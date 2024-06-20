@@ -1,0 +1,844 @@
+
+Jacobian in geometric coordinates:
+
+j := j0 + eps*j1 + eps**2*j2
+
+j0 := r
+
+j1 := cos(w)*df(d1,r)*r + cos(2*w)*(e1 - df(e1,r)*r) + cos(3*w)*(2*t1 - df(t1,r)*r)
+
+j2 :=  - p2 - 2*df(t1,r)*t1 - df(p2,r)*r - df(e1,r)*e1 + cos(w)*( - df(t1,r)*e1 - 2*df(e1,r)*t1 + df(d1,r)*e1)
+
+       + 2*cos(2*w)*df(d1,r)*t1
+
+j/x := k0 + eps*k1 + eps*eps*k2:
+
+k0 := r
+
+k1 := cos(w)*r*(r + df(d1,r)) + cos(2*w)*(e1 - df(e1,r)*r) + cos(3*w)*(2*t1 - df(t1,r)*r)
+
+        3                                                                            2
+k2 := (r  - 2*p2 + 2*d1*r - 4*df(t1,r)*t1 - 2*df(p2,r)*r - 2*df(e1,r)*e1 + df(d1,r)*r )/2
+
+                                                                      2
+       + (cos(w)*( - e1*r - 2*df(t1,r)*e1 - 4*df(e1,r)*t1 - df(e1,r)*r  + 2*df(d1,r)*e1))/2
+
+                     3             2                             2
+       + (cos(2*w)*(r  - df(t1,r)*r  + 4*df(d1,r)*t1 + df(d1,r)*r ))/2 + (cos(3*w)*r*(e1 - df(e1,r)*r))/2
+
+       + (cos(4*w)*r*(2*t1 - df(t1,r)*r))/2
+
+Choice of P2 with associated residual:
+
+              2    4       2         2
+q2 := ( - 8*t1  + r  - 4*e1  + 4*d1*r )/(8*r)
+
+res2 := 0
+
+Straight field-line flux-surface label:
+
+rst := abs(r)
+
+theta := tt0 + eps*tt1 + eps**2*tt2
+
+tt0 := w
+
+tt1 := sin(w)*(r + df(d1,r)) + (sin(2*w)*(e1 - df(e1,r)*r))/(2*r) + (sin(3*w)*(2*t1 - df(t1,r)*r))/(3*r)
+
+                                                                    2
+tt2 := (sin(w)*( - e1*r - 2*df(t1,r)*e1 - 4*df(e1,r)*t1 - df(e1,r)*r  + 2*df(d1,r)*e1))/(2*r)
+
+                      3             2                             2
+        + (sin(2*w)*(r  - df(t1,r)*r  + 4*df(d1,r)*t1 + df(d1,r)*r ))/(4*r) + (sin(3*w)*(e1 - df(e1,r)*r))/6
+
+        + (sin(4*w)*(2*t1 - df(t1,r)*r))/8
+
+Secular variation residual:
+
+rest := 0
+
+Evaluate covariant metric tensor in geometric coordinates:
+
+Evaluate contravariant metric tensor in geometric coordinates:
+
+Transform contravariant metric tensor to straight coordinates:
+
+Express geometric angle in terms of straight angle:
+
+Contravariant metric tensor elements in straight coordinates:
+
+gr2 := gr20 + eps*gr21 + eps**2*gr22
+
+gr20 := 1
+
+gr21 :=  - 2*cos(t)*df(d1,r) + 2*cos(2*t)*df(e1,r) + 2*cos(3*t)*df(t1,r)
+
+              2      4       2         2             2  2             2  2             2  2      2
+gr22 := (16*t1  + 3*r  + 6*e1  + 4*d1*r  + 2*df(t1,r) *r  + 2*df(e1,r) *r  + 2*df(d1,r) *r )/(4*r )
+
+grt2 := grt20 + eps*grt21 + eps**2*grt22
+
+grt20 := 0
+
+                                                                                                  2       2
+grt21 := (sin(t)*(r + df(d1,r) + df(d1,r,2)*r))/r + (sin(2*t)*( - 3*e1 - df(e1,r)*r - df(e1,r,2)*r ))/(2*r )
+
+                                                          2       2
+          + (sin(3*t)*( - 8*t1 - df(t1,r)*r - df(t1,r,2)*r ))/(3*r )
+
+grt22 := 0
+
+x*x := x20 + eps*x21 + eps**2*x22
+
+x20 := 1
+
+x21 :=  - 2*cos(t)*r
+
+            2
+x22 := ( - r  - 4*d1 - 2*df(d1,r)*r)/2
+
+Express Grad-Shafranov equation in straight coordinates:
+
+Fourier analyze Grad-Shafranov equation:
+
+Components of Grad-Shafranov equation:
+
+Zeroth-order equilibrium equation:
+
+                        2            3   3
+c0 := (2*q*r - df(q,r)*r  + df(p,r)*q )/q
+
+c1 := 1
+
+                            2            3   3
+g2p := ( - 2*q*r + df(q,r)*r  - df(p,r)*q )/q
+
+l=1 shaping equation:
+
+                          3
+d1pp := (q*r - 2*df(p,r)*q  - 3*df(d1,r)*q + 2*df(d1,r)*df(q,r)*r)/(q*r)
+
+l=2 shaping equation:
+
+                                                       2      2
+e1pp := (3*e1*q - 3*df(e1,r)*q*r + 2*df(e1,r)*df(q,r)*r )/(q*r )
+
+l=3 shaping equation:
+
+                                                       2      2
+t1pp := (8*q*t1 - 3*df(t1,r)*q*r + 2*df(q,r)*df(t1,r)*r )/(q*r )
+
+Second-order equilibrium equation:
+
+                 3                                                       2                                2
+g4p := ( - 12*q*r  - 16*g2*q*r - 8*d1*q*r - 32*df(t1,r)*q*t1 - 4*df(t1,r) *q*r - 4*df(t1,r,2)*df(t1,r)*q*r
+
+                        2              4                 2               2                 2                     2  2
+         + 16*df(q,r)*t1  + 3*df(q,r)*r  + 8*df(q,r)*g2*r  + 6*df(q,r)*e1  + 4*df(q,r)*d1*r  + 2*df(q,r)*df(t1,r) *r
+
+                      3  2                 3                 2                  3                                2
+         + 2*df(p,r)*q *r  + 8*df(p,r)*d1*q  - 4*df(g2,r)*q*r  - 4*df(g2,r)*g2*q  - 12*df(e1,r)*e1*q - 4*df(e1,r) *q*r
+
+                     2          2                            2                 2                       3
+         + 2*df(e1,r) *df(q,r)*r  - 4*df(e1,r,2)*df(e1,r)*q*r  - 4*df(d1,r)*q*r  + 4*df(d1,r)*df(p,r)*q *r
+
+                     2                 2          2                            2      3
+         - 4*df(d1,r) *q*r + 2*df(d1,r) *df(q,r)*r  - 4*df(d1,r,2)*df(d1,r)*q*r )/(4*q )
+
+S/r := ss
+
+ss := i*n*r
+
+Q/r := qq0 + eps*qq1 + eps**2*qq2
+
+qq0 := ( - i)/(n*r)
+
+qq1 := ( - 2*cos(t)*i*df(d1,r))/(n*r) + (2*cos(2*t)*i*df(e1,r))/(n*r) + (2*cos(3*t)*i*df(t1,r))/(n*r)
+
+                2      4       2         2             2  2             2  2             2  2         3
+qq2 := (i*(16*t1  + 3*r  + 6*e1  + 4*d1*r  - 6*df(t1,r) *r  - 6*df(e1,r) *r  - 6*df(d1,r) *r ))/(4*n*r )
+
+T/r := tc0 + eps*tc1 + eps**2*tc2
+
+tc0 := (i*df(g,r)*invf)/(n*r)
+
+                                                                                                2       2
+tc1 := (sin(t)*(r + df(d1,r) + df(d1,r,2)*r))/r + (sin(2*t)*( - 3*e1 - df(e1,r)*r - df(e1,r,2)*r ))/(2*r )
+
+                                                        2       2
+        + (sin(3*t)*( - 8*t1 - df(t1,r)*r - df(t1,r,2)*r ))/(3*r ) + (2*cos(t)*i*df(d1,r)*df(g,r)*invf)/(n*r)
+
+        + ( - 2*cos(2*t)*i*df(e1,r)*df(g,r)*invf)/(n*r) + ( - 2*cos(3*t)*i*df(g,r)*df(t1,r)*invf)/(n*r)
+
+                                2      4       2         2             2  2             2  2             2  2         3
+tc2 := (i*df(g,r)*invf*( - 16*t1  - 3*r  - 6*e1  - 4*d1*r  + 6*df(t1,r) *r  + 6*df(e1,r) *r  + 6*df(d1,r) *r ))/(4*n*r )
+
+U/r := uu0 + eps*uu1 + eps**2*uu2
+
+                   2
+uu0 := df(p,r)*invf
+
+                            2                                                     2                                   2
+uu1 := 2*cos(t)*df(p,r)*invf *( - r + df(d1,r)) - 2*cos(2*t)*df(e1,r)*df(p,r)*invf  - 2*cos(3*t)*df(p,r)*df(t1,r)*invf
+
+                    2
+uu2 := (df(p,r)*invf
+
+                  2      4       2          2             2  2             2  2                3             2  2
+        *( - 16*t1  - 5*r  - 6*e1  - 12*d1*r  + 6*df(t1,r) *r  + 6*df(e1,r) *r  - 12*df(d1,r)*r  + 6*df(d1,r) *r ))
+
+            2
+       /(4*r )
+
+V/r := vv0 + eps*vv1 + eps**2*vv2
+
+            2          2     2
+vv0 := (i*(n  - df(g,r) *invf ))/(n*r)
+
+                     2               2                   2     2
+vv1 := (2*cos(t)*i*(n *r + df(d1,r)*n  - df(d1,r)*df(g,r) *invf ))/(n*r)
+
+                                      2          2     2
+        + (2*cos(2*t)*i*df(e1,r)*( - n  + df(g,r) *invf ))/(n*r)
+
+                                      2          2     2
+        + (2*cos(3*t)*i*df(t1,r)*( - n  + df(g,r) *invf ))/(n*r)
+
+                  2   2      2  4       2  2         2  2             2  2  2             2     2   2
+vv2 := (i*( - 16*n *t1  + 7*n *r  - 6*e1 *n  + 4*d1*n *r  + 6*df(t1,r) *n *r  + 16*df(g,r) *invf *t1
+
+                       2     2  4            2   2     2            2        2  2            2         2     2  2
+            + 3*df(g,r) *invf *r  + 6*df(g,r) *e1 *invf  + 4*df(g,r) *d1*invf *r  - 6*df(g,r) *df(t1,r) *invf *r
+
+                        2  2  2             2        2     2  2                2  3             2  2  2
+            + 6*df(e1,r) *n *r  - 6*df(e1,r) *df(g,r) *invf *r  + 12*df(d1,r)*n *r  + 6*df(d1,r) *n *r
+
+                        2        2     2  2         3
+            - 6*df(d1,r) *df(g,r) *invf *r ))/(4*n*r )
+
+W/r := ww0 + eps*ww1 + eps**2*ww2
+
+                             3
+ww0 := 2*df(g,r)*df(p,r)*invf  - df(g,r)*df(invf,r) - df(g,r,2)*invf
+
+                                    3                                                             3
+ww1 := 4*cos(t)*df(g,r)*df(p,r)*invf *( - r + df(d1,r)) - 4*cos(2*t)*df(e1,r)*df(g,r)*df(p,r)*invf
+
+                                                  3
+        - 4*cos(3*t)*df(g,r)*df(p,r)*df(t1,r)*invf
+
+                            3
+ww2 := (df(g,r)*df(p,r)*invf
+
+                  2      4       2          2             2  2             2  2                3             2  2
+        *( - 16*t1  - 5*r  - 6*e1  - 12*d1*r  + 6*df(t1,r) *r  + 6*df(e1,r) *r  - 12*df(d1,r)*r  + 6*df(d1,r) *r ))
+
+            2
+       /(2*r )
+
+X/r := xx0 + eps*xx1 + eps**2*xx2
+
+                                            3
+xx0 := i*df(p,r)*invf*n*(invf - df(p,r)*invf *r + df(invf,r)*r)
+
+                                    3                                                          3
+xx1 := 2*sin(t)*df(g,r)*df(p,r)*invf *(r - df(d1,r)) + 4*sin(2*t)*df(e1,r)*df(g,r)*df(p,r)*invf
+
+                                                  3                                                        3  2
+        + 6*sin(3*t)*df(g,r)*df(p,r)*df(t1,r)*invf  + cos(t)*i*df(p,r)*invf*n*( - 3*invf*r + 4*df(p,r)*invf *r
+
+                           2                                          3
+           - 2*df(invf,r)*r  + df(d1,r)*invf - 2*df(d1,r)*df(p,r)*invf *r + df(d1,r,2)*invf*r)
+
+                                  2                                                  2  2               2
+        + (cos(2*t)*i*df(p,r)*invf *n*( - 3*e1 - df(e1,r)*r + 2*df(e1,r)*df(p,r)*invf *r  - df(e1,r,2)*r ))/r
+
+                                  2                                       2                          2  2
+        + (cos(3*t)*i*df(p,r)*invf *n*( - 8*t1 - df(t1,r)*r - df(t1,r,2)*r  + 2*df(p,r)*df(t1,r)*invf *r ))/r
+
+                                     3                                3   2               3  4               2     3
+xx2 := (i*df(p,r)*invf*n*( - 6*invf*r  - 8*d1*invf*r + 16*df(p,r)*invf *t1  - df(p,r)*invf *r  + 6*df(p,r)*e1 *invf
+
+                                3  2                     2     3  2                 4                    2
+            + 20*df(p,r)*d1*invf *r  - 6*df(p,r)*df(t1,r) *invf *r  - 2*df(invf,r)*r  - 8*df(invf,r)*d1*r
+
+                        2             3  2                     2                           3  3
+            - 6*df(e1,r) *df(p,r)*invf *r  - 16*df(d1,r)*invf*r  + 24*df(d1,r)*df(p,r)*invf *r
+
+                                     3             2             3  2                      3
+            - 4*df(d1,r)*df(invf,r)*r  - 6*df(d1,r) *df(p,r)*invf *r  - 4*df(d1,r,2)*invf*r ))/(4*r)
+
+Primitive coupling coefficients: j = 0:
+
+bm0 := bm00 + eps*bm01 + eps**2*bm02
+
+         -1  2
+bm00 := n  *m
+
+bm01 := 0
+
+          -2  -1  2        4      2         2         2      2         2      2         2       2        2          2
+bm02 := (r  *n  *m *( - 3*r  - 4*r *d1 + 6*r *df(d1,r)  + 6*r *df(e1,r)  + 6*r *df(t1,r)  - 6*e1  - 16*t1 ))/4 + n*r
+
+cm0 := cm00 + eps*cm01 + eps**2*cm02
+
+         -1                                     2
+cm00 := n  *m*nmq0*df(g,r)*invf - m*df(p,r)*invf *r
+
+cm01 := 0
+
+          -2  -1
+cm02 := (r  *n  *m*nmq0*df(g,r)*invf
+
+                 4      2         2         2      2         2      2         2       2        2         -1
+         *( - 3*r  - 4*r *d1 + 6*r *df(d1,r)  + 6*r *df(e1,r)  + 6*r *df(t1,r)  - 6*e1  - 16*t1 ))/4 + (r  *m*df(p,r)
+
+                2     4       3                2         2         2      2         2      2         2       2        2
+           *invf *(5*r  + 12*r *df(d1,r) + 12*r *d1 - 6*r *df(d1,r)  - 6*r *df(e1,r)  - 6*r *df(t1,r)  + 6*e1  + 16*t1 )
+
+           )/4
+
+dm0 := dm00 + eps*dm01 + eps**2*dm02
+
+            -1                                     2
+dm00 :=  - n  *m*nmq0*df(g,r)*invf + m*df(p,r)*invf *r
+
+dm01 := 0
+
+          -2  -1
+dm02 := (r  *n  *m*nmq0*df(g,r)*invf
+
+              4      2         2         2      2         2      2         2       2        2         -1               2
+         *(3*r  + 4*r *d1 - 6*r *df(d1,r)  - 6*r *df(e1,r)  - 6*r *df(t1,r)  + 6*e1  + 16*t1 ))/4 + (r  *m*df(p,r)*invf
+
+                   4       3                2         2         2      2         2      2         2       2        2
+           *( - 5*r  - 12*r *df(d1,r) - 12*r *d1 + 6*r *df(d1,r)  + 6*r *df(e1,r)  + 6*r *df(t1,r)  - 6*e1  - 16*t1 ))/4
+
+em0 := em00 + eps*em01 + eps**2*em02
+
+         -1     2   2          2     2                                  3
+em00 := n  *nmq0 *(n  - df(g,r) *invf ) + nmq0*r*(2*df(g,r)*df(p,r)*invf  - df(g,r)*df(invf,r) - df(g,r,2)*invf)
+
+                                            3
+         + n*df(p,r)*invf*r*( - df(p,r)*invf *r + invf + df(invf,r)*r)
+
+em01 := 0
+
+          -2  -1     2     2  4       2  3               2  2         2  2         2      2  2         2
+em02 := (r  *n  *nmq0 *(7*n *r  + 12*n *r *df(d1,r) + 4*n *r *d1 + 6*n *r *df(d1,r)  + 6*n *r *df(e1,r)
+
+                  2  2         2      2   2       2   2            2     2  4            2     2  2
+             + 6*n *r *df(t1,r)  - 6*n *e1  - 16*n *t1  + 3*df(g,r) *invf *r  + 4*df(g,r) *invf *r *d1
+
+                        2     2  2         2            2     2  2         2            2     2  2         2
+             - 6*df(g,r) *invf *r *df(d1,r)  - 6*df(g,r) *invf *r *df(e1,r)  - 6*df(g,r) *invf *r *df(t1,r)
+
+                        2     2   2             2     2   2         -1                          3
+             + 6*df(g,r) *invf *e1  + 16*df(g,r) *invf *t1 ))/4 + (r  *nmq0*df(g,r)*df(p,r)*invf
+
+                   4       3                2         2         2      2         2      2         2       2        2
+           *( - 5*r  - 12*r *df(d1,r) - 12*r *d1 + 6*r *df(d1,r)  + 6*r *df(e1,r)  + 6*r *df(t1,r)  - 6*e1  - 16*t1 ))/2
+
+                                           3  4                  3  3                           3  2
+         + (n*df(p,r)*invf*( - df(p,r)*invf *r  + 24*df(p,r)*invf *r *df(d1,r) + 20*df(p,r)*invf *r *d1
+
+                                3  2         2                 3  2         2                 3  2         2
+                - 6*df(p,r)*invf *r *df(d1,r)  - 6*df(p,r)*invf *r *df(e1,r)  - 6*df(p,r)*invf *r *df(t1,r)
+
+                                3   2                  3   2           3                      3            2
+                + 6*df(p,r)*invf *e1  + 16*df(p,r)*invf *t1  - 4*invf*r *df(d1,r,2) - 6*invf*r  - 16*invf*r *df(d1,r)
+
+                                              4                 3                          2
+                - 8*invf*r*d1 - 2*df(invf,r)*r  - 4*df(invf,r)*r *df(d1,r) - 8*df(invf,r)*r *d1))/4
+
+Primitive coupling coefficients: j = +1:
+
+bmp1 := bmp10 + eps*bp101 + eps**2*bmp12
+
+bmp10 := 0
+
+          -1  2             -1
+bmp11 := n  *m *df(d1,r) + n  *m*df(d1,r)
+
+bmp12 := 0
+
+cmp1 := cmp10 + eps*cmp11 + eps**2*cmp12
+
+cmp10 := 0
+
+cmp11 := 
+
+  -1                                                                                          2
+(n  *m*nmqp1*(n*r*df(d1,r,2) + n*r + n*df(d1,r) + 2*df(g,r)*invf*df(d1,r)))/2 + m*df(p,r)*invf *r*(r - df(d1,r))
+
+cmp12 := 0
+
+dmp1 := dmp10 + eps*dmp11 + eps**2*dmp12
+
+dmp10 := 0
+
+           -1                                                                              -1                       2  2
+dmp11 := (n  *m*nmqp1*(n*r*df(d1,r,2) + n*r + n*df(d1,r) - 2*df(g,r)*invf*df(d1,r)))/2 + (n  *m*( - 2*n*df(p,r)*invf *r
+
+                                  2
+                + 2*n*df(p,r)*invf *r*df(d1,r) - n*r*df(d1,r,2) - n*r - n*df(d1,r) + 2*df(g,r)*invf*df(d1,r)))/2
+
+              -1                                                                            -1                     2  2
+          + (n  *nmqp1*(n*r*df(d1,r,2) + n*r + n*df(d1,r) - 2*df(g,r)*invf*df(d1,r)))/2 + (n  *( - 2*n*df(p,r)*invf *r
+
+                                  2
+                + 2*n*df(p,r)*invf *r*df(d1,r) - n*r*df(d1,r,2) - n*r - n*df(d1,r) + 2*df(g,r)*invf*df(d1,r)))/2
+
+dmp12 := 0
+
+emp1 := emp10 + eps*emp11 + eps**2*emp12
+
+emp10 := 0
+
+          -1      2   2      2                   2     2              -1            2      2
+emp11 := n  *nmqp1 *(n *r + n *df(d1,r) - df(g,r) *invf *df(d1,r)) + n  *nmqp1*( - n *r - n *df(d1,r)
+
+                                       3  2                           3                     2     2
+             - 2*n*df(g,r)*df(p,r)*invf *r  + 2*n*df(g,r)*df(p,r)*invf *r*df(d1,r) + df(g,r) *invf *df(d1,r)) + (df(p,r)
+
+                                     3  2                   3
+            *invf*r*(4*n*df(p,r)*invf *r  - 2*n*df(p,r)*invf *r*df(d1,r) + n*invf*r*df(d1,r,2) - 3*n*invf*r
+
+                                                    2                 2                   2
+                + n*invf*df(d1,r) - 2*n*df(invf,r)*r  + 2*df(g,r)*invf *r - 2*df(g,r)*invf *df(d1,r)))/2
+
+emp12 := 0
+
+Primitive coupling coefficients: j = -1:
+
+bmm1 := bmm10 + eps*bm101 + eps**2*bmm12
+
+bmm10 := 0
+
+          -1  2             -1
+bmm11 := n  *m *df(d1,r) - n  *m*df(d1,r)
+
+bmm12 := 0
+
+cmm1 := cmm10 + eps*cmm11 + eps**2*cmm12
+
+cmm10 := 0
+
+cmm11 := 
+
+  -1                                                                                             2
+(n  *m*nmqm1*( - n*r*df(d1,r,2) - n*r - n*df(d1,r) + 2*df(g,r)*invf*df(d1,r)))/2 + m*df(p,r)*invf *r*(r - df(d1,r))
+
+cmm12 := 0
+
+dmm1 := dmm10 + eps*dmm11 + eps**2*dmm12
+
+dmm10 := 0
+
+           -1                                                                                 -1
+dmm11 := (n  *m*nmqm1*( - n*r*df(d1,r,2) - n*r - n*df(d1,r) - 2*df(g,r)*invf*df(d1,r)))/2 + (n  *m*(
+
+                                  2  2                   2
+                - 2*n*df(p,r)*invf *r  + 2*n*df(p,r)*invf *r*df(d1,r) - n*r*df(d1,r,2) - n*r - n*df(d1,r)
+
+                - 2*df(g,r)*invf*df(d1,r)))/2
+
+              -1                                                                            -1                  2  2
+          + (n  *nmqm1*(n*r*df(d1,r,2) + n*r + n*df(d1,r) + 2*df(g,r)*invf*df(d1,r)))/2 + (n  *(2*n*df(p,r)*invf *r
+
+                                  2
+                - 2*n*df(p,r)*invf *r*df(d1,r) + n*r*df(d1,r,2) + n*r + n*df(d1,r) + 2*df(g,r)*invf*df(d1,r)))/2
+
+dmm12 := 0
+
+emm1 := emm10 + eps*emm11 + eps**2*emm12
+
+emm10 := 0
+
+          -1      2   2      2                   2     2              -1         2      2
+emm11 := n  *nmqm1 *(n *r + n *df(d1,r) - df(g,r) *invf *df(d1,r)) + n  *nmqm1*(n *r + n *df(d1,r)
+
+                                       3  2                           3                     2     2
+             - 2*n*df(g,r)*df(p,r)*invf *r  + 2*n*df(g,r)*df(p,r)*invf *r*df(d1,r) - df(g,r) *invf *df(d1,r)) + (df(p,r)
+
+                                     3  2                   3
+            *invf*r*(4*n*df(p,r)*invf *r  - 2*n*df(p,r)*invf *r*df(d1,r) + n*invf*r*df(d1,r,2) - 3*n*invf*r
+
+                                                    2                 2                   2
+                + n*invf*df(d1,r) - 2*n*df(invf,r)*r  - 2*df(g,r)*invf *r + 2*df(g,r)*invf *df(d1,r)))/2
+
+emm12 := 0
+
+Primitive coupling coefficients: j = +2:
+
+bmp2 := bmp20 + eps*bp201 + eps**2*bmp22
+
+bmp20 := 0
+
+             -1  2               -1
+bmp21 :=  - n  *m *df(e1,r) - 2*n  *m*df(e1,r)
+
+bmp22 := 0
+
+cmp2 := cmp20 + eps*cmp21 + eps**2*cmp22
+
+cmp20 := 0
+
+           -1  -1                2
+cmp21 := (r  *n  *m*nmqp2*( - n*r *df(e1,r,2) - n*r*df(e1,r) - 3*n*e1 - 4*df(g,r)*invf*r*df(e1,r)))/4
+
+                          2
+          + m*df(p,r)*invf *r*df(e1,r)
+
+cmp22 := 0
+
+dmp2 := dmp20 + eps*dmp21 + eps**2*dmp22
+
+dmp20 := 0
+
+           -1  -1                2                                                                        -1  -1
+dmp21 := (r  *n  *m*nmqp2*( - n*r *df(e1,r,2) - n*r*df(e1,r) - 3*n*e1 + 4*df(g,r)*invf*r*df(e1,r)))/4 + (r  *n  *m
+
+                                 2  2               2
+            *( - 2*n*df(p,r)*invf *r *df(e1,r) + n*r *df(e1,r,2) + n*r*df(e1,r) + 3*n*e1 - 4*df(g,r)*invf*r*df(e1,r)))/2
+
+              -1  -1              2                                                                       -1  -1
+          + (r  *n  *nmqp2*( - n*r *df(e1,r,2) - n*r*df(e1,r) - 3*n*e1 + 4*df(g,r)*invf*r*df(e1,r)))/2 + r  *n
+
+                              2  2               2
+         *( - 2*n*df(p,r)*invf *r *df(e1,r) + n*r *df(e1,r,2) + n*r*df(e1,r) + 3*n*e1 - 4*df(g,r)*invf*r*df(e1,r))
+
+dmp22 := 0
+
+emp2 := emp20 + eps*emp21 + eps**2*emp22
+
+emp20 := 0
+
+          -1      2               2          2     2
+emp21 := n  *nmqp2 *df(e1,r)*( - n  + df(g,r) *invf )
+
+               -1                  2                         3            2     2                 2
+          + 2*n  *nmqp2*df(e1,r)*(n  - n*df(g,r)*df(p,r)*invf *r - df(g,r) *invf ) + (df(p,r)*invf
+
+                              2  2               2
+            *(2*n*df(p,r)*invf *r *df(e1,r) - n*r *df(e1,r,2) - n*r*df(e1,r) - 3*n*e1 + 4*df(g,r)*invf*r*df(e1,r)))/2
+
+emp22 := 0
+
+Primitive coupling coefficients: j = -2:
+
+bmm2 := bmm20 + eps*bm201 + eps**2*bmm22
+
+bmm20 := 0
+
+             -1  2               -1
+bmm21 :=  - n  *m *df(e1,r) + 2*n  *m*df(e1,r)
+
+bmm22 := 0
+
+cmm2 := cmm20 + eps*cmm21 + eps**2*cmm22
+
+cmm20 := 0
+
+cmm21 := 
+
+  -1  -1             2                                                                                    2
+(r  *n  *m*nmqm2*(n*r *df(e1,r,2) + n*r*df(e1,r) + 3*n*e1 - 4*df(g,r)*invf*r*df(e1,r)))/4 + m*df(p,r)*invf *r*df(e1,r)
+
+cmm22 := 0
+
+dmm2 := dmm20 + eps*dmm21 + eps**2*dmm22
+
+dmm20 := 0
+
+           -1  -1             2                                                                        -1  -1
+dmm21 := (r  *n  *m*nmqm2*(n*r *df(e1,r,2) + n*r*df(e1,r) + 3*n*e1 + 4*df(g,r)*invf*r*df(e1,r)))/4 + (r  *n  *m
+
+                                 2  2               2
+            *( - 2*n*df(p,r)*invf *r *df(e1,r) + n*r *df(e1,r,2) + n*r*df(e1,r) + 3*n*e1 + 4*df(g,r)*invf*r*df(e1,r)))/2
+
+              -1  -1              2                                                                       -1  -1
+          + (r  *n  *nmqm2*( - n*r *df(e1,r,2) - n*r*df(e1,r) - 3*n*e1 - 4*df(g,r)*invf*r*df(e1,r)))/2 + r  *n
+
+                           2  2               2
+         *(2*n*df(p,r)*invf *r *df(e1,r) - n*r *df(e1,r,2) - n*r*df(e1,r) - 3*n*e1 - 4*df(g,r)*invf*r*df(e1,r))
+
+dmm22 := 0
+
+emm2 := emm20 + eps*emm21 + eps**2*emm22
+
+emm20 := 0
+
+          -1      2               2          2     2
+emm21 := n  *nmqm2 *df(e1,r)*( - n  + df(g,r) *invf )
+
+               -1                     2                         3            2     2                 2
+          + 2*n  *nmqm2*df(e1,r)*( - n  - n*df(g,r)*df(p,r)*invf *r + df(g,r) *invf ) + (df(p,r)*invf
+
+                              2  2               2
+            *(2*n*df(p,r)*invf *r *df(e1,r) - n*r *df(e1,r,2) - n*r*df(e1,r) - 3*n*e1 - 4*df(g,r)*invf*r*df(e1,r)))/2
+
+emm22 := 0
+
+Primitive coupling coefficients: j = +3:
+
+bmp3 := bmp30 + eps*bp301 + eps**2*bmp32
+
+bmp30 := 0
+
+             -1  2               -1
+bmp31 :=  - n  *m *df(t1,r) - 3*n  *m*df(t1,r)
+
+bmp32 := 0
+
+cmp3 := cmp30 + eps*cmp31 + eps**2*cmp32
+
+cmp30 := 0
+
+           -1  -1                2
+cmp31 := (r  *n  *m*nmqp3*( - n*r *df(t1,r,2) - n*r*df(t1,r) - 8*n*t1 - 6*df(g,r)*invf*r*df(t1,r)))/6
+
+                          2
+          + m*df(p,r)*invf *r*df(t1,r)
+
+cmp32 := 0
+
+dmp3 := dmp30 + eps*dmp31 + eps**2*dmp32
+
+dmp30 := 0
+
+           -1  -1                2                                                                        -1  -1
+dmp31 := (r  *n  *m*nmqp3*( - n*r *df(t1,r,2) - n*r*df(t1,r) - 8*n*t1 + 6*df(g,r)*invf*r*df(t1,r)))/6 + (r  *n  *m
+
+                                 2  2               2
+            *( - 2*n*df(p,r)*invf *r *df(t1,r) + n*r *df(t1,r,2) + n*r*df(t1,r) + 8*n*t1 - 6*df(g,r)*invf*r*df(t1,r)))/2
+
+              -1  -1              2                                                                          -1  -1
+          + (r  *n  *nmqp3*( - n*r *df(t1,r,2) - n*r*df(t1,r) - 8*n*t1 + 6*df(g,r)*invf*r*df(t1,r)))/2 + (3*r  *n
+
+                                 2  2               2
+            *( - 2*n*df(p,r)*invf *r *df(t1,r) + n*r *df(t1,r,2) + n*r*df(t1,r) + 8*n*t1 - 6*df(g,r)*invf*r*df(t1,r)))/2
+
+dmp32 := 0
+
+emp3 := emp30 + eps*emp31 + eps**2*emp32
+
+emp30 := 0
+
+          -1      2               2          2     2
+emp31 := n  *nmqp3 *df(t1,r)*( - n  + df(g,r) *invf )
+
+             -1                    2                           3              2     2                 2
+          + n  *nmqp3*df(t1,r)*(3*n  - 2*n*df(g,r)*df(p,r)*invf *r - 3*df(g,r) *invf ) + (df(p,r)*invf
+
+                              2  2               2
+            *(2*n*df(p,r)*invf *r *df(t1,r) - n*r *df(t1,r,2) - n*r*df(t1,r) - 8*n*t1 + 6*df(g,r)*invf*r*df(t1,r)))/2
+
+emp32 := 0
+
+Primitive coupling coefficients: j = -3:
+
+bmm3 := bmm30 + eps*bm301 + eps**2*bmm32
+
+bmm30 := 0
+
+             -1  2               -1
+bmm31 :=  - n  *m *df(t1,r) + 3*n  *m*df(t1,r)
+
+bmm32 := 0
+
+cmm3 := cmm30 + eps*cmm31 + eps**2*cmm32
+
+cmm30 := 0
+
+cmm31 := 
+
+  -1  -1             2                                                                                    2
+(r  *n  *m*nmqm3*(n*r *df(t1,r,2) + n*r*df(t1,r) + 8*n*t1 - 6*df(g,r)*invf*r*df(t1,r)))/6 + m*df(p,r)*invf *r*df(t1,r)
+
+cmm32 := 0
+
+dmm3 := dmm30 + eps*dmm31 + eps**2*dmm32
+
+dmm30 := 0
+
+           -1  -1             2                                                                        -1  -1
+dmm31 := (r  *n  *m*nmqm3*(n*r *df(t1,r,2) + n*r*df(t1,r) + 8*n*t1 + 6*df(g,r)*invf*r*df(t1,r)))/6 + (r  *n  *m
+
+                                 2  2               2
+            *( - 2*n*df(p,r)*invf *r *df(t1,r) + n*r *df(t1,r,2) + n*r*df(t1,r) + 8*n*t1 + 6*df(g,r)*invf*r*df(t1,r)))/2
+
+              -1  -1              2                                                                          -1  -1
+          + (r  *n  *nmqm3*( - n*r *df(t1,r,2) - n*r*df(t1,r) - 8*n*t1 - 6*df(g,r)*invf*r*df(t1,r)))/2 + (3*r  *n
+
+                              2  2               2
+            *(2*n*df(p,r)*invf *r *df(t1,r) - n*r *df(t1,r,2) - n*r*df(t1,r) - 8*n*t1 - 6*df(g,r)*invf*r*df(t1,r)))/2
+
+dmm32 := 0
+
+emm3 := emm30 + eps*emm31 + eps**2*emm32
+
+emm30 := 0
+
+          -1      2               2          2     2
+emm31 := n  *nmqm3 *df(t1,r)*( - n  + df(g,r) *invf )
+
+             -1                       2                           3              2     2                 2
+          + n  *nmqm3*df(t1,r)*( - 3*n  - 2*n*df(g,r)*df(p,r)*invf *r + 3*df(g,r) *invf ) + (df(p,r)*invf
+
+                              2  2               2
+            *(2*n*df(p,r)*invf *r *df(t1,r) - n*r *df(t1,r,2) - n*r*df(t1,r) - 8*n*t1 - 6*df(g,r)*invf*r*df(t1,r)))/2
+
+emm32 := 0
+
+Residuals of j=0 coupling coefficients:
+
+dlm00 := 0
+
+dlm02 := 0
+
+dmm00 := 0
+
+dmm02 := 0
+
+dnm00 := 0
+
+dnm02 := 0
+
+dpm00 := 0
+
+dpm02 := 0
+
+Residuals of j=+1 coupling coefficients:
+
+dlmp11 := 0
+
+dmmp11 := 0
+
+dnmp11 := 0
+
+dpmp11 := 0
+
+Residuals of j=-1 coupling coefficients:
+
+dlmm11 := 0
+
+dmmm11 := 0
+
+dnmm11 := 0
+
+dpmm11 := 0
+
+Residuals of j=+2 coupling coefficients:
+
+dlmp21 := 0
+
+dmmp21 := 0
+
+dnmp21 := 0
+
+dpmp21 := 0
+
+Residuals of j=-2 coupling coefficients:
+
+dlmm21 := 0
+
+dmmm21 := 0
+
+dnmm21 := 0
+
+dpmm21 := 0
+
+Residuals of j=+3 coupling coefficients:
+
+dlmp31 := 0
+
+dmmp31 := 0
+
+dnmp31 := 0
+
+dpmp31 := 0
+
+Residuals of j=-3 coupling coefficients:
+
+dlmm31 := 0
+
+dmmm31 := 0
+
+dnmm31 := 0
+
+dpmm31 := 0
+
+Residuals of special j=1 coupling coefficients:
+
+dmmp10 := 0
+
+dmmm10 := 0
+
+dnm0p1 := 0
+
+dnm0m1 := 0
+
+dpm0p1 := 0
+
+dpm0m1 := 0
+
+Residuals of special j=2 coupling coefficients:
+
+dmmp20 := 0
+
+dmmm20 := 0
+
+dnm0p2 := 0
+
+dnm0m2 := 0
+
+dpm0p2 := 0
+
+dpm0m2 := 0
+
+Residuals of special j=3 coupling coefficients:
+
+dmmp30 := 0
+
+dmmm30 := 0
+
+dnm0p3 := 0
+
+dnm0m3 := 0
+
+dpm0p3 := 0
+
+dpm0m3 := 0
+
+         -3              3            2
+g2p0 := q  *( - df(p,r)*q  - 2*q*r + r *df(q,r))
+
+g2p2 := 0
+
+         -5             5  2               5                         5                 5                 3  2       3  3
+g4p := (q  *(2*df(p,r)*q *r  + 12*df(p,r)*q *r*df(d1,r) + 8*df(p,r)*q *d1 + 4*df(p,r)*q *g2 + 4*df(p,r)*q *r  - 12*q *r
+
+                   3  2               3           3           2      3           2      3           2      3
+              - 8*q *r *df(d1,r) - 8*q *r*d1 + 8*q *r*df(d1,r)  + 8*q *r*df(e1,r)  + 8*q *r*df(t1,r)  - 8*q *r*g2
+
+                    3                   3                  2  4              2  2                 2  2         2
+              - 24*q *e1*df(e1,r) - 64*q *t1*df(t1,r) + 3*q *r *df(q,r) + 4*q *r *d1*df(q,r) - 6*q *r *df(d1,r) *df(q,r)
+
+                   2  2         2              2  2         2              2  2                 2   2
+              - 6*q *r *df(e1,r) *df(q,r) - 6*q *r *df(t1,r) *df(q,r) + 4*q *r *df(q,r)*g2 + 6*q *e1 *df(q,r)
+
+                    2   2                3      4
+              + 16*q *t1 *df(q,r) + 8*q*r  - 4*r *df(q,r)))/4
+
+Equilibrium residuals:
+
+dg2p := 0
+
+dg4p := 0
+
+dd1pp := 0
+
+de1pp := 0
+
+dt1pp := 0

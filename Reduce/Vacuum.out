@@ -1,0 +1,435 @@
+
+Ftheta residual:
+
+0
+
+xi0 residual:
+
+0
+
+xi1 residual:
+
+0
+
+xi2 residual:
+
+0
+
+Pmm0 residual:
+
+0
+
+Pmm2 residual:
+
+0
+
+Qmm0 residual:
+
+0
+
+Qmm2 residual:
+
+0
+
+P000 residual:
+
+0
+
+P002 residual:
+
+0
+
+P010 residual:
+
+0
+
+P012 residual:
+
+0
+
+hh00 residual:
+
+0
+
+hh02 residual:
+
+0
+
+ii00 residual:
+
+0
+
+ii02 residual:
+
+0
+
+Pmmp11 residual:
+
+0
+
+Qmmp11 residual:
+
+0
+
+P00p11 residual:
+
+0
+
+P01p11 residual:
+
+0
+
+hhp11 residual:
+
+0
+
+iip11 residual:
+
+0
+
+Pmmp21 residual:
+
+0
+
+Qmmp21 residual:
+
+0
+
+P00p21 residual:
+
+0
+
+P01p21 residual:
+
+0
+
+hhp21 residual:
+
+0
+
+iip21 residual:
+
+0
+
+Pmmp31 residual:
+
+0
+
+Qmmp31 residual:
+
+0
+
+P00p31 residual:
+
+0
+
+P01p31 residual:
+
+0
+
+hhp31 residual:
+
+0
+
+iip31 residual:
+
+0
+
+Pmmp41 residual:
+
+0
+
+Qmmp41 residual:
+
+0
+
+P00p41 residual:
+
+0
+
+P01p41 residual:
+
+0
+
+hhp41 residual:
+
+0
+
+iip41 residual:
+
+0
+
+Pmmm11 residual:
+
+0
+
+Qmmm11 residual:
+
+0
+
+P00m11 residual:
+
+0
+
+P01m11 residual:
+
+0
+
+hhm11 residual:
+
+0
+
+iim11 residual:
+
+0
+
+Pmmm21 residual:
+
+0
+
+Qmmm21 residual:
+
+0
+
+P00m21 residual:
+
+0
+
+P01m21 residual:
+
+0
+
+hhm21 residual:
+
+0
+
+iim21 residual:
+
+0
+
+Pmmm31 residual:
+
+0
+
+Qmmm31 residual:
+
+0
+
+P00m31 residual:
+
+0
+
+P01m31 residual:
+
+0
+
+hhm31 residual:
+
+0
+
+iim31 residual:
+
+0
+
+Pmmm41 residual:
+
+0
+
+Qmmm41 residual:
+
+0
+
+P00m41 residual:
+
+0
+
+P01m41 residual:
+
+0
+
+hhmp4 residual:
+
+0
+
+iim41 residual:
+
+0
+
+Rmm0 residual:
+
+0
+
+Rmm2 residual:
+
+0
+
+R000 residual:
+
+0
+
+R002 residual:
+
+0
+
+R010 residual:
+
+0
+
+R012 residual:
+
+0
+
+Rmmp1 residual:
+
+0
+
+R00p1 residual:
+
+0
+
+Rmmp2 residual:
+
+0
+
+Rmmp2 residual:
+
+0
+
+Rmmp3 residual:
+
+0
+
+Rmmp3 residual:
+
+0
+
+Rmmp4 residual:
+
+0
+
+Rmmp4 residual:
+
+0
+
+Rmmm1 residual:
+
+0
+
+R00m1 residual:
+
+0
+
+Rmmm2 residual:
+
+0
+
+R00m2 residual:
+
+0
+
+Rmmm3 residual:
+
+0
+
+R00m3 residual:
+
+0
+
+Rmmm4 residual:
+
+0
+
+R00m3 residual:
+
+0
+
+Smm0 residual:
+
+0
+
+Smm2 residual:
+
+0
+
+Smmp1 residual:
+
+0
+
+Smmp2 residual:
+
+0
+
+Smmp3 residual:
+
+0
+
+Smmp4 residual:
+
+0
+
+Smmm1 residual:
+
+0
+
+Smmm2 residual:
+
+0
+
+Smmm3 residual:
+
+0
+
+Smmm4 residual:
+
+0
+
+amm := 0
+
+bmm := 2*m
+
+cmm := 0
+
+ammp1 := 0
+
+bmmp1 := 0
+
+cmmp1 := 0
+
+ammp2 := 0
+
+bmmp2 := 0
+
+cmmp2 := 0
+
+ammp3 := 0
+
+bmmp3 := 0
+
+cmmp3 := 0
+
+ammm1 := 0
+
+bmmm1 := 0
+
+cmmm1 := 0
+
+ammm2 := 0
+
+bmmm2 := 0
+
+cmmm2 := 0
+
+ammm3 := 0
+
+bmmm3 := 0
+
+cmmm3 := 0
+
+           2  2  2
+s00 := (eps *n *r )/2
+
+a00 := 0
+
+b00 := 1
+
+c00 := 0

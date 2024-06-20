@@ -1,0 +1,1429 @@
+\documentclass[12pt,prb,aps]{revtex4-1}
+\usepackage{amsmath}           		          	
+\usepackage{graphicx,epstopdf}					
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{esint}
+\pdfoutput = 1 
+\newcommand {\bxi}{\mbox{\boldmath$\xi$}}
+\allowdisplaybreaks
+
+\begin{document}
+\title{Calculation of Tearing Mode Stability in an Inverse Aspect-Ratio Expanded Tokamak Plasma Equilibrium}
+\author{Richard Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin, TX 78712}
+
+\maketitle
+
+\section{Introduction} 
+The calculation of tearing mode stability in a high temperature tokamak plasma is most efficiently formulated as  an asymptotic
+matching problem.\cite{fkr} In such a problem, the  plasma is  divided into two regions. In the ``outer region'', which comprises most
+of the plasma, the tearing perturbation is described by the equations of linearized, marginally-stable, ideal magnetohydrodynamics (ideal-MHD).
+However, these equations become singular on so-called ``rational'' magnetic flux-surfaces. In the so-called ``inner region'', which
+consists of a set of narrow layers centered on the various rational surfaces, non-ideal-MHD effects such as plasma inertia, resistivity, and
+viscosity become important. The growth-rate and angular rotation frequency of the reconnected magnetic flux at a given rational
+surface (labelled $k$) are fixed by asymptotically matching the resistive layer
+solution in the associated segment of the inner region, which is characterized by a dimensionless complex quantity ${\mit\Delta}_k$,  to the ideal-MHD solution in the outer region. In a realistic axisymmetric tokamak  plasma equilibrium, tearing
+perturbations with different toroidal mode numbers are independent of one another, whereas perturbations with different poloidal
+mode numbers are coupled together via toroidicity and the shaping of magnetic flux-surfaces.\cite{con0}
+Consequently, for a tearing perturbation with a given toroidal mode number, 
+ the ${\mit\Delta}_k$ values associated with  the various rational surfaces in the plasma are interrelated via a matrix equation.\cite{connor,cht,tokuda,brennan, ham,am1,am3}
+
+In general, the  numerical determination of the elements of the matrix equation that links the various ${\mit\Delta}_k$ values from the ideal-MHD equations 
+in the outer region is a exceptionally challenging task.\cite{nish,pletz,am2,aglas,aglas1}
+One way of greatly reducing the complexity of this task is to employ an inverse aspect-ratio expanded plasma equilibrium.\cite{greene} In such an equilibrium,
+the metric elements of the flux-coordinate system can be expressed analytically in terms of a relatively small number of  flux-surface functions,
+which represents a major simplification.\cite{con0} Another significant advantage of an inverse aspect-ratio expanded equilibrium is that the magnetic perturbation in the plasma can be
+matched to a vacuum solution  expressed as an expansion in toroidal functions.\cite{am1} The alternative approach of using a Green's
+function solution in the vacuum region is much more computationally intensive.\cite{chance} The inverse aspect-ratio expansion approach to determining tearing mode stability in tokamak plasmas 
+was first introduced in Ref.~\onlinecite{connor} in a calculation that allowed for three  poloidal harmonics coupled via toroidicity. The
+inverse aspect-ratio expansion approach was extended in Ref.~\onlinecite{am1} in a calculation that allowed for seven poloidal harmonics coupled via toroidicity, flux-surface elongation, and
+flux-surface triangularity. In this paper, we intend to generalize the inverse aspect-ratio expansion  approach to allow for an arbitrary number of poloidal harmonics coupled
+by flux-surfaces of general shape. Furthermore, unlike Refs.~\onlinecite{connor} and \onlinecite{am1}, we shall not assume that the plasma
+is up-down symmetric. 
+
+\section{Preliminary Analysis}
+\subsection{Normalization}\label{coords}
+All lengths in this paper are normalized to  the major radius of the plasma magnetic axis, $R_0$. All magnetic field-strengths
+are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All current densities are normalized to $B_0/(\mu_0\,R_0)$. All plasma pressures are normalized to $B_0^{\,2}/\mu_0$.
+All toroidal electromagnetic torques are normalized to $B_0^{\,2}\,R_0^{\,3}/\mu_0$. 
+
+\subsection{Axisymmetric Tokamak Plasma Equilibrium}\label{s3}
+Let $R$, $\phi$, $Z$ be right-handed cylindrical coordinates whose Jacobian 
+is
+\begin{equation}
+(\nabla R\times \nabla\phi\cdot\nabla Z)^{-1} = R.
+\end{equation}
+Note that $|\nabla\phi|=1/R$. 
+
+Let $r$, $\theta$, $\phi$ be right-handed flux-coordinates whose
+Jacobian is\,\cite{connor,bussac}
+\begin{equation}\label{jac}
+{\cal J}(r,\theta)\equiv (\nabla r\times \nabla\theta\cdot\nabla\phi)^{-1} \equiv R\left(\frac{\partial R}{\partial\theta}\,\frac{\partial Z}{\partial r} -\frac{\partial R}{\partial r}\,\frac{\partial Z}{\partial \theta}\right)= r\,R^{\,2}.
+\end{equation}
+Note that $r=r(R,Z)$ and $\theta=\theta(R,Z)$. 
+The magnetic axis corresponds to $r=0$. The inboard mid-plane corresponds to $\theta=0$. 
+
+Consider an axisymmetric tokamak equilibrium\,\cite{gs1} whose magnetic field takes the form\,\cite{connor,am1}
+\begin{equation}
+{\bf B}(r,\theta) = f(r)\,\nabla\phi\times \nabla r + g(r)\,\nabla\phi = f\,\nabla(\phi-q\,\theta)\times \nabla r,
+\end{equation}
+where
+\begin{equation}\label{q}
+q(r) = \frac{r\,g}{f}
+\end{equation}
+is the safety-factor (i.e., the inverse of the rotational transform). Note that ${\bf B}\cdot\nabla r=0$, which implies that $r$ is a magnetic flux-surface label.
+We require $g=1$ on the magnetic axis in order to ensure that the normalized toroidal magnetic field-strength at the  axis is unity.  
+
+It is easily demonstrated that
+\begin{align}
+B^{\,r}&={\bf B}\cdot\nabla r= 0,\label{bup1}\\[0.5ex]
+B^{\,\theta} &={\bf B}\cdot\nabla \theta= \frac{f}{r\,R^{\,2}},\label{bup2}\\[0.5ex]
+B^{\,\phi} &={\bf B}\cdot\nabla \phi= \frac{g}{R^{\,2}},\label{bup3}\\[0.5ex]
+B_r &={\cal J}\,\nabla\theta\times\nabla\phi\cdot{\bf B}= -r\,f\,\nabla r\cdot\nabla\theta,\label{bdown1}\\[0.5ex]
+B_\theta &={\cal J}\,\nabla\phi\times\nabla r\cdot{\bf B}= r\,f\,|\nabla r|^2,\\[0.5ex]
+B_\phi &={\cal J}\,\nabla r\times\nabla \theta \cdot{\bf B}= g,\label{bdown3}
+\end{align}
+where use has been made of Sect.~\ref{s2}. 
+
+The Maxwell equation (neglecting the displacement current, because tearing modes are comparatively low-frequency phenomena)
+${\bf J}= \nabla\times{\bf B}$
+yields
+\begin{align}
+{\cal J}\,J^{\,r} &= \frac{\partial B_\phi}{\partial \theta} =0,\label{jup1}\\[0.5ex]
+{\cal J}\,J^{\,\theta} &= -\frac{\partial B_\phi}{\partial r} = - g',\label{jup2}\\[0.5ex]
+{\cal J}\,J^{\,\phi}&= \frac{\partial B_\theta}{\partial r} -\frac{\partial B_r}{\partial\theta}=\frac{\partial}{\partial r}\!\left(r\,f\,|\nabla r|^2\right)+ \frac{\partial}{\partial\theta}\!\left(r\,f\,\nabla r\cdot\nabla\theta\right),\label{jup3}
+\end{align}
+where ${\bf J}$ is the equilibrium current density, $'\equiv d/dr$, and use has been made of  Eqs.~(\ref{bdown1})--(\ref{bdown3}) and (\ref{curl1})--(\ref{curl3}).
+
+Equilibrium force balance requires that
+\begin{equation}\label{e15c}
+ \nabla P={\bf J}\times {\bf B},
+\end{equation}
+where $P(r)$ is the equilibrium plasma pressure. Here, for the sake of simplicity, we have neglected the small centrifugal modifications to force balance due to plasma
+rotation.\cite{flow,flow1}
+It follows that 
+\begin{align}\label{eg1}
+P'&= {\cal J}(J^{\,\theta}\,B^{\,\phi}-J^{\,\phi}\,B^{\,\theta})= -g'\,\frac{g}{R^{\,2}} - \frac{f}{r\,R^{\,2}}\left[\frac{\partial}{\partial r}\!\left(r\,f\,|\nabla r|^2\right)+ \frac{\partial}{\partial\theta}\!\left(r\,f\,\nabla r\cdot\nabla\theta\right)\right].
+%,\\[0.5ex]
+%0&= {\cal J}\,(J^{\,\phi}\,B^{\,r}-J^{\,r}\,B^{\,\phi}) = 0,\\[0.5ex]
+%0&= {\cal J}\,(J^{\,r}\,B^{\,\phi}-J^{\,\theta}\,B^{\,r}) = 0,
+\end{align}
+where use has been made of Eqs.~(\ref{bup1})--(\ref{bup3}),  (\ref{jup1})--(\ref{jup3}), and (\ref{crossdown1})--(\ref{crossdown3}). The
+other two components of Eq.~(\ref{e15c}) are identically zero. 
+
+Equation~(\ref{eg1}) yields the {\em Grad-Shafranov equation},\cite{gs1}
+\begin{equation}\label{gs}
+\frac{f}{r}\,\frac{\partial}{\partial r}\!\left(r\,f\,|\nabla r|^2\right) +\frac{f}{r}\,\frac{\partial}{\partial\theta}\!\left(r\,f\,\nabla r\cdot\nabla\theta\right)+g\,g' + R^{\,2}\,P'=0.
+\end{equation}
+It follows from Eqs.~(\ref{q}), (\ref{jup3}), and (\ref{gs}) that
+\begin{equation}\label{jup3a}
+{\cal J}\,J^{\,\phi} = -q\,g' - \frac{r\,R^{\,2}\,P'}{f}.
+\end{equation}
+It is clear from Eqs.~(\ref{jup2}) and (\ref{jup3a}) that $g'=P'=0$ in the  current-free vacuum region surrounding the plasma.
+We shall also assume that $g'=P'=0$ at the plasma/vacuum interface, so as to ensure that the equilibrium plasma
+current density is zero at the interface. 
+
+\section{Derivation of Outer Region PDEs}
+\subsection{Introduction}
+The outer region partial differential equations (PDEs) were first presented in Ref.~\onlinecite{connor} without an explicit
+derivation. However, the derivation is sufficiently non-obvious that it is worth outlining in this section. 
+
+\subsection{Governing Equations}
+In the outer region, the perturbed plasma equilibrium satisfies the  ideal-MHD equations\,\cite{connor,am1,am3,gs1}
+\begin{align}
+{\bf b} &= \nabla\times (\bxi\times {\bf B}),\label{e21}\\[0.5ex]
+\nabla p &={\bf j}\times {\bf B}  +{\bf J}\times {\bf b},\label{e22}\\[0.5ex]
+{\bf j} &= \nabla\times {\bf b},\label{e23}\\[0.5ex]
+p&= -\bxi\cdot\nabla P,\label{e24}
+\end{align}
+where $\bxi(r,\theta,\phi)$ is the plasma displacement, ${\bf b}(r,\theta,\phi)$ the perturbed magnetic field,
+${\bf j}(r,\theta,\phi)$ the perturbed current density, and $p(r,\theta,\phi)$ the perturbed pressure. 
+Let us assume that all perturbed quantities vary with $\phi$ as $\exp(-{\rm i}\,n\,\phi)$, where the real positive integer $n$ is the
+toroidal mode number of the tearing mode. For example, $p(r,\theta,\phi) = p(r,\theta)\,\exp(-{\rm i}\,n\,\phi)$. 
+
+\subsection{Radial Plasma Displacement}
+Equations~(\ref{crossdown2}) and (\ref{crossdown3}) yield
+\begin{align}
+(\bxi\times {\bf B})_\theta&= {\cal J}\,(\xi^{\,\phi}\,B^{\,r} - \xi^{\,r}\,B^{\,\phi}) = -{\cal J}\,B^{\,\phi}\,\xi^{\,r},\\[0.5ex]
+(\bxi\times {\bf B})_\phi &= {\cal J}\,(\xi^{\,r}\,B^{\,\theta} - \xi^{\,\theta}\,B^{\,r})= {\cal J}\,B^{\,\theta}\,\xi^{\,r},
+\end{align}
+where use has been made of  the fact that $B^{\,r}=J^{\,r}=0$. [See Eqs.~(\ref{bup1}) and (\ref{jup1}).]
+Combining the previous two equations with  Eqs.~(\ref{e21}) and (\ref{curl1}), we obtain
+\begin{align}
+{\cal J}\,b^{\,r} &= \frac{\partial}{\partial\theta}\left({\cal J}\,B^{\,\theta}\,\xi^{\,r}\right)-{\rm i}\,n\,{\cal J}\,B^{\,\phi}\,\xi^{\,r}.
+\end{align}
+Thus, Eqs.~(\ref{jac}), (\ref{q}), (\ref{bup2}), and (\ref{bup3}) give
+\begin{align}\label{e41}
+r\,R^{\,2}\,b^{\,r}& = \left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y,
+\end{align}
+where 
+\begin{align}\label{e42}
+y(r,\theta) &=f\,\xi^{\,r}.
+\end{align}
+
+\subsection{Perturbed Force Balance}
+According to Eq.~(\ref{e24}), 
+\begin{equation}
+p =-P'\,\nabla r\cdot\bxi=- P'\,\xi^{\,r}.
+\end{equation}
+So, the perturbed force balance equation, (\ref{e22}), yields
+\begin{align}
+-\frac{\partial\, (P'\,\xi^{\,r})}{\partial r} &= ({\bf j}\times {\bf B})_r+({\bf J}\times {\bf b})_r,\\[0.5ex]
+-\frac{\partial\,(P'\,\xi^{\,r})}{\partial \theta}&= ({\bf j}\times {\bf B})_\theta+({\bf J}\times {\bf b})_\theta,\\[0.5ex]
+{\rm i}\,n\,P'\,\xi^{\,r} &= ({\bf j}\times {\bf B})_\phi+({\bf J}\times {\bf b})_\phi,
+\end{align}
+giving
+\begin{align}
+-\frac{\partial\, (P'\,\xi^{\,r})}{\partial r} &=r\,R^{\,2}\,(j^{\,\theta}\,B^{\,\phi}-j^{\,\phi}\,B^{\,\theta}) + r\,R^{\,2}\,(J^{\,\theta}\,b^{\,\phi}-J^{\,\phi}\,b^{\,\theta}),\\[0.5ex]
+-\frac{\partial\,(P'\,\xi^{\,r})}{\partial \theta}&=r\,R^{\,2}\,(j^{\,\phi}\,B^{\,r}-j^{\,r}\,B^{\,\phi}) + r\,R^{\,2}\,(J^{\,\phi}\,b^{\,r}-J^{\,r}\,b^{\,\phi}),\\[0.5ex]
+{\rm i}\,n\,P'\,\xi^{\,r} &=r\,R^{\,2}\,(j^{\,r}\,B^{\,\theta}-j^{\,\theta}\,B^{\,r}) + r\,R^{\,2}\,(J^{\,r}\,b^{\,\theta}-J^{\,\theta}\,b^{\,r}),
+\end{align}
+where use has been made of Eqs.~(\ref{jac}) and (\ref{crossdown1})--(\ref{crossdown3}). 
+Thus, according to Eqs.~(\ref{bup1})--(\ref{bup3}), (\ref{jup1}), (\ref{jup2}), and (\ref{jup3a}), 
+\begin{align}
+-\frac{\partial\, (P'\,\xi^{\,r})}{\partial r} &= f\,(q\,j^{\,\theta} -j^{\,\phi}) - g'\,b^{\,\phi} + \left(q\,g'+\frac{r\,R^{\,2}\,P'}{f}\right)b^{\,\theta},\label{e51}\\[0.5ex]
+-\frac{\partial\,(P'\,\xi^{\,r})}{\partial \theta}&=-r\,g\,j^{\,r} - \left(q\,g'+\frac{r\,R^{\,2}\,P'}{f}\right)b^{\,r},\label{e44}\\[0.5ex]
+{\rm i}\,n\,P'\,\xi^{\,r} &= f\,j^{\,r}+g'\,b^{\,r}.\label{e53}
+\end{align}
+It follows from Eqs.~(\ref{e42}), (\ref{e41}), and (\ref{e53}) that 
+\begin{equation}\label{e54}
+r\,j^{\,r} = {\rm i}\,n\,\alpha_p\,y - \frac{\alpha_g}{R^{\,2}}\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y,
+\end{equation}
+where
+\begin{align}
+\alpha_p(r) &= \frac{r\,P'}{f^2},\label{ap}\\[0.5ex]
+\alpha_g (r)&= \frac{g'}{f}.\label{ag}
+\end{align}
+Note that Eq.~(\ref{e44}) is trivially satisfied. Hence, only Eq.~(\ref{e51}) remains to be solved. 
+
+\subsection{Perturbed Plasma Current Density}
+Equation~(\ref{e23}) yields 
+\begin{align}
+r\,R^{\,2}\,j^{\,r} &= \frac{\partial b_\phi}{\partial\theta}+{\rm i}\,n\,b_\theta,\label{e57}\\[0.5ex]
+r\,R^{\,2}\,j^{\,\theta} &=-{\rm i}\,n\,b_r -\frac{\partial b_\phi}{\partial r},\label{e58}\\[0.5ex]
+r\,R^{\,2}\,j^{\,\phi}&= \frac{\partial b_\theta}{\partial r} -\frac{\partial b_r}{\partial \theta},\label{e59}
+\end{align}
+where use has been made of Eqs.~(\ref{jac}) and (\ref{curl1})--(\ref{curl3}). 
+Now, according to Sect.~\ref{s2}, 
+\begin{equation}
+{\bf b} = b_r\,\nabla r + b_\theta\,\nabla\theta+b_\phi\,\nabla\phi,
+\end{equation}
+so
+\begin{align}
+b^{\,r} &= {\bf b}\cdot\nabla r = |\nabla r|^2\,b_r + (\nabla r\cdot\nabla\theta)\,b_\theta,\label{e61}\\[0.5ex]
+b^{\,\theta} &= {\bf b}\cdot\nabla \theta = (\nabla r\cdot\nabla\theta)\,b_r + |\nabla\theta|^2\,b_\theta,\label{e62}\\[0.5ex]
+b^{\,\phi}&={\bf b}\cdot\nabla\phi =\frac{b_\phi}{R^{\,2}}.\label{e63}
+\end{align}
+
+Let us define
+\begin{equation}\label{z}
+x(r,\theta) = b_\phi.
+\end{equation}
+It follows from Eqs.~(\ref{e54}), (\ref{e57}), (\ref{e63}), and (\ref{z}) that
+\begin{align}
+b_\theta &= -\frac{\alpha_g}{{\rm i}\,n}\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y+\alpha_p\,R^{\,2}\,y- \frac{1}{{\rm i}\,n}\,\frac{\partial x}{\partial \theta},\label{e65}\\[0.5ex]
+b^{\,\phi}&=\frac{x}{R^{\,2}}.\label{e66}
+\end{align}
+
+Equations~(\ref{e61}) and (\ref{e62}) can be rearranged to give
+\begin{align}
+b_r &= \left(\frac{1}{|\nabla r|^2}\right)b^{\,r}- \left(\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\right)b_\theta,\label{e69}\\[0.5ex]
+b^{\,\theta} &= \left(\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\right)b^{\,r} +\left[|\nabla\theta|^2 -\frac{(\nabla r\cdot\nabla\theta)^2}{|\nabla r|^2}\right]b_\theta.\label{e70}
+\end{align}
+But, from Eq.~(\ref{jac}), 
+%it follows from Eq.~(\ref{jac}) that
+%\begin{align}
+%|\nabla r\cdot\nabla\theta\times\nabla\phi|^2 &= |\nabla r\times\nabla\theta\cdot\nabla\phi|^2= |\nabla r\times\nabla\theta|^2\,|\nabla\phi|^2\nonumber\\[0.5ex] &=\left[|\nabla r|^2\,|\nabla\theta|^2-(\nabla r \cdot\nabla\theta)^2\right]\frac{1}{R^{\,2}}= \frac{1}{r^2\,R^{\,4}},
+%\end{align}
+%which implies that
+\begin{equation}
+|\nabla r|^2\,|\nabla\theta|^2-(\nabla r \cdot\nabla\theta)^2 = \frac{1}{r^2\,R^{\,2}}.
+\end{equation}
+Thus, Eq.~(\ref{e70}) reduces to 
+\begin{equation}\label{e58x}
+b^{\,\theta} = \left(\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\right)b^{\,r} + \left(\frac{1}{r^2\,R^{\,2}\,|\nabla r|^2}\right) b_\theta.
+\end{equation}
+Making use of Eqs.~(\ref{e41}) and (\ref{e65}), we obtain
+\begin{equation}\label{e74}
+r^2\,R^{\,2}\,b^{\,\theta} = T\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y + U\,y -Q\,\frac{\partial x}{\partial\theta},
+\end{equation}
+where
+\begin{align}
+Q(r,\theta)&= \frac{1}{{\rm i}\,n\,|\nabla r|^2},\label{eq}\\[0.5ex]
+U(r,\theta)&= \frac{\alpha_p\,R^{\,2}}{|\nabla r|^2},\label{eu}\\[0.5ex]
+T(r,\theta)&= \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}-\frac{\alpha_g}{{\rm i}\,n\,|\nabla r|^2}.\label{et}
+\end{align}
+
+Equation~(\ref{e69}) gives
+\begin{equation}\label{e76}
+b_r = A\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y - B\,y + C\,\frac{\partial x}{\partial\theta},
+\end{equation}
+where
+\begin{align}
+A(r,\theta)&= \frac{1}{r\,R^{\,2}\,|\nabla r|^2}+\frac{\alpha_g}{{\rm i}\,n}\,\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2},\\[0.5ex]
+B(r,\theta)&= \alpha_p\,\frac{R^{\,2}\,\nabla r\cdot\nabla\theta}{|\nabla r|^2},\\[0.5ex]
+C(r,\theta)&= \frac{1}{{\rm i}\,n}\,\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2},
+\end{align}
+and use has been made of Eqs.~(\ref{e41}) and (\ref{e65}).
+
+\subsection{First Outer Region PDE}
+According to Eq.~(\ref{e21}), 
+\begin{equation}\label{divb}
+\nabla \cdot\,{\bf b} =0,
+\end{equation}
+which implies that
+\begin{equation}
+r\,\frac{\partial}{\partial r}\!\left[\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y\right]+\frac{\partial (r^2\,R^{\,2}\,b^{\,\theta})}{\partial \theta} - S\,x=0,
+\end{equation}
+where
+\begin{equation}\label{s}
+S(r) = {\rm i}\,n\,r^2,
+\end{equation}
+and use has been made of Eqs.~(\ref{jac}),  (\ref{e41}),  (\ref{e66}), and (\ref{div}).
+Thus, employing Eq.~(\ref{e74}), we obtain the {\em first outer region partial differential equation}\/ (PDE), \cite{connor}
+\begin{equation}\label{efirst}
+r\,\frac{\partial}{\partial r}\!\left[\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y\right]=\frac{\partial}{\partial\theta}\!\left(Q\,\frac{\partial x}{\partial\theta}\right)
++S\,x -\frac{\partial}{\partial\theta}\!\left[T\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y+U\,y\right].
+\end{equation}
+
+\subsection{Second Outer Region PDE}
+According to Eqs.~(\ref{e58}), (\ref{e59}), (\ref{z}), (\ref{e65}), and (\ref{e76}), 
+\begin{align}
+r\,R^{\,2}\,j^{\,\theta} &= -{\rm i}\,n\left[A\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y-B\,y+C\,\frac{\partial x}{\partial\theta}\right]-\frac{\partial x}{\partial r},\\[0.5ex]
+r\,R^{\,2}\,j^{\,\phi} &= \frac{\partial}{\partial r}\!\left[-\frac{\alpha_g}{{\rm i}\,n}\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y+\alpha_p\,R^{\,2}\,y\right]-\frac{1}{{\rm i}\,n}\,\frac{\partial^2 x}{\partial r\,\partial\theta}\nonumber\\[0.5ex]&\phantom{=}-\frac{\partial}{\partial\theta}\!\left[A\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y-B\,y+C\,\frac{\partial x}{\partial\theta}\right].
+\end{align}
+So,
+\begin{align}
+r\,R^{\,2}\,(q\,j^{\,\theta}-j^{\,\phi}) &=\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)\left[A\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y-B\,y+C\,\frac{\partial x}{\partial\theta}\right]\nonumber\\[0.5ex]&\phantom= +\frac{1}{{\rm i}\,n}\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)\frac{\partial x}{\partial r} \nonumber\\[0.5ex]
+&\phantom{=} -\frac{\partial}{\partial r}\!\left[-\frac{\alpha_g}{{\rm i}\,n}\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y+\alpha_p\,R^{\,2}\,y\right].
+\end{align}
+Thus, Eq.~(\ref{e51}) gives
+\begin{align}
+-\frac{r\,R^{\,2}}{f}\frac{\partial}{\partial r}\!\left(\frac{f}{r}\,\alpha_p\,y\right)&=\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)\left[A\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y-B\,y+C\,\frac{\partial x}{\partial\theta}\right]\nonumber\\[0.5ex]&\phantom= +\frac{1}{{\rm i}\,n}\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)\frac{\partial x}{\partial r} \nonumber\\[0.5ex]
+&\phantom{=} -\frac{\partial}{\partial r}\!\left[-\frac{\alpha_g}{{\rm i}\,n}\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y+\alpha_p\,R^{\,2}\,y\right]-r\,\alpha_g\,x\nonumber\\[0.5ex]
+&\phantom{=} +\frac{1}{r}\left(q\,\alpha_g + R^{\,2}\,\alpha_p\right) \left[T\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y + U\,y -Q\,\frac{\partial x}{\partial\theta}\right],
+\end{align}
+where use has been made of Eqs.~(\ref{e42}), (\ref{ap}), (\ref{ag}), (\ref{e66}),  (\ref{e74}). The
+previous equation reduces to
+\begin{align}
+-{\rm i}\,n\,\alpha_p\,\alpha_f\,R^{\,2}\,y&={\rm i}\,n\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)\left[r\,A\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y-r\,B\,y+r\,C\,\frac{\partial x}{\partial\theta}\right]\nonumber\\[0.5ex]&\phantom= +\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)r\,\frac{\partial x}{\partial r}  +r\,\alpha_g'\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y \nonumber\\[0.5ex]
+&\phantom{=}+ \alpha_g\,r\,\frac{\partial}{\partial r}\!\left[\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y\right]
+-{\rm i}\,n\,r\,\frac{\partial R^{\,2}}{\partial r}\,\alpha_p\,y-\alpha_g\,S\,x\nonumber\\[0.5ex]
+&\phantom{=} +{\rm i}\,n\left(q\,\alpha_g + R^{\,2}\,\alpha_p\right) \left[T\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y + U\,y -Q\,\frac{\partial x}{\partial\theta}\right],
+\end{align}
+where
+\begin{equation}\label{af}
+\alpha_f(r) = \frac{r^2}{f}\,\frac{d}{dr}\!\left(\frac{f}{r}\right),
+\end{equation}
+and use has been made of Eq.~(\ref{s}). 
+Employing Eq.~(\ref{efirst}), we obtain
+\begin{align}
+-{\rm i}\,n\,\alpha_p\,\alpha_f\,R^{\,2}\,y&={\rm i}\,n\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)\left[r\,A\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y-r\,B\,y+r\,C\,\frac{\partial x}{\partial\theta}\right]\nonumber\\[0.5ex]&\phantom= +\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)r\,\frac{\partial x}{\partial r}  +r\,\alpha_g'\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y \nonumber\\[0.5ex]
+&\phantom{=}+ \alpha_g\,\frac{\partial}{\partial\theta}\!\left(Q\,\frac{\partial x}{\partial\theta}\right)
++\alpha_g\,S\,x -\alpha_g\,\frac{\partial}{\partial\theta}\!\left[T\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y+U\,y\right]\nonumber\\[0.5ex]&\phantom{=}
+-{\rm i}\,n\,r\,\frac{\partial R^{\,2}}{\partial r}\,\alpha_p\,y-\alpha_g\,S\,x\nonumber\\[0.5ex]
+&\phantom{=} +{\rm i}\,n\left(q\,\alpha_g + R^{\,2}\,\alpha_p\right) \left[T\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y + U\,y -Q\,\frac{\partial x}{\partial\theta}\right],
+\end{align}
+which yields
+\begin{align}
+-{\rm i}\,n\,\alpha_p\,\alpha_f\,R^{\,2}\,y&={\rm i}\,n\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)\left[r\,A\left(\frac{\partial}{\partial \theta}-{\rm i}\,n\,q\right)y-r\,B\,y+r\,C\,\frac{\partial x}{\partial\theta}\right]\nonumber\\[0.5ex]&\phantom= +\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)r\,\frac{\partial x}{\partial r}  +r\,\alpha_g'\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y \nonumber\\[0.5ex]
+&\phantom{=}+ \alpha_g\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)\left[Q\,\frac{\partial x}{\partial\theta}
+-T\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y-U\,y\right]\nonumber\\[0.5ex]&\phantom{=}
+-{\rm i}\,n\,r\,\frac{\partial R^{\,2}}{\partial r}\,\alpha_p\,y+{\rm i}\,n\,R^{\,2}\,\alpha_p \left[T\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y + U\,y -Q\,\frac{\partial x}{\partial\theta}\right],
+\end{align}
+which reduces to the {\em second outer region PDE}, \cite{connor}
+\begin{align}\label{esecond}
+\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)r\,\frac{\partial x}{\partial r} &= -\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)T^\ast\,\frac{\partial x}{\partial \theta} + U\,\frac{\partial x}{\partial\theta}+X\,y\nonumber\\[0.5ex]&\phantom{=} -\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)V\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y + W\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y,
+\end{align}
+where
+\begin{align}
+V(r,\theta)&= \frac{1}{|\nabla r|^2}\left(\frac{{\rm i}\,n}{R^{\,2}}+\frac{\alpha_g^{\,2}}{{\rm i}\,n}\right),\label{ev}\\[0.5ex]
+W(r,\theta)&= \frac{2\,\alpha_g\,\alpha_p\,R^{\,2}}{|\nabla r|^2} -r\,\alpha_g',\label{ew}\\[0.5ex]
+X(r,\theta)&= {\rm i}\,n\,\alpha_p\left[\frac{\partial}{\partial \theta}(T^\ast\,R^{\,2})+r\,\frac{\partial R^{\,2}}{\partial r}-\alpha_f\,R^{\,2}-U\,R^{\,2}\right],\label{ex}
+\end{align}
+and $\phantom{!}^\ast$ denotes a complex conjugate. 
+
+\section{Outer Region ODEs}\label{sode}
+\subsection{Primitive Outer Region ODEs}\label{ode1}
+Let
+\begin{equation}\label{e79o}
+x(r,\theta) = n\,z(r,\theta),
+\end{equation}
+and
+let us express $y(r,\theta)$ and $z(r,\theta)$ as  Fourier series in the poloidal angle, $\theta$:
+\begin{align}
+y(r,\theta)&= \sum_{m}y_m(r)\,\exp(\,{\rm i}\,m\,\theta),\\[0.5ex]
+z(r,\theta) &= \sum_{m}z_m(r)\,\exp(\,{\rm i}\,m\,\theta),\label{e97}
+\end{align}
+Here, the  (not necessarily positive) integers $m$ are the  poloidal mode numbers of the coupled Fourier harmonics included in the calculation. 
+The outer region PDEs, (\ref{efirst}) and (\ref{esecond}),  reduce to the {\em primitive outer region ordinary differential equations}\/ (ODEs), \cite{connor,am1,am3}
+\begin{align}\label{e41x}
+r\,\frac{d}{dr}\left[(m-n\,q)\,y_m\right]&= \sum_{m'}\left(A_m^{\,m'}\,z_{m'}+B_m^{\,m'}\,y_{m'}\right),\\[0.5ex]
+(m-n\,q)\,r\,\frac{dz_m}{dr} &= \sum_{m'}\left(C_{m}^{\,m'}\,z_{m'}+D_m^{\,m'}\,y_{m'}\right),\label{e42x}
+\end{align}
+where
+\begin{align}
+n^{-1}\,A_m^{\,m'}(r) &= \frac{1}{2\pi\,{\rm i}}\oint{\rm e}^{-{\rm i}\,m\,\theta}\left(\frac{\partial}{\partial\theta}\,Q\,\frac{\partial}{\partial\theta}+S\right){\rm e}^{\,{\rm i}\,m'\,\theta}\,d\theta,\\[0.5ex]
+B_m^{\,m'}(r) &= \frac{1}{2\pi\,{\rm i}}\oint{\rm e}^{-{\rm i}\,m\,\theta}\left[-\frac{\partial}{\partial\theta}\,T\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)-\frac{\partial U}{\partial\theta}\right]{\rm e}^{\,{\rm i}\,m'\,\theta}\,d\theta,\\[0.5ex]
+C_m^{\,m'}(r) &= \frac{1}{2\pi\,{\rm i}}\oint{\rm e}^{-{\rm i}\,m\,\theta}\left[-\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)T^\ast\,\frac{\partial}{\partial\theta}+U\,\frac{\partial}{\partial\theta}\right]{\rm e}^{\,{\rm i}\,m'\,\theta}\,d\theta,\\[0.5ex]
+n\,D_m^{\,m'}(r)&= \frac{1}{2\pi\,{\rm i}}\oint{\rm e}^{-{\rm i}\,m\,\theta}\left[-\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)V\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)
+\right. \nonumber\\[0.5ex]&\phantom{=}\left.+W\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)+ X\right]{\rm e}^{\,{\rm i}\,m'\,\theta}\,d\theta.
+\end{align}
+Hence, it follows from Eqs.~(\ref{eq})--(\ref{et}), (\ref{s}), and (\ref{ev})--(\ref{ex}) that\,\cite{am3}
+\begin{align}\label{e104}
+A_m^{\,m'}&= m\,m'\,c_m^{\,m'} + n^2\,r^2\,\delta_m^{\,m'}\\[0.5ex]
+B_m^{\,m'}&= m\,(m'-n\,q)\left(-f_m^{\,m'}+n^{-1}\,\alpha_g\,c_m^{\,m'}\right) -m\,\alpha_p\,d_m^{\,m'},\\[0.5ex]
+C_m^{\,m'}&= -(m-n\,q)\,m'\left(f_m^{\,m'}+n^{-1}\,\alpha_g\,c_m^{\,m'}\right)+m'\,\alpha_p\,d_m^{\,m'},\\[0.5ex]
+D_m^{\,m'}&= (m-n\,q)\,(m'-n\,q)\left(b_m^{\,m'}-n^{-2}\,\alpha_g^{\,2}\,c_m^{\,m'}\right) - (m-n\,q)\,n^{-1}\,r\,\alpha_g'\,\delta_m^{\,m'}\label{e107}\\[0.5ex]
+&\phantom{=} + 
+\alpha_p\left[(m-m')\,g_m^{\,m'}+n^{-1}\,\alpha_g\,(m+m'-2\,n\,q)\,d_m^{\,m'} + r\,\frac{d a_m^{\,m'}}{dr}-\alpha_f\,a_m^{\,m'}
+-\alpha_p\,e_m^{\,m'}\right],\nonumber
+\end{align}
+where
+\begin{align}\label{e108}
+a_m^{\,m'}(r) &= \oint R^{\,2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
+b_m^{\,m'}(r) &= \oint |\nabla r|^{-2}\,R^{\,-2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
+c_m^{\,m'}(r) &= \oint |\nabla r|^{-2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
+d_m^{\,m'}(r) &= \oint |\nabla r|^{-2}\,R^{\,2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
+e_m^{\,m'}(r) &= \oint |\nabla r|^{-2}\,R^{\,4}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
+f_m^{\,m'}(r) &= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\label{fdef}\\[0.5ex]
+g_m^{\,m'}(r) &= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,R^{\,2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi}.\label{e114}
+\end{align}
+Here, we have extended the analysis of Ref.~\onlinecite{am3} to take into account the fact that the $A_m^{\,m'}$, $B_m^{\,m'}$, $a_m^{\,m'}$, $b_m^{\,m'}$, et cetera,
+are complex quantities in a realistic non-up-down-symmetric plasma equilibrium. 
+
+\subsection{Outer Region ODEs}\label{ode2}
+Let 
+\begin{align}
+y_m(r) &= \frac{\psi_m(r)}{m-n\,q},\label{e115}\\[0.5ex]
+z_m(r) &= \frac{Z_m(r)+k_j\,\psi_m(r)}{m-n\,q},\label{Zdef}
+\end{align}
+where
+\begin{equation}\label{e117}
+k_m(r) = -{\rm Re}\left(\frac{B_m^{\,m}}{A_m^{\,m}}\right) = -\left[\frac{m\,(m-n\,q)\,
+n^{-1}\,\alpha_g\,c_m^{\,m} - m\,\alpha_p\,d_m^{\,m}}{m^2\,c_m^{\,m}+n^2\,r^2}\right].
+\end{equation}
+Here, we have made use of the fact that $f_m^{\,m}$ is imaginary. [See Eq.~(\ref{fdef}).] 
+It follows from Eq.~(\ref{e41}) that
+\begin{equation}\label{psidef}
+b^{\,r}(r,\theta)= {\rm i}\sum_{m}\frac{\psi_m(r)}{r\,R^{\,2}}\,\exp(\,{\rm i}\,m\,\theta). 
+\end{equation}
+Furthermore, Eqs.~(\ref{e41x}) and (\ref{e42x}) transform to give the  {\em outer region ODEs},\cite{am1,am3}
+\begin{align}\label{e61x}
+r\,\frac{d\psi_m}{dr} &=\sum_{m'}\frac{L_m^{\,m'}\,Z_{m'}+M_m^{\,m'}\,\psi_{m'}}{m'-n\,q},\\[0.5ex]
+(m-n\,q)\,r\,\frac{d}{dr}\!\left(\frac{Z_m}{m-n\,q}\right)&=\sum_{m'}\frac{N_m^{\,m'}\,Z_{m'}+P_m^{\,m'}\,\psi_{m'}}{m'-n\,q},\label{e62x}
+\end{align}
+where
+\begin{align}\label{e121}
+L_m^{\,m'}(r) &=A_m^{\,m'},\\[0.5ex]
+M_m^{\,m'}(r)& = B_m^{\,m'}+k_{m'}\,L_m^{\,m'},\\[0.5ex]
+N_m^{\,m'}(r)&= C_m^{\,m'}-k_m\,L_m^{\,m'},\\[0.5ex]
+P_m^{\,m'}(r) &=D_m^{\,m'}+k_{m'}\,C_m^{\,m'}  -k_m\,M_m^{\,m'}-k_m\,n\,q\,s\,\delta_m^{\,m'} - (m-n\,q)\,r\,\frac{dk_{m}}{dr}\,\delta_m^{\,m'},\label{e124}
+\end{align}
+with 
+\begin{equation}
+s(r)=\frac{r\,q'}{q}.
+\end{equation}
+Note that
+\begin{equation}
+M_m^{\,m}=N_m^{\,m} = - m\,(m-n\,q)\,f_m^{\,m}.
+\end{equation}
+
+\subsection{Symmetry Properties}
+Equations~(\ref{e108})--(\ref{e114}) imply that
+$a_{m'}^{\,m}= a_m^{\,m'\ast}$,
+$b_{m'}^{\,m}= b_m^{\,m'\ast}$, 
+$c_{m'}^{\,m}= c_m^{\,m'\ast}$,
+$d_{m'}^{\,m}= d_m^{\,m'\ast}$,
+$e_{m'}^{\,m}= e_m^{\,m'\ast}$,
+$f_{m'}^{\,m}= -f_m^{\,m'\ast}$,
+$g_{m'}^{\,m}= -g_m^{\,m'\ast}$,
+for all $m$, $m'$.
+ Hence, Eqs.~(\ref{e104})--(\ref{e107}), Eqs.~(\ref{e117}), and (\ref{e121})--(\ref{e124}) give
+\begin{align}
+L_{m'}^{\,m}&= L_m^{\,m'\ast},\label{e137}\\[0.5ex]
+M_{m'}^{\,m}&=-N_m^{\,m'\ast},\\[0.5ex]
+N_{m'}^{\,m}&=-M_m^{\,m'\ast},\label{e139}\\[0.5ex]
+P_{m'}^{\,m}&= P_m^{\,m'\ast}.\label{e140}
+\end{align}
+
+\subsection{Toroidal Electromagnetic Torque}
+The volume integrated toroidal electromagnetic torque acting between the magnetic axis and a magnetic flux-surface whose label is $r$ is given by
+\begin{align}
+T_\phi(r) &=\int_0^r\oint\oint R^{\,2}\,\nabla\phi\cdot({\bf J}+{\bf j})\times ({\bf B}\times {\bf b})\,{\cal J}\,d\tilde{r}\,d\theta\,d\phi\nonumber\\[0.5ex]
+&=
+\int_0^r\oint\oint\,  ({\bf j}\times {\bf b})_\phi\,{\cal J}\,d\tilde{r}\,d\theta\,d\phi
+\end{align}
+Here, use has been made of Eq.~(\ref{e15c}), as well as the fact that $P=P(r)$. We have also taken into account that ${\bf b}$ and ${\bf j}$ vary with $\phi$ as
+$\exp(-{\rm i}\,n\,\phi)$, whereas ${\bf B}$, ${\bf J}$, ${\cal J}$, and $|\nabla\phi|$ are independent of $\phi$. It is clear that the zeroth-order (in perturbed quantities) contribution
+to $T_\phi$ is identically zero, whereas the first-order contributions average to zero, leaving only second-order (i.e., nonlinear in perturbed quantities) contributions. 
+Making use of Sect.~\ref{s2}, as well as Eqs.~(\ref{jac}), (\ref{e23}), (\ref{e69}), (\ref{e58x}), and (\ref{divb}), we deduce that
+\begin{align}
+{\cal J}\,({\bf j}\times {\bf b})_\phi&=\frac{\partial}{\partial r}\!\left({\cal J}\,b_\phi\,b^{\,r}\right)+\frac{\partial}{\partial\theta}\!\left({\cal J}\,b_\phi\,b^{\,\theta}\right)+\frac{\partial}{\partial \phi}\!\left({\cal J}\,b_\phi\,b^{\,\phi}\right)\nonumber\\[0.5ex]
+&\phantom{=}-\frac{1}{2}\,\frac{\partial}{\partial\phi}\!\left[{\cal J}\left(b_r\,b^{\,r} + b_\theta\,b^{\,\theta}+b_\phi\,b^{\,\phi}\right)\right].
+\end{align}
+Hence, we obtain 
+\begin{equation}\label{torque}
+T_\phi(r)=\oint\oint {\cal J}\,b_\phi\,b^{\,r}\,d\theta\,d\phi=  r\oint\oint R^{\,2}\,b_\phi\,b^{\,r}\,d\theta\,d\phi,
+\end{equation}
+where the integral on the right-hand side is evaluated on the magnetic flux-surface whose label is $r$. We can reinterpret the
+previous expression as specifying the net outward flux of toroidal electromagnetic angular momentum across the magnetic flux-surface whose label is $r$. 
+Finally, making use of Eqs.~(\ref{z}), (\ref{e79o}), (\ref{e97}), and (\ref{Zdef})--(\ref{psidef}), the previous expression reduces to\,\cite{am1}
+\begin{align}\label{etorque}
+T_\phi(r) &= {\rm i}\,\pi^2\,n\sum_{m}\frac{Z_m^{\,\ast}\,\psi_m-\psi_m^{\,\ast}\,Z_m}{m-n\,q}.
+%\nonumber\\[0.5ex]
+%&=n\,\pi^2\,{\rm i}\sum_{j=1,J}(\hat{Z}_j^{\,\ast}\,\psi_j-\psi_j^{\,\ast}\,\hat{Z}_j)=n\,\pi^2\,{\rm i}\,(\underline{\hat{Z}}^\dag\,\underline{\psi}-\underline{\psi}^\dag\,\underline{\hat{Z}}).
+\end{align}
+ 
+ It follows from Eqs.~(\ref{e61x}), (\ref{e62x}) and (\ref{e137})--(\ref{e140}) that
+\begin{equation}\label{e141c}
+r\,\frac{d}{dr}\!\left(\sum_{m} \frac{Z_m^{\,\ast}\,\psi_m-\psi_m^{\,\ast}\,Z_m}{m-n\,q}\right)= 0.
+\end{equation}
+Hence, we deduce that\,\cite{am1}
+\begin{equation}\label{etcons}
+\frac{dT_\phi}{dr}=0
+\end{equation}
+in any region of the plasma that satisfies the outer region ODEs. Thus, the volume integrated toroidal electromagnetic torque is
+constant between rational magnetic flux-surfaces. As will become apparent in Sect.~\ref{sa7}, the integrated torque can have discontinuous jumps across rational flux-surfaces. It follows that
+net electromagnetic torques can only develop in the plasma in the immediate vicinity of rational magnetic flux-surfaces, where the ideal-MHD equations  become singular. \cite{rfa}
+
+\section{Behavior in Vicinity of Rational Surface}\label{snus}
+\subsection{Introduction}
+The analysis of this section is a generalization of the analysis of Ref.~\onlinecite{am3} that takes into
+account the fact that the $L_m^{\,m'}$, $M_m^{\,m'}$, et cetera, are complex quantities in a realistic non-up-down-symmetric tokamak
+plasma equilibrium.
+
+Let there be $K$ rational magnetic flux-surfaces in the plasma. Suppose that the $k$th surface lies at $r=r_k$, and possesses the resonant
+poloidal mode number $m_k$, where $q(r_k)=m_k/n$.   
+
+\subsection{General Case}\label{sgen}
+Consider the solution of the outer region ODEs, (\ref{e61x}) and (\ref{e62x}), in the
+vicinity of the $k$th rational surface. Let  $x=r-r_k$.  The most general small-$|x|$ solution of the ODEs
+can be shown to take the form\,\cite{am1,am3}
+\begin{align}
+\psi_{m_k}(r_k+x)&=A_{L\,k}^\pm \,|x|^{\nu_{L\,k}}\,(1+\lambda_{L}\,x+\cdots) + A_{S\,k}^{\pm}\,{\rm sgn}(x)\,|x|^{\nu_{S\,k}}\,(1+\cdots) \nonumber\\[0.5ex]
+& \phantom{=}+ A_{C}\,x\,(1+\cdots),\label{ex1}\\[0.5ex]
+Z_{m_k}(r_k+x)&= A_{L\,k}^\pm\,|x|^{\nu_{L\,k}}(b_{L}  + \gamma_{L}\,x+\cdots) + A_{S\,k}^{\pm}\,{\rm sgn}(x)\,|x|^{\nu_{S\,k}}\,(b_{S}+\cdots)\nonumber\\[0.5ex]
+& \phantom{=}+ B_{C}\,x\,(1+\cdots),\label{ex2}
+\end{align}
+and 
+\begin{align}
+\psi_{m_k+j}(r_k+x)&=A_{L\,k}^\pm\,|x|^{\nu_{L\,k}}\,(a_j+c_j\,x+\cdots)  
++A_{S\,k}^\pm\,{\rm sgn}(x)\,|x|^{\nu_{S\,k}}\,(\tilde{a}_{j}+\cdots)\nonumber\\[0.5ex]
+&\phantom{=}+ (\bar{\psi}_{m_k+j}+\bar{\psi}_{m_j+k}'\,x+\cdots),\\[0.5ex]
+Z_{m_k+j}(r_k+x)&= A_{L\,k}^\pm\,|x|^{\nu_{L\,k}}\,(b_j+d_j\,x+\cdots) +A_{S\,k}^\pm\,{\rm sgn}(x)\,|x|^{\nu_{S\,k}}\,(\tilde{b}_{j}+\cdots)\nonumber\\[0.5ex]
+&\phantom{=}+(\bar{Z}_{m_k+j}\,+\bar{Z}_{m_k+j}'\,x+\cdots).\label{ex4}
+\end{align}
+The superscripts $\phantom{!}^+$ and $\phantom{!}^-$ correspond  to $x>0$ and $x<0$, respectively. Here, $A_{L\,k}$ is known as the coefficient of
+the large solution, whereas $A_{S\,k}$ is termed the coefficient of the small solution. \cite{am1,am3,ggj}
+Moreover, 
+\begin{align}
+\nu_{L\,k}&= \frac{1}{2}-\sqrt{-D_{I\,k}},\label{nul}\\[0.5ex]
+\nu_{S\,k} &=  \frac{1}{2}+\sqrt{-D_{I\,k}},\label{nus}\\[0.5ex]
+D_{I\,k} &= -L_0\,P_0-\frac{1}{4},\\[0.5ex]
+L_0 &=-\left(\frac{L_{m_k}^{\,m_k}}{m_k\,s}\right)_{r_k},\label{lkk}\\[0.5ex]
+P_0 &= -\left(\frac{P_{m_k}^{\,m_k}}{m_k\,s}\right)_{r_k}.\label{pkk}
+\end{align}
+Note that, ordinarily, $\nu_{L\,k}$, $\nu_{S\,k}$, $D_{I\,k}$, $L_0$ and $P_0$ are all real quantities. 
+Furthermore, 
+\begin{align}
+b_{L} &= \frac{\nu_{L\,k}}{L_0},\label{ebl}\\[0.5ex]
+b_{S} &= \frac{\nu_{S\,k}}{L_0},\label{ebs}\\[0.5ex]
+A_{C} &= - \frac{1}{r_k\,P_0}\sum_{j\neq 0}\frac{1}{j}\left(N_{m_k}^{\,m_k+j}\,\bar{Z}_{m_k+j}+ P_{m_k}^{\,m_k+j}\,\bar{\psi}_{m_k+j}\right)_{r_k},\\[0.5ex]
+B_{C} &= - \frac{1}{r_k\,L_0}\sum_{j\neq 0}\frac{1}{j}\left(L_{m_k}^{\,m_k+j}\,\bar{Z}_{m_k+j}+ M_{m_k}^{\,m_k+j}\,\bar{\psi}_{m_k+j}\right)_{r_k}+\frac{A_{C}}{L_0},\\[0.5ex]
+\lambda_{L} &= \frac{1}{2\,r_k}\left[\frac{P_1\,L_0}{\nu_{L\,k}} + T_1 + \nu_{L\,k}\left(\frac{L_1}{L_0}-2\right)+2\,M_1\right]_{r_k}\nonumber\\[0.5ex]&
+\phantom{=}-\frac{1}{2\,(m_k\,s)_{r_k}}\,\frac{1}{r_k\,\nu_{L\,k}}\sum_{j\neq0}\frac{1}{j}\left[L_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+P_{m_k}^{\,m_k+j}\,L_{m_k+j}^{\,m_k} +
+M_{m_k}^{\,m_k+j}\,M_{m_k+j}^{\,m_k}+N_{m_k}^{\,m_k+j}\,N_{m_k+j}^{\,m_k}\phantom{\frac{a}{b_L}}\right.\nonumber\\[0.5ex]&
+\phantom{=}\left. + b_{L}\,(L_{m_k}^{\,{m_k}+j}\,N_{m_k+j}^{\,m_k}+M_{m_k}^{\,m_k+j}\,L_{m_k+j}^{\,m_k})+\frac{1}{b_{L}}\,(N_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+ P_{m_k}^{\,m_k+j}\,M_{m_k+j}^{\,m_k})\right]_{r_k},\\[0.5ex]
+\gamma_{L} &=\frac{1}{2\,r_k}\left[(1+\nu_{L\,k})\left(\frac{P_1}{\nu_{L\,k}}+\frac{T_1}{L_0}-\frac{\nu_{L\,k}}{L_0}\right)+
+P_0\left(\frac{L_1}{L_0}-1\right)+2\,b_{L}\,M_1\right]_{r_k}\nonumber\\[0.5ex]
+&\phantom{=}-\frac{1}{2\,(m_k\,s)_{r_k}}\,\frac{1}{r_k\,\nu_{L\,k}\,L_0}\sum_{j\neq 0}\frac{1}{j}\left[(\nu_{L\,k}+1)\,(P_{m_k}^{\,m_k+j}\,L_{m_k+j}^{\,m_k}+N_{m_k}^{\,m_k+j}\,N_{m_k+j}^{\,m_k})\phantom{\frac{a}{b_L}}\right.\nonumber\\[0.5ex]
+&\phantom{=} +(\nu_{L\,k}-1)\,(L_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+M_{m_k}^{\,m_k+j}\,M_{m_k+j}^{\,m_k})+b_{L}\,(\nu_{L\,k}-1)\,(L_{m_k}^{\,m_k+j}\,N_{m_k+j}^{\,m_k}+M_{m_k}^{\,m_k+j}\,L_{m_k+j}^{\,m_k}) \nonumber\\[0.5ex]
+&\phantom{=} \left. + \frac{1}{b_{L}}\left(\nu_{L\,k}+1)\,(N_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+P_{m_k}^{\,m_k+j}\,M_{m_k+j}^{\,m_k}\right)\right]_{r_k},\\[0.5ex]
+a_j&=-\frac{1}{(m_k\,s)_{r_k}}\left(\frac{L^{\,m_k}_{m_k+j}}{L_0}+\frac{M^{\,m_k}_{m_k+j}}{\nu_{L\,k}}\right)_{r_k},\label{e135}\\[0.5ex]
+b_j&=- \frac{1}{(m_k\,s)_{r_k}}\left(\frac{P^{\,m_k}_{m_k+j}}{\nu_{L\,k}}+\frac{N^{\,m_k}_{m_k+j}}{L_0}\right)_{r_k},\\[0.5ex]
+\tilde{a}_{j}&= -\frac{1}{(m_k\,s)_{r_k}}\left(\frac{L^{\,m_k}_{m_k+j}}{L_0}+\frac{M^{\,m_k}_{m_k+j}}{\nu_{S\,k}}\right)_{r_k},\\[0.5ex]
+\tilde{b}_{j}&=- \frac{1}{(m_k\,s)_{r_k}}\left(\frac{P^{\,m_k}_{m_k+j}}{\nu_{S\,k}}+\frac{N^{\,m_k}_{m_k+j}}{L_0}\right)_{r_k},\label{e138}\\[0.5ex]
+c_j&= \frac{1}{(1+\nu_{L\,k})\,r_k}\left[-\nu_{L\,k}\,a_j+L_{j\,1}\,b_{L}+M_{j\,1}\right.\nonumber\\[0.5ex]
+&\phantom{=}-
+\frac{r_k}{m_k\,s}\left(L_{m_k+j}^{\,m_k}\,\gamma_L+M_{m_k+j}^{\,m_k}\,\lambda_L\right) +\left.\sum_{j'\neq 0} \frac{1}{j'}\left(L_{m_k+j}^{\,m_k+j'}\,b_{j'}+ M_{m_k+j}^{\,m_k+j'}\,a_{j'}\right)\right]_{r_k},\\[0.5ex]
+d_j&= \frac{1}{(1+\nu_{L\,k})\,r_k}\left[-\left(\nu_{L\,k}+\frac{m_k\,s}{j}\right)b_j+N_{j\,1}\,b_{L\,k}+P_{j\,1}\right.\nonumber\\[0.5ex]
+&\phantom{=}-
+\frac{r_k}{m_k\,s}\left(N_{m_k+j}^{\,m_k}\,\gamma_L+P_{m_k+j}^{\,m_k}\,\lambda_L\right) +\left.\sum_{j'\neq 0} \frac{1}{j'}\left(N_{m_k+j}^{\,m_k+j'}\,b_{j'}+ P_{m_k+j}^{\,m_k+j'}\,a_{j'}\right)\right]_{r_k},\\[0.5ex]
+\bar{\psi}_{m_k+j}' &= \frac{1}{r_k}\left[-\frac{r_k}{m_k\,s}\left(L_{m_k+j}^{\,m_k}\,B_C+ M_{m_k+j}^{m_k}\,A_C\right)\right.\nonumber\\[0.5ex]&\phantom{=}\left.
++ \sum_{j'\neq 0} \frac{1}{j'}\left(L_{m+k+j}^{\,m_k+j'}\,\bar{Z}_{m_k+j'} +M_{m+k+j}^{\,m_k+j'}\,\bar{\psi}_{m_k+j'}\right)\right]_{r_k},\\[0.5ex]
+\bar{Z}_{m_k+j}' &= \frac{1}{r_k}\left[-\frac{m_k\,s}{j}\,\bar{Z}_{m_k+j}-\frac{r_k}{m_k\,s}\left(N_{m_k+j}^{\,m_k}\,B_C+ P_{m_k+j}^{m_k}\,A_C\right)\right.\nonumber\\[0.5ex]&\phantom{=}\left.+ 
+\sum_{j'\neq 0} \frac{1}{j'}\left(N_{m+k+j}^{\,m_k+j'}\,\bar{Z}_{m_k+j'} +P_{m+k+j}^{\,m_k+j'}\,\bar{\psi}_{m_k+j'}\right)\right]_{r_k},
+\end{align}
+and
+\begin{align}
+L_1&= \lim_{x\rightarrow 0}\left(\frac{L_{m_k}^{\,m_k}}{m_k-n\,q}-\frac{r_k\,L_0}{x}\right),\\[0.5ex]
+P_1&=  \lim_{x\rightarrow 0}\left(\frac{P_{m_k}^{\,m_k}}{m_k-n\,q}-\frac{r_k\,P_0}{x}\right),\\[0.5ex]
+T_1 &= \lim_{x\rightarrow 0}\left(\frac{-n\,q\,s}{m_k-n\,q}-\frac{r_k}{x}\right),\\[0.5ex]
+M_1 &= \lim_{x\rightarrow 0}\left(\frac{M_{m_k}^{\,m_k}}{m_k-n\,q}\right),\\[0.5ex]
+L_{j\,1}&=\lim_{x\rightarrow 0}\left(\frac{L_{m_k+j}^{\,m_k}}{m_k-n\,q}+\frac{r_k}{m_k\,s}\,\frac{L_{m_k+j}^{\,m_k}}{x}\right),\\[0.5ex]
+M_{j\,1}&=\lim_{x\rightarrow 0}\left(\frac{M_{m_k+j}^{\,m_k}}{m_k-n\,q}+\frac{r_k}{m_k\,s}\,\frac{M_{m_k+j}^{\,m_k}}{x}\right),\\[0.5ex]
+N_{j\,1}&=\lim_{x\rightarrow 0}\left(\frac{N_{m_k+j}^{\,m_k}}{m_k-n\,q}+\frac{r_k}{m_k\,s}\,\frac{N_{m_k+j}^{\,m_k}}{x}\right),\\[0.5ex]
+P_{j\,1}&=\lim_{x\rightarrow 0}\left(\frac{P_{m_k+j}^{\,m_k}}{m_k-n\,q}+\frac{r_k}{m_k\,s}\,\frac{P_{m_k+j}^{\,m_k}}{x}\right).
+\end{align}
+
+The coefficients of the large and the small solutions at the $k$th rational surface are evaluated as follows:
+\begin{align}
+\bar{\psi}_{m_k+j} &= \psi_{m_k+j}(r_k+\delta)- (a_j+\delta\,c_j)\,A_{L\,k}\,|\delta|^{\,\nu_{L\,k}}\nonumber\\[0.5ex]
+\phantom{=}&-\tilde{a}_j\,{\rm sgn}(\delta)\,|\delta|^{\nu_{S\,k}}\,A_{S\,k}-\bar{\psi}'_{m_k+j}\,\delta+{\cal O}(\delta^2),\\[0.5ex]
+\bar{Z}_{m_k+j}&= Z_{m_k+j}(r_k+\delta)- (b_j+\delta\,d_j)\,A_{L\,k}\,|\delta|^{\,\nu_{L\,k}}\nonumber\\[0.5ex]
+\phantom{=}&-\tilde{b}_j\,{\rm sgn}(\delta)\,|\delta|^{\nu_{S\,k}}\,A_{S\,k}-\bar{Z}'_{m_k+j}\,\delta+{\cal O}(\delta^2),\\[0.5ex]
+A_{S\,k} &= \frac{Z_{m_k}(r_k+\delta)-b_L\,\psi_{m_k}(r_k+\delta)-\delta\,(B_C-b_L\,A_C)-\delta\,(\gamma_L-b_L\,\lambda_L)\,A_{L\,k}\,|\delta|^{\,\nu_{L\,k}}}{
+(b_S-b_L)\,{\rm sgn}(\delta)\,|\delta|^{\nu_{S\,k}}}\nonumber\\[0.5ex]
+&+{\cal O}(\delta),\\[0.5ex]
+A_{L\,k} &= \frac{\psi_{m_k}(r_k+\delta)-A_{S\,k}\,{\rm sgn}(\delta)\,|\delta|^{\nu_{S\,k}}-A_C\,\delta}{(1+\delta\,\lambda_L)\,|\delta|^{\nu_{L\,k}}}+{\cal O}(\delta^2)
+\end{align}
+for $j\neq 0$. The previous set of equations can be solved via iteration.
+
+The previous analysis is based on the assumption that $ D_{I\,k}< 0$.
+ If $D_{I\,k}>0$ then the indices $\nu_{L\,k}$ and $\nu_{S\,k}$ become
+complex, indicating that the plasma in the vicinity of the $k$th rational surface is unstable to localized ideal interchange modes. \cite{mercier}
+
+\subsection{Special Case}\label{sspec}
+In the limit $\nu_{L\,k}\rightarrow 0$, some of the previous expressions become singular, and a special treatment is required. The most general small-$|x|$ solution of the outer region ODEs 
+takes the form
+\begin{align}
+\psi_{m_k}(r_k+x)&=A_{L\,k}^\pm \,[1+\nu_{L\,k}\,\ln|x|+\hat{\lambda}_{L}\,x\,(\ln |x|-1)+\mu_{L}\,x\,(\ln^2\!|x|-2\,\ln|x|-2) + \xi_{L}\,x+\cdots]  \nonumber\\[0.5ex]&\phantom{=}+ A_{S\,k}^{\pm}\,x\,(1+\cdots) + \hat{A}_{C}\,x\,(1+\cdots)+ A_{D}\,x\,(\ln |x|-1 + \cdots),\\[0.5ex]
+Z_{m_k}(r_k+x)&= A_{L\,k}^\pm\left(b_L+\hat{\gamma}_{L}\,x\,\ln |x|+\delta_{L}\,x\,\ln^2\!|x|+\cdots\right) +A_{S\,k}^\pm\,x\,(b_{S}+\cdots)\nonumber\\[0.5ex]&\phantom{=} + B_{D}\,x\,(\ln |x|+\cdots),
+\end{align}
+and 
+\begin{align}
+\psi_{m_k+j}(r_k+x)&=A_{L\,k}^\pm\,(\hat{a}_j\,\ln |x|+\cdots)+A_{S\,k}^\pm\,x\,(\tilde{a}_j+\cdots)  + \bar{\psi}_{m_k+j}\,(1+\cdots),\\[0.5ex]
+Z_{m_k+j}(r_k+x)&= A_{L\,k}^\pm\,(\hat{b}_j \,\ln |x|+ \cdots) +  A_{S\,k}^\pm\,x\,(\tilde{b}_j + \cdots) +\bar{Z}_{m_k+j}\,(1+\cdots).
+\end{align}
+Here, 
+\begin{align}
+\hat{A}_{C} &= \frac{1}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(L_{m_k}^{\,m_k+j}\,\bar{Z}_{m_k+j}+ M_{m_k}^{\,m_k+j}\,\bar{\psi}_{m_k+j}\right)_{r_k},\\[0.5ex]
+A_{D} &=  \frac{L_0}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(N_{m_k}^{\,m_k+j}\,\bar{Z}_{m_k+j}+ P_{m_k}^{\,m_k+j}\,\bar{\psi}_{m_k+j}\right)_{r_k}
+\nonumber\\[0.5ex]&\phantom{=}-
+\frac{\nu_{L\,k}}{r_k}\,\sum_{j\neq 0}\frac{1}{j}\left(L_{m_k}^{\,m_k+j}\,\bar{Z}_{m_k+j}+ M_{m_k}^{\,m_k+j}\,\bar{\psi}_{m_k+j}\right)_{r_k},
+\\[0.5ex]
+B_{D} &= \frac{A_{D}}{L_0},\\[0.5ex]
+\hat{\lambda}_{L} &= \frac{P_1\,L_0\,(1+\nu_{L\,k}) }{r_k} + \frac{\nu_{L\,k}\,T_1}{r_k}
+-\frac{1}{(m_k\,s)_{r_k}}\,\frac{1}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(L_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+M_{m_k}^{\,m_k+j}\,M_{m_k+j}^{m_k}\right)_{r_k}\nonumber\\[0.5ex]&\phantom{=}
+- \frac{\nu_{L\,k}}{(m_k\,s)_{r_k}}\,\frac{1}{r_k}
+\left(L_{m_k}^{\,m_k+j}\,N_{m_k+j}^{\,m_k}+M_{m_k}^{\,m_k+j}\,L_{m_k+j}^{m_k}\right)_{r_k},\\[0.5ex]
+\mu_{L}&= -\frac{1}{2\,(m_k\,s)_{r_k}}\frac{L_0}{r_k}\sum_{j\neq 0}\frac{1}{j}\,(N_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+P_{m_k}^{\,m_k+j}\,M_{m_k+j}^{\,m_k})_{r_k},\\[0.5ex]
+\xi_{L} &= M_1+ \frac{\nu_{L\,k}}{r_k} \left(\frac{L_1}{L_0}-1\right),\\[0.5ex]
+\hat{\gamma}_{L} &=\frac{P_1\,(1+\nu_{L\,k})}{L_0\,r_k} + \frac{\nu_{L\,k}\,T_1}{r_k},\\[0.5ex]
+\delta_{L} &= \frac{\mu_{L}}{L_0}.
+\end{align}
+Here, $\hat{a}_j$, $\hat{b}_j$, $\tilde{a}_j$ and $\tilde{b}_j$ are again specified by Eqs.~(\ref{e135})--(\ref{e138}). 
+
+The coefficients of the large and the small solutions at the $k$th rational surface are evaluated as follows:
+\begin{align}
+\bar{\psi}_{m_k+j} &= \psi_{m_k+j}(r_k+\delta)- \hat{a}_j\,A_{L\,k}\,\ln|\delta| +{\cal O}(\delta),\\[0.5ex]
+\bar{Z}_{m_k+j}&= Z_{m_k+j}(r_k+\delta)-\hat{b}_j\,A_{L\,k}\,\ln|\delta|+{\cal O}(\delta),\\[0.5ex]
+A_{S\,k} &= \frac{Z_{m_k}(r_k+\delta)-b_{L}\,A_{L\,k}-\delta\,\ln|\delta|\,[B_D+(\hat{\gamma}_L+\delta_L\,\ln|\delta|)\,A_{L\,k}]}
+{b_S\,\delta}+{\cal O}(\delta),\\[0.5ex]
+A_{L\,k} &= \frac{\psi_{m_k}(r_k+\delta)-\delta\,[A_{S\,k}+A_C+A_D\,(\ln|\delta|-1)]}
+{1+\nu_{L\,k}\,\ln|\delta|+\delta\,[\hat{\lambda}_L\,(\ln|\delta|-1)+ \mu_L\,(\ln^2|\delta|-2\,\ln|\delta|-2)+\xi_L]}+{\cal O}(\delta^{\,2})
+\end{align}
+for $j\neq 0$. As before, these equations can be solved via iteration.
+
+\subsection{Asymptotic Matching Across  Rational Surfaces}\label{sa7}
+Consider the resonant layer solution in the vicinity of the $k$th  rational surface, whose resonant poloidal mode number is $m_k$. 
+This solution can be separated into independent tearing and twisting parity components.\cite{ggj}
+The tearing parity   component is such that $\psi_{m_k}(r_k-x)=\psi_{m_k}(r_k+x)$ throughout the layer, whereas the  twisting parity component is such that
+$\psi_{m_k}(r_k-x)=-\psi_{m_k}(r_k+x)$. It turns out, however, that the twisting parity response of a resonant layer to the solution in the outer region is generally negligible compared to the tearing parity response.\cite{connor,twist,am3}
+Hence,  we shall neglect the twisting parity responses of the various resonant layers  in the plasma all together. 
+
+The neglect of the twisting parity responses of the various resonant layers in the plasma implies that the coefficients of the large solution to the left and to the right of
+each rational surface in the plasma are equal to one another.\cite{am1} In other words,
+\begin{equation}\label{tear}
+A_{L\,k}^- = A_{L\,k}^+= A_{L\,k}.
+\end{equation}
+ Note, however, that the coefficients of the small solution to the left and to the right of a given rational surface are not, in general, equal to one another. 
+
+Consider a solution that is completely continuous across the $k$th rational surface, so that $A_{S\,k}^-=A_{S\,k}^+$. According to the
+preceding analysis, the continuity condition for the resonant harmonic can be written as
+\begin{align}
+\psi_{m_k}(r_k+|\delta|) &= \psi_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,\lambda_L + A_C] + 2\,A_{S\,k}^-\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
+Z_{m_k} (r_k+|\delta|) &=  Z_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,\gamma_L + B_C] + 2\,A_{S\,k}^-\,b_S\,|\delta|^{\nu_{S\,k}} 
+\nonumber\\[0.5ex]&\phantom{=}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
+\psi_{m_k+j}(r_k+|\delta|) &= \psi_{m_k+j}(r_k-|\delta|) +2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,c_j + \bar{\psi}_{m_k+j}] + 2\,A_{S\,k}^-\,a_j\,|\delta|^{\nu_{S\,k}}+\nonumber\\[0.5ex]&\phantom{=} {\cal O}(\delta^{\,2}),\\[0.5ex]
+Z_{m_k+j}(r_k+|\delta|) &= Z_{m_k+j}(r_k-|\delta|) +2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,d_j + \bar{Z}_{m_k+j}] + 2\,A_{S\,k}^-\,b_j\,|\delta|^{\nu_{S\,k}}
+\nonumber\\[0.5ex]&\phantom{=}+ {\cal O}(\delta^{\,2})
+\end{align}
+in the general case, and 
+\begin{align}
+\psi_{m_k}(r_k+|\delta|) &= \psi_{m_k}(r_k-|\delta|) \nonumber\\[0.5ex]
+&\phantom{=}+ 2\,|\delta|\,\{A_{L\,k}\,[\hat{\lambda}_L\,(\ln|\delta|-1)+\hat{\mu}_L\,(\ln^2|\delta|-2\,\ln|\delta|-2)+ \xi_L]\nonumber\\[0.5ex]
+&\phantom{=}+ A_C
++A_D\,(\ln|\delta|-1) + A_{S\,k}^-\}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
+Z_{m_k} (r_k+|\delta|) &=  Z_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,\ln|\delta| \,(\hat{\gamma}_L+\delta_L\,\ln|\delta|)+ B_D\,\ln|\delta|
++A_{S\,k}^-\,b_{S}]\nonumber\\[0.5ex]&+ {\cal O}(\delta^{\,2}),\\[0.5ex]
+\psi_{m_k+j}(r_k+|\delta|) &= \psi_{m_k+j}(r_k-|\delta|)+{\cal O}(\delta),\\[0.5ex]
+Z_{m_k+j}(r_k+|\delta|) &= Z_{m_k+j}(r_k-|\delta|)+{\cal O}(\delta)
+\end{align}
+in the special case. In both cases, $j\neq 0$.
+
+Consider a solution that is launched from the $k$th rational surface, so that $A_{L\,k} = A_{S\,k}^-=0$. It follows from the preceding analysis that
+\begin{align}
+\psi_{m_k}(r_k+|\delta|) &= A_{S\,k}^+\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^2),\\[0.5ex]
+Z_{m_k}(r_k+|\delta|) &= A_{S\,k}^+\,b_S\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^2),\\[0.5ex]
+\psi_{m_k+j}(r_k+|\delta|)& = A_{S\,k}^+\,\tilde{a}_j\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^2),\\[0.5ex]
+Z_{m_k+j}(r_k+|\delta|) &= A_{S\,k}^+\,\tilde{b}_j\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^2)
+\end{align}
+for $j\neq 0$. 
+
+It is helpful to define the quantities\,\cite{am1}
+\begin{align}\label{Psidef}
+{\mit\Psi}_k&= r_k^{\,\nu_{L\,k}}\left(\frac{\nu_{S\,k}-\nu_{L\,k}}{L_{m_k}^{\,{m_k}}}\right)^{1/2}_{r_k} A_{L\,k},\\[0.5ex]
+{\mit\Delta\Psi}_k &= r_k^{\,\nu_{S\,k}}\left(\frac{\nu_{S\,k}-\nu_{L\,k}}{L_{m_k}^{\,m_k}}\right)^{1/2}_{r_k} (A_{S\,k}^+ - A_{S\,k}^-)\label{edpp}
+\end{align}
+at each rational surface in the plasma. Here, the complex parameter ${\mit\Psi}_k$ is a measure of the reconnected helical magnetic flux at the $k$th rational surface, whereas
+the complex parameter ${\mit\Delta\Psi}_k$ is a measure of the strength of a localized current sheet that flows parallel to the equilibrium magnetic field at the surface. 
+It is evident from Eqs.~(\ref{etorque}), (\ref{etcons}), (\ref{ex1}), (\ref{ex2}), (\ref{nul}), (\ref{nus}), (\ref{lkk}), (\ref{ebl}), (\ref{ebs}), and (\ref{tear})--(\ref{edpp}) that\, \cite{am1,am3}
+\begin{equation}\label{e204z}
+T_\phi(r) =\int_0^r \sum_{k=1,K}\delta T_k\,\delta(\tilde{r}-r_k)\,d\tilde{r},
+\end{equation}
+where
+\begin{equation}\label{e194t}
+\delta T_k = 2\,\pi^2\,n\,{\rm Im}({\mit\Psi}_k^\ast\,{\mit\Delta\Psi}_k).
+\end{equation}
+Here, $\delta T_k$ is the net toroidal electromagnetic torque exerted on the plasma in the immediate vicinity of the $k$th rational
+surface. 
+
+\section{Inverse Aspect-Ratio Expanded Tokamak Equilibrium}
+\subsection{Equilibrium Magnetic Flux-Surfaces}
+Let the plasma/vacuum boundary correspond to $r=\epsilon$, where $\epsilon\ll 1$ is the inverse aspect-ratio of the
+plasma. In other words, $\epsilon=a/R_0$, where $a\ll R_0$ is the effective minor radius of the plasma. 
+Let $r=\epsilon\,\hat{r}$, $\nabla =\epsilon^{\,-1}\,\hat{\nabla}$, and $'\rightarrow \epsilon^{\,-1}\,'$. 
+Suppose that the locii of the equilibrium magnetic flux-surfaces can be written in the parametric form:\,\cite{con0,gim,am1,fitz2024}
+\begin{align}
+R(\hat{r},\omega) &= 1 -\epsilon\,\hat{r}\,\cos\omega + \epsilon^{\,2}\,\sum_{j>0}H_j(\hat{r})\,\cos[(j-1)\,\omega] + \epsilon^{\,2}\,\sum_{j>1}V_j(\hat{r})\,\sin[(j-1)\,\omega] \nonumber\\[0.5ex]
+&\phantom{=}+\epsilon^{\,3}\,L(\hat{r})\,\cos\omega,\label{e19x}\\[0.5ex]
+Z(\hat{r},\omega)&= \epsilon\,\hat{r}\,\sin\omega +\epsilon^{\,2}\,\sum_{j>1}H_j(\hat{r})\,\sin[(j-1)\,\omega]
+-\epsilon^{\,2}\,\sum_{j>1}V_j(\hat{r})\,\cos[(j-1)\,\omega]\nonumber\\[0.5ex]&\phantom{=}-\epsilon^{\,3}\,L(\hat{r})\,\sin\omega,\label{e20x}
+\end{align}
+where $j$ is a positive integer. 
+Here, $H_1(\hat{r})$  controls the relative horizontal locations of the flux-surface centroids, $H_2(\hat{r})$ and $V_2(\hat{r})$ control the 
+magnitudes and vertical tilts of the flux-surface ellipticities, $H_3(\hat{r})$ and
+$V_3(\hat{r})$ control the magnitudes and vertical tilts of the flux-surface triangularities, et cetera, whereas $L(\hat{r})$ is a
+re-labelling parameter. Moreover, $\omega(R,Z)$ is a  poloidal angle that is distinct from $\theta$. Note that $V_1$ does not appear in Eq.~(\ref{e20x})
+because such a factor merely gives rise to a rigid vertical shift of the plasma that can be eliminated by a suitable choice of the
+origin of the flux-coordinate system.\cite{fitz2024}
+
+Let
+\begin{equation}
+J(\hat{r},\omega) = \frac{1}{\epsilon^{\,2}}\left(\frac{\partial R}{\partial\omega}\,\frac{\partial Z}{\partial \hat{r}} -\frac{\partial R}{\partial \hat{r}}\,\frac{\partial Z}{\partial \omega}\right)
+\end{equation}
+be the Jacobian of the $\hat{r}$, $\omega$ coordinate system. We can transform to the $\hat{r}$, $\theta$ coordinate system 
+by writing
+\begin{align}\label{e11}
+\theta(\hat{r},\omega) &= \left.2\pi\int_0^\omega \frac{J(\hat{r},\tilde{\omega})}{R(\hat{r},\tilde{\omega})}\,d\tilde{\omega}\right/\oint\frac{J(\hat{r},\omega)}{R(\hat{r},\omega)}\,d\omega,\\[0.5ex]
+\hat{r}&=\frac{1}{2\pi}\oint\frac{J(\hat{r},\omega)}{R(\hat{r},\omega)}\,d\omega.\label{e12}
+\end{align}
+This transformation ensures that 
+\begin{equation}
+\frac{\partial\theta}{\partial\omega} = \frac{J}{\hat{r}\,R},
+\end{equation}
+and, hence, that 
+\begin{equation}
+{\cal J} \equiv \frac{R}{\epsilon} \left(\frac{\partial R}{\partial\theta}\,\frac{\partial Z}{\partial \hat{r}} -\frac{\partial R}{\partial \hat{r}}\,\frac{\partial Z}{\partial \hat{r}}\right)
+=\epsilon\, R\,J\,\frac{\partial\omega}{\partial\theta} =\hat{r}\,R^{\,2},
+\end{equation}
+in accordance with Eq.~(\ref{jac}). 
+
+\subsection{Metric Elements}\label{metric}
+We can determine the metric elements of the flux-coordinate system by combining Eqs.~(\ref{e19x})--(\ref{e12}).
+Evaluating the elements up to ${\cal O}(\epsilon)$, but retaining ${\cal O}(\epsilon^{\,2})$ contributions to terms that are independent of
+$\omega$, we obtain,\cite{am1,gim,fitz2024}
+\begin{align}\label{epdef}
+L(\hat{r})&= \frac{\hat{r}^{\,3}}{8} -\frac{\hat{r}\,H_1}{2}-\frac{1}{2}\sum_{j>1}(j-1)\,\frac{H_j^{\,2}}{\hat{r}}
+-\frac{1}{2}\sum_{j>1}(j-1)\,\frac{V_j^{\,2}}{\hat{r}},\\[0.5ex]
+\theta &= \omega+\epsilon\,\hat{r}\,\sin\omega - \epsilon\sum_{j>0}\frac{1}{j}\left[H_j'-(j-1)\,\frac{H_j}{\hat{r}}\right]\sin(j\,\omega)
+\nonumber\\[0.5ex]&\phantom{=}+ \epsilon\sum_{j>1}\frac{1}{j}\left[V_j'-(j-1)\,\frac{V_j}{\hat{r}}\right]\cos(j\,\omega),\label{e22y}\\[0.5ex]
+|\hat{\nabla} \hat{r}|^2 &= 1 +2\,\epsilon\sum_{j>0}H_j'\,\cos(j\,\theta) +2\,\epsilon\sum_{j>1}V_j'\,\sin(j\,\theta) \nonumber\\[0.5ex]
+&\phantom{=}+\epsilon^{\,2}\left(\frac{3\,\hat{r}^2}{4}-H_1+
+\frac{1}{2}\sum_{j>0}\left[H_j'^{\,2}+(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\right.\nonumber\\[0.5ex]&\phantom{=}\left.+
+\frac{1}{2}\sum_{j>1}\left[V_j'^{\,2}+(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]
+\right),\label{e19}\\[0.5ex]
+\hat{\nabla}\hat{r}\cdot\hat{\nabla}\theta&=\epsilon\,\sin\theta
+-\epsilon\sum_{j>0}\frac{1}{j}\left[H_j''+\frac{H_j'}{\hat{r}}+(j^2-1)\,\frac{H_j}{\hat{r}^{\,2}}\right]\sin(j\,\theta)\nonumber\\[0.5ex]&
+\phantom{=}+\epsilon\sum_{j>1}\frac{1}{j}\left[V_j''+\frac{V_j'}{\hat{r}}+(j^2-1)\,\frac{V_j}{\hat{r}^{\,2}}\right]\cos(j\,\theta),
+\\[0.5ex]
+R^{\,2}&= 1-2\,\epsilon\,\hat{r}\,\cos\theta -\epsilon^{\,2}\left(\frac{\hat{r}^{\,2}}{2}-\hat{r}\,H_1'-2\,H_1\right).\label{e25a}
+\end{align}
+Here, $'\equiv d/d\hat{r}$. Moreover, we have made use of the fact that $V_j\propto H_j$, for $j>1$, because
+$V_j$ and $H_j$ satisfy the identical differential equations, (\ref{e33x}) and (\ref{e28}). 
+
+\subsection{Expansion of Grad-Shafranov Equation}\label{exp}
+Let us write
+\begin{align}\label{e26v}
+f(\hat{r})&= \epsilon\,\frac{\hat{r}\,g}{q},\\[0.5ex]
+g(\hat{r}) &= 1+ \epsilon^{\,2}\,g_2(\hat{r}) + \epsilon^{\,4}\,g_4(\hat{r}),\label{e27v}\\[0.5ex]
+P'(\hat{r}) &= \epsilon^{\,2}\,p_2'(\hat{r}),\label{eq1}
+\end{align}
+where $q$,  $g_2$, $g_4$, and $p_2$ are all ${\cal O}(1)$. Here, the safety-factor, $q(\hat{r})$, and the second-order plasma
+pressure gradient, $p_2'(\hat{r})$, are the two free flux-surface functions that characterize the plasma equilibrium.\cite{gs1} 
+
+Expanding the Grad-Shafranov equation, (\ref{gs}), order by order in the
+small parameter $\epsilon$, making use of Eqs.~(\ref{e19})--(\ref{eq1}), we obtain\,\cite{con0,connor,gim,fitz2024}
+\begin{align}
+g_2'&=- p_2' - \frac{\hat{r}}{q^2}\,(2-s),\label{e26}\\[0.5ex]
+H_1''&= -(3-2\,s)\,\frac{H_1' }{\hat{r}}
+-1+\frac{2\,p_2'\,q^2}{\hat{r}},\label{e27}\\[0.5ex]
+H_j''&= -(3-2\,s)\,\frac{H_j'}{\hat{r}}+(j^2-1)\,\frac{H_j}{\hat{r}^{\,2}}~~~~~\mbox{for $j>1$},\label{e33x}\\[0.5ex]
+V_j''&= -(3-2\,s)\,\frac{V_j'}{\hat{r}}+(j^2-1)\,\frac{V_j}{\hat{r}^{\,2}}~~~~~~\mbox{for $j>1$},\label{e28}\\[0.5ex]
+g_4'&= -\frac{\hat{r}}{q^2}\left(
+\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right.\nonumber\\[0.5ex]
+&\phantom{===}
++\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
+&\phantom{===}\left.+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
+&\phantom{=}
++\frac{\hat{r}}{q^2}\,(2-s)\left(-g_2-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1 +\frac{1}{2}\sum_{j>0}\left[3\,H_j'^{\,2}- (j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]
+\right.\nonumber\\[0.5ex]
+&\phantom{===}\left.+\frac{1}{2}\sum_{j>1}\left[3\,V_j'^{\,2}- (j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
+&\phantom{=}
++p_2'\left(g_2+\frac{\hat{r}^{\,2}}{2}+\frac{\hat{r}^{\,2}}{q^2}-2\,H_1-3\,\hat{r}\,H_1'\right).\label{e31}
+\end{align}
+Note that the relative horizontal shift of magnetic flux-surfaces, $H_1$, otherwise known as the {\em Shafranov shift},\cite{shaf} is driven by toroidicity [the second term on
+the right-hand side of Eq.~(\ref{e27})], and plasma pressure gradients (the third term). All of the other shaping terms (i.e., the $H_j$, for $j>1$, and
+the $V_j$) are driven by currents flowing in axisymmetric external  magnetic field-coils.\cite{fitz2024} 
+
+Finally, it follows from Eqs.~(\ref{ap}), (\ref{ag}), (\ref{af}), and (\ref{e26v})--(\ref{eq1}) that
+\begin{align}
+\alpha_p(\hat{r}) &= \frac{p_2'\,q^2}{\hat{r}}\left(1-2\,\epsilon^{\,2}\,g_2\right),\\[0.5ex]
+\alpha_g(\hat{r}) &= \frac{q}{\hat{r}}\left(g_2' -\epsilon^{\,2}\,g_2\,g_2'+\epsilon^{\,2}\,g_4'\right),\\[0.5ex]
+\alpha_f(\hat{r}) &= -s + \epsilon^{\,2}\,\hat{r}\,g_2'.
+\end{align}
+
+\subsection{Self-Inductance and $\beta$ values}
+The normalized self-inductance, toroidal beta, poloidal beta, and normalized beta values of the plasma
+can be written\,\cite{gs1}
+\begin{align}
+l_i&= \frac{2\int_0^1 \hat{r}\,f^2\,\langle |\nabla r|^2\rangle\,d\hat{r}}{(f^2\,\langle|\nabla r|^2\rangle^2)_{\hat{r}=1}},\\[0.5ex]
+\beta_t &=  \frac{2\,\epsilon^{\,2}\int_0^1 \hat{r}\,\langle R^{\,2}\rangle\,p_2\,d\hat{r}}{\int_0^1 \hat{r}\,\langle R^{\,2}\rangle\,d\hat{r}},\\[0.5ex]
+\beta_p &=  \frac{2\,\epsilon^{\,2}\int_0^1 \hat{r}\,\langle R^{\,2}\rangle\,p_2\,d\hat{r}}
+{(f^2\,\langle|\nabla r|^2/R^{\,2}\rangle)_{\hat{r}=1}\int_0^1 \hat{r}\,\langle R^{\,2}\rangle\,d\hat{r}},\\[0.5ex]
+\beta_N &=  \frac{20\,\epsilon^{\,2}\int_0^1 \hat{r}\,\langle R^{\,2}\rangle\,p_2\,d\hat{r}}
+{(f\,\langle|\nabla r|^2\rangle)_{\hat{r}=1}\int_0^1 \hat{r}\,\langle R^{\,2}\rangle\,d\hat{r}},
+\end{align}
+respectively. Here, $\langle\cdots\rangle \equiv \oint (\cdots)\,d\theta/2\pi$.
+
+\subsection{Coupling Coefficients}
+Let
+\begin{align}
+S_1(\hat{r})&= \frac{1}{2}\sum_{j>0}\left[3\,(H_j'^{\,2}+V_j'^{\,2}) - (j^2-1)\,\frac{H_j^{\,2}+V_j^{\,2}}{\hat{r}^{\,2}}\right],\\[0.5ex]
+S_2(\hat{r})&= \sum_{j>1}2\,(j^2-1)\left(H_j'^{\,2}+V_j'^{\,2}-\frac{11}{3}\,\frac{H_j'\,H_j+V_j'\,V_j}{\hat{r}}+j^2\,\frac{H_j^{\,2}+V_j^{\,2}}{\hat{r}^{\,2}}\right)\nonumber\\[0.5ex]&\phantom{=} -\sum_{j>0}(1-s)\left(\frac{H_j'\,H_j+V_j'\,V_j}{\hat{r}}+\frac{1}{3}\,\frac{H_j^{\,2}+V_j^{\,2}}{\hat{r}^{\,2}}\right).
+\end{align}
+The analysis of Sects.~\ref{ode1}, \ref{ode2}, \ref{metric}, and \ref{exp} can be combined to give
+the following expressions for the coupling coefficients appearing in the outer region ODES, (\ref{e61x}) and (\ref{e62x}):\,\cite{am1}
+\begin{align}
+L_m^{\,m}(\hat{r})&= m^2 + \epsilon^{\,2}\,m^2\left(-\frac{3\,\hat{r}^{\,2}}{4} + H_1+S_1\right)+ \epsilon^{\,2}\,n^2\,\hat{r}^{\,2},\\[0.5ex]
+M_m^{\,m}(\hat{r})&= 0,\\[0.5ex]
+N_m^{\,m}(\hat{r})&= 0,\\[0.5ex]
+P_m^{\,m}(\hat{r}) &= (m-n\,q)^2+ \frac{m-n\,q}{m}\,q\,\hat{r}\,\frac{d}{d\hat{r}}\!\left(\frac{2-s}{q}\right)\nonumber\\[0.5ex]
+&\phantom{=}+\epsilon^{\,2}\,(m-n\,q)^2\left\{\frac{7\,\hat{r}^{\,2}}{4} -H_1-3\,\hat{r}\,H_1'+S_1\right.\nonumber\\[0.5ex]
+&\phantom{=} \left.+\frac{1}{m^2}\left[\frac{n}{m}\,\hat{r}\,\frac{d}{d\hat{r}}\!\left(\hat{r}^{\,2}\,\frac{2-s}{q}\right)
+-\hat{r}^{\,2}\,\frac{(2-s)^2}{q^2}-\hat{r}\,\frac{d}{d\hat{r}}(\hat{r}\,p_2')\right]\right\}\nonumber\\[0.5ex]
+&\phantom{=}-\epsilon^{\,2}\,\frac{m-n\,q}{m}\left\{2\,\hat{r}\,p_2'\,(2-s) +q\,\hat{r}\,\frac{d}{d\hat{r}}\!\left[
+\hat{r}^{\,2}\,\frac{2-s}{q^3}+\frac{s}{q}\left(\frac{3\,\hat{r}^{\,2}}{4}-H_1-S_1\right)\right.\right.\nonumber\\[0.5ex]
+&\left.\left.-\frac{2}{q}\left(\frac{3\,\hat{r}^{\,2}}{2}-H_1-\hat{r}\,H_1'-\frac{2}{3}\,S_1\right)\right]-S_2\right\}+\epsilon^{\,2}\,2\,\hat{r}\,p_2'\,(1-q^2),\\[0.5ex]
+L_m^{\,m\pm 1}(\hat{r}) &= -\epsilon\,m\,(m\pm 1)\,H_1',\\[0.5ex]
+L_m^{\,m\pm j}(\hat{r})&= - \epsilon\,m\,(m\pm j)\,(H_j'\pm {\rm i}\,V_j')\mbox{~~~~~for $j>1$},\\[0.5ex]
+M_m^{\,m\pm 1}(\hat{r}) &= \mp \epsilon\,m\,(m-n\,q)\,p_2'\,q^2\pm \epsilon\,m\,(m\pm 1-n\,q)\,[\hat{r}+ (1-s)\,H_1'],\\[0.5ex]
+M_m^{\,m\pm j}(\hat{r}) &= \pm \epsilon\,\frac{m}{j}\,(m\pm j-n\,q)\left[(1-s)\,(H_j'\pm {\rm i}\,V_j')-(j^2-1)\,\frac{H_j\pm{\rm i} \,V_j}{\hat{r}}\right]\nonumber\\[0.5ex]&\phantom{=}\mbox{~~~~~for $j>1$},\\[0.5ex]
+N_m^{\,m\pm 1}(\hat{r}) &= \mp \epsilon\,(m\pm 1)\,(m\pm 1-n\,q)\,p_2'\,q^2\pm \epsilon\,(m\pm 1)\,(m-n\,q)\,[\hat{r}+ (1-s)\,H_1'],\\[0.5ex]
+N_m^{\,m\pm j}(\hat{r}) &= \pm \epsilon\,\frac{(m\pm j)}{j}\,(m-n\,q)\left[(1-s)\,(H_j'\pm {\rm i}\,V_j')-(j^2-1)\,\frac{H_j\pm{\rm i}\, V_j}{\hat{r}}\right]\nonumber\\[0.5ex]&\phantom{=}\mbox{~~~~~for $j>1$},\\[0.5ex]
+P_m^{\,m\pm 1}(\hat{r})&= -\epsilon\,(1+s)\,p_2'\,q^2+ \epsilon\,(m-n\,q)\,(m\pm 1-n\,q)\,(\hat{r}-H_1'),\\[0.5ex]
+P_m^{\,m\pm j}(\hat{r})&= -\epsilon\,(m-n\,q)\,(m\pm j-n\,q)\,(H_j' \pm {\rm i} \,V_j')]\mbox{~~~~~for $j>1$}.
+\end{align}
+When $m=0$, some of the coupling coefficient take on special values: 
+\begin{align}
+P_0^{\,0}(\hat{r})&=n^2\,q^2-\frac{q^2}{\hat{r}}\,\frac{d}{d\hat{r}}\!\left(\hat{r}^{\,2}\,\frac{2-s}{q^2}\right)-q^2\,\hat{r}\,\frac{d}{d\hat{r}}\!\left(
+\frac{p_2'}{\hat{r}}\right),\\[0.5ex]
+M_{\pm 1}^{\,0}(\hat{r}) &= \lim_{m\rightarrow 0}\,M_{m\pm 1}^{\,m} \mp\epsilon\,(2-s)\,H_1',\\[0.5ex]
+M_{\pm j}^{\,0}(\hat{r}) &= \lim_{m\rightarrow 0}\,M_{m\pm j}^{\,m} \mp\epsilon\,(2-s)\,j\,(H_j'\mp{\rm i}\,V_j')\mbox{~~~~~for $j>1$},\\[0.5ex]
+N_0^{\,\pm 1}(\hat{r}) &= \lim_{m\rightarrow 0}\,N_m^{\,m\pm 1} \pm\epsilon\,(2-s)\,H_1',\\[0.5ex]
+N_0^{\,\pm j}(\hat{r}) &= \lim_{m\rightarrow 0}\,N_m^{\,m\pm j} \pm\epsilon\,(2-s)\,j\,(H_j'\pm{\rm i}\,V_j')\mbox{~~~~~for $j>1$},\\[0.5ex]
+P_{\pm 1}^{\,0}(\hat{r})&= \lim_{m\rightarrow 0}\,P_{m\pm 1}^{\,m}-\epsilon\,(2-s)\left\{\pm n\,q^3\,p_2'+(1\mp n\,q)\left[\hat{r}+(1-s)\,H_1'\right]\right\}\\[0.5ex]
+P_{\pm j}^{\,0}(\hat{r}) & =\lim_{m\rightarrow 0}\,P_{m\pm j}^{\,m}-\epsilon\,(2-s)\,\frac{(j\mp n\,q)}{j}
+\left[(1-s)\,(H_j'\mp{\rm i}\,V_j')-(j^2-1)\left(\frac{H_j\mp {\rm i}\,V_j}{\hat{r}}\right)\right]\nonumber\\[0.5ex]&\mbox{~~~~~for $j>1$},\\[0.5ex]
+P_0^{\,\pm 1}(\hat{r})&= \lim_{m\rightarrow 0}\,P_{m\pm 1}^{\,m}-\epsilon\,(2-s)\left\{\pm n\,q^3\,p_2'+(1\mp n\,q)\left[\hat{r}+(1-s)\,H_1'\right]\right\},\\[0.5ex]
+P_0^{\,\pm j}(\hat{r})&=\lim_{m\rightarrow 0}\,P_m^{\,m\pm j}-\epsilon\,(2-s)\,\frac{(j\mp n\,q)}{j}
+\left[(1-s)\,(H_j'\pm {\rm i}\,V_j')-(j^2-1)\left(\frac{H_j\pm {\rm i}\,V_j}{\hat{r}}\right)\right]\nonumber\\[0.5ex]&\mbox{~~~~~for $j>1$}.
+\end{align}
+Note that the coupling coefficients satisfy the symmetry requirements (\ref{e137})--(\ref{e140}).
+
+\subsection{Behavior Close to Magnetic Axis}\label{axis}
+In the limit $\hat{r}\ll 1$,  a well-behaved solution of the outer region ODEs, (\ref{e61x}) and (\ref{e62x}), with a dominant poloidal
+mode number $m>0$ is such that\,\cite{am1}
+\begin{align}\label{e213}
+Z_m(\hat{r})&\simeq \frac{m-n\,q}{m}\,\psi_m(\hat{r}),\\[0.5ex]
+\psi_{m+1}(\hat{r})&\simeq- \epsilon\,\frac{\hat{r}\left[(m-n\,q)-2\,p_2''\,q^2\right]}{2\,(m-n\,q)}\,\psi_m(\hat{r}),\\[0.5ex]
+\psi_{m+j} (\hat{r})&\simeq 
+\epsilon\,\frac{2\,\hat{r}^{\,2}\,q''\,(H_j'-{\rm i}\,V_j')}{(m-n\,q)\,(m+1)\,q}\,\psi_m(\hat{r})\mbox{~~~~for $j>1$}\label{e215}
+\end{align}
+to lowest order, with all of the other $Z_m$ and $\psi_m$ approximately zero. 
+A well-behaved solution with a dominant poloidal mode number $m<0$ is such that 
+\begin{align}
+Z_m(\hat{r})&\simeq \frac{m-n\,q}{|m|}\,\psi_m(\hat{r}),\label{e216}\\[0.5ex]
+\psi_{m-1}(\hat{r})&\simeq -\epsilon\,\frac{\hat{r}\left[(m-n\,q)+2\,p_2''\,q^2\right]}{2\,(m-n\,q)}\,\psi_m(\hat{r}),\\[0.5ex]
+\psi_{m-j} (\hat{r})&\simeq 
+-\epsilon\,\frac{2\,\hat{r}^{\,2}\,q''\,(H_j'+{\rm i}\,V_j')}{(m-n\,q)\,(|m|+1)\,q}\,\psi_m(\hat{r})\mbox{~~~~for $j>1$}\label{e218}
+\end{align}
+to lowest order, with all of the other $Z_m$ and $\psi_m$ approximately zero. For the special case in which the dominant poloidal
+mode number is zero, the well-behaved solution is
+\begin{equation}
+Z_0(\hat{r})\simeq {\rm constant}
+\end{equation}
+to lowest order, with all of the other $Z_m$ and $\psi_m$ approximately zero. 
+
+Note that the solutions (\ref{e213})--(\ref{e218}) only exhibit ``outward'' coupling of different poloidal harmonics
+(i.e., coupling in the direction away from the $m=0$ harmonic). However, the solutions whose central poloidal
+mode numbers are $m=\pm 1$ are special cases, and also exhibit inward coupling. Thus, in addition, to the
+couplings described in Eqs.~(\ref{e213})--(\ref{e215}), an $m=1$ solution drives the harmonics
+\begin{equation}
+\psi_{1-j}(\hat{r})\simeq 2\,\epsilon\,(H_j'-{\rm i}\,V_j')\,\psi_1(\hat{r})\mbox{~~~~for $j>1$}.
+\end{equation}
+Likewise, in addition to the couplings described in Eqs.~(\ref{e216})--(\ref{e218}), an $m=-1$ solution drives the
+harmonics
+\begin{equation}
+\psi_{-1+j}(\hat{r})\simeq 2\,\epsilon\,(H_j'+{\rm i}\,V_j')\,\psi_{-1}(\hat{r})\mbox{~~~~for $j>1$}.
+\end{equation}
+
+\subsection{Plasma/Vacuum Interface}
+We require the equilibrium plasma current to be zero at the plasma/vacuum interface, $\hat{r}=1$, which
+implies that $g'(1)=P'(1)= 0$. (See Sect.~\ref{s3}.) It follows from Eqs.~(\ref{e27v})--(\ref{e26}) and (\ref{e31}) that we need\,\cite{am1}
+\begin{align}
+p_2'(1) &= 0,\label{e222}\\[0.5ex]
+s(1) &= 2+ \epsilon^{\,2}\left(\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right.\nonumber\\[0.5ex]
+&\phantom{===}
++\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
+&\phantom{===}\left.+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)_{\hat{r}=1}
++{\cal O}(\epsilon^4).\label{e223}
+\end{align}
+
+\subsection{Perturbed Vacuum Magnetic Field}
+In the vacuum region surrounding the plasma, the perturbed magnetic field can be written in the form\,\cite{am1}
+\begin{equation}
+{\bf b} = {\rm i}\,\nabla V,
+\end{equation}
+where the scalar magnetic potential, $V(\hat{r},\theta,\phi)= V(\hat{r},\theta)\,\exp(-{\rm i}\,n\,\phi)$,  is expanded as 
+\begin{equation}\label{e225}
+V(\hat{r},\theta) = \sum_{m}V_m(\hat{r})\,\exp({\rm i}\,m\,\theta).
+\end{equation}
+It follows from Eqs.~(\ref{e66}), (\ref{e79o}), (\ref{e97}), and (\ref{Zdef})--(\ref{psidef}) that
+\begin{align}
+Z_m(\hat{r})&= (m-n\,q)\,V_m(\hat{r}),\label{evdef}\\[0.5ex]
+\psi_m(\hat{r}) &= \sum_{m'}\left[h_m^{\,m'}\,\hat{r}\,\frac{dV_{m'}}{d\hat{r}}+ i_{m}^{\,m'}\,m'\,V_m'(\hat{r})\right],
+\end{align}
+where
+\begin{align}
+h_m^{\,m'}(\hat{r})&= \oint |\hat{\nabla}\hat{r}|^2\,R^{\,2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
+i_m^{\,m'}(\hat{r})&= \oint {\rm i}\,\hat{r}\,\hat{\nabla} \hat{r}\cdot\hat{\nabla}\theta\,R^{\,2} \,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi}.\label{e229}
+\end{align}
+
+In the vacuum region, the scalar magnetic potential satisfies Laplace's equation
+\begin{equation}
+\nabla^2 V= 0.
+\end{equation}
+It is necessary to obtain solution of the previous equation that extend beyond the region of validity of the
+inverse aspect-ratio expansion. This goal can be achieved using {\em orthogonal toroidal coordinates}, $\mu$, $\eta$, $\phi$,\,\cite{morse}
+\begin{align}\label{e54cx}
+R &= \frac{\sinh\mu}{\cosh\mu-\cos\eta},\\[0.5ex]
+Z&= \frac{\sin\eta}{\cosh\mu-\cos\eta}.\label{e55cc}
+\end{align}
+Here, $\mu(R,Z)\rightarrow 0$ corresponds to either $R\rightarrow 0$ or $(R^{\,2}+Z^{\,2})^{1/2}\rightarrow\infty$ (i.e.,
+an approach to the toroidal symmetry axis or to infinity), whereas $\mu(R,Z)\rightarrow \infty$
+corresponds to $(R, Z) \rightarrow (1, 0)$ (i.e., an approach to the magnetic axis). Furthermore, $\eta(R,Z)$ is an angular variable in the poloidal
+plane.  The most general solution of Laplace's equation in toroidal coordinates for a potential that has $n$ periods around the
+toroidal symmetry axis is\,\cite{morse1}
+\begin{equation}
+V(\mu,\eta) = \sum_m (z-\cos\eta)^{1/2}\,[A_m\,P_{m-1/2}^{\,n}(z) + B_m\,Q_{m-1/2}^{\,n}(z)]\,\exp(-{\rm i}\,m\,\eta),\label{e233}
+\end{equation}
+where $z=\cosh\mu$, $P_{m-1/2}^{\,n}(z)$ and $Q_{m-1/2}^{\,n}(z)$ are {\em toroidal functions},\cite{abrama} and the $A_m$ and
+$B_m$ are arbitrary constants.  Note that $P_{m-1/2}^{\,n}(z)$ is well behaved
+in the limit $z\rightarrow 1$, whereas $Q_{m-1/2}^{\,n}(z)$ is badly behaved.  Conversely, $P_{n-1/2}^{\,n}(z)$ is badly behaved in the limit
+$z\rightarrow\infty$, whereas $Q_{m-1/2}^{\,n}(z)$ is well behaved. 
+
+In the immediate vicinity of the plasma/vacuum boundary, Eqs.~(\ref{e19x}), (\ref{e20x}), (\ref{epdef}), (\ref{e54cx}), and (\ref{e55cc}) can
+be combined to give\,\cite{fitz2024}
+\begin{equation}\label{e73h}
+\eta=\pi-\theta-\epsilon\,F_\theta(\hat{r},\theta)+{\cal O}(\epsilon^{\,2}),
+\end{equation}
+where
+\begin{equation}\label{e234}
+F_\theta(\hat{r},\theta) = -\frac{\hat{r}}{2}\,\sin\theta+\sum_{j>0}\frac{1}{j}\left(H_j' + \frac{H_j}{\hat{r}}\right)\sin(j\,\theta)
+-\sum_{j>1}\frac{1}{j}\left(V_j' + \frac{V_j}{\hat{r}}\right)\cos(j\,\theta).
+\end{equation}
+Furthermore, 
+\begin{equation}\label{e74cc}
+z = \frac{\xi(\hat{r},\theta)}{\epsilon\,\hat{r}},
+\end{equation}
+where 
+\begin{align}\label{e75cc}
+\xi(\hat{r},\theta)&= 1+ \epsilon\left[-\frac{\hat{r}}{2}\,\cos\theta
+ +\sum_{j>0}\frac{H_j}{\hat{r}}\,\cos(j\,\theta)+\sum_{j>1}\frac{V_j}{\hat{r}}\,\sin(j\,\theta)\right] \\[0.5ex]
+ &\phantom{=}+ \epsilon^{\,2}\left[\frac{3\,\hat{r}^{\,2}}{16}+\frac{H_1}{4}-\frac{\hat{r}\,H_1'}{4}
+-\frac{1}{2}\sum_{j>0}\left(\frac{H_j'\,H_j}{\hat{r}}-\frac{H_j^{\,2}}{2\,\hat{r}^{\,2}}\right)-\frac{1}{2}\sum_{j>1}\left(\frac{V_j'\,V_j}{\hat{r}}-\frac{V_j^{\,2}}{2\,\hat{r}^{\,2}}\right)\right].\nonumber
+\end{align}
+Note that  $\hat{r}\sim{\cal O}(1)$ in the near-vacuum region, which implies that $z\gg 1$. 
+
+It is easily demonstrated that $P_{m-1/2}^{\,n}(z)= P_{|m|-1/2}^{\,n}(z)$
+and $Q_{m-1/2}^{\,n}(z) = Q_{|m|-1/2}^{\,n}(z)$.\cite{abram2}
+In the limit $z\gg 1$, the toroidal functions $P_{|m|-1/2}^{\,n}(z)$ and $Q_{|m|-1/2}^{\,n}(z)$
+have the following asymptotic behaviors:\,\cite{morse2,bate}
+\begin{align}
+\frac{z^{1/2}\,P_{-1/2}^{\,n}(z)}{\tanh^{n}z}&= \frac{2}{\sqrt{2\pi}\,\Gamma(1/2-n)}
+\left\{\ln\left(\frac{8\,z}{\zeta_n}\right)\right.\nonumber\\[0.5ex]
+&\phantom{=}\left.
++ \frac{1}{4}\left[(n^2-5/4)+ (n+1/2)\,(n+3/2)\,\ln\left(\frac{8\,z}{\zeta_n}\right)\right]\frac{1}{z^2}\right\},\\[0.5ex]
+\frac{z^{1/2}\,P_{1/2}^{\,n}(z)}{\tanh^n z}&= \frac{2\,z}{\sqrt{2\pi}\,\Gamma(3/2-n)}
+\Biggl(1\nonumber\\[0.5ex]&\phantom{=}-\left[\frac{n^2-1/4}{2}\,\ln\left(\frac{8\,z}{\zeta_n}\right)+\frac{(n-1/2)\,(n-3/2)}{4} \right]\frac{1}{z^2}\Biggr),\\[0.5ex]
+\frac{z^{1/2}\,P_{|m|-1/2}^{\,n}(z)}{\tanh^n z}&= \frac{(|m|-1)!\,2^{\,|m|}\,z^{\,|m|}}{\sqrt{2\pi}\,\Gamma(|m|-n+1/2)}
+\left[1- \frac{(n-|m|+1/2)\,(n-|m|+3/2)}{4\,(|m|-1)}\,\frac{1}{z^2}\right],\label{e8nm}\\[0.5ex]
+\frac{z^{1/2}\,Q_{|m|-1/2}^{\,n}(z)}{\tanh^{-n}z}&=  \frac{\sqrt{\pi}\,\Gamma(|m|+n+1/2)\,z^{-|m|}}{\sqrt{2}\,2^{\,|m|}\,|m|!}
+\Biggl[1\nonumber\\[0.5ex]&\phantom{=}+ \frac{(|m|-n+1/2)\,(|m|-n+3/2)}{4\,(|m|+1)}\,\frac{1}{z^2}\Biggr],\label{e241}
+\end{align}
+where
+\begin{equation}
+\zeta_n = \exp\left(\sum_{i=1,n}\frac{2}{2\,i-1}\right).
+\end{equation}
+Here, Eqs.~(\ref{e8nm}) only applies to $|m|>1$. 
+Note that there is a factor ${\rm i}^{\,n}$ difference between the definition of the $P_{n-1/2}^{\,n}(z)$ used in this paper and that employed in Ref.~\onlinecite{morse1}.
+Moreover, $\Gamma(z)$ is a Gamma function.\cite{abram1} 
+
+Let 
+\begin{align}\label{e11cc}
+a_0 &= \frac{2}{\sqrt{2\pi}\,\Gamma(1/2-n)}\,A_0,\\[0.5ex]
+a_m &= \frac{\cos(|m|\,\pi)\,(|m|-1)!\,2^{\,|m|}\,\epsilon^{\,-|m|}}{\sqrt{2\pi}\,\Gamma(|m|-n+1/2)}\,A_m,\label{e13nm}\\[0.5ex]
+b_m &= \frac{\cos(|m|\,\pi)\,\sqrt{\pi}\,\Gamma(|m|+n+1/2)\,\epsilon^{\,|m|}}{2^{\,|m|+1/2}\,|m|!}\,B_m,\label{e13cc}
+\end{align}
+where Eq.~(\ref{e13nm}) only  applies to $|m|>0$. 
+Equations~(\ref{e19})--(\ref{e25a}), (\ref{e27})--(\ref{e28}), (\ref{e222})--(\ref{e223}), (\ref{e225})--(\ref{e229}), (\ref{e233}), and (\ref{e234})--(\ref{e241})
+can be combined to give
+\begin{align}
+V_m(1) &= \sum_{m'}\left(a_{m'}\,{\cal P}_m^{\,m'} + b_{m'}\,{\cal Q}_{m}^{\,m'}\right),\label{e27cc}\\[0.5ex]
+\psi_m(1)& = \sum_{m'}\left(a_{m'}\,{\cal R}_m^{\,m'} + b_{m'}\,{\cal S}_{m}^{\,m'}\right),\label{e54cc}
+\end{align}
+where\,\cite{am1}
+\begin{align}
+{\cal P}_{m+\sigma\,j}^{\,m}  &=\epsilon\,\frac{|m|}{2\,j}\left[(H_j'-{\rm i}\,\sigma\,V_j')+(j+1)\left(H_j-{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},\\[0.5ex]
+{\cal P}_{m+\sigma}^{\,m} &=\epsilon\left[\left(\frac{1}{4}-\frac{|m|}{2}\right)+|m|\left(H_1+\frac{H_1'}{2}\right)\right],\\[0.5ex]
+{\cal P}_m^{\,m}  &= 1+\epsilon^{\,2}\,[G_0 (|m|)- |m|\,G_1- |m|^2\,G_2],\\[0.5ex]
+{\cal P}_{m-\sigma}^{\,m} &= \epsilon\left(\frac{1}{4}- |m|\,\frac{H_1'}{2}\right),\\[0.5ex]
+{\cal P}_{m-\sigma\,j}^{\,m} &= \epsilon\,\frac{|m|}{2\,j}\,\left[-\left(H_j'+{\rm i}\,\sigma\,V_j'\right)+(j-1)\left(
+H_j+{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},\\[0.5ex]
+{\cal Q}_{m+\sigma\,j}^{\,m} &=\epsilon\,\frac{|m|}{2\,j}\,\left[\left(H_j'-{\rm i}\,\sigma\,V_j'\right)-(j-1)\left(
+H_j-{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$}, \\[0.5ex]
+{\cal Q}_{m+\sigma}^{\,m} &=\epsilon\left(\frac{1}{4}+ |m|\,\frac{H_1'}{2}\right)\\[0.5ex]
+{\cal Q}_m^{\,m} &= 1+\epsilon^{\,2}\,[G_0 (-|m|)+ |m|\,G_1- |m|^2\,G_2],\\[0.5ex]
+{\cal Q}_{m-\sigma}^{\,m} &=\epsilon\left[\left(\frac{1}{4}+\frac{|m|}{2}\right)-|m|\left(H_1+\frac{H_1'}{2}\right)\right], \\[0.5ex]
+{\cal Q}_{m-\sigma\,j}^{\,m} &=  \epsilon\,\frac{|m|}{2\,j}\left[-(H_j'+{\rm i}\,\sigma\,V_j')-(j+1)\left(H_j+{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},\\[0.5ex]
+{\cal R}_{m+\sigma\,j}^{\,m}  &=\epsilon\,\frac{|m|}{2}\left(1+\frac{|m|}{j}\right)\left[-(H_j'-{\rm i}\,\sigma\,V_j')-(j+1)\left(H_j-{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},\\[0.5ex]
+{\cal R}_{m+\sigma}^{\,m} &=\epsilon\,(1+|m|)\left[\left(\frac{1}{4}+\frac{|m|}{2}\right)-|m|\left(H_1+\frac{H_1'}{2}\right)\right],\\[0.5ex]
+{\cal R}_m^{\,m} &= |m|\,\left(-1-\epsilon^{\,2}\,[G_3 (|m|)- |m|\,(G_1+H_1/2)- |m|^2\,G_2]\right),\\[0.5ex]
+{\cal R}_{m-\sigma}^{\,m} &=\epsilon\left[\left(\frac{1}{4}+\frac{|m|}{4}\right)
+-|m|\,(1-|m|)\,\frac{H_1'}{2}\right],\\[0.5ex]
+{\cal R}_{m-\sigma\,j}^{\,m} &= \epsilon\,\frac{|m|}{2}\left(1-\frac{|m|}{j}\right)\left[-\left(H_j'+{\rm i}\,\sigma\,V_j'\right)+(j-1)\left(
+H_j+{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},\\[0.5ex]
+{\cal S}_{m+\sigma\,j}^{\,m}  &=\epsilon\,\frac{|m|}{2}\left(1+\frac{|m|}{j}\right)\left[\left(H_j'-{\rm i}\,\sigma\,V_j'\right)-(j-1)\left(
+H_j-{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$}, \\[0.5ex]
+{\cal S}_{m+\sigma}^{\,m} &= \epsilon\left[\left(\frac{1}{4}-\frac{|m|}{4}\right)
++|m|\,(1+|m|)\,\frac{H_1'}{2}\right],\\[0.5ex]
+{\cal S}_m^{\,m} &=|m|\, \left(1+\epsilon^{\,2}\left[G_3 (-|m|)+ |m|\left(G_1+\frac{H_1}{2}\right)- |m|^2\,G_2\right]\right),\\[0.5ex]
+{\cal S}_{m-\sigma}^{\,m} &=\epsilon\,(1-|m|)\left[\left(\frac{1}{4}-\frac{|m|}{2}\right)+|m|\left(H_1+\frac{H_1'}{2}\right)\right], \\[0.5ex]
+{\cal S}_{m-\sigma\,j}^{\,m} &=\epsilon\,\frac{|m|}{2}\left(1-\frac{|m|}{j}\right)\left[(H_j'+{\rm i}\,\sigma\,V_j')+(j+1)\left(H_j+{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},
+\end{align}
+and 
+\begin{align}
+G_0(|m|) &= -\left[\frac{n^2+(|m|-2)\,(|m|-3/4)}{4\,(|m|-1)}\right]-\frac{H_1}{2}-\frac{H_1'}{4}\mbox{~~~~for $|m|\neq 1$},\\[0.5ex]
+G_0(1) &= -\frac{n^2}{4}-\left(\frac{n^2}{2}-\frac{1}{8}\right)\ln\left(\frac{8}{\zeta_n\,\epsilon}\right)-\frac{H_1}{2}-\frac{H_1'}{4},\\[0.5ex]
+G_1  &= -\frac{3\,H_1}{4} - \frac{H_1'}{4} + \frac{1}{2}\sum_{j>0}H_j'\,H_j+ \frac{1}{2}\sum_{j>1}V_j'\,V_j,\\[0.5ex]
+G_2 &= -\frac{H_1'}{4}+\frac{1}{4}\sum_{j>0}\frac{1}{j^2}\left[H_j'^{\,2}+ 2\,H_j'\,H_j - (j^2-1)\,H_j^{\,2}\right]\nonumber\\[0.5ex]&\phantom{=}+\frac{1}{4}\sum_{j>1}\frac{1}{j^2}\left[V_j'^{\,2}+ 2\,V_j'\,V_j - (j^2-1)\,V_j^{\,2}\right],\\[0.5ex]
+G_3(|m|)& =- \left[\frac{(|m|-2)\,n^2+ |m|^2/4}{4\,(|m|-1)\,|m|}\right]\mbox{~~~~for $|m|\neq 1$},\\[0.5ex]
+G_3(1)&= -\frac{n^2}{4} +\frac{1}{8}+\left(\frac{n^2}{2}-\frac{1}{8}\right)\ln\left(\frac{8}{\zeta_n\,\epsilon}\right).
+\end{align}
+Here $\sigma={\rm sgn}(m)$. Moreover, the shaping functions and their derivatives are all evaluated at $\hat{r}=1$. 
+There are a number of special cases: 
+\begin{align}
+{\cal P}_j^{\,0} &= \epsilon\left(\frac{H_j-{\rm i}\,V_j}{2}\right)\mbox{~~~for $j>1$},\\[0.5ex]
+{\cal P}_1^{\,0} &=\epsilon\left[\frac{1}{4}\ln\left(\frac{8}{\zeta_n\,\epsilon}\right)-\frac{1}{4}+\frac{H_1}{2}\right],\\[0.5ex]
+{\cal P}_0^{\,0}  &= \ln\left(\frac{8}{\zeta_n\,\epsilon}\right)+\epsilon^{\,2}\left[\frac{n^2}{4} -\frac{5}{16} + \left(\frac{n^2}{4}+\frac{3}{8}\right)\ln\left(\frac{8}{\zeta_n\,\epsilon}\right)\right]\nonumber\\[0.5ex]
+&\phantom{=}-\left(\frac{H_1}{2}+\frac{H_1'}{4}\right)\ln\left(\frac{8}{\zeta_n\,\epsilon}\right)-G_1,\\[0.5ex]
+{\cal P}_{-1}^{\,0} &=\epsilon\left[\frac{1}{4}\ln\left(\frac{8}{\zeta_n\,\epsilon}\right)-\frac{1}{4}+\frac{H_1}{2}\right],\\[0.5ex]
+{\cal P}_{-j}^{\,0}   &= \epsilon\left(\frac{H_j+{\rm i}\,V_j}{2}\right)\mbox{~~~for $j>1$},\\[0.5ex]
+{\cal R}_j^{\,0}&= \epsilon\left(-\frac{H_j'-{\rm i}\,V_j'}{2}-\frac{H_j-{\rm i}\,V_j}{2}\right)\mbox{~~~for $j>1$},\\[0.5ex]
+{\cal R}_1^{\,0} &=\epsilon\left[\frac{1}{4}\ln\left(\frac{8}{\zeta_n\,\epsilon}\right)+\frac{1}{2}-\frac{H_1}{2}-\frac{H_1'}{2}\right],\\[0.5ex]
+{\cal R}_0^{\,0}  &= -1+\epsilon^{\,2}\,n^2\,\frac{1}{2}\left[\ln\left(\frac{8}{\zeta_n\,\epsilon}\right)+\frac{1}{2}\right],\\[0.5ex]
+{\cal R}_{-1}^{\,0} &=\epsilon\left[\frac{1}{4}\ln\left(\frac{8}{\zeta_n\,\epsilon}\right)+\frac{1}{2}-\frac{H_1}{2}-\frac{H_1'}{2}\right],\\[0.5ex]
+{\cal R}_{-j}^{\,0}   &= \epsilon\left(-\frac{H_j'+{\rm i}\,V_j'}{2}-\frac{H_j+{\rm i}\,V_j}{2}\right)\mbox{~~~for $j>1$},\\[0.5ex]
+{\cal S}_0^{\,0} &= \epsilon^{\,2}\,\frac{n^2}{2}.
+\end{align}
+
+It can be demonstrated that\,\cite{am1}
+\begin{align}\label{e286}
+{\cal A}^{mm'}\equiv\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal R}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal P}_{m''}^{\,m'}\right)&= \delta^{\,mm'}\,{\cal O}(\epsilon^{\,4})+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\\[0.5ex]
+{\cal B}^{mm'}\equiv\sum_{m''}\left({\cal Q}_{m''}^{\,m\,\ast}\,{\cal S}_{m''}^{\,m'}- {\cal S}_{m''}^{\,m\,\ast}\,{\cal Q}_{m''}^{\,m'}\right)&= \delta^{\,mm'}\,{\cal O}(\epsilon^{\,4})+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\\[0.5ex]
+{\cal C}^{mm'}\equiv\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal S}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal Q}_{m''}^{\,m'}\right)&= \delta^{\,mm'}\,[h_m+{\cal O}(\epsilon^{\,4})]+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\label{e288}
+\end{align}
+where
+\begin{equation}
+h_m = \left\{\begin{array}{ccc}2\,|m|&~~~~~~&\mbox{$|m|>0$}\\[0.5ex]
+1&&\mbox{$|m|=0$}\end{array}\right..
+\end{equation}
+Thus, we can determine the parameters in the expansions (\ref{e27cc}) and (\ref{e54cc}) as follows:
+\begin{align}
+a_m &= \frac{1}{h_m}\sum_{m'}\left[-{\cal Q}_{m'}^{\,m\,\ast}\,\psi_{m'}(1) + \frac{{\cal S}_{m'}^{\,m\,\ast}\,Z_{m'}(1)}{m'-n\,q(1)}\right]+{\cal O}(\epsilon^{\,2}),\\[0.5ex]
+b_m &= \frac{1}{h_m}\sum_{m'}\left[{\cal P}_{m'}^{\,m\,\ast}\,\psi_{m'}(1) -\frac{{\cal R}_{m'}^{\,m\,\ast}\,Z_{m'}(1)}{m'-n\,q(1)}\right]+{\cal O}(\epsilon^{\,2}),\label{e291}
+\end{align}
+where use has been made of Eq.~(\ref{evdef}).
+
+\subsection{Toroidal Electromagnetic Angular Momentum Flux}
+By analogy with Eq.~(\ref{torque}), the outward flux of toroidal electromagnetic angular momentum across the plasma boundary,
+which is equal to the flux of  toroidal electromagnetic angular momentum across a surface of constant $\mu$ (in the direction of
+decreasing $\mu$) in the vacuum region, is given by 
+\begin{align}
+T_\phi(1) &= -\oint\oint (\nabla\mu\times \nabla\eta\cdot\nabla\phi)^{-1}\,b_\phi\,b^{\,\mu}\,d\eta\,d\phi\nonumber\\[0.5ex]
+&= -\frac{{\rm i}\,\pi\,n}{2}\oint \frac{z^2-1}{z-\cos\eta}\left(\frac{\partial V}{\partial z}\,V^{\,\ast}-\frac{\partial V^{\,\ast}}{\partial z}\,V\right)d\eta,
+\end{align}
+where $z=\cosh\mu$. 
+From Eq.~(\ref{e233}), we get
+\begin{equation}
+T_\phi(1)=-{\rm i}\,\pi^2\,n\sum_m(z^2-1)\left[\frac{dP_{m-1}^{\,n}}{dz}\,Q_{m-1/2}^{\,n}- P_{m-1/2}^{\,n}\,\frac{dQ_{m-1/2}^{\,n}}{dz}\right]
+\left(A_m\,B_m^{\,\ast}- A_m^{\,\ast}\,B_m\right).
+\end{equation}
+However,\cite{morse3}
+\begin{equation}
+\frac{dP_{m-1}^{\,n}}{dz}\,Q_{m-1/2}^{\,n}- P_{m-1/2}^{\,n}\,\frac{dQ_{m-1/2}^{\,n}}{dz}= \frac{\Gamma(|m|+n+1/2)}{\Gamma(|m|-n-1/2)\,(z^2-1)}.
+\end{equation}
+Thus, making use of Eqs.~(\ref{e11cc})--(\ref{e13cc}), we obtain
+\begin{equation}\label{e90cc}
+T_\phi(1) =- {\rm i}\,\pi^2\,n\sum_m h_m\,(a_m\,b_m^{\,\ast}-a_m^{\,\ast}\,b_m).
+\end{equation}
+
+\subsection{Homogeneous Boundary Condition at Plasma/Vacuum Interface}
+In the absence of currents driven in non-axisymmetric external magnetic field-coils and  eddy currents flowing in external conductors, the vacuum expansion  (\ref{e233})
+must contain none of the terms involving the $Q_{m-1/2}^{\,n}(z)$, because these terms are badly behaved a long way from the plasma,
+and could not, therefore, be generated by currents flowing within the plasma (which are the only type of currents present in the problem).  It follows that the $B_m$ coefficients must all be zero. Hence, according to
+Eq.~(\ref{e13cc}),
+\begin{equation}\label{e296}
+b_m= 0
+\end{equation}
+for all $m$. Thus, Eq.~(\ref{e291}) yields the following boundary condition at the plasma/vacuum interface:
+\begin{equation}\label{e297}
+\frac{Z_m(1) }{m-n\,q(1)}= \sum_{m'}H_{mm'}\,\psi_{m'}(1),
+\end{equation}
+where
+\begin{equation}\label{e298}
+\sum_{m''}{\cal R}_{m''}^{\,m\,\ast}\,H_{m'' m'}= {\cal P}_{m'}^{\,m\,\ast}.
+\end{equation}
+
+Now, from Eq.~(\ref{etorque}), (\ref{e27cc}), (\ref{e54cc}), and (\ref{e286})--(\ref{e288}), 
+\begin{align}\label{e299}
+T_\phi(1) &= {\rm i}\,\pi^2\,n\sum_{m}\frac{Z_m^{\,\ast}(1)\,\psi_m(1)-\psi_m^{\,\ast}(1)\,Z_m(1)}{m-n\,q(1)}\nonumber\\[0.5ex]
+&={\rm i}\,\pi^2\,n\sum_{m,m'}\left(a_m^{\,\ast}\,{\cal A}^{mm'}\,a_{m'} + a_m^{\,\ast}\,{\cal B}^{mm'}\,b_{m'}+b_m^{\,\ast}\,{\cal B}^{m'm\,\ast}\,a_{m'}
++b_m^{\,\ast}\,{\cal C}^{mm'}\,b_{m'}\right)\nonumber\\[0.5ex]
+&= -{\rm i}\,\pi^2\,n\sum_m h_m\,(a_m\,b_m^{\,\ast}-a_m^{\,\ast}\,b_m) + {\cal O}(\epsilon^{\,2}).
+\end{align}
+Given that Eq.~(\ref{e90cc}) is an exact result (i.e., it is independent of our inverse aspect-ratio expansion), it is clear that the 
+${\cal O}(\epsilon^{\,2})$ and ${\cal O}(\epsilon^{\,4})$ residuals on the right-hand sides of Eqs.~(\ref{e286})--(\ref{e288})
+would all be zero in an exact calculation.
+
+Equations~(\ref{e90cc}) and (\ref{e296}) imply that 
+\begin{equation}\label{e300}
+T_\phi(1)=0. 
+\end{equation}
+In other words, the flux of toroidal electromagnetic angular momentum across the plasma boundary is
+exactly zero, as must be the case for an isolated plasma.  According to Eqs.~(\ref{e297}) and (\ref{e299}), this constraint can only be satisfied if  $H_{mm'}$ is an Hermitian matrix. 
+Now, Eqs.~(\ref{e298}) yields 
+\begin{equation}
+\sum_{m'',m'''}{\cal R}_{m''}^{m\,\ast}\,(H_{m''m'''}-H_{m'''m''}^{\,\ast})\,{\cal R}_{m'''}^{\,m'}=\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal R}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal P}_{m''}^{\,m'}\right)={\cal O}(\epsilon^{\,2}),
+\end{equation}
+where use has been made of Eq.~(\ref{e286}). Thus, it is clear that $H_{mm'}$ is Hermitian to ${\cal O}(\epsilon^{\,2})$. 
+Moreover, we can enforce the physical constraint  (\ref{e300}) by neglecting the ${\cal O}(\epsilon^{\,2})$ non-Hermitian
+component of $H_{mm'}$.
+
+\section{Calculation of Tearing Mode Dispersion Relation}
+\subsection{Introduction}
+Let the $m_j$, for $j=1,J$, be the poloidal mode numbers included in the calculation. Here, it is assumed that $m_{j+1}=m_j+1$ for $j=1,J-1$. 
+Let there be $K$ rational surfaces in the plasma, and let the $k$th surface lie at radius $\hat{r}_k$, for $k=1,K$. Here,
+it is assumed that $\hat{r}_{k+1}>\hat{r}_k$ for $k=1,K-1$. 
+
+\subsection{Well-Behaved Solutions Launched from Magnetic Axis}
+Let us launch $J$ linearly independent, well-behaved solutions of the outer region ODEs, (\ref{e61x}) and (\ref{e62x}), from the
+magnetic axis, as described in Sect.~\ref{axis}. Let us then numerically integrate these solutions to the plasma/vacuum interface. The poloidal harmonics of
+the solutions are denoted $\psi^a_{m_{j'}\,m_j}(\hat{r})$ and $Z^a_{m_{j'}\,m_j}(\hat{r})$, for $j,j'=1,J$. Here,
+$m_{j'}$ is the poloidal mode number of the harmonic, whereas $m_j$ is the dominant poloidal mode number of the solution close to the
+magnetic axis. The asymptotic matching conditions imposed at the rational surfaces are
+\begin{align}
+A_{L\,k}^{-} &= A_{L\,k}^+,\\[0.5ex]
+{\mit\Delta\Psi}_k &= 0,
+\end{align}
+for $k=1,K$. (See Sect.~\ref{sa7}). 
+Let ${\mit\Pi}_{kj}^a$, for   $k=1,K$ and $j=1,J$,  be the value of ${\mit\Psi}_k$ at the $k$th rational surface associated with a solution launched
+from the magnetic axis with dominant poloidal mode number $m_j$. 
+
+A scheme similar to A.H.~Glasser's ``fixups'' \cite{ham} is employed to periodically re-orthogonalize the set of solutions. These  re-orthogonalizations are implemented at user defined locations between the magnetic axis and the plasma boundary.  At each re-orthogonalization location, the matrix of solutions is forced to become upper triangular, via a process similar to Gaussian elimination, such that only one solution has a non-zero amount of the highest poloidal  harmonic, two solutions have non-zero amounts of the next highest harmonic, and so on. The solutions are then renormalized to their largest component. 
+ The re-othognalizations are
+ necessary to prevent the solutions for becoming colinear as a result of rounding errors, given the significantly
+ different rates at with poloidal harmonics with different poloidal mode numbers grow with increasing $\hat{r}$  close to the magnetic axis. (In fact, an $m$th harmonic grows as $\hat{r}^{\,|m|}$. Hence, an $m=10$ harmonic would grow far faster than an $m=1$ harmonic. Unchecked, each solution
+ would quickly become dominated by its component with the largest mode number.)
+
+\subsection{Small Solutions Launched from Rational Surfaces}
+Let us launch a ``small'' solution of the outer region ODEs  from each rational surface in the plasma, as described in Sects.~\ref{sgen} and \ref{sspec}, 
+ and numerically integrate it to the plasma vacuum boundary. The poloidal harmonics of
+the solutions are denoted $\psi^s_{m_{j}\,k}(\hat{r})$ and $Z^s_{m_{j}\,k}(\hat{r})$, for $j=1,J$ and $k=1,K$. Here,
+$m_{j}$ is the poloidal mode number of the harmonic, whereas $k$ is the index of the rational surface from which the solution is launched.
+The launch conditions are
+\begin{align}
+A_{L\,k}^+ &=  0,\\[0.5ex]
+{\mit\Delta\Psi}_k &=1.
+\end{align}
+The asymptotic matching conditions imposed at the other rational surfaces are
+\begin{align}
+A_{L\,k'}^{-} &= A_{L\,k'}^+,\\[0.5ex]
+{\mit\Delta\Psi}_{k'} &= 0,
+\end{align}
+for $k'=k+1,K$.
+Let 
+${\mit\Pi}_{k'k}^s$, for $k'=1,K$ and $k=1,K$,  be the value of ${\mit\Psi}_{k'}$ at the $k'$th rational surface associated with a small solution
+launched from the $k$th rational surface. Note that ${\mit\Pi}_{k'k}^s=0$ for $k' \leq k$.  
+
+\subsection{Tearing Mode Dispersion Relation}
+The most general expression for the solution of the outer region ODEs at the plasma/vacuum interface is
+\begin{align}
+\psi_{m_j}(1) &= \sum_{j'=1,J}\psi_{m_j\,m_{j'}}^a(1)\,\alpha_{j'} + \sum_{k=1,K}\psi_{m_j\,k}^s(1)\,{\mit\Delta\Psi}_k,\\[0.5ex]
+Z_{m_j}(1) &= \sum_{j'=1,J}Z_{m_j\,m_{j'}}^a(1)\,\alpha_{j'} + \sum_{k=1,K}Z_{m_j\,k}^s(1)\,{\mit\Delta\Psi}_k,
+\end{align}
+for $j=1,J$, where the $\alpha_j$ are complex coefficients. However, the solution must satisfy the boundary condition (\ref{e297}). 
+It follows that
+\begin{equation}
+\sum_{j'=1,J}X_{jj'}\,\alpha_{j'} = \sum_{k=1,K}Y_{jk}\,{\mit\Delta\Psi}_k
+\end{equation}
+for $j=1,J$, where
+\begin{align}
+X_{jj'} &=\frac{Z^a_{m_j\,m_{j'}}(1)}{m_j-n\,q(1)}-\sum_{j''=1,J} H_{m_j\,m_{j''}}\,\psi^a_{m_j''\,m_{j'}}(1),\\[0.5ex]
+Y_{jk} &= \sum_{j''=1,J}H_{m_j\,m_{j''}}\,\psi_{m_{j''}\,k}^s(1)-\frac{Z^s_{m_j\,k}(1)}{m_j-n\,q(1)}
+\end{align}
+for $j,j'=1,J$ and $k=1,K$. Thus, we can write
+\begin{equation}
+\alpha_j = \sum_{k=1,K}{\mit\Omega}_{jk}\,{\mit\Delta\Psi}_k
+\end{equation}
+for $j=1,J$, 
+where
+\begin{equation}
+\sum_{j'=1,J}X_{jj'}\,{\mit\Omega}_{j'k} = Y_{jk}
+\end{equation}
+for $j=1,J$ and $k=1,K$. It follows that our general solution is now free of arbitrary parameters.
+ Finally, we obtain the {\em tearing mode dispersion relation},\cite{connor,cht,am1,pletz}
+\begin{equation}\label{e315}
+{\mit\Psi}_k = \sum_{k'=1,K}F_{kk'}\,{\mit\Delta\Psi}_{k'}
+\end{equation}
+for $k,k'=1,K$, where
+\begin{equation}
+F_{kk'}=\sum_{j=1,J}{\mit\Pi}^a_{kj}\,{\mit\Omega}_{jk'} + {\mit\Pi}^s_{kk'}.
+\end{equation}
+Equation~(\ref{e315}) specifies the reconnected magnetic flux, ${\mit\Psi}_k$, driven at each rational surface in the plasma
+as a consequence of the current sheets, ${\mit\Delta\Psi}_k$, flowing at the surfaces. It follows that $F_{kk'}$ is a dimensionless
+inductance matrix.\cite{rfbook}
+
+We can construct the ``fully reconnected" tearing eigenfunction\,\cite{am1} associated with the $k$th rational surface,
+which is defined to have the following properties, 
+\begin{align}
+{\mit\Psi}_{k' }&= F_{k'k},\\[0.5ex]
+{\mit\Delta\Psi}_{k'} &= \delta_{k'k}
+\end{align}
+for $k'=1,K$, 
+as follows: 
+\begin{align}
+\psi_{m_j\,k}^{f}(\hat{r}) &=\psi^s_{m_j\,k}(\hat{r})+ \sum_{j'=1,J}\psi_{m_j\,m_{j'}}^a(\hat{r})\,{\mit\Omega}_{j'k},\\[0.5ex]
+Z_{m_j\,k}^{f}(\hat{r}) &=Z^s_{m_j\,k}(\hat{r})+ \sum_{j'=1,J}Z_{m_j\,m_{j'}}^a(\hat{r})\,{\mit\Omega}_{j'k}
+\end{align}
+for $j=1,J$.
+
+The tearing mode dispersion relation can be written in the alternative form\,\cite{cht,am1}
+\begin{equation}\label{e317}
+{\mit\Delta\Psi}_k = \sum_{k'=1,K}E_{kk'}\,{\mit\Psi}_{k'}
+\end{equation}
+for $k=1,K$, where $E_{kk'}$ is the inverse of $F_{kk'}$. The previous equation specifies the current sheets driven at each rational surface
+in the plasma as a consequence of the reconnected fluxes at the surfaces. 
+
+We can construct the ``unreconnected" tearing eigenfunction\,\cite{am1} associated with the $k$th rational surface,
+which is defined to have the following properties, 
+\begin{align}
+{\mit\Psi}_{k' }&= \delta_{k'k},\\[0.5ex]
+{\mit\Delta\Psi}_{k'} &= E_{k'k}
+\end{align}
+for $k'=1,K$, 
+as follows: 
+\begin{align}
+\psi_{m_j\,k}^{u}(\hat{r}) &=\sum_{k'=1,K}\psi_{m_j\,k'}^{f}(\hat{r})\,E_{k'k},\\[0.5ex]
+Z_{m_j\,k}^{u}(\hat{r}) &=\sum_{k'=1,K}Z_{m_j\,k'}^{f}(\hat{r})\,E_{k'k},
+\end{align}
+for $j=1,J$.
+
+Let
+\begin{equation}
+{\mit\Delta}_k = \frac{{\mit\Delta\Psi}_k}{{\mit\Psi}_k}
+\end{equation}
+ be the complex quantity that characterizes the
+tearing response of the resonant layer at the $k$th rational surface to the ideal-MHD solution in the outer region.\cite{fkr}
+In general, ${\mit\Delta}_k$ is a function of the growth-rate and phase-velocity of the reconnected magnetic flux at the surface.\cite{am1,layer,layer1}
+The previous two equations can be combined to give the ultimate form of the tearing mode dispersion relation,
+\begin{equation}
+\sum_{k'=1,k}({\mit\Delta}_k\,\delta_{kk'}-E_{kk'})\,{\mit\Psi}_{k'} = 0
+\end{equation}
+for $k=1,K$. It is clear that $E_{kk}$ is the tearing stability index\,\cite{fkr} at the $k$th rational surface when magnetic reconnection  takes place
+at this surface, but is suppressed at the other surfaces (as is likely to occur in the presence of sheared plasma rotation\,\cite{am1}). 
+
+\subsection{Toroidal Electromagnetic Torques}
+According to Eqs.~(\ref{e194t}) and (\ref{e317}), the net toroidal electromagnetic torque exerted on the plasma
+in the immediate vicinity of the $k$th rational surface is
+\begin{equation}
+\delta T_k = 2\,\pi^2\,n\sum_{k'=1,K} {\rm Im}({\mit\Psi}_k^{\,\ast}\,E_{kk'}\,{\mit\Psi}_{k'}).
+\end{equation}
+The total electromagnetic torque exerted on the plasma is
+\begin{equation}
+T_\phi(1) = \sum_{k=1,K}\delta T_k =  2\,\pi^2\,n\sum_{k,k'=1,K} {\rm Im}({\mit\Psi}_k^{\,\ast}\,E_{kk'}\,{\mit\Psi}_{k'}).
+\end{equation}
+However, we have already established that this total torque is zero, irrespective of the values of the ${\mit\Psi}_k$. [See Eq.~(\ref{e300})].
+Thus, it follows that
+\begin{equation}
+E_{kk'} = E_{k'k}^{\,\ast}.
+\end{equation}
+In other words, the matrix $E_{kk'}$ is Hermitian,\cite{am1} which implies that $F_{kk'}$ is also Hermitian (as must ought to be the case if $F_{kk'}$ can
+be interpreted as 
+a dimensionless inductance matrix). 
+
+\section*{Acknowledgements}
+This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
+The analytic calculations  described  this paper have been verified using the {\sc REDUCE} computer algebra system.
+
+\section*{Data Availability Statement}
+The digital data used in the figures in this paper can be obtained from the author upon reasonable request.
+
+\appendix
+\section{Nonorthogonal Curvilinear Coordinates}\label{s2}
+Consider the nonorthogonal curvilinear coordinate system, $r$, $\theta$, $\phi$,  introduced in Sect.~\ref{coords}, and let
+${\cal J}=  (\nabla r\times \nabla\theta\cdot\nabla\phi)^{-1}$.
+
+Let
+\begin{align}
+{\bf A} &= A^{\,r}\,{\cal J}\,\nabla\theta\times\nabla\phi
++  A^{\,\theta}\,{\cal J}\,\nabla\phi\times\nabla r
++  A^{\,\phi}\,{\cal J}\,\nabla r\times\nabla\theta,\\[0.5ex]
+{\bf A} &= A_r\,\nabla r+A_\theta\,\nabla\theta+A_\phi\,\nabla\phi,
+\end{align}
+where ${\bf A}$ is a general vector.
+It is easily demonstrated that
+\begin{align}
+{\bf A}\cdot{\bf B} &= A_r\,B^{\,r}+A_\theta \,B^{\,\theta}+A_\phi\,B^{\,\phi}=A^{\,r}\,B_r+A^{\,\theta}\,B_{\theta}+A^{\,\phi}\,B_\phi,\\[0.5ex]
+({\bf A}\times {\bf B})_r &= {\cal J}\,(A^{\,\theta}\,B^{\,\phi}-A^{\,\phi}\,B^{\,\theta}),\label{crossdown1}\\[0.5ex]
+({\bf A}\times {\bf B})_\theta &= {\cal J}\,(A^{\,\phi}\,B^{\,r}-A^{\,r}\,B^{\,\phi}),\label{crossdown2}\\[0.5ex]
+({\bf A}\times {\bf B})_\phi &= {\cal J}\,(A^{\,r}\,B^{\,\theta}-A^{\,\theta}\,B^{\,r}),\label{crossdown3}\\[0.5ex]
+{\cal J}\,({\bf A}\times {\bf B})^{\,r} &= A_{\theta}\,B_{\phi}-A_{\phi}\,B_{\theta},\label{crossup1}\\[0.5ex]
+{\cal J}\,({\bf A}\times {\bf B})^{\,\theta} &= A_{\phi}\,B_{r}-A_{r}\,B_{\phi},\\[0.5ex]
+{\cal J}\,({\bf A}\times {\bf B})^{\,\phi} &=A_{r}\,B_{\theta}-A_{\theta}\,B_{r},\label{crossup3}
+\end{align}
+where ${\bf B}$ is another general vector.
+Furthermore,
+\begin{align}
+{\cal J}\,\nabla \cdot{\bf C} &= \frac{\partial\,({\cal J}\,C^{\,r})}{\partial r} + 
+\frac{\partial\,({\cal J}\,C^{\,\theta})}{\partial \theta}+ 
+\frac{\partial\,({\cal J}\,C^{\,\phi})}{\partial \phi},\label{div}\\[0.5ex]
+{\cal J}\,(\nabla\times {\bf C})^{\,r}&= \frac{\partial C_\phi}{\partial \theta}
+-\frac{\partial C_\theta}{\partial \phi},\label{curl1}\\[0.5ex]
+{\cal J}\,(\nabla\times {\bf C})^{\,\theta}&= \frac{\partial C_r}{\partial \phi}
+-\frac{\partial C_\phi}{\partial r},\\[0.5ex]
+{\cal J}\,(\nabla\times {\bf C})^{\,\phi}&= \frac{\partial C_\theta}{\partial r}
+-\frac{\partial C_r}{\partial \theta},\label{curl3}
+\end{align}
+where ${\bf C}({\bf r})$ is a general vector field.
+
+\begin{thebibliography}{99}\baselineskip 5ex
+
+\bibitem{fkr} H.P.~Furth,  J.~Killeen, and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).
+
+\bibitem{con0} J.W.~Connor, and R.J.~Hastie, {\em The Effect of Shaped Plasma Cross Sections on the Ideal Kink Mode in a Tokamak}. (Rep. CLM-M106, Culham Laboratory, Abingdon UK, 1985)
+
+\bibitem{connor} J.W.~Connor,  S.C.~Cowley, R.J.~Hastie,  T.C.~Hender,  A.~Hood, and T.J.~Martin, 
+Phys.\ Fluids {\bf 31}, 577 (1988).
+
+\bibitem{cht} J.W.~Connor, R.J.~Hastie, and J.B.~Taylor, Phys.\ Fluids B {\bf 3}, 1539 (1991).
+
+\bibitem{am1} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin, and C.M.~Roach, Nucl.\ Fusion {\bf 33}, 1533 (1993).
+
+\bibitem{tokuda} S.~Tokuda, Nucl.\ Fusion {\bf 41}, 1037 (2001).
+
+\bibitem{brennan} D.P.~Brennan, R.J.~La Haye, A.D.~Turnbull, M.S.~Chu, T.H.~Jensen, L.L.~Lao, T.C.~Luce, P.A.~Politzer, and E.J.~Strait, Phys.\ Plasmas {\bf 10}, 1643 (2003).
+
+\bibitem{ham} C.J.~Ham, J.W.~Connor, S.C.~Cowley, C.G.~Gimblett, R.J.~Hastie, T.C.~Hender, and T.J.~Martin, Plasma Phys.\ Controlled Fusion {\bf 54}, 025009 (2012). 
+
+\bibitem{am3} R.~Fitzpatrick, Phys.\ Plasmas {\bf 24}, 072506 (2017). 
+
+\bibitem{nish} Y.~Nishimura, J.D.~Callen, and C.C.~Hegna, Phys.\ Plasmas {\bf 5}, 4292 (1998).
+
+\bibitem{pletz} A.~Pletzer, and R.L.~Dewar, J.\ Plasma Physics {\bf 45}, 427 (1991).
+
+\bibitem{am2} A.H.~Glasser, Z.R.~Wang, and J.-K.~Park, Phys.\ Plasmas {\bf 23}, 112506 (2016).
+
+\bibitem{aglas} A.S.~Glasser, E.~Kolemen, and A.H.~Glasser, Phys.\ Plasmas {\bf 25}, 032507 (2018).
+
+\bibitem{aglas1} A.S.~Glasser, and E.~Koleman, Phys.\ Plasmas {\bf 25}, 082502 (2018). 
+
+\bibitem{greene} J.M.~Greene, J.L.~Johnson, and K.E.~Weimer,  Phys.\  Fluids  {\bf 14}, 671 (1971).
+
+\bibitem{chance} M.S.~Chance, Phys.\ Plasmas {\bf 4}, 2161 (1997).
+
+\bibitem{bussac} M.N.~Bussac, R.~Pellat, D.~Edery, and J.L.~Soule, Phys.\ Rev.\ Lett.\ {\bf 35}, 1638 (1975).
+
+\bibitem{gs1} J.P.~Freidberg, {\em Ideal Magnetohydrodynamics}. (Plenum, New York NY, 1987.)
+
+\bibitem{flow} R.~Iacono, A.~Bondeson, F.~Troyon, and R.~Gruber, Phys.\ Fluids B {\bf 2}, 1794 (1990).
+
+\bibitem{flow1} L.~Guazzotto,  R.~Betti, J.~Manickam, and  S.~Kaye, Phys.\ Plasmas {\bf 11}, 604 (2004).
+
+\bibitem{rfa} R.~Fitzpatrick, Nucl.\ Fusion {\bf 33}, 1049 (1993).
+
+\bibitem{ggj} A.H.~Glasser, J.M.~Greene, and J.L.~Johnson, Phys.\ Fluids {\bf 18}, 875 (1975).
+
+\bibitem{mercier} C.~Mercier, Nucl.\ Fusion {\bf 1}, 47 (1960).
+
+\bibitem{twist} R. Fitzpatrick, Phys.\ Plasmas {\bf 1}, 3308 (1994).
+
+\bibitem{gim} R.~Fitzpatrick, C.G.~Gimblett, and R.J.~Hastie, Plasma Phys.\ Control.\ Fusion {\bf 34}, 161 (1992). 
+
+\bibitem{fitz2024} R.~Fitzpatrick, {\em Inverse Aspect-Ratio Expanded Tokamak Equilibria}, submitted to Physics of Plasmas (2024).
+
+\bibitem{shaf} V.D.~Shafranov, Atomnaya \'{E}nergiya {\bf 3}, 521  (1962).
+
+\bibitem{morse} P.M.~Morse, and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1301. (McGraw-Hill, New York NY, 1953)
+
+\bibitem{morse1} P.M.~Morse, and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1302. (McGraw-Hill, New York NY, 1953)
+
+\bibitem{abrama} M.~Abramowitz, and I.A.~Stegun, {\em Handbook of Mathematical Functions}, sect.~8.11. (Dover, New York NY, 1964)
+
+\bibitem{abram2} M.~Abramowitz, and I.A.~Stegun, {\em Handbook of Mathematical Functions}, sect.~8.2. (Dover, New York NY, 1964)
+
+\bibitem{morse2} P.M.~Morse, and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1302, p.~1329. (McGraw-Hill, New York NY, 1953)
+
+\bibitem{bate} A.~Erd\'{e}lyi, W.~Magnus, F.~Oberhettinger, F.C.~Tricomi, {\em Higher Transcendental Functions}, vol.~1, sect.~1.7.3. 
+(McGraw-Hill, New York NY, 1953)
+
+\bibitem{abram1} M.~Abramowitz, and I.A.~Stegun, {\em Handbook of Mathematical Functions}, ch.~6. (Dover, New York NY, 1964)
+
+\bibitem{morse3} P.M.~Morse, and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1330. (McGraw-Hill, New York NY, 1953)
+
+\bibitem{rfbook} R.~Fitzpatrick, {\em Tearing Mode Dynamics in Tokamak Plasmas}. (IOP, Bristol UK,  2023)
+
+\bibitem{layer} R.~Fitzpatrick, Phys.\ Plasmas {\bf 5}, 3325 (1998).
+
+\bibitem{layer1} A. Cole, and R. Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
+
+\end{thebibliography}
+
+\end{document}
+
+
