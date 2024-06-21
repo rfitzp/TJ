@@ -19,14 +19,14 @@
 \section{Introduction} 
 The calculation of tearing mode stability in a high temperature tokamak plasma is most efficiently formulated as  an asymptotic
 matching problem.\cite{fkr} In such a problem, the  plasma is  divided into two regions. In the ``outer region'', which comprises most
-of the plasma, the tearing perturbation is described by the equations of linearized, marginally-stable, ideal magnetohydrodynamics (ideal-MHD).
-However, these equations become singular on so-called ``rational'' magnetic flux-surfaces. In the so-called ``inner region'', which
+of the plasma, the tearing perturbation is described by the equations of linearized, marginally-stable, ideal magnetohydrodynamics (ideal-MHD). [See Sect.~\ref{mhd}.]
+However, these equations become singular on so-called ``rational'' magnetic flux-surfaces at which the perturbed magnetic field resonates with the equilibrium field. In the so-called ``inner region'', which
 consists of a set of narrow layers centered on the various rational surfaces, non-ideal-MHD effects such as plasma inertia, resistivity, and
 viscosity become important. The growth-rate and angular rotation frequency of the reconnected magnetic flux at a given rational
-surface (labelled $k$) are fixed by asymptotically matching the resistive layer
+surface (numbered $k$) are fixed by asymptotically matching the resistive layer
 solution in the associated segment of the inner region, which is characterized by a dimensionless complex quantity ${\mit\Delta}_k$,  to the ideal-MHD solution in the outer region. In a realistic axisymmetric tokamak  plasma equilibrium, tearing
 perturbations with different toroidal mode numbers are independent of one another, whereas perturbations with different poloidal
-mode numbers are coupled together via toroidicity and the shaping of magnetic flux-surfaces.\cite{con0}
+mode numbers are coupled together via toroidicity and the non-circular shaping of magnetic flux-surfaces.\cite{con0}
 Consequently, for a tearing perturbation with a given toroidal mode number, 
  the ${\mit\Delta}_k$ values associated with  the various rational surfaces in the plasma are interrelated via a matrix equation.\cite{connor,cht,tokuda,brennan, ham,am1,am3}
 
@@ -130,7 +130,7 @@ current density is zero at the interface.
 The outer region partial differential equations (PDEs) were first presented in Ref.~\onlinecite{connor} without an explicit
 derivation. However, the derivation is sufficiently non-obvious that it is worth outlining in this section. 
 
-\subsection{Governing Equations}
+\subsection{Governing Equations}\label{mhd}
 In the outer region, the perturbed plasma equilibrium satisfies the  ideal-MHD equations\,\cite{connor,am1,am3,gs1}
 \begin{align}
 {\bf b} &= \nabla\times (\bxi\times {\bf B}),\label{e21}\\[0.5ex]
@@ -546,16 +546,16 @@ a_j&=-\frac{1}{(m_k\,s)_{r_k}}\left(\frac{L^{\,m_k}_{m_k+j}}{L_0}+\frac{M^{\,m_k
 b_j&=- \frac{1}{(m_k\,s)_{r_k}}\left(\frac{P^{\,m_k}_{m_k+j}}{\nu_{L\,k}}+\frac{N^{\,m_k}_{m_k+j}}{L_0}\right)_{r_k},\\[0.5ex]
 \tilde{a}_{j}&= -\frac{1}{(m_k\,s)_{r_k}}\left(\frac{L^{\,m_k}_{m_k+j}}{L_0}+\frac{M^{\,m_k}_{m_k+j}}{\nu_{S\,k}}\right)_{r_k},\\[0.5ex]
 \tilde{b}_{j}&=- \frac{1}{(m_k\,s)_{r_k}}\left(\frac{P^{\,m_k}_{m_k+j}}{\nu_{S\,k}}+\frac{N^{\,m_k}_{m_k+j}}{L_0}\right)_{r_k},\label{e138}\\[0.5ex]
-c_j&= \frac{1}{(1+\nu_{L\,k})\,r_k}\left[-\nu_{L\,k}\,a_j+L_{j\,1}\,b_{L}+M_{j\,1}\right.\nonumber\\[0.5ex]
+c_j&= \frac{1}{(1+\nu_{L\,k})\,r_k}\left[-\nu_{L\,k}\,a_j+L_{j\,1}\,b_{L}+M_{j\,1}\phantom{\frac{1}{j}}\right.\nonumber\\[0.5ex]
 &\phantom{=}-
 \frac{r_k}{m_k\,s}\left(L_{m_k+j}^{\,m_k}\,\gamma_L+M_{m_k+j}^{\,m_k}\,\lambda_L\right) +\left.\sum_{j'\neq 0} \frac{1}{j'}\left(L_{m_k+j}^{\,m_k+j'}\,b_{j'}+ M_{m_k+j}^{\,m_k+j'}\,a_{j'}\right)\right]_{r_k},\\[0.5ex]
-d_j&= \frac{1}{(1+\nu_{L\,k})\,r_k}\left[-\left(\nu_{L\,k}+\frac{m_k\,s}{j}\right)b_j+N_{j\,1}\,b_{L\,k}+P_{j\,1}\right.\nonumber\\[0.5ex]
+d_j&= \frac{1}{(1+\nu_{L\,k})\,r_k}\left[-\left(\nu_{L\,k}+\frac{m_k\,s}{j}\right)b_j+N_{j\,1}\,b_{L}+P_{j\,1}\right.\nonumber\\[0.5ex]
 &\phantom{=}-
 \frac{r_k}{m_k\,s}\left(N_{m_k+j}^{\,m_k}\,\gamma_L+P_{m_k+j}^{\,m_k}\,\lambda_L\right) +\left.\sum_{j'\neq 0} \frac{1}{j'}\left(N_{m_k+j}^{\,m_k+j'}\,b_{j'}+ P_{m_k+j}^{\,m_k+j'}\,a_{j'}\right)\right]_{r_k},\\[0.5ex]
 \bar{\psi}_{m_k+j}' &= \frac{1}{r_k}\left[-\frac{r_k}{m_k\,s}\left(L_{m_k+j}^{\,m_k}\,B_C+ M_{m_k+j}^{m_k}\,A_C\right)\right.\nonumber\\[0.5ex]&\phantom{=}\left.
-+ \sum_{j'\neq 0} \frac{1}{j'}\left(L_{m+k+j}^{\,m_k+j'}\,\bar{Z}_{m_k+j'} +M_{m+k+j}^{\,m_k+j'}\,\bar{\psi}_{m_k+j'}\right)\right]_{r_k},\\[0.5ex]
++ \sum_{j'\neq 0} \frac{1}{j'}\left(L_{m_k+j}^{\,m_k+j'}\,\bar{Z}_{m_k+j'} +M_{m_k+j}^{\,m_k+j'}\,\bar{\psi}_{m_k+j'}\right)\right]_{r_k},\\[0.5ex]
 \bar{Z}_{m_k+j}' &= \frac{1}{r_k}\left[-\frac{m_k\,s}{j}\,\bar{Z}_{m_k+j}-\frac{r_k}{m_k\,s}\left(N_{m_k+j}^{\,m_k}\,B_C+ P_{m_k+j}^{m_k}\,A_C\right)\right.\nonumber\\[0.5ex]&\phantom{=}\left.+ 
-\sum_{j'\neq 0} \frac{1}{j'}\left(N_{m+k+j}^{\,m_k+j'}\,\bar{Z}_{m_k+j'} +P_{m+k+j}^{\,m_k+j'}\,\bar{\psi}_{m_k+j'}\right)\right]_{r_k},
+\sum_{j'\neq 0} \frac{1}{j'}\left(N_{m_k+j}^{\,m_k+j'}\,\bar{Z}_{m_k+j'} +P_{m_k+j}^{\,m_k+j'}\,\bar{\psi}_{m_k+j'}\right)\right]_{r_k},
 \end{align}
 and
 \begin{align}
@@ -608,11 +608,11 @@ A_{D} &=  \frac{L_0}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(N_{m_k}^{\,m_k+j}\,\bar{
 B_{D} &= \frac{A_{D}}{L_0},\\[0.5ex]
 \hat{\lambda}_{L} &= \frac{P_1\,L_0\,(1+\nu_{L\,k}) }{r_k} + \frac{\nu_{L\,k}\,T_1}{r_k}
 -\frac{1}{(m_k\,s)_{r_k}}\,\frac{1}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(L_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+M_{m_k}^{\,m_k+j}\,M_{m_k+j}^{m_k}\right)_{r_k}\nonumber\\[0.5ex]&\phantom{=}
-- \frac{\nu_{L\,k}}{(m_k\,s)_{r_k}}\,\frac{1}{r_k}
+- \frac{1}{(m_k\,s)_{r_k}}\,\frac{\nu_{L\,k}}{r_k}
 \left(L_{m_k}^{\,m_k+j}\,N_{m_k+j}^{\,m_k}+M_{m_k}^{\,m_k+j}\,L_{m_k+j}^{m_k}\right)_{r_k},\\[0.5ex]
 \mu_{L}&= -\frac{1}{2\,(m_k\,s)_{r_k}}\frac{L_0}{r_k}\sum_{j\neq 0}\frac{1}{j}\,(N_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+P_{m_k}^{\,m_k+j}\,M_{m_k+j}^{\,m_k})_{r_k},\\[0.5ex]
 \xi_{L} &= M_1+ \frac{\nu_{L\,k}}{r_k} \left(\frac{L_1}{L_0}-1\right),\\[0.5ex]
-\hat{\gamma}_{L} &=\frac{P_1\,(1+\nu_{L\,k})}{L_0\,r_k} + \frac{\nu_{L\,k}\,T_1}{r_k},\\[0.5ex]
+\hat{\gamma}_{L} &=\frac{P_1\,(1+\nu_{L\,k})}{L_0\,r_k} + \frac{\nu_{L\,k}\,T_1}{L_0\,r_k},\\[0.5ex]
 \delta_{L} &= \frac{\mu_{L}}{L_0}.
 \end{align}
 Here, $\hat{a}_j$, $\hat{b}_j$, $\tilde{a}_j$ and $\tilde{b}_j$ are again specified by Eqs.~(\ref{e135})--(\ref{e138}). 
@@ -626,7 +626,7 @@ A_{S\,k} &= \frac{Z_{m_k}(r_k+\delta)-b_{L}\,A_{L\,k}-\delta\,\ln|\delta|\,[B_D+
 A_{L\,k} &= \frac{\psi_{m_k}(r_k+\delta)-\delta\,[A_{S\,k}+A_C+A_D\,(\ln|\delta|-1)]}
 {1+\nu_{L\,k}\,\ln|\delta|+\delta\,[\hat{\lambda}_L\,(\ln|\delta|-1)+ \mu_L\,(\ln^2|\delta|-2\,\ln|\delta|-2)+\xi_L]}+{\cal O}(\delta^{\,2})
 \end{align}
-for $j\neq 0$. As before, these equations can be solved via iteration.
+for $j\neq 0$. As before, the previous equations can be solved via iteration.
 
 \subsection{Asymptotic Matching Across  Rational Surfaces}\label{sa7}
 Consider the resonant layer solution in the vicinity of the $k$th  rational surface, whose resonant poloidal mode number is $m_k$. 
@@ -648,8 +648,8 @@ preceding analysis, the continuity condition for the resonant harmonic can be wr
 \psi_{m_k}(r_k+|\delta|) &= \psi_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,\lambda_L + A_C] + 2\,A_{S\,k}^-\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
 Z_{m_k} (r_k+|\delta|) &=  Z_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,\gamma_L + B_C] + 2\,A_{S\,k}^-\,b_S\,|\delta|^{\nu_{S\,k}} 
 \nonumber\\[0.5ex]&\phantom{=}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
-\psi_{m_k+j}(r_k+|\delta|) &= \psi_{m_k+j}(r_k-|\delta|) +2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,c_j + \bar{\psi}_{m_k+j}] + 2\,A_{S\,k}^-\,a_j\,|\delta|^{\nu_{S\,k}}+\nonumber\\[0.5ex]&\phantom{=} {\cal O}(\delta^{\,2}),\\[0.5ex]
-Z_{m_k+j}(r_k+|\delta|) &= Z_{m_k+j}(r_k-|\delta|) +2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,d_j + \bar{Z}_{m_k+j}] + 2\,A_{S\,k}^-\,b_j\,|\delta|^{\nu_{S\,k}}
+\psi_{m_k+j}(r_k+|\delta|) &= \psi_{m_k+j}(r_k-|\delta|) +2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,c_j + \bar{\psi}_{m_k+j}'] + 2\,A_{S\,k}^-\,a_j\,|\delta|^{\nu_{S\,k}}\nonumber\\[0.5ex]&\phantom{=} +{\cal O}(\delta^{\,2}),\\[0.5ex]
+Z_{m_k+j}(r_k+|\delta|) &= Z_{m_k+j}(r_k-|\delta|) +2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,d_j + \bar{Z}_{m_k+j}'] + 2\,A_{S\,k}^-\,b_j\,|\delta|^{\nu_{S\,k}}
 \nonumber\\[0.5ex]&\phantom{=}+ {\cal O}(\delta^{\,2})
 \end{align}
 in the general case, and 
@@ -667,10 +667,10 @@ in the special case. In both cases, $j\neq 0$.
 
 Consider a solution that is launched from the $k$th rational surface, so that $A_{L\,k} = A_{S\,k}^-=0$. It follows from the preceding analysis that
 \begin{align}
-\psi_{m_k}(r_k+|\delta|) &= A_{S\,k}^+\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^2),\\[0.5ex]
-Z_{m_k}(r_k+|\delta|) &= A_{S\,k}^+\,b_S\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^2),\\[0.5ex]
-\psi_{m_k+j}(r_k+|\delta|)& = A_{S\,k}^+\,\tilde{a}_j\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^2),\\[0.5ex]
-Z_{m_k+j}(r_k+|\delta|) &= A_{S\,k}^+\,\tilde{b}_j\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^2)
+\psi_{m_k}(r_k+|\delta|) &= A_{S\,k}^+\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
+Z_{m_k}(r_k+|\delta|) &= A_{S\,k}^+\,b_S\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
+\psi_{m_k+j}(r_k+|\delta|)& = A_{S\,k}^+\,\tilde{a}_j\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
+Z_{m_k+j}(r_k+|\delta|) &= A_{S\,k}^+\,\tilde{b}_j\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2})
 \end{align}
 for $j\neq 0$. 
 
@@ -729,7 +729,7 @@ This transformation ensures that
 and, hence, that 
 \begin{equation}
 {\cal J} \equiv \frac{R}{\epsilon} \left(\frac{\partial R}{\partial\theta}\,\frac{\partial Z}{\partial \hat{r}} -\frac{\partial R}{\partial \hat{r}}\,\frac{\partial Z}{\partial \hat{r}}\right)
-=\epsilon\, R\,J\,\frac{\partial\omega}{\partial\theta} =\hat{r}\,R^{\,2},
+=\epsilon\, R\,J\,\frac{\partial\omega}{\partial\theta} =r\,R^{\,2},
 \end{equation}
 in accordance with Eq.~(\ref{jac}). 
 
@@ -798,7 +798,7 @@ Finally, it follows from Eqs.~(\ref{ap}), (\ref{ag}), (\ref{af}), and (\ref{e26v
 \end{align}
 
 \subsection{Self-Inductance and $\beta$ values}
-The normalized self-inductance, toroidal beta, poloidal beta, and normalized beta values of the plasma
+The conventionally defined normalized self-inductance, toroidal beta, poloidal beta, and normalized beta values of the plasma equilibrium 
 can be written\,\cite{gs1}
 \begin{align}
 l_i&= \frac{2\int_0^1 \hat{r}\,f^2\,\langle |\nabla r|^2\rangle\,d\hat{r}}{(f^2\,\langle|\nabla r|^2\rangle^2)_{\hat{r}=1}},\\[0.5ex]
@@ -944,7 +944,7 @@ V(\mu,\eta) = \sum_m (z-\cos\eta)^{1/2}\,[A_m\,P_{m-1/2}^{\,n}(z) + B_m\,Q_{m-1/
 \end{equation}
 where $z=\cosh\mu$, $P_{m-1/2}^{\,n}(z)$ and $Q_{m-1/2}^{\,n}(z)$ are {\em toroidal functions},\cite{abrama} and the $A_m$ and
 $B_m$ are arbitrary constants.  Note that $P_{m-1/2}^{\,n}(z)$ is well behaved
-in the limit $z\rightarrow 1$, whereas $Q_{m-1/2}^{\,n}(z)$ is badly behaved.  Conversely, $P_{n-1/2}^{\,n}(z)$ is badly behaved in the limit
+in the limit $z\rightarrow 1$, whereas $Q_{m-1/2}^{\,n}(z)$ is badly behaved.  Conversely, $P_{m-1/2}^{\,n}(z)$ is badly behaved in the limit
 $z\rightarrow\infty$, whereas $Q_{m-1/2}^{\,n}(z)$ is well behaved. 
 
 In the immediate vicinity of the plasma/vacuum boundary, Eqs.~(\ref{e19x}), (\ref{e20x}), (\ref{epdef}), (\ref{e54cx}), and (\ref{e55cc}) can
@@ -978,20 +978,20 @@ have the following asymptotic behaviors:\,\cite{morse2,bate}
 \frac{z^{1/2}\,P_{-1/2}^{\,n}(z)}{\tanh^{n}z}&= \frac{2}{\sqrt{2\pi}\,\Gamma(1/2-n)}
 \left\{\ln\left(\frac{8\,z}{\zeta_n}\right)\right.\nonumber\\[0.5ex]
 &\phantom{=}\left.
-+ \frac{1}{4}\left[(n^2-5/4)+ (n+1/2)\,(n+3/2)\,\ln\left(\frac{8\,z}{\zeta_n}\right)\right]\frac{1}{z^2}\right\},\\[0.5ex]
++ \frac{1}{4}\left[(n^2-5/4)+ (n+1/2)\,(n+3/2)\,\ln\left(\frac{8\,z}{\zeta_n}\right)\right]\frac{1}{z^2}+{\cal O}\left(\frac{1}{z^4}\right)\right\},\\[0.5ex]
 \frac{z^{1/2}\,P_{1/2}^{\,n}(z)}{\tanh^n z}&= \frac{2\,z}{\sqrt{2\pi}\,\Gamma(3/2-n)}
-\Biggl(1\nonumber\\[0.5ex]&\phantom{=}-\left[\frac{n^2-1/4}{2}\,\ln\left(\frac{8\,z}{\zeta_n}\right)+\frac{(n-1/2)\,(n-3/2)}{4} \right]\frac{1}{z^2}\Biggr),\\[0.5ex]
+\Biggl\{1\nonumber\\[0.5ex]&\phantom{=}-\left[\frac{n^2-1/4}{2}\,\ln\left(\frac{8\,z}{\zeta_n}\right)+\frac{(n-1/2)\,(n-3/2)}{4} \right]\frac{1}{z^2}+{\cal O}\left(\frac{1}{z^4}\right)\Biggr\},\\[0.5ex]
 \frac{z^{1/2}\,P_{|m|-1/2}^{\,n}(z)}{\tanh^n z}&= \frac{(|m|-1)!\,2^{\,|m|}\,z^{\,|m|}}{\sqrt{2\pi}\,\Gamma(|m|-n+1/2)}
-\left[1- \frac{(n-|m|+1/2)\,(n-|m|+3/2)}{4\,(|m|-1)}\,\frac{1}{z^2}\right],\label{e8nm}\\[0.5ex]
+\left[1- \frac{(n-|m|+1/2)\,(n-|m|+3/2)}{4\,(|m|-1)}\,\frac{1}{z^2}+{\cal O}\left(\frac{1}{z^4}\right)\right],\label{e8nm}\\[0.5ex]
 \frac{z^{1/2}\,Q_{|m|-1/2}^{\,n}(z)}{\tanh^{-n}z}&=  \frac{\sqrt{\pi}\,\Gamma(|m|+n+1/2)\,z^{-|m|}}{\sqrt{2}\,2^{\,|m|}\,|m|!}
-\Biggl[1\nonumber\\[0.5ex]&\phantom{=}+ \frac{(|m|-n+1/2)\,(|m|-n+3/2)}{4\,(|m|+1)}\,\frac{1}{z^2}\Biggr],\label{e241}
+\Biggl[1\nonumber\\[0.5ex]&\phantom{=}+ \frac{(|m|-n+1/2)\,(|m|-n+3/2)}{4\,(|m|+1)}\,\frac{1}{z^2}+{\cal O}\left(\frac{1}{z^4}\right)\Biggr],\label{e241}
 \end{align}
 where
 \begin{equation}
 \zeta_n = \exp\left(\sum_{i=1,n}\frac{2}{2\,i-1}\right).
 \end{equation}
 Here, Eqs.~(\ref{e8nm}) only applies to $|m|>1$. 
-Note that there is a factor ${\rm i}^{\,n}$ difference between the definition of the $P_{n-1/2}^{\,n}(z)$ used in this paper and that employed in Ref.~\onlinecite{morse1}.
+Note that there is a factor ${\rm i}^{\,n}$ difference between the definition of the $P_{m-1/2}^{\,n}(z)$ used in this paper and that employed in Ref.~\onlinecite{morse1}.
 Moreover, $\Gamma(z)$ is a Gamma function.\cite{abram1} 
 
 Let 
@@ -1165,10 +1165,11 @@ for $k=1,K$. (See Sect.~\ref{sa7}).
 Let ${\mit\Pi}_{kj}^a$, for   $k=1,K$ and $j=1,J$,  be the value of ${\mit\Psi}_k$ at the $k$th rational surface associated with a solution launched
 from the magnetic axis with dominant poloidal mode number $m_j$. 
 
-A scheme similar to A.H.~Glasser's ``fixups'' \cite{ham} is employed to periodically re-orthogonalize the set of solutions. These  re-orthogonalizations are implemented at user defined locations between the magnetic axis and the plasma boundary.  At each re-orthogonalization location, the matrix of solutions is forced to become upper triangular, via a process similar to Gaussian elimination, such that only one solution has a non-zero amount of the highest poloidal  harmonic, two solutions have non-zero amounts of the next highest harmonic, and so on. The solutions are then renormalized to their largest component. 
- The re-othognalizations are
+A scheme similar to A.H.~Glasser's ``fixups'' \cite{ham} is employed to periodically re-orthogonalize the set of solutions. These  re-orthogonalizations are implemented at user-defined locations between the magnetic axis and the plasma boundary.  At each re-orthogonalization location, the matrix of solutions is forced to become upper triangular, via a process similar to Gaussian elimination, such that only one solution has a non-zero amount of the highest poloidal  harmonic, two solutions have non-zero amounts of the next highest harmonic, and so on. The solutions are then renormalized to their largest component. 
+ The re-orthogonalizations are
  necessary to prevent the solutions for becoming colinear as a result of rounding errors, given the significantly
- different rates at with poloidal harmonics with different poloidal mode numbers grow with increasing $\hat{r}$  close to the magnetic axis. (In fact, an $m$th harmonic grows as $\hat{r}^{\,|m|}$. Hence, an $m=10$ harmonic would grow far faster than an $m=1$ harmonic. Unchecked, each solution
+ different rates at which poloidal harmonics with different poloidal mode numbers grow with increasing $\hat{r}$  close to the magnetic axis. (In fact, a
+ harmonic with mode number $m$ grows as $\hat{r}^{\,|m|}$. Hence, an $m=10$ harmonic  grows far faster than an $m=1$ harmonic. Unchecked, each solution
  would quickly become dominated by its component with the largest mode number.)
 
 \subsection{Small Solutions Launched from Rational Surfaces}
@@ -1241,7 +1242,7 @@ as follows:
 \psi_{m_j\,k}^{f}(\hat{r}) &=\psi^s_{m_j\,k}(\hat{r})+ \sum_{j'=1,J}\psi_{m_j\,m_{j'}}^a(\hat{r})\,{\mit\Omega}_{j'k},\\[0.5ex]
 Z_{m_j\,k}^{f}(\hat{r}) &=Z^s_{m_j\,k}(\hat{r})+ \sum_{j'=1,J}Z_{m_j\,m_{j'}}^a(\hat{r})\,{\mit\Omega}_{j'k}
 \end{align}
-for $j=1,J$.
+for $j=1,J$. Note that the fully reconnected solution associated with the $k$th rational surface only has a current sheet at that surface. 
 
 The tearing mode dispersion relation can be written in the alternative form\,\cite{cht,am1}
 \begin{equation}\label{e317}
@@ -1262,7 +1263,7 @@ as follows:
 \psi_{m_j\,k}^{u}(\hat{r}) &=\sum_{k'=1,K}\psi_{m_j\,k'}^{f}(\hat{r})\,E_{k'k},\\[0.5ex]
 Z_{m_j\,k}^{u}(\hat{r}) &=\sum_{k'=1,K}Z_{m_j\,k'}^{f}(\hat{r})\,E_{k'k},
 \end{align}
-for $j=1,J$.
+for $j=1,J$.  Note that the unreconnected solution associated with the $k$th rational surface only has reconnected flux at that surface. 
 
 Let
 \begin{equation}

@@ -26,10 +26,10 @@
 ## EigenFunctions:
 
 	- Full.py        - Plots psi and Z components of fully reconnected solution vector associated with given rational surface versus r
-        - Unrc.py        - Plots psi and Z components of unreconnected solution vector associated with given rational surface versus r
+	- Unrc.py        - Plots psi and Z components of unreconnected solution vector associated with given rational surface versus r
 	- Unrc1.py       - Plots kth harmonic of psi and Z components of unreconnected solution vector associated with given rational surface versus r.
 
 ## Torques:
 
 	- Tfull.py       - Plots angular momentum flux associated with pair of fully reconnected solutions versus r
-        - Tunrc.py       - Plots angular momentum flux associated with pair of unreconnected solutions versus r
+	- Tunrc.py       - Plots angular momentum flux associated with pair of unreconnected solutions versus r
