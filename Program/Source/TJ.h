@@ -130,6 +130,13 @@ class TJ
   gsl_interp_accel** HPacc;     // Accelerator for interpolated radial derivatives of horizontal shaping functions
   gsl_interp_accel** VPacc;     // Accelerator for interpolated radial derivatives of vertical shaping functions
 
+  int             Nf;           // Number of magnetic flux-surfaces
+  int             Nw;           // Number of angular points on magnetic flux-surfaces
+  Array<double,2> RR;           // R coodinates of magnetic flux-surfaces
+  Array<double,2> ZZ;           // Z coodinates of magnetic flux-surfaces
+  Array<double,2> rvals;        // r values on magnetic flux-surfaces
+  Array<double,2> thvals;       // theta values on magnetic flux-surfaces
+
   // ......................
   // Calculation parameters
   // ......................

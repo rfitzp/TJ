@@ -146,8 +146,10 @@ void Equilibrium::Solve ()
       VPacc[n]    = gsl_interp_accel_alloc ();
     }
 
-  RR.resize (Nf, Nw+1);
-  ZZ.resize (Nf, Nw+1);
+  RR    .resize (Nf, Nw+1);
+  ZZ    .resize (Nf, Nw+1);
+  rvals .resize (Nf, Nw+1);
+  thvals.resize (Nf, Nw+1);
 
   // ..................
   // Set up radial grid
@@ -398,8 +400,10 @@ void Equilibrium::Solve ()
 	  for (int n = 2; n <= Ns; n++)
 	    Z += epsa*epsa * (hn[n] * sin (double (n - 1) * w) - vn[n] * cos (double (n - 1) * w));
 	  
-	  RR(i-1, j) = R;
-	  ZZ(i-1, j) = Z;
+	  RR    (i-1, j) = R;
+	  ZZ    (i-1, j) = Z;
+	  rvals (i-1, j) = rf;
+	  thvals(i-1, j) = t;
 	}
       
       delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
@@ -612,6 +616,8 @@ void Equilibrium::Solve ()
   double* Vnpdata = new double[(Ns+1)*(Nr+1)];
   double* Rdata   = new double[Nf*(Nw+1)];
   double* Zdata   = new double[Nf*(Nw+1)];
+  double* rdata   = new double[Nf*(Nw+1)];
+  double* tdata   = new double[Nf*(Nw+1)];
   double* Hna     = new double[Ns+1];
   double* Vna     = new double[Ns+1];
   double* npol    = new double[Ns+1];
@@ -641,8 +647,10 @@ void Equilibrium::Solve ()
   for (int n = 0; n < Nf; n++)
     for (int i = 0; i <= Nw; i++)
       {
-	Rdata[i + n*(Nw+1)] = RR(n, i);
-	Zdata[i + n*(Nw+1)] = ZZ(n, i);
+	Rdata[i + n*(Nw+1)] = RR    (n, i);
+	Zdata[i + n*(Nw+1)] = ZZ    (n, i);
+	rdata[i + n*(Nw+1)] = rvals (n, i);
+	tdata[i + n*(Nw+1)] = thvals(n, i);
       }
 
   try
@@ -734,6 +742,10 @@ void Equilibrium::Solve ()
       R_x.putVar (Rdata);
       NcVar Z_x = dataFile.addVar ("Z", ncDouble, flux_d);
       Z_x.putVar (Zdata);
+      NcVar rr_x = dataFile.addVar ("rr", ncDouble, flux_d);
+      rr_x.putVar (rdata);
+      NcVar t_x = dataFile.addVar ("theta", ncDouble, flux_d);
+      t_x.putVar (tdata);
 
       NcVar n_x = dataFile.addVar ("n", ncDouble, s_d);
       n_x.putVar (npol);
@@ -791,6 +803,7 @@ void Equilibrium::Solve ()
 
   delete[] Hndata; delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata;
   delete[] Rdata;  delete[] Zdata;   delete[] Hna;    delete[] Vna;
+  delete[] rdata;  delete[] tdata;
 
   delete[] data;
 }

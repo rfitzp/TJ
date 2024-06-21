@@ -154,6 +154,8 @@ class Equilibrium
 
   Array<double,2> RR;       // R coodinates of magnetic flux-surfaces
   Array<double,2> ZZ;       // Z coodinates of magnetic flux-surfaces
+  Array<double,2> rvals;    // r values on magnetic flux-surfaces
+  Array<double,2> thvals;   // theta values on magnetic flux-surfaces
    
   // -------------------------------
   // Adaptive integration parameters

@@ -91,8 +91,43 @@ void TJ::ReadEquilibrium ()
 	    VVfunc(n, i) = Vndata [i + n*(Nr+1)];
 	    VPfunc(n, i) = Vnpdata[i + n*(Nr+1)];
 	  }
+
+      NcVar RR_x = dataFile.getVar ("R");
+      NcVar ZZ_x = dataFile.getVar ("Z");
+      NcVar rr_x = dataFile.getVar ("rr");
+      NcVar tt_x = dataFile.getVar ("theta");
+      NcDim f_d  = RR_x.getDim (0);
+      NcDim w_d  = RR_x.getDim (1);
+
+      Nf = f_d.getSize ();
+      Nw = w_d.getSize ();
+
+      RR.resize     (Nf, Nw);
+      ZZ.resize     (Nf, Nw);
+      rvals.resize  (Nf, Nw);
+      thvals.resize (Nf, Nw);
+
+      double* RRdata = new double[Nf*Nw];
+      double* ZZdata = new double[Nf*Nw];
+      double* rrdata = new double[Nf*Nw];
+      double* ttdata = new double[Nf*Nw];
+
+      RR_x.getVar (RRdata);
+      ZZ_x.getVar (ZZdata);
+      rr_x.getVar (rrdata);
+      tt_x.getVar (ttdata);
+ 
+      for (int n = 0; n < Nf; n++)
+	for (int i = 0; i < Nw; i++)
+	  {
+	    RR    (n, i) = RRdata[i + n*Nw];
+	    ZZ    (n, i) = ZZdata[i + n*Nw];
+	    rvals (n, i) = rrdata[i + n*Nw];
+	    thvals(n, i) = ttdata[i + n*Nw];
+	  }
       
-      delete[] para; delete[] Hndata; delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata; 
+      delete[] para;   delete[] Hndata; delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata;
+      delete[] RRdata; delete[] ZZdata; delete[] rrdata;  delete[] ttdata;
     }
   catch (NcException& e)
      {

@@ -12,6 +12,16 @@ fn = 'Equilibrium.nc'
 ds = nc.Dataset(fn)
 R  = ds['R']
 Z  = ds['Z']
+r  = ds['rr']
+t  = ds['theta']
+
+RR = np.asarray(R);
+ZZ = np.asarray(Z);
+rr = np.asarray(r);
+
+fn1 = 'TJ.nc'
+ds1 = nc.Dataset(fn1)
+rres = ds1['rres']
 
 RR = np.asarray(R)
 nf = RR.shape[0]
@@ -27,12 +37,14 @@ scale = float (input ("scale ? "))
 plt.xlim(1.-scale, 1.+scale)
 plt.ylim(-scale, scale)
 
-for n in range (nf-1):
+for n in range (0, nf, 10):
     plt.plot(R[n], Z[n], color = 'blue', linewidth = 0.5, linestyle = 'solid')
-plt.plot(R[nf-1],  Z[nf-1],  color = 'red', linewidth = 1.0, linestyle = 'solid')
+plt.plot(R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
 
 for n in range (0,nt-1,5):
     plt.plot(R[:,n], Z[:,n], color = 'green', linewidth = 0.5, linestyle = 'solid')
+
+plt.contour(RR, ZZ, rr, rres, colors='red', linewidths = 1.)    
 
 plt.plot([1.], [0.], marker='o', markersize=2, color="red")
 

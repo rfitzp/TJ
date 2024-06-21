@@ -1,4 +1,4 @@
-# Python scripts for program TJ
+# Python Scripts for Program TJ
 
 
 ## Equilibrium:
