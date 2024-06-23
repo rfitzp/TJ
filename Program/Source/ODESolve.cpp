@@ -96,7 +96,7 @@ void TJ::ODESolve ()
   nf = (NFIX == 0) ? 0 : int ((rx - rres[nres-1]) * double (NFIX));
   SegmentFixup (rr, rx, nf, YY);
   
-  printf ("Integrating solution vectors to plasma boundary:  r = %11.4e: Torque test = %11.4e\n", rx, TorqueTest (rx, YY));
+  printf ("Integrating solution vectors to plasma boundary:      r = %11.4e: Torque test = %11.4e\n", rx, TorqueTest (rx, YY));
 
   int index = NDIAG - 1;
 

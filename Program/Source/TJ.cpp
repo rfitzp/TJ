@@ -65,7 +65,7 @@ TJ::TJ ()
   // --------------------------------
   NameListTJ (&NTOR, &MMIN, &MMAX,
 	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX, &FREE, 
-	      &acc, &h0, &hmin, &hmax, &EPSF);
+	      &acc, &h0, &hmin, &hmax, &EPSF, &POWR);
  
   // -----------------------------
   // Output calculation parameters
@@ -76,8 +76,8 @@ TJ::TJ ()
 	  NTOR, MMIN, MMAX, EPS, DEL);
   printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free = %1d\n",
 	  NFIX, NDIAG, NULC, ITERMAX, FREE);
-  printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
-	  acc, h0, hmin, hmax, EPSF);
+  printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e powr = %10.3e\n",
+	  acc, h0, hmin, hmax, EPSF, POWR);
 }
 
 // ###########

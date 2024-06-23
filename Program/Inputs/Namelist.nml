@@ -21,19 +21,22 @@
  NTOR  = 1
  MMIN  = -10
  MMAX  = 20
+ FREE  = 1
 
- EPS     = 1.e-4
- DEL     = 1.e-8
- NFIX    = 160
- NDIAG   = 1024
+ EPS   = 1.e-4
+ DEL   = 1.e-8
+ NFIX  = 160
+ NDIAG = 1024
+
  NULC    = 2.e-9
  ITERMAX = 10
- FREE    = 1
 
- ACC   = 1.e-12
- H0    = 1.e-4
- HMIN  = 1.e-10
- HMAX  = 1.e-2
- EPSF  = 1.e-4
+ ACC  = 1.e-12
+ H0   = 1.e-4
+ HMIN = 1.e-10
+ HMAX = 1.e-2
+
+ EPSF = 1.e-4
+ POWR = 2.
 /
  

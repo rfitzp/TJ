@@ -53,7 +53,7 @@ using namespace arma;
 // Namelist reading function
 extern "C" void NameListTJ (int* NTOR, int* MMIN, int* MMAX,
 			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX, int* FREE, 
-			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF);
+			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF, double* POWR);
 
 // ############
 // Class header
@@ -78,6 +78,7 @@ class TJ
   int    FREE;    // Flag for free/fixed boundary calculation 
 
   double EPSF;    // Step-length for finite difference determination of derivative
+  double POWR;    // Power for reduction in dynamic range of visulalized fields
 
   // ..................................................
   // Equilibrium data (read from Inputs/Equilibrium.nc)
@@ -383,6 +384,8 @@ class TJ
   void GetTorqueUnrc ();
   // Output visualization data for unreconnected tearing eigenfunctions
   void VisualizeEigenfunctions ();
+  // Reduce dynamic range of quantity
+  double ReduceRange (double x);
   
   // ..................
   // In Interpolate.cpp

@@ -430,7 +430,24 @@ void TJ::VisualizeEigenfunctions ()
 		}
 	    }
 
-	  Psiuv(k, i, l) = complex<double> (psi_r, psi_i);
-	  Zuv  (k, i, l) = complex<double> (z_r,   z_i);
+	  Psiuv(k, i, l) = complex<double> (ReduceRange(psi_r), ReduceRange(psi_i));
+	  Zuv  (k, i, l) = complex<double> (ReduceRange(z_r),   ReduceRange(z_i));
 	}
+}
+
+// ############################################
+// Function to reduce dynamic range of quantity
+// ############################################
+double TJ::ReduceRange (double x)
+{
+  double y;
+
+  if (x > 0.)
+    y =    pow (x, 1./POWR);
+  else if (x < 0.)
+    y =  - pow (fabs(x), 1./POWR);
+  else
+    y = 0.;
+
+  return y;
 }

@@ -31,8 +31,8 @@
 	- Unrc.py        - Plots poloidal harmonics of psi and Z Fourier components of unreconnected solution vector associated with
 	  		   given rational surface versus r
 	- Unrc1.py       - Plots kth poloidal harmonic of psi and Z components of unreconnected solution vector associated with given rational surface versus r.
-        - Psi.py         - Plots psi Fourier components of unreconnected solution vector associated with given rational surface in R, Z plane
-	- PsiZ.py        - Plots psi and Z Fourier components of unreconnected solution vector associated with given rational surface in R, Z plane
+	- Psi.py         - Plots psi components of unreconnected solution vector associated with given rational surface in R, Z plane
+	- PsiZ.py        - Plots psi and Z components of unreconnected solution vector associated with given rational surface in R, Z plane
 
 ## Torques:
 

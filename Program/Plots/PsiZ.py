@@ -65,7 +65,7 @@ plt.contourf(RR, ZZ, Pr, ncont, cmap=ReBu)
 plt.plot([1.], [0.], marker='o', markersize=1, color="black")
 
 plt.xlabel(r'$R/R_0$', fontsize="12")
-plt.ylabel(r'$Z$',  fontsize="12")
+plt.ylabel(r'$Z/R_0$',  fontsize="12")
 
 plt.subplot(2, 2, 2)
 plt.xlim(1.-scale, 1.+scale)
@@ -80,7 +80,7 @@ plt.contourf(RR, ZZ, Pi, ncont, cmap=ReBu)
 plt.plot([1.], [0.], marker='o', markersize=1, color="black")
 
 plt.xlabel(r'$R/R_0$', fontsize="12")
-plt.ylabel(r'$Z$',  fontsize="12")
+plt.ylabel(r'$Z/R_0$',  fontsize="12")
 
 plt.subplot(2, 2, 3)
 plt.xlim(1.-scale, 1.+scale)
@@ -95,7 +95,7 @@ plt.contourf(RR, ZZ, Zr, ncont, cmap=ReBu)
 plt.plot([1.], [0.], marker='o', markersize=1, color="black")
 
 plt.xlabel(r'$R/R_0$', fontsize="12")
-plt.ylabel(r'$Z$',  fontsize="12")
+plt.ylabel(r'$Z/R_0$',  fontsize="12")
 
 plt.subplot(2, 2, 4)
 plt.xlim(1.-scale, 1.+scale)
@@ -110,7 +110,7 @@ plt.contourf(RR, ZZ, Zi, ncont, cmap=ReBu)
 plt.plot([1.], [0.], marker='o', markersize=1, color="black")
 
 plt.xlabel(r'$R/R_0$', fontsize="12")
-plt.ylabel(r'$Z$',  fontsize="12")
+plt.ylabel(r'$Z/R_0$',  fontsize="12")
 
 plt.tight_layout()
 
