@@ -116,7 +116,11 @@ void TJ::ReadEquilibrium ()
       ZZ_x.getVar (ZZdata);
       rr_x.getVar (rrdata);
       tt_x.getVar (ttdata);
- 
+
+      rf = new double[Nf];
+      for (int n = 0; n < Nf; n++)
+	rf[n] = rrdata[n*Nw];
+      
       for (int n = 0; n < Nf; n++)
 	for (int i = 0; i < Nw; i++)
 	  {

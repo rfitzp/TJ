@@ -1,5 +1,5 @@
-# Intput files for program TJ
+# Intput files for Program TJ
 
-  - Namelist.nml - Fortran namelist
-  - Shape.txt    - Text file specifing normalized edge flux-surface shaping harmonics at plasma boundary
+  - *Namelist.nml* - Fortran namelist
+  - *Shape.txt*    - Text file specifing normalized edge flux-surface shaping harmonics at plasma boundary
   

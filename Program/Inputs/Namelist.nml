@@ -19,8 +19,8 @@
 
 &TJ_CONTROL
  NTOR  = 1
- MMIN  = -5
- MMAX  = 10
+ MMIN  = -10
+ MMAX  = 20
 
  EPS     = 1.e-4
  DEL     = 1.e-8

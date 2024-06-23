@@ -14,6 +14,7 @@ int main ()
   // Call class Equilibrium to construct aspect-ratio expanded tokamak equilibrium
   // .............................................................................
   Equilibrium equilibrium;
+  clock_t     begin = clock ();
   equilibrium.Solve ();
   
   // ...........................................................
@@ -21,6 +22,11 @@ int main ()
   // ...........................................................
   TJ tj;
   tj.Solve ();
+
+  clock_t end       = clock ();
+  double time_spent = double (end - begin) /double(CLOCKS_PER_SEC);
+
+  printf ("\nNormal termination: Cpu time = %10.3e s\n", time_spent);
 
   return 0;
 }

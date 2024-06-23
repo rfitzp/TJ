@@ -196,6 +196,10 @@ void TJ::WriteNetCDF ()
   double* TTu     = new double[nres*NDIAG];
   double* TFull   = new double[nres*nres*NDIAG];
   double* TUnrc   = new double[nres*nres*NDIAG];
+  double* PPV_r   = new double[nres*Nf*Nw];
+  double* PPV_i   = new double[nres*Nf*Nw];
+  double* ZZV_r   = new double[nres*Nf*Nw];
+  double* ZZV_i   = new double[nres*Nf*Nw];
 
   for (int n = 0; n <= Ns; n++)
     for (int i = 0; i <= Nr; i++)
@@ -322,6 +326,18 @@ void TJ::WriteNetCDF ()
 	  TUnrc[cnt] = Tunrc(j, jp, i);
 	  cnt++;
 	}
+
+  cnt = 0;
+  for (int k = 0; k < nres; k++)
+    for (int i = 0; i < Nf; i++)
+      for (int l = 0; l < Nw; l++)
+	{
+	  PPV_r[cnt] = real (Psiuv(k, i, l));
+	  PPV_i[cnt] = imag (Psiuv(k, i, l));
+	  ZZV_r[cnt] = real (Zuv  (k, i, l));
+	  ZZV_i[cnt] = imag (Zuv  (k, i, l));
+	  cnt++;
+	}
   
   try
     {
@@ -333,6 +349,8 @@ void TJ::WriteNetCDF ()
       NcDim j_d = dataFile.addDim ("J",     J);
       NcDim k_d = dataFile.addDim ("K",     K);
       NcDim d_d = dataFile.addDim ("ndiag", NDIAG);
+      NcDim f_d = dataFile.addDim ("Nf",    Nf);
+      NcDim w_d = dataFile.addDim ("Nw",    Nw);
 
       vector<NcDim> shape_d;
       shape_d.push_back (s_d);
@@ -369,6 +387,11 @@ void TJ::WriteNetCDF ()
       tt_d.push_back (x_d);
       tt_d.push_back (x_d);
       tt_d.push_back (d_d);
+
+      vector<NcDim> v_d;
+      v_d.push_back (x_d);
+      v_d.push_back (f_d);
+      v_d.push_back (w_d);
  
       NcVar r_x = dataFile.addVar ("r", ncDouble, r_d);
       r_x.putVar (rr);
@@ -529,6 +552,16 @@ void TJ::WriteNetCDF ()
       tfull_x.putVar (TFull);
       NcVar tunrc_x = dataFile.addVar ("Torque_pair_unrc", ncDouble, tt_d);
       tunrc_x.putVar (TUnrc);
+
+      NcVar ppvr_x = dataFile.addVar ("Psi_unrc_eig_r", ncDouble, v_d);
+      ppvr_x.putVar (PPV_r);
+      NcVar ppvi_x = dataFile.addVar ("Psi_unrc_eig_i", ncDouble, v_d);
+      ppvi_x.putVar (PPV_i);
+      NcVar zzvr_x = dataFile.addVar ("Z_unrc_eig_r", ncDouble, v_d);
+      zzvr_x.putVar (ZZV_r);
+      NcVar zzvi_x = dataFile.addVar ("Z_unrc_eig_i", ncDouble, v_d);
+      zzvi_x.putVar (ZZV_i);
+
     }
   catch(NcException& e)
     {
@@ -545,10 +578,11 @@ void TJ::WriteNetCDF ()
   delete[] Qvac_r;  delete[] Qvac_i;  delete[] Rvac_r;  delete[] Rvac_i;
   delete[] Svac_r;  delete[] Svac_i;  delete[] Hmat_r;  delete[] Hmat_i;
   delete[] Hres_r;  delete[] Hres_i;  delete[] Hsym_r;  delete[] Hsym_i;
-  delete[] Ttest_i; delete[] Pnorm_i; delete[] Znorm_i; delete[] PPPsi_r;
-  delete[] PPPsi_i; delete[] ZZZ_r;   delete[] ZZZ_i;
+  delete[] Ttest_i; delete[] Pnorm_i; delete[] Znorm_i;
+  delete[] PPPsi_r; delete[] PPPsi_i; delete[] ZZZ_r;   delete[] ZZZ_i;
   delete[] PPF_r;   delete[] PPF_i;   delete[] ZZF_r;   delete[] ZZF_i;
   delete[] TTf;     delete[] TTu;     delete[] TFull;   delete[] TUnrc;
+  delete[] PPV_r;   delete[] PPV_i;   delete[] ZZV_r;   delete[] ZZV_i;
 }
 
 // #############################
@@ -600,7 +634,7 @@ void TJ::CleanUp ()
   delete[] mres;   delete[] qres;   delete[] rres; delete[] sres; delete[] DIres;
   delete[] nuLres; delete[] nuSres; delete[] qerr; delete[] Jres;
 
-  delete[] hode; delete[] eode; delete[] Rgrid;
+  delete[] hode; delete[] eode; delete[] Rgrid; delete[] rf;
 }
 
 // #####################################

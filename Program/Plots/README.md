@@ -5,7 +5,8 @@
 
 	- Flux.py        - Plots equilibrium magnetic flux-surfaces in R, Z plane
 	- Equilibrium.py - Plots components of aspect-ratio expanded equilibrium versus r
-	- Safety.py      - Plots safety-factor, q, magnetic shear, s, higher order shear, s_2, pressure gradient and derivate of pressure gradient, p'', versus radius, r
+	- Safety.py      - Plots safety-factor, q, magnetic shear, s, higher order shear, s_2, pressure gradient and
+	  		   derivate of pressure gradient, p'', versus radius, r
 	- Shear.py       - Plots magnetic shear, amd related functions, versus r
 	- Shape.py       - Plots values of shaping functions at plasma boundary
 	- Shaping.py     - Plots shaping functions versus r
@@ -25,9 +26,13 @@
 
 ## EigenFunctions:
 
-	- Full.py        - Plots psi and Z components of fully reconnected solution vector associated with given rational surface versus r
-	- Unrc.py        - Plots psi and Z components of unreconnected solution vector associated with given rational surface versus r
-	- Unrc1.py       - Plots kth harmonic of psi and Z components of unreconnected solution vector associated with given rational surface versus r.
+	- Full.py        - Plots poloidal harmonics of psi and Z Fourier components of fully reconnected solution vector associated with
+	  		   given rational surface versus r
+	- Unrc.py        - Plots poloidal harmonics of psi and Z Fourier components of unreconnected solution vector associated with
+	  		   given rational surface versus r
+	- Unrc1.py       - Plots kth poloidal harmonic of psi and Z components of unreconnected solution vector associated with given rational surface versus r.
+        - Psi.py         - Plots psi Fourier components of unreconnected solution vector associated with given rational surface in R, Z plane
+	- PsiZ.py        - Plots psi and Z Fourier components of unreconnected solution vector associated with given rational surface in R, Z plane
 
 ## Torques:
 

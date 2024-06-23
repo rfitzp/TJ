@@ -11,6 +11,7 @@
 // Radial coordinate, r, normalized to epsa * R_0, where eps_a is inverse-aspect ratio.
 // So r=0 corresponds to magnetic axis, and r=1 to plasma/vacuum interface.
 
+// See Equilibrium.h for description of equilibrium.
 // Program assumes monotonic safety-factor profile.
 
 // Inputs:
@@ -37,6 +38,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include <time.h>
 
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
@@ -63,13 +65,13 @@ class TJ
   // ..................
   // Control parameters
   // ..................
-  int    NTOR;    // Toroidal mode number of RMP (read from namelist)
+  int    NTOR;    // Toroidal mode number (read from namelist)
   int    MMIN;    // Minimum poloidal mode number included in calculation (read from namelist)
   int    MMAX;    // Maximum poloidal mode number included in calculation (read from namelist)
 
   double EPS;     // Solutions launched from magnetic axis at r = EPS (read from namelist)
   double DEL;     // Distance of closest approach to rational surface is DEL (read from namelist)
-  int    NFIX;    // Number of fixups (read from namelist)
+  int    NFIX;    // Number of fixups performed (read from namelist)
   int    NDIAG;   // Number of radial grid-points for diagnostics (read from namelist)
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from namelist)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from namelist)
@@ -82,9 +84,9 @@ class TJ
   // ..................................................
   double             epsa;      // Inverse aspect-ratio
   int                Ns;        // Number of shaping harmonics
-  int                Nr;        // Number of radial grid points
+  int                Nr;        // Number of radial grid-points
 
-  double*            rr;        // Radial grid points
+  double*            rr;        // Radial grid-points
   double*            pp;        // First radial derivative of plasma pressure
   double*            ppp;       // Second radial derivative of plasma pressure 
   double*            q;         // Safety-factor
@@ -129,14 +131,7 @@ class TJ
   gsl_interp_accel** VVacc;     // Accelerator for interpolated vertical shaping functions
   gsl_interp_accel** HPacc;     // Accelerator for interpolated radial derivatives of horizontal shaping functions
   gsl_interp_accel** VPacc;     // Accelerator for interpolated radial derivatives of vertical shaping functions
-
-  int             Nf;           // Number of magnetic flux-surfaces
-  int             Nw;           // Number of angular points on magnetic flux-surfaces
-  Array<double,2> RR;           // R coodinates of magnetic flux-surfaces
-  Array<double,2> ZZ;           // Z coodinates of magnetic flux-surfaces
-  Array<double,2> rvals;        // r values on magnetic flux-surfaces
-  Array<double,2> thvals;       // theta values on magnetic flux-surfaces
-
+ 
   // ......................
   // Calculation parameters
   // ......................
@@ -182,7 +177,7 @@ class TJ
   // -----------------
   // ODE Solution data
   // -----------------
-  double*                  Rgrid;  // Radial grid points for diagnostics
+  double*                  Rgrid;  // Radial grid-points for diagnostics
   Array<double,2>          Ttest;  // Torque test for solution vectors versus radius
   Array<double,2>          Pnorm;  // Norms of Psi components of solution vectors versus radius
   Array<double,2>          Znorm;  // Norms of Z components of solution vectors versus radius
@@ -208,12 +203,27 @@ class TJ
   Array<complex<double>,3> Zf;    // Z componnents of fully reconnected tearing eigenfunctions
   Array<complex<double>,2> Emat;  // Tearing stability matrix
   Array<complex<double>,3> Psiu;  // Psi components of unreconnected tearing eigenfunctions
-  Array<complex<double>,3> Zu;    // Z componnents of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> Zu;    // Z components of unreconnected tearing eigenfunctions
   Array<double,2>          Tf;    // Torques associated with fully reconnected eigenfunctions
   Array<double,2>          Tu;    // Torques associated with unreconnected eigenfunctions
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
-    
+
+  // ----------------------------------------
+  // Visulalization of tearing eigenfunctions
+  // ----------------------------------------
+  int                      Nf;     // Number of radial grid-points on visualization grid
+  int                      Nw;     // Number of angular grid-points on visualization grid
+  double*                  rf;     // Radial grid-points on visualization grif
+  Array<double,2>          RR;     // R coodinates of visualization grid-points
+  Array<double,2>          ZZ;     // Z coodinates of visualization grid-points
+  Array<double,2>          rvals;  // r values of visulalization grid-points
+  Array<double,2>          thvals; // theta values of visualization grid-points
+  Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 
+  Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
+  Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visulalization grid
+  Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
+
   // .......................
   // Root finding parameters
   // .......................
@@ -371,6 +381,8 @@ class TJ
   void GetTorqueFull ();
   // Calculate angular momentum flux associated with pairs of unreconnected solution vectors
   void GetTorqueUnrc ();
+  // Output visualization data for unreconnected tearing eigenfunctions
+  void VisualizeEigenfunctions ();
   
   // ..................
   // In Interpolate.cpp

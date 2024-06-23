@@ -1,6 +1,6 @@
 # Unrc.py
 
-# Plots psi and Z components of unreconnected solution vector associated with given rational surface versus r.
+# Plots poloidal harmonics of psi and Z components of unreconnected solution vector associated with given rational surface versus r.
 # User prompted for rational surface number.
 # Locations of rational surfaces are shown.
 

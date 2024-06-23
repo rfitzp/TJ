@@ -1,7 +1,6 @@
 # Flux.py
 
 # Plots equilibrium magnetic flux-surfaces in R, Z plane.
-# User prompted for scale (x-limits: 1.-scale, 1.+scale; z-limits: -scale, scale)
 
 import math
 import numpy as np
@@ -10,22 +9,23 @@ import netCDF4 as nc
 
 fn = 'Equilibrium.nc'
 ds = nc.Dataset(fn)
+para = ds['para']
 R  = ds['R']
 Z  = ds['Z']
 r  = ds['rr']
 t  = ds['theta']
 
+epsa = para[0]
+
 RR = np.asarray(R);
 ZZ = np.asarray(Z);
 rr = np.asarray(r);
+nf = RR.shape[0]
+nt = RR.shape[1]                
 
 fn1 = 'TJ.nc'
 ds1 = nc.Dataset(fn1)
 rres = ds1['rres']
-
-RR = np.asarray(R)
-nf = RR.shape[0]
-nt = RR.shape[1]                
 
 fig = plt.figure(figsize=(8.0, 8.0))
 plt.rc('xtick', labelsize=17) 
@@ -33,7 +33,7 @@ plt.rc('ytick', labelsize=17)
 
 plt.subplot(1, 1, 1)
 
-scale = float (input ("scale ? "))
+scale = 1.5*epsa
 plt.xlim(1.-scale, 1.+scale)
 plt.ylim(-scale, scale)
 
@@ -49,7 +49,7 @@ plt.contour(RR, ZZ, rr, rres, colors='red', linewidths = 1.)
 plt.plot([1.], [0.], marker='o', markersize=2, color="red")
 
 plt.xlabel(r'$R/R_0$', fontsize="20")
-plt.ylabel(r'$Z/Z_0$',  fontsize="20")
+plt.ylabel(r'$Z$',  fontsize="20")
 
 plt.tight_layout()
 

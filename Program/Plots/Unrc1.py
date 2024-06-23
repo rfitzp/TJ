@@ -1,6 +1,6 @@
 # Unrc1.py
 
-# Plots kth harmonic of psi and Z components of unreconnected solution vector associated with given rational surface versus r.
+# Plots kth poloidal harmonic of psi and Z components of unreconnected solution vector associated with given rational surface versus r.
 # User prompted for rational surface number and poloidal harmomic mode number.
 # Locations of rational surfaces are shown.
 

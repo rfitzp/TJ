@@ -6,18 +6,21 @@
 // All lengths (except r) normalized to R_0 (major radius of magnetic axis).
 // All magnetic field-strengths normalized to B_0 (on-axis toroidal magnetic field-strength).
 // Radial coordinate, r, normalized to epsa * R_0, where eps_a is inverse-aspect ratio.
-// So r=0 is magnetic axis, r=1 is plasma/vacuum interface.
+// So r = 0. is magnetic axis, r = 1. is plasma/vacuum interface.
 
 // Flux-surfaces:
 
 // R(r,w) = 1 - epsa r cosw + epsa^2 H1(r) + epsa^2 sum_{n=2,Ns} [Hn(r) cos(n-1)w + Vn(r) sin(n-1)w]
 // Z(r,w) =     epsa r sinw                + epsa^2 sum_{n=2,Ns} [Hn(r) sin(n-1)w - Vn(r) cos(n-1)w]
 //
-// Here, R,phi,Z are cylindrical polar coordinates while r,w,phi are flux coordinates
+// Here, R, phi, Z are cylindrical polar coordinates while r, w, phi are flux coordinates
 
-// Edge shaping: Hna = Hn(1), Vna = Vn(1)
+// Edge shaping: Hna = Hn(1.), Vna = Vn(1.)
 
 // Equilibrium profiles:
+//
+//  Lowest order (i.e., cylindrical) safety factor profile is q0(r) = r^2/f1(r)
+//  Pressure profile is p(r) = epsa^2 p2(r)
 // 
 //  f1(r) = (1/nu/qc) [1 - (1 - r^2)^nu]
 //
@@ -27,7 +30,7 @@
 
 // Inputs:
 //  Inputs/Namelist.nml - namelist
-//  Inputs/Shape.txt    - nlines
+//  Inputs/Shape.txt    - nlines (i.e. no of subsequent lines to be read)
 //                        H2a V2a
 //                        H3a V3a
 //                        etc.
@@ -76,25 +79,25 @@ class Equilibrium
   // ------------------
   // Physics parameters
   // ------------------
+  double epsa;   // Inverse aspect-ratio of plasma (read from namelist)
   double qc;     // Lowest-order safety-factor on magnetic axis (read from namelist)
   double nu;     // Toroidal current peaking parameter (read from namelist)
   double pc;     // Normalized plasma pressure on magnetic axis (read from namelist)
   double mu;     // Pressure peaking parameter (read from namelist)
-  double epsa;   // Inverse aspect-ratio of plasma (read from namelist)
 
   // ----------------------
   // Calculation parameters
   // ----------------------
   double eps;    // Distance of closest approach to magnetic axis (read from namelist)
   int    Ns;     // Number of shaping harmonics (read from namelist)
-  int    Nr;     // Number of radial grid points (read from namelist)
-  int    Nf;     // Number of magnetic flux-surfaces (read from namelist)
-  int    Nw;     // Number of angular points on magnetic flux-surfaces (read from namelist)
+  int    Nr;     // Number of radial grid-points for calculation purposes (read from namelist)
+  int    Nf;     // Number of radial grid-points for visualization purposes (read from namelist)
+  int    Nw;     // Number of angular grid-points for visulalization purposes (read from namelist)
 
   // ----------------
   // Calculation data
   // ----------------
-  double* rr;               // Radial grid points
+  double* rr;               // Radial grid-points
   double* p2;               // Plasma pressure profile
   double* f1;               // Lowest-order poloidal flux function
   double* f3;               // Higher-order poloidal flux function
@@ -105,15 +108,15 @@ class Equilibrium
   double* Ip;               // Poloidal plasma current
   double* Jt;               // Radial derivative of toroidal plasma current
   double* Jp;               // Radial derivative of poloidal plasma current
-  double* pp;               // Radial plasma pressure gradient
+  double* pp;               // Radial derivative of plasma pressure
   double* ppp;              // Second radial derivative of plasma pressure 
   double* qq;               // First radial derivative of safety-factor times r
   double* qqq;              // Radial derivative of qq times r
-  double* s;                // Magnetic shear:     s  = r q'/q
-  double* s2;               // Higher-order shear: s2 = r^2 q''/q
+  double* s;                // Magnetic shear:              s  = r q2'/q2
+  double* s2;               // Second-order magnetic shear: s2 = r^2 q2''/q2
   double* S1;               // First shaping function
   double* S2;               // Second shaping function
-  double* P1;               // First profile function: (2-s)/q
+  double* P1;               // First profile function:  (2-s)/q2
   double* P2;               // Second profile function: r dP1/dr
   double* P3;               // Third profile function
   double* P3a;              // Auxillary third profile function
@@ -152,10 +155,10 @@ class Equilibrium
   gsl_interp_accel* gr2acc; // Accelerator for interpolated <|nabla r|^2> function
   gsl_interp_accel* R2acc;  // Accelerator for interpolated <R^2> function
 
-  Array<double,2> RR;       // R coodinates of magnetic flux-surfaces
-  Array<double,2> ZZ;       // Z coodinates of magnetic flux-surfaces
-  Array<double,2> rvals;    // r values on magnetic flux-surfaces
-  Array<double,2> thvals;   // theta values on magnetic flux-surfaces
+  Array<double,2> RR;       // R coodinates of magnetic flux-surfaces for visualization purposes
+  Array<double,2> ZZ;       // Z coodinates of magnetic flux-surfaces for visualization purposes
+  Array<double,2> rvals;    // r values on magnetic flux-surfaces for visualization purposes
+  Array<double,2> thvals;   // theta values on magnetic flux-surfaces for visualization purposes
    
   // -------------------------------
   // Adaptive integration parameters
