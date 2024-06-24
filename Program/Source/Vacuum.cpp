@@ -22,6 +22,8 @@ void TJ::GetVacuum ()
   Hmat.resize (J, J);
   Hdag.resize (J, J);
   Hsym.resize (J, J);
+  Imat.resize (J, J);
+  Gmat.resize (J, J);
   double* Hn  = new double[Ns+1];
   double* Vn  = new double[Ns+1];
   double* Hnp = new double[Ns+1];
@@ -242,5 +244,24 @@ void TJ::GetVacuum ()
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       Hsym(j, jp) = 0.5 * (Hmat(j, jp) + Hdag(j, jp));
+
+  // ..................
+  // Calculate G-matrix
+  // ..................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	if (j == jp)
+	  {
+	    if (MPOL[j] == 0)
+	      Imat(j, jp) = complex<double> (1., 0.);
+	    else
+	      Imat(j, jp) = complex<double> (2. * fabs (mpol[j]), 0.);
+	  }
+	else
+	  Imat(j, jp) = complex<double> (0., 0.);
+      }
+  
+  SolveLinearSystem (Rdag, Gmat, Imat);
 }
  

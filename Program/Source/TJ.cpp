@@ -177,6 +177,8 @@ void TJ::WriteNetCDF ()
   double* Hres_i  = new double[J*J];
   double* Hsym_r  = new double[J*J];
   double* Hsym_i  = new double[J*J];
+  double* Gmat_r  = new double[J*J];
+  double* Gmat_i  = new double[J*J];
   double* Ttest_i = new double[K*NDIAG];
   double* Pnorm_i = new double[K*NDIAG];
   double* Znorm_i = new double[K*NDIAG];
@@ -200,6 +202,10 @@ void TJ::WriteNetCDF ()
   double* PPV_i   = new double[nres*Nf*Nw];
   double* ZZV_r   = new double[nres*Nf*Nw];
   double* ZZV_i   = new double[nres*Nf*Nw];
+  double* chi_r   = new double[nres*J];
+  double* chi_i   = new double[nres*J];
+  double* chi_m   = new double[nres*J];
+  double* chi_a   = new double[nres*J];
 
   for (int n = 0; n <= Ns; n++)
     for (int i = 0; i <= Nr; i++)
@@ -255,6 +261,8 @@ void TJ::WriteNetCDF ()
 	Cvac_i[cnt] = fabs (Cvac(j, jp).imag ());
 	Hmat_r[cnt] = Hmat(j, jp).real();
 	Hmat_i[cnt] = Hmat(j, jp).imag();
+	Gmat_r[cnt] = Gmat(j, jp).real();
+	Gmat_i[cnt] = Gmat(j, jp).imag();
 	Hres_r[cnt] = fabs (Hmat(j, jp).real() - Hdag(j, jp).real());
 	Hres_i[cnt] = fabs (Hmat(j, jp).imag() - Hdag(j, jp).imag());
 	Hsym_r[cnt] = Hsym(j, jp).real();
@@ -338,6 +346,17 @@ void TJ::WriteNetCDF ()
 	  ZZV_i[cnt] = imag (Zuv  (k, i, l));
 	  cnt++;
 	}
+
+  cnt = 0;
+  for (int j = 0; j < nres; j++)
+    for (int i = 0; i < J; i++)
+      {
+	chi_r[cnt] = real (Chmat (j, i));
+	chi_i[cnt] = imag (Chmat (j, i));
+	chi_m[cnt] = abs  (Chmat (j, i));
+	chi_a[cnt] = arg  (Chmat (j, i)) /M_PI;
+	cnt++;
+      }
   
   try
     {
@@ -369,6 +388,10 @@ void TJ::WriteNetCDF ()
       torque_d.push_back (k_d);
       torque_d.push_back (d_d);
 
+      vector<NcDim> chi_d;
+      chi_d.push_back (x_d);
+      chi_d.push_back (j_d);
+      
       vector<NcDim> soln_d;
       soln_d.push_back (j_d);
       soln_d.push_back (k_d);
@@ -490,6 +513,10 @@ void TJ::WriteNetCDF ()
       hmatr_x.putVar (Hmat_r);
       NcVar hmati_x = dataFile.addVar ("Hmat_i", ncDouble, vacuum_d);
       hmati_x.putVar (Hmat_i);
+      NcVar gmatr_x = dataFile.addVar ("Gmat_r", ncDouble, vacuum_d);
+      gmatr_x.putVar (Gmat_r);
+      NcVar gmati_x = dataFile.addVar ("Gmat_i", ncDouble, vacuum_d);
+      gmati_x.putVar (Gmat_i);
       NcVar hresr_x = dataFile.addVar ("Hres_r", ncDouble, vacuum_d);
       hresr_x.putVar (Hres_r);
       NcVar hresi_x = dataFile.addVar ("Hres_i", ncDouble, vacuum_d);
@@ -562,6 +589,14 @@ void TJ::WriteNetCDF ()
       NcVar zzvi_x = dataFile.addVar ("Z_unrc_eig_i", ncDouble, v_d);
       zzvi_x.putVar (ZZV_i);
 
+      NcVar chir_x = dataFile.addVar ("Chi_r", ncDouble, chi_d);
+      chir_x.putVar (chi_r);
+      NcVar chii_x = dataFile.addVar ("Chi_i", ncDouble, chi_d);
+      chii_x.putVar (chi_i);
+      NcVar chim_x = dataFile.addVar ("Chi_m", ncDouble, chi_d);
+      chim_x.putVar (chi_m);
+      NcVar chia_x = dataFile.addVar ("Chi_a", ncDouble, chi_d);
+      chia_x.putVar (chi_a);
     }
   catch(NcException& e)
     {
@@ -583,6 +618,8 @@ void TJ::WriteNetCDF ()
   delete[] PPF_r;   delete[] PPF_i;   delete[] ZZF_r;   delete[] ZZF_i;
   delete[] TTf;     delete[] TTu;     delete[] TFull;   delete[] TUnrc;
   delete[] PPV_r;   delete[] PPV_i;   delete[] ZZV_r;   delete[] ZZV_i;
+  delete[] Gmat_r;  delete[] Gmat_i;  delete[] chi_r;   delete[] chi_i;
+  delete[] chi_m;   delete[] chi_a;
 }
 
 // #############################

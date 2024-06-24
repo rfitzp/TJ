@@ -16,7 +16,8 @@
 
 	- Matrix.py      - Plots L_m^m', M_m^m', N_m^m', and P_m^m' coupling matrices versus r
 	- VacRes.py      - Visualizes vacuum solution residual matrices A_m^m', B_m^m', and C_m^m'
-	- Hmat.py        - Visualizes vacuum matching matrix, H_m^m'
+	- Hmat.py        - Visualizes homogeneous vacuum response matrix, H_m^m'
+	- Gmat.py        - Visualizes inhomogeneous vacuum response matrix, G_m^m'
 
 ## ODESolution:
 
@@ -38,3 +39,7 @@
 
 	- Tfull.py       - Plots angular momentum flux associated with pair of fully reconnected solutions versus r
 	- Tunrc.py       - Plots angular momentum flux associated with pair of unreconnected solutions versus r
+
+## Resonant magnetic perturbation response
+
+   	 - Chi.py        - Plots resonant magnetic perturbation response vector versus poloidal mode number associated with given rational surface

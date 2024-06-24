@@ -42,6 +42,7 @@
 
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
+#include <gsl/gsl_sf_gamma.h>
 #include <netcdf>
 #include <armadillo>
 
@@ -171,9 +172,11 @@ class TJ
   Array<complex<double>,2> Avac;  // Vacuum residual matrix
   Array<complex<double>,2> Bvac;  // Vacuum residual matrix
   Array<complex<double>,2> Cvac;  // Vacuum residual matrix
-  Array<complex<double>,2> Hmat;  // Vacuum response matrix
+  Array<complex<double>,2> Hmat;  // Vacuum homogeneous response matrix
   Array<complex<double>,2> Hdag;  // Hermitian conjugate of Hmat
   Array<complex<double>,2> Hsym;  // Symmeterized Hmat
+  Array<complex<double>,2> Imat;  // Vacuum solution matrix
+  Array<complex<double>,2> Gmat;  // Vacuum inhomogeneous response matrix
 
   // -----------------
   // ODE Solution data
@@ -200,9 +203,12 @@ class TJ
   Array<complex<double>,2> Ymat;  // Y-matrix
   Array<complex<double>,2> Omat;  // Omega-matrix
   Array<complex<double>,2> Fmat;  // Inductance matrix
+  Array<complex<double>,2> Emat;  // Tearing stability matrix
+  Array<complex<double>,2> Ximat; // Xi-matrix
+  Array<complex<double>,2> Upmat; // Upsilon-matrix
+  Array<complex<double>,2> Chmat; // Chi-matrix
   Array<complex<double>,3> Psif;  // Psi components of fully reconnected tearing eigenfunctions
   Array<complex<double>,3> Zf;    // Z componnents of fully reconnected tearing eigenfunctions
-  Array<complex<double>,2> Emat;  // Tearing stability matrix
   Array<complex<double>,3> Psiu;  // Psi components of unreconnected tearing eigenfunctions
   Array<complex<double>,3> Zu;    // Z components of unreconnected tearing eigenfunctions
   Array<double,2>          Tf;    // Torques associated with fully reconnected eigenfunctions

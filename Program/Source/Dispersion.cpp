@@ -22,10 +22,13 @@ void TJ::FindDispersion ()
   Ymat .resize(J,    nres);
   Omat .resize(J,    nres);
   Fmat .resize(nres, nres);
+  Emat .resize(nres, nres);
+  Ximat.resize(J,    J);
+  Upmat.resize(nres, J);
+  Chmat.resize(nres, J);
   Psif .resize(J,    nres, NDIAG);
   Zf   .resize(J,    nres, NDIAG);
   Tf   .resize(nres, NDIAG);
-  Emat .resize(nres, nres);
   Psiu .resize(J,    nres, NDIAG);
   Zu   .resize(J,    nres, NDIAG);
   Tu   .resize(nres, NDIAG);
@@ -260,6 +263,43 @@ void TJ::FindDispersion ()
   // Calculate unreconnected eigenfunction visualization data
   // ........................................................
   VisualizeEigenfunctions ();
+
+  // ...................
+  // Calculate Xi-matrix
+  // ...................
+  SolveLinearSystem (Xmat, Ximat, Gmat);
+
+  // ........................
+  // Calculate Upsilon-matrix
+  // ........................
+  for (int j = 0; j < nres; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	Upmat(j, jp) = complex<double> (0., 0.);
+	
+	for (int k = 0; k < J; k++)
+	  Upmat(j, jp) += Pia(j, k) * Ximat(k, jp);
+      }
+  
+  // ....................
+  // Calculate Chi-matrix
+  // ....................
+  for (int j = 0; j < nres; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	Chmat(j, jp) = complex<double> (0., 0.);
+	
+	for (int k = 0; k < nres; k++)
+	  Chmat(j, jp) += Emat(j, k) * Upmat(k, jp);
+
+	/*
+	double mbar = fabs (mpol[jp]);
+	double norm = cos (mbar*M_PI) * sqrt(M_PI) * gsl_sf_gamma (mbar+ntor+0.5) * pow (epsa, mbar)
+	  /pow (2., mbar+0.5) /gsl_sf_gamma (1.+mbar);
+	  
+	Chmat(j, jp) *= norm;
+	*/
+      }
 }
 
 // #######################################################################################################

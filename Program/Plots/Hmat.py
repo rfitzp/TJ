@@ -1,6 +1,6 @@
 # Hmat.py
 
-# Visualizes vacuum matching matrix, H_m^m'.
+# Visualizes homogeneous vacuum response matrix, H_m^m'.
 # Also shows hermitian test for matrix and hermitianized version of matrix.
 
 import math
