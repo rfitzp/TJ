@@ -1,7 +1,7 @@
 &EQUILIBRIUM_CONTROL
  QC   = 1.2
  NU   = 3.5
- PC   = 0.5
+ PC   = 1.5
  MU   = 3.0
  EPSA = 0.04
 
@@ -19,7 +19,7 @@
 
 &TJ_CONTROL
  NTOR  = 1
- MMIN  = -5
+ MMIN  = -15
  MMAX  = 15
  FREE  = 1
 

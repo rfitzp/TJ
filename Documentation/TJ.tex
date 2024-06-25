@@ -904,6 +904,7 @@ s(1) &= 2+ \epsilon^{\,2}\left(\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right
 +{\cal O}(\epsilon^4).\label{e223}
 \end{align}
 
+\section{Vacuum Solution}
 \subsection{Perturbed Vacuum Magnetic Field}
 In the vacuum region surrounding the plasma, the perturbed magnetic field can be written in the form\,\cite{am1}
 \begin{equation}
@@ -916,7 +917,7 @@ V(\hat{r},\theta) = \sum_{m}V_m(\hat{r})\,\exp({\rm i}\,m\,\theta).
 It follows from Eqs.~(\ref{e66}), (\ref{e79o}), (\ref{e97}), and (\ref{Zdef})--(\ref{psidef}) that
 \begin{align}
 Z_m(\hat{r})&= (m-n\,q)\,V_m(\hat{r}),\label{evdef}\\[0.5ex]
-\psi_m(\hat{r}) &= \sum_{m'}\left[h_m^{\,m'}\,\hat{r}\,\frac{dV_{m'}}{d\hat{r}}+ i_{m}^{\,m'}\,m'\,V_m'(\hat{r})\right],
+\psi_m(\hat{r}) &= \sum_{m'}\left[h_m^{\,m'}\,\hat{r}\,\frac{dV_{m'}}{d\hat{r}}+ i_{m}^{\,m'}\,m'\,V_{m'}(\hat{r})\right],
 \end{align}
 where
 \begin{align}
@@ -928,7 +929,7 @@ In the vacuum region, the scalar magnetic potential satisfies Laplace's equation
 \begin{equation}
 \nabla^2 V= 0.
 \end{equation}
-It is necessary to obtain solution of the previous equation that extend beyond the region of validity of the
+It is necessary to obtain a solution of the previous equation that extends beyond the region of validity of the
 inverse aspect-ratio expansion. This goal can be achieved using {\em orthogonal toroidal coordinates}, $\mu$, $\eta$, $\phi$,\,\cite{morse}
 \begin{align}\label{e54cx}
 R &= \frac{\sinh\mu}{\cosh\mu-\cos\eta},\\[0.5ex]
@@ -982,7 +983,7 @@ have the following asymptotic behaviors:\,\cite{morse2,bate}
 \frac{z^{1/2}\,P_{1/2}^{\,n}(z)}{\tanh^n z}&= \frac{2\,z}{\sqrt{2\pi}\,\Gamma(3/2-n)}
 \Biggl\{1\nonumber\\[0.5ex]&\phantom{=}-\left[\frac{n^2-1/4}{2}\,\ln\left(\frac{8\,z}{\zeta_n}\right)+\frac{(n-1/2)\,(n-3/2)}{4} \right]\frac{1}{z^2}+{\cal O}\left(\frac{1}{z^4}\right)\Biggr\},\\[0.5ex]
 \frac{z^{1/2}\,P_{|m|-1/2}^{\,n}(z)}{\tanh^n z}&= \frac{(|m|-1)!\,2^{\,|m|}\,z^{\,|m|}}{\sqrt{2\pi}\,\Gamma(|m|-n+1/2)}
-\left[1- \frac{(n-|m|+1/2)\,(n-|m|+3/2)}{4\,(|m|-1)}\,\frac{1}{z^2}+{\cal O}\left(\frac{1}{z^4}\right)\right],\label{e8nm}\\[0.5ex]
+\left[1- \frac{(n-|m|+1/2)\,(n-|m|+3/2)}{4\,(|m|-1)}\,\frac{1}{z^2}\right.\nonumber\\[0.5ex]&\phantom{=}\left.+{\cal O}\left(\frac{1}{z^4}\right)\right],\label{e8nm}\\[0.5ex]
 \frac{z^{1/2}\,Q_{|m|-1/2}^{\,n}(z)}{\tanh^{-n}z}&=  \frac{\sqrt{\pi}\,\Gamma(|m|+n+1/2)\,z^{-|m|}}{\sqrt{2}\,2^{\,|m|}\,|m|!}
 \Biggl[1\nonumber\\[0.5ex]&\phantom{=}+ \frac{(|m|-n+1/2)\,(|m|-n+3/2)}{4\,(|m|+1)}\,\frac{1}{z^2}+{\cal O}\left(\frac{1}{z^4}\right)\Biggr],\label{e241}
 \end{align}
@@ -995,13 +996,17 @@ Note that there is a factor ${\rm i}^{\,n}$ difference between the definition of
 Moreover, $\Gamma(z)$ is a Gamma function.\cite{abram1} 
 
 Let 
-\begin{align}\label{e11cc}
-a_0 &= \frac{2}{\sqrt{2\pi}\,\Gamma(1/2-n)}\,A_0,\\[0.5ex]
-a_m &= \frac{\cos(|m|\,\pi)\,(|m|-1)!\,2^{\,|m|}\,\epsilon^{\,-|m|}}{\sqrt{2\pi}\,\Gamma(|m|-n+1/2)}\,A_m,\label{e13nm}\\[0.5ex]
+\begin{align}
+a_m &= \frac{\cos(|m|\,\pi)\,2^{\,|m|+1/2}\,|m|!\,\epsilon^{\,-|m|}}{\sqrt{\pi}\,\Gamma(|m|-n+1/2)\,h_m}\,A_m,\label{e11cc}\\[0.5ex]
 b_m &= \frac{\cos(|m|\,\pi)\,\sqrt{\pi}\,\Gamma(|m|+n+1/2)\,\epsilon^{\,|m|}}{2^{\,|m|+1/2}\,|m|!}\,B_m,\label{e13cc}
 \end{align}
-where Eq.~(\ref{e13nm}) only  applies to $|m|>0$. 
-Equations~(\ref{e19})--(\ref{e25a}), (\ref{e27})--(\ref{e28}), (\ref{e222})--(\ref{e223}), (\ref{e225})--(\ref{e229}), (\ref{e233}), and (\ref{e234})--(\ref{e241})
+where
+\begin{equation}
+h_m = \left\{\begin{array}{ccc}2\,|m|&~~~~~~&\mbox{$|m|>0$}\\[0.5ex]
+1&&\mbox{$|m|=0$}\end{array}\right..
+\end{equation}
+Equations~(\ref{e19})--(\ref{e25a}), (\ref{e27})--(\ref{e28}), (\ref{e222})--(\ref{e223}), (\ref{e225})--(\ref{e229}), (\ref{e233}),  (\ref{e234})--(\ref{e241}),
+and (\ref{e11cc})--(\ref{e13cc}) 
 can be combined to give
 \begin{align}
 \frac{Z_m(1)}{m-n\,q(1)} &= \sum_{m'}\left(a_{m'}\,{\cal P}_m^{\,m'} + b_{m'}\,{\cal Q}_{m}^{\,m'}\right),\label{e27cc}\\[0.5ex]
@@ -1014,20 +1019,29 @@ where\,\cite{am1}
 {\cal P}_m^{\,m}  &= 1+\epsilon^{\,2}\,[G_0 (|m|)- |m|\,G_1- |m|^2\,G_2],\\[0.5ex]
 {\cal P}_{m-\sigma}^{\,m} &= \epsilon\left(\frac{1}{4}- |m|\,\frac{H_1'}{2}\right),\\[0.5ex]
 {\cal P}_{m-\sigma\,j}^{\,m} &= \epsilon\,\frac{|m|}{2\,j}\,\left[-\left(H_j'+{\rm i}\,\sigma\,V_j'\right)+(j-1)\left(
-H_j+{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},\\[0.5ex]
+H_j+{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},
+\end{align}
+and 
+\begin{align}
 {\cal Q}_{m+\sigma\,j}^{\,m} &=\epsilon\,\frac{|m|}{2\,j}\,\left[\left(H_j'-{\rm i}\,\sigma\,V_j'\right)-(j-1)\left(
 H_j-{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$}, \\[0.5ex]
 {\cal Q}_{m+\sigma}^{\,m} &=\epsilon\left(\frac{1}{4}+ |m|\,\frac{H_1'}{2}\right)\\[0.5ex]
 {\cal Q}_m^{\,m} &= 1+\epsilon^{\,2}\,[G_0 (-|m|)+ |m|\,G_1- |m|^2\,G_2],\\[0.5ex]
 {\cal Q}_{m-\sigma}^{\,m} &=\epsilon\left[\left(\frac{1}{4}+\frac{|m|}{2}\right)-|m|\left(H_1+\frac{H_1'}{2}\right)\right], \\[0.5ex]
-{\cal Q}_{m-\sigma\,j}^{\,m} &=  \epsilon\,\frac{|m|}{2\,j}\left[-(H_j'+{\rm i}\,\sigma\,V_j')-(j+1)\left(H_j+{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},\\[0.5ex]
+{\cal Q}_{m-\sigma\,j}^{\,m} &=  \epsilon\,\frac{|m|}{2\,j}\left[-(H_j'+{\rm i}\,\sigma\,V_j')-(j+1)\left(H_j+{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},
+\end{align}
+and
+\begin{align}
 {\cal R}_{m+\sigma\,j}^{\,m}  &=\epsilon\,\frac{|m|}{2}\left(1+\frac{|m|}{j}\right)\left[-(H_j'-{\rm i}\,\sigma\,V_j')-(j+1)\left(H_j-{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},\\[0.5ex]
 {\cal R}_{m+\sigma}^{\,m} &=\epsilon\,(1+|m|)\left[\left(\frac{1}{4}+\frac{|m|}{2}\right)-|m|\left(H_1+\frac{H_1'}{2}\right)\right],\\[0.5ex]
 {\cal R}_m^{\,m} &= |m|\,\left(-1-\epsilon^{\,2}\left[G_3 (|m|)- |m|\left(G_1+\frac{H_1}{2}\right)- |m|^2\,G_2\right]\right),\\[0.5ex]
 {\cal R}_{m-\sigma}^{\,m} &=\epsilon\left[\left(\frac{1}{4}+\frac{|m|}{4}\right)
 -|m|\,(1-|m|)\,\frac{H_1'}{2}\right],\\[0.5ex]
 {\cal R}_{m-\sigma\,j}^{\,m} &= \epsilon\,\frac{|m|}{2}\left(1-\frac{|m|}{j}\right)\left[-\left(H_j'+{\rm i}\,\sigma\,V_j'\right)+(j-1)\left(
-H_j+{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},\\[0.5ex]
+H_j+{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$},
+\end{align}
+and 
+\begin{align}
 {\cal S}_{m+\sigma\,j}^{\,m}  &=\epsilon\,\frac{|m|}{2}\left(1+\frac{|m|}{j}\right)\left[\left(H_j'-{\rm i}\,\sigma\,V_j'\right)-(j-1)\left(
 H_j-{\rm i}\,\sigma\,V_j\right)\right]\mbox{~~~for $j>1$}, \\[0.5ex]
 {\cal S}_{m+\sigma}^{\,m} &= \epsilon\left[\left(\frac{1}{4}-\frac{|m|}{4}\right)
@@ -1066,13 +1080,8 @@ It can be demonstrated that\,\cite{am1}
 \begin{align}\label{e286}
 {\cal A}^{mm'}\equiv\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal R}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal P}_{m''}^{\,m'}\right)&= \delta^{\,mm'}\,{\cal O}(\epsilon^{\,4})+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\\[0.5ex]
 {\cal B}^{mm'}\equiv\sum_{m''}\left({\cal Q}_{m''}^{\,m\,\ast}\,{\cal S}_{m''}^{\,m'}- {\cal S}_{m''}^{\,m\,\ast}\,{\cal Q}_{m''}^{\,m'}\right)&= \delta^{\,mm'}\,{\cal O}(\epsilon^{\,4})+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\\[0.5ex]
-{\cal C}^{mm'}\equiv\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal S}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal Q}_{m''}^{\,m'}\right)&= \delta^{\,mm'}\,[h_m+{\cal O}(\epsilon^{\,4})]+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\label{e288}
+{\cal C}^{mm'}\equiv\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal S}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal Q}_{m''}^{\,m'}\right)&= \delta^{\,mm'}\,[h_m+{\cal O}(\epsilon^{\,4})]+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}).\label{e288}
 \end{align}
-where
-\begin{equation}
-h_m = \left\{\begin{array}{ccc}2\,|m|&~~~~~~&\mbox{$|m|>0$}\\[0.5ex]
-1&&\mbox{$|m|=0$}\end{array}\right..
-\end{equation}
 Thus, we can determine the parameters in the expansions (\ref{e27cc}) and (\ref{e54cc}) as follows:
 \begin{align}
 a_m &= \frac{1}{h_m}\sum_{m'}\left[-{\cal Q}_{m'}^{\,m\,\ast}\,\psi_{m'}(1) + \frac{{\cal S}_{m'}^{\,m\,\ast}\,Z_{m'}(1)}{m'-n\,q(1)}\right]+{\cal O}(\epsilon^{\,2}),\\[0.5ex]
@@ -1091,12 +1100,12 @@ T_\phi(1) &= -\oint\oint (\nabla\mu\times \nabla\eta\cdot\nabla\phi)^{-1}\,b_\ph
 where $z=\cosh\mu$. 
 From Eq.~(\ref{e233}), we get
 \begin{equation}
-T_\phi(1)=-{\rm i}\,\pi^2\,n\sum_m(z^2-1)\left[\frac{dP_{m-1}^{\,n}}{dz}\,Q_{m-1/2}^{\,n}- P_{m-1/2}^{\,n}\,\frac{dQ_{m-1/2}^{\,n}}{dz}\right]
+T_\phi(1)=-{\rm i}\,\pi^2\,n\sum_m(z^2-1)\left[\frac{dP_{m-1/2}^{\,n}}{dz}\,Q_{m-1/2}^{\,n}- P_{m-1/2}^{\,n}\,\frac{dQ_{m-1/2}^{\,n}}{dz}\right]
 \left(A_m\,B_m^{\,\ast}- A_m^{\,\ast}\,B_m\right).
 \end{equation}
 However,\cite{morse3}
 \begin{equation}
-\frac{dP_{m-1}^{\,n}}{dz}\,Q_{m-1/2}^{\,n}- P_{m-1/2}^{\,n}\,\frac{dQ_{m-1/2}^{\,n}}{dz}= \frac{\Gamma(|m|+n+1/2)}{\Gamma(|m|-n-1/2)\,(z^2-1)}.
+\frac{dP_{m-1/2}^{\,n}}{dz}\,Q_{m-1/2}^{\,n}- P_{m-1/2}^{\,n}\,\frac{dQ_{m-1/2}^{\,n}}{dz}= \frac{\Gamma(|m|+n+1/2)}{\Gamma(|m|-n-1/2)\,(z^2-1)}.
 \end{equation}
 Thus, making use of Eqs.~(\ref{e11cc})--(\ref{e13cc}), we obtain
 \begin{equation}\label{e90cc}
@@ -1104,7 +1113,7 @@ T_\phi(1) =- {\rm i}\,\pi^2\,n\sum_m h_m\,(a_m\,b_m^{\,\ast}-a_m^{\,\ast}\,b_m).
 \end{equation}
 
 \subsection{Homogeneous Boundary Condition at Plasma/Vacuum Interface}
-In the absence of currents driven in non-axisymmetric external magnetic field-coils and  eddy currents flowing in external conductors, the vacuum expansion  (\ref{e233})
+In the absence of currents flowing in non-axisymmetric external magnetic field-coils, or  non-axisymmetric eddy currents flowing in axisymmetric external conductors, the vacuum expansion  (\ref{e233})
 must contain none of the terms involving the $Q_{m-1/2}^{\,n}(z)$, because these terms are badly behaved a long way from the plasma,
 and could not, therefore, be generated by currents flowing within the plasma (which are the only type of currents present in the problem).  It follows that the $B_m$ coefficients must all be zero. Hence, according to
 Eq.~(\ref{e13cc}),
@@ -1145,7 +1154,7 @@ where use has been made of Eq.~(\ref{e286}). Thus, it is clear that $H_{mm'}$ is
 Moreover, we can enforce the physical constraint  (\ref{e300}) by neglecting the ${\cal O}(\epsilon^{\,2})$ non-Hermitian
 component of $H_{mm'}$.
 
-\section{Calculation of  Homogeneous Tearing Mode Dispersion Relation}
+\section{Calculation of  Tearing Mode Dispersion Relation}
 \subsection{Introduction}
 Let the $m_j$, for $j=1,J$, be the poloidal mode numbers included in the calculation. Here, it is assumed that $m_{j+1}=m_j+1$ for $j=1,J-1$. 
 Let there be $K$ rational surfaces in the plasma, and let the $k$th surface lie at radius $\hat{r}_k$, for $k=1,K$. Here,
@@ -1199,7 +1208,7 @@ The most general expression for the solution of the outer region ODEs at the pla
 Z_{m_j}(1) &= \sum_{j'=1,J}Z_{m_j\,m_{j'}}^a(1)\,\alpha_{j'} + \sum_{k=1,K}Z_{m_j\,k}^s(1)\,{\mit\Delta\Psi}_k,
 \end{align}
 for $j=1,J$, where the $\alpha_j$ are complex coefficients. However, in the absence of currents flowing in non-axisymmetric external
-magnetic field-coils, the solution must satisfy the homogenous boundary condition (\ref{e297}). 
+magnetic field-coils, or non-axisymmetric eddy currents flowing in axisymmetric external conductors, the solution must satisfy the homogenous boundary condition (\ref{e297}). 
 It follows that
 \begin{equation}
 \sum_{j'=1,J}X_{jj'}\,\alpha_{j'} = \sum_{k=1,K}Y_{jk}\,{\mit\Delta\Psi}_k
