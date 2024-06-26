@@ -291,14 +291,6 @@ void TJ::FindDispersion ()
 	
 	for (int k = 0; k < nres; k++)
 	  Chmat(j, jp) += Emat(j, k) * Upmat(k, jp);
-
-	/*
-	double mbar = fabs (mpol[jp]);
-	double norm = cos (mbar*M_PI) * sqrt(M_PI) * gsl_sf_gamma (mbar+ntor+0.5) * pow (epsa, mbar)
-	  /pow (2., mbar+0.5) /gsl_sf_gamma (1.+mbar);
-	  
-	Chmat(j, jp) *= norm;
-	*/
       }
 }
 
