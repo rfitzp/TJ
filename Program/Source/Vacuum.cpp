@@ -195,6 +195,24 @@ void TJ::GetVacuum ()
 
   delete[] Hn; delete[] Hnp; delete[] Vn; delete[] Vnp;
 
+  // ...........................
+  // Renormalize vacuum matrices
+  // ...........................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	int    mp = MPOL[jp];
+	double mm = fabs (mpol[jp]);
+
+	if (mp != 0)
+	  {
+	    Pvac (j, jp) /= mm;
+	    Qvac (j, jp) /= mm;
+	    Rvac (j, jp) /= mm;
+	    Svac (j, jp) /= mm;
+	  }
+      }
+
   // ..................................
   // Calculate vacuum residual matrices
   // ..................................
@@ -219,9 +237,9 @@ void TJ::GetVacuum ()
 	if (j == jp)
 	  {
 	    if (MPOL[j] == 0)
-	      Cvac (j, jp) -= 1.;
+	      Cvac (j, jp) -= complex<double> (1., 0.);
 	    else
-	      Cvac (j, jp) -= 2.*fabs (mpol[j]);
+	      Cvac (j, jp) -= complex<double> (2./fabs (mpol[j]), 0.);
 	  }
       }
 
@@ -256,7 +274,7 @@ void TJ::GetVacuum ()
 	    if (MPOL[j] == 0)
 	      Imat(j, jp) = complex<double> (1., 0.);
 	    else
-	      Imat(j, jp) = complex<double> (2. * fabs (mpol[j]), 0.);
+	      Imat(j, jp) = complex<double> (2./fabs (mpol[j]), 0.);
 	  }
 	else
 	  Imat(j, jp) = complex<double> (0., 0.);
