@@ -3,7 +3,7 @@
  NU   = 3.5
  PC   = 1.0
  MU   = 3.0
- EPSA = 0.01
+ EPSA = 0.04
 
  EPS  = 1.e-4
  NS   = 20
@@ -19,8 +19,8 @@
 
 &TJ_CONTROL
  NTOR  = 1
- MMIN  = -15
- MMAX  = 15
+ MMIN  = -10
+ MMAX  = 10
  FREE  = 1
 
  EPS   = 1.e-4

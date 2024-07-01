@@ -63,7 +63,7 @@ TJ::TJ ()
   // --------------------------------
   // Read namelist file Inputs/TJ.nml
   // --------------------------------
-  NameListTJ (&NTOR, &MMIN, &MMAX,
+  NameListTJ (&NTOR, &MMIN, &MMAX, 
 	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX, &FREE, 
 	      &acc, &h0, &hmin, &hmax, &EPSF, &POWR);
  
@@ -74,7 +74,7 @@ TJ::TJ ()
   printf ("Calculation parameters:\n");
   printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
 	  NTOR, MMIN, MMAX, EPS, DEL);
-  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free = %1d\n",
+  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d\n",
 	  NFIX, NDIAG, NULC, ITERMAX, FREE);
   printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e powr = %10.3e\n",
 	  acc, h0, hmin, hmax, EPSF, POWR);
@@ -253,18 +253,18 @@ void TJ::WriteNetCDF ()
 	Rvac_i[cnt] = Rvac(j, jp).imag();
 	Svac_r[cnt] = Svac(j, jp).real();
 	Svac_i[cnt] = Svac(j, jp).imag();
-	Avac_r[cnt] = fabs (Avac(j, jp).real ());
-	Avac_i[cnt] = fabs (Avac(j, jp).imag ());
-	Bvac_r[cnt] = fabs (Bvac(j, jp).real ());
-	Bvac_i[cnt] = fabs (Bvac(j, jp).imag ());
-	Cvac_r[cnt] = fabs (Cvac(j, jp).real ());
-	Cvac_i[cnt] = fabs (Cvac(j, jp).imag ());
+	Avac_r[cnt] = Avac(j, jp).real();
+	Avac_i[cnt] = Avac(j, jp).imag();
+	Bvac_r[cnt] = Bvac(j, jp).real();
+	Bvac_i[cnt] = Bvac(j, jp).real();
+	Cvac_r[cnt] = Cvac(j, jp).real();
+	Cvac_i[cnt] = Cvac(j, jp).real();
 	Hmat_r[cnt] = Hmat(j, jp).real();
 	Hmat_i[cnt] = Hmat(j, jp).imag();
 	Gmat_r[cnt] = Gmat(j, jp).real();
 	Gmat_i[cnt] = Gmat(j, jp).imag();
-	Hres_r[cnt] = fabs (Hmat(j, jp).real() - Hdag(j, jp).real());
-	Hres_i[cnt] = fabs (Hmat(j, jp).imag() - Hdag(j, jp).imag());
+	Hres_r[cnt] = Hmat(j, jp).real() - Hdag(j, jp).real();
+	Hres_i[cnt] = Hmat(j, jp).imag() - Hdag(j, jp).imag();
 	Hsym_r[cnt] = Hsym(j, jp).real();
 	Hsym_i[cnt] = Hsym(j, jp).imag();
 	cnt++;

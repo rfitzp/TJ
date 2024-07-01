@@ -52,7 +52,7 @@ using namespace netCDF::exceptions;
 using namespace arma;
 
 // Namelist reading function
-extern "C" void NameListTJ (int* NTOR, int* MMIN, int* MMAX,
+extern "C" void NameListTJ (int* NTOR, int* MMIN, int* MMAX, 
 			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX, int* FREE, 
 			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF, double* POWR);
 

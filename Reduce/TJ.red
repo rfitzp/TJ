@@ -226,11 +226,46 @@ gr20 := coeffn(gr2,eps,0);
 gr21 := coeffn(gr2,eps,1);
 gr22 := coeffn(gr2,eps,2);
 
+gr20_target := 1$
+gr21_target := 2*df(H1,r)*cos(t)
+   + 2*df(H2,r)*cos(2*t) + 2*df(H3,r)*cos(3*t) + 2*df(H4,r)*cos(4*t)
+   + 2*df(V2,r)*sin(2*t) + 2*df(V3,r)*sin(3*t) + 2*df(V4,r)*sin(4*t)$
+gr22_target := 3*r*r/4 - H1
+   + (df(H1,r)*df(H1,r) + (1*1-1)*H1*H1/r/r)/2
+   + (df(H2,r)*df(H2,r) + (2*2-1)*H2*H2/r/r)/2
+   + (df(H3,r)*df(H3,r) + (3*3-1)*H3*H3/r/r)/2
+   + (df(H4,r)*df(H4,r) + (4*4-1)*H4*H4/r/r)/2
+   + (df(V2,r)*df(V2,r) + (2*2-1)*V2*V2/r/r)/2
+   + (df(V3,r)*df(V3,r) + (3*3-1)*V3*V3/r/r)/2
+   + (df(V4,r)*df(V4,r) + (4*4-1)*V4*V4/r/r)/2$
+
+write "Residuals of gr2 elements:";
+gr20 - gr20_target;
+gr21 - gr21_target;
+gr22 - gr22_target;
+
 write "grt2 := grt20 + eps*grt21 + eps**2*grt22";
 grt2  := av2(grrgrt,eps,t)$
 grt20 := coeffn(grt2,eps,0);
 grt21 := coeffn(grt2,eps,1);
 grt22 := coeffn(grt2,eps,2);
+grt22 := 0;
+
+grt20_target := 0$
+grt21_target := sin(t)
+   - (df(H1,r,2) + df(H1,r)/r + (1*1-1)*H1/r/r) * sin(t)/1
+   - (df(H2,r,2) + df(H2,r)/r + (2*2-1)*H2/r/r) * sin(2*t)/2
+   - (df(H3,r,2) + df(H3,r)/r + (3*3-1)*H3/r/r) * sin(3*t)/3
+   - (df(H4,r,2) + df(H4,r)/r + (4*4-1)*H4/r/r) * sin(4*t)/4
+   + (df(V2,r,2) + df(V2,r)/r + (2*2-1)*V2/r/r) * cos(2*t)/2
+   + (df(V3,r,2) + df(V3,r)/r + (3*3-1)*V3/r/r) * cos(3*t)/3
+   + (df(V4,r,2) + df(V4,r)/r + (4*4-1)*V4/r/r) * cos(4*t)/4$
+grt22_target := 0$
+
+write "Residuals of grt2 elements:";
+grt20 - grt20_target;
+grt21 - grt21_target;
+grt22 - grt22_target;
 
 write "x*x := x20 + eps*x21 + eps**2*x22";
 x1  := 1 + eps*x$
@@ -239,6 +274,69 @@ x2  := av2(x2,eps,t)$
 x20 := coeffn(x2,eps,0);
 x21 := coeffn(x2,eps,1);
 x22 := coeffn(x2,eps,2);
+
+x20_target := 1$
+x21_target := - 2 * r * cos(t)$
+x22_target := - r*r/2 + r*df(H1,r) + 2*H1$
+
+write "Residuals of x2 elements:";
+x20 - x20_target;
+x21 - x21_target;
+x22 - x22_target;
+
+write "x2gr2 := x2gr20 + eps*x2gr21 + eps**2*x2gr22";
+x2gr2  := av2(x2*gr2,eps,t)$
+x2gr20 := coeffn(x2gr2,eps,0);
+x2gr21 := coeffn(x2gr2,eps,1);
+x2gr22 := coeffn(x2gr2,eps,2);
+
+x2gr20_target := 1$
+x2gr21_target := - 2*r*cos(t)
+   + 2*df(H1,r) * cos(t)
+   + 2*df(H2,r) * cos(2*t)
+   + 2*df(H3,r) * cos(3*t)
+   + 2*df(H4,r) * cos(4*t)
+   + 2*df(V2,r) * sin(2*t)
+   + 2*df(V3,r) * sin(3*t)
+   + 2*df(V4,r) * sin(4*t)$
+x2gr22_target := r*r/4 - df(H1,r)*r + H1
+   + (df(H1,r)*df(H1,r) + (1*1-1)*H1*H1/r/r)/2
+   + (df(H2,r)*df(H2,r) + (2*2-1)*H2*H2/r/r)/2
+   + (df(H3,r)*df(H3,r) + (3*3-1)*H3*H3/r/r)/2
+   + (df(H4,r)*df(H4,r) + (4*4-1)*H4*H4/r/r)/2
+   + (df(V2,r)*df(V2,r) + (2*2-1)*V2*V2/r/r)/2
+   + (df(V3,r)*df(V3,r) + (3*3-1)*V3*V3/r/r)/2
+   + (df(V4,r)*df(V4,r) + (4*4-1)*V4*V4/r/r)/2$
+
+write "Residuals of x2gr2 elements:";
+x2gr20 - x2gr20_target;
+x2gr21 - x2gr21_target;
+x2gr22 - x2gr22_target;
+
+write "x2grt2  := x2grt20 + eps*x2grt21 + eps**2*x2grt22";
+x2grt2  := av2(x2*grt2,eps,t)$
+x2grt20 := coeffn(x2grt2,eps,0);
+x2grt21 := coeffn(x2grt2,eps,1);
+x2grt22 := coeffn(x2grt2,eps,2);
+x2grt22 := 0;
+
+x2grt20_target := 0$
+x2grt21_target := sin(t)
+   - (df(H1,r,2) + df(H1,r)/r + (1*1-1)*H1/r/r) * sin(t)/1
+   - (df(H2,r,2) + df(H2,r)/r + (2*2-1)*H2/r/r) * sin(2*t)/2
+   - (df(H3,r,2) + df(H3,r)/r + (3*3-1)*H3/r/r) * sin(3*t)/3
+   - (df(H4,r,2) + df(H4,r)/r + (4*4-1)*H4/r/r) * sin(4*t)/4
+   + (df(V2,r,2) + df(V2,r)/r + (2*2-1)*V2/r/r) * cos(2*t)/2
+   + (df(V3,r,2) + df(V3,r)/r + (3*3-1)*V3/r/r) * cos(3*t)/3
+   + (df(V4,r,2) + df(V4,r)/r + (4*4-1)*V4/r/r) * cos(4*t)/4$
+x2grt22_target := 0$
+
+write "Residuals of x2grt2 elements:";
+x2grt20 - x2grt20_target;
+x2grt21 - x2grt21_target;
+x2grt22 - x2grt22_target;
+
+;bye;
 
 igr2 := av2(inv(gr2,eps),eps,t)$
 ix2  := av2(inv(x2,eps),eps,t)$

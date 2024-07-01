@@ -44,13 +44,7 @@ m = input ("rational surface number ? ")
 k = int(m) - 1
 
 Pr  = psi_r[k,:,:]
-PPr = np.asarray(Pr)
 Pi  = psi_i[k,:,:]
-PPi = np.asarray(Pi)
-Zr  = z_r[k,:,:]
-ZPr = np.asarray(Zr)
-Zi  = z_i[k,:,:]
-ZPi = np.asarray(Zi)
 
 plt.subplot(1, 2, 1)
 plt.xlim(1.-scale, 1.+scale)
