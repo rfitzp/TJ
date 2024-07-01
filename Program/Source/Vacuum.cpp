@@ -253,7 +253,7 @@ void TJ::GetVacuum ()
 	Rdag (j, jp) = conj (Rvac (jp, j));
       }
   
-  SolveLinearSystem (Rdag, Hmat, Pdag);
+  SolveLinearSystem (Pdag, Hmat, Rdag);
   
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
@@ -269,17 +269,12 @@ void TJ::GetVacuum ()
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	if (j == jp)
-	  {
-	    if (MPOL[j] == 0)
-	      Imat(j, jp) = complex<double> (1., 0.);
-	    else
-	      Imat(j, jp) = complex<double> (2./fabs (mpol[j]), 0.);
-	  }
-	else
-	  Imat(j, jp) = complex<double> (0., 0.);
+	complex<double> sum = Svac (j, jp);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += Hmat (j, jpp) * Qvac (jpp, jp);
+
+	Gmat (j, jp) = sum;
       }
-  
-  SolveLinearSystem (Rdag, Gmat, Imat);
 }
  

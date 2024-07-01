@@ -73,24 +73,20 @@ void TJ::FindDispersion ()
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	if (FREE)
-	  Xmat(j, jp) = Za(j, jp) /(mpol[j] - ntor*qa);
-	else
-	  Xmat(j, jp) = complex<double> (0., 0.);
+	Xmat(j, jp) = - Psia(j, jp);
 
-	for (int k = 0; k < J; k++)
-	  Xmat(j, jp) -= Hsym(j, k) * Psia(k, jp);
+	if (FREE)
+	  for (int k = 0; k < J; k++)
+	    Xmat(j, jp) += Hsym(j, k) * Za(k, jp) /(mpol[k] - ntor*qa);
       }
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < nres; jp++)
       {
-	if (FREE)
-	  Ymat(j, jp) = - Zs(j, jp) /(mpol[j] - ntor*qa);
-	else
-	  Ymat(j, jp) = complex<double> (0., 0.);
+	Ymat(j, jp) = Psis(j, jp);
 
-	for (int k = 0; k < J; k++)
-	  Ymat(j, jp) += Hsym(j, k) * Psis(k, jp);
+	if (FREE)
+	  for (int k = 0; k < J; k++)
+	    Ymat(j, jp) -= Hsym(j, k) * Zs(k, jp) /(mpol[k] - ntor*qa);
       }
 
   // ......................

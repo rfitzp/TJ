@@ -12,6 +12,12 @@ void TJ::SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2>
   int size1 = A.extent(0);
   int size2 = A.extent(1);
   int size3 = B.extent(1);
+
+  if (size1 != size3)
+    {
+      printf ("TJ::SolveLinearSystem: Error - over/underdetermined linear system\n");
+      exit (1);
+    }
  
   // Solve problem using Armadillo
   cx_mat Amat (size1, size2), Xmat (size2, size3), Bmat (size1, size3);
