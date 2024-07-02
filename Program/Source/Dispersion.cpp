@@ -73,20 +73,25 @@ void TJ::FindDispersion ()
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	Xmat(j, jp) = - Psia(j, jp);
-
 	if (FREE)
-	  for (int k = 0; k < J; k++)
-	    Xmat(j, jp) += Hsym(j, k) * Za(k, jp) /(mpol[k] - ntor*qa);
+	  Xmat(j, jp) = Za(j, jp) /(mpol[j] - ntor*qa);
+	else
+	  Xmat(j, jp) = complex<double> (0., 0.);
+
+	for (int k = 0; k < J; k++)
+	  Xmat(j, jp) -= Hsym(j, k) * Psia(k, jp);
       }
+
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < nres; jp++)
       {
-	Ymat(j, jp) = Psis(j, jp);
-
 	if (FREE)
-	  for (int k = 0; k < J; k++)
-	    Ymat(j, jp) -= Hsym(j, k) * Zs(k, jp) /(mpol[k] - ntor*qa);
+	  Ymat(j, jp) = - Zs(j, jp) /(mpol[j] - ntor*qa);
+	else
+	  Ymat(j, jp) = complex<double> (0., 0.);
+
+	for (int k = 0; k < J; k++)
+	  Ymat(j, jp) += Hsym(j, k) * Psis(k, jp);
       }
 
   // ......................
@@ -125,7 +130,7 @@ void TJ::FindDispersion ()
     }
 
   // ..................................................
-  // Calculate fully reconnected tearing eigenfunctions
+  // Calculate fully-reconnected tearing eigenfunctions
   // ..................................................
   for (int i = 0; i < NDIAG; i++)
     {
@@ -145,7 +150,7 @@ void TJ::FindDispersion ()
     }
 
   // ..................................................................
-  // Calculate torques associated with fully reconnected eigenfunctions
+  // Calculate torques associated with fully-reconnected eigenfunctions
   // ..................................................................
   for (int i = 0; i < NDIAG; i++)
     for (int k = 0; k < nres; k++)
@@ -167,7 +172,7 @@ void TJ::FindDispersion ()
       }
 
   // ...........................................................................
-  // Calculate torques associated with pairs of fully reconnected eigenfunctions
+  // Calculate torques associated with pairs of fully-reconnected eigenfunctions
   // ...........................................................................
   GetTorqueFull ();
 
@@ -288,10 +293,29 @@ void TJ::FindDispersion ()
 	for (int k = 0; k < nres; k++)
 	  Chmat(j, jp) += Emat(j, k) * Upmat(k, jp);
       }
+
+  // ....................
+  // Normalize Chi-matrix
+  // ....................
+  for (int j = 0; j < nres; j++)
+    {
+      double sum = 0.;
+
+      for (int jp = 0; jp < J; jp++)
+	sum += real (conj (Chmat(j, jp)) * Chmat(j, jp));
+
+      for (int jp = 0; jp < J; jp++)
+	Chmat(j, jp) /= sum;
+    }
+
+  // ...........................................................
+  // Calculate resonant magnetic perturbation visualization data
+  // ...........................................................
+  VisualizeResonantMagneticPerturbations ();
 }
 
 // #######################################################################################################
-// Function to calculate angular momentum flux associated with pairs of fully reconnected solution vectors
+// Function to calculate angular momentum flux associated with pairs of fully-reconnected solution vectors
 // #######################################################################################################
 void TJ::GetTorqueFull ()
 {
@@ -362,10 +386,10 @@ void TJ::VisualizeEigenfunctions ()
   // ...............
   // Allocate memory
   // ...............
-  Psiuf.resize(J, nres, Nf);
-  Zuf  .resize(J, nres, Nf);
-  Psiuv.resize(nres, Nf, Nw);
-  Zuv  .resize(nres, Nf, Nw);
+  Psiuf.resize(J,    nres, Nf);
+  Zuf  .resize(J,    nres, Nf);
+  Psiuv.resize(nres, Nf,   Nw);
+  Zuv  .resize(nres, Nf,   Nw);
 
   // ..........................................................................................
   // Interpolate unreconnected eigenfunction data from diagnostic to visulalization radial grid
@@ -403,7 +427,7 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline_init (z_r_spline,   Rgrid, z_r,   NDIAG);
 	gsl_spline_init (z_i_spline,   Rgrid, z_i,   NDIAG);
 
-	// Interpolate data onto visulalization grid
+	// Interpolate data onto visualization grid
 	for (int i = 0; i < Nf; i++)
 	  {
 	    double x = gsl_spline_eval (psi_r_spline, rf[i], psi_r_acc);
@@ -458,22 +482,87 @@ void TJ::VisualizeEigenfunctions ()
 		}
 	    }
 
-	  Psiuv(k, i, l) = complex<double> (ReduceRange(psi_r), ReduceRange(psi_i));
-	  Zuv  (k, i, l) = complex<double> (ReduceRange(z_r),   ReduceRange(z_i));
+	  Psiuv(k, i, l) = complex<double> (ReduceRange(psi_r, POWR), ReduceRange(psi_i, POWR));
+	  Zuv  (k, i, l) = complex<double> (ReduceRange(z_r,   POWR), ReduceRange(z_i,   POWR));
 	}
+}
+
+// #########################################################################
+// Function to output visualization data for resonant magnetic perturbations
+// #########################################################################
+void TJ::VisualizeResonantMagneticPerturbations ()
+{
+  // ................................
+  // Set up vacuum visualization grid
+  // ................................
+  RV = new double[Nf];
+  ZV = new double[Nf];
+
+  double scale = 1.5 * epsa;
+  double Rmin  = 1. - scale;
+  double Rmax  = 1. + scale;
+  double Zmin  = - scale;
+  double Zmax  = + scale;
+
+  for (int i = 0; i < Nf; i++)
+    {
+      RV[i] = Rmin + double (i) * (Rmax - Rmin) /double (Nf - 1);
+      ZV[i] = Zmin + double (i) * (Zmax - Zmin) /double (Nf - 1);
+    }
+
+  // .........................................
+  // Calculate resonant magnetic perturbations
+  // .........................................
+  Vx.resize (nres, Nf, Nf);
+
+  for (int k = 0; k < nres; k++)
+    {
+      for (int i = 0; i < Nf; i++)
+	for (int j = 0; j < Nf; j++)
+	  {
+	    double R = RV[i];
+	    double Z = ZV[j];
+	    
+	    double z = GetCoshMu (R, Z);
+	    if (z > 1.e3)
+	      z = 1.e3;
+	    double eta  = GetEta (R, Z);
+	    double ceta = cos (eta);
+	    
+	    complex<double> sum = complex<double> (0., 0.);
+
+	    for (int jj = 0; jj < J; jj++)
+	      {
+		if (MPOL[jj] == 0)
+		  {
+		    sum += conj(Chmat(k, jj)) * (sqrt(2.) /sqrt(M_PI) /gsl_sf_gamma (0.5 + ntor)) * sqrt (z - ceta) * ToroidalQ (NTOR, 0, z);
+		  }
+		else
+		  {
+		    sum += conj(Chmat(k, jj)) * cos (mpol[jj]*M_PI) 
+		      * (pow (2., fabs (mpol[jj]) + 0.5) * gsl_sf_fact (abs (MPOL[jj]) - 1)
+			 /sqrt(M_PI) /gsl_sf_gamma (fabs (mpol[jj]) + 0.5 + ntor) /pow (epsa, fabs (mpol[jj])))
+		      * sqrt (z - ceta) * ToroidalQ (NTOR, abs (MPOL[jj]), z)
+		      * complex<double> (cos (mpol[jj]*eta), - sin (mpol[jj]*eta));
+		  }
+	      }
+
+	    Vx(k, i, j) = complex<double> (ReduceRange(real(sum), 3.), ReduceRange(imag(sum), 3.));
+	  }
+    }
 }
 
 // ############################################
 // Function to reduce dynamic range of quantity
 // ############################################
-double TJ::ReduceRange (double x)
+double TJ::ReduceRange (double x, double powr)
 {
   double y;
 
   if (x > 0.)
-    y =    pow (x, 1./POWR);
+    y =    pow (x, 1./powr);
   else if (x < 0.)
-    y =  - pow (fabs(x), 1./POWR);
+    y =  - pow (fabs(x), 1./powr);
   else
     y = 0.;
 

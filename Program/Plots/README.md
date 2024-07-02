@@ -43,3 +43,4 @@
 ## Resonant magnetic perturbation response:
 
    	 - Chi.py        - Plots resonant magnetic perturbation response vector versus poloidal mode number associated with given rational surface
+	 - RMP.py        - Plots scalar magnetic potential of resonant magnetic perturbation associated with given rational surface in R, Z plane

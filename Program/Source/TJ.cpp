@@ -80,9 +80,9 @@ TJ::TJ ()
 	  acc, h0, hmin, hmax, EPSF, POWR);
 }
 
-// ###########
+// ##########
 // Destructor
-// ###########
+// ##########
 TJ::~TJ ()
 {
 }
@@ -206,6 +206,8 @@ void TJ::WriteNetCDF ()
   double* chi_i   = new double[nres*J];
   double* chi_m   = new double[nres*J];
   double* chi_a   = new double[nres*J];
+  double* Vx_r    = new double[nres*Nf*Nf];
+  double* Vx_i    = new double[nres*Nf*Nf];
 
   for (int n = 0; n <= Ns; n++)
     for (int i = 0; i <= Nr; i++)
@@ -357,7 +359,17 @@ void TJ::WriteNetCDF ()
 	chi_a[cnt] = arg  (Chmat (j, i)) /M_PI;
 	cnt++;
       }
-  
+
+  cnt = 0;
+  for (int k = 0; k < nres; k++)
+    for (int i = 0; i < Nf; i++)
+      for (int j = 0; j < Nf; j++)
+	{
+	  Vx_r[cnt] = real (Vx (k, i, j));
+	  Vx_i[cnt] = imag (Vx (k, i, j));
+	  cnt++;
+	}
+
   try
     {
       NcFile dataFile ("Plots/TJ.nc", NcFile::replace);
@@ -415,6 +427,11 @@ void TJ::WriteNetCDF ()
       v_d.push_back (x_d);
       v_d.push_back (f_d);
       v_d.push_back (w_d);
+      
+      vector<NcDim> rmp_d;
+      rmp_d.push_back (x_d);
+      rmp_d.push_back (f_d);
+      rmp_d.push_back (f_d);
  
       NcVar r_x = dataFile.addVar ("r", ncDouble, r_d);
       r_x.putVar (rr);
@@ -597,8 +614,18 @@ void TJ::WriteNetCDF ()
       chim_x.putVar (chi_m);
       NcVar chia_x = dataFile.addVar ("Chi_a", ncDouble, chi_d);
       chia_x.putVar (chi_a);
+
+      NcVar rv_x = dataFile.addVar ("Rv", ncDouble, f_d);
+      rv_x.putVar (RV);
+      NcVar zv_x = dataFile.addVar ("Zv", ncDouble, f_d);
+      zv_x.putVar (ZV);
+      
+      NcVar vxr_x = dataFile.addVar ("Vx_r", ncDouble, rmp_d);
+      vxr_x.putVar (Vx_r);
+      NcVar vxi_x = dataFile.addVar ("Vx_i", ncDouble, rmp_d);
+      vxi_x.putVar (Vx_i);
     }
-  catch(NcException& e)
+  catch (NcException& e)
     {
       e.what ();
       exit (1);
@@ -619,7 +646,7 @@ void TJ::WriteNetCDF ()
   delete[] TTf;     delete[] TTu;     delete[] TFull;   delete[] TUnrc;
   delete[] PPV_r;   delete[] PPV_i;   delete[] ZZV_r;   delete[] ZZV_i;
   delete[] Gmat_r;  delete[] Gmat_i;  delete[] chi_r;   delete[] chi_i;
-  delete[] chi_m;   delete[] chi_a;
+  delete[] chi_m;   delete[] chi_a;   delete[] Vx_r;    delete[] Vx_i;
 }
 
 // #############################
@@ -672,6 +699,8 @@ void TJ::CleanUp ()
   delete[] nuLres; delete[] nuSres; delete[] qerr; delete[] Jres;
 
   delete[] hode; delete[] eode; delete[] Rgrid; delete[] rf;
+
+  delete[] RV; delete[] ZV;
 }
 
 // #####################################

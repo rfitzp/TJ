@@ -22,7 +22,6 @@ void TJ::GetVacuum ()
   Hmat.resize (J, J);
   Hdag.resize (J, J);
   Hsym.resize (J, J);
-  Imat.resize (J, J);
   Gmat.resize (J, J);
   double* Hn  = new double[Ns+1];
   double* Vn  = new double[Ns+1];
@@ -253,7 +252,7 @@ void TJ::GetVacuum ()
 	Rdag (j, jp) = conj (Rvac (jp, j));
       }
   
-  SolveLinearSystem (Pdag, Hmat, Rdag);
+  SolveLinearSystem (Rdag, Hmat, Pdag);
   
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
@@ -266,15 +265,21 @@ void TJ::GetVacuum ()
   // ..................
   // Calculate G-matrix
   // ..................
+  Array<complex<double>,2> Imat(J, J);
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	complex<double> sum = Svac (j, jp);
-
-	for (int jpp = 0; jpp < J; jpp++)
-	  sum += Hmat (j, jpp) * Qvac (jpp, jp);
-
-	Gmat (j, jp) = sum;
+	if (j == jp)
+	  {
+	    if (MPOL[j] == 0)
+	      Imat (j, jp) = complex<double> (1., 0.);
+	    else
+	      Imat (j, jp) = complex<double> (2./fabs (mpol[j]), 0.);
+	  }
+	else
+	  Imat (j, jp) = complex<double> (0., 0.);
       }
+  
+  SolveLinearSystem (Rdag, Gmat, Imat);
 }
  

@@ -81,9 +81,9 @@ class TJ
   double EPSF;    // Step-length for finite difference determination of derivative
   double POWR;    // Power for reduction in dynamic range of visulalized fields
 
-  // ..................................................
-  // Equilibrium data (read from Inputs/Equilibrium.nc)
-  // ..................................................
+  // .................................................
+  // Equilibrium data (read from Plots/Equilibrium.nc)
+  // .................................................
   double             epsa;      // Inverse aspect-ratio
   int                Ns;        // Number of shaping harmonics
   int                Nr;        // Number of radial grid-points
@@ -175,7 +175,6 @@ class TJ
   Array<complex<double>,2> Hmat;  // Vacuum homogeneous response matrix
   Array<complex<double>,2> Hdag;  // Hermitian conjugate of Hmat
   Array<complex<double>,2> Hsym;  // Symmeterized Hmat
-  Array<complex<double>,2> Imat;  // Vacuum solution matrix
   Array<complex<double>,2> Gmat;  // Vacuum inhomogeneous response matrix
 
   // -----------------
@@ -216,9 +215,9 @@ class TJ
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
 
-  // ----------------------------------------
-  // Visulalization of tearing eigenfunctions
-  // ----------------------------------------
+  // ------------------------------------------------
+  // Visualization of tearing eigenfunctions and RMPs
+  // ------------------------------------------------
   int                      Nf;     // Number of radial grid-points on visualization grid
   int                      Nw;     // Number of angular grid-points on visualization grid
   double*                  rf;     // Radial grid-points on visualization grif
@@ -230,6 +229,9 @@ class TJ
   Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visulalization grid
   Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
+  double*                  RV;     // R coodinates of vacuum visualization grid-points
+  double*                  ZV;     // Z coodinates of vacuum visualization grid-points
+  Array<complex<double>,3> Vx;     // Scalar magnetic potentials of resonant magnetic perturbations
 
   // .......................
   // Root finding parameters
@@ -390,8 +392,10 @@ class TJ
   void GetTorqueUnrc ();
   // Output visualization data for unreconnected tearing eigenfunctions
   void VisualizeEigenfunctions ();
+  // Output visualization data for resonant magnetic perturbations
+  void VisualizeResonantMagneticPerturbations ();
   // Reduce dynamic range of quantity
-  double ReduceRange (double x);
+  double ReduceRange (double x, double powr);
   
   // ..................
   // In Interpolate.cpp
@@ -457,6 +461,24 @@ class TJ
   void SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B);
   // Invert square matrix
   void InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA);
+
+  // ...............
+  // In Toroidal.cpp
+  // ...............
+
+  // Return associated Legendre function P^m_(n-1/2) (z)
+  double ToroidalP (int m, int n, double z);
+  // Return associated Legendre function Q^m_(n-1/2) (z)
+  double ToroidalQ (int m, int n, double z);
+  // Return derivative of associated Legendre function P^m_(n-1/2) (z)
+  double ToroidaldPdz (int m, int n, double z);
+  // Return derivative of associated Legendre function Q^m_(n-1/2) (z)
+  double ToroidaldQdz (int m, int n, double z);
+
+  // Return hyperbolic cosine of toroidal coordinate mu
+  double GetCoshMu (double R, double Z);
+  // Return toroidal coordinate eta
+  double GetEta (double R, double Z);
 };
 
 #endif //TJXX

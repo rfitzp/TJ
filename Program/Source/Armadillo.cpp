@@ -13,7 +13,7 @@ void TJ::SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2>
   int size2 = A.extent(1);
   int size3 = B.extent(1);
 
-  if (size1 != size3)
+  if (size1 != size2)
     {
       printf ("TJ::SolveLinearSystem: Error - over/underdetermined linear system\n");
       exit (1);

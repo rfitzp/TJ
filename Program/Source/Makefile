@@ -14,9 +14,9 @@ F_SOURCE = NameListEquilibrium.f90 NameListTJ.f90
 
 C_HEADER = TJ.h 
 C_OBJECT = main.o TJ.o Equilibrium.o ReadEquilibrium.o Interpolate.o ZeroFind.o Rational.o Matrix.o\
-	Vacuum.o Armadillo.o Integrate.o ODESolve.o Resonant.o Dispersion.o 
+	Vacuum.o Armadillo.o Integrate.o ODESolve.o Resonant.o Dispersion.o Toroidal.o
 C_SOURCE = main.cpp TJ.cpp Equilibrium.cpp ReadEquilibrium.cpp Interpolate.cpp ZeroFind.cpp Rational.cpp Matrix.cpp\
-	Vacuum.cpp Armadillo.cpp Integrate.cpp ODESolve.cpp Resonant.cpp Dispersion.cpp
+	Vacuum.cpp Armadillo.cpp Integrate.cpp ODESolve.cpp Resonant.cpp Dispersion.cpp Toroidal.cpp
 
 EXECUTABLE = ../tj
 

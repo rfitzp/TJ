@@ -386,7 +386,7 @@ f_m^{\,m'}(r) &= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2
 g_m^{\,m'}(r) &= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,R^{\,2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi}.\label{e114}
 \end{align}
 Here, we have extended the analysis of Ref.~\onlinecite{am3} to take into account the fact that the $A_m^{\,m'}$, $B_m^{\,m'}$, $a_m^{\,m'}$, $b_m^{\,m'}$, et cetera,
-are complex quantities in a realistic non-up-down-symmetric plasma equilibrium. 
+are complex quantities in a realistic non-up-down-symmetric tokamak plasma equilibrium. 
 
 \subsection{Outer-Region ODEs}\label{ode2}
 Let 
@@ -992,7 +992,7 @@ Moreover, $\Gamma(z)$ is a Gamma function.\cite{abram1}
 
 Let 
 \begin{align}
-a_m &= \frac{\cos(|m|\,\pi)\,2^{\,|m|-1/2}\,|m|!\,\epsilon^{\,-|m|}}{\sqrt{\pi}\,\Gamma(|m|+1/2-n)}\,A_m,\label{e11cc}\\[0.5ex]
+a_m &= \frac{\cos(|m|\,\pi)\,2^{\,|m|-1/2}\,|m|!}{\sqrt{\pi}\,\Gamma(|m|+1/2-n)\,\epsilon^{\,|m|}}\,A_m,\label{e11cc}\\[0.5ex]
 b_m &= \frac{\cos(|m|\,\pi)\,\sqrt{\pi}\,\Gamma(|m|+1/2+n)\,\epsilon^{\,|m|}}{2^{\,|m|+1/2}\,(|m|-1)!}\,B_m\label{e13cc}
 \end{align}
 for general $m$, and
@@ -1090,11 +1090,17 @@ and
 {\cal S}_{-j}^{\,0}   &= 0\mbox{~~~for $j>1$}.
 \end{align}
 
-It can be demonstrated that\,\cite{am1}
+Let
+\begin{align}\label{e286a}
+{\cal A}^{mm'}&=\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal R}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal P}_{m''}^{\,m'}\right),\\[0.5ex]
+{\cal B}^{mm'}&=\sum_{m''}\left({\cal Q}_{m''}^{\,m\,\ast}\,{\cal S}_{m''}^{\,m'}- {\cal S}_{m''}^{\,m\,\ast}\,{\cal Q}_{m''}^{\,m'}\right),\\[0.5ex]
+{\cal C}^{mm'}&=\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal S}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal Q}_{m''}^{\,m'}\right).\label{e288a}
+\end{align}
+It can be demonstrated  from the previous definitions, after considerable algebra, that\,\cite{am1}
 \begin{align}\label{e286}
-{\cal A}^{mm'}\equiv\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal R}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal P}_{m''}^{\,m'}\right)&= \delta^{\,mm'}\,{\cal O}(\epsilon^{\,4})+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\\[0.5ex]
-{\cal B}^{mm'}\equiv\sum_{m''}\left({\cal Q}_{m''}^{\,m\,\ast}\,{\cal S}_{m''}^{\,m'}- {\cal S}_{m''}^{\,m\,\ast}\,{\cal Q}_{m''}^{\,m'}\right)&= \delta^{\,mm'}\,{\cal O}(\epsilon^{\,4})+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\\[0.5ex]
-{\cal C}^{mm'}\equiv\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal S}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal Q}_{m''}^{\,m'}\right)&= \delta^{\,mm'}\,[h_m+{\cal O}(\epsilon^{\,4})]+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\label{e288}
+{\cal A}^{mm'}&= \delta^{\,mm'}\,{\cal O}(\epsilon^{\,4})+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\\[0.5ex]
+{\cal B}^{mm'}&= \delta^{\,mm'}\,{\cal O}(\epsilon^{\,4})+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\\[0.5ex]
+{\cal C}^{mm'}&= \delta^{\,mm'}\,[h_m+{\cal O}(\epsilon^{\,4})]+ (1-\delta^{\,mm'})\,{\cal O}(\epsilon^{\,2}),\label{e288}
 \end{align}
 where 
 \begin{equation}
@@ -1108,7 +1114,7 @@ b_m &= \frac{1}{h_m}\sum_{m'}\left[{\cal P}_{m'}^{\,m\,\ast}\,\psi_{m'}(1) -\fra
 \end{align}
 
 \subsection{Toroidal Electromagnetic Angular Momentum Flux}
-By analogy with Eq.~(\ref{torque}), the outward flux of toroidal electromagnetic angular momentum across the plasma boundary,
+By analogy with Eq.~(\ref{torque}), the outward flux of toroidal electromagnetic angular momentum across the plasma/vacuum interface,
 which is equal to the flux of  toroidal electromagnetic angular momentum across a surface of constant $\mu$ (in the direction of
 decreasing $\mu$) in the vacuum region, is given by 
 \begin{align}
@@ -1122,7 +1128,7 @@ T_\phi(1)=-{\rm i}\,\pi^2\,n\sum_m(z^2-1)\left[\frac{dP_{m-1/2}^{\,n}}{dz}\,Q_{m
 \end{equation}
 However,\cite{morse3}
 \begin{equation}
-\frac{dP_{m-1/2}^{\,n}}{dz}\,Q_{m-1/2}^{\,n}- P_{m-1/2}^{\,n}\,\frac{dQ_{m-1/2}^{\,n}}{dz}= \frac{\Gamma(|m|+1/2+n)}{\Gamma(|m|-1/2-n)\,(z^2-1)}.
+\frac{dP_{m-1/2}^{\,n}}{dz}\,Q_{m-1/2}^{\,n}- P_{m-1/2}^{\,n}\,\frac{dQ_{m-1/2}^{\,n}}{dz}= \frac{\Gamma(|m|+1/2+n)}{\Gamma(|m|+1/2-n)\,(z^2-1)}.
 \end{equation}
 Thus, making use of Eqs.~(\ref{e11cc})--(\ref{e15cc}), we obtain
 \begin{equation}\label{e90cc}
@@ -1139,14 +1145,14 @@ b_m= 0
 \end{equation}
 for all $m$. Thus, Eq.~(\ref{e291}) yields the following homogenous boundary condition at the plasma/vacuum interface:
 \begin{equation}\label{e297}
-\psi_{m}(1)= \sum_{m'}H_{mm'}\,\frac{Z_{m'}(1) }{m'-n\,q(1)},
+\frac{Z_{m}(1)}{m-n\,q(1)}= \sum_{m'}H_{mm'}\,\psi_{m'}(1),
 \end{equation}
 where
 \begin{equation}\label{e298}
-\sum_{m''}{\cal P}_{m''}^{\,m\,\ast}\,H_{m'' m'}= {\cal R}_{m'}^{\,m\,\ast}.
+\sum_{m''}{\cal R}_{m''}^{\,m\,\ast}\,H_{m'' m'}= {\cal P}_{m'}^{\,m\,\ast}.
 \end{equation}
 
-Now, from Eq.~(\ref{etorque}), (\ref{e27cc}), (\ref{e54cc}), and (\ref{e286})--(\ref{e288}), 
+Now, from Eq.~(\ref{etorque}), (\ref{e27cc}), (\ref{e54cc}), and (\ref{e286a})--(\ref{e288}), 
 \begin{align}\label{e299}
 T_\phi(1) &= {\rm i}\,\pi^2\,n\sum_{m}\frac{Z_m^{\,\ast}(1)\,\psi_m(1)-\psi_m^{\,\ast}(1)\,Z_m(1)}{m-n\,q(1)}\nonumber\\[0.5ex]
 &={\rm i}\,\pi^2\,n\sum_{m,m'}\left(a_m^{\,\ast}\,{\cal A}^{mm'}\,a_{m'} + a_m^{\,\ast}\,{\cal C}^{mm'}\,b_{m'}-b_m^{\,\ast}\,{\cal C}^{m'm\,\ast}\,a_{m'}
@@ -1155,34 +1161,30 @@ T_\phi(1) &= {\rm i}\,\pi^2\,n\sum_{m}\frac{Z_m^{\,\ast}(1)\,\psi_m(1)-\psi_m^{\
 \end{align}
 Given that Eq.~(\ref{e90cc}) is an exact result (i.e., it is independent of our inverse aspect-ratio expansion), it is clear that the 
 ${\cal O}(\epsilon^{\,2})$ and ${\cal O}(\epsilon^{\,4})$ residuals on the right-hand sides of Eqs.~(\ref{e286})--(\ref{e288})
-would all be zero in an exact calculation (such as the one described in Sect.~\ref{vacxx}).
+would all be zero in an exact calculation. (See Sect.~\ref{acons}.)
 
 Equations~(\ref{e90cc}) and (\ref{e296}) imply that 
 \begin{equation}\label{e300}
 T_\phi(1)=0. 
 \end{equation}
-In other words, the flux of toroidal electromagnetic angular momentum across the plasma boundary is
+In other words, the flux of toroidal electromagnetic angular momentum across the plasma/vacuum interface is
 exactly zero, as must be the case for an isolated plasma.  According to Eqs.~(\ref{e297}) and (\ref{e299}), this constraint can only be satisfied if  $H_{mm'}$ is an Hermitian matrix. 
 Now, Eqs.~(\ref{e298}) yields 
 \begin{equation}
-\sum_{m'',m'''}{\cal P}_{m''}^{m\,\ast}\,(H_{m''m'''}-H_{m'''m''}^{\,\ast})\,{\cal P}_{m'''}^{\,m'}=\sum_{m''}\left({\cal R}_{m''}^{\,m\,\ast}\,{\cal P}_{m''}^{\,m'}- {\cal P}_{m''}^{\,m\,\ast}\,{\cal R}_{m''}^{\,m'}\right)={\cal O}(\epsilon^{\,2}),
+\sum_{m'',m'''}{\cal R}_{m''}^{m\,\ast}\,(H_{m''m'''}-H_{m'''m''}^{\,\ast})\,{\cal R}_{m'''}^{\,m'}=\sum_{m''}\left({\cal P}_{m''}^{\,m\,\ast}\,{\cal R}_{m''}^{\,m'}- {\cal R}_{m''}^{\,m\,\ast}\,{\cal P}_{m''}^{\,m'}\right)={\cal O}(\epsilon^{\,2}),
 \end{equation}
-where use has been made of Eq.~(\ref{e286}). Thus, it is clear that $H_{mm'}$ is Hermitian to ${\cal O}(\epsilon^{\,2})$. 
+where use has been made of Eqs.~(\ref{e286a}) and (\ref{e286}). Thus, it is clear that $H_{mm'}$ is Hermitian to ${\cal O}(\epsilon^{\,2})$. 
 
 \subsection{Inhomogeneous Boundary Condition at Plasma/Vacuum Interface}
 Non-axisymmetric currents (with $n$ periods in the toroidal direction) flowing in magnetic field-coils external to the plasma generate a
-vacuum magnetic field at the plasma boundary that is characterized by the $b_m$ coefficients  appearing in Eqs.~(\ref{e27cc}) and (\ref{e54cc}).
+vacuum magnetic field at the plasma/vacuum interface that is characterized by the $b_m$ coefficients  appearing in Eqs.~(\ref{e27cc}) and (\ref{e54cc}).
 If the $b_m$ are non-zero then Eqs.~(\ref{e291}) and (\ref{e298}) yield the following inhomogeneous boundary condition at the plasma/vacuum interface:
 \begin{equation}\label{inhom}
-\psi_{m}(1)= \sum_{m'}H_{mm'}\,\frac{Z_{m'}(1) }{m'-n\,q(1)}+ \sum_{m'}G_{mm'}\,b_{m'},
+\frac{Z_{m}(1)}{m-n\,q(1)}= \sum_{m'}H_{mm'}\,\psi_{m'}(1)- \sum_{m'}G_{mm'}\,b_{m'},
 \end{equation}
 where
-\begin{equation}
-\sum_{m''} {\cal P}_{m''}^{\,m\,\ast}\,G_{m''m'} = h_{m}\,\delta^{\,m}_{m'}.
-\end{equation}
-However, making use of Eqs.~(\ref{e288}) and (\ref{e298}), the previous expression can be transformed to give
-\begin{equation}\label{e338}
-G_{mm'} = {\cal S}_m^{\,m'} + \sum_{m''} H_{mm''}\,{\cal Q}_{m''}^{\,m'}.
+\begin{equation}\label{e337}
+\sum_{m''} {\cal R}_{m''}^{\,m\,\ast}\,G_{m''m'} = h_{m}\,\delta^{\,m}_{m'}.
 \end{equation}
 
 \section{General Vacuum Solution}\label{vacxx}
@@ -1190,7 +1192,7 @@ G_{mm'} = {\cal S}_m^{\,m'} + \sum_{m''} H_{mm''}\,{\cal Q}_{m''}^{\,m'}.
 According to the analysis of Sect.~\ref{vacx}, the homogeneous vacuum response matrix, $H_{mm'}$, which is defined in Eq.~(\ref{inhom}), must be
 Hermitian, otherwise toroidal angular momentum is not conserved. However, the analysis of Sect.~\ref{vacx} only guarantees that
 $H_{mm'}$ is Hermitian to ${\cal O}(\epsilon^2)$. If we wish to obtain a homogeneous vacuum response matrix that is Hermitian to greater accuracy than
-this then we must extend our analysis, as described in Sects.~\ref{svacsoln}--\ref{svacsoln1}.
+this then we must improve our analysis, as described in Sects.~\ref{svacsoln}--\ref{svacsoln1}.
 
 \subsection{Vacuum Solution}\label{svacsoln}
 Let us assumed that all perturbed quantities  vary with the toroidal angle, $\phi$, as $\exp(-{\rm i}\,n\,\phi)$, which allows us to ignore $\phi$.
@@ -1207,7 +1209,7 @@ V^p(z,\eta) &=\sum_m A_m\,(z-\cos\eta)^{1/2}\,P_{m-1/2}^{\,n}(z)\,\exp(-{\rm i}\
 V^x(z,\eta) &=\sum_m B_m\,(z-\cos\eta)^{1/2}\,Q_{m-1/2}^{\,n}(z)\,\exp(-{\rm i}\,m\,\eta),
 \end{align}
 where the $A_m$ and $B_m$ are arbitrary complex coefficients. 
-Here, $V^p$ is the potential generated by currents flowing within the plasma, whereas $V^x$ is the potential
+Here, $V^p$ is the potential generated by perturbed currents flowing within the plasma, whereas $V^x$ is the potential
 generated by non-axisymmetric currents flowing in magnetic field-coils external to the plasma. For the sake
 of convenience, the latter
 currents are assumed to lie at infinity.
@@ -1228,9 +1230,11 @@ V_m^{\,x} &= \oint_{\hat{r}=1}V^x\,\exp(-{\rm i}\,m\,\theta)\,\frac{d\theta}{2\p
 and
 \begin{align}
 {\cal P}_m^{\,m'} &=
-\frac{\cos(|m'|\,\pi)\,\sqrt{\pi}\,\Gamma(|m'|+1/2-n)}{2^{\,|m'|-1/2}\,|m'|!\,\epsilon^{-|m'|}}\oint_{\hat{r}=1}
-(z-\cos\eta)^{1/2}\,P_{m'-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi},\label{e346}\\[0.5ex]
-{\cal Q}_m^{\,m'} &=\frac{\cos(|m'|\,\pi)\,2^{\,|m'|+1/2}\,(|m'|-1)!}{\sqrt{\pi}\,\Gamma(|m'|+1/2+n)\,\epsilon^{\,|m'|}}\
+\frac{\cos(|m'|\,\pi)\,\sqrt{\pi}\,\Gamma(|m'|+1/2-n)\,\epsilon^{\,|m'|}}{2^{\,|m'|-1/2}\,|m'|!}\nonumber\\[0.5ex]
+&\phantom{=}\times
+\oint_{\hat{r}=1}(z-\cos\eta)^{1/2}\,P_{m'-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi},\label{e346}\\[0.5ex]
+{\cal Q}_m^{\,m'} &=\frac{\cos(|m'|\,\pi)\,2^{\,|m'|+1/2}\,(|m'|-1)!}{\sqrt{\pi}\,\Gamma(|m'|+1/2+n)\,\epsilon^{\,|m'|}}\nonumber\\[0.5ex]
+&\phantom{=}\times
 \oint_{\hat{r}=1}
 (z-\cos\eta)^{1/2}\,Q_{m'-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
 \end{align}
@@ -1262,7 +1266,7 @@ where, according to the analysis of Sect.~\ref{pertb},
 and
 \begin{align}\label{e354}
 {\cal R}_m^{\,m'} &=
-\frac{\cos(|m'|\,\pi)\,\sqrt{\pi}\,\Gamma(|m'|+1/2-n)}{2^{\,|m'|-1/2}\,|m'|!\,\epsilon^{-|m'|}}
+\frac{\cos(|m'|\,\pi)\,\sqrt{\pi}\,\Gamma(|m'|+1/2-n)\,\epsilon^{\,|m'|}}{2^{\,|m'|-1/2}\,|m'|!}
 \nonumber\\[0.5ex]&\times \oint_{\hat{r}=1}
 R^{\,2}\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,P_{m'-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{dP_{m'-1/2}^{\,n}}{dz}\right]\hat{\nabla}\hat{r}\cdot\hat{\nabla} z
 \right.\nonumber\\[0.5ex]&
@@ -1295,6 +1299,35 @@ R^{\,2}\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,Q_{-1/2}^{\,n}(z)+(z-\cos\
 \right\}\exp(-{\rm i}\,m\,\theta)\,\frac{d\theta}{2\pi}
 \end{align}
 for the special case $m'=0$.
+
+\subsection{Toroidal Angular Momentum Conservation}\label{acons}
+The outward flux of toroidal electromagnetic angular momentum across the plasma/vacuum interface is
+\begin{equation}
+T_\phi(1) = {\rm i}\,\pi^2\,n\sum_m\left[V_m^{\,\ast}(1)\,\psi_m(1)-\psi_m^{\,\ast}(1)\,V_m(1)\right],
+\end{equation}
+where use has been made of Eqs.~(\ref{etorque}) and (\ref{evdef}). However,
+Eqs.~(\ref{e343})--(\ref{e345}) and (\ref{e351})--(\ref{e353}) yield
+\begin{align}
+V_m(1)&= \sum_{m'}\left({\cal P}_m^{\,m'} \,a_{m'}+ {\cal Q}_{m}^{\,m'}\,b_{m'}\right),\\[0.5ex]
+\psi_m(1)& = \sum_{m'}\left({\cal R}_m^{\,m'}\,a_{m'} + {\cal S}_{m}^{\,m'}\,b_{m'}\right).
+\end{align}
+Hence, 
+\begin{equation}
+T_\phi(1) ={\rm i}\,\pi^2\,n\sum_{m,m'}\left(a_m^{\,\ast}\,{\cal A}^{mm'}\,a_{m'} + a_m^{\,\ast}\,{\cal C}^{mm'}\,b_{m'}-b_m^{\,\ast}\,{\cal C}^{m'm\,\ast}\,a_{m'}
++b_m^{\,\ast}\,{\cal B}^{mm'}\,b_{m'}\right),
+\end{equation}
+where use has been made of Eqs.~(\ref{e286a})--(\ref{e288a}). However, we know from 
+Eq.~(\ref{e90cc}) that 
+\begin{equation}
+T_\phi(1) =- {\rm i}\,\pi^2\,n\sum_m h_m\,(a_m\,b_m^{\,\ast}-a_m^{\,\ast}\,b_m).
+\end{equation}
+Moreover, the previous equation is valid for all possible values of the $a_m$ and the $b_m$. Hence, we deduce that 
+\begin{align}\label{e286x}
+{\cal A}^{mm'}&= 0,\\[0.5ex]
+{\cal B}^{mm'}&= 0,\\[0.5ex]
+{\cal C}^{mm'}&= \delta^{\,mm'}\,h_m.\label{e288x}
+\end{align}
+[See Eqs.~(\ref{e286})--(\ref{e288}).]
 
 \subsection{Homogeneous Vacuum Response Matrix}
 Let us define the function ${\cal E}_m(z,\mu)$ such that
@@ -1333,31 +1366,31 @@ where  use has been made of Eqs.~(\ref{e360}) and (\ref{e362}).
 Thus, we can
 write
 \begin{equation}
-\psi_m^{\,p} = \sum_{m'}\,H_{mm'}\,V_{m'}^{\,p},
+\psi_m^{\,p} = \sum_{m'}\,H_{mm'}^{-1}\,V_{m'}^{\,p},
 \end{equation}
 where 
 \begin{equation}\label{e368}
-H_{mm'}=\oint_{\hat{r}=1}R^{\,2}\,\hat{\nabla} {\cal E}_m\cdot \hat{\nabla}\hat{r}\,\exp(\,{\rm i}\,m'\,\theta)\,\frac{d\theta}{2\pi},
+H_{mm'}^{-1}=\oint_{\hat{r}=1}R^{\,2}\,\hat{\nabla} {\cal E}_m\cdot \hat{\nabla}\hat{r}\,\exp(\,{\rm i}\,m'\,\theta)\,\frac{d\theta}{2\pi},
 \end{equation}
 and use has been made of Eq.~(\ref{e344}). 
 
-The homogeneous vacuum response matrix can be written
+The inverse homogeneous vacuum response matrix can be written
 \begin{equation}\label{e369}
-H_{mm'} =-\frac{1}{2\pi}\oint_S {\cal E}_{m'}^{\,\ast}\,\nabla{\cal E}_m\cdot d{\bf S},
+H_{mm'}^{-1} =-\frac{1}{2\pi}\oint_S {\cal E}_{m'}^{\,\ast}\,\nabla{\cal E}_m\cdot d{\bf S},
 \end{equation}
 where use has been made of Eqs.~(\ref{e358}), (\ref{e360}), and (\ref{e368}). It follows that
 \begin{align}\label{e370}
-H_{mm'}-H_{m'm}^{\,\ast} &= -\frac{1}{2\pi}\oint_S\left({\cal E}_{m'}^{\,\ast}\,\nabla{\cal E}_m-{\cal E}_m\,\nabla{\cal E}_{m'}^{\,\ast}\right)\cdot
+H_{mm'}^{-1}-H_{m'm}^{-1\,\ast} &= -\frac{1}{2\pi}\oint_S\left({\cal E}_{m'}^{\,\ast}\,\nabla{\cal E}_m-{\cal E}_m\,\nabla{\cal E}_{m'}^{\,\ast}\right)\cdot
 d{\bf S}\nonumber\\[0.5ex]
 &\phantom{=}-\frac{1}{2\pi}\int_C\nabla\cdot\left({\cal E}_{m'}^{\,\ast}\,\nabla{\cal E}_m-{\cal E}_m\,\nabla{\cal E}_{m'}^{\,\ast}\right)dC\nonumber\\[0.5ex]
 &\phantom{=}-\frac{1}{2\pi}\int_C\left({\cal E}_{m'}^{\,\ast}\,\nabla^2{\cal E}_m-{\cal E}_m\,\nabla^2{\cal E}_{m'}^{\,\ast}\right)dC=0,
 \end{align}
-where use has been made of Eq.~(\ref{e359}). Thus, we conclude that $H_{mm'}$, as defined in Eq.~(\ref{e368}), is   Hermitian  to all orders in $\epsilon$. 
+where use has been made of Eq.~(\ref{e359}). Thus, we conclude that $H_{mm'}^{-1}$, as defined in Eq.~(\ref{e368}), is   Hermitian  to all orders in $\epsilon$. It follows that the homogeneous vacuum response matrix, $H_{mm'}$, is also Hermitian to all orders in $\epsilon$. 
 
 Equations~(\ref{e359}) and (\ref{e360}) can be automatically satisfied by writing
 \begin{align}\label{e372}
 {\cal E}_m&= a_m^{\,0}\,\frac{\sqrt{\pi}\,\Gamma(1/2-n)}{\sqrt{2}}\,(z-\cos\eta)^{1/2}\,P_{-1/2}^{\,n}(z)\\[0.5ex]
-&\phantom{=}+ \sum_{m'\neq 0} a_{m}^{\,m'}\,\frac{\cos(|m'|\,\pi)\,\sqrt{\pi}\,\Gamma(|m'|+1/2-n)}{2^{\,|m'|-1/2}\,|m'|!\,\epsilon^{-|m'|}}\,
+&\phantom{=}+ \sum_{m'\neq 0} a_{m}^{\,m'}\,\frac{\cos(|m'|\,\pi)\,\sqrt{\pi}\,\Gamma(|m'|+1/2-n)\,\epsilon^{\,|m'|}}{2^{\,|m'|-1/2}\,|m'|!}\,
 (z-\cos\eta)^{1/2}\,P_{m'-1/2}^{\,n}(z)\,\exp(\,{\rm i}\,m'\,\eta),\nonumber
 \end{align}
 where the $a_m^{\,m'}$ are complex coefficients. 
@@ -1376,38 +1409,33 @@ It follows that
 \end{equation}
 Moreover, Eqs.~(\ref{e368}) and (\ref{e372}) give
 \begin{equation}
-H_{mm'} = \sum_{m''}a_m^{\,m''}\,{\cal R}_{m'}^{\,m''\ast},
+H_{mm'}^{-1} = \sum_{m''}a_m^{\,m''}\,{\cal R}_{m'}^{\,m''\ast},
 \end{equation}
 where use has been made of Eqs.~(\ref{e354}) and (\ref{e356}). The previous two equations can be combined to give
 \begin{equation}\label{e376}
-\sum_{m''}{\cal P}_{m''}^{\,m\,\ast}\,H_{m''m'}={\cal R}_{m'}^{\,m\,\ast},
+\sum_{m''}{\cal R}_{m''}^{\,m\,\ast}\,H_{m''m'}={\cal P}_{m'}^{\,m\,\ast},
 \end{equation}
 which is analogous in form to Eq.~(\ref{e298}). 
-
-Alternatively, Eqs.~(\ref{e369}) and (\ref{e370}) can be combined to give
-\begin{equation}
-H_{mm'}=-\frac{1}{4\pi}\oint_S\left({\cal E}_{m'}\,\nabla{\cal E}_m+ {\cal E}_m\,\nabla{\cal E}_{m'}\right)\cdot d{\bf S},
-\end{equation}
-which yields 
-\begin{equation}
-H_{mm'} = \frac{1}{2}\sum_{m''}\left(a_m^{\,m''}\,{\cal R}_{m'}^{\,m''\ast}+{\cal R}_m^{\,m''}\,a_{m'}^{\,m''\ast}\right), 
-\end{equation}
-with the aid of Eqs.~(\ref{e354}),  (\ref{e356}), and (\ref{e372}). Of course, the previous expression for $H_{mm'}$ is manifestly Hermitian. 
 
 \subsection{Inhomogeneous Boundary Condition at Plasma/Vacuum Interface}\label{svacsoln1}
 Equations~(\ref{evdef}), (\ref{e343}), (\ref{e345}), (\ref{e351}), (\ref{e353}),  and (\ref{e376}) yield the
 following inhomogeneous boundary condition at the plasma/vacuum interface:
-\begin{equation}
-\psi_m(1) = \sum_{m'}H_{mm'}\,\frac{Z_{m'}(1)}{m'-n\,q(1)}+\sum_{m'}G_{mm'}\,b_{m'},
+\begin{equation}\label{inhom1}
+\frac{Z_m(1)}{m-n\,q(1)} = \sum_{m'}H_{mm'}\,\psi_{m'}(1)-\sum_{m'}G_{mm'}\,b_{m'},
 \end{equation}
 where 
 \begin{equation}
-G_{mm'} = {\cal S}_m^{\,m'}-\sum_{m''}\,H_{mm''}\,{\cal Q}_{m''}^{\,m'}.
+G_{mm'} = -{\cal Q}_m^{\,m'}-\sum_{m''}\,H_{mm''}\,{\cal S}_{m''}^{\,m'}.
 \end{equation}
-Note that the previous two equations are analogous in form to Eqs.~(\ref{inhom}) and (\ref{e338}), respectively. 
+Making use of Eqs.~(\ref{e288a}), (\ref{e288x}), and (\ref{e376}), the previous equation
+can be transformed to give 
+\begin{equation}\label{e337a}
+\sum_{m''} {\cal R}_{m''}^{\,m\,\ast}\,G_{m''m'} = h_{m}\,\delta^{\,m}_{m'}.
+\end{equation}
+Note that Eqs.~(\ref{inhom1}) and (\ref{e337a}) are  analogous in form to Eqs.~(\ref{inhom}) and (\ref{e337}), respectively. 
 
 \subsection{Summary}
-In Sects.~\ref{svacsoln}--\ref{svacsoln1}, we demonstrated that if the algebraic quantities ${\cal P}_m^{\,m'}$, ${\cal Q}_m^{\,m'}$, ${\cal R}_m^{\,m'}$,
+In Sects.~\ref{svacsoln}--\ref{svacsoln1}, we demonstrate that if the algebraic quantities ${\cal P}_m^{\,m'}$, ${\cal Q}_m^{\,m'}$, ${\cal R}_m^{\,m'}$,
 and ${\cal S}_m^{\,m'}$, defined in Sect.~\ref{pertb}, are replaced by the corresponding  one-dimensional integrals defined in Sect.~\ref{svacsoln} then the
 remainder of the vacuum analysis of Sect.~\ref{vacx} is unchanged, but the homogenous vacuum response matrix becomes exactly Hermitian, as is required by
 toroidal angular momentum conservation. Obviously, algebraic quantities can be evaluated far more quickly than integrals. Nevertheless,
@@ -1434,7 +1462,7 @@ for $k=1,K$. (See Sect.~\ref{sa7}).
 Let ${\mit\Pi}_{kj}^a$, for   $k=1,K$ and $j=1,J$,  be the value of ${\mit\Psi}_k$ at the $k$th rational surface associated with a solution launched
 from the magnetic axis with dominant poloidal mode number $m_j$. 
 
-A scheme similar to A.H.~Glasser's ``fixups'' \cite{ham} is employed to periodically re-orthogonalize the set of solutions. These  re-orthogonalizations are implemented at user-defined locations between the magnetic axis and the plasma boundary.  At each re-orthogonalization location, the matrix of solutions is forced to become upper triangular, via a process similar to Gaussian elimination, such that only one solution has a non-zero amount of the highest poloidal  harmonic, two solutions have non-zero amounts of the next highest harmonic, and so on. The solutions are then renormalized to their largest component. 
+A scheme similar to A.H.~Glasser's ``fixups'' \cite{ham} is employed to periodically re-orthogonalize the set of solutions. These  re-orthogonalizations are implemented at user-defined locations between the magnetic axis and the plasma/vacuum interface.  At each re-orthogonalization location, the matrix of solutions is forced to become upper triangular, via a process similar to Gaussian elimination, such that only one solution has a non-zero amount of the highest poloidal  harmonic, two solutions have non-zero amounts of the next highest harmonic, and so on. The solutions are then renormalized to their largest component. 
  The re-orthogonalizations are
  necessary to prevent the solutions for becoming colinear as a result of rounding errors, given the significantly
  different rates at which poloidal harmonics with different poloidal mode numbers grow with increasing $\hat{r}$  close to the magnetic axis. (In fact, a
@@ -1475,8 +1503,9 @@ It follows that
 \end{equation}
 for $j=1,J$, where
 \begin{align}
-X_{jj'} &=\sum_{j''=1,J}H_{m_j\,m_{j''}}\,\frac{Z_{m_{j''}\,m_{j'}}^{a}(1)}{m_{j''}-n\,q(1)}-\psi_{m_j\,m_{j'}}^{a}(1),\\[0.5ex]
-Y_{jk} &=\psi_{m_j\,k}^{s}(1)- \sum_{j''=1,J}H_{m_j\,m_{j'}}\,\frac{Z^s_{m_{j'}\,k}(1)}{m_{j'}-n\,q(1)}
+X_{jj'} &=\frac{Z_{m_j\,m_{j'}}^{a}(1)}{m_j-n\,q(1)}-\sum_{j''=1,J}H_{m_j\,m_{j''}}\,\psi_{m_{j''}\,m_{j'}}^a(1),\\[0.5ex]
+Y_{jk} &= \sum_{j'=1,J}H_{m_j\,m_{j'}}\,\psi_{m_{j'}\,k}^{s}(1)-
+\frac{Z_{m_j\,k}^s(1)}{m_j-n\,q(1)}
 \end{align}
 for $j,j'=1,J$ and $k=1,K$. Thus, we can write
 \begin{equation}
@@ -1500,7 +1529,7 @@ Equation~(\ref{e315}) specifies the reconnected magnetic flux, ${\mit\Psi}_k$, d
 as a consequence of the current sheets, ${\mit\Delta\Psi}_k$, flowing at the surfaces. It is clear that $F_{kk'}$ is a dimensionless
 inductance matrix.\cite{rfbook}
 
-We can construct the ``fully reconnected" tearing eigenfunction\,\cite{am1} associated with the $k$th rational surface,
+We can construct the ``fully-reconnected" tearing eigenfunction\,\cite{am1} associated with the $k$th rational surface,
 which is defined to have the following properties, 
 \begin{align}
 {\mit\Psi}_{k' }&= F_{k'k},\\[0.5ex]
@@ -1512,7 +1541,7 @@ as follows:
 \psi_{m_j\,k}^{f}(\hat{r}) &=\psi^s_{m_j\,k}(\hat{r})+ \sum_{j'=1,J}\psi_{m_j\,m_{j'}}^a(\hat{r})\,{\mit\Omega}_{j'k},\\[0.5ex]
 Z_{m_j\,k}^{f}(\hat{r}) &=Z^s_{m_j\,k}(\hat{r})+ \sum_{j'=1,J}Z_{m_j\,m_{j'}}^a(\hat{r})\,{\mit\Omega}_{j'k}
 \end{align}
-for $j=1,J$. Note that the fully reconnected solution associated with the $k$th rational surface only has a current sheet at that surface. 
+for $j=1,J$. Note that the fully-reconnected solution associated with the $k$th rational surface only has a current sheet at that surface. 
 (The current sheets at the other surfaces are all zero.)
 
 The tearing-mode dispersion relation can be written in the alternative form\,\cite{cht,am1}
@@ -1578,11 +1607,11 @@ condition with Eqs.~(\ref{e385}) and (\ref{e386}), we obtain the {\em inhomogene
 {\mit\Delta\Psi}_k=\sum_{k'=1,K}E_{kk'}\,{\mit\Psi}_k+\sum_{j=1,J}\chi_{k\,j}\,b_{m_j}
 \end{equation}
 for $k=1,K$. 
-Here, the resonant magnetic perturbation (RMP) generated by the non-axisymmetric currents has a magnetic scalar potential  that takes the form (see Sect.~\ref{vacxx})
+Here, the  vacuum magnetic perturbation  generated by the non-axisymmetric currents has a magnetic scalar potential  that takes the form (see Sect.~\ref{vacxx})
 \begin{align}
-V^x(z,\eta)&= b_{m_{j_0}}\,\frac{\sqrt{\pi}\,\Gamma(1/2-n)}{\sqrt{2}}\,(z-\cos\eta)^{1/2}\,Q_{-1/2}^{\,n}(z)\\[0.5ex]
-&\phantom{=}+ \sum_{j=1,J}^{j\neq j_0} b_{m_j}\,\frac{\cos(|m_j|\,\pi)\,\sqrt{\pi}\,\Gamma(|m_j|+1/2-n)}{2^{\,|m_j|-1/2}\,|m_j|!\,\epsilon^{-|m_j|}}\,
-(z-\cos\eta)^{1/2}\,Q_{m_j-1/2}^{\,n}(z)\,\exp(\,{\rm i}\,m_j\,\eta),\nonumber
+V^x(z,\eta)&= b_{m_{j_0}}\,\frac{\sqrt{2}}{\sqrt{\pi}\,\Gamma(1/2+n)}\,(z-\cos\eta)^{1/2}\,Q_{-1/2}^{\,n}(z)\\[0.5ex]
+&\phantom{=}+ \sum_{j=1,J}^{j\neq j_0} b_{m_j}\,\frac{\cos(|m_j|\,\pi)\,2^{\,|m_j|+1/2}\,(|m_j|-1)!}{\sqrt{\pi}\,\Gamma(|m_j|+1/2+n)\,\epsilon^{\,|m_j|}}\
+(z-\cos\eta)^{1/2}\,Q_{m_j-1/2}^{\,n}(z)\,\exp(-{\rm i}\,m_j\,\eta),\nonumber
 \end{align}
 where $m_{j_0}=0$. Moreover,
 \begin{align}
@@ -1592,7 +1621,7 @@ where $m_{j_0}=0$. Moreover,
 \end{align}
 for $k=1,K$ and $j=1,J$. Here, we have made use of the fact that $E_{kk'}$ is the inverse of $F_{kk'}$.
 
-Under normal circumstances, magnetic reconnection driven by the RMP at the various rational surfaces in the plasma 
+Under normal circumstances, magnetic reconnection driven by the  vacuum perturbation at the various rational surfaces in the plasma 
 is strongly suppressed by plasma rotation.\cite{am1,rfbook} This situation corresponds to $|{\mit\Delta}_k|\gg |E_{kk}|$ for $k=1$, $K$.
 It follows from Eqs.~(\ref{e403}) and (\ref{e408}) that the reconnected magnetic flux driven at the $k$th rational surface is
 \begin{equation}
@@ -1602,17 +1631,25 @@ Thus, according to Eq.~(\ref{e405}), the toroidal electromagnetic locking torque
 \begin{equation}
 \delta T_k = 2\pi^2\,n\,\frac{{\rm Im}({\mit\Delta}_k)}{|{\mit\Delta}_k|^2}\,\left|\sum_{j=1,J}\chi_{k\,j}\,b_{m_j}\right|^2.
 \end{equation}
-It is clear that, for a fixed RMP amplitude, the RMP that maximizes the torque exerted at the $k$th rational surface has a
+It is clear that, for a fixed perturbation amplitude, the perturbation that maximizes the torque exerted at the $k$th rational surface has a
 poloidal spectrum such that 
-\begin{equation}
-b_{m_j}\propto \chi_{k\,j},
+\begin{equation}\label{e426}
+b_{m_j}= \frac{B_k\,\chi_{k\,j}^{\,\ast}}{\sum_{j=1,J}\chi_{k\,j}^\ast\,\chi_{k\,j}},
 \end{equation}
-and a magnetic scalar potential such that $V_x\propto V_k^x$, where 
-\begin{align}
-V^x_k(z,\eta)&= \chi_{k\,j_0}\,\frac{\sqrt{\pi}\,\Gamma(1/2-n)}{\sqrt{2}}\,(z-\cos\eta)^{1/2}\,Q_{-1/2}^{\,n}(z)\\[0.5ex]
-&\phantom{=}+ \sum_{j=1,J}^{j\neq j_0} \chi_{k\,j}\,\frac{\cos(|m_j|\,\pi)\,\sqrt{\pi}\,\Gamma(|m_j|+1/2-n)}{2^{\,|m_j|-1/2}\,|m_j|!\,\epsilon^{-|m_j|}}\,
-(z-\cos\eta)^{1/2}\,Q_{m_j-1/2}^{\,n}(z)\,\exp(\,{\rm i}\,m_j\,\eta).\nonumber
+where $B_k$ is a complex coefficient, 
+and a magnetic scalar potential such that $V_x= V_k^x$, where 
+\begin{align}\label{e427}
+V^x_k(z,\eta)&= \frac{\chi_{k\,j_0}^\ast}{\sum_{j=1,J}\chi_{k\,j}^\ast\,\chi_{k\,j}}\,\frac{\sqrt{2}}{\sqrt{\pi}\,\Gamma(1/2+n)}\,(z-\cos\eta)^{1/2}\,Q_{-1/2}^{\,n}(z)\nonumber\\[0.5ex]
+&\phantom{=}+ \sum_{j=1,J}^{j\neq j_0} \frac{\chi_{k\,j}^\ast}{\sum_{j=1,J}\chi_{k\,j}^\ast\,\chi_{k\,j}}\,\frac{\cos(|m_j|\,\pi)\,2^{\,|m_j|+1/2}\,(|m_j|-1)!}{\sqrt{\pi}\,\Gamma(|m_j|+1/2+n)\,\epsilon^{\,|m_j|}}\nonumber\\[0.5ex]
+&\phantom{=}\times
+(z-\cos\eta)^{1/2}\,Q_{m_j-1/2}^{\,n}(z)\,\exp(-{\rm i}\,m_j\,\eta).
 \end{align}
+The associated torque exerted at the rational surface is
+\begin{equation}
+\delta T_k = 2\pi^2\,n\,\frac{{\rm Im}({\mit\Delta}_k)}{|{\mit\Delta}_k|^2}\,|B_k|^{\,2}.
+\end{equation}
+The vacuum magnetic perturbation specified in Eqs.~(\ref{e426}) and (\ref{e427}) is termed the perturbation that ``resonates'' with the $k$th
+rational surface. 
 
 \section*{Acknowledgements}
 This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
@@ -1693,7 +1730,7 @@ where ${\bf C}({\bf r})$ is a general vector field.
 
 \bibitem{chance} M.S.~Chance, Phys.\ Plasmas {\bf 4}, 2161 (1997).
 
-\bibitem{xu} T.Xu,  R. Fitzpatrick, Nucl.\ Fusion {\bf 59}, 064002 (2019).
+\bibitem{xu} T.~Xu, and R.~Fitzpatrick, Nucl.\ Fusion {\bf 59}, 064002 (2019).
 
 \bibitem{bussac} M.N.~Bussac, R.~Pellat, D.~Edery, and J.L.~Soule, Phys.\ Rev.\ Lett.\ {\bf 35}, 1638 (1975).
 
