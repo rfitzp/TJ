@@ -100,17 +100,17 @@ void TJ::ReadEquilibrium ()
       NcDim w_d  = RR_x.getDim (1);
 
       Nf = f_d.getSize ();
-      Nw = w_d.getSize ();
+      Nw = w_d.getSize () - 1;
 
-      RR.resize     (Nf, Nw);
-      ZZ.resize     (Nf, Nw);
-      rvals.resize  (Nf, Nw);
-      thvals.resize (Nf, Nw);
+      RR.resize     (Nf, Nw+1);
+      ZZ.resize     (Nf, Nw+1);
+      rvals.resize  (Nf, Nw+1);
+      thvals.resize (Nf, Nw+1);
 
-      double* RRdata = new double[Nf*Nw];
-      double* ZZdata = new double[Nf*Nw];
-      double* rrdata = new double[Nf*Nw];
-      double* ttdata = new double[Nf*Nw];
+      double* RRdata = new double[Nf*(Nw+1)];
+      double* ZZdata = new double[Nf*(Nw+1)];
+      double* rrdata = new double[Nf*(Nw+1)];
+      double* ttdata = new double[Nf*(Nw+1)];
 
       RR_x.getVar (RRdata);
       ZZ_x.getVar (ZZdata);
@@ -122,12 +122,12 @@ void TJ::ReadEquilibrium ()
 	rf[n] = rrdata[n*Nw];
       
       for (int n = 0; n < Nf; n++)
-	for (int i = 0; i < Nw; i++)
+	for (int i = 0; i <= Nw; i++)
 	  {
-	    RR    (n, i) = RRdata[i + n*Nw];
-	    ZZ    (n, i) = ZZdata[i + n*Nw];
-	    rvals (n, i) = rrdata[i + n*Nw];
-	    thvals(n, i) = ttdata[i + n*Nw];
+	    RR    (n, i) = RRdata[i + n*(Nw+1)];
+	    ZZ    (n, i) = ZZdata[i + n*(Nw+1)];
+	    rvals (n, i) = rrdata[i + n*(Nw+1)];
+	    thvals(n, i) = ttdata[i + n*(Nw+1)];
 	  }
       
       delete[] para;   delete[] Hndata; delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata;
@@ -235,4 +235,101 @@ void TJ::ReadEquilibrium ()
 	  epsa, Getq (0.), Getq (1.), GetHn (1, 1.), sa, G1, G2);
   for (int n = 2; n <= Ns; n++)
     printf ("n = %3d Hna = %10.3e Vna = %10.3e\n", n, GetHn (n, 1.), GetVn (n, 1.));
+}
+
+// ####################################################
+// Function to calculate metric data on plasma boundary
+// ####################################################
+void TJ::CalculateMetric ()
+{
+  // ...............
+  // Allocate memory
+  // ...............
+  th     = new double[Nw+1];
+  Rbound = new double[Nw+1];
+  Zbound = new double[Nw+1];
+  cmu    = new double[Nw+1];
+  eeta   = new double[Nw+1];
+  ceta   = new double[Nw+1];
+  seta   = new double[Nw+1];
+  R2grgz = new double[Nw+1];
+  R2grge = new double[Nw+1];
+
+  Rbspline = gsl_spline_alloc (gsl_interp_cspline, Nw+1);
+  Zbspline = gsl_spline_alloc (gsl_interp_cspline, Nw+1);
+  Rbacc    = gsl_interp_accel_alloc ();
+  Zbacc    = gsl_interp_accel_alloc ();
+ 
+  Rrzspline = gsl_spline_alloc (gsl_interp_cspline, Nw+1);
+  Rrespline = gsl_spline_alloc (gsl_interp_cspline, Nw+1);
+  Rrzacc    = gsl_interp_accel_alloc ();
+  Rreacc    = gsl_interp_accel_alloc ();
+ 
+  // .....................
+  // Calculate metric data
+  // .....................
+  for (int i = 0; i <= Nw; i++)
+    th[i] = thvals(Nf-1, i);
+
+  double dt = th[2] - th[0];
+  
+  for (int i = 0; i <= Nw; i++)
+    {
+      double R00 = RR(Nf-1, i);
+      double Z00 = ZZ(Nf-1, i);
+  
+      double R0m, Z0m, R0p, Z0p;
+      if (i == 0)
+	{
+	  R0m = RR(Nf-1, Nw-1);
+	  Z0m = ZZ(Nf-1, Nw-1);
+	  R0p = RR(Nf-1, i+1);
+	  Z0p = ZZ(Nf-1, i+1);
+	}
+      else if (i == Nw)
+	{
+	  R0m = RR(Nf-1, i-1);
+	  Z0m = ZZ(Nf-1, i-1);
+	  R0p = RR(Nf-1, 1);
+	  Z0p = ZZ(Nf-1, 1);
+	}
+      else
+	{
+	  R0m = RR(Nf-1, i-1);
+	  Z0m = ZZ(Nf-1, i-1);
+	  R0p = RR(Nf-1, i+1);
+	  Z0p = ZZ(Nf-1, i+1);
+	}
+
+      double Rt = (R0p - R0m) /dt;
+      double Zt = (Z0p - Z0m) /dt;
+
+      double z   = GetCoshMu (R00, Z00);
+      double et  = GetEta (R00, Z00);
+      double cet = cos (et);
+      double set = sin (et);
+
+      double muR = 1. - z * cet;
+      double muZ = - sqrt (z*z - 1.) * set;
+      double etR = - sqrt (z*z - 1.) * set;
+      double etZ = z * cet - 1.;
+
+      Rbound[i] = R00;
+      Zbound[i] = Z00;
+      cmu   [i] = z;
+      eeta  [i] = et /M_PI;
+      ceta  [i] = cet;
+      seta  [i] = set;
+    
+      R2grgz[i] = R00 * sqrt (z*z - 1.) * (Rt * muZ - Zt * muR);
+      R2grge[i] = R00                   * (Rt * etZ - Zt * etR);
+    }
+
+  // .......................
+  // Interpolate metric data
+  // .......................
+  gsl_spline_init (Rbspline,  th, Rbound, Nw+1);
+  gsl_spline_init (Zbspline,  th, Zbound, Nw+1);
+  gsl_spline_init (Rrzspline, th, R2grgz, Nw+1);
+  gsl_spline_init (Rrespline, th, R2grge, Nw+1);
 }

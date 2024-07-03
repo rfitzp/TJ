@@ -79,7 +79,7 @@ void TJ::FindDispersion ()
 	  Xmat(j, jp) = complex<double> (0., 0.);
 
 	for (int k = 0; k < J; k++)
-	  Xmat(j, jp) -= Hsym(j, k) * Psia(k, jp);
+	  Xmat(j, jp) -= Hmat(j, k) * Psia(k, jp);
       }
 
   for (int j = 0; j < J; j++)
@@ -91,7 +91,7 @@ void TJ::FindDispersion ()
 	  Ymat(j, jp) = complex<double> (0., 0.);
 
 	for (int k = 0; k < J; k++)
-	  Ymat(j, jp) += Hsym(j, k) * Psis(k, jp);
+	  Ymat(j, jp) += Hmat(j, k) * Psis(k, jp);
       }
 
   // ......................
@@ -388,8 +388,8 @@ void TJ::VisualizeEigenfunctions ()
   // ...............
   Psiuf.resize(J,    nres, Nf);
   Zuf  .resize(J,    nres, Nf);
-  Psiuv.resize(nres, Nf,   Nw);
-  Zuv  .resize(nres, Nf,   Nw);
+  Psiuv.resize(nres, Nf,   Nw+1);
+  Zuv  .resize(nres, Nf,   Nw+1);
 
   // ..........................................................................................
   // Interpolate unreconnected eigenfunction data from diagnostic to visulalization radial grid
@@ -462,7 +462,7 @@ void TJ::VisualizeEigenfunctions ()
 
   for (int k = 0; k < nres; k++)
     for (int i = 0; i < Nf; i++)
-      for (int l = 0; l < Nw; l++)
+      for (int l = 0; l <= Nw; l++)
 	{
 	  double theta = thvals(i, l);
 	  double psi_r = 0., psi_i = 0., z_r = 0., z_i = 0.;

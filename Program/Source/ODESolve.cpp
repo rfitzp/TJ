@@ -337,6 +337,9 @@ void TJ::Segment (double& r, double rx, Array<complex<double>,2> YY)
   complex<double>* Y   = new complex<double>[neqns];
   complex<double>* err = new complex<double>[neqns];
 
+  h     = h0;
+  count = 0;
+  
   int index = 0;
   for (int i = 0; i < NDIAG; i++)
     if (Rgrid[i] < r)

@@ -3,7 +3,7 @@
  NU   = 3.5
  PC   = 1.0
  MU   = 3.0
- EPSA = 0.01
+ EPSA = 0.04
 
  EPS  = 1.e-4
  NS   = 20
@@ -22,6 +22,7 @@
  MMIN  = -5
  MMAX  = 15
  FREE  = 1
+ TVAC  = 1
 
  EPS   = 1.e-4
  DEL   = 1.e-8

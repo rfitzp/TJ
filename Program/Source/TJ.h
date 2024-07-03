@@ -53,7 +53,7 @@ using namespace arma;
 
 // Namelist reading function
 extern "C" void NameListTJ (int* NTOR, int* MMIN, int* MMAX, 
-			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX, int* FREE, 
+			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX, int* FREE, int* TVAC, 
 			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF, double* POWR);
 
 // ############
@@ -63,9 +63,9 @@ class TJ
 {
  private:
 
-  // ..................
-  // Control parameters
-  // ..................
+  // .................................................
+  // Control parameters (read from Inputs/Namelist.nml)
+  // ..................................................
   int    NTOR;    // Toroidal mode number (read from namelist)
   int    MMIN;    // Minimum poloidal mode number included in calculation (read from namelist)
   int    MMAX;    // Maximum poloidal mode number included in calculation (read from namelist)
@@ -76,11 +76,12 @@ class TJ
   int    NDIAG;   // Number of radial grid-points for diagnostics (read from namelist)
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from namelist)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from namelist)
-  int    FREE;    // Flag for free/fixed boundary calculation 
+  int    FREE;    // Flag for free/fixed boundary calculation (read from namelist)
+  int    TVAC;    // Flag for true vacuum calculation (read from namelist)
+  double POWR;    // Power for reduction in dynamic range of visulalized fields (read from namelist)
 
   double EPSF;    // Step-length for finite difference determination of derivative
-  double POWR;    // Power for reduction in dynamic range of visulalized fields
-
+ 
   // .................................................
   // Equilibrium data (read from Plots/Equilibrium.nc)
   // .................................................
@@ -133,6 +134,25 @@ class TJ
   gsl_interp_accel** VVacc;     // Accelerator for interpolated vertical shaping functions
   gsl_interp_accel** HPacc;     // Accelerator for interpolated radial derivatives of horizontal shaping functions
   gsl_interp_accel** VPacc;     // Accelerator for interpolated radial derivatives of vertical shaping functions
+
+  double*            cmu;       // Cosh(mu) on plasma boundary
+  double*            eeta;      // eta on plasm boundary
+  double*            ceta;      // cos(eta) on plasma boundary
+  double*            seta;      // sin(eta) on plasma boundary
+  double*            R2grgz;    // R^2 nabla r . nabla z   on plasma boundary
+  double*            R2grge;    // R^2 nabla r . nabla eta on plasma boundary
+
+  double*            th;        // Theta values on plasma boundary
+  double*            Rbound;    // R values on plasma boundary
+  double*            Zbound;    // Z values on plasma boundary
+  gsl_spline*        Rrzspline; // Interpolated R2grgz function on plasma boundary
+  gsl_spline*        Rrespline; // Interpolated R2grge function on plasma boundary
+  gsl_interp_accel*  Rrzacc;    // Accelerator for interpolated R2grgz function
+  gsl_interp_accel*  Rreacc;    // Accelerator for interpolated R2grge function
+  gsl_spline*        Rbspline;  // Interpolated R function on plasma boundary
+  gsl_spline*        Zbspline;  // Interpolated Z function on plasma boundary
+  gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function
+  gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function
  
   // ......................
   // Calculation parameters
@@ -299,6 +319,8 @@ class TJ
 
   // Read equilibrium data from Inputs/Equilibrium.nc
   void ReadEquilibrium ();
+  // Calculate metric data at plasma boundary
+  void CalculateMetric ();
     
   // .............
   // In Vacuum.cpp
@@ -306,6 +328,8 @@ class TJ
 
   // Calculate vacuum matrices
   void GetVacuum ();
+  // Evaluate right-hand sides of vacuum odes
+  void Rhs1 (double r, complex<double>* Y, complex<double>* dYdr);
   
   // ...............
   // In Rational.cpp
@@ -452,6 +476,16 @@ class TJ
   // Advance set of coupled first-order o.d.e.s by single step using fixed
   //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
   void CashKarp45Fixed (int neqns, double& x, complex<double>* y, complex<double>* err, double h);
+  // Advance set of coupled first-order o.d.e.s by single step using adaptive
+  //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
+  void CashKarp45Adaptive1 (int neqns, double& x, complex<double>* y, double& h, 
+			    double& t_err, double acc, double S, double T, int& rept,
+			    int maxrept, double h_min, double h_max, int flag, 
+			    int diag, FILE* file);
+  // Advance set of coupled first-order o.d.e.s by single step using fixed
+  //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
+  void CashKarp45Fixed1 (int neqns, double& x, complex<double>* y, complex<double>* err, double h);
+ 
   
   // ................
   // In Armadillo.cpp

@@ -64,7 +64,7 @@ TJ::TJ ()
   // Read namelist file Inputs/TJ.nml
   // --------------------------------
   NameListTJ (&NTOR, &MMIN, &MMAX, 
-	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX, &FREE, 
+	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX, &FREE, &TVAC, 
 	      &acc, &h0, &hmin, &hmax, &EPSF, &POWR);
  
   // -----------------------------
@@ -74,8 +74,8 @@ TJ::TJ ()
   printf ("Calculation parameters:\n");
   printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
 	  NTOR, MMIN, MMAX, EPS, DEL);
-  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d\n",
-	  NFIX, NDIAG, NULC, ITERMAX, FREE);
+  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d         tvac = %1d\n",
+	  NFIX, NDIAG, NULC, ITERMAX, FREE, TVAC);
   printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e powr = %10.3e\n",
 	  acc, h0, hmin, hmax, EPSF, POWR);
 }
@@ -97,6 +97,9 @@ void TJ::Solve ()
 
   // Read equlibrium data
   ReadEquilibrium ();
+
+  // Calculate metric data at plasma boundary
+  CalculateMetric ();
 
   // Calculate vacuum matrices
   GetVacuum ();
@@ -198,10 +201,10 @@ void TJ::WriteNetCDF ()
   double* TTu     = new double[nres*NDIAG];
   double* TFull   = new double[nres*nres*NDIAG];
   double* TUnrc   = new double[nres*nres*NDIAG];
-  double* PPV_r   = new double[nres*Nf*Nw];
-  double* PPV_i   = new double[nres*Nf*Nw];
-  double* ZZV_r   = new double[nres*Nf*Nw];
-  double* ZZV_i   = new double[nres*Nf*Nw];
+  double* PPV_r   = new double[nres*Nf*(Nw+1)];
+  double* PPV_i   = new double[nres*Nf*(Nw+1)];
+  double* ZZV_r   = new double[nres*Nf*(Nw+1)];
+  double* ZZV_i   = new double[nres*Nf*(Nw+1)];
   double* chi_r   = new double[nres*J];
   double* chi_i   = new double[nres*J];
   double* chi_m   = new double[nres*J];
@@ -340,7 +343,7 @@ void TJ::WriteNetCDF ()
   cnt = 0;
   for (int k = 0; k < nres; k++)
     for (int i = 0; i < Nf; i++)
-      for (int l = 0; l < Nw; l++)
+      for (int l = 0; l <= Nw; l++)
 	{
 	  PPV_r[cnt] = real (Psiuv(k, i, l));
 	  PPV_i[cnt] = imag (Psiuv(k, i, l));
@@ -370,7 +373,7 @@ void TJ::WriteNetCDF ()
 	  cnt++;
 	}
 
-  try
+   try
     {
       NcFile dataFile ("Plots/TJ.nc", NcFile::replace);
 
@@ -381,7 +384,7 @@ void TJ::WriteNetCDF ()
       NcDim k_d = dataFile.addDim ("K",     K);
       NcDim d_d = dataFile.addDim ("ndiag", NDIAG);
       NcDim f_d = dataFile.addDim ("Nf",    Nf);
-      NcDim w_d = dataFile.addDim ("Nw",    Nw);
+      NcDim w_d = dataFile.addDim ("Nw",    Nw+1);
 
       vector<NcDim> shape_d;
       shape_d.push_back (s_d);
@@ -624,6 +627,21 @@ void TJ::WriteNetCDF ()
       vxr_x.putVar (Vx_r);
       NcVar vxi_x = dataFile.addVar ("Vx_i", ncDouble, rmp_d);
       vxi_x.putVar (Vx_i);
+
+      NcVar t_x = dataFile.addVar ("theta", ncDouble, w_d);
+      t_x.putVar (th);
+      NcVar cmu_x = dataFile.addVar ("cosmu", ncDouble, w_d);
+      cmu_x.putVar (cmu);
+      NcVar e_x = dataFile.addVar ("eta", ncDouble, w_d);
+      e_x.putVar (eeta);
+      NcVar ceta_x = dataFile.addVar ("coseta", ncDouble, w_d);
+      ceta_x.putVar (ceta);
+      NcVar seta_x = dataFile.addVar ("sineta", ncDouble, w_d);
+      seta_x.putVar (seta);
+      NcVar R2grgz_x = dataFile.addVar ("R2grgz", ncDouble, w_d);
+      R2grgz_x.putVar (R2grgz);
+      NcVar R2grge_x = dataFile.addVar ("R2grge", ncDouble, w_d);
+      R2grge_x.putVar (R2grge);
     }
   catch (NcException& e)
     {
@@ -647,6 +665,8 @@ void TJ::WriteNetCDF ()
   delete[] PPV_r;   delete[] PPV_i;   delete[] ZZV_r;   delete[] ZZV_i;
   delete[] Gmat_r;  delete[] Gmat_i;  delete[] chi_r;   delete[] chi_i;
   delete[] chi_m;   delete[] chi_a;   delete[] Vx_r;    delete[] Vx_i;
+  delete[] R2grgz;  delete[] R2grge;  delete[] cmu;     delete[] ceta;
+  delete[] seta;    delete[] eeta;
 }
 
 // #############################
@@ -700,7 +720,10 @@ void TJ::CleanUp ()
 
   delete[] hode; delete[] eode; delete[] Rgrid; delete[] rf;
 
-  delete[] RV; delete[] ZV;
+  delete[] RV; delete[] ZV; delete[] th; delete[] Rbound; delete[] Zbound;
+
+  gsl_spline_free (Rrzspline); gsl_spline_free (Rrespline); gsl_interp_accel_free (Rrzacc); gsl_interp_accel_free (Rreacc);
+  gsl_spline_free (Rbspline);  gsl_spline_free (Zbspline);  gsl_interp_accel_free (Rbacc);  gsl_interp_accel_free (Zbacc); 
 }
 
 // #####################################

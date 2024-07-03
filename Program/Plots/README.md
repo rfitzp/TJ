@@ -18,6 +18,7 @@
 	- VacRes.py      - Visualizes vacuum solution residual matrices A_m^m', B_m^m', and C_m^m'
 	- Hmat.py        - Visualizes homogeneous vacuum response matrix, H_m^m'
 	- Gmat.py        - Visualizes inhomogeneous vacuum response matrix, G_m^m'
+	- Metric.py      - Plots metric data at plasma boundary
 
 ## ODE Solution:
 

@@ -174,6 +174,7 @@ void Equilibrium::Solve ()
   rhs_chooser   = 0;
 
   h            = h0;
+  count        = 0;
   r            = rr[0];
   g2[0]        = 0.;
   HHfunc(1, 0) = 0.;
@@ -384,12 +385,17 @@ void Equilibrium::Solve ()
       for (int j = 0; j <= Nw; j++)
 	{
 	  double t = double (j) * 2.*M_PI /double (Nw);
-	  
-	  double w = t - epsa*rf*sin(t) + epsa*hnp[1]*sin(t);
-	  for (int n = 2; n <= Ns; n++)
+
+	  double w, wold = t;
+	  for (int i = 0; i < 10; i++)
 	    {
-	      w += epsa * (hnp[n] - double (n - 1) * hn[n]/rf) * sin(double (n) * t) /double (n);
-	      w -= epsa * (vnp[n] - double (n - 1) * vn[n]/rf) * cos(double (n) * t) /double (n);
+	      w = t - epsa*rf*sin(wold) + epsa*hnp[1]*sin(wold);
+	      for (int n = 2; n <= Ns; n++)
+		{
+		  w += epsa * (hnp[n] - double (n - 1) * hn[n]/rf) * sin(double (n) * wold) /double (n);
+		  w -= epsa * (vnp[n] - double (n - 1) * vn[n]/rf) * cos(double (n) * wold) /double (n);
+		}
+	      wold = w;
 	    }
 	  
 	  double R = 1. - epsa*rf*cos(w) + epsa*epsa*epsa*p*cos(w) + epsa*epsa*hn[1];
@@ -422,6 +428,7 @@ void Equilibrium::Solve ()
   double V2c = VPfunc(2, 0);
 
   h       = h0;
+  count   = 0;
   f3[0]   = 0.;
   q0[0]   = qc;
   qq[0]   = 0.;
@@ -526,6 +533,7 @@ void Equilibrium::Solve ()
 
   r     = eps;
   h     = h0;
+  count = 0;
   y2[0] = 0.;
   y2[1] = 0.;
   y2[2] = 0.;
@@ -1021,7 +1029,7 @@ void Equilibrium::CashKarp45Adaptive (int neqns, double& x, double* y, double& h
   for (int i = 0; i < neqns; i++)
     y0[i] = y[i];
 
-  // Take Cash-Kaprt RK4/RK5 step 
+  // Take Cash-Kapt RK4/RK5 step 
   CashKarp45Fixed (neqns, x, y, Err, h);
 
   // Calculate truncation error
