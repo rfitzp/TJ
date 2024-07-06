@@ -1,7 +1,7 @@
 # RMP.py
 
 # Plots magnetic scalar potential of resonant magnetic perturbation associated with rational surface in R, Z plane
-# User prompted for rational surface number
+# User prompted for rational surface number and scaling exponent
 
 import math
 import numpy as np
@@ -45,8 +45,35 @@ plt.rc('ytick', labelsize=12)
 m = input ("rational surface number ? ")
 k = int(m) - 1
 
+scl = input ("scaling exponent ? ")
+
 Vr = Vxr[k,:,:]
 Vi = Vxi[k,:,:]
+
+VVr = np.asarray (Vr)
+VVi = np.asarray (Vi)
+
+for i in range (np.size(VVr,0)):
+    for j in range (np.size(VVr,1)):
+        val = VVr[i][j]
+        if (val > 0.):
+            val1 = float(val)**float(scl)
+        elif (val < 0.):
+            val1 = - (-float(val))**float(scl)
+        else:
+            val1 = 0.
+        VVr[i][j] = val1
+
+for i in range (np.size(VVi,0)):
+    for j in range (np.size(VVi,1)):
+        val = VVi[i][j]
+        if (val > 0.):
+            val1 = float(val)**float(scl)
+        elif (val < 0.):
+            val1 = - (-float(val))**float(scl)
+        else:
+            val1 = 0.
+        VVi[i][j] = val1
 
 plt.subplot(1, 2, 1)
 plt.xlim(Rv[0], Rv[-1])
@@ -56,7 +83,7 @@ plt.plot(R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')
 
 plt.contour(RR, ZZ, rr, rres, colors='black', linewidths = 0.5)
 
-plt.contourf(RRV, ZZV, Vr, ncont, cmap=ReBu)    
+plt.contourf(RRV, ZZV, VVr, ncont, cmap=ReBu)    
 
 plt.plot([1.], [0.], marker='o', markersize=1, color="black")
 
@@ -71,7 +98,7 @@ plt.plot(R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')
 
 plt.contour(RR, ZZ, rr, rres, colors='black', linewidths = 0.5)
 
-plt.contourf(RRV, ZZV, Vi, ncont, cmap=ReBu)    
+plt.contourf(RRV, ZZV, VVi, ncont, cmap=ReBu)    
 
 plt.plot([1.], [0.], marker='o', markersize=1, color="black")
 

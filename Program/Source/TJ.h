@@ -55,7 +55,7 @@ using namespace arma;
 extern "C" void NameListTJ (int* NTOR, int* MMIN, int* MMAX, 
 			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX,
 			    int* FREE, int* TVAC, int* SYMM, 
-			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF, double* POWR);
+			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF);
 
 // ############
 // Class header
@@ -80,7 +80,6 @@ class TJ
   int    FREE;    // Flag for free/fixed boundary calculation (read from namelist)
   int    TVAC;    // Flag for improved vacuum calculation (read from namelist)
   int    SYMM;    // Flag for symmeterization of H-matrix (read from namelist)
-  double POWR;    // Power for reduction in dynamic range of visulalized fields (read from namelist)
 
   double EPSF;    // Step-length for finite difference determination of derivative
  
@@ -144,9 +143,6 @@ class TJ
   double*            R2grgz;    // R^2 nabla r . nabla z   on plasma boundary
   double*            R2grge;    // R^2 nabla r . nabla eta on plasma boundary
 
-  double*            th;        // Theta values on plasma boundary
-  double*            Rbound;    // R values on plasma boundary
-  double*            Zbound;    // Z values on plasma boundary
   gsl_spline*        Rrzspline; // Interpolated R2grgz function on plasma boundary
   gsl_spline*        Rrespline; // Interpolated R2grge function on plasma boundary
   gsl_interp_accel*  Rrzacc;    // Accelerator for interpolated R2grgz function
@@ -257,15 +253,22 @@ class TJ
   double*                  ZV;     // Z coodinates of vacuum visualization grid-points
   Array<complex<double>,3> Vx;     // Scalar magnetic potentials of resonant magnetic perturbations
 
-  // .......................
+  // --------------------
+  // Plasma boundary data
+  // ---------------------
+  double* Rbound;    // R values on plasma boundary
+  double* Zbound;    // Z values on plasma boundary
+  double* tbound;    // theta values on plasma boundary
+  
+  // -----------------------
   // Root finding parameters
-  // .......................
+  // -----------------------
   double Eta;      // Minimum magnitude of f at root f(x) = 0
   int    Maxiter;  // Maximum number of iterations
 
-  // ...............................
+  // -------------------------------
   // Adaptive integration parameters
-  // ...............................
+  // -------------------------------
   double acc;     // Integration accuracy (read from namelist)
   double h0;      // Initial step-length (read from namelist)
   double hmin;    // Minimum step-length (read from namelist)
@@ -422,8 +425,6 @@ class TJ
   void VisualizeEigenfunctions ();
   // Output visualization data for resonant magnetic perturbations
   void VisualizeResonantMagneticPerturbations ();
-  // Reduce dynamic range of quantity
-  double ReduceRange (double x, double powr);
   
   // ..................
   // In Interpolate.cpp

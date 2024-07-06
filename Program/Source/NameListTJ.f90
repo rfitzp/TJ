@@ -6,7 +6,7 @@
 
 subroutine NameListTJ (NTOR, MMIN, MMAX,&
      EPS, DEL, NFIX, NDIAG, NULC, ITERMAX, FREE, TVAC, SYMM,&
-     ACC, H0, HMIN, HMAX, EPSF, POWR) &
+     ACC, H0, HMIN, HMAX, EPSF) &
      bind (c, name = 'NameListTJ')
   
   use, intrinsic :: iso_c_binding, only: c_int, c_double
@@ -31,11 +31,10 @@ subroutine NameListTJ (NTOR, MMIN, MMAX,&
   real    (kind = c_double), intent (inout) :: HMIN
   real    (kind = c_double), intent (inout) :: HMAX
   real    (kind = c_double), intent (inout) :: EPSF
-  real    (kind = c_double), intent (inout) :: POWR
  
   namelist /TJ_CONTROL/ NTOR, MMIN, MMAX,&
        EPS, DEL, NFIX, NDIAG, NULC, ITERMAX, FREE, TVAC, SYMM,&
-       ACC, H0, HMIN, HMAX, EPSF, POWR
+       ACC, H0, HMIN, HMAX, EPSF
        
   open  (unit = 100, file = 'Inputs/Namelist.nml', status = 'old')
   read  (unit = 100, nml  = TJ_CONTROL)

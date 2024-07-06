@@ -11,6 +11,7 @@
 	- Shape.py       - Plots values of shaping functions at plasma boundary
 	- Shaping.py     - Plots shaping functions versus r
 	- Profile.py     - Plots shaping function, S_1, and profiles function, P_1, P_2, P_3, versus radius, r
+	- Boundary.py    - Plots data relating to plasma boundary
 
 ## Vacuum matrices:
 

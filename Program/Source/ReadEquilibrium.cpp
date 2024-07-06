@@ -129,6 +129,18 @@ void TJ::ReadEquilibrium ()
 	    rvals (n, i) = rrdata[i + n*(Nw+1)];
 	    thvals(n, i) = ttdata[i + n*(Nw+1)];
 	  }
+
+      NcVar Rbound_x = dataFile.getVar ("Rbound");
+      NcVar Zbound_x = dataFile.getVar ("Zbound");
+      NcVar tbound_x = dataFile.getVar ("tbound");
+
+      Rbound = new double[Nw+1];
+      Zbound = new double[Nw+1];
+      tbound = new double[Nw+1];
+
+      Rbound_x.getVar (Rbound);
+      Zbound_x.getVar (Zbound);
+      tbound_x.getVar (tbound);
       
       delete[] para;   delete[] Hndata; delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata;
       delete[] RRdata; delete[] ZZdata; delete[] rrdata;  delete[] ttdata;
@@ -245,9 +257,6 @@ void TJ::CalculateMetric ()
   // ...............
   // Allocate memory
   // ...............
-  th     = new double[Nw+1];
-  Rbound = new double[Nw+1];
-  Zbound = new double[Nw+1];
   cmu    = new double[Nw+1];
   eeta   = new double[Nw+1];
   ceta   = new double[Nw+1];
@@ -268,10 +277,7 @@ void TJ::CalculateMetric ()
   // .....................
   // Calculate metric data
   // .....................
-  for (int i = 0; i <= Nw; i++)
-    th[i] = thvals(Nf-1, i);
-
-  double dt = th[2] - th[0];
+  double dt = tbound[2] - tbound[0];
   
   for (int i = 0; i <= Nw; i++)
     {
@@ -281,24 +287,24 @@ void TJ::CalculateMetric ()
       double R0m, Z0m, R0p, Z0p;
       if (i == 0)
 	{
-	  R0m = RR(Nf-1, Nw-1);
-	  Z0m = ZZ(Nf-1, Nw-1);
-	  R0p = RR(Nf-1, i+1);
-	  Z0p = ZZ(Nf-1, i+1);
+	  R0m = Rbound[Nw-1];
+	  Z0m = Zbound[Nw-1];
+	  R0p = Rbound[i+1];
+	  Z0p = Zbound[i+1];
 	}
       else if (i == Nw)
 	{
-	  R0m = RR(Nf-1, i-1);
-	  Z0m = ZZ(Nf-1, i-1);
-	  R0p = RR(Nf-1, 1);
-	  Z0p = ZZ(Nf-1, 1);
+	  R0m = Rbound[i-1];
+	  Z0m = Zbound[i-1];
+	  R0p = Rbound[1];
+	  Z0p = Zbound[1];
 	}
       else
 	{
-	  R0m = RR(Nf-1, i-1);
-	  Z0m = ZZ(Nf-1, i-1);
-	  R0p = RR(Nf-1, i+1);
-	  Z0p = ZZ(Nf-1, i+1);
+	  R0m = Rbound[i-1];
+	  Z0m = Zbound[i-1];
+	  R0p = Rbound[i+1];
+	  Z0p = Zbound[i+1];
 	}
 
       double Rt = (R0p - R0m) /dt;
@@ -314,8 +320,6 @@ void TJ::CalculateMetric ()
       double etR = - sqrt (z*z - 1.) * set;
       double etZ = z * cet - 1.;
 
-      Rbound[i] = R00;
-      Zbound[i] = Z00;
       cmu   [i] = z;
       eeta  [i] = et /M_PI;
       ceta  [i] = cet;
@@ -328,8 +332,8 @@ void TJ::CalculateMetric ()
   // .......................
   // Interpolate metric data
   // .......................
-  gsl_spline_init (Rbspline,  th, Rbound, Nw+1);
-  gsl_spline_init (Zbspline,  th, Zbound, Nw+1);
-  gsl_spline_init (Rrzspline, th, R2grgz, Nw+1);
-  gsl_spline_init (Rrespline, th, R2grge, Nw+1);
+  gsl_spline_init (Rbspline,  tbound, Rbound, Nw+1);
+  gsl_spline_init (Zbspline,  tbound, Zbound, Nw+1);
+  gsl_spline_init (Rrzspline, tbound, R2grgz, Nw+1);
+  gsl_spline_init (Rrespline, tbound, R2grge, Nw+1);
 }

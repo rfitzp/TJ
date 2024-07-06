@@ -66,7 +66,7 @@ TJ::TJ ()
   NameListTJ (&NTOR, &MMIN, &MMAX, 
 	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX,
 	      &FREE, &TVAC, &SYMM, 
-	      &acc, &h0, &hmin, &hmax, &EPSF, &POWR);
+	      &acc, &h0, &hmin, &hmax, &EPSF);
 
   // ............
   // Sanity check
@@ -156,8 +156,8 @@ TJ::TJ ()
 	  NTOR, MMIN, MMAX, EPS, DEL);
   printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d         tvac = %1d symm = %1d\n",
 	  NFIX, NDIAG, NULC, ITERMAX, FREE, TVAC, SYMM);
-  printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e powr = %10.3e\n",
-	  acc, h0, hmin, hmax, EPSF, POWR);
+  printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
+	  acc, h0, hmin, hmax, EPSF);
 }
 
 // ##########
@@ -709,7 +709,7 @@ void TJ::WriteNetCDF ()
       vxi_x.putVar (Vx_i);
 
       NcVar t_x = dataFile.addVar ("theta", ncDouble, w_d);
-      t_x.putVar (th);
+      t_x.putVar (tbound);
       NcVar cmu_x = dataFile.addVar ("cosmu", ncDouble, w_d);
       cmu_x.putVar (cmu);
       NcVar e_x = dataFile.addVar ("eta", ncDouble, w_d);
@@ -800,10 +800,12 @@ void TJ::CleanUp ()
 
   delete[] hode; delete[] eode; delete[] Rgrid; delete[] rf;
 
-  delete[] RV; delete[] ZV; delete[] th; delete[] Rbound; delete[] Zbound;
+  delete[] RV; delete[] ZV; 
 
   gsl_spline_free (Rrzspline); gsl_spline_free (Rrespline); gsl_interp_accel_free (Rrzacc); gsl_interp_accel_free (Rreacc);
-  gsl_spline_free (Rbspline);  gsl_spline_free (Zbspline);  gsl_interp_accel_free (Rbacc);  gsl_interp_accel_free (Zbacc); 
+  gsl_spline_free (Rbspline);  gsl_spline_free (Zbspline);  gsl_interp_accel_free (Rbacc);  gsl_interp_accel_free (Zbacc);
+
+  delete[] Rbound; delete[] Zbound; delete[] tbound;
 }
 
 // #####################################

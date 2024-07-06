@@ -482,8 +482,8 @@ void TJ::VisualizeEigenfunctions ()
 		}
 	    }
 
-	  Psiuv(k, i, l) = complex<double> (ReduceRange(psi_r, POWR), ReduceRange(psi_i, POWR));
-	  Zuv  (k, i, l) = complex<double> (ReduceRange(z_r,   POWR), ReduceRange(z_i,   POWR));
+	  Psiuv(k, i, l) = complex<double> (psi_r, psi_i);
+	  Zuv  (k, i, l) = complex<double> (z_r,   z_i);
 	}
 }
 
@@ -547,24 +547,8 @@ void TJ::VisualizeResonantMagneticPerturbations ()
 		  }
 	      }
 
-	    Vx(k, i, j) = complex<double> (ReduceRange(real(sum), 3.), ReduceRange(imag(sum), 3.));
+	    Vx(k, i, j) = sum;
 	  }
     }
 }
 
-// ############################################
-// Function to reduce dynamic range of quantity
-// ############################################
-double TJ::ReduceRange (double x, double powr)
-{
-  double y;
-
-  if (x > 0.)
-    y =    pow (x, 1./powr);
-  else if (x < 0.)
-    y =  - pow (fabs(x), 1./powr);
-  else
-    y = 0.;
-
-  return y;
-}
