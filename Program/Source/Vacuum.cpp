@@ -21,6 +21,8 @@ void TJ::GetVacuum ()
   Cvac.resize (J, J);
   Rdag.resize (J, J);
   Pdag.resize (J, J);
+  Pinv.resize (J, J);
+  Hinv.resize (J, J);
   Hmat.resize (J, J);
   Hdag.resize (J, J);
   Hsym.resize (J, J);
@@ -308,8 +310,26 @@ void TJ::GetVacuum ()
 	Pdag (j, jp) = conj (Pvac (jp, j));
 	Rdag (j, jp) = conj (Rvac (jp, j));
       }
-  
-  SolveLinearSystem (Rdag, Hmat, Pdag);
+ 
+  if (SYMM)
+    {
+      InvertMatrix (Pvac, Pinv);
+
+      for (int j = 0; j < J; j++)
+	for (int jp = 0; jp < J; jp++)
+	  {
+	    complex<double> sum = complex<double> (0., 0.);
+
+	    for (int jpp = 0; jpp < J; jpp++)
+	      Hinv (j, jp) += 0.5 * (Rvac (j, jpp) * Pinv (jpp, jp) + conj (Rvac (jp, jpp) * Pinv (jpp, j)));
+	  }
+
+      InvertMatrix (Hinv, Hmat);
+    }
+  else
+    {
+      SolveLinearSystem (Rdag, Hmat, Pdag);
+    }
   
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)

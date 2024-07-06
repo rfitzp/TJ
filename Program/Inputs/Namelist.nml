@@ -3,13 +3,14 @@
  NU   = 3.5
  PC   = 1.0
  MU   = 3.0
- EPSA = 0.04
+ EPSA = 0.1
 
  EPS  = 1.e-4
  NS   = 20
  NR   = 1000
  NF   = 500
  NW   = 500
+ HIGH = 1
 
  ACC  = 1.e-12
  H0   = 1.e-4
@@ -21,11 +22,13 @@
  NTOR  = 1
  MMIN  = -5
  MMAX  = 15
+
  FREE  = 1
  TVAC  = 1
+ SYMM  = 1
 
  EPS   = 1.e-4
- DEL   = 1.e-8
+ DEL   = 1.e-9
  NFIX  = 160
  NDIAG = 1024
 

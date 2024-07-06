@@ -5,7 +5,7 @@
 ! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%$
 
 subroutine NameListEquilibrium (QC, NU, PC, MU, EPSA,&
-     EPS, NS, NR, NF, NW,&
+     EPS, NS, NR, NF, NW, HIGH,&
      ACC, H0, HMIN, HMAX)&
      bind (c, name = 'NameListEquilibrium')
 
@@ -23,6 +23,7 @@ subroutine NameListEquilibrium (QC, NU, PC, MU, EPSA,&
   integer (kind = c_int),    intent (inout) :: NR
   integer (kind = c_int),    intent (inout) :: NF
   integer (kind = c_int),    intent (inout) :: NW
+  integer (kind = c_int),    intent (inout) :: HIGH
 
   real    (kind = c_double), intent (inout) :: ACC
   real    (kind = c_double), intent (inout) :: H0
@@ -30,7 +31,7 @@ subroutine NameListEquilibrium (QC, NU, PC, MU, EPSA,&
   real    (kind = c_double), intent (inout) :: HMAX
  
   namelist /EQUILIBRIUM_CONTROL/ QC, NU, PC, MU, EPSA,&
-       EPS, NS, NR, NF, NW,&
+       EPS, NS, NR, NF, NW, HIGH,&
        ACC, H0, HMIN, HMAX
        
   open  (unit = 100, file = 'Inputs/Namelist.nml', status = 'old')

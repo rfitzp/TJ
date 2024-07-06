@@ -64,9 +64,89 @@ TJ::TJ ()
   // Read namelist file Inputs/TJ.nml
   // --------------------------------
   NameListTJ (&NTOR, &MMIN, &MMAX, 
-	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX, &FREE, &TVAC, 
+	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX,
+	      &FREE, &TVAC, &SYMM, 
 	      &acc, &h0, &hmin, &hmax, &EPSF, &POWR);
- 
+
+  // ............
+  // Sanity check
+  // ............
+  if (NTOR < 1)
+    {
+      printf ("TJ: Error - NTOR must be positive");
+      exit (1);
+    }
+  if (MMAX < MMIN)
+    {
+      printf ("TJ: Error - MMIN must be less that MMAX");
+      exit (1);
+    }
+  if (MMAX < MMIN)
+    {
+      printf ("TJ: Error - MMIN must be less that MMAX");
+      exit (1);
+    }
+  if (EPS <= 0.)
+    {
+      printf ("TJ: Error - EPS must be positive");
+      exit (1);
+    }
+  if (DEL <= 0.)
+    {
+      printf ("TJ: Error - DEL must be positive");
+      exit (1);
+    }
+  if (NFIX < 0)
+    {
+      printf ("TJ: Error - NFIX cannot be negative");
+      exit (1);
+    }
+  if (NDIAG < 0)
+    {
+      printf ("TJ: Error - NDIAG cannot be less that two");
+      exit (1);
+    }
+  if (NULC <= 0.)
+    {
+      printf ("TJ: Error - NULC must be positive");
+      exit (1);
+    }
+  if (ITERMAX < 0)
+    {
+      printf ("TJ: Error - ITERMAX cannot be negative");
+      exit (1);
+    }
+    if (acc <= 0.)
+    {
+      printf ("TJ:: Error - acc must be positive\n");
+      exit (1);
+    }
+  if (h0 <= 0.)
+    {
+      printf ("TJ:: Error - h0 must be positive\n");
+      exit (1);
+    }
+  if (hmin <= 0.)
+    {
+      printf ("TJ:: Error - hmin must be positive\n");
+      exit (1);
+    }
+  if (hmax <= 0.)
+    {
+      printf ("TJ:: Error - hmax must be positive\n");
+      exit (1);
+    }
+  if (hmax < hmin)
+    {
+      printf ("TJ:: Error - hmax must exceed hmin\n");
+      exit (1);
+    }
+  if (EPSF <= 0.)
+    {
+      printf ("TJ: Error - EPSF must be positive");
+      exit (1);
+    }
+  
   // -----------------------------
   // Output calculation parameters
   // -----------------------------
@@ -74,8 +154,8 @@ TJ::TJ ()
   printf ("Calculation parameters:\n");
   printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
 	  NTOR, MMIN, MMAX, EPS, DEL);
-  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d         tvac = %1d\n",
-	  NFIX, NDIAG, NULC, ITERMAX, FREE, TVAC);
+  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d         tvac = %1d symm = %1d\n",
+	  NFIX, NDIAG, NULC, ITERMAX, FREE, TVAC, SYMM);
   printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e powr = %10.3e\n",
 	  acc, h0, hmin, hmax, EPSF, POWR);
 }

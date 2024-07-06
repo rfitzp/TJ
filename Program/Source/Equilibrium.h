@@ -66,7 +66,7 @@ using namespace netCDF::exceptions;
 
 // Namelist reading function
 extern "C" void NameListEquilibrium (double* QC, double* NU, double* PC, double* MU, double* EPSA,
-				     double* EPS, int* NS, int* NR, int* NF, int* NW,
+				     double* EPS, int* NS, int* NR, int* NF, int* NW, int* HIGH, 
 				     double* ACC, double* H0, double* HMIN, double* HMAX);
     
 // ############
@@ -93,6 +93,7 @@ class Equilibrium
   int    Nr;     // Number of radial grid-points for calculation purposes (read from namelist)
   int    Nf;     // Number of radial grid-points for visualization purposes (read from namelist)
   int    Nw;     // Number of angular grid-points for visulalization purposes (read from namelist)
+  int    HIGH;   // Flag for higher order calculation of flux surfaces (read from namelist)
 
   // ----------------
   // Calculation data
@@ -201,7 +202,7 @@ private:
   // ..................
   // in Equilibrium.cpp
   // ..................
-  
+
   // Return f1(r)
   double Getf1 (double r);
   // Return f1'(r)
@@ -212,6 +213,10 @@ private:
   double Getp2p (double r);
   // Return p2''(r)
   double Getp2pp (double r);
+  // Return relabeling parameter
+  double GetP (double rf, double* hn, double* vn, double* hnp, double* vnp);
+  // Return w-theta transformation function
+  double Gettfun (double r, double w, double* hn, double* vn, double* hnp, double* vnp);
   
   // Evaluate right-hand sides of differential equations
   void Rhs (double x, double* y, double* dydx);

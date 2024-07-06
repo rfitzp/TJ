@@ -58,8 +58,88 @@ Equilibrium::Equilibrium ()
   // Read namelist file Inputs/Equilibrium.nml
   // -----------------------------------------
   NameListEquilibrium (&qc, &nu, &pc, &mu, &epsa,
-		       &eps, &Ns, &Nr, &Nf, &Nw,
+		       &eps, &Ns, &Nr, &Nf, &Nw, &HIGH, 
 		       &acc, &h0, &hmin, &hmax);
+
+
+  // ------------
+  // Sanity check
+  // ------------
+  if (qc < 0.)
+    {
+      printf ("Equilibrium:: Error - qc cannot be negative\n");
+      exit (1);
+    }
+  if (nu < 1.)
+    {
+      printf ("Equilibrium:: Error - nu cannot be less than unity\n");
+      exit (1);
+    }
+  if (pc < 1.)
+    {
+      printf ("Equilibrium:: Error - pc cannot be negative\n");
+      exit (1);
+    }
+  if (mu < 1.)
+    {
+      printf ("Equilibrium:: Error - mu cannot be less than unity\n");
+      exit (1);
+    }
+  if (epsa < 0.)
+    {
+      printf ("Equilibrium:: Error - epsa cannot be less than unity\n");
+      exit (1);
+    }
+  if (eps < 0.)
+    {
+      printf ("Equilibrium:: Error - eps cannot be less than unity\n");
+      exit (1);
+    }
+  if (Ns < 1)
+    {
+      printf ("Equilibrium:: Error - Ns cannot be less than unity\n");
+      exit (1);
+    }
+  if (Nr < 2)
+    {
+      printf ("Equilibrium:: Error - Nr cannot be less than two\n");
+      exit (1);
+    }
+  if (Nf < 2)
+    {
+      printf ("Equilibrium:: Error - Nf cannot be less than two\n");
+      exit (1);
+    }
+  if (Nw < 2)
+    {
+      printf ("Equilibrium:: Error - Nw cannot be less than two\n");
+      exit (1);
+    }
+  if (acc <= 0.)
+    {
+      printf ("Equilibrium:: Error - acc must be positive\n");
+      exit (1);
+    }
+  if (h0 <= 0.)
+    {
+      printf ("Equilibrium:: Error - h0 must be positive\n");
+      exit (1);
+    }
+  if (hmin <= 0.)
+    {
+      printf ("Equilibrium:: Error - hmin must be positive\n");
+      exit (1);
+    }
+  if (hmax <= 0.)
+    {
+      printf ("Equilibrium:: Error - hmax must be positive\n");
+      exit (1);
+    }
+  if (hmax < hmin)
+    {
+      printf ("Equilibrium:: Error - hmax must exceed hmin\n");
+      exit (1);
+    }
 }
 
 // ###########
@@ -270,8 +350,8 @@ void Equilibrium::Solve ()
   
   printf ("\n");
   printf ("Program Equilibrium::\n");
-  printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d\n",
-	  qc, nu, pc, mu, epsa, Ns, Nr);
+  printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d HIGH = %1d\n",
+	  qc, nu, pc, mu, epsa, Ns, Nr, HIGH);
   printf ("B_v = %10.3e\n\n", - epsa * (f1a/2.) * (log (8./epsa) - 1.5 - H1a));
   
   // .........................
@@ -378,9 +458,7 @@ void Equilibrium::Solve ()
       for (int n = 2; n <= Ns; n++)
 	vnp[n] = gsl_spline_eval (VPspline[n], rf, VPacc[n]);
       
-      double p = rf*rf*rf/8. - rf*hn[1]/2.;
-      for (int n = 2; n <= Ns; n++)
-	p += - double (n - 1) * hn[n]*hn[n] /2./rf - double (n - 1) * vn[n]*vn[n] /2./rf;
+      double p = GetP (rf, hn, vn, hnp, vnp);
       
       for (int j = 0; j <= Nw; j++)
 	{
@@ -389,20 +467,15 @@ void Equilibrium::Solve ()
 	  double w, wold = t;
 	  for (int i = 0; i < 10; i++)
 	    {
-	      w = t - epsa*rf*sin(wold) + epsa*hnp[1]*sin(wold);
-	      for (int n = 2; n <= Ns; n++)
-		{
-		  w += epsa * (hnp[n] - double (n - 1) * hn[n]/rf) * sin(double (n) * wold) /double (n);
-		  w -= epsa * (vnp[n] - double (n - 1) * vn[n]/rf) * cos(double (n) * wold) /double (n);
-		}
+	      w    = t - Gettfun (rf, wold, hn, vn, hnp, vnp);
 	      wold = w;
 	    }
 	  
-	  double R = 1. - epsa*rf*cos(w) + epsa*epsa*epsa*p*cos(w) + epsa*epsa*hn[1];
+	  double R = 1. - epsa * rf * cos(w) + epsa*epsa*epsa * p * cos(w) + epsa*epsa * hn[1];
 	  for (int n = 2; n <= Ns; n++)
 	    R += epsa*epsa * (hn[n] * cos (double (n - 1) * w) + vn[n] * sin (double (n - 1) * w));
 	  
-	  double Z = epsa*rf*sin(w) - epsa*epsa*epsa*p*sin(w);
+	  double Z = epsa * rf * sin(w) - epsa*epsa*epsa * p * sin(w);
 	  for (int n = 2; n <= Ns; n++)
 	    Z += epsa*epsa * (hn[n] * sin (double (n - 1) * w) - vn[n] * cos (double (n - 1) * w));
 	  
@@ -861,6 +934,115 @@ double Equilibrium::Getp2pp (double r)
 {
   return - 2. * pc * mu * pow (1. - r*r, mu-1.)
     + 4. * pc * mu * (mu-1.) * r*r * pow (1. - r*r, mu-2.);
+}
+
+// #######################################
+// Function to return relabeling parameter
+// #######################################
+double Equilibrium::GetP (double r, double* hn, double* vn, double* hnp, double* vnp)
+{
+  double p = r*r*r /8. - r*hn[1] /2.;
+
+  for (int n = 2; n <= Ns; n++)
+    {
+      p += - double (n - 1) * hn[n] * hn[n] /2./r - double (n - 1) * vn[n] * vn[n] /2./r;
+
+      if (n + 1 <= Ns)
+	p +=
+	  - epsa * double (n - 1) * (hnp[n] * hn[n+1] + hnp[n+1] * hn[n]) /2. - double (n - 1) * hn[n] * hn[n+1] /2.
+	  - epsa * double (n - 1) * (vnp[n] * vn[n+1] + vnp[n+1] * vn[n]) /2. - double (n - 1) * vn[n] * vn[n+1] /2.;
+	  
+    }
+
+  if (HIGH)
+    {
+      p += epsa * (r*r * hn[2] /4. - r*r*r * hnp[2] /4.);
+
+      for (int n = 2; n <= Ns; n++)
+	{
+	  if (n + 1 <= Ns)
+	    p +=
+	      - epsa * double (n - 1) * (hnp[n] * hn[n+1] + hnp[n+1] * hn[n]) /2. - double (n - 1) * hn[n] * hn[n+1] /2.
+	      - epsa * double (n - 1) * (vnp[n] * vn[n+1] + vnp[n+1] * vn[n]) /2. - double (n - 1) * vn[n] * vn[n+1] /2.;
+	  
+	}
+    }
+
+  return p;
+}
+
+// ##################################################
+// Function to return w-theta transformation function
+// ##################################################
+double Equilibrium::Gettfun (double r, double w, double* hn, double* vn, double* hnp, double* vnp)
+{
+  // .....................
+  // Lowest order function
+  // .....................
+  double tfun = epsa * r * sin(w) - epsa * hnp[1] * sin(w);
+
+  for (int n = 2; n <= Ns; n++)
+    {
+      tfun -= epsa * (hnp[n] - double (n - 1) * hn[n] /r) * sin (double (n) * w) /double (n);
+      tfun += epsa * (vnp[n] - double (n - 1) * vn[n] /r) * cos (double (n) * w) /double (n);
+    }
+
+  if (HIGH)
+    {
+      // .......................
+      // Higher order correction
+      // .......................
+      double* sums = new double[Ns+1];
+      
+      for (int n = 1; n <= Ns; n++)
+	{
+	  sums[n] = 0.;
+	  
+	  for (int np = 2; np <= Ns; np++)
+	    {
+	      if (np + n <= Ns)
+		sums[n] +=
+		  + (double (np + n - 1) /double (n)) * (hnp[np]   * hn[np+n] + vnp[np]   * vn[np+n]) /r
+		  + (double (np     - 1) /double (n)) * (hnp[np+n] * hn[np]   + vnp[np+n] * vn[np])   /r;
+	    }
+	}
+      
+      if (Ns >= 2)
+	tfun += epsa*epsa * (vn[2] /2. + r*vnp[2] /2. + hnp[1]*vn[2] /r) * cos (w);
+      if (Ns >= 3)
+	tfun += epsa*epsa * (            r*vnp[3] /4. + hnp[1]*vn[3] /r) * cos (2. * w);
+      
+      for (int n = 3; n <= Ns; n++)
+	{
+	  if (n + 1 <= Ns)
+	    tfun +=
+	      + epsa*epsa * (( - double (n - 2) * (vn[n-1] + vnp[n+1])
+			       + r * (vnp[n-1] + vnp[n+1])) /(2. * double (n)) + hnp[1] * vn[n+1] /r) * cos (double (n) * w);
+	  else
+	    tfun +=
+	      + epsa*epsa * ((- double (n - 2) * vn[n-1] + r * vnp[n-1]) /(2. * double (n))) * cos (double (n) * w);
+	}
+      
+      if (Ns >= 2)
+	tfun  -= epsa*epsa * (hn[2] /2. + r * hnp[2] /2. + hnp[1] * hn[2] /r + sums[1]) * sin (w);
+      
+      tfun += epsa*epsa * (r*r /4. - r*hnp[1] /4.) * sin (2. * w);
+      
+      if (Ns >= 3)
+	tfun -= epsa*epsa * (r*hnp[3] /4. + hnp[1]*hn[3] /r + sums[2]) * sin (2. * w);
+      
+      for (int n = 3; n <= Ns; n++)
+	{
+	  tfun   -= epsa*epsa * ( - (double (n - 2) /double (2*n)) * hn[n-1] + r * hnp[n-1] /double (2*n) + sums[n]) * sin (double (n) * w);
+	  
+	  if (n + 1 >= Ns)
+	    tfun -= epsa*epsa * ( - (double (n - 2) /double (2*n)) * hn[n+1] + r * hnp[n+1] /double (2*n) + hnp[1] * hnp[n+1] /r) * sin (double (n) * w);
+	}
+      
+      delete[] sums;
+    }
+    
+  return tfun;
 }
 
 // ###############################################################

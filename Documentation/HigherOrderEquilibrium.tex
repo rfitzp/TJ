@@ -1,0 +1,60 @@
+\documentclass[12pt,prb,aps]{revtex4-1}
+\usepackage{amsmath}           		          	
+\usepackage{graphicx,epstopdf}					
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{esint}
+\pdfoutput = 1 
+\newcommand {\bxi}{\mbox{\boldmath$\xi$}}
+\allowdisplaybreaks
+
+\begin{document}
+\section{Higher Order Equilibrium}
+We have 
+\begin{align}
+R(\hat{r},\omega) &= 1 -\epsilon\,\hat{r}\,\cos\omega + \epsilon^{\,2}\,\sum_{j>0}H_j(\hat{r})\,\cos[(j-1)\,\omega] + \epsilon^{\,2}\,\sum_{j>1}V_j(\hat{r})\,\sin[(j-1)\,\omega] \nonumber\\[0.5ex]
+&\phantom{=}+\epsilon^{\,3}\,[L_3(\hat{r})+\epsilon\,L_4(\hat{r})]\,\cos\omega,\\[0.5ex]
+Z(\hat{r},\omega)&= \epsilon\,\hat{r}\,\sin\omega +\epsilon^{\,2}\,\sum_{j>1}H_j(\hat{r})\,\sin[(j-1)\,\omega]
+-\epsilon^{\,2}\,\sum_{j>1}V_j(\hat{r})\,\cos[(j-1)\,\omega]\nonumber\\[0.5ex]&\phantom{=}-
+\epsilon^{\,3}\,[L_3(\hat{r})+\epsilon\,L_4(\hat{r})]\,\sin\omega,
+\end{align}
+where
+\begin{align}
+L_3(\hat{r})&= \frac{\hat{r}^{\,3}}{8} -\frac{\hat{r}\,H_1}{2}-\frac{1}{2}\sum_{j>1}(j-1)\,\frac{H_j^{\,2}}{\hat{r}}
+-\frac{1}{2}\sum_{j>1}(j-1)\,\frac{V_j^{\,2}}{\hat{r}},\\[0.5ex]
+L_4(\hat{r})&=\frac{\hat{r}^{\,2}\,H_2}{4}  - \frac{\hat{r}^{\,3}\,H_2'}{4}
+-\sum_{j>1}\frac{j-1}{2}\left(H_j'\,H_{j+1}+H_{j+1}'\,H_j\right) - \sum_{j>1}\frac{j-1}{2}\,H_j\,H_{j+1}\nonumber\\[0.5ex]
+&\phantom{=}-\sum_{j>1}\frac{j-1}{2}\left(V_j'\,V_{j+1}+V_{j+1}'\,V_j\right) - \sum_{j>1}\frac{j-1}{2}\,V_j\,V_{j+1}.
+\end{align}
+Furthermore,
+\begin{equation}
+\theta =\omega + \epsilon\,F_1(\hat{r},\omega) + \epsilon^2\,F_2(\hat{r},\omega),
+\end{equation}
+where
+\begin{align}
+F_1(\hat{r},\omega)&= \hat{r}\,\sin\omega - \sum_{j>0}\frac{1}{j}\left[H_j'-(j-1)\,\frac{H_j}{\hat{r}}\right]\sin(j\,\omega)
++ \sum_{j>1}\frac{1}{j}\left[V_j'-(j-1)\,\frac{V_j}{\hat{r}}\right]\cos(j\,\omega),\\[0.5ex]
+F_2(\hat{r},\omega) &= \left(\frac{V_2}{2}+ \frac{\hat{r}\,V_2'}{2}+\frac{H_1'\,V_2}{\hat{r}}\right)\cos\omega +
+\left(\frac{\hat{r}\,V_3'}{4} + \frac{H_1'\,V_3}{\hat{r}}\right)\cos(2\,\omega) \nonumber\\[0.5ex]
+&\phantom{=}+\sum_{j>2}\left\{\frac{1}{2\,j}\left[-(j-2)\,(V_{j-1}+V_{j+1})+\hat{r}\,(V_{j-1}'+V_{j+1}')\right]+\frac{H_1'\,V_{j+1}}{\hat{r}}\right\}\cos(j\,\omega)\nonumber\\[0.5ex]
+&\phantom{=}-\left\{
+\frac{H_2}{2}+\frac{\hat{r}\,H_2'}{2} + \frac{H_1'\,H_2}{\hat{r}}+\sum_{j'>1}j'\left(\frac{H_{j'}'\,H_{j'+1}}{\hat{r}}
++\frac{V_{j'}'\,V_{j'+1}}{\hat{r}}\right)
+\right.\nonumber\\[0.5ex]&\phantom{=}\left.
++\sum_{j'>1}(j'-1)\left(\frac{H_{j'+1}'\,H_{j'}}{\hat{r}}
++\frac{V_{j'+1}'\,V_{j'}}{\hat{r}}\right)\right\}\sin\omega\nonumber\\[0.5ex]
+&-\left\{
+-\frac{\hat{r}^2}{4}+\frac{\hat{r}}{4}\,(H_1'+H_3')+ \frac{H_1'\,H_3}{\hat{r}}+\sum_{j'>1}\frac{j'+1}{2}\left(\frac{H_{j'}'\,H_{j'+2}}{\hat{r}}
++\frac{V_{j'}'\,V_{j'+2}}{\hat{r}}\right)
+\right.\nonumber\\[0.5ex]&\phantom{=}\left.
++\sum_{j'>1}\frac{j'-1}{2}\left(\frac{H_{j'+2}'\,H_{j'}}{\hat{r}}
++\frac{V_{j'+2}'\,V_{j'}}{\hat{r}}\right)\right\}\sin(2\,\omega)\nonumber\\[0.5ex]
+&\phantom{=} -\sum_{j>2}\left\{-\frac{j-2}{2\,j}\,(H_{j-1}+H_{j+1})+\frac{\hat{r}}{2\,j}\,(H_{j-1}'+H_{j+1}')+\frac{H_1'\,H_{j+1}}{\hat{r}}\right.
+\nonumber\\[0.5ex]
+&\phantom{=}\left.+\sum_{j'>1}\frac{j'+j-1}{j}\left(\frac{H_{j'}'\,H_{j'+j}}{\hat{r}}
++\frac{V_{j'}'\,V_{j'+j}}{\hat{r}}\right)+\sum_{j'>1}\frac{j'-1}{j}\left(\frac{H_{j'+j}'\,H_{j'}}{\hat{r}}
++\frac{V_{j'+j}'\,V_{j'}}{\hat{r}}\right)\right\}\sin(j\,\omega).
+\end{align}
+
+\end{document}

@@ -53,7 +53,8 @@ using namespace arma;
 
 // Namelist reading function
 extern "C" void NameListTJ (int* NTOR, int* MMIN, int* MMAX, 
-			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX, int* FREE, int* TVAC, 
+			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX,
+			    int* FREE, int* TVAC, int* SYMM, 
 			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF, double* POWR);
 
 // ############
@@ -77,7 +78,8 @@ class TJ
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from namelist)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from namelist)
   int    FREE;    // Flag for free/fixed boundary calculation (read from namelist)
-  int    TVAC;    // Flag for true vacuum calculation (read from namelist)
+  int    TVAC;    // Flag for improved vacuum calculation (read from namelist)
+  int    SYMM;    // Flag for symmeterization of H-matrix (read from namelist)
   double POWR;    // Power for reduction in dynamic range of visulalized fields (read from namelist)
 
   double EPSF;    // Step-length for finite difference determination of derivative
@@ -189,9 +191,11 @@ class TJ
   Array<complex<double>,2> Svac;  // Vacuum solution matrix
   Array<complex<double>,2> Pdag;  // Hermitian conjugate of Pvac
   Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rvac
+  Array<complex<double>,2> Pinv;  // Inverse of Pvac
   Array<complex<double>,2> Avac;  // Vacuum residual matrix
   Array<complex<double>,2> Bvac;  // Vacuum residual matrix
   Array<complex<double>,2> Cvac;  // Vacuum residual matrix
+  Array<complex<double>,2> Hinv;  // Inverse of vacuum homogeneous response matrix
   Array<complex<double>,2> Hmat;  // Vacuum homogeneous response matrix
   Array<complex<double>,2> Hdag;  // Hermitian conjugate of Hmat
   Array<complex<double>,2> Hsym;  // Symmeterized Hmat
