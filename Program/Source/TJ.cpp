@@ -194,6 +194,7 @@ void TJ::Solve ()
   FindDispersion ();
   
   // Write program data
+  printf ("Writing data to netcdf file:\n");
   WriteNetCDF ();
 
   // Clean up

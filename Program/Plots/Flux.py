@@ -37,11 +37,17 @@ scale = 1.5*epsa
 plt.xlim(1.-scale, 1.+scale)
 plt.ylim(-scale, scale)
 
-for n in range (0, nf, 10):
-    plt.plot(R[n], Z[n], color = 'blue', linewidth = 0.5, linestyle = 'solid')
+for n in range (0, nf):
+    plt.plot(R[n], Z[n],   color = 'blue', linewidth = 0.1, linestyle = 'solid')
 plt.plot(R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
 
-for n in range (0,nt-1,5):
+for n in range (0,nt-1):
+    plt.plot(R[:,n], Z[:,n], color = 'green', linewidth = 0.1, linestyle = 'solid')
+
+for n in range (0, nf,10):
+    plt.plot(R[n], Z[n],   color = 'blue', linewidth = 0.5, linestyle = 'solid')
+
+for n in range (0,nt-1,10):
     plt.plot(R[:,n], Z[:,n], color = 'green', linewidth = 0.5, linestyle = 'solid')
 
 plt.contour(RR, ZZ, rr, rres, colors='red', linewidths = 1.)    

@@ -226,6 +226,7 @@ class TJ
   Array<complex<double>,2> Ximat; // Xi-matrix
   Array<complex<double>,2> Upmat; // Upsilon-matrix
   Array<complex<double>,2> Chmat; // Chi-matrix
+  Array<complex<double>,2> Imat;  // Plasma RMP response matrix
   Array<complex<double>,3> Psif;  // Psi components of fully reconnected tearing eigenfunctions
   Array<complex<double>,3> Zf;    // Z componnents of fully reconnected tearing eigenfunctions
   Array<complex<double>,3> Psiu;  // Psi components of unreconnected tearing eigenfunctions

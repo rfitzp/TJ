@@ -93,7 +93,10 @@ class Equilibrium
   int    Nr;     // Number of radial grid-points for calculation purposes (read from namelist)
   int    Nf;     // Number of radial grid-points for visualization purposes (read from namelist)
   int    Nw;     // Number of angular grid-points for visulalization purposes (read from namelist)
-  int    HIGH;   // Flag for higher order calculation of flux surfaces (read from namelist)
+  int    HIGH;   // Switch for higher order calculation of boundary data (read from namelist)
+                 //  HIGH = 0 - lowest-order analytic calculation of boundary data
+                 //  HIGH = 1 - higher-order analytic calculation of boundary data
+                 //  HIGH = 2 - numerical calculation of boundary data
 
   // ----------------
   // Calculation data
@@ -143,6 +146,7 @@ class Equilibrium
   gsl_spline**       HPspline;  // Interpolated radial derivatives of horizontal shaping functions
   gsl_spline**       VPspline;  // Interpolated radial derivatives of vertical shaping functions
   gsl_spline*        Lspline;   // Interpolated relabelling function
+  gsl_spline*        wspline;   // Interpolated omega function
 
   gsl_interp_accel*  g2acc;     // Accelerator for interpolated g2 function
   gsl_interp_accel** HHacc;     // Accelerator for interpolated horizontal shaping functions
@@ -150,6 +154,7 @@ class Equilibrium
   gsl_interp_accel** HPacc;     // Accelerator for interpolated radial derivatives of horizontal shaping functions
   gsl_interp_accel** VPacc;     // Accelerator for interpolated radial derivatives of vertical shaping functions
   gsl_interp_accel*  Lacc;      // Accelerator for interpolated relabelling function
+  gsl_interp_accel*  wacc;      // Accelerator for interpolated omega function
 
   gsl_spline*        fspline;   // Interpolated f function
   gsl_spline*        gr2spline; // Interpolated <|nabla r|^2> function
@@ -168,6 +173,8 @@ class Equilibrium
   double*            Zbound;    // Z values on plasma boundary
   double*            tbound;    // theta values on plasma boundary
   double*            wbound;    // omega values on plasma boundary
+  double*            tbound0;   // Preliminary theta values on plasma boundary
+  double*            wbound0;   // Preliminary omega values on plasma boundary
   double*            R2b;       // R^2 values on plasma boundary
   double*            grr2b;     // |nabla r|^2 values on plasma boundary
    
@@ -224,14 +231,26 @@ private:
   // Return p2''(r)
   double Getp2pp (double r);
 
-  // Return relabeling parameter
-  double GetL (double rf, double* hn, double* vn, double* hnp, double* vnp);
+  // Return relabelling parameter
+  double GetL (double r);
+  // Return R
+  double GetR (double r, double w);
+  // Return dRdr
+  double GetdRdr (double r, double w);
+  // Return dRdw
+  double GetdRdw (double r, double w);
+  // Return Z
+  double GetZ (double r, double w);
+  // Return dZdr
+  double GetdZdr (double r, double w);
+  // Return dZdw
+  double GetdZdw (double r, double w);
   // Return w-theta transformation function
-  double Gettfun (double r, double w, double* hn, double* vn, double* hnp, double* vnp);
+  double Gettfun (double r, double w);
   // Return R2
-  double GetR2 (double r, double t, double* hn, double* vn, double* hnp, double* vnp);
+  double GetR2 (double r, double t);
   // Return |nabla r|^2
-  double Getgrr2 (double r, double t, double* hn, double* vn, double* hnp, double* vnp);
+  double Getgrr2 (double r, double t);
   
   // Evaluate right-hand sides of differential equations
   void Rhs (double x, double* y, double* dydx);

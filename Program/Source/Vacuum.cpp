@@ -399,7 +399,7 @@ void TJ::Rhs1 (double t, complex<double>* Y, complex<double>* dYdt)
 	double R2re = gsl_spline_eval (Rrespline, t, Rreacc);
 
 	double z   = GetCoshMu (R, Z);
-	double eta = GetEta (R, Z);
+	double eta = GetEta    (R, Z);
 	double cet = cos (eta);
 	double set = sin (eta);
 

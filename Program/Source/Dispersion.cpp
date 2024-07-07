@@ -26,6 +26,7 @@ void TJ::FindDispersion ()
   Ximat.resize(J,    J);
   Upmat.resize(nres, J);
   Chmat.resize(nres, J);
+  Imat .resize(nres, nres);
   Psif .resize(J,    nres, NDIAG);
   Zf   .resize(J,    nres, NDIAG);
   Tf   .resize(nres, NDIAG);
@@ -307,6 +308,44 @@ void TJ::FindDispersion ()
       for (int jp = 0; jp < J; jp++)
 	Chmat(j, jp) /= sum;
     }
+
+  // ..................
+  // Calculate I-matrix
+  // ..................
+  for (int j = 0; j < nres; j++)
+    for (int jp = 0; jp < nres; jp++)
+      {
+	complex<double> sum1 = complex<double> (0., 0.);
+	complex<double> sum2 = complex<double> (0., 0.);
+
+	for (int k = 0; k < J; k++)
+	  {
+	    sum1 += conj (Chmat(jp, k)) * Chmat(j, k);
+	    sum2 += conj (Chmat(j , k)) * Chmat(j, k);
+	  }
+
+	Imat(j, jp) = sum1/sum2;
+      }
+
+  /*
+  // ...............
+  // Output I-matrix
+  // ...............
+  printf ("Re(I):\n");
+  for (int j = 0; j < nres; j++)
+    {
+      for (int jp = 0; jp < nres; jp++)
+	printf ("%10.3e ", real(Imat(j, jp)));
+      printf ("\n");
+    }
+  printf ("Im(I):\n");
+  for (int j = 0; j < nres; j++)
+   {
+      for (int jp = 0; jp < nres; jp++)
+	printf ("%10.3e ", imag(Imat(j, jp)));
+      printf ("\n");
+    }
+  */
 
   // ...........................................................
   // Calculate resonant magnetic perturbation visualization data

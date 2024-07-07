@@ -147,7 +147,7 @@ plt.ylabel(r"imag($Z$)", fontsize="15")
 
 plt.subplot(3, 2, 5)
 
-plt.xlim(0.9, 1.)
+plt.xlim(0., 1.)
 
 plt.plot(r, Pn[j,:], color='blue', linewidth = 1, linestyle = 'solid')
 plt.plot(r, Zn[j,:], color='red', linewidth = 1, linestyle = 'solid')
@@ -162,7 +162,7 @@ plt.ylabel(r"norm($\psi$)", fontsize="15")
 
 plt.subplot(3, 2, 6)
 
-plt.xlim(0.9, 1.)
+plt.xlim(0., 1.)
 
 plt.plot(r, Tq[j,:], color='blue', linewidth = 1, linestyle = 'solid')
 

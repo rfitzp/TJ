@@ -30,10 +30,10 @@ plt.subplot(2, 1, 1)
 
 plt.xlim(0., 1.)
 
-plt.plot(rr, hhh, color='blue', linewidth = 2, linestyle = 'solid')
-
 for rx in rres:
     plt.axvline (rx, color='red', linewidth = 1.5, linestyle = 'dashed')
+
+plt.plot(rr, hhh, color='blue', linewidth = 1, linestyle = 'solid')
 
 plt.xlabel(r'$\hat{r}$', fontsize="15")
 plt.ylabel(r'$\log_{10}(h)$', fontsize="15")
@@ -42,10 +42,13 @@ plt.subplot(2, 1, 2)
 
 plt.xlim(0., 1.)
 
-plt.plot(rr, eeerr, color='blue', linewidth = 2, linestyle = 'solid')
-
 for rx in rres:
     plt.axvline (rx, color='red', linewidth = 1.5, linestyle = 'dashed')
+
+plt.plot    (rr,     eeerr, color = 'blue', linewidth = 1,    linestyle = 'solid')
+plt.axhline (-12,           color = 'red',  linewidth = 0.5,  linestyle = 'dotted')
+plt.axhline (-13,           color = 'red',  linewidth = 0.5,  linestyle = 'dotted')
+plt.axhline (-14,           color = 'red',  linewidth = 0.5,  linestyle = 'dotted')
 
 plt.xlabel(r'$\hat{r}$', fontsize="15")
 plt.ylabel(r'$\log_{10}(\epsilon)$', fontsize="15")

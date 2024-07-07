@@ -277,25 +277,25 @@ void TJ::CalculateMetric ()
   // .....................
   // Calculate metric data
   // .....................
-  double dt = tbound[2] - tbound[0];
+  double dt = tbound[1] - tbound[0];
   
   for (int i = 0; i <= Nw; i++)
     {
-      double R00 = RR(Nf-1, i);
-      double Z00 = ZZ(Nf-1, i);
+      double R00 = Rbound[i];
+      double Z00 = Zbound[i];
   
       double R0m, Z0m, R0p, Z0p;
       if (i == 0)
 	{
 	  R0m = Rbound[Nw-1];
 	  Z0m = Zbound[Nw-1];
-	  R0p = Rbound[i+1];
-	  Z0p = Zbound[i+1];
+	  R0p = Rbound[1];
+	  Z0p = Zbound[1];
 	}
       else if (i == Nw)
 	{
-	  R0m = Rbound[i-1];
-	  Z0m = Zbound[i-1];
+	  R0m = Rbound[Nw-1];
+	  Z0m = Zbound[Nw-1];
 	  R0p = Rbound[1];
 	  Z0p = Zbound[1];
 	}
@@ -307,11 +307,11 @@ void TJ::CalculateMetric ()
 	  Z0p = Zbound[i+1];
 	}
 
-      double Rt = (R0p - R0m) /dt;
-      double Zt = (Z0p - Z0m) /dt;
+      double Rt = (R0p - R0m) /2./dt;
+      double Zt = (Z0p - Z0m) /2./dt;
 
       double z   = GetCoshMu (R00, Z00);
-      double et  = GetEta (R00, Z00);
+      double et  = GetEta    (R00, Z00);
       double cet = cos (et);
       double set = sin (et);
 
@@ -320,10 +320,10 @@ void TJ::CalculateMetric ()
       double etR = - sqrt (z*z - 1.) * set;
       double etZ = z * cet - 1.;
 
-      cmu   [i] = z;
-      eeta  [i] = et /M_PI;
-      ceta  [i] = cet;
-      seta  [i] = set;
+      cmu [i] = z;
+      eeta[i] = et /M_PI;
+      ceta[i] = cet;
+      seta[i] = set;
     
       R2grgz[i] = R00 * sqrt (z*z - 1.) * (Rt * muZ - Zt * muR);
       R2grge[i] = R00                   * (Rt * etZ - Zt * etR);

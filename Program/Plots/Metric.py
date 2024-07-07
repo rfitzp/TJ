@@ -28,7 +28,10 @@ plt.subplot (2, 2, 1)
 
 plt.xlim (0., 2.)
 
-plt.plot (tt, cm, color = 'blue', linewidth = 2, linestyle = 'solid')
+plt.plot    (tt,  cm, color = 'blue',  linewidth = 2, linestyle = 'solid')
+plt.axvline (0.5,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.0,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.5,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\theta/\pi$', fontsize = "15")
 plt.ylabel (r'$z$', fontsize = "15")
@@ -40,6 +43,9 @@ plt.xlim (0., 2.)
 plt.plot    (tt, ce, color = 'blue',   linewidth = 2,   linestyle = 'solid', label = r"$\cos\,\eta$")
 plt.plot    (tt, se, color = 'green', linewidth = 2,   linestyle = 'solid', label = r"$\sin\,\eta$")
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (0.5,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.0,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.5,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\theta/\pi$', fontsize = "15")
 plt.legend (fontsize = "15")
@@ -48,7 +54,11 @@ plt.subplot (2, 2, 3)
 
 plt.xlim (0., 2.)
 
-plt.plot (tt, rz, color = 'blue',  linewidth = 2,   linestyle = 'solid')
+plt.plot    (tt, rz, color = 'blue',  linewidth = 2,   linestyle = 'solid')
+plt.axvline (0.5,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.0,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.5,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
 
 plt.xlabel (r'$\theta/\pi$', fontsize = "15")
 plt.ylabel (r'$R^2\,\hat{\nabla} \hat{r}\cdot\hat{\nabla} z$', fontsize="15")
@@ -59,6 +69,9 @@ plt.xlim (0., 2.)
 
 plt.plot    (tt, re, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (0.5,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.0,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.5,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\theta/\pi$', fontsize = "15")
 plt.ylabel (r'$R^2\,\hat{\nabla} \hat{r}\cdot\hat{\nabla} \eta$', fontsize = "15")
