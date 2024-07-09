@@ -53,8 +53,9 @@ using namespace arma;
 
 // Namelist reading function
 extern "C" void NameListTJ (int* NTOR, int* MMIN, int* MMAX, 
-			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX, int* FREE, 
-			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF, double* POWR);
+			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX,
+			    int* FREE, int* SYMM, 
+			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF);
 
 // ############
 // Class header
@@ -63,9 +64,9 @@ class TJ
 {
  private:
 
-  // ..................
-  // Control parameters
-  // ..................
+  // .................................................
+  // Control parameters (read from Inputs/Namelist.nml)
+  // ..................................................
   int    NTOR;    // Toroidal mode number (read from namelist)
   int    MMIN;    // Minimum poloidal mode number included in calculation (read from namelist)
   int    MMAX;    // Maximum poloidal mode number included in calculation (read from namelist)
@@ -76,14 +77,14 @@ class TJ
   int    NDIAG;   // Number of radial grid-points for diagnostics (read from namelist)
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from namelist)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from namelist)
-  int    FREE;    // Flag for free/fixed boundary calculation 
+  int    FREE;    // Flag for free/fixed boundary calculation (read from namelist)
+  int    SYMM;    // Flag for symmeterization of H-matrix (read from namelist)
 
   double EPSF;    // Step-length for finite difference determination of derivative
-  double POWR;    // Power for reduction in dynamic range of visulalized fields
-
-  // ..................................................
-  // Equilibrium data (read from Inputs/Equilibrium.nc)
-  // ..................................................
+ 
+  // .................................................
+  // Equilibrium data (read from Plots/Equilibrium.nc)
+  // .................................................
   double             epsa;      // Inverse aspect-ratio
   int                Ns;        // Number of shaping harmonics
   int                Nr;        // Number of radial grid-points
@@ -133,6 +134,22 @@ class TJ
   gsl_interp_accel** VVacc;     // Accelerator for interpolated vertical shaping functions
   gsl_interp_accel** HPacc;     // Accelerator for interpolated radial derivatives of horizontal shaping functions
   gsl_interp_accel** VPacc;     // Accelerator for interpolated radial derivatives of vertical shaping functions
+
+  double*            cmu;       // Cosh(mu) on plasma boundary
+  double*            eeta;      // eta on plasm boundary
+  double*            ceta;      // cos(eta) on plasma boundary
+  double*            seta;      // sin(eta) on plasma boundary
+  double*            R2grgz;    // R^2 nabla r . nabla z   on plasma boundary
+  double*            R2grge;    // R^2 nabla r . nabla eta on plasma boundary
+
+  gsl_spline*        Rrzspline; // Interpolated R2grgz function on plasma boundary
+  gsl_spline*        Rrespline; // Interpolated R2grge function on plasma boundary
+  gsl_interp_accel*  Rrzacc;    // Accelerator for interpolated R2grgz function
+  gsl_interp_accel*  Rreacc;    // Accelerator for interpolated R2grge function
+  gsl_spline*        Rbspline;  // Interpolated R function on plasma boundary
+  gsl_spline*        Zbspline;  // Interpolated Z function on plasma boundary
+  gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function
+  gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function
  
   // ......................
   // Calculation parameters
@@ -164,19 +181,14 @@ class TJ
   double                   G1;    // Vacuum solution parameter
   double                   G2;    // Vacuum solution parameter
   Array<complex<double>,2> Pvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Qvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Rvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Svac;  // Vacuum solution matrix
   Array<complex<double>,2> Pdag;  // Hermitian conjugate of Pvac
+  Array<complex<double>,2> Pinv;  // Inverse of Pvac
+  Array<complex<double>,2> Rvac;  // Vacuum solution matrix
   Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rvac
   Array<complex<double>,2> Avac;  // Vacuum residual matrix
-  Array<complex<double>,2> Bvac;  // Vacuum residual matrix
-  Array<complex<double>,2> Cvac;  // Vacuum residual matrix
   Array<complex<double>,2> Hmat;  // Vacuum homogeneous response matrix
   Array<complex<double>,2> Hdag;  // Hermitian conjugate of Hmat
-  Array<complex<double>,2> Hsym;  // Symmeterized Hmat
-  Array<complex<double>,2> Imat;  // Vacuum solution matrix
-  Array<complex<double>,2> Gmat;  // Vacuum inhomogeneous response matrix
+  Array<complex<double>,2> Hinv;  // Inverse of vacuum homogeneous response matrix
 
   // -----------------
   // ODE Solution data
@@ -204,9 +216,6 @@ class TJ
   Array<complex<double>,2> Omat;  // Omega-matrix
   Array<complex<double>,2> Fmat;  // Inductance matrix
   Array<complex<double>,2> Emat;  // Tearing stability matrix
-  Array<complex<double>,2> Ximat; // Xi-matrix
-  Array<complex<double>,2> Upmat; // Upsilon-matrix
-  Array<complex<double>,2> Chmat; // Chi-matrix
   Array<complex<double>,3> Psif;  // Psi components of fully reconnected tearing eigenfunctions
   Array<complex<double>,3> Zf;    // Z componnents of fully reconnected tearing eigenfunctions
   Array<complex<double>,3> Psiu;  // Psi components of unreconnected tearing eigenfunctions
@@ -216,9 +225,9 @@ class TJ
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
 
-  // ----------------------------------------
-  // Visulalization of tearing eigenfunctions
-  // ----------------------------------------
+  // ------------------------------------------------
+  // Visualization of tearing eigenfunctions and RMPs
+  // ------------------------------------------------
   int                      Nf;     // Number of radial grid-points on visualization grid
   int                      Nw;     // Number of angular grid-points on visualization grid
   double*                  rf;     // Radial grid-points on visualization grif
@@ -231,15 +240,24 @@ class TJ
   Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visulalization grid
   Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
 
-  // .......................
+  // --------------------
+  // Plasma boundary data
+  // ---------------------
+  double* tbound;    // theta values on plasma boundary
+  double* Rbound;    // R values on plasma boundary
+  double* Zbound;    // Z values on plasma boundary
+  double* dRdthe;    // dR/dtheta values on plasma boundary
+  double* dZdthe;    // dZ/dtheta values on plasma boundary
+  
+  // -----------------------
   // Root finding parameters
-  // .......................
+  // -----------------------
   double Eta;      // Minimum magnitude of f at root f(x) = 0
   int    Maxiter;  // Maximum number of iterations
 
-  // ...............................
+  // -------------------------------
   // Adaptive integration parameters
-  // ...............................
+  // -------------------------------
   double acc;     // Integration accuracy (read from namelist)
   double h0;      // Initial step-length (read from namelist)
   double hmin;    // Minimum step-length (read from namelist)
@@ -297,6 +315,8 @@ class TJ
 
   // Read equilibrium data from Inputs/Equilibrium.nc
   void ReadEquilibrium ();
+  // Calculate metric data at plasma boundary
+  void CalculateMetric ();
     
   // .............
   // In Vacuum.cpp
@@ -304,6 +324,8 @@ class TJ
 
   // Calculate vacuum matrices
   void GetVacuum ();
+  // Evaluate right-hand sides of vacuum odes
+  void Rhs1 (double r, complex<double>* Y, complex<double>* dYdr);
   
   // ...............
   // In Rational.cpp
@@ -390,9 +412,7 @@ class TJ
   void GetTorqueUnrc ();
   // Output visualization data for unreconnected tearing eigenfunctions
   void VisualizeEigenfunctions ();
-  // Reduce dynamic range of quantity
-  double ReduceRange (double x);
-  
+   
   // ..................
   // In Interpolate.cpp
   // ..................
@@ -448,6 +468,16 @@ class TJ
   // Advance set of coupled first-order o.d.e.s by single step using fixed
   //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
   void CashKarp45Fixed (int neqns, double& x, complex<double>* y, complex<double>* err, double h);
+  // Advance set of coupled first-order o.d.e.s by single step using adaptive
+  //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
+  void CashKarp45Adaptive1 (int neqns, double& x, complex<double>* y, double& h, 
+			    double& t_err, double acc, double S, double T, int& rept,
+			    int maxrept, double h_min, double h_max, int flag, 
+			    int diag, FILE* file);
+  // Advance set of coupled first-order o.d.e.s by single step using fixed
+  //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
+  void CashKarp45Fixed1 (int neqns, double& x, complex<double>* y, complex<double>* err, double h);
+ 
   
   // ................
   // In Armadillo.cpp
@@ -457,6 +487,24 @@ class TJ
   void SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B);
   // Invert square matrix
   void InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA);
+
+  // ...............
+  // In Toroidal.cpp
+  // ...............
+
+  // Return associated Legendre function P^m_(n-1/2) (z)
+  double ToroidalP (int m, int n, double z);
+  // Return associated Legendre function Q^m_(n-1/2) (z)
+  double ToroidalQ (int m, int n, double z);
+  // Return derivative of associated Legendre function P^m_(n-1/2) (z)
+  double ToroidaldPdz (int m, int n, double z);
+  // Return derivative of associated Legendre function Q^m_(n-1/2) (z)
+  double ToroidaldQdz (int m, int n, double z);
+
+  // Return hyperbolic cosine of toroidal coordinate mu
+  double GetCoshMu (double R, double Z);
+  // Return toroidal coordinate eta
+  double GetEta (double R, double Z);
 };
 
 #endif //TJXX

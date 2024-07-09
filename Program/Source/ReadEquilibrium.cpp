@@ -100,17 +100,17 @@ void TJ::ReadEquilibrium ()
       NcDim w_d  = RR_x.getDim (1);
 
       Nf = f_d.getSize ();
-      Nw = w_d.getSize ();
+      Nw = w_d.getSize () - 1;
 
-      RR.resize     (Nf, Nw);
-      ZZ.resize     (Nf, Nw);
-      rvals.resize  (Nf, Nw);
-      thvals.resize (Nf, Nw);
+      RR.resize     (Nf, Nw+1);
+      ZZ.resize     (Nf, Nw+1);
+      rvals.resize  (Nf, Nw+1);
+      thvals.resize (Nf, Nw+1);
 
-      double* RRdata = new double[Nf*Nw];
-      double* ZZdata = new double[Nf*Nw];
-      double* rrdata = new double[Nf*Nw];
-      double* ttdata = new double[Nf*Nw];
+      double* RRdata = new double[Nf*(Nw+1)];
+      double* ZZdata = new double[Nf*(Nw+1)];
+      double* rrdata = new double[Nf*(Nw+1)];
+      double* ttdata = new double[Nf*(Nw+1)];
 
       RR_x.getVar (RRdata);
       ZZ_x.getVar (ZZdata);
@@ -122,13 +122,31 @@ void TJ::ReadEquilibrium ()
 	rf[n] = rrdata[n*Nw];
       
       for (int n = 0; n < Nf; n++)
-	for (int i = 0; i < Nw; i++)
+	for (int i = 0; i <= Nw; i++)
 	  {
-	    RR    (n, i) = RRdata[i + n*Nw];
-	    ZZ    (n, i) = ZZdata[i + n*Nw];
-	    rvals (n, i) = rrdata[i + n*Nw];
-	    thvals(n, i) = ttdata[i + n*Nw];
+	    RR    (n, i) = RRdata[i + n*(Nw+1)];
+	    ZZ    (n, i) = ZZdata[i + n*(Nw+1)];
+	    rvals (n, i) = rrdata[i + n*(Nw+1)];
+	    thvals(n, i) = ttdata[i + n*(Nw+1)];
 	  }
+
+      NcVar tbound_x = dataFile.getVar ("tbound");
+      NcVar Rbound_x = dataFile.getVar ("Rbound");
+      NcVar Zbound_x = dataFile.getVar ("Zbound");
+      NcVar dRdthe_x = dataFile.getVar ("dRdtheta");
+      NcVar dZdthe_x = dataFile.getVar ("dZdtheta");
+ 
+      tbound = new double[Nw+1];
+      Rbound = new double[Nw+1];
+      Zbound = new double[Nw+1];
+      dRdthe = new double[Nw+1];
+      dZdthe = new double[Nw+1];
+
+      tbound_x.getVar (tbound);
+      Rbound_x.getVar (Rbound);
+      Zbound_x.getVar (Zbound);
+      dRdthe_x.getVar (dRdthe);
+      dZdthe_x.getVar (dZdthe);
       
       delete[] para;   delete[] Hndata; delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata;
       delete[] RRdata; delete[] ZZdata; delete[] rrdata;  delete[] ttdata;
@@ -231,8 +249,73 @@ void TJ::ReadEquilibrium ()
 
   // Output equilibrium data
   printf ("Equilibrium data:\n");
-  printf ("epsa = %10.3e q0 = %10.3e qa = %10.3e H1a = %10.3e sa = %10.3e G1 = %10.3e G2 = %10.3e\n",
-	  epsa, Getq (0.), Getq (1.), GetHn (1, 1.), sa, G1, G2);
+  printf ("epsa = %10.3e q0 = %10.3e qa = %10.3e sa = %10.3e G1 = %10.3e G2 = %10.3e\n",
+	  epsa, Getq (0.), Getq (1.), sa, G1, G2);
+  printf ("n = %3d Hna = %10.3e Vna = %10.3e\n", 1, GetHn (1, 1.), 0.);
   for (int n = 2; n <= Ns; n++)
-    printf ("n = %3d Hna = %10.3e Vna = %10.3e\n", n, GetHn (n, 1.), GetVn (n, 1.));
+    if (GetHn (n, 1.) > 1.e-15 || GetVn (n, 1.) > 1.e-15)
+      printf ("n = %3d Hna = %10.3e Vna = %10.3e\n", n, GetHn (n, 1.), GetVn (n, 1.));
+}
+
+// ####################################################
+// Function to calculate metric data on plasma boundary
+// ####################################################
+void TJ::CalculateMetric ()
+{
+  // ...............
+  // Allocate memory
+  // ...............
+  cmu    = new double[Nw+1];
+  eeta   = new double[Nw+1];
+  ceta   = new double[Nw+1];
+  seta   = new double[Nw+1];
+  R2grgz = new double[Nw+1];
+  R2grge = new double[Nw+1];
+
+  Rbspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Zbspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Rbacc    = gsl_interp_accel_alloc ();
+  Zbacc    = gsl_interp_accel_alloc ();
+ 
+  Rrzspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Rrespline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Rrzacc    = gsl_interp_accel_alloc ();
+  Rreacc    = gsl_interp_accel_alloc ();
+ 
+  // .....................
+  // Calculate metric data
+  // .....................
+  for (int i = 0; i <= Nw; i++)
+    {
+      double R  = Rbound[i];
+      double Z  = Zbound[i];
+      double Rt = dRdthe[i];
+      double Zt = dZdthe[i];
+
+      double z   = GetCoshMu (R, Z);
+      double et  = GetEta    (R, Z);
+      double cet = cos (et);
+      double set = sin (et);
+
+      double muR = 1. - z * cet;
+      double muZ = - sqrt (z*z - 1.) * set;
+      double etR = - sqrt (z*z - 1.) * set;
+      double etZ = z * cet - 1.;
+
+      cmu [i] = z;
+      eeta[i] = et /M_PI;
+      ceta[i] = cet;
+      seta[i] = set;
+    
+      R2grgz[i] = R * sqrt (z*z - 1.) * (Rt * muZ - Zt * muR);
+      R2grge[i] = R                   * (Rt * etZ - Zt * etR);
+    }
+
+  // .......................
+  // Interpolate metric data
+  // .......................
+  gsl_spline_init (Rbspline,  tbound, Rbound, Nw+1);
+  gsl_spline_init (Zbspline,  tbound, Zbound, Nw+1);
+  gsl_spline_init (Rrzspline, tbound, R2grgz, Nw+1);
+  gsl_spline_init (Rrespline, tbound, R2grge, Nw+1);
 }

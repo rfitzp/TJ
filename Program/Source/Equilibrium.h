@@ -66,7 +66,7 @@ using namespace netCDF::exceptions;
 
 // Namelist reading function
 extern "C" void NameListEquilibrium (double* QC, double* NU, double* PC, double* MU, double* EPSA,
-				     double* EPS, int* NS, int* NR, int* NF, int* NW,
+				     double* EPS, int* NS, int* NR, int* NF, int* NW, 
 				     double* ACC, double* H0, double* HMIN, double* HMAX);
     
 // ############
@@ -97,68 +97,88 @@ class Equilibrium
   // ----------------
   // Calculation data
   // ----------------
-  double* rr;               // Radial grid-points
-  double* p2;               // Plasma pressure profile
-  double* f1;               // Lowest-order poloidal flux function
-  double* f3;               // Higher-order poloidal flux function
-  double* g2;               // Toroidal flux function
-  double* q0;               // Lowest-order safety-factor
-  double* q2;               // Higher-order safety-factor
-  double* It;               // Toroidal plasma current
-  double* Ip;               // Poloidal plasma current
-  double* Jt;               // Radial derivative of toroidal plasma current
-  double* Jp;               // Radial derivative of poloidal plasma current
-  double* pp;               // Radial derivative of plasma pressure
-  double* ppp;              // Second radial derivative of plasma pressure 
-  double* qq;               // First radial derivative of safety-factor times r
-  double* qqq;              // Radial derivative of qq times r
-  double* s;                // Magnetic shear:              s  = r q2'/q2
-  double* s2;               // Second-order magnetic shear: s2 = r^2 q2''/q2
-  double* S1;               // First shaping function
-  double* S2;               // Second shaping function
-  double* P1;               // First profile function:  (2-s)/q2
-  double* P2;               // Second profile function: r dP1/dr
-  double* P3;               // Third profile function
-  double* P3a;              // Auxillary third profile function
-  double* ff;               // f profile
-  double* ggr2;             // <|nabla r|^2> profile
-  double* RR2;              // <R^2> profile
+  double* rr;    // Radial grid-points
+  double* p2;    // Plasma pressure profile
+  double* f1;    // Lowest-order poloidal flux function
+  double* f3;    // Higher-order poloidal flux function
+  double* g2;    // Toroidal flux function
+  double* q0;    // Lowest-order safety-factor
+  double* q2;    // Higher-order safety-factor
+  double* It;    // Toroidal plasma current
+  double* Ip;    // Poloidal plasma current
+  double* Jt;    // Radial derivative of toroidal plasma current
+  double* Jp;    // Radial derivative of poloidal plasma current
+  double* pp;    // Radial derivative of plasma pressure
+  double* ppp;   // Second radial derivative of plasma pressure 
+  double* qq;    // First radial derivative of safety-factor times r
+  double* qqq;   // Radial derivative of qq times r
+  double* s;     // Magnetic shear:              s  = r q2'/q2
+  double* s2;    // Second-order magnetic shear: s2 = r^2 q2''/q2
+  double* S1;    // First shaping function
+  double* S2;    // Second shaping function
+  double* P1;    // First profile function:  (2-s)/q2
+  double* P2;    // Second profile function: r dP1/dr
+  double* P3;    // Third profile function
+  double* P3a;   // Auxillary third profile function
+  double* ff;    // f profile
+  double* ggr2;  // <|nabla r|^2> profile
+  double* RR2;   // <R^2> profile
    
-  Array<double,2> HHfunc;   // Horizontal shaping functions
-  Array<double,2> VVfunc;   // Vertical shaping functions
-  Array<double,2> HPfunc;   // Radial derivatives of horizontal shaping functions
-  Array<double,2> VPfunc;   // Radial derivatives of vertical shaping functions
+  Array<double,2>    HHfunc;    // Horizontal shaping functions
+  Array<double,2>    VVfunc;    // Vertical shaping functions
+  Array<double,2>    HPfunc;    // Radial derivatives of horizontal shaping functions
+  Array<double,2>    VPfunc;    // Radial derivatives of vertical shaping functions
+  double*            Lfunc;     // Relabelling function
 
-  gsl_spline* Itspline;     // Interpolated It function
-  gsl_spline* Ipspline;     // Interpolated Ip function
+  gsl_spline*        Itspline;  // Interpolated It function
+  gsl_spline*        Ipspline;  // Interpolated Ip function
 
-  gsl_interp_accel* Itacc;  // Accelerator for interpolated It function
-  gsl_interp_accel* Ipacc;  // Accelerator for interpolated Ip function
+  gsl_interp_accel*  Itacc;     // Accelerator for interpolated It function
+  gsl_interp_accel*  Ipacc;     // Accelerator for interpolated Ip function
 
-  gsl_spline*  g2spline;    // Interpolated g2 function
-  gsl_spline** HHspline;    // Interpolated horizontal shaping functions
-  gsl_spline** VVspline;    // Interpolated vertical shaping functions
-  gsl_spline** HPspline;    // Interpolated radial derivatives of horizontal shaping functions
-  gsl_spline** VPspline;    // Interpolated radial derivatives of vertical shaping functions
+  gsl_spline*        g2spline;  // Interpolated g2(r) function
+  gsl_spline**       HHspline;  // Interpolated horizontal shaping functions versus r
+  gsl_spline**       VVspline;  // Interpolated vertical shaping functions versus r
+  gsl_spline**       HPspline;  // Interpolated radial derivatives of horizontal shaping functions versus r
+  gsl_spline**       VPspline;  // Interpolated radial derivatives of vertical shaping functions versus r
+  gsl_spline*        Lspline;   // Interpolated relabelling function versus r
+  gsl_spline*        wspline;   // Interpolated omega(theta) function
+  gsl_spline*        Rspline;   // Interpolated R(theta) function
+  gsl_spline*        Zspline;   // Interpolated Z(theta) function
 
-  gsl_interp_accel*  g2acc; // Accelerator for interpolated g2 function
-  gsl_interp_accel** HHacc; // Accelerator for interpolated horizontal shaping functions
-  gsl_interp_accel** VVacc; // Accelerator for interpolated vertical shaping functions
-  gsl_interp_accel** HPacc; // Accelerator for interpolated radial derivatives of horizontal shaping functions
-  gsl_interp_accel** VPacc; // Accelerator for interpolated radial derivatives of vertical shaping functions
+  gsl_interp_accel*  g2acc;     // Accelerator for interpolated g2 function
+  gsl_interp_accel** HHacc;     // Accelerator for interpolated horizontal shaping functions
+  gsl_interp_accel** VVacc;     // Accelerator for interpolated vertical shaping functions
+  gsl_interp_accel** HPacc;     // Accelerator for interpolated radial derivatives of horizontal shaping functions
+  gsl_interp_accel** VPacc;     // Accelerator for interpolated radial derivatives of vertical shaping functions
+  gsl_interp_accel*  Lacc;      // Accelerator for interpolated relabelling function
+  gsl_interp_accel*  wacc;      // Accelerator for interpolated omega function
+  gsl_interp_accel*  Racc;      // Accelerator for interpolated R(theta)
+  gsl_interp_accel*  Zacc;      // Accelerator for interpolated Z(theta)
 
-  gsl_spline* fspline;      // Interpolated f function
-  gsl_spline* gr2spline;    // Interpolated <|nabla r|^2> function
-  gsl_spline* R2spline;     // Interpolated <R^2> function
+  gsl_spline*        fspline;   // Interpolated f function versus r
+  gsl_spline*        gr2spline; // Interpolated <|nabla r|^2> function versus r
+  gsl_spline*        R2spline;  // Interpolated <R^2> function versus r
 
-  gsl_interp_accel* facc;   // Accelerator for interpolated f function
-  gsl_interp_accel* gr2acc; // Accelerator for interpolated <|nabla r|^2> function
-  gsl_interp_accel* R2acc;  // Accelerator for interpolated <R^2> function
+  gsl_interp_accel*  facc;      // Accelerator for interpolated f function
+  gsl_interp_accel*  gr2acc;    // Accelerator for interpolated <|nabla r|^2> function
+  gsl_interp_accel*  R2acc;     // Accelerator for interpolated <R^2> function
 
-  Array<double,2> RR;       // R coodinates of magnetic flux-surfaces for visualization purposes
-  Array<double,2> ZZ;       // Z coodinates of magnetic flux-surfaces for visualization purposes
-  Array<double,2> rvals;    // r values on magnetic flux-surfaces for visualization purposes
-  Array<double,2> thvals;   // theta values on magnetic flux-surfaces for visualization purposes
+  Array<double,2>    RR;        // R coodinates of magnetic flux-surfaces for visualization purposes
+  Array<double,2>    ZZ;        // Z coodinates of magnetic flux-surfaces for visualization purposes
+  Array<double,2>    rvals;     // r values on magnetic flux-surfaces for visualization purposes
+  Array<double,2>    thvals;    // theta values on magnetic flux-surfaces for visualization purposes
+
+  double*            Rbound;    // R values on plasma boundary
+  double*            Zbound;    // Z values on plasma boundary
+  double*            tbound;    // theta values on plasma boundary
+  double*            wbound;    // omega values on plasma boundary
+  double*            tbound0;   // Preliminary theta values on plasma boundary
+  double*            wbound0;   // Preliminary omega values on plasma boundary
+  double*            dRdtheta;  // dR/dtheta values on plasma boundary
+  double*            dZdtheta;  // dZ/dtheta values on plasma boundary
+  double*            R2b;       // R^2 values on plasma boundary
+  double*            grr2b;     // |nabla r|^2 values on plasma boundary
    
   // -------------------------------
   // Adaptive integration parameters
@@ -201,7 +221,7 @@ private:
   // ..................
   // in Equilibrium.cpp
   // ..................
-  
+
   // Return f1(r)
   double Getf1 (double r);
   // Return f1'(r)
@@ -212,6 +232,27 @@ private:
   double Getp2p (double r);
   // Return p2''(r)
   double Getp2pp (double r);
+
+  // Return relabelling parameter
+  double GetL (double r);
+  // Return R
+  double GetR (double r, double w);
+  // Return dRdr
+  double GetdRdr (double r, double w);
+  // Return dRdw
+  double GetdRdw (double r, double w);
+  // Return Z
+  double GetZ (double r, double w);
+  // Return dZdr
+  double GetdZdr (double r, double w);
+  // Return dZdw
+  double GetdZdw (double r, double w);
+  // Return w-theta transformation function
+  double Gettfun (double r, double w);
+  // Return R2
+  double GetR2 (double r, double t);
+  // Return |nabla r|^2
+  double Getgrr2 (double r, double t);
   
   // Evaluate right-hand sides of differential equations
   void Rhs (double x, double* y, double* dydx);

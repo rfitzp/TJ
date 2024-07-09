@@ -13,6 +13,7 @@ int main ()
   // .............................................................................
   // Call class Equilibrium to construct aspect-ratio expanded tokamak equilibrium
   // .............................................................................
+  printf ("----------\nProgram TJ\n----------\n");
   Equilibrium equilibrium;
   clock_t     begin = clock ();
   equilibrium.Solve ();

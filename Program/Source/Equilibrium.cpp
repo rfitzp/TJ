@@ -58,9 +58,89 @@ Equilibrium::Equilibrium ()
   // Read namelist file Inputs/Equilibrium.nml
   // -----------------------------------------
   NameListEquilibrium (&qc, &nu, &pc, &mu, &epsa,
-		       &eps, &Ns, &Nr, &Nf, &Nw,
+		       &eps, &Ns, &Nr, &Nf, &Nw, 
 		       &acc, &h0, &hmin, &hmax);
-}
+
+
+  // ------------
+  // Sanity check
+  // ------------
+  if (qc < 0.)
+    {
+      printf ("Equilibrium:: Error - qc cannot be negative\n");
+      exit (1);
+    }
+  if (nu < 1.)
+    {
+      printf ("Equilibrium:: Error - nu cannot be less than unity\n");
+      exit (1);
+    }
+  if (pc < 0.)
+    {
+      printf ("Equilibrium:: Error - pc cannot be negative\n");
+      exit (1);
+    }
+  if (mu < 1.)
+    {
+      printf ("Equilibrium:: Error - mu cannot be less than unity\n");
+      exit (1);
+    }
+  if (epsa < 0.)
+    {
+      printf ("Equilibrium:: Error - epsa cannot be less than unity\n");
+      exit (1);
+    }
+  if (eps < 0.)
+    {
+      printf ("Equilibrium:: Error - eps cannot be less than unity\n");
+      exit (1);
+    }
+  if (Ns < 1)
+    {
+      printf ("Equilibrium:: Error - Ns cannot be less than unity\n");
+      exit (1);
+    }
+  if (Nr < 2)
+    {
+      printf ("Equilibrium:: Error - Nr cannot be less than two\n");
+      exit (1);
+    }
+  if (Nf < 2)
+    {
+      printf ("Equilibrium:: Error - Nf cannot be less than two\n");
+      exit (1);
+    }
+  if (Nw < 2)
+    {
+      printf ("Equilibrium:: Error - Nw cannot be less than two\n");
+      exit (1);
+    }
+  if (acc <= 0.)
+    {
+      printf ("Equilibrium:: Error - acc must be positive\n");
+      exit (1);
+    }
+  if (h0 <= 0.)
+    {
+      printf ("Equilibrium:: Error - h0 must be positive\n");
+      exit (1);
+    }
+  if (hmin <= 0.)
+    {
+      printf ("Equilibrium:: Error - hmin must be positive\n");
+      exit (1);
+    }
+  if (hmax <= 0.)
+    {
+      printf ("Equilibrium:: Error - hmax must be positive\n");
+      exit (1);
+    }
+  if (hmax < hmin)
+    {
+      printf ("Equilibrium:: Error - hmax must exceed hmin\n");
+      exit (1);
+    }
+ }
 
 // ###########
 // Destructor
@@ -122,6 +202,14 @@ void Equilibrium::Solve ()
   gr2acc    = gsl_interp_accel_alloc ();
   R2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   R2acc     = gsl_interp_accel_alloc ();
+  Lspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  Lacc      = gsl_interp_accel_alloc ();
+  wspline   = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  wacc      = gsl_interp_accel_alloc ();
+  Rspline   = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Racc      = gsl_interp_accel_alloc ();
+  Zspline   = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Zacc      = gsl_interp_accel_alloc ();
 
   HHspline = new gsl_spline*[Ns+1];
   VVspline = new gsl_spline*[Ns+1];
@@ -151,16 +239,27 @@ void Equilibrium::Solve ()
   rvals .resize (Nf, Nw+1);
   thvals.resize (Nf, Nw+1);
 
+  Rbound   = new double[Nw+1];
+  Zbound   = new double[Nw+1];
+  tbound   = new double[Nw+1];
+  wbound0  = new double[Nw+1];
+  tbound0  = new double[Nw+1];
+  wbound   = new double[Nw+1];
+  R2b      = new double[Nw+1];
+  grr2b    = new double[Nw+1];
+  dRdtheta = new double[Nw+1];
+  dZdtheta = new double[Nw+1];
+
   // ..................
   // Set up radial grid
   // ..................
   for (int i = 0; i <= Nr; i++)
     {
-      rr[i]  = double (i) /double (Nr);
-      p2[i]  = Getp2  (rr[i]);
-      pp[i]  = Getp2p (rr[i]);
+      rr [i] = double (i) /double (Nr);
+      p2 [i] = Getp2  (rr[i]);
+      pp [i] = Getp2p (rr[i]);
       ppp[i] = Getp2pp(rr[i]);
-      f1[i]  = Getf1  (rr[i]);
+      f1 [i] = Getf1  (rr[i]);
     }
 
   // ....................................
@@ -174,6 +273,7 @@ void Equilibrium::Solve ()
   rhs_chooser   = 0;
 
   h            = h0;
+  count        = 0;
   r            = rr[0];
   g2[0]        = 0.;
   HHfunc(1, 0) = 0.;
@@ -268,10 +368,9 @@ void Equilibrium::Solve ()
   double H1a = HPfunc(1, Nr);
   
   printf ("\n");
-  printf ("Program Equilibrium::\n");
-  printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d\n",
-	  qc, nu, pc, mu, epsa, Ns, Nr);
-  printf ("B_v = %10.3e\n\n", - epsa * (f1a/2.) * (log (8./epsa) - 1.5 - H1a));
+  printf ("Subprogram Equilibrium::\n");
+  printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
+	  qc, nu, pc, mu, epsa, Ns, Nr, Nf, Nw);
   
   // .........................
   // Rescale shaping functions
@@ -279,9 +378,7 @@ void Equilibrium::Solve ()
   int    nn   = 1;
   double Hnam = HPfunc(1, Nr)/2.;
   double zero = 0.;
-  double qnc  = f1a * Hnam * cos (M_PI);
-  printf ("n = %3d:  Hna = %10.3e  Vna = %10.3e  qnc = %10.3e  qns = %10.3e\n",
-	  nn, HHfunc(1, Nr), zero, qnc, zero);
+  printf ("n = %3d:  Hna = %10.3e  Vna = %10.3e\n", nn, HHfunc(1, Nr), zero);
 
   for (int n = 2; n <= Ns; n++)
     {
@@ -311,11 +408,9 @@ void Equilibrium::Solve ()
 
       double Hnam = (HPfunc(n, Nr) + double (n - 1) * HHfunc(n, Nr)) /double (2*n);
       double Vnam = (VPfunc(n, Nr) + double (n - 1) * VVfunc(n, Nr)) /double (2*n);
-      double qnc  =   f1a * Hnam * cos (double (n) * M_PI);
-      double qns  = - f1a * Vnam * cos (double (n) * M_PI);
-    
-      printf ("n = %3d:  Hna = %10.3e  Vna = %10.3e  qnc = %10.3e  qns = %10.3e\n",
-	      n, Hnfc, Vnfc, qnc, qns);
+
+      if (fabs (Hnfc) > 1.e-15 || fabs (Vnfc) > 1.e-15)
+	printf ("n = %3d:  Hna = %10.3e  Vna = %10.3e\n", n, Hnfc, Vnfc);
     }
   
   delete[] hna; delete[] vna;
@@ -354,64 +449,122 @@ void Equilibrium::Solve ()
       gsl_spline_init (VPspline[n], rr, data, Nr+1);
     }
 
+  // .................................
+  // Interpolate relabelling parameter
+  // .................................
+  Lfunc = new double[Nr+1];
+
+  Lfunc[0] = 0.;
+  for (int i = 1; i <= Nr; i++)
+    {
+      double rf = double (i) /double (Nr);
+
+      Lfunc[i] = GetL (rf);
+    }
+
+   gsl_spline_init (Lspline, rr, Lfunc, Nr+1);
+
   // ...........................................................
   // Calculate magnetic flux-surfaces for visualization purposes
   // ...........................................................
+  printf ("Calculating magnetic flux-surfaces:\n");
   for (int i = 1; i <= Nf; i++)
+     {
+       double rf = double (i) /double (Nf);
+       double L  = gsl_spline_eval (Lspline, rf, Lacc);
+      
+       for (int j = 0; j <= Nw; j++)
+	 {
+	   double t = double (j) * 2.*M_PI /double (Nw);
+	   
+	   double w, wold = t;
+	   for (int i = 0; i < 10; i++)
+	     {
+	       w    = t - Gettfun (rf, wold);
+	       wold = w;
+	     }
+	   
+	   double R = GetR (rf, w);
+	   double Z = GetZ (rf, w);
+	   
+	   RR    (i-1, j) = R;
+	   ZZ    (i-1, j) = Z;
+	   rvals (i-1, j) = rf;
+	   thvals(i-1, j) = t;
+	 }
+     }
+  
+  // .......................
+  // Calculate boundary data
+  // .......................
+  // Set up preliminary omega grid
+  for (int j = 0; j <= Nw; j++)
+    wbound0[j] = double (j) * 2.*M_PI /double (Nw);
+  
+  // Calculate preliminary theta grid
+  tbound0[0] = 0.;
+  
+  double  w;
+  double* y3   = new double[1];
+  double* err3 = new double[1];
+  rhs_chooser  = 3;
+  
+  w     = 0.;
+  h     = h0;
+  count = 0;
+  y3[0] = 0.;
+  
+  for (int j = 1; j <= Nw; j++)
     {
-      double rf = double (i) /double (Nf);
-
-      double* hn = new double[Ns+1];
-      for (int n = 1; n <= Ns; n++)
-	hn[n] = gsl_spline_eval (HHspline[n], rf, HHacc[n]);
-
-      double* vn = new double[Ns+1];
-      for (int n = 2; n <= Ns; n++)
-	vn[n] = gsl_spline_eval (VVspline[n], rf, VVacc[n]);
-
-      double* hnp = new double[Ns+1];
-      for (int n = 1; n <= Ns; n++)
-	hnp[n] = gsl_spline_eval (HPspline[n], rf, HPacc[n]);
-      
-      double* vnp = new double[Ns+1];
-      for (int n = 2; n <= Ns; n++)
-	vnp[n] = gsl_spline_eval (VPspline[n], rf, VPacc[n]);
-      
-      double p = rf*rf*rf/8. - rf*hn[1]/2.;
-      for (int n = 2; n <= Ns; n++)
-	p += - double (n - 1) * hn[n]*hn[n] /2./rf - double (n - 1) * vn[n]*vn[n] /2./rf;
-      
-      for (int j = 0; j <= Nw; j++)
+      do
 	{
-	  double t = double (j) * 2.*M_PI /double (Nw);
-	  
-	  double w = t - epsa*rf*sin(t) + epsa*hnp[1]*sin(t);
-	  for (int n = 2; n <= Ns; n++)
-	    {
-	      w += epsa * (hnp[n] - double (n - 1) * hn[n]/rf) * sin(double (n) * t) /double (n);
-	      w -= epsa * (vnp[n] - double (n - 1) * vn[n]/rf) * cos(double (n) * t) /double (n);
-	    }
-	  
-	  double R = 1. - epsa*rf*cos(w) + epsa*epsa*epsa*p*cos(w) + epsa*epsa*hn[1];
-	  for (int n = 2; n <= Ns; n++)
-	    R += epsa*epsa * (hn[n] * cos (double (n - 1) * w) + vn[n] * sin (double (n - 1) * w));
-	  
-	  double Z = epsa*rf*sin(w) - epsa*epsa*epsa*p*sin(w);
-	  for (int n = 2; n <= Ns; n++)
-	    Z += epsa*epsa * (hn[n] * sin (double (n - 1) * w) - vn[n] * cos (double (n - 1) * w));
-	  
-	  RR    (i-1, j) = R;
-	  ZZ    (i-1, j) = Z;
-	  rvals (i-1, j) = rf;
-	  thvals(i-1, j) = t;
+	  CashKarp45Adaptive (1, w, y3, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
 	}
+      while (w < wbound0[j]);
+      CashKarp45Fixed (1, w, y3, err3, wbound0[j] - w);
       
-      delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+      tbound0[j] = y3[0];
     }
-
+  
+  double rbb = tbound0[Nw] /(2.*M_PI);
+  printf ("rb = %10.3e\n", rbb);
+  
+  for (int j = 0; j <= Nw; j++)
+    tbound0[j] /= rbb;
+  
+  // Interpolate preliminary boundary data
+  gsl_spline_init (wspline, tbound0, wbound0, Nw+1);
+  
+  // Calculate final boundary data
+  for (int j = 0; j <= Nw; j++)
+    tbound[j] = double (j) * 2.*M_PI /double (Nw);
+  
+  double rb = 1.;
+  for (int j = 0; j <= Nw; j++)
+    {
+      double t = tbound[j];
+      double w = gsl_spline_eval (wspline, t, wacc);
+      
+      wbound[j] = w;
+      Rbound[j] = GetR    (rb, w);
+      Zbound[j] = GetZ    (rb, w);
+      R2b   [j] = GetR2   (rb, t);
+      grr2b [j] = Getgrr2 (rb, t);
+    }
+  
+  gsl_spline_init (Rspline, tbound, Rbound, Nw+1);
+  gsl_spline_init (Zspline, tbound, Zbound, Nw+1);
+  
+  for (int j = 0; j <= Nw; j++)
+    {
+      dRdtheta[j] = gsl_spline_eval_deriv (Rspline, tbound[j], Racc);
+      dZdtheta[j] = gsl_spline_eval_deriv (Zspline, tbound[j], Zacc);
+    }
+   
   // .....................
   // Integrate f3 equation
   // .....................
+  printf ("Calculating f3 equation:\n");
   double* y1    = new double[1];
   double* dy1dr = new double[1];
   double* err1  = new double[1];
@@ -422,6 +575,7 @@ void Equilibrium::Solve ()
   double V2c = VPfunc(2, 0);
 
   h       = h0;
+  count   = 0;
   f3[0]   = 0.;
   q0[0]   = qc;
   qq[0]   = 0.;
@@ -460,11 +614,11 @@ void Equilibrium::Solve ()
 		   + epsa*epsa * (+ 2.*r*gg2/ff1     + r*r*g2p/ff1     - r*r*gg2*f1p/ff1/ff1
 				  - 2.*r*ff3/ff1/ff1 - r*r*f3p/ff1/ff1 + 2.*r*r*ff3*f1p/ff1/ff1/ff1));
   
-      double gr2 = 3.*rr[i]*rr[i]/4. - HHfunc(1, i) + HPfunc(1, i)*HPfunc(1, i)/2.;
+      double gr2 = 3.*rr[i]*rr[i]/4. - HHfunc(1, i) + HPfunc(1, i) * HPfunc(1, i) /2.;
       for (int n = 2; n <= Ns; n++)
 	{
-	  gr2 += (HPfunc(n, i)*HPfunc(n, i) + double (n*n - 1) * HHfunc(n, i)*HHfunc(n, i)/r/r)/2.;
-	  gr2 += (VPfunc(n, i)*VPfunc(n, i) + double (n*n - 1) * VVfunc(n, i)*VVfunc(n, i)/r/r)/2.;
+	  gr2 += (HPfunc(n, i) * HPfunc(n, i) + double (n*n - 1) * HHfunc(n, i) * HHfunc(n, i) /r/r)/2.;
+	  gr2 += (VPfunc(n, i) * VPfunc(n, i) + double (n*n - 1) * VVfunc(n, i) * VVfunc(n, i) /r/r)/2.;
 	}
 
       double R2 = rr[i]*rr[i]/2. - rr[i]*HPfunc(1, i) - 2.*HHfunc(1, i);
@@ -472,24 +626,34 @@ void Equilibrium::Solve ()
       ff  [i] = ff1 + epsa*epsa * ff3;
       ggr2[i] = 1.  + epsa*epsa * gr2;
       RR2 [i] = 1.  - epsa*epsa * R2;
-      It  [i] =   2.*M_PI * (f1[i] * (1. + epsa*epsa*gr2) + epsa*epsa*f3[i]);
+      It  [i] =   2.*M_PI * (f1[i] * (1. + epsa*epsa * gr2) + epsa*epsa * f3[i]);
       Ip  [i] = - 2.*M_PI * g2[i];
     }
   q2[0] = qc * (1. + epsa*epsa * (H2c*H2c + V2c*V2c));
 
+  // ........................
+  // Calculate magnetic shear
+  // ........................
+  for (int i = 0; i <= Nr; i++)
+    {
+      s[i] = qq[i] /q2[i];
+    }
+  
   // ....................................
   // Calculate target edge magnetic shear
   // ....................................
-  double sum = 1.5 - 2.*HPfunc(1,Nr) + HPfunc(1,Nr)*HPfunc(1,Nr);
-  for (int n = 2; n <= Ns; n++)
-    sum +=
-      + HPfunc(n,Nr)*HPfunc(n,Nr) + 2.*double(n*n-1)*HPfunc(n,Nr)*HHfunc(n,Nr) - double(n*n-1)*HHfunc(n,Nr)*HHfunc(n,Nr)
-      + VPfunc(n,Nr)*VPfunc(n,Nr) + 2.*double(n*n-1)*VPfunc(n,Nr)*VVfunc(n,Nr) - double(n*n-1)*VVfunc(n,Nr)*VVfunc(n,Nr);
-  double sa = 2. + epsa*epsa*sum * q0[Nr]/q2[Nr];
-
-  // .......................................
-  // Calculate s = r q'/q and s2 = r^2 q''/q
-  // .......................................
+  double sum  = 1.5 - 2. * HPfunc(1, Nr) + HPfunc(1, Nr) * HPfunc(1, Nr);
+   for (int n = 2; n <= Ns; n++)
+    {
+      sum +=
+	+ HPfunc(n, Nr) * HPfunc(n, Nr) + 2. * double (n*n - 1) * HPfunc(n, Nr) * HHfunc(n, Nr) - double (n*n - 1) * HHfunc(n, Nr) * HHfunc(n, Nr)
+	+ VPfunc(n, Nr) * VPfunc(n, Nr) + 2. * double (n*n - 1) * VPfunc(n, Nr) * VVfunc(n, Nr) - double (n*n - 1) * VVfunc(n, Nr) * VVfunc(n, Nr);
+    }
+   double sa = 2. + epsa*epsa * sum * q0[Nr] /q2[Nr];
+   
+  // ........................
+  // Calculate s2 = r^2 q''/q
+  // ........................
   double hh = 1. /double(Nr);
   for (int i = 1; i < Nr; i++)
     qqq[i] = rr[i] * (qq[i+1] - qq[i-1]) /2./hh;
@@ -498,7 +662,6 @@ void Equilibrium::Solve ()
 
   for (int i = 0; i <= Nr; i++)
     {
-      s [i] = qq[i] /q2[i];
       s2[i] = (qqq[i] - qq[i]) /q2[i];
     }
 
@@ -526,6 +689,7 @@ void Equilibrium::Solve ()
 
   r     = eps;
   h     = h0;
+  count = 0;
   y2[0] = 0.;
   y2[1] = 0.;
   y2[2] = 0.;
@@ -539,10 +703,9 @@ void Equilibrium::Solve ()
 
   double li    = 2.*y2[0] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
   double betat = 2. * epsa*epsa * y2[1] /y2[2];
-  double betap = 2. * y2[1] /y2[2] /ff[Nr]/ff[Nr] /ggr2[Nr];
+  double betap = 2. * y2[1] /y2[0];
   double betaN = 20. * betat /epsa /ff[Nr] /ggr2[Nr];
 
-  printf ("\n");
   printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It = %10.3e\n",
 	  q2[0], q0[Nr], q2[Nr], Ip[Nr], It[Nr]);
   printf ("li = %10.3e betat = %10.3e betap = %10.3e betaN = %10.3e\n",
@@ -553,18 +716,18 @@ void Equilibrium::Solve ()
   // ...........................
   for (int i = 1; i <= Nr; i++)
     {
-      double sum1 = 1.5 * HPfunc(1,i)*HPfunc(1,i);
-      double sum2 = - (1. - s[i]) * (HPfunc(1,i)*HHfunc(1,i) /rr[i] + (1./3.) * HHfunc(1,i)*HHfunc(1,i) /rr[i]/rr[i]);
+      double sum1 = 1.5 * HPfunc(1, i) * HPfunc(1, i);
+      double sum2 = - (1. - s[i]) * (HPfunc(1, i) * HHfunc(1, i) /rr[i] + (1./3.) * HHfunc(1, i) * HHfunc(1, i) /rr[i]/rr[i]);
  
       for (int n = 2; n <= Ns; n++)
 	{
-	  sum1 += (               3. * (HPfunc(n,i)*HPfunc(n,i) + VPfunc(n,i)*VPfunc(n,i))
-		     - double(n*n-1) * (HHfunc(n,i)*HHfunc(n,i) + VVfunc(n,i)*VVfunc(n,i)) /rr[i]/rr[i])/2.;
-	  sum2 += 2. * double(n*n-1) * (+ HPfunc(n,i)*HPfunc(n,i) + VPfunc(n,i)*VPfunc(n,i)
-					- (11./3.) * (HPfunc(n,i)*HHfunc(n,i) + VPfunc(n,i)*VVfunc(n,i)) /rr[i]
-					+ double(n*n) * (HHfunc(n,i)*HHfunc(n,i) + VVfunc(n,i)*VVfunc(n,i)) /rr[i]/rr[i])
-	    - (1. - s[i]) * (            (HPfunc(n,i)*HHfunc(n,i) + VPfunc(n,i)*VVfunc(n,i)) /rr[i]
-			     + (1./3.) * (HHfunc(n,i)*HHfunc(n,i) + VVfunc(n,i)*VVfunc(n,i)) /rr[i]/rr[i]);
+	  sum1 += (                  3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
+		     - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i])/2.;
+	  sum2 += 2. * double (n*n - 1) * (+ HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)
+					- (11./3.) * (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
+					+ double (n*n) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i)*VVfunc(n, i)) /rr[i]/rr[i])
+	    - (1. - s[i]) * (            (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
+			     + (1./3.) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i]);
 	}
 
       S1[i] = sum1;
@@ -579,17 +742,17 @@ void Equilibrium::Solve ()
   for (int i = 0; i <= Nr; i++)
     {
       P1[i]  = (2. - s[i]) /q2[i];
-      P2[i]  = (- 3.*s[i] + 2.*s[i]*s[i] - s2[i]) /q2[i];
+      P2[i]  = (- 3. * s[i] + 2. * s[i]*s[i] - s2[i]) /q2[i];
       P3a[i] =
-        + rr[i]*rr[i]  * (2. - s[i]) /q2[i]/q2[i]/q2[i]
-	+ (s[i]/q2[i]) * (3.*rr[i]*rr[i]/4. - HHfunc(1,i) - S1[i])
-	- (2./q2[i])   * (3.*rr[i]*rr[i]/2. - HHfunc(1,i) - rr[i]*HPfunc(1,i) - 2.*S1[i]/3.);
+        + rr[i]*rr[i]   * (2. - s[i]) /q2[i]/q2[i]/q2[i]
+	+ (s[i] /q2[i]) * (3. * rr[i]*rr[i] /4. - HHfunc(1, i) - S1[i])
+	- (2.   /q2[i]) * (3. * rr[i]*rr[i] /2. - HHfunc(1, i) - rr[i] * HPfunc(1, i) - 2. * S1[i] /3.);
     }
   P1[0] = P1[1];
 
   for (int i = 1; i < Nr; i++)
     {
-      P3[i] = 2.*rr[i]*pp[i]*(2. - s[i]) + q2[i] * rr[i] * (P3a[i+1] - P3a[i-1])/2./hh - S2[i];
+      P3[i] = 2. * rr[i] * pp[i] * (2. - s[i]) + q2[i] * rr[i] * (P3a[i+1] - P3a[i-1]) /2./hh - S2[i];
     }
   P3[0]  = P3[1]    - (P3[2]    - P3[1]);
   P3[Nr] = P3[Nr-1] + (P3[Nr-1] - P3[Nr-2]);
@@ -597,19 +760,20 @@ void Equilibrium::Solve ()
   // ...................
   // Calculate G1 and G2
   // ...................
-  double G1 = - 0.75*HHfunc(1,Nr) - 0.25*HPfunc(1,Nr) + 0.5*HPfunc(1,Nr)*HHfunc(1,Nr);
-  double G2 = - 0.25*HPfunc(1,Nr) + 0.25*(HPfunc(1,Nr)*HPfunc(1,Nr) + 0.5*HPfunc(1,Nr)*HHfunc(1,Nr));
+  double G1 = - 0.75 * HHfunc(1, Nr) - 0.25 * HPfunc(1, Nr) + 0.5 * HPfunc(1, Nr) * HHfunc(1, Nr);
+  double G2 = - 0.25 * HPfunc(1, Nr) + 0.25 * (HPfunc(1, Nr) * HPfunc(1, Nr) + 0.5 * HPfunc(1, Nr) * HHfunc(1, Nr));
   for (int n = 2; n <= Ns; n++)
     {
-      G1 += 0.5 * (HPfunc(n,Nr)*HHfunc(n,Nr) + VPfunc(n,Nr)*VVfunc(n,Nr));
+      G1 += 0.5 * (HPfunc(n, Nr) * HHfunc(n, Nr) + VPfunc(n, Nr) * VVfunc(n, Nr));
       G2 +=
-	+ 0.25 * (HPfunc(n,Nr)*HPfunc(n,Nr) + 2.*HPfunc(n,Nr)*HHfunc(n,Nr) - double(n*n-1)*HHfunc(n,Nr)*HHfunc(n,Nr)) /double(n*n)
-	+ 0.25 * (VPfunc(n,Nr)*VPfunc(n,Nr) + 2.*VPfunc(n,Nr)*VVfunc(n,Nr) - double(n*n-1)*VVfunc(n,Nr)*VVfunc(n,Nr)) /double(n*n);
+	+ 0.25 * (HPfunc(n, Nr) * HPfunc(n, Nr) + 2. * HPfunc(n, Nr) * HHfunc(n, Nr) - double (n*n - 1) * HHfunc(n, Nr) * HHfunc(n, Nr)) /double (n*n)
+	+ 0.25 * (VPfunc(n, Nr) * VPfunc(n, Nr) + 2. * VPfunc(n, Nr) * VVfunc(n, Nr) - double (n*n - 1) * VVfunc(n, Nr) * VVfunc(n, Nr)) /double (n*n);
     }
   
   // ..........................
   // Output data to netcdf file
   // ..........................
+  printf ("Writing data to netcdf file:\n");
   double* Hndata  = new double[(Ns+1)*(Nr+1)];
   double* Hnpdata = new double[(Ns+1)*(Nr+1)];
   double* Vndata  = new double[(Ns+1)*(Nr+1)];
@@ -753,10 +917,28 @@ void Equilibrium::Solve ()
       Hna_x.putVar (Hna);
       NcVar Vna_x = dataFile.addVar ("Vna", ncDouble, s_d);
       Vna_x.putVar (Vna);
+
+      NcVar Rbound_x = dataFile.addVar ("Rbound", ncDouble, w_d);
+      Rbound_x.putVar (Rbound);
+      NcVar Zbound_x = dataFile.addVar ("Zbound", ncDouble, w_d);
+      Zbound_x.putVar (Zbound);
+      NcVar tbound_x = dataFile.addVar ("tbound", ncDouble, w_d);
+      tbound_x.putVar (tbound);
+      NcVar wbound_x = dataFile.addVar ("wbound", ncDouble, w_d);
+      wbound_x.putVar (wbound);
+      NcVar R2b_x = dataFile.addVar ("R2bound", ncDouble, w_d);
+      R2b_x.putVar (R2b);
+      NcVar grr2b_x = dataFile.addVar ("grr2bound", ncDouble, w_d);
+      grr2b_x.putVar (grr2b);
+      NcVar dRdtheta_x = dataFile.addVar ("dRdtheta", ncDouble, w_d);
+      dRdtheta_x.putVar (dRdtheta);
+      NcVar dZdtheta_x = dataFile.addVar ("dZdtheta", ncDouble, w_d);
+      dZdtheta_x.putVar (dZdtheta);
     }
   catch(NcException& e)
     {
       e.what ();
+      printf ("Error writing Plots/Equilbrium.nc\n");
       exit (1);
     }
   
@@ -805,7 +987,14 @@ void Equilibrium::Solve ()
   delete[] Rdata;  delete[] Zdata;   delete[] Hna;    delete[] Vna;
   delete[] rdata;  delete[] tdata;
 
-  delete[] data;
+  delete[] data;   delete[] Rbound; delete[] Zbound; delete[] tbound; delete[] wbound;
+  delete[] R2b;    delete[] grr2b;
+
+  delete[] Lfunc; gsl_spline_free (Lspline); gsl_interp_accel_free (Lacc);
+
+  delete[] tbound0; delete wbound0;   gsl_spline_free (wspline); gsl_interp_accel_free (wacc);
+  delete[] dRdtheta; delete dZdtheta; gsl_spline_free (Rspline); gsl_interp_accel_free (Racc);
+  gsl_spline_free (Zspline); gsl_interp_accel_free (Zacc);
 }
 
 // ########################
@@ -853,6 +1042,404 @@ double Equilibrium::Getp2pp (double r)
 {
   return - 2. * pc * mu * pow (1. - r*r, mu-1.)
     + 4. * pc * mu * (mu-1.) * r*r * pow (1. - r*r, mu-2.);
+}
+
+// #######################################
+// Function to return relabeling parameter
+// #######################################
+double Equilibrium::GetL (double r)
+{
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double L = r*r*r /8. - r*hn[1] /2.;
+
+  for (int n = 2; n <= Ns; n++)
+    {
+      L += - double (n - 1) * hn[n] * hn[n] /2./r - double (n - 1) * vn[n] * vn[n] /2./r;
+    }
+
+  L += epsa * (r*r * hn[2] /4. - r*r*r * hnp[2] /4.);
+
+  for (int n = 2; n <= Ns; n++)
+    {
+      if (n + 1 <= Ns)
+	L +=
+	  - epsa * double (n - 1) * (hnp[n] * hn[n+1] + hnp[n+1] * hn[n]) * r /2. - double (n - 1) * hn[n] * hn[n+1] /2.
+	  - epsa * double (n - 1) * (vnp[n] * vn[n+1] + vnp[n+1] * vn[n]) * r /2. - double (n - 1) * vn[n] * vn[n+1] /2.;
+    }
+  
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return L;
+}
+
+// ####################
+// Function to return R
+// ####################
+double Equilibrium::GetR (double r, double w)
+{
+  double L = GetL (r);
+  
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double R = 1. - epsa * r * cos (w) + epsa*epsa*epsa * L * cos (w) + epsa*epsa * hn[1];
+
+  for (int n = 2; n <= Ns; n++)
+    R += epsa*epsa * (hn[n] * cos (double (n - 1) * w) + vn[n] * sin (double (n - 1) * w));
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return R;
+}
+
+// #######################
+// Function to return dRdr
+// #######################
+double Equilibrium::GetdRdr (double r, double w)
+{
+  double Lp   = GetL (r);
+  double Lm   = GetL (r - eps);
+  double dLdr = (Lp - Lm) /eps;
+  
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double dRdr = - cos (w) + epsa*epsa * dLdr * cos (w) + epsa * hnp[1];
+
+  for (int n = 2; n <= Ns; n++)
+    dRdr += epsa * (hnp[n] * cos (double (n - 1) * w) + vnp[n] * sin (double (n - 1) * w));
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return dRdr;
+}
+
+// #######################
+// Function to return dRdw
+// #######################
+double Equilibrium::GetdRdw (double r, double w)
+{
+  double L = GetL (r);
+  
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double dRdw = r * sin (w) - epsa*epsa * L * sin (w);
+
+  for (int n = 2; n <= Ns; n++)
+    dRdw += epsa * double (n - 1) * ( - hn[n] * sin (double (n - 1) * w) + vn[n] * cos (double (n - 1) * w));
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return dRdw;
+}
+
+// ####################
+// Function to return Z
+// ####################
+double Equilibrium::GetZ (double r, double w)
+{
+  double L = GetL (r);
+
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double Z = epsa * r * sin (w) - epsa*epsa*epsa * L * sin (w);
+
+  for (int n = 2; n <= Ns; n++)
+    Z += epsa*epsa * (hn[n] * sin (double (n - 1) * w) - vn[n] * cos (double (n - 1) * w));
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return Z;
+}
+
+// #######################
+// Function to return dZdr
+// #######################
+double Equilibrium::GetdZdr (double r, double w)
+{
+  double Lp   = GetL (r);
+  double Lm   = GetL (r - eps);
+  double dLdr = (Lp - Lm) /eps;
+
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double dZdr = sin (w) - epsa*epsa * dLdr * sin (w);
+
+  for (int n = 2; n <= Ns; n++)
+    dZdr += epsa * (hnp[n] * sin (double (n - 1) * w) - vnp[n] * cos (double (n - 1) * w));
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return dZdr;
+}
+
+// #######################
+// Function to return dZdw
+// #######################
+double Equilibrium::GetdZdw (double r, double w)
+{
+  double L = GetL (r);
+
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double dZdw = r * cos (w) - epsa*epsa * L * cos (w);
+
+  for (int n = 2; n <= Ns; n++)
+    dZdw += epsa * double (n - 1) * (hn[n] * cos (double (n - 1) * w) + vn[n] * sin (double (n - 1) * w));
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return dZdw;
+}
+
+// #####################
+// Function to return R2
+// #####################
+double Equilibrium::GetR2 (double r, double t)
+{
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double R2 = 1. - 2. * epsa * r * cos (t) - epsa*epsa * (r*r/2. - r * hnp[1] - 2. * hn[1]);
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return R2;
+}
+
+// ##############################
+// Function to return |nabla r|^2
+// ##############################
+double Equilibrium::Getgrr2 (double r, double t)
+{
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double grr2 = 1. + 2. * epsa * hnp[1] * cos (t) + epsa*epsa * (0.75*r*r - hn[1] + hnp[1]*hnp[1] /2.);
+
+  for (int n = 2; n <= Ns; n++)
+    {
+      grr2 += 2.*epsa * (hnp[n] * cos (double (n) * t) + vnp[n] * sin (double (n) * t))
+	+ epsa*epsa * (  (hnp[n]*hnp[n] + double (n*n - 1) * hn[n]*hn[n] /r/r) /2.
+		       + (vnp[n]*vnp[n] + double (n*n - 1) * vn[n]*vn[n] /r/r) /2.);
+    }
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return grr2;
+}
+
+// ##################################################
+// Function to return w-theta transformation function
+// ##################################################
+double Equilibrium::Gettfun (double r, double w)
+{
+  // .....................
+  // Get shaping functions
+  // .....................
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  // .....................
+  // Lowest-order function
+  // .....................
+  double tfun = epsa * r * sin(w) - epsa * hnp[1] * sin(w);
+
+  for (int n = 2; n <= Ns; n++)
+    {
+      tfun -= epsa * (hnp[n] - double (n - 1) * hn[n] /r) * sin (double (n) * w) /double (n);
+      tfun += epsa * (vnp[n] - double (n - 1) * vn[n] /r) * cos (double (n) * w) /double (n);
+    }
+
+  // .......................
+  // Higher-order correction
+  // .......................
+  double* sums = new double[Ns+1];
+  
+  for (int n = 1; n <= Ns; n++)
+    {
+      sums[n] = 0.;
+      
+      for (int np = 2; np <= Ns; np++)
+	{
+	  if (np + n <= Ns)
+	    sums[n] +=
+	      + (double (np + n - 1) /double (n)) * (hnp[np]   * hn[np+n] + vnp[np]   * vn[np+n]) /r
+	      + (double (np     - 1) /double (n)) * (hnp[np+n] * hn[np]   + vnp[np+n] * vn[np])   /r;
+	}
+    }
+  
+  if (Ns >= 2)
+    tfun += epsa*epsa * (vn[2] /2. + r*vnp[2] /2. + hnp[1]*vn[2] /r) * cos (w);
+  if (Ns >= 3)
+    tfun += epsa*epsa * (            r*vnp[3] /4. + hnp[1]*vn[3] /r) * cos (2. * w);
+  
+  for (int n = 3; n <= Ns; n++)
+    {
+      if (n + 1 <= Ns)
+	tfun +=
+	  + epsa*epsa * (( - double (n - 2) * (vn[n-1] + vnp[n+1])
+			   + r * (vnp[n-1] + vnp[n+1])) /(2. * double (n)) + hnp[1] * vn[n+1] /r) * cos (double (n) * w);
+      else
+	tfun +=
+	  + epsa*epsa * ((- double (n - 2) * vn[n-1] + r * vnp[n-1]) /(2. * double (n))) * cos (double (n) * w);
+    }
+  
+  if (Ns >= 2)
+    tfun  -= epsa*epsa * (hn[2] /2. + r * hnp[2] /2. + hnp[1] * hn[2] /r + sums[1]) * sin (w);
+  
+  tfun += epsa*epsa * (r*r /4. - r*hnp[1] /4.) * sin (2. * w);
+  
+  if (Ns >= 3)
+    tfun -= epsa*epsa * (r*hnp[3] /4. + hnp[1]*hn[3] /r + sums[2]) * sin (2. * w);
+  
+  for (int n = 3; n <= Ns; n++)
+    {
+      tfun   -= epsa*epsa * ( - (double (n - 2) /double (2*n)) * hn[n-1] + r * hnp[n-1] /double (2*n) + sums[n]) * sin (double (n) * w);
+      
+      if (n + 1 >= Ns)
+	tfun -= epsa*epsa * ( - (double (n - 2) /double (2*n)) * hn[n+1] + r * hnp[n+1] /double (2*n) + hnp[1] * hnp[n+1] /r) * sin (double (n) * w);
+    }
+  
+  delete[] sums; delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return tfun;
 }
 
 // ###############################################################
@@ -971,13 +1558,29 @@ void Equilibrium::Rhs (double r, double* y, double* dydr)
       // ..........................................
 
       double p2  = Getp2 (r);
+      double g2  = gsl_spline_eval (g2spline,  r, g2acc);
       double f   = gsl_spline_eval (fspline,   r, facc);
       double gr2 = gsl_spline_eval (gr2spline, r, gr2acc);
       double R2  = gsl_spline_eval (R2spline,  r, R2acc);
 
       dydr[0] = f*f * gr2 /r;
       dydr[1] = r * p2 * R2;
-      dydr[2] = r * R2;
+      dydr[2] = r * (1. + eps*eps * g2) * (1. + eps*eps * g2);
+    }
+  else if (rhs_chooser == 3)
+    {
+      // ........................................
+      // Right-hand side for boundary calculation
+      // ........................................
+
+      double rb    = 1.;
+      double R     = GetR    (rb, r);
+      double dRdr  = GetdRdr (rb, r);
+      double dRdw  = GetdRdw (rb, r);
+      double dZdr  = GetdZdr (rb, r);
+      double dZdw  = GetdZdw (rb, r);
+
+      dydr[0] = (dRdw * dZdr - dRdr * dZdw) /R;
     }
  }
 
@@ -1021,7 +1624,7 @@ void Equilibrium::CashKarp45Adaptive (int neqns, double& x, double* y, double& h
   for (int i = 0; i < neqns; i++)
     y0[i] = y[i];
 
-  // Take Cash-Kaprt RK4/RK5 step 
+  // Take Cash-Kapt RK4/RK5 step 
   CashKarp45Fixed (neqns, x, y, Err, h);
 
   // Calculate truncation error

@@ -54,7 +54,7 @@ void TJ::ODESolve ()
   double rr = EPS;
   LaunchAxis (rr, YY);
 
-  printf ("Initializing solution vectors at magnetic axis:         r = %11.4e: Torque test = %11.4e\n", rr, TorqueTest (rr, YY));
+  printf ("Initializing solution vectors at magnetic axis:             r = %11.4e: Torque test = %11.4e\n", rr, TorqueTest (rr, YY));
 
   // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // Integrate solution vectors launched from magnetic axis to first rational surface
@@ -66,10 +66,10 @@ void TJ::ODESolve ()
   // +++++++++++++++++++++++++++++++++++++++++++++++++++
   // Jump solution vectors across first rational surface
   // +++++++++++++++++++++++++++++++++++++++++++++++++++
-  printf ("Integrating solution vectors to rational surface:       r = %11.4e: Torque test = %11.4e\n", rr, TorqueTest (rr, YY));
+  printf ("Integrating solution vectors to rational surface (%3d/%3d): r = %11.4e: Torque test = %11.4e\n", 1, nres, rr, TorqueTest (rr, YY));
   JumpRational   (0, rr, YY);
   LaunchRational (0, rr, YY);
-  printf ("Integrating solution vectors to rational surface:       r = %11.4e: Torque test = %11.4e\n", rr, TorqueTest (rr, YY));
+  printf ("Integrating solution vectors to rational surface (%3d/%3d): r = %11.4e: Torque test = %11.4e\n", 1, nres, rr, TorqueTest (rr, YY));
 
   // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // Integrate solution vectors across other rational surfaces
@@ -83,10 +83,10 @@ void TJ::ODESolve ()
       // ++++++++++++++++++++++++++++++++++++++++++++++++++++
       // Jump solution vectors across other rational surfaces
       // ++++++++++++++++++++++++++++++++++++++++++++++++++++
-      printf ("Integrating solution vectors to rational surface:       r = %11.4e: Torque test = %11.4e\n", rr, TorqueTest (rr, YY));
+      printf ("Integrating solution vectors to rational surface (%3d/%3d): r = %11.4e: Torque test = %11.4e\n", j+1, nres, rr, TorqueTest (rr, YY));
       JumpRational   (j, rr, YY);
       LaunchRational (j, rr, YY);
-      printf ("Integrating solution vectors to rational surface:       r = %11.4e: Torque test = %11.4e\n", rr, TorqueTest (rr, YY));
+      printf ("Integrating solution vectors to rational surface (%3d/%3d): r = %11.4e: Torque test = %11.4e\n", j+1, nres, rr, TorqueTest (rr, YY));
     }
 
   // +++++++++++++++++++++++++++++++++++++++++++++
@@ -96,7 +96,7 @@ void TJ::ODESolve ()
   nf = (NFIX == 0) ? 0 : int ((rx - rres[nres-1]) * double (NFIX));
   SegmentFixup (rr, rx, nf, YY);
   
-  printf ("Integrating solution vectors to plasma boundary:        r = %11.4e: Torque test = %11.4e\n", rx, TorqueTest (rx, YY));
+  printf ("Integrating solution vectors to plasma boundary:            r = %11.4e: Torque test = %11.4e\n", rx, TorqueTest (rx, YY));
 
   int index = NDIAG - 1;
 
@@ -313,7 +313,7 @@ void TJ::SegmentFixup (double& r, double rx, int nf, Array<complex<double>,2> YY
 	RE = exp(log(rw) + (log(rx) - log(rw)) * double(l) /double(nf));
       
       // Integrate solution vectors to next fixup radius
-      printf ("Integrating solution vectors to fixup radius (%3d/%3d): r = %11.4e", l, nf, RE);
+      printf ("Integrating solution vectors to fixup radius (%3d/%3d):     r = %11.4e", l, nf, RE);
       Segment (r, RE, YY);
       
       // Fixup solution vector
@@ -337,6 +337,9 @@ void TJ::Segment (double& r, double rx, Array<complex<double>,2> YY)
   complex<double>* Y   = new complex<double>[neqns];
   complex<double>* err = new complex<double>[neqns];
 
+  h     = h0;
+  count = 0;
+  
   int index = 0;
   for (int i = 0; i < NDIAG; i++)
     if (Rgrid[i] < r)

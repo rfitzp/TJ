@@ -1,15 +1,15 @@
 &EQUILIBRIUM_CONTROL
  QC   = 1.2
  NU   = 3.5
- PC   = 1.0
+ PC   = 0.1
  MU   = 3.0
- EPSA = 0.04
+ EPSA = 0.1
 
  EPS  = 1.e-4
  NS   = 20
  NR   = 1000
  NF   = 500
- NW   = 500
+ NW   = 1000
 
  ACC  = 1.e-12
  H0   = 1.e-4
@@ -18,25 +18,26 @@
 /
 
 &TJ_CONTROL
- NTOR  = 1
- MMIN  = -10
- MMAX  = 10
- FREE  = 1
+ NTOR    = 1
+ MMIN    = -5
+ MMAX    = 15
 
- EPS   = 1.e-4
- DEL   = 1.e-8
- NFIX  = 160
- NDIAG = 1024
+ FREE    = 1
+ SYMM    = 1
+
+ EPS     = 1.e-4
+ DEL     = 1.e-8
+ NFIX    = 160
+ NDIAG   = 1024
 
  NULC    = 2.e-9
  ITERMAX = 10
 
- ACC  = 1.e-12
- H0   = 1.e-4
- HMIN = 1.e-10
- HMAX = 1.e-2
+ ACC     = 1.e-12
+ H0      = 1.e-4
+ HMIN    = 1.e-10
+ HMAX    = 1.e-2
 
- EPSF = 1.e-4
- POWR = 1.
+ EPSF    = 1.e-4
 /
  

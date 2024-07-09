@@ -1,0 +1,58 @@
+
+Relabeling parameter:
+
+res2 := 0
+
+res3 := 0
+
+Straight field-line flux-surface label:
+
+rst := abs(r)
+
+Secular variation residual:
+
+rest := 0
+
+theta := tt0 + eps*tt1 + eps**2*tt2
+
+tt0_residual := 0
+
+tt1_residual := 0
+
+tt2_c1_residual := (4*df(v6,r)*h5 - 5*df(v5,r)*h6 + 3*df(v5,r)*h4 - 4*df(v4,r)*h5 + 2*df(v4,r)*h3 - 3*df(v3,r)*h4
+
+                       + df(v3,r)*h2 - 2*df(v2,r)*h3 - 4*df(h6,r)*v5 + 5*df(h5,r)*v6 - 3*df(h5,r)*v4 + 4*df(h4,r)*v5
+
+                       - 2*df(h4,r)*v3 + 3*df(h3,r)*v4 - df(h3,r)*v2 + 2*df(h2,r)*v3)/r
+
+tt2_c2_residual := (3*df(v6,r)*h4 + 2*df(v5,r)*h3 - 5*df(v4,r)*h6 + df(v4,r)*h2 - 4*df(v3,r)*h5 - 3*df(v2,r)*h4
+
+                       - 3*df(h6,r)*v4 - 2*df(h5,r)*v3 + 5*df(h4,r)*v6 - df(h4,r)*v2 + 4*df(h3,r)*v5 + 3*df(h2,r)*v4)
+
+                   /(2*r)
+
+tt2_c3_residual := (2*df(v6,r)*h3 + df(v5,r)*h2 - 5*df(v3,r)*h6 - 4*df(v2,r)*h5 - 2*df(h6,r)*v3 - df(h5,r)*v2
+
+                       + 5*df(h3,r)*v6 + 4*df(h2,r)*v5)/(3*r)
+
+tt2_c4_residual := (df(v6,r)*h2 - 5*df(v2,r)*h6 - df(h6,r)*v2 + 5*df(h2,r)*v6)/(4*r)
+
+tt2_c5_residual := 0
+
+tt2_c6_residual := 0
+
+tt2_c7_residual := 0
+
+tt2_s1_residual := 0
+
+tt2_s2_residual := 0
+
+tt2_s3_residual := 0
+
+tt2_s4_residual := 0
+
+tt2_s5_residual := 0
+
+tt2_s6_residual := 0
+
+tt2_s7_residual := 0

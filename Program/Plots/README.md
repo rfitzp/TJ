@@ -11,19 +11,21 @@
 	- Shape.py       - Plots values of shaping functions at plasma boundary
 	- Shaping.py     - Plots shaping functions versus r
 	- Profile.py     - Plots shaping function, S_1, and profiles function, P_1, P_2, P_3, versus radius, r
+	- Boundary.py    - Plots data relating to plasma boundary
 
 ## Vacuum matrices:
 
-	- Matrix.py      - Plots L_m^m', M_m^m', N_m^m', and P_m^m' coupling matrices versus r
-	- VacRes.py      - Visualizes vacuum solution residual matrices A_m^m', B_m^m', and C_m^m'
-	- Hmat.py        - Visualizes homogeneous vacuum response matrix, H_m^m'
-	- Gmat.py        - Visualizes inhomogeneous vacuum response matrix, G_m^m'
+        - Vacuum.py      - Visualizes vacuum matrices P_m^m' and R_m^m
+	- VacRes.py      - Visualizes vacuum solution residual matrix A_m^m'
+	- Hmat.py        - Visualizes vacuum response matrix, H_m^m'
+	- Metric.py      - Plots metric data at plasma boundary
 
 ## ODE Solution:
 
-	- h.py           - Plots adaptive ode integration step-length, h, and truncation error, err, versus radius, r
+	- Matrix.py      - Plots L_m^m', M_m^m', N_m^m', and P_m^m' coupling matrices versus r
 	- Solutions.py   - Plots psi and Z components of m-dominant solution vector versus r
-	- Solution.py    - Plots mth harmonic of psi and Z components of m;-dominant solution vector versus r
+	- Solution.py    - Plots mth harmonic of psi and Z components of m-dominant solution vector versus r
+	- h.py           - Plots adaptive ode integration step-length, h, and truncation error, err, versus radius, r
 
 ## Tearing eigenfunctions:
 
@@ -40,6 +42,3 @@
 	- Tfull.py       - Plots angular momentum flux associated with pair of fully reconnected solutions versus r
 	- Tunrc.py       - Plots angular momentum flux associated with pair of unreconnected solutions versus r
 
-## Resonant magnetic perturbation response:
-
-   	 - Chi.py        - Plots resonant magnetic perturbation response vector versus poloidal mode number associated with given rational surface

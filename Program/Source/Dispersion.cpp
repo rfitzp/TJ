@@ -23,9 +23,6 @@ void TJ::FindDispersion ()
   Omat .resize(J,    nres);
   Fmat .resize(nres, nres);
   Emat .resize(nres, nres);
-  Ximat.resize(J,    J);
-  Upmat.resize(nres, J);
-  Chmat.resize(nres, J);
   Psif .resize(J,    nres, NDIAG);
   Zf   .resize(J,    nres, NDIAG);
   Tf   .resize(nres, NDIAG);
@@ -79,8 +76,9 @@ void TJ::FindDispersion ()
 	  Xmat(j, jp) = complex<double> (0., 0.);
 
 	for (int k = 0; k < J; k++)
-	  Xmat(j, jp) -= Hsym(j, k) * Psia(k, jp);
+	  Xmat(j, jp) -= Hmat(j, k) * Psia(k, jp);
       }
+
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < nres; jp++)
       {
@@ -90,7 +88,7 @@ void TJ::FindDispersion ()
 	  Ymat(j, jp) = complex<double> (0., 0.);
 
 	for (int k = 0; k < J; k++)
-	  Ymat(j, jp) += Hsym(j, k) * Psis(k, jp);
+	  Ymat(j, jp) += Hmat(j, k) * Psis(k, jp);
       }
 
   // ......................
@@ -129,7 +127,7 @@ void TJ::FindDispersion ()
     }
 
   // ..................................................
-  // Calculate fully reconnected tearing eigenfunctions
+  // Calculate fully-reconnected tearing eigenfunctions
   // ..................................................
   for (int i = 0; i < NDIAG; i++)
     {
@@ -149,7 +147,7 @@ void TJ::FindDispersion ()
     }
 
   // ..................................................................
-  // Calculate torques associated with fully reconnected eigenfunctions
+  // Calculate torques associated with fully-reconnected eigenfunctions
   // ..................................................................
   for (int i = 0; i < NDIAG; i++)
     for (int k = 0; k < nres; k++)
@@ -171,7 +169,7 @@ void TJ::FindDispersion ()
       }
 
   // ...........................................................................
-  // Calculate torques associated with pairs of fully reconnected eigenfunctions
+  // Calculate torques associated with pairs of fully-reconnected eigenfunctions
   // ...........................................................................
   GetTorqueFull ();
 
@@ -263,43 +261,14 @@ void TJ::FindDispersion ()
   // Calculate unreconnected eigenfunction visualization data
   // ........................................................
   VisualizeEigenfunctions ();
-
-  // ...................
-  // Calculate Xi-matrix
-  // ...................
-  SolveLinearSystem (Xmat, Ximat, Gmat);
-
-  // ........................
-  // Calculate Upsilon-matrix
-  // ........................
-  for (int j = 0; j < nres; j++)
-    for (int jp = 0; jp < J; jp++)
-      {
-	Upmat(j, jp) = complex<double> (0., 0.);
-	
-	for (int k = 0; k < J; k++)
-	  Upmat(j, jp) += Pia(j, k) * Ximat(k, jp);
-      }
-  
-  // ....................
-  // Calculate Chi-matrix
-  // ....................
-  for (int j = 0; j < nres; j++)
-    for (int jp = 0; jp < J; jp++)
-      {
-	Chmat(j, jp) = complex<double> (0., 0.);
-	
-	for (int k = 0; k < nres; k++)
-	  Chmat(j, jp) += Emat(j, k) * Upmat(k, jp);
-      }
 }
 
 // #######################################################################################################
-// Function to calculate angular momentum flux associated with pairs of fully reconnected solution vectors
+// Function to calculate angular momentum flux associated with pairs of fully-reconnected solution vectors
 // #######################################################################################################
 void TJ::GetTorqueFull ()
 {
-  complex<double> I   = complex<double> (0., 1.);
+  complex<double> I = complex<double> (0., 1.);
 
   for (int k = 0; k < nres; k++)
     for (int kp = 0; kp < nres; kp++)
@@ -366,10 +335,10 @@ void TJ::VisualizeEigenfunctions ()
   // ...............
   // Allocate memory
   // ...............
-  Psiuf.resize(J, nres, Nf);
-  Zuf  .resize(J, nres, Nf);
-  Psiuv.resize(nres, Nf, Nw);
-  Zuv  .resize(nres, Nf, Nw);
+  Psiuf.resize(J,    nres, Nf);
+  Zuf  .resize(J,    nres, Nf);
+  Psiuv.resize(nres, Nf,   Nw+1);
+  Zuv  .resize(nres, Nf,   Nw+1);
 
   // ..........................................................................................
   // Interpolate unreconnected eigenfunction data from diagnostic to visulalization radial grid
@@ -407,7 +376,7 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline_init (z_r_spline,   Rgrid, z_r,   NDIAG);
 	gsl_spline_init (z_i_spline,   Rgrid, z_i,   NDIAG);
 
-	// Interpolate data onto visulalization grid
+	// Interpolate data onto visualization grid
 	for (int i = 0; i < Nf; i++)
 	  {
 	    double x = gsl_spline_eval (psi_r_spline, rf[i], psi_r_acc);
@@ -442,7 +411,7 @@ void TJ::VisualizeEigenfunctions ()
 
   for (int k = 0; k < nres; k++)
     for (int i = 0; i < Nf; i++)
-      for (int l = 0; l < Nw; l++)
+      for (int l = 0; l <= Nw; l++)
 	{
 	  double theta = thvals(i, l);
 	  double psi_r = 0., psi_i = 0., z_r = 0., z_i = 0.;
@@ -462,24 +431,8 @@ void TJ::VisualizeEigenfunctions ()
 		}
 	    }
 
-	  Psiuv(k, i, l) = complex<double> (ReduceRange(psi_r), ReduceRange(psi_i));
-	  Zuv  (k, i, l) = complex<double> (ReduceRange(z_r),   ReduceRange(z_i));
+	  Psiuv(k, i, l) = complex<double> (psi_r, psi_i);
+	  Zuv  (k, i, l) = complex<double> (z_r,   z_i);
 	}
 }
 
-// ############################################
-// Function to reduce dynamic range of quantity
-// ############################################
-double TJ::ReduceRange (double x)
-{
-  double y;
-
-  if (x > 0.)
-    y =    pow (x, 1./POWR);
-  else if (x < 0.)
-    y =  - pow (fabs(x), 1./POWR);
-  else
-    y = 0.;
-
-  return y;
-}
