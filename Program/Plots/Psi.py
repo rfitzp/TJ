@@ -33,8 +33,6 @@ ds1   = nc.Dataset(fn1)
 rres  = ds1['rres']
 psi_r = ds1['Psi_unrc_eig_r']
 psi_i = ds1['Psi_unrc_eig_i']
-z_r   = ds1['Z_unrc_eig_r']
-z_i   = ds1['Z_unrc_eig_i']
 
 fig = plt.figure(figsize=(12.0, 6.0))
 plt.rc('xtick', labelsize=12) 

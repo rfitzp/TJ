@@ -55,7 +55,7 @@ plt.contour(RR, ZZ, rr, rres, colors='red', linewidths = 1.)
 plt.plot([1.], [0.], marker='o', markersize=2, color="red")
 
 plt.xlabel(r'$R/R_0$', fontsize="20")
-plt.ylabel(r'$Z$',  fontsize="20")
+plt.ylabel(r'$Z/R_0$',  fontsize="20")
 
 plt.tight_layout()
 

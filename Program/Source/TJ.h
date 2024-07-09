@@ -54,7 +54,7 @@ using namespace arma;
 // Namelist reading function
 extern "C" void NameListTJ (int* NTOR, int* MMIN, int* MMAX, 
 			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX,
-			    int* FREE, int* TVAC, int* SYMM, 
+			    int* FREE, int* SYMM, 
 			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF);
 
 // ############
@@ -78,7 +78,6 @@ class TJ
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from namelist)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from namelist)
   int    FREE;    // Flag for free/fixed boundary calculation (read from namelist)
-  int    TVAC;    // Flag for improved vacuum calculation (read from namelist)
   int    SYMM;    // Flag for symmeterization of H-matrix (read from namelist)
 
   double EPSF;    // Step-length for finite difference determination of derivative
@@ -182,20 +181,14 @@ class TJ
   double                   G1;    // Vacuum solution parameter
   double                   G2;    // Vacuum solution parameter
   Array<complex<double>,2> Pvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Qvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Rvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Svac;  // Vacuum solution matrix
   Array<complex<double>,2> Pdag;  // Hermitian conjugate of Pvac
-  Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rvac
   Array<complex<double>,2> Pinv;  // Inverse of Pvac
+  Array<complex<double>,2> Rvac;  // Vacuum solution matrix
+  Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rvac
   Array<complex<double>,2> Avac;  // Vacuum residual matrix
-  Array<complex<double>,2> Bvac;  // Vacuum residual matrix
-  Array<complex<double>,2> Cvac;  // Vacuum residual matrix
-  Array<complex<double>,2> Hinv;  // Inverse of vacuum homogeneous response matrix
   Array<complex<double>,2> Hmat;  // Vacuum homogeneous response matrix
   Array<complex<double>,2> Hdag;  // Hermitian conjugate of Hmat
-  Array<complex<double>,2> Hsym;  // Symmeterized Hmat
-  Array<complex<double>,2> Gmat;  // Vacuum inhomogeneous response matrix
+  Array<complex<double>,2> Hinv;  // Inverse of vacuum homogeneous response matrix
 
   // -----------------
   // ODE Solution data
@@ -223,10 +216,6 @@ class TJ
   Array<complex<double>,2> Omat;  // Omega-matrix
   Array<complex<double>,2> Fmat;  // Inductance matrix
   Array<complex<double>,2> Emat;  // Tearing stability matrix
-  Array<complex<double>,2> Ximat; // Xi-matrix
-  Array<complex<double>,2> Upmat; // Upsilon-matrix
-  Array<complex<double>,2> Chmat; // Chi-matrix
-  Array<complex<double>,2> Imat;  // Plasma RMP response matrix
   Array<complex<double>,3> Psif;  // Psi components of fully reconnected tearing eigenfunctions
   Array<complex<double>,3> Zf;    // Z componnents of fully reconnected tearing eigenfunctions
   Array<complex<double>,3> Psiu;  // Psi components of unreconnected tearing eigenfunctions
@@ -250,16 +239,15 @@ class TJ
   Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visulalization grid
   Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
-  double*                  RV;     // R coodinates of vacuum visualization grid-points
-  double*                  ZV;     // Z coodinates of vacuum visualization grid-points
-  Array<complex<double>,3> Vx;     // Scalar magnetic potentials of resonant magnetic perturbations
 
   // --------------------
   // Plasma boundary data
   // ---------------------
+  double* tbound;    // theta values on plasma boundary
   double* Rbound;    // R values on plasma boundary
   double* Zbound;    // Z values on plasma boundary
-  double* tbound;    // theta values on plasma boundary
+  double* dRdthe;    // dR/dtheta values on plasma boundary
+  double* dZdthe;    // dZ/dtheta values on plasma boundary
   
   // -----------------------
   // Root finding parameters
@@ -424,9 +412,7 @@ class TJ
   void GetTorqueUnrc ();
   // Output visualization data for unreconnected tearing eigenfunctions
   void VisualizeEigenfunctions ();
-  // Output visualization data for resonant magnetic perturbations
-  void VisualizeResonantMagneticPerturbations ();
-  
+   
   // ..................
   // In Interpolate.cpp
   // ..................

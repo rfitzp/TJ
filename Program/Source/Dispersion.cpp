@@ -23,10 +23,6 @@ void TJ::FindDispersion ()
   Omat .resize(J,    nres);
   Fmat .resize(nres, nres);
   Emat .resize(nres, nres);
-  Ximat.resize(J,    J);
-  Upmat.resize(nres, J);
-  Chmat.resize(nres, J);
-  Imat .resize(nres, nres);
   Psif .resize(J,    nres, NDIAG);
   Zf   .resize(J,    nres, NDIAG);
   Tf   .resize(nres, NDIAG);
@@ -265,92 +261,6 @@ void TJ::FindDispersion ()
   // Calculate unreconnected eigenfunction visualization data
   // ........................................................
   VisualizeEigenfunctions ();
-
-  // ...................
-  // Calculate Xi-matrix
-  // ...................
-  SolveLinearSystem (Xmat, Ximat, Gmat);
-
-  // ........................
-  // Calculate Upsilon-matrix
-  // ........................
-  for (int j = 0; j < nres; j++)
-    for (int jp = 0; jp < J; jp++)
-      {
-	Upmat(j, jp) = complex<double> (0., 0.);
-	
-	for (int k = 0; k < J; k++)
-	  Upmat(j, jp) += Pia(j, k) * Ximat(k, jp);
-      }
-  
-  // ....................
-  // Calculate Chi-matrix
-  // ....................
-  for (int j = 0; j < nres; j++)
-    for (int jp = 0; jp < J; jp++)
-      {
-	Chmat(j, jp) = complex<double> (0., 0.);
-	
-	for (int k = 0; k < nres; k++)
-	  Chmat(j, jp) += Emat(j, k) * Upmat(k, jp);
-      }
-
-  // ....................
-  // Normalize Chi-matrix
-  // ....................
-  for (int j = 0; j < nres; j++)
-    {
-      double sum = 0.;
-
-      for (int jp = 0; jp < J; jp++)
-	sum += real (conj (Chmat(j, jp)) * Chmat(j, jp));
-
-      for (int jp = 0; jp < J; jp++)
-	Chmat(j, jp) /= sum;
-    }
-
-  // ..................
-  // Calculate I-matrix
-  // ..................
-  for (int j = 0; j < nres; j++)
-    for (int jp = 0; jp < nres; jp++)
-      {
-	complex<double> sum1 = complex<double> (0., 0.);
-	complex<double> sum2 = complex<double> (0., 0.);
-
-	for (int k = 0; k < J; k++)
-	  {
-	    sum1 += conj (Chmat(jp, k)) * Chmat(j, k);
-	    sum2 += conj (Chmat(j , k)) * Chmat(j, k);
-	  }
-
-	Imat(j, jp) = sum1/sum2;
-      }
-
-  /*
-  // ...............
-  // Output I-matrix
-  // ...............
-  printf ("Re(I):\n");
-  for (int j = 0; j < nres; j++)
-    {
-      for (int jp = 0; jp < nres; jp++)
-	printf ("%10.3e ", real(Imat(j, jp)));
-      printf ("\n");
-    }
-  printf ("Im(I):\n");
-  for (int j = 0; j < nres; j++)
-   {
-      for (int jp = 0; jp < nres; jp++)
-	printf ("%10.3e ", imag(Imat(j, jp)));
-      printf ("\n");
-    }
-  */
-
-  // ...........................................................
-  // Calculate resonant magnetic perturbation visualization data
-  // ...........................................................
-  VisualizeResonantMagneticPerturbations ();
 }
 
 // #######################################################################################################
@@ -358,7 +268,7 @@ void TJ::FindDispersion ()
 // #######################################################################################################
 void TJ::GetTorqueFull ()
 {
-  complex<double> I   = complex<double> (0., 1.);
+  complex<double> I = complex<double> (0., 1.);
 
   for (int k = 0; k < nres; k++)
     for (int kp = 0; kp < nres; kp++)
@@ -524,70 +434,5 @@ void TJ::VisualizeEigenfunctions ()
 	  Psiuv(k, i, l) = complex<double> (psi_r, psi_i);
 	  Zuv  (k, i, l) = complex<double> (z_r,   z_i);
 	}
-}
-
-// #########################################################################
-// Function to output visualization data for resonant magnetic perturbations
-// #########################################################################
-void TJ::VisualizeResonantMagneticPerturbations ()
-{
-  // ................................
-  // Set up vacuum visualization grid
-  // ................................
-  RV = new double[Nf];
-  ZV = new double[Nf];
-
-  double scale = 1.5 * epsa;
-  double Rmin  = 1. - scale;
-  double Rmax  = 1. + scale;
-  double Zmin  = - scale;
-  double Zmax  = + scale;
-
-  for (int i = 0; i < Nf; i++)
-    {
-      RV[i] = Rmin + double (i) * (Rmax - Rmin) /double (Nf - 1);
-      ZV[i] = Zmin + double (i) * (Zmax - Zmin) /double (Nf - 1);
-    }
-
-  // .........................................
-  // Calculate resonant magnetic perturbations
-  // .........................................
-  Vx.resize (nres, Nf, Nf);
-
-  for (int k = 0; k < nres; k++)
-    {
-      for (int i = 0; i < Nf; i++)
-	for (int j = 0; j < Nf; j++)
-	  {
-	    double R = RV[i];
-	    double Z = ZV[j];
-	    
-	    double z = GetCoshMu (R, Z);
-	    if (z > 1.e3)
-	      z = 1.e3;
-	    double eta  = GetEta (R, Z);
-	    double ceta = cos (eta);
-	    
-	    complex<double> sum = complex<double> (0., 0.);
-
-	    for (int jj = 0; jj < J; jj++)
-	      {
-		if (MPOL[jj] == 0)
-		  {
-		    sum += conj(Chmat(k, jj)) * (sqrt(2.) /sqrt(M_PI) /gsl_sf_gamma (0.5 + ntor)) * sqrt (z - ceta) * ToroidalQ (NTOR, 0, z);
-		  }
-		else
-		  {
-		    sum += conj(Chmat(k, jj)) * cos (mpol[jj]*M_PI) 
-		      * (pow (2., fabs (mpol[jj]) + 0.5) * gsl_sf_fact (abs (MPOL[jj]) - 1)
-			 /sqrt(M_PI) /gsl_sf_gamma (fabs (mpol[jj]) + 0.5 + ntor) /pow (epsa, fabs (mpol[jj])))
-		      * sqrt (z - ceta) * ToroidalQ (NTOR, abs (MPOL[jj]), z)
-		      * complex<double> (cos (mpol[jj]*eta), - sin (mpol[jj]*eta));
-		  }
-	      }
-
-	    Vx(k, i, j) = sum;
-	  }
-    }
 }
 

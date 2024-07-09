@@ -61,7 +61,7 @@ plt.axvline (1.5,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 
 plt.xlabel (r'$\theta/\pi$', fontsize = "15")
-plt.ylabel (r'$R^2\,\hat{\nabla} \hat{r}\cdot\hat{\nabla} z$', fontsize="15")
+plt.ylabel (r'${\cal J}\,\,\nabla r\cdot\nabla z$', fontsize="15")
 
 plt.subplot (2, 2, 4)
 
@@ -74,7 +74,7 @@ plt.axvline (1.0,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (1.5,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\theta/\pi$', fontsize = "15")
-plt.ylabel (r'$R^2\,\hat{\nabla} \hat{r}\cdot\hat{\nabla} \eta$', fontsize = "15")
+plt.ylabel (r'${\cal J}\,\,\nabla r\cdot\nabla \eta$', fontsize = "15")
 
 plt.tight_layout()
 

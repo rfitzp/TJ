@@ -78,6 +78,7 @@ double TJ::ToroidalP (int m, int n, double z)
 // accuracy of about 1 in 10^12.
 //
 // Reference: Bateman Manuscript Project, Vol. I, p. 134, Eq. (41)
+//
 // Added cos(m PI) factor to get agreement with TJ definition.
 // ################################################################
 double TJ::ToroidalQ (int m, int n, double z)

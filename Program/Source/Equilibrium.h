@@ -66,7 +66,7 @@ using namespace netCDF::exceptions;
 
 // Namelist reading function
 extern "C" void NameListEquilibrium (double* QC, double* NU, double* PC, double* MU, double* EPSA,
-				     double* EPS, int* NS, int* NR, int* NF, int* NW, int* HIGH, 
+				     double* EPS, int* NS, int* NR, int* NF, int* NW, 
 				     double* ACC, double* H0, double* HMIN, double* HMAX);
     
 // ############
@@ -93,10 +93,6 @@ class Equilibrium
   int    Nr;     // Number of radial grid-points for calculation purposes (read from namelist)
   int    Nf;     // Number of radial grid-points for visualization purposes (read from namelist)
   int    Nw;     // Number of angular grid-points for visulalization purposes (read from namelist)
-  int    HIGH;   // Switch for higher order calculation of boundary data (read from namelist)
-                 //  HIGH = 0 - lowest-order analytic calculation of boundary data
-                 //  HIGH = 1 - higher-order analytic calculation of boundary data
-                 //  HIGH = 2 - numerical calculation of boundary data
 
   // ----------------
   // Calculation data
@@ -140,13 +136,15 @@ class Equilibrium
   gsl_interp_accel*  Itacc;     // Accelerator for interpolated It function
   gsl_interp_accel*  Ipacc;     // Accelerator for interpolated Ip function
 
-  gsl_spline*        g2spline;  // Interpolated g2 function
-  gsl_spline**       HHspline;  // Interpolated horizontal shaping functions
-  gsl_spline**       VVspline;  // Interpolated vertical shaping functions
-  gsl_spline**       HPspline;  // Interpolated radial derivatives of horizontal shaping functions
-  gsl_spline**       VPspline;  // Interpolated radial derivatives of vertical shaping functions
-  gsl_spline*        Lspline;   // Interpolated relabelling function
-  gsl_spline*        wspline;   // Interpolated omega function
+  gsl_spline*        g2spline;  // Interpolated g2(r) function
+  gsl_spline**       HHspline;  // Interpolated horizontal shaping functions versus r
+  gsl_spline**       VVspline;  // Interpolated vertical shaping functions versus r
+  gsl_spline**       HPspline;  // Interpolated radial derivatives of horizontal shaping functions versus r
+  gsl_spline**       VPspline;  // Interpolated radial derivatives of vertical shaping functions versus r
+  gsl_spline*        Lspline;   // Interpolated relabelling function versus r
+  gsl_spline*        wspline;   // Interpolated omega(theta) function
+  gsl_spline*        Rspline;   // Interpolated R(theta) function
+  gsl_spline*        Zspline;   // Interpolated Z(theta) function
 
   gsl_interp_accel*  g2acc;     // Accelerator for interpolated g2 function
   gsl_interp_accel** HHacc;     // Accelerator for interpolated horizontal shaping functions
@@ -155,10 +153,12 @@ class Equilibrium
   gsl_interp_accel** VPacc;     // Accelerator for interpolated radial derivatives of vertical shaping functions
   gsl_interp_accel*  Lacc;      // Accelerator for interpolated relabelling function
   gsl_interp_accel*  wacc;      // Accelerator for interpolated omega function
+  gsl_interp_accel*  Racc;      // Accelerator for interpolated R(theta)
+  gsl_interp_accel*  Zacc;      // Accelerator for interpolated Z(theta)
 
-  gsl_spline*        fspline;   // Interpolated f function
-  gsl_spline*        gr2spline; // Interpolated <|nabla r|^2> function
-  gsl_spline*        R2spline;  // Interpolated <R^2> function
+  gsl_spline*        fspline;   // Interpolated f function versus r
+  gsl_spline*        gr2spline; // Interpolated <|nabla r|^2> function versus r
+  gsl_spline*        R2spline;  // Interpolated <R^2> function versus r
 
   gsl_interp_accel*  facc;      // Accelerator for interpolated f function
   gsl_interp_accel*  gr2acc;    // Accelerator for interpolated <|nabla r|^2> function
@@ -175,6 +175,8 @@ class Equilibrium
   double*            wbound;    // omega values on plasma boundary
   double*            tbound0;   // Preliminary theta values on plasma boundary
   double*            wbound0;   // Preliminary omega values on plasma boundary
+  double*            dRdtheta;  // dR/dtheta values on plasma boundary
+  double*            dZdtheta;  // dZ/dtheta values on plasma boundary
   double*            R2b;       // R^2 values on plasma boundary
   double*            grr2b;     // |nabla r|^2 values on plasma boundary
    
