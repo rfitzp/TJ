@@ -103,8 +103,8 @@ void TJ::ReadEquilibrium ()
 
   // Output equilibrium data
   printf ("Equilibrium data:\n");
-  printf ("epsa = %10.3e q0 = %10.3e qa = %10.3e sa = %10.3e G1 = %10.3e G2 = %10.3e\n",
-	  epsa, Getq (0.), Getq (1.), sa, G1, G2);
+  printf ("epsa = %10.3e q0 = %10.3e qa = %10.3e sa = %10.3e\n",
+	  epsa, Getq (0.), Getq (1.), sa);
   printf ("n = %3d Hna = %10.3e Vna = %10.3e\n", 1, GetHn (1, 1.), 0.);
   for (int n = 2; n <= Ns; n++)
     if (GetHn (n, 1.) > 1.e-15 || GetVn (n, 1.) > 1.e-15)

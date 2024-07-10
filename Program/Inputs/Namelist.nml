@@ -1,7 +1,7 @@
 &EQUILIBRIUM_CONTROL
- QC   = 1.2
+ QC   = 0.9
  NU   = 3.5
- PC   = 0.1
+ PC   = 0.6
  MU   = 3.0
  EPSA = 0.1
 

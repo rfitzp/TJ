@@ -178,8 +178,6 @@ class TJ
   // Vacuum solution data
   // --------------------
   double                   sa;    // Edge magnetic shear
-  double                   G1;    // Vacuum solution parameter
-  double                   G2;    // Vacuum solution parameter
   Array<complex<double>,2> Pvac;  // Vacuum solution matrix
   Array<complex<double>,2> Pdag;  // Hermitian conjugate of Pvac
   Array<complex<double>,2> Pinv;  // Inverse of Pvac

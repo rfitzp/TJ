@@ -1,7 +1,7 @@
 # Flux.py
 
-# Plots r, theta coordinate system in R, Z plane.
-# Also shows rational surfaces
+# Plots r, omega coordinate system in R, Z plane.
+# Also shows rational surfaces.
 
 import math
 import numpy as np
@@ -11,8 +11,8 @@ import netCDF4 as nc
 fn   = 'Equilibrium.nc'
 ds   = nc.Dataset (fn)
 para = ds['para']
-R    = ds['R']
-Z    = ds['Z']
+R    = ds['Rw']
+Z    = ds['Zw']
 r    = ds['rr']
 
 epsa = para[0]
@@ -42,7 +42,7 @@ for n in range (0, nf):
 plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
 
 for n in range (0, nt-1):
-    plt.plot (R[:,n], Z[:,n], color = 'green', linewidth = 0.1, linestyle = 'solid')
+    plt.plot(R[:,n], Z[:,n], color = 'green', linewidth = 0.1, linestyle = 'solid')
 
 for n in range (0, nf, 10):
     plt.plot (R[n], Z[n], color = 'blue', linewidth = 0.5, linestyle = 'solid')
@@ -50,7 +50,7 @@ for n in range (0, nf, 10):
 for n in range (0, nt-1, 10):
     plt.plot (R[:,n], Z[:,n], color = 'green', linewidth = 0.5, linestyle = 'solid')
 
-plt.contour (RR, ZZ, rr, rres, colors = 'red', linewidths = 1.)    
+plt.contour (RR, ZZ, rr, rres, colors='red', linewidths = 1.)    
 
 plt.plot ([1.], [0.], marker = 'o', markersize = 2, color = "red")
 

@@ -6,7 +6,7 @@
 // All lengths (except r) normalized to R_0 (major radius of magnetic axis).
 // All magnetic field-strengths normalized to B_0 (on-axis toroidal magnetic field-strength).
 // Radial coordinate, r, normalized to epsa * R_0, where eps_a is inverse-aspect ratio.
-// So r = 0. is magnetic axis, r = 1. is plasma/vacuum interface.
+// So r = 0. is magnetic axis, r = 1 is plasma/vacuum interface.
 
 // Flux-surfaces:
 
@@ -15,7 +15,7 @@
 //
 // Here, R, phi, Z are cylindrical polar coordinates while r, w, phi are flux coordinates
 
-// Edge shaping: Hna = Hn(1.), Vna = Vn(1.)
+// Edge shaping: Hna = Hn(1), Vna = Vn(1)
 
 // Equilibrium profiles:
 //
@@ -41,7 +41,7 @@
 // Plots:
 //  Plots/*.py
 
-// Program uses:
+// Class uses:
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
 //  GNU scientific library (https://www.gnu.org/software/gsl)
 //  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
@@ -116,7 +116,7 @@ class Equilibrium
   double* s2;    // Second-order magnetic shear: s2 = r^2 q2''/q2
   double* S1;    // First shaping function
   double* S2;    // Second shaping function
-  double* P1;    // First profile function:  (2-s)/q2
+  double* P1;    // First profile function:  (2-s) /q2
   double* P2;    // Second profile function: r dP1/dr
   double* P3;    // Third profile function
   double* P3a;   // Auxillary third profile function
@@ -132,10 +132,6 @@ class Equilibrium
 
   gsl_spline*        Itspline;  // Interpolated It function
   gsl_spline*        Ipspline;  // Interpolated Ip function
-
-  gsl_interp_accel*  Itacc;     // Accelerator for interpolated It function
-  gsl_interp_accel*  Ipacc;     // Accelerator for interpolated Ip function
-
   gsl_spline*        g2spline;  // Interpolated g2(r) function
   gsl_spline**       HHspline;  // Interpolated horizontal shaping functions versus r
   gsl_spline**       VVspline;  // Interpolated vertical shaping functions versus r
@@ -145,7 +141,12 @@ class Equilibrium
   gsl_spline*        wspline;   // Interpolated omega(theta) function
   gsl_spline*        Rspline;   // Interpolated R(theta) function
   gsl_spline*        Zspline;   // Interpolated Z(theta) function
+  gsl_spline*        fspline;   // Interpolated f function versus r
+  gsl_spline*        gr2spline; // Interpolated <|nabla r|^2> function versus r
+  gsl_spline*        R2spline;  // Interpolated <R^2> function versus r
 
+  gsl_interp_accel*  Itacc;     // Accelerator for interpolated It function
+  gsl_interp_accel*  Ipacc;     // Accelerator for interpolated Ip function
   gsl_interp_accel*  g2acc;     // Accelerator for interpolated g2 function
   gsl_interp_accel** HHacc;     // Accelerator for interpolated horizontal shaping functions
   gsl_interp_accel** VVacc;     // Accelerator for interpolated vertical shaping functions
@@ -155,19 +156,17 @@ class Equilibrium
   gsl_interp_accel*  wacc;      // Accelerator for interpolated omega function
   gsl_interp_accel*  Racc;      // Accelerator for interpolated R(theta)
   gsl_interp_accel*  Zacc;      // Accelerator for interpolated Z(theta)
-
-  gsl_spline*        fspline;   // Interpolated f function versus r
-  gsl_spline*        gr2spline; // Interpolated <|nabla r|^2> function versus r
-  gsl_spline*        R2spline;  // Interpolated <R^2> function versus r
-
   gsl_interp_accel*  facc;      // Accelerator for interpolated f function
   gsl_interp_accel*  gr2acc;    // Accelerator for interpolated <|nabla r|^2> function
   gsl_interp_accel*  R2acc;     // Accelerator for interpolated <R^2> function
 
-  Array<double,2>    RR;        // R coodinates of magnetic flux-surfaces for visualization purposes
-  Array<double,2>    ZZ;        // Z coodinates of magnetic flux-surfaces for visualization purposes
+  Array<double,2>    RR;        // R coodinates of magnetic flux-surfaces for visualization purposes (uniform theta grid)
+  Array<double,2>    ZZ;        // Z coodinates of magnetic flux-surfaces for visualization purposes (uniform theta grid)
+  Array<double,2>    RRw;       // R coodinates of magnetic flux-surfaces for visualization purposes (uniform omega grid)
+  Array<double,2>    ZZw;       // Z coodinates of magnetic flux-surfaces for visualization purposes (uniform omega grid)
   Array<double,2>    rvals;     // r values on magnetic flux-surfaces for visualization purposes
   Array<double,2>    thvals;    // theta values on magnetic flux-surfaces for visualization purposes
+  Array<double,2>    wvals;     // omega values on magnetic flux-surfaces for visualization purposes
 
   double*            Rbound;    // R values on plasma boundary
   double*            Zbound;    // Z values on plasma boundary
@@ -247,8 +246,8 @@ private:
   double GetdZdr (double r, double w);
   // Return dZdw
   double GetdZdw (double r, double w);
-  // Return w-theta transformation function
-  double Gettfun (double r, double w);
+  // Return theta(r, omega) function
+  double Gettheta (double r, double w);
   // Return R2
   double GetR2 (double r, double t);
   // Return |nabla r|^2
@@ -275,7 +274,7 @@ private:
   // .............
 
   // Write equilibrium data to netcdf file
-  void WriteNetcdf (double sa, double G1, double G2);
+  void WriteNetcdf (double sa);
 };
 
 #endif //EQUILIBRIUM

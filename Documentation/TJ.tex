@@ -28,7 +28,7 @@ solution in the associated segment of the inner region, which is characterized b
 perturbations with different toroidal mode numbers are independent of one another, whereas perturbations with different poloidal
 mode numbers are coupled together via toroidicity and the non-circular shaping of magnetic flux-surfaces.\cite{con0}
 Consequently, for a tearing perturbation with a given toroidal mode number, 
- the ${\mit\Delta}_k$ values associated with  the various rational surfaces in the plasma are interrelated via a matrix equation.\cite{connor,cht,tokuda,brennan, ham,am1,am3} [See Eq.~(\ref{e317}).]
+ the ${\mit\Delta}_k$ values associated with  the various rational surfaces in the plasma are interrelated via a matrix equation.\cite{connor,cht,tokuda,brennan, ham,am1,am3} [See Eq.~(\ref{e317u}).]
 
 In general, the  numerical determination of the elements of the matrix equation that links the various ${\mit\Delta}_k$ values from the ideal-MHD equations 
 in the outer region is a exceptionally challenging task.\cite{nish,pletz,am2,aglas,aglas1}
@@ -36,15 +36,18 @@ One way of greatly reducing the complexity of this task is to employ an inverse 
 the metric elements of the flux-coordinate system can be expressed analytically in terms of a relatively small number of  flux-surface functions,
 which represents a major simplification.\cite{con0} Another significant advantage of an inverse aspect-ratio expanded equilibrium is that the magnetic perturbation in the plasma can be efficiently 
 matched to a vacuum solution  expressed as an expansion in toroidal functions.\cite{am1} The alternative approach of using a Green's
-function solution in the vacuum region is much more computationally intensive.\cite{chance,xu} The inverse aspect-ratio expansion approach to determining tearing-mode stability in tokamak plasmas 
-was first introduced in Ref.~\onlinecite{connor} in a calculation that allows for three  poloidal harmonics coupled via toroidicity. The
+function solution in the vacuum region is much more computationally intensive.\cite{chance,xu}
+
+ The inverse aspect-ratio expansion approach to determining tearing-mode stability in tokamak plasmas 
+was first introduced in Ref.~\onlinecite{connor} in a calculation that allows for three  poloidal harmonics coupled via toroidicity. 
+The
 inverse aspect-ratio expansion approach was extended in Ref.~\onlinecite{am1} in a calculation that allows for seven poloidal harmonics coupled via toroidicity, flux-surface elongation, and
-flux-surface triangularity. In this paper, we intend to generalize the inverse aspect-ratio expansion  approach to allow for an arbitrary number of poloidal harmonics coupled
-by flux-surfaces of general shape. Furthermore, unlike Refs.~\onlinecite{connor} and \onlinecite{am1}, we shall not assume that the plasma
+flux-surface triangularity. In this paper, we intend to generalize the inverse aspect-ratio expansion  approach to allow for an {\em arbitrary}\/ number of poloidal harmonics coupled
+by flux-surfaces of {\em general}\/ shape. Furthermore, unlike Refs.~\onlinecite{connor} and \onlinecite{am1}, we shall not assume that the plasma
 equilibrium 
 is up-down symmetric. 
 
-\section{Preliminary Analysis}
+\section{General Plasma Equilibrium}
 \subsection{Normalization}\label{coords}
 All lengths in this paper are normalized to  the major radius of the plasma magnetic axis, $R_0$. All magnetic field-strengths
 are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All current densities are normalized to $B_0/(\mu_0\,R_0)$. All plasma pressures are normalized to $B_0^{\,2}/\mu_0$.
@@ -138,7 +141,7 @@ p&= -\bxi\cdot\nabla P,\label{e24}
 \end{align}
 where $\bxi(r,\theta,\phi)$ is the plasma displacement, ${\bf b}(r,\theta,\phi)$ the perturbed magnetic field,
 ${\bf j}(r,\theta,\phi)$ the perturbed current density, and $p(r,\theta,\phi)$ the perturbed pressure. 
-Let us assume that all perturbed quantities vary with $\phi$ as $\exp(-{\rm i}\,n\,\phi)$, where the real positive integer $n$ is the
+Let us assume that all perturbed quantities vary with the toroidal angle, $\phi$, as $\exp(-{\rm i}\,n\,\phi)$, where the real positive integer $n$ is the
 toroidal mode number of the tearing mode. For example, $p(r,\theta,\phi) = p(r,\theta)\,\exp(-{\rm i}\,n\,\phi)$. 
 
 \subsection{Radial Plasma Displacement}
@@ -336,7 +339,7 @@ V(r,\theta)&= \frac{1}{|\nabla r|^2}\left(\frac{{\rm i}\,n}{R^{\,2}}+\frac{\alph
 W(r,\theta)&= \frac{2\,\alpha_g\,\alpha_p\,R^{\,2}}{|\nabla r|^2} -r\,\alpha_g',\label{ew}\\[0.5ex]
 X(r,\theta)&= {\rm i}\,n\,\alpha_p\left[\frac{\partial}{\partial \theta}(T^\ast\,R^{\,2})+r\,\frac{\partial R^{\,2}}{\partial r}-\alpha_f\,R^{\,2}-U\,R^{\,2}\right],\label{ex}
 \end{align}
-and $\phantom{!}^\ast$ denotes a complex conjugate. 
+and $\phantom{!}^\ast$ denotes a complex conjugate.
 
 \section{Outer-Region ODEs}\label{sode}
 \subsection{Primitive Outer-Region ODEs}\label{ode1}
@@ -386,13 +389,14 @@ f_m^{\,m'}(r) &= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2
 g_m^{\,m'}(r) &= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,R^{\,2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi}.\label{e114}
 \end{align}
 Here, we have extended the analysis of Ref.~\onlinecite{am3} to take into account the fact that the $A_m^{\,m'}$, $B_m^{\,m'}$, $a_m^{\,m'}$, $b_m^{\,m'}$, et cetera,
-are complex quantities in a realistic non-up-down-symmetric tokamak plasma equilibrium. 
+are complex quantities in a realistic non-up-down-symmetric tokamak plasma equilibrium. . Note, that $\delta_m^{\,m'}$ is a Kronecker delta symbol.
 
+ 
 \subsection{Outer-Region ODEs}\label{ode2}
 Let 
 \begin{align}
 y_m(r) &= \frac{\psi_m(r)}{m-n\,q},\label{e115}\\[0.5ex]
-z_m(r) &= \frac{Z_m(r)+k_j\,\psi_m(r)}{m-n\,q},\label{Zdef}
+z_m(r) &= \frac{Z_m(r)+k_m\,\psi_m(r)}{m-n\,q},\label{Zdef}
 \end{align}
 where
 \begin{equation}\label{e117}
@@ -440,8 +444,9 @@ for all $m$, $m'$.
 L_{m'}^{\,m}&= L_m^{\,m'\ast},\label{e137}\\[0.5ex]
 M_{m'}^{\,m}&=-N_m^{\,m'\ast},\\[0.5ex]
 N_{m'}^{\,m}&=-M_m^{\,m'\ast},\label{e139}\\[0.5ex]
-P_{m'}^{\,m}&= P_m^{\,m'\ast}.\label{e140}
+P_{m'}^{\,m}&= P_m^{\,m'\ast},\label{e140}
 \end{align}
+for all $m$, $m'$. 
 
 \subsection{Toroidal Electromagnetic Torque}
 The volume integrated toroidal electromagnetic torque acting between the magnetic axis and a magnetic flux-surface whose label is $r$ is given by
@@ -477,7 +482,8 @@ Hence, we deduce that\,\cite{am1}
 \begin{equation}\label{etcons}
 \frac{dT_\phi}{dr}=0
 \end{equation}
-in any region of the plasma that satisfies the outer-region ODEs. Thus, the volume integrated toroidal electromagnetic torque is
+in any region of the plasma that satisfies the outer-region ODEs. Thus, the volume integrated toroidal electromagnetic torque acting between the
+magnetic axis and a given magnetic flux-surface is
 constant between rational magnetic flux-surfaces. As will become apparent in Sect.~\ref{sa7}, the integrated torque can have discontinuous jumps across rational flux-surfaces. It follows that
 net electromagnetic torques can only develop in the plasma in the immediate vicinity of rational magnetic flux-surfaces, where the ideal-MHD equations  become singular. \cite{rfa}
 
@@ -506,8 +512,9 @@ and
 +A_{S\,k}^\pm\,{\rm sgn}(x)\,|x|^{\nu_{S\,k}}\,(\tilde{a}_{j}+\cdots)\nonumber\\[0.5ex]
 &\phantom{=}+ (\bar{\psi}_{m_k+j}+\bar{\psi}_{m_j+k}'\,x+\cdots),\\[0.5ex]
 Z_{m_k+j}(r_k+x)&= A_{L\,k}^\pm\,|x|^{\nu_{L\,k}}\,(b_j+d_j\,x+\cdots) +A_{S\,k}^\pm\,{\rm sgn}(x)\,|x|^{\nu_{S\,k}}\,(\tilde{b}_{j}+\cdots)\nonumber\\[0.5ex]
-&\phantom{=}+(\bar{Z}_{m_k+j}\,+\bar{Z}_{m_k+j}'\,x+\cdots).\label{ex4}
+&\phantom{=}+(\bar{Z}_{m_k+j}\,+\bar{Z}_{m_k+j}'\,x+\cdots),\label{ex4}
 \end{align}
+for $j\neq 0$. 
 The superscripts $\phantom{!}^+$ and $\phantom{!}^-$ correspond  to $x>0$ and $x<0$, respectively. Here, $A_{L\,k}$ is known as the ``coefficient of
 the large solution,'' whereas $A_{S\,k}$ is termed the ``coefficient of the small solution.''\cite{am1,am3,ggj}
 Moreover, 
@@ -580,7 +587,9 @@ The  analysis in this section is based on the assumption that $ D_{I\,k}< 0$.
 complex, indicating that the plasma in the vicinity of the $k$th rational surface is unstable to localized ideal interchange modes.\cite{mercier}
 
 \subsection{Special Case}\label{sspec}
-In the limit $\nu_{L\,k}\rightarrow 0$, some of the previous expressions become singular, and a special treatment is required. The most general small-$|x|$ solution of the outer-region ODEs 
+In the limit $\nu_{L\,k}\rightarrow 0$, some of the previous expressions become singular, and a special treatment is required. Such a special
+treatment is always needed for  $q=1$ rational  surfaces. 
+The most general small-$|x|$ solution of the outer-region ODEs 
 takes the form
 \begin{align}
 \psi_{m_k}(r_k+x)&=A_{L\,k}^\pm \,[1+\nu_{L\,k}\,\ln|x|+\hat{\lambda}_{L}\,x\,(\ln |x|-1)+\mu_{L}\,x\,(\ln^2\!|x|-2\,\ln|x|-2) + \xi_{L}\,x+\cdots]  \nonumber\\[0.5ex]&\phantom{=}+ A_{S\,k}^{\pm}\,x\,(1+\cdots) + \hat{A}_{C}\,x\,(1+\cdots)+ A_{D}\,x\,(\ln |x|-1 + \cdots),\\[0.5ex]
@@ -589,8 +598,9 @@ Z_{m_k}(r_k+x)&= A_{L\,k}^\pm\left(b_L+\hat{\gamma}_{L}\,x\,\ln |x|+\delta_{L}\,
 and 
 \begin{align}
 \psi_{m_k+j}(r_k+x)&=A_{L\,k}^\pm\,(\hat{a}_j\,\ln |x|+\cdots)+A_{S\,k}^\pm\,x\,(\tilde{a}_j+\cdots)  + \bar{\psi}_{m_k+j}\,(1+\cdots),\\[0.5ex]
-Z_{m_k+j}(r_k+x)&= A_{L\,k}^\pm\,(\hat{b}_j \,\ln |x|+ \cdots) +  A_{S\,k}^\pm\,x\,(\tilde{b}_j + \cdots) +\bar{Z}_{m_k+j}\,(1+\cdots).
+Z_{m_k+j}(r_k+x)&= A_{L\,k}^\pm\,(\hat{b}_j \,\ln |x|+ \cdots) +  A_{S\,k}^\pm\,x\,(\tilde{b}_j + \cdots) +\bar{Z}_{m_k+j}\,(1+\cdots),
 \end{align}
+for $j\neq 0$. 
 Here, 
 \begin{align}
 \hat{A}_{C} &= \frac{1}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(L_{m_k}^{\,m_k+j}\,\bar{Z}_{m_k+j}+ M_{m_k}^{\,m_k+j}\,\bar{\psi}_{m_k+j}\right)_{r_k},\\[0.5ex]
@@ -638,7 +648,7 @@ for all $k$.
 
 Consider a solution that is completely continuous across the $k$th rational surface, so that $A_{S\,k}^-=A_{S\,k}^+$. According to the
 preceding analysis, the continuity condition for the resonant harmonic can be written as
-\begin{align}
+\begin{align}\label{c1}
 \psi_{m_k}(r_k+|\delta|) &= \psi_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,\lambda_L + A_C] + 2\,A_{S\,k}^-\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
 Z_{m_k} (r_k+|\delta|) &=  Z_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,\gamma_L + B_C] + 2\,A_{S\,k}^-\,b_S\,|\delta|^{\nu_{S\,k}} 
 \nonumber\\[0.5ex]&\phantom{=}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
@@ -655,16 +665,16 @@ in the general case, and
 Z_{m_k} (r_k+|\delta|) &=  Z_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,\ln|\delta| \,(\hat{\gamma}_L+\delta_L\,\ln|\delta|)+ B_D\,\ln|\delta|
 +A_{S\,k}^-\,b_{S}]\nonumber\\[0.5ex]&\phantom{=}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
 \psi_{m_k+j}(r_k+|\delta|) &= \psi_{m_k+j}(r_k-|\delta|)+{\cal O}(\delta),\\[0.5ex]
-Z_{m_k+j}(r_k+|\delta|) &= Z_{m_k+j}(r_k-|\delta|)+{\cal O}(\delta)
+Z_{m_k+j}(r_k+|\delta|) &= Z_{m_k+j}(r_k-|\delta|)+{\cal O}(\delta)\label{c2}
 \end{align}
 in the special case. In both cases, $j\neq 0$.
 
 Consider a solution that is launched from the $k$th rational surface, so that $A_{L\,k} = A_{S\,k}^-=0$. It follows from the preceding analysis that
-\begin{align}
+\begin{align}\label{l1}
 \psi_{m_k}(r_k+|\delta|) &= A_{S\,k}^+\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
 Z_{m_k}(r_k+|\delta|) &= A_{S\,k}^+\,b_S\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
 \psi_{m_k+j}(r_k+|\delta|)& = A_{S\,k}^+\,\tilde{a}_j\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
-Z_{m_k+j}(r_k+|\delta|) &= A_{S\,k}^+\,\tilde{b}_j\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2})
+Z_{m_k+j}(r_k+|\delta|) &= A_{S\,k}^+\,\tilde{b}_j\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2})\label{l2}
 \end{align}
 for $j\neq 0$. 
 
@@ -675,7 +685,7 @@ It is helpful to define the quantities\,\cite{am1}
 \end{align}
 at each rational surface in the plasma. Here, the complex parameter ${\mit\Psi}_k$ is a measure of the reconnected helical magnetic flux at the $k$th rational surface, whereas
 the complex parameter ${\mit\Delta\Psi}_k$ is a measure of the strength of a localized current sheet that flows parallel to the equilibrium magnetic field at the surface. 
-It is evident from Eqs.~(\ref{etorque}), (\ref{etcons}), (\ref{ex1}), (\ref{ex2}), (\ref{nul}), (\ref{nus}), (\ref{lkk}), (\ref{ebl}), (\ref{ebs}), and (\ref{tear})--(\ref{edpp}) that\,\cite{am1,am3}
+It is evident from Eqs.~(\ref{etorque}), (\ref{etcons})--(\ref{ex2}), (\ref{nul}), (\ref{nus}), (\ref{lkk}), (\ref{ebl}), (\ref{ebs}), and (\ref{tear})--(\ref{edpp}) that\,\cite{am1,am3}
 \begin{equation}\label{e204z}
 T_\phi(r) =\int_0^r \sum_{k=1,K}\delta T_k\,\delta(\tilde{r}-r_k)\,d\tilde{r},
 \end{equation}
@@ -724,8 +734,9 @@ V &=
 \frac{\sqrt{\pi}\,\Gamma(|m|+1/2-n)\,\epsilon^{\,|m|}}{2^{\,|m|-1/2}\,|m|!}
 \,(z-\cos\eta)^{1/2}\,P_{m-1/2}^{\,n}(z) \,\exp(-{\rm i}\,m\,\eta),\nonumber
 \end{align}
-where $z=\cosh\mu$, the $P_{m-1/2}^{\,n}(z)$ are {\em toroidal functions},\cite{abrama} and the $a_m$ are arbitrary complex coefficients.
-Here, the normalization of the $a_m$ is conventional.\cite{am1}
+where $z=\cosh\mu$, the $P_{m-1/2}^{\,n}(z)$ are {\em toroidal functions},\cite{abrama}  $\Gamma(z)$ is a
+gamma function,\cite{abramb} and the $a_m$ are arbitrary complex coefficients.
+Here, the normalization of the $a_m$ is the same as that adopted in Ref.~\onlinecite{am1}.
 
 \subsection{Plasma/Vacuum Interface}
 In the vicinity of the plasma/vacuum interface, we can write
@@ -753,7 +764,7 @@ for the special case $m'=0$.
 
 Let
 \begin{equation}\label{ebnm}
-\psi(r,\theta)\,\exp(-{\rm i}\,n\,\phi) = -{\rm i}\,{\cal J}\,{\bf b}\cdot\nabla r.
+{\cal J}\,{\bf b}\cdot\nabla r = {\rm i}\,\psi(r,\theta)\,\exp(-{\rm i}\,n\,\phi).
 \end{equation}
 In the vicinity of the plasma/vacuum interface, we can write
 \begin{equation}\label{ebnm1}
@@ -809,7 +820,7 @@ decreasing $\mu$) in the vacuum region, is given by
 T_\phi(\epsilon) &= -\oint\oint (\nabla\mu\times \nabla\eta\cdot\nabla\phi)^{-1}\,b_\phi\,b^{\,\mu}\,d\eta\,d\phi\nonumber\\[0.5ex]
 &= -\frac{{\rm i}\,\pi\,n}{2}\oint \frac{z^2-1}{z-\cos\eta}\left(\frac{\partial V}{\partial z}\,V^{\,\ast}-\frac{\partial V^{\,\ast}}{\partial z}\,V\right)d\eta.
 \end{align}
-From Eq.~(\ref{e233}), we get
+Making use of Eq.~(\ref{e233}), we deduce that 
 \begin{equation}\label{e300}
 T_\phi(\epsilon)=0.
 \end{equation}
@@ -828,14 +839,15 @@ as
 \end{equation}
 
 \subsection{Vacuum Response Matrix}\label{svacsoln1}
-Let us now prove that the vacuum response matrix, $H_{mm'}$,  actually is Hermitian. 
+It is clearly important to prove that the vacuum response matrix, $H_{mm'}$,   is Hermitian. Otherwise, toroidal electromagnetic
+angular momentum is not conserved. 
 
 Let us assume that all perturbed quantities vary with the toroidal angle, $\phi$, as $\exp(-{\rm i}\,n\,\phi)$. 
 The vacuum region outside the plasma corresponds to the section, $C$ (say), of the $R$, $Z$ plane that lies between
 the curve $r=\epsilon$ and the curve $z=1$. 
 Let us define the function ${\cal E}_m(z,\mu)$ such that
 \begin{align}\label{e358}
-{\cal E}_m&= \exp(-{\rm i}\,m\,\theta) &\mbox{at $\hat{r}=1$},\\[0.5ex]
+{\cal E}_m&= \exp(-{\rm i}\,m\,\theta) &\mbox{at $r=\epsilon$},\\[0.5ex]
 \nabla^2{\cal E}_m &= \frac{n^2}{R^{\,2}}\,{\cal E}_m &\mbox{throughout $C$},\label{e359}\\[0.5ex]
 {\cal E}_m &= 0& \mbox{at $z=1$}.\label{e360}
 \end{align}
@@ -1119,7 +1131,7 @@ magnetic axis. The asymptotic matching conditions imposed at the rational surfac
 A_{L\,k}^{-} &= A_{L\,k}^+,\\[0.5ex]
 {\mit\Delta\Psi}_k &= 0,
 \end{align}
-for $k=1,K$. (See Sect.~\ref{sa7}). 
+for $k=1,K$. [Equations~(\ref{c1})--(\ref{c2}) specify how these matching conditions are implemented at a given rational surface.]
 Let ${\mit\Pi}_{kj}^a$, for   $k=1,K$ and $j=1,J$,  be the value of ${\mit\Psi}_k$ at the $k$th rational surface associated with a solution launched
 from the magnetic axis with dominant poloidal mode number $m_j$. 
 
@@ -1137,15 +1149,16 @@ the solutions are denoted $\psi^s_{m_{j}\,k}(\hat{r})$ and $Z^s_{m_{j}\,k}(\hat{
 $m_{j}$ is the poloidal mode number of the harmonic, whereas $k$ is the index of the rational surface from which the solution is launched.
 The launch conditions are
 \begin{align}
-A_{L\,k}^+ &=  0,\\[0.5ex]
+A_{L\,k}^- &= A_{L\,k}^+ = A_{S\,k}^- = 0,\\[0.5ex]
 {\mit\Delta\Psi}_k &=1.
 \end{align}
+[These launch conditions can be implemented at a given rational surface using Eqs.~(\ref{l1})--(\ref{l2}).]
 The asymptotic matching conditions imposed at the other rational surfaces are
 \begin{align}
 A_{L\,k'}^{-} &= A_{L\,k'}^+,\\[0.5ex]
 {\mit\Delta\Psi}_{k'} &= 0,
 \end{align}
-for $k'=k+1,K$.
+for $k'=k+1,K$. [Equations~(\ref{c1})--(\ref{c2}) again specify how these matching conditions are implemented at a given rational surface.]
 Let 
 ${\mit\Pi}_{k'k}^s$, for $k'=1,K$ and $k=1,K$,  be the value of ${\mit\Psi}_{k'}$ at the $k'$th rational surface associated with a small solution
 launched from the $k$th rational surface. Note that ${\mit\Pi}_{k'k}^s=0$ for $k' \leq k$.  
@@ -1234,7 +1247,7 @@ Let
 tearing response of the resonant layer at the $k$th rational surface to the ideal-MHD solution in the outer region.\cite{fkr}
 In general, ${\mit\Delta}_k$ is a function of the growth-rate and phase-velocity of the reconnected magnetic flux at the surface.\cite{am1,layer,layer1}
 The previous two equations can be combined to give the ultimate form of the  tearing-mode dispersion relation,
-\begin{equation}
+\begin{equation}\label{e317u}
 \sum_{k'=1,k}({\mit\Delta}_k\,\delta_{kk'}-E_{kk'})\,{\mit\Psi}_{k'} = 0
 \end{equation}
 for $k=1,K$. It is clear that $E_{kk}$ is the tearing stability index\,\cite{fkr} at the $k$th rational surface when magnetic reconnection  takes place
@@ -1362,6 +1375,8 @@ where ${\bf C}({\bf r})$ is a general vector field.
 \bibitem{morse1} P.M.~Morse, and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1302. (McGraw-Hill, New York NY, 1953)
 
 \bibitem{abrama} M.~Abramowitz, and I.A.~Stegun, {\em Handbook of Mathematical Functions}, sect.~8.11. (Dover, New York NY, 1964)
+
+\bibitem{abramb} M.~Abramowitz, and I.A.~Stegun, {\em Handbook of Mathematical Functions}, ch.~6. (Dover, New York NY, 1964)
 
 \bibitem{gim} R.~Fitzpatrick, C.G.~Gimblett, and R.J.~Hastie, Plasma Phys.\ Control.\ Fusion {\bf 34}, 161 (1992). 
 

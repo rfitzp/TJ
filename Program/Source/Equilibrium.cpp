@@ -236,8 +236,11 @@ void Equilibrium::Solve ()
 
   RR    .resize (Nf, Nw+1);
   ZZ    .resize (Nf, Nw+1);
+  RRw   .resize (Nf, Nw+1);
+  ZZw   .resize (Nf, Nw+1);
   rvals .resize (Nf, Nw+1);
   thvals.resize (Nf, Nw+1);
+  wvals .resize (Nf, Nw+1);
 
   Rbound   = new double[Nw+1];
   Zbound   = new double[Nw+1];
@@ -468,31 +471,48 @@ void Equilibrium::Solve ()
   // Calculate magnetic flux-surfaces for visualization purposes
   // ...........................................................
   printf ("Calculating magnetic flux-surfaces:\n");
+
   for (int i = 1; i <= Nf; i++)
-     {
-       double rf = double (i) /double (Nf);
-       double L  = gsl_spline_eval (Lspline, rf, Lacc);
+    {
+      double rf = double (i) /double (Nf);
       
-       for (int j = 0; j <= Nw; j++)
-	 {
-	   double t = double (j) * 2.*M_PI /double (Nw);
-	   
-	   double w, wold = t;
-	   for (int i = 0; i < 10; i++)
-	     {
-	       w    = t - Gettfun (rf, wold);
-	       wold = w;
-	     }
-	   
-	   double R = GetR (rf, w);
-	   double Z = GetZ (rf, w);
-	   
-	   RR    (i-1, j) = R;
-	   ZZ    (i-1, j) = Z;
-	   rvals (i-1, j) = rf;
-	   thvals(i-1, j) = t;
-	 }
-     }
+      for (int j = 0; j <= Nw; j++)
+	{
+	  double t = double (j) * 2.*M_PI /double (Nw);
+	  
+	  double w, wold = t;
+	  for (int i = 0; i < 10; i++)
+	    {
+	      w    = t - Gettheta (rf, wold);
+	      wold = w;
+	    }
+	  
+	  double R = GetR (rf, w);
+	  double Z = GetZ (rf, w);
+	  
+	  RR    (i-1, j) = R;
+	  ZZ    (i-1, j) = Z;
+	  rvals (i-1, j) = rf;
+	  thvals(i-1, j) = t;
+	  wvals (i-1, j) = w;
+	}
+    }
+
+  for (int i = 1; i <= Nf; i++)
+    {
+      double rf = double (i) /double (Nf);
+      
+      for (int j = 0; j <= Nw; j++)
+	{
+	  double w = double (j) * 2.*M_PI /double (Nw);
+	  
+	  double R = GetR (rf, w);
+	  double Z = GetZ (rf, w);
+	  
+	  RRw (i-1, j) = R;
+	  ZZw (i-1, j) = Z;
+	}
+    }
   
   // .......................
   // Calculate boundary data
@@ -758,23 +778,10 @@ void Equilibrium::Solve ()
   P3[0]  = P3[1]    - (P3[2]    - P3[1]);
   P3[Nr] = P3[Nr-1] + (P3[Nr-1] - P3[Nr-2]);
 
-  // ...................
-  // Calculate G1 and G2
-  // ...................
-  double G1 = - 0.75 * HHfunc(1, Nr) - 0.25 * HPfunc(1, Nr) + 0.5 * HPfunc(1, Nr) * HHfunc(1, Nr);
-  double G2 = - 0.25 * HPfunc(1, Nr) + 0.25 * (HPfunc(1, Nr) * HPfunc(1, Nr) + 0.5 * HPfunc(1, Nr) * HHfunc(1, Nr));
-  for (int n = 2; n <= Ns; n++)
-    {
-      G1 += 0.5 * (HPfunc(n, Nr) * HHfunc(n, Nr) + VPfunc(n, Nr) * VVfunc(n, Nr));
-      G2 +=
-	+ 0.25 * (HPfunc(n, Nr) * HPfunc(n, Nr) + 2. * HPfunc(n, Nr) * HHfunc(n, Nr) - double (n*n - 1) * HHfunc(n, Nr) * HHfunc(n, Nr)) /double (n*n)
-	+ 0.25 * (VPfunc(n, Nr) * VPfunc(n, Nr) + 2. * VPfunc(n, Nr) * VVfunc(n, Nr) - double (n*n - 1) * VVfunc(n, Nr) * VVfunc(n, Nr)) /double (n*n);
-    }
-  
   // ......................................
   // Output equilibrium data to netcdf file
   // ......................................
-  WriteNetcdf (sa, G1, G2);
+  WriteNetcdf (sa);
   
   // ........
   // Clean up
@@ -1180,10 +1187,10 @@ double Equilibrium::Getgrr2 (double r, double t)
   return grr2;
 }
 
-// ##################################################
-// Function to return w-theta transformation function
-// ##################################################
-double Equilibrium::Gettfun (double r, double w)
+// ########################################
+// Function to return theta(omega) function
+// ########################################
+double Equilibrium::Gettheta (double r, double w)
 {
   // .....................
   // Get shaping functions

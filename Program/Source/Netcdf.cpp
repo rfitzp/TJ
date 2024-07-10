@@ -6,7 +6,7 @@
 // #################################################
 // Function to write equilibrium data to netcdf file
 // #################################################
-void Equilibrium::WriteNetcdf (double sa, double G1, double G2)
+void Equilibrium::WriteNetcdf (double sa)
 {
   printf ("Writing data to netcdf file Plots/Equilibrium.nc:\n");
 
@@ -16,8 +16,11 @@ void Equilibrium::WriteNetcdf (double sa, double G1, double G2)
   double* Vnpdata = new double[(Ns+1)*(Nr+1)];
   double* Rdata   = new double[Nf*(Nw+1)];
   double* Zdata   = new double[Nf*(Nw+1)];
+  double* Rwdata  = new double[Nf*(Nw+1)];
+  double* Zwdata  = new double[Nf*(Nw+1)];
   double* rdata   = new double[Nf*(Nw+1)];
   double* tdata   = new double[Nf*(Nw+1)];
+  double* wdata   = new double[Nf*(Nw+1)];
   double* Hna     = new double[Ns+1];
   double* Vna     = new double[Ns+1];
   double* npol    = new double[Ns+1];
@@ -47,28 +50,29 @@ void Equilibrium::WriteNetcdf (double sa, double G1, double G2)
   for (int n = 0; n < Nf; n++)
     for (int i = 0; i <= Nw; i++)
       {
-	Rdata[i + n*(Nw+1)] = RR    (n, i);
-	Zdata[i + n*(Nw+1)] = ZZ    (n, i);
-	rdata[i + n*(Nw+1)] = rvals (n, i);
-	tdata[i + n*(Nw+1)] = thvals(n, i);
+	Rdata [i + n*(Nw+1)] = RR    (n, i);
+	Zdata [i + n*(Nw+1)] = ZZ    (n, i);
+	Rwdata[i + n*(Nw+1)] = RRw   (n, i);
+	Zwdata[i + n*(Nw+1)] = ZZw   (n, i);
+	rdata [i + n*(Nw+1)] = rvals (n, i);
+	tdata [i + n*(Nw+1)] = thvals(n, i);
+	wdata [i + n*(Nw+1)] = wvals (n, i);
       }
 
   try
     {
       NcFile dataFile ("Plots/Equilibrium.nc", NcFile::replace);
 
-      NcDim p_d = dataFile.addDim ("Np", 4);
+      NcDim p_d = dataFile.addDim ("Np", 2);
       NcDim r_d = dataFile.addDim ("Nr", Nr+1);
       NcDim s_d = dataFile.addDim ("Ns", Ns+1);
       NcDim f_d = dataFile.addDim ("Nf", Nf);
       NcDim w_d = dataFile.addDim ("Nw", Nw+1);
 
-      double para[4];
+      double para[2];
       para[0] = epsa;
       para[1] = sa;
-      para[2] = G1;
-      para[3] = G2;
-
+ 
       vector<NcDim> shape_d;
       shape_d.push_back (s_d);
       shape_d.push_back (r_d);
@@ -142,10 +146,16 @@ void Equilibrium::WriteNetcdf (double sa, double G1, double G2)
       R_x.putVar (Rdata);
       NcVar Z_x = dataFile.addVar ("Z", ncDouble, flux_d);
       Z_x.putVar (Zdata);
+      NcVar Rw_x = dataFile.addVar ("Rw", ncDouble, flux_d);
+      Rw_x.putVar (Rwdata);
+      NcVar Zw_x = dataFile.addVar ("Zw", ncDouble, flux_d);
+      Zw_x.putVar (Zwdata);
       NcVar rr_x = dataFile.addVar ("rr", ncDouble, flux_d);
       rr_x.putVar (rdata);
       NcVar t_x = dataFile.addVar ("theta", ncDouble, flux_d);
       t_x.putVar (tdata);
+      NcVar w_x = dataFile.addVar ("omega", ncDouble, flux_d);
+      w_x.putVar (wdata);
 
       NcVar n_x = dataFile.addVar ("n", ncDouble, s_d);
       n_x.putVar (npol);
@@ -171,16 +181,17 @@ void Equilibrium::WriteNetcdf (double sa, double G1, double G2)
       NcVar dZdtheta_x = dataFile.addVar ("dZdtheta", ncDouble, w_d);
       dZdtheta_x.putVar (dZdtheta);
     }
-  catch(NcException& e)
+  catch (NcException& e)
     {
-      printf ("%s\n", e.what ());
       printf ("Error writing data to netcdf file Plots/Equilbrium.nc\n");
+      printf ("%s\n", e.what ());
       exit (1);
     }
 
-  delete[] Hndata; delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata;
-  delete[] Rdata;  delete[] Zdata;   delete[] Hna;    delete[] Vna;
-  delete[] rdata;  delete[] tdata;   delete[] npol;
+  delete[] Hndata;  delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata;
+  delete[] Rdata;   delete[] Zdata;   delete[] Hna;    delete[] Vna;
+  delete[] rdata;   delete[] tdata;   delete[] npol;   delete[] wdata;
+  delete[] Rwdata;  delete[] Zwdata;   
 }
 
 // ##################################################
@@ -203,8 +214,6 @@ void TJ::ReadNetcdf ()
       p_x.getVar(para);
       epsa = para[0];
       sa   = para[1];
-      G1   = para[2];
-      G2   = para[3];
       
       NcVar r_x   = dataFile.getVar ("r");
       NcVar pp_x  = dataFile.getVar ("pp");
@@ -333,8 +342,8 @@ void TJ::ReadNetcdf ()
     }
   catch (NcException& e)
      {
-       printf ("%s\n", e.what ());
        printf ("Error reading data from netcdf file Inputs/Equilbrium.nc\n");
+       printf ("%s\n", e.what ());
        exit (1);
      }
 }
@@ -747,8 +756,8 @@ void TJ::WriteNetcdf ()
     }
   catch (NcException& e)
     {
-      printf ("%s\n", e.what ());
       printf ("Error writing data to netcdf file Plots/TJ.nc\n");
+      printf ("%s\n", e.what ());
       exit (1);
     }
 
