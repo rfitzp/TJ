@@ -300,8 +300,6 @@ class TJ
   
   // Set mode numbers
   void SetModeNumbers ();
-  // Write data to Plots/TJ.nc
-  void WriteNetCDF ();
   // Deallocate memory
   void CleanUp ();
   // Open new file for writing
@@ -505,6 +503,16 @@ class TJ
   double GetCoshMu (double R, double Z);
   // Return toroidal coordinate eta
   double GetEta (double R, double Z);
+
+  // .............
+  // In Netcdf.cpp
+  // .............
+
+  // Read equilibrium data from netcdf file
+  void ReadNetcdf ();
+  // Write stability data to netcdf file
+  void WriteNetcdf ();
+
 };
 
 #endif //TJXX

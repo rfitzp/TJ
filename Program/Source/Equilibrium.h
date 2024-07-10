@@ -269,6 +269,13 @@ private:
   FILE* OpenFilew (char* filename);
   // Open file for reading
   FILE* OpenFiler (char* filename);
+
+  // .............
+  // in Netcdf.cpp
+  // .............
+
+  // Write equilibrium data to netcdf file
+  void WriteNetcdf (double sa, double G1, double G2);
 };
 
 #endif //EQUILIBRIUM

@@ -123,7 +123,8 @@ void TJ::GetVacuum ()
       InvertMatrix (Hinv, Hmat);
     }
 
-  printf ("Aerr = %11.4e Herr = %10.4e\n", Aerr, Herr);
+  printf ("A-matrix zero test:      %10.4e\n", Aerr);
+  printf ("H-matrix Hermitian test: %10.4e\n", Herr);
  }
  
 // ####################################################

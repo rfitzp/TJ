@@ -185,30 +185,41 @@ void TJ::FindDispersion ()
   for (int j = 0; j < nres; j++)
     {
       for (int jp = 0; jp < nres; jp++)
-	printf ("%10.3e ", real(Emat(j, jp)));
+	printf ("%10.3e ", real (Emat(j, jp)));
       printf ("\n");
     }
   printf ("Im(E):\n");
   for (int j = 0; j < nres; j++)
    {
       for (int jp = 0; jp < nres; jp++)
-	printf ("%10.3e ", imag(Emat(j, jp)));
+	printf ("%10.3e ", imag (Emat(j, jp)));
       printf ("\n");
     }
   printf ("Re(E_res):\n");
   for (int j = 0; j < nres; j++)
     {
       for (int jp = 0; jp < nres; jp++)
-	printf ("%10.3e ", real(Emat(j, jp) - conj(Emat(jp, j)))/2.);
+	printf ("%10.3e ", real (Emat(j, jp) - conj (Emat(jp, j))));
       printf ("\n");
     }
   printf ("Im(E_res):\n");
   for (int j = 0; j < nres; j++)
    {
       for (int jp = 0; jp < nres; jp++)
-	printf ("%10.3e ", imag(Emat(j, jp) - conj(Emat(jp, j)))/2.);
+	printf ("%10.3e ", imag (Emat(j, jp) - conj (Emat(jp, j))));
       printf ("\n");
     }
+
+  double Eerr = 0.;
+  for (int j = 0; j < nres; j++)
+    for (int jp = 0; jp < nres; jp++)
+      {
+	double eval = abs (Emat(j, jp) - conj (Emat(jp, j)));
+
+	if (eval > Eerr)
+	  Eerr = eval;	
+      }
+  printf ("E-matrix Hermitian test: %10.3e\n", Eerr);
 
   // ..............................................
   // Calculate unreconnected tearing eigenfunctions
