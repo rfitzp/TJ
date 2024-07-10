@@ -3,7 +3,8 @@
 
 ## Plasma equilibrium:
 
-	- Flux.py        - Plots equilibrium magnetic flux-surfaces in R, Z plane
+	- Flux.py        - Plots r, theta coordinate system in R, Z plane
+	- Fluxw.py       - Plots r, omega coordinate system in R, Z plane
 	- Equilibrium.py - Plots components of aspect-ratio expanded equilibrium versus r
 	- Safety.py      - Plots safety-factor, q, magnetic shear, s, higher order shear, s_2, pressure gradient and
 	  		   derivate of pressure gradient, p'', versus radius, r
@@ -15,7 +16,7 @@
 
 ## Vacuum matrices:
 
-        - Vacuum.py      - Visualizes vacuum matrices P_m^m' and R_m^m
+   	- Vacuum.py      - Visualizes vacuum matrices P_m^m' and R_m^m
 	- VacRes.py      - Visualizes vacuum solution residual matrix A_m^m'
 	- Hmat.py        - Visualizes vacuum response matrix, H_m^m'
 	- Metric.py      - Plots metric data at plasma boundary
