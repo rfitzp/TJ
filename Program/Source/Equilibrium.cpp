@@ -379,7 +379,6 @@ void Equilibrium::Solve ()
   // Rescale shaping functions
   // .........................
   int    nn   = 1;
-  double Hnam = HPfunc(1, Nr)/2.;
   double zero = 0.;
   printf ("n = %3d:  Hna = %10.3e  Vna = %10.3e\n", nn, HHfunc(1, Nr), zero);
 

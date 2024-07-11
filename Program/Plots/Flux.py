@@ -27,7 +27,7 @@ fn1  = 'TJ.nc'
 ds1  = nc.Dataset (fn1)
 rres = ds1['rres']
 
-fig = plt.figure (figsize = (8.0, 8.0))
+fig = plt.figure (figsize = (8.0, 7.5))
 plt.rc ('xtick', labelsize = 17) 
 plt.rc ('ytick', labelsize = 17) 
 
