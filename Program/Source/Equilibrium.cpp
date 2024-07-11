@@ -550,8 +550,10 @@ void Equilibrium::Solve ()
   double rbb = tbound0[Nw] /(2.*M_PI);
   printf ("rb = %10.3e\n", rbb);
   
-  for (int j = 0; j <= Nw; j++)
+  for (int j = 0; j < Nw; j++)
     tbound0[j] /= rbb;
+
+  tbound0[Nw] = 2.*M_PI;
   
   // Interpolate preliminary boundary data
   gsl_spline_init (wspline, tbound0, wbound0, Nw+1);

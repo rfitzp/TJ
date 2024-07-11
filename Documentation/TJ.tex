@@ -39,7 +39,7 @@ matched to a vacuum solution  expressed as an expansion in toroidal functions.\c
 function solution in the vacuum region is much more computationally intensive.\cite{chance,xu}
 
  The inverse aspect-ratio expansion approach to determining tearing-mode stability in tokamak plasmas 
-was first introduced in Ref.~\onlinecite{connor} in a calculation that allows for three  poloidal harmonics coupled via toroidicity. 
+was first presented in Ref.~\onlinecite{connor} in a calculation that allows for three  poloidal harmonics coupled via toroidicity. 
 The
 inverse aspect-ratio expansion approach was extended in Ref.~\onlinecite{am1} in a calculation that allows for seven poloidal harmonics coupled via toroidicity, flux-surface elongation, and
 flux-surface triangularity. In this paper, we intend to generalize the inverse aspect-ratio expansion  approach to allow for an {\em arbitrary}\/ number of poloidal harmonics coupled
@@ -197,7 +197,7 @@ where
 \alpha_p(r) &= \frac{r\,P'}{f^2},\label{ap}\\[0.5ex]
 \alpha_g (r)&= \frac{g'}{f}.\label{ag}
 \end{align}
-Note that Eq.~(\ref{e44}) is trivially satisfied. Hence, only Eq.~(\ref{e51}) remains to be solved. 
+Note that Eq.~(\ref{e44}) is trivially satisfied. Hence, of the three components of the perturbed force balance equation, only Eq.~(\ref{e51}) remains to be solved. 
 
 \subsection{Perturbed Plasma Current Density}
 Equation~(\ref{e23}) yields 
@@ -389,7 +389,7 @@ f_m^{\,m'}(r) &= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2
 g_m^{\,m'}(r) &= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,R^{\,2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi}.\label{e114}
 \end{align}
 Here, we have extended the analysis of Ref.~\onlinecite{am3} to take into account the fact that the $A_m^{\,m'}$, $B_m^{\,m'}$, $a_m^{\,m'}$, $b_m^{\,m'}$, et cetera,
-are complex quantities in a realistic non-up-down-symmetric tokamak plasma equilibrium. . Note, that $\delta_m^{\,m'}$ is a Kronecker delta symbol.
+are complex quantities in a realistic non-up-down-symmetric tokamak plasma equilibrium.  Note, that $\delta_m^{\,m'}$ is a Kronecker delta symbol.
 
  
 \subsection{Outer-Region ODEs}\label{ode2}
@@ -543,7 +543,7 @@ P_0\left(\frac{L_1}{L_0}-1\right)+2\,b_{L}\,M_1\right]_{r_k}\nonumber\\[0.5ex]
 &\phantom{=} \left. + \frac{1}{b_{L}}\left(\nu_{L\,k}+1)\,(N_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+P_{m_k}^{\,m_k+j}\,M_{m_k+j}^{\,m_k}\right)\right]_{r_k},\\[0.5ex]
 a_j&=-\frac{1}{(m_k\,s)_{r_k}}\left(\frac{L^{\,m_k}_{m_k+j}}{L_0}+\frac{M^{\,m_k}_{m_k+j}}{\nu_{L\,k}}\right)_{r_k},\label{e135}\\[0.5ex]
 b_j&=- \frac{1}{(m_k\,s)_{r_k}}\left(\frac{P^{\,m_k}_{m_k+j}}{\nu_{L\,k}}+\frac{N^{\,m_k}_{m_k+j}}{L_0}\right)_{r_k},\\[0.5ex]
-\tilde{a}_{j}&= -\frac{1}{(m_k\,s)_{r_k}}\left(\frac{L^{\,m_k}_{m_k+j}}{L_0}+\frac{M^{\,m_k}_{m_k+j}}{\nu_{S\,k}}\right)_{r_k},\\[0.5ex]
+\tilde{a}_{j}&= -\frac{1}{(m_k\,s)_{r_k}}\left(\frac{L^{\,m_k}_{m_k+j}}{L_0}+\frac{M^{\,m_k}_{m_k+j}}{\nu_{S\,k}}\right)_{r_k},\label{e135a}\\[0.5ex]
 \tilde{b}_{j}&=- \frac{1}{(m_k\,s)_{r_k}}\left(\frac{P^{\,m_k}_{m_k+j}}{\nu_{S\,k}}+\frac{N^{\,m_k}_{m_k+j}}{L_0}\right)_{r_k},\label{e138}\\[0.5ex]
 c_j&= \frac{1}{(1+\nu_{L\,k})\,r_k}\left[-\nu_{L\,k}\,a_j+L_{j\,1}\,b_{L}+M_{j\,1}\phantom{\frac{1}{j}}\right.\nonumber\\[0.5ex]
 &\phantom{=}-
@@ -588,7 +588,7 @@ complex, indicating that the plasma in the vicinity of the $k$th rational surfac
 
 \subsection{Special Case}\label{sspec}
 In the limit $\nu_{L\,k}\rightarrow 0$, some of the previous expressions become singular, and a special treatment is required. Such a special
-treatment is always needed for  $q=1$ rational  surfaces. 
+treatment is always needed for  rational  surfaces characterized by $q=1$.  
 The most general small-$|x|$ solution of the outer-region ODEs 
 takes the form
 \begin{align}
@@ -611,14 +611,16 @@ A_{D} &=  \frac{L_0}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(N_{m_k}^{\,m_k+j}\,\bar{
 B_{D} &= \frac{A_{D}}{L_0},\\[0.5ex]
 \hat{\lambda}_{L} &= \frac{P_1\,L_0\,(1+\nu_{L\,k}) }{r_k} + \frac{\nu_{L\,k}\,T_1}{r_k}
 -\frac{1}{(m_k\,s)_{r_k}}\,\frac{1}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(L_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+M_{m_k}^{\,m_k+j}\,M_{m_k+j}^{m_k}\right)_{r_k}\nonumber\\[0.5ex]&\phantom{=}
-- \frac{1}{(m_k\,s)_{r_k}}\,\frac{\nu_{L\,k}}{r_k}
+- \frac{1}{(m_k\,s)_{r_k}}\,\frac{\nu_{L\,k}}{L_0\,r_k}
 \left(L_{m_k}^{\,m_k+j}\,N_{m_k+j}^{\,m_k}+M_{m_k}^{\,m_k+j}\,L_{m_k+j}^{m_k}\right)_{r_k},\\[0.5ex]
 \mu_{L}&= -\frac{1}{2\,(m_k\,s)_{r_k}}\frac{L_0}{r_k}\sum_{j\neq 0}\frac{1}{j}\,(N_{m_k}^{\,m_k+j}\,P_{m_k+j}^{\,m_k}+P_{m_k}^{\,m_k+j}\,M_{m_k+j}^{\,m_k})_{r_k},\\[0.5ex]
 \xi_{L} &= M_1+ \frac{\nu_{L\,k}}{r_k} \left(\frac{L_1}{L_0}-1\right),\\[0.5ex]
-\hat{\gamma}_{L} &=\frac{P_1\,(1+\nu_{L\,k})}{L_0\,r_k} + \frac{\nu_{L\,k}\,T_1}{L_0\,r_k},\\[0.5ex]
-\delta_{L} &= \frac{\mu_{L}}{L_0}.
+\hat{\gamma}_{L} &=\frac{P_1\,(1+\nu_{L\,k})}{r_k} + \frac{\nu_{L\,k}\,T_1}{L_0\,r_k},\\[0.5ex]
+\delta_{L} &= \frac{\mu_{L}}{L_0},\\[0.5ex]
+\hat{a}_j&=-\frac{1}{(m_k\,s)_{r_k}}\left(\frac{\nu_{L\,k}\,L^{\,m_k}_{m_k+j}}{L_0}+M^{\,m_k}_{m_k+j}\right)_{r_k},\\[0.5ex]
+\hat{b}_j&=- \frac{1}{(m_k\,s)_{r_k}}\left(P^{\,m_k}_{m_k+j}+\frac{\nu_{L\,k}\,N^{\,m_k}_{m_k+j}}{L_0}\right)_{r_k}.
 \end{align}
-Moreover, $\hat{a}_j$, $\hat{b}_j$, $\tilde{a}_j$ and $\tilde{b}_j$ are again specified by Eqs.~(\ref{e135})--(\ref{e138}). 
+Moreover, $\tilde{a}_j$ and $\tilde{b}_j$ are again specified by Eqs.~(\ref{e135a})--(\ref{e138}). 
 
 The coefficients of the large and the small solutions at the $k$th rational surface are evaluated as follows:
 \begin{align}
@@ -832,11 +834,7 @@ According to Eq.~(\ref{etorque}), the outward flux of toroidal electromagnetic a
 T_\phi(\epsilon) = {\rm i}\,\pi^2\,n\sum_m\left[\frac{Z_m^{\,\ast}\,\psi_m-\psi_m^{\,\ast}\,Z_m}{m-n\,q}\right]_{r=\epsilon}.
 \end{equation}
 It follows from Eq.~(\ref{bc}) that Eq.~(\ref{e300}) can only be satisfied, in general, if the vacuum
-response matrix, $H_{mm'}$, is Hermitian. Assuming that this is the case, Eq.~(\ref{ehdef}) can be rewritten
-as 
-\begin{equation}
-\sum_{m''} {\cal R}_{m''}^{\,m\,\ast}\,H_{m''m'} = {\cal P}_{m'}^{\,m\,\ast}.
-\end{equation}
+response matrix, $H_{mm'}$, is Hermitian. 
 
 \subsection{Vacuum Response Matrix}\label{svacsoln1}
 It is clearly important to prove that the vacuum response matrix, $H_{mm'}$,   is Hermitian. Otherwise, toroidal electromagnetic
@@ -851,7 +849,7 @@ Let us define the function ${\cal E}_m(z,\mu)$ such that
 \nabla^2{\cal E}_m &= \frac{n^2}{R^{\,2}}\,{\cal E}_m &\mbox{throughout $C$},\label{e359}\\[0.5ex]
 {\cal E}_m &= 0& \mbox{at $z=1$}.\label{e360}
 \end{align}
-In this section, $\nabla^2$  denotes a two-dimensional Laplacian in the $R$, $Z$ plane, and all vector analysis takes place in this plane. 
+In this section, $\nabla^2$  denotes a two-dimensional Laplacian in the $R$, $Z$ plane, and all vector analysis is two-dimensional, and takes place in the $R$-$Z$ plane. 
 Recall that
 \begin{align}
 \nabla^2 V &= \frac{n^2}{R^{\,2}}\,V &\mbox{throughout $C$},\label{e361}\\[0.5ex]

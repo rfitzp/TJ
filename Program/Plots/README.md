@@ -17,7 +17,7 @@
 ## Vacuum matrices:
 
    	- Vacuum.py      - Visualizes vacuum matrices P_m^m' and R_m^m
-	- VacRes.py      - Visualizes vacuum solution residual matrix A_m^m'
+	- Amat.py        - Visualizes vacuum matrix A_m^m'
 	- Hmat.py        - Visualizes vacuum response matrix, H_m^m'
 	- Metric.py      - Plots metric data at plasma boundary
 

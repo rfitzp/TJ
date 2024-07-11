@@ -53,8 +53,7 @@ using namespace arma;
 
 // Namelist reading function
 extern "C" void NameListTJ (int* NTOR, int* MMIN, int* MMAX, 
-			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX,
-			    int* FREE, int* SYMM, 
+			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX, int* FREE, 
 			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF);
 
 // ############
@@ -78,7 +77,6 @@ class TJ
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from namelist)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from namelist)
   int    FREE;    // Flag for free/fixed boundary calculation (read from namelist)
-  int    SYMM;    // Flag for symmeterization of H-matrix (read from namelist)
 
   double EPSF;    // Step-length for finite difference determination of derivative
  
@@ -180,14 +178,14 @@ class TJ
   double                   sa;    // Edge magnetic shear
   Array<complex<double>,2> Pvac;  // Vacuum solution matrix
   Array<complex<double>,2> Pdag;  // Hermitian conjugate of Pvac
-  Array<complex<double>,2> Pinv;  // Inverse of Pvac
   Array<complex<double>,2> Rvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rvac
-  Array<complex<double>,2> Avac;  // Vacuum residual matrix
-  Array<complex<double>,2> Hmat;  // Vacuum homogeneous response matrix
-  Array<complex<double>,2> Hdag;  // Hermitian conjugate of Hmat
-  Array<complex<double>,2> Hinv;  // Inverse of vacuum homogeneous response matrix
-
+  Array<complex<double>,2> Amat;  // Pdag * Rvac
+  Array<complex<double>,2> Aher;  // Hermitian component of A
+  Array<complex<double>,2> Aant;  // Anti-Hermitian component of A
+  Array<complex<double>,2> Rmat;  // Pdag * Rmat = Aher
+  Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rmat
+  Array<complex<double>,2> Hmat;  // Vacuum response matrix: Rdag * Hmat = Pdag
+ 
   // -----------------
   // ODE Solution data
   // -----------------
@@ -213,6 +211,8 @@ class TJ
   Array<complex<double>,2> Ymat;  // Y-matrix
   Array<complex<double>,2> Omat;  // Omega-matrix
   Array<complex<double>,2> Fmat;  // Inductance matrix
+  Array<complex<double>,2> Fher;  // Symmeterized inductance matrix
+  double*                  Fval;  // Eigenvalues of symmeterized F-matrix
   Array<complex<double>,2> Emat;  // Tearing stability matrix
   Array<complex<double>,3> Psif;  // Psi components of fully reconnected tearing eigenfunctions
   Array<complex<double>,3> Zf;    // Z componnents of fully reconnected tearing eigenfunctions
@@ -483,6 +483,8 @@ class TJ
   void SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B);
   // Invert square matrix
   void InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA);
+  // Return eigenvalues of Hermitian matix H
+  void GetEigenvalues (Array<complex<double>,2> H, double* evals);
 
   // ...............
   // In Toroidal.cpp

@@ -64,8 +64,7 @@ TJ::TJ ()
   // Read namelist file Inputs/TJ.nml
   // --------------------------------
   NameListTJ (&NTOR, &MMIN, &MMAX, 
-	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX,
-	      &FREE, &SYMM, 
+	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX, &FREE, 
 	      &acc, &h0, &hmin, &hmax, &EPSF);
 
   // ............
@@ -154,8 +153,8 @@ TJ::TJ ()
   printf ("Calculation parameters:\n");
   printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
 	  NTOR, MMIN, MMAX, EPS, DEL);
-  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d         symm = %1d\n",
-	  NFIX, NDIAG, NULC, ITERMAX, FREE, SYMM);
+  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d\n",
+	  NFIX, NDIAG, NULC, ITERMAX, FREE);
   printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
 	  acc, h0, hmin, hmax, EPSF);
 }
@@ -271,7 +270,7 @@ void TJ::CleanUp ()
   gsl_spline_free (Rrzspline); gsl_spline_free (Rrespline); gsl_interp_accel_free (Rrzacc); gsl_interp_accel_free (Rreacc);
   gsl_spline_free (Rbspline);  gsl_spline_free (Zbspline);  gsl_interp_accel_free (Rbacc);  gsl_interp_accel_free (Zbacc);
 
-  delete[] Rbound; delete[] Zbound; delete[] tbound; delete[] dRdthe; delete[] dZdthe;
+  delete[] Rbound; delete[] Zbound; delete[] tbound; delete[] dRdthe; delete[] dZdthe; delete[] Fval;
 }
 
 // #####################################

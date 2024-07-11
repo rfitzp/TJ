@@ -22,25 +22,25 @@ plt.subplot (2, 2, 1)
 
 prrax = plt.matshow (pvacr, fignum=0)
 plt.colorbar (prrax)
-plt.title (r"$Re(P_m^m)$")
+plt.title (r"$Re(P_m^{m'})$")
 
 plt.subplot (2, 2, 2)
 
 priax = plt.matshow (pvaci, fignum=0)
 plt.colorbar (priax)
-plt.title (r"$Im(P_m^m)$")
+plt.title (r"$Im(P_m^{m'})$")
 
 plt.subplot (2, 2, 3)
 
 rrrax = plt.matshow (rvacr, fignum=0)
 plt.colorbar (rrrax)
-plt.title (r"$Re(R_m^m)$")
+plt.title (r"$Re(R_m^{m'})$")
 
 plt.subplot (2, 2, 4)
 
 rriax = plt.matshow (rvaci, fignum=0)
 plt.colorbar (rriax)
-plt.title (r"$Im(R_m^m)$")
+plt.title (r"$Im(R_m^{m'})$")
 
 plt.tight_layout ()
 

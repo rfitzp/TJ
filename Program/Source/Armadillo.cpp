@@ -51,10 +51,29 @@ void TJ::InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA
     for (int j = 0; j < size; j++)
       Amat(i, j) = A(i, j);
 
-  cx_mat Bmat = inv(Amat);
+  cx_mat Bmat = inv (Amat);
 
   for (int i = 0; i < size; i++)
     for (int j = 0; j < size; j++)
       invA(i, j) = Bmat(i, j);
  }
 
+// ###################################################
+// Function to return eigenvalues of Hermitian matix H
+// ###################################################
+void TJ::GetEigenvalues (Array<complex<double>,2> H, double* evals)
+{
+  int size = H.extent(0);
+
+  // Solve problem using Armadillo
+  cx_mat Hmat (size, size);
+
+  for (int i = 0; i < size; i++)
+    for (int j = 0; j < size; j++)
+      Hmat(i, j) = H(i, j);
+
+  vec eigval = eig_sym (Hmat);
+
+  for (int i = 0; i < size; i++)
+    evals[i] = eigval(i);
+}

@@ -22,6 +22,7 @@ void TJ::FindDispersion ()
   Ymat .resize(J,    nres);
   Omat .resize(J,    nres);
   Fmat .resize(nres, nres);
+  Fher .resize(nres, nres);
   Emat .resize(nres, nres);
   Psif .resize(J,    nres, NDIAG);
   Zf   .resize(J,    nres, NDIAG);
@@ -31,6 +32,7 @@ void TJ::FindDispersion ()
   Tu   .resize(nres, NDIAG);
   Tfull.resize(nres, nres, NDIAG);
   Tunrc.resize(nres, nres, NDIAG);
+  Fval = new double[nres];
 
   // ............
   // Collate data
@@ -126,6 +128,20 @@ void TJ::FindDispersion ()
       printf ("\n");
     }
 
+  // .................................
+  // Calculate eigenvalues of F-matrix
+  // .................................
+  for (int j = 0; j < nres; j++)
+    for (int jp = 0; jp < nres; jp++)
+      Fher (j, jp) = 0.5 * (Fmat (j, jp) + conj (Fmat (jp, j)));
+
+  GetEigenvalues (Fher, Fval);
+
+  printf ("Eigenvalues of F-matrix:");
+  for (int i = 0; i < nres; i++)
+    printf (" %10.3e ", Fval[i]);
+  printf ("\n");
+  
   // ..................................................
   // Calculate fully-reconnected tearing eigenfunctions
   // ..................................................

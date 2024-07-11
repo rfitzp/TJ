@@ -14,13 +14,13 @@ void TJ::GetVacuum ()
   // ...............
   Pvac.resize (J, J);
   Pdag.resize (J, J);
-  Pinv.resize (J, J);
   Rvac.resize (J, J);
+  Amat.resize (J, J);
+  Aher.resize (J, J);
+  Aant.resize (J, J);
+  Rmat.resize (J, J);
   Rdag.resize (J, J);
-  Avac.resize (J, J);
   Hmat.resize (J, J);
-  Hdag.resize (J, J);
-  Hinv.resize (J, J);
 
   // .........................
   // Calculate vacuum matrices
@@ -53,79 +53,60 @@ void TJ::GetVacuum ()
 	Rvac(j, jp) = Y[index]; index++;
       }
 
-  // ..................................
-  // Calculate vacuum residual matrix
-  // ..................................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      Pdag (j, jp) = conj (Pvac (jp, j));
+
+  // ..................
+  // Calculate A-matrix
+  // ..................
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	complex<double> suma = complex<double> (0., 0.);
+	complex<double> sum = complex<double> (0., 0.);
 
 	for (int jpp = 0; jpp < J; jpp++)
-	  {
-	    suma += conj (Pvac (jpp, j)) * Rvac (jpp, jp) - conj (Rvac (jpp, j)) * Pvac (jpp, jp);
-	  }
+	  sum += Pdag (j, jpp) * Rvac (jpp, jp);
 
-	Avac (j, jp) = suma;
+	Amat (j, jp) = sum;
       }
-
-  double Aerr = 0.;
 
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	double aval = abs (Avac (j, jp));
-
-	if (aval > Aerr)
-	  Aerr = aval;	
+	Aher (j, jp) = 0.5 * (Amat (j, jp) + conj (Amat (jp, j)));
+	Aant (j, jp) = 0.5 * (Amat (j, jp) - conj (Amat (jp, j)));
       }
+  
+  // ...................
+  // Calculate residuals
+  // ...................
+  double Ahmax = 0., Aamax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double ahval = abs (Aher (j, jp));
+	double aaval = abs (Aant (j, jp));
+
+	if (ahval > Ahmax)
+	  Ahmax = ahval;
+	if (aaval > Aamax)
+	  Aamax = aaval;	
+      }
+
+  printf ("Vacuum residual: %10.4e\n", Aamax/Ahmax);
 
   // ..................
   // Calculate H-matrix
   // ..................
+  SolveLinearSystem (Pdag, Rmat, Aher);
+
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
-      {
-	Pdag (j, jp) = conj (Pvac (jp, j));
-	Rdag (j, jp) = conj (Rvac (jp, j));
-      }
-
+      Rdag (j, jp) = conj (Rmat (jp, j));
+  
   SolveLinearSystem (Rdag, Hmat, Pdag);
-   
-  for (int j = 0; j < J; j++)
-    for (int jp = 0; jp < J; jp++)
-      Hdag (j, jp) = conj (Hmat(jp ,j));
-   
-  double Herr = 0.;
-
-  for (int j = 0; j < J; j++)
-    for (int jp = 0; jp < J; jp++)
-      {
-	double hval = abs (Hmat (j, jp) - Hdag (j, jp));
-
-	if (hval > Herr)
-	  Herr = hval;	
-      }
-
-  if (SYMM)
-    {
-      InvertMatrix (Pvac, Pinv);
-
-      for (int j = 0; j < J; j++)
-	for (int jp = 0; jp < J; jp++)
-	  {
-	    complex<double> sum = complex<double> (0., 0.);
-
-	    for (int jpp = 0; jpp < J; jpp++)
-	      Hinv (j, jp) += 0.5 * (Rvac (j, jpp) * Pinv (jpp, jp) + conj (Rvac (jp, jpp) * Pinv (jpp, j)));
-	  }
-
-      InvertMatrix (Hinv, Hmat);
-    }
-
-  printf ("A-matrix zero test:      %10.4e\n", Aerr);
-  printf ("H-matrix Hermitian test: %10.4e\n", Herr);
- }
+}
  
 // ####################################################
 // Function to evaluate right-hand sides of vacuum odes

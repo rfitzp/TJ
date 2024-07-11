@@ -1,7 +1,6 @@
 # Hmat.py
 
-# Visualizes homogeneous vacuum response matrix, H_m^m'.
-# Also shows hermitian test for matrix and hermitianized version of matrix.
+# Visualizes vacuum response matrix H_m^m'
 
 import math
 import numpy as np
@@ -10,38 +9,24 @@ import netCDF4 as nc
 
 fn    = 'TJ.nc'
 ds    = nc.Dataset(fn)
-hmatr = ds['Hmat_r']
-hmati = ds['Hmat_i']
-hresr = ds['Hres_r']
-hresi = ds['Hres_i']
+avacr = ds['Hmat_r']
+avaci = ds['Hmat_i']
 
-fig = plt.figure (figsize = (8.0, 8.0))
+fig = plt.figure (figsize = (12.0, 6.0))
 plt.rc ('xtick', labelsize=12) 
 plt.rc ('ytick', labelsize=12)
 
-plt.subplot (2, 2, 1)
+plt.subplot (1, 2, 1)
 
-arrax = plt.matshow (hmatr, fignum=0)
+arrax = plt.matshow (avacr, fignum=0)
 plt.colorbar (arrax)
-plt.title (r"$Re(H_{mm})$")
+plt.title (r"$Re(H^{mm'})$")
 
-plt.subplot (2, 2, 2)
+plt.subplot (1, 2, 2)
 
-ariax = plt.matshow (hmati, fignum=0)
+ariax = plt.matshow (avaci, fignum=0)
 plt.colorbar (ariax)
-plt.title (r"$Im(H_{mm})$")
-
-plt.subplot (2, 2, 3)
-
-brrax = plt.matshow (hresr, fignum=0)
-plt.colorbar (brrax)
-plt.title (r"$Re(H_{mm}-H_{mm}^\dag)$")
-
-plt.subplot (2, 2, 4)
-
-briax = plt.matshow (hresi, fignum=0)
-plt.colorbar (briax)
-plt.title (r"$Im(H_{mm}-H_{mm}^\dag)$")
+plt.title (r"$Im(H^{mm'})$")
 
 plt.tight_layout()
 
