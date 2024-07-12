@@ -4,8 +4,8 @@ F_COMPILER = gfortran
 F_FLAGS    =
 F_INCLUDE  = -I/opt/local/include
 
-C_COMPILER = clang++ -O3 -std=c++11 
-C_FLAGS    = -w 
+C_COMPILER = clang++ 
+C_FLAGS    = -w -O3 -std=c++11 
 C_INCLUDE  = -I/opt/local/include
 C_LIBS     = -L/opt/local/lib -L/opt/local/lib/libgcc -lgfortran.5 -lgsl -lgslcblas -lnetcdf_c++4 -larmadillo -llapack
 

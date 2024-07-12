@@ -346,7 +346,7 @@ void Equilibrium::Solve ()
   
   if (fscanf (file, "%d", &nshape) != 1)
     {
-      printf ("Error reading Shape.txt\n");
+      printf ("Equilibrium:: Error reading Shape.txt\n");
       exit (1);
     }
   double* hna = new double[nshape+2];
@@ -356,7 +356,7 @@ void Equilibrium::Solve ()
     {
       if (fscanf (file, "%lf %lf", &hnax, &vnax) != 2)
 	{
-	  printf ("Error reading Shape.txt\n");
+	  printf ("Equilibrium:: Error reading Shape.txt\n");
 	  exit (1);
 	}
       hna[i+2] = hnax;
@@ -372,6 +372,7 @@ void Equilibrium::Solve ()
   
   printf ("\n");
   printf ("Subprogram Equilibrium::\n");
+  printf ("Calculation parameters:\n");
   printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
 	  qc, nu, pc, mu, epsa, Ns, Nr, Nf, Nw);
   
@@ -787,24 +788,30 @@ void Equilibrium::Solve ()
   // ........
   // Clean up
   // ........
-  delete[] rr;  delete[] p2;  delete[] f1;  delete[] f3;   delete[] g2;  delete[] q0;  delete[] q2;
-  delete[] It;  delete[] Ip;  delete[] Jt;  delete[] Jp;   delete[] pp;  delete[] ppp; delete[] qq;
-  delete[] qqq; delete[] s;   delete[] s2;  delete[] S1;   delete[] S2;  delete[] P1;  delete[] P2;
-  delete[] P3;  delete[] P3a; delete[] ff;  delete[] ggr2; delete[] RR2;
+  printf ("Cleaning up:\n");
+  
+  delete[] rr;   delete[] p2;     delete[] f1;     delete[] f3;      delete[] g2;
+  delete[] q0;   delete[] q2;     delete[] ppp;    delete[] qq;      delete[] dRdtheta; 
+  delete[] It;   delete[] Ip;     delete[] Jt;     delete[] Jp;      delete[] pp;   
+  delete[] qqq;  delete[] s;      delete[] s2;     delete[] S1;      delete[] S2;
+  delete[] P1;   delete[] P2;     delete[] y2;     delete[] err2;    delete[] dZdtheta;
+  delete[] P3;   delete[] P3a;    delete[] ff;     delete[] ggr2;    delete[] RR2;
+  delete[] y;    delete[] err;    delete[] y1;     delete[] dy1dr;   delete[] err1; 
+  delete[] data; delete[] Rbound; delete[] Zbound; delete[] tbound;  delete[] wbound;
+  delete[] R2b;  delete[] grr2b;  delete[] Lfunc;  delete[] tbound0; delete[] wbound0;
 
-  delete[] y;  delete[] err; delete[] y1; delete[] dy1dr; delete[] err1; delete[] y2; delete[] err2;
+  gsl_spline_free (g2spline);
+  gsl_spline_free (Itspline);
+  gsl_spline_free (Ipspline);
+  gsl_spline_free (fspline);
+  gsl_spline_free (gr2spline);
+  gsl_spline_free (R2spline);
 
-  gsl_spline_free       (g2spline);
   gsl_interp_accel_free (g2acc);
-  gsl_spline_free       (Itspline);
   gsl_interp_accel_free (Itacc);
-  gsl_spline_free       (Ipspline);
   gsl_interp_accel_free (Ipacc);
-  gsl_spline_free       (fspline);
   gsl_interp_accel_free (facc);
-  gsl_spline_free       (gr2spline);
   gsl_interp_accel_free (gr2acc);
-  gsl_spline_free       (R2spline);
   gsl_interp_accel_free (R2acc);
 
   for (int i = 0; i <= Ns; i++)
@@ -819,19 +826,19 @@ void Equilibrium::Solve ()
       gsl_interp_accel_free (HPacc[i]);
       gsl_interp_accel_free (VPacc[i]);
     }
-  
   delete[] HHspline; delete[] VVspline; delete[] HPspline; delete[] VPspline;
   delete[] HHacc;    delete[] VVacc;    delete[] HPacc;    delete[] VPacc;
 
-  delete[] data;     delete[] Rbound;  delete[] Zbound; delete[] tbound;  delete[] wbound;
-  delete[] R2b;      delete[] grr2b;   delete[] Lfunc;  delete[] tbound0; delete[] wbound0;
-  delete[] dRdtheta; delete[] dZdtheta;
-
-  gsl_spline_free (Lspline); gsl_interp_accel_free (Lacc);
-  gsl_spline_free (wspline); gsl_interp_accel_free (wacc);
-  gsl_spline_free (Rspline); gsl_interp_accel_free (Racc);
-  gsl_spline_free (Zspline); gsl_interp_accel_free (Zacc);
-}
+  gsl_spline_free (Lspline); 
+  gsl_spline_free (wspline); 
+  gsl_spline_free (Rspline); 
+  gsl_spline_free (Zspline);
+  
+  gsl_interp_accel_free (Lacc);
+  gsl_interp_accel_free (wacc);
+  gsl_interp_accel_free (Racc);
+  gsl_interp_accel_free (Zacc);
+ }
 
 // ########################
 // Function to return f1(r)
@@ -1643,7 +1650,7 @@ FILE* Equilibrium::OpenFilew (char* filename)
   FILE* file = fopen (filename, "w");
   if (file == NULL) 
     {
-      printf ("OpenFilew: Error opening data-file: %s\n", filename);
+      printf ("Equilibrium::OpenFilew: Error opening data-file: %s\n", filename);
       exit (1);
     }
   return file;
@@ -1657,7 +1664,7 @@ FILE* Equilibrium::OpenFiler (char* filename)
   FILE* file = fopen (filename, "r");
   if (file == NULL) 
     {
-      printf ("OpenFiler: Error opening data-file: %s\n", filename);
+      printf ("Equilibrium::OpenFiler: Error opening data-file: %s\n", filename);
       exit (1);
     }
   return file;

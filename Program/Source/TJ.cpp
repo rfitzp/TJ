@@ -221,10 +221,16 @@ void TJ::SetModeNumbers ()
 // #############################
 void TJ::CleanUp ()
 {
-  delete[] MPOL; delete[] mpol;
+  printf ("Cleaning up:\n");
   
-  delete[] rr; delete[] pp; delete[] ppp; delete[] q; delete[] s; delete[] s2;
-  delete[] S1; delete[] P1; delete[] P2;  delete[] P3;
+  delete[] MPOL;   delete[] mpol;   delete[] s;      delete[] s2;
+  delete[] rr;     delete[] pp;     delete[] ppp;    delete[] q; 
+  delete[] S1;     delete[] P1;     delete[] P2;     delete[] P3;
+  delete[] mres;   delete[] qres;   delete[] rres;   delete[] sres;      
+  delete[] nuLres; delete[] nuSres; delete[] qerr;   delete[] Jres;
+  delete[] hode;   delete[] eode;   delete[] Rgrid;  delete[] rf;
+  delete[] Rbound; delete[] Zbound; delete[] tbound; delete[] dRdthe;
+  delete[] DIres;  delete[] dZdthe; delete[] Fval;
 
   gsl_spline_free (ppspline);
   gsl_spline_free (pppspline);
@@ -258,21 +264,20 @@ void TJ::CleanUp ()
       gsl_interp_accel_free (HPacc[i]);
       gsl_interp_accel_free (VPacc[i]);
     }
-  
   delete[] HHspline; delete[] VVspline; delete[] HPspline; delete[] VPspline;
   delete[] HHacc;    delete[] VVacc;    delete[] HPacc;    delete[] VPacc;
 
-  delete[] mres;   delete[] qres;   delete[] rres; delete[] sres; delete[] DIres;
-  delete[] nuLres; delete[] nuSres; delete[] qerr; delete[] Jres;
+  gsl_spline_free (Rrzspline);
+  gsl_spline_free (Rrespline);
+  gsl_spline_free (Rbspline);
+  gsl_spline_free (Zbspline);
 
-  delete[] hode; delete[] eode; delete[] Rgrid; delete[] rf;
-
-  gsl_spline_free (Rrzspline); gsl_spline_free (Rrespline); gsl_interp_accel_free (Rrzacc); gsl_interp_accel_free (Rreacc);
-  gsl_spline_free (Rbspline);  gsl_spline_free (Zbspline);  gsl_interp_accel_free (Rbacc);  gsl_interp_accel_free (Zbacc);
-
-  delete[] Rbound; delete[] Zbound; delete[] tbound; delete[] dRdthe; delete[] dZdthe; delete[] Fval;
-}
-
+  gsl_interp_accel_free (Rbacc);
+  gsl_interp_accel_free (Zbacc);
+  gsl_interp_accel_free (Rrzacc);
+  gsl_interp_accel_free (Rreacc);
+}  
+ 
 // #####################################
 // Function to open new file for writing
 // #####################################
@@ -281,7 +286,7 @@ FILE* TJ::OpenFilew (char* filename)
   FILE* file = fopen (filename, "w");
   if (file == NULL) 
     {
-      printf ("OpenFilew: Error opening data-file: %s\n", filename);
+      printf ("TJ::OpenFilew: Error opening data-file: %s\n", filename);
       exit (1);
     }
   return file;
@@ -295,7 +300,7 @@ FILE* TJ::OpenFiler (char* filename)
   FILE* file = fopen (filename, "r");
   if (file == NULL) 
     {
-      printf ("OpenFiler: Error opening data-file: %s\n", filename);
+      printf ("TJ::OpenFiler: Error opening data-file: %s\n", filename);
       exit (1);
     }
   return file;

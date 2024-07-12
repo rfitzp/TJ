@@ -11,13 +11,13 @@ ReBu = plt.get_cmap('seismic')
 
 ncont = 160
 
-fn = 'Equilibrium.nc'
-ds = nc.Dataset(fn)
+fn   = 'Equilibrium.nc'
+ds   = nc.Dataset(fn)
 para = ds['para']
-R  = ds['R']
-Z  = ds['Z']
-r  = ds['rr']
-t  = ds['theta']
+R    = ds['R']
+Z    = ds['Z']
+r    = ds['rr']
+t    = ds['theta']
 
 epsa = para[0]
 scale = 1.5*epsa
@@ -108,65 +108,69 @@ for i in range (np.size(ZZi,0)):
             val1 = 0.
         ZZi[i][j] = val1   
         
-plt.subplot(2, 2, 1)
-plt.xlim(1.-scale, 1.+scale)
-plt.ylim(-scale, scale)
+plt.subplot (2, 2, 1)
 
-plt.plot(R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
+plt.xlim (1.-scale, 1.+scale)
+plt.ylim (-scale, scale)
 
-plt.contour(RR, ZZ, rr, rres, colors='black', linewidths = 0.5)    
+plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
 
-plt.contourf(RR, ZZ, Pr, ncont, cmap=ReBu)    
+plt.contour (RR, ZZ, rr, rres, colors='black', linewidths = 0.5)    
 
-plt.plot([1.], [0.], marker='o', markersize=1, color="black")
+plt.contourf (RR, ZZ, Pr, ncont, cmap = ReBu)    
 
-plt.xlabel(r'$R/R_0$', fontsize="12")
-plt.ylabel(r'$Z/R_0$',  fontsize="12")
+plt.plot ([1.], [0.], marker = 'o', markersize = 1, color = "black")
 
-plt.subplot(2, 2, 2)
-plt.xlim(1.-scale, 1.+scale)
-plt.ylim(-scale, scale)
+plt.xlabel (r'$R/R_0$', fontsize = "12")
+plt.ylabel (r'$Z/R_0$', fontsize = "12")
 
-plt.plot(R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
+plt.subplot (2, 2, 2)
 
-plt.contour(RR, ZZ, rr, rres, colors='black', linewidths = 0.5)    
+plt.xlim (1.-scale, 1.+scale)
+plt.ylim (-scale, scale)
 
-plt.contourf(RR, ZZ, PPi, ncont, cmap=ReBu)    
+plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
 
-plt.plot([1.], [0.], marker='o', markersize=1, color="black")
+plt.contour (RR, ZZ, rr, rres, colors = 'black', linewidths = 0.5)    
 
-plt.xlabel(r'$R/R_0$', fontsize="12")
-plt.ylabel(r'$Z/R_0$',  fontsize="12")
+plt.contourf (RR, ZZ, PPi, ncont, cmap=ReBu)    
 
-plt.subplot(2, 2, 3)
-plt.xlim(1.-scale, 1.+scale)
-plt.ylim(-scale, scale)
+plt.plot ([1.], [0.], marker = 'o', markersize = 1, color = "black")
 
-plt.plot(R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
+plt.xlabel (r'$R/R_0$', fontsize = "12")
+plt.ylabel (r'$Z/R_0$', fontsize = "12")
 
-plt.contour(RR, ZZ, rr, rres, colors='black', linewidths = 0.5)    
+plt.subplot (2, 2, 3)
 
-plt.contourf(RR, ZZ, ZZr, ncont, cmap=ReBu)    
+plt.xlim (1.-scale, 1.+scale)
+plt.ylim (-scale, scale)
 
-plt.plot([1.], [0.], marker='o', markersize=1, color="black")
+plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
 
-plt.xlabel(r'$R/R_0$', fontsize="12")
-plt.ylabel(r'$Z/R_0$',  fontsize="12")
+plt.contour (RR, ZZ, rr, rres, colors = 'black', linewidths = 0.5)    
 
-plt.subplot(2, 2, 4)
-plt.xlim(1.-scale, 1.+scale)
-plt.ylim(-scale, scale)
+plt.contourf (RR, ZZ, ZZr, ncont, cmap = ReBu)    
 
-plt.plot(R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
+plt.plot ([1.], [0.], marker = 'o', markersize = 1, color = "black")
 
-plt.contour(RR, ZZ, rr, rres, colors='black', linewidths = 0.5)    
+plt.xlabel (r'$R/R_0$', fontsize = "12")
+plt.ylabel (r'$Z/R_0$', fontsize = "12")
 
-plt.contourf(RR, ZZ, ZZi, ncont, cmap=ReBu)
+plt.subplot (2, 2, 4)
 
-plt.plot([1.], [0.], marker='o', markersize=1, color="black")
+plt.xlim (1.-scale, 1.+scale)
+plt.ylim (-scale, scale)
 
-plt.xlabel(r'$R/R_0$', fontsize="12")
-plt.ylabel(r'$Z/R_0$',  fontsize="12")
+plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
+
+plt.contour (RR, ZZ, rr, rres, colors = 'black', linewidths = 0.5)    
+
+plt.contourf (RR, ZZ, ZZi, ncont, cmap = ReBu)
+
+plt.plot ([1.], [0.], marker = 'o', markersize = 1, color = "black")
+
+plt.xlabel (r'$R/R_0$', fontsize = "12")
+plt.ylabel (r'$Z/R_0$', fontsize = "12")
 
 plt.tight_layout()
 

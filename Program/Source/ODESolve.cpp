@@ -544,32 +544,35 @@ void TJ::Fixup (double r, Array<complex<double>,2> YY)
     {
       complex<double> yii = (MPOL[i] == 0) ? YY(J+i, i) : YY(i, i);
 
-      // Renormalize solution vectors
-      for (int k = 0; k < 2*J; k++)
+      if (abs (yii) > 1.e-15)
 	{
-	  complex<double> yki = YY(k, i);
-
-	  YY(k, i) = yki /yii;
-
-	  for (int l = 0; l < NDIAG; l++)
+          // Renormalize solution vectors
+	  for (int k = 0; k < 2*J; k++)
 	    {
-	      if (r > Rgrid[l])
+	      complex<double> yki = YY(k, i);
+	      
+	      YY(k, i) = yki /yii;
+	      
+	      for (int l = 0; l < NDIAG; l++)
 		{
-		  complex<double> Yki = YYY(k, i, l);
-
-		  YYY(k, i, l) = Yki /yii;
+		  if (r > Rgrid[l])
+		    {
+		      complex<double> Yki = YYY(k, i, l);
+		      
+		      YYY(k, i, l) = Yki /yii;
+		    }
 		}
 	    }
-	}
-
-      // Renormalize Pi matrix
-      for (int k = 0; k < nres; k++)
-	{
-	  if (r > rres[k])
+	  
+	  // Renormalize Pi matrix
+	  for (int k = 0; k < nres; k++)
 	    {
-	      complex<double> pki = Pi(k, i);
-	      
-	      Pi(k, i) = pki /yii;
+	      if (r > rres[k])
+		{
+		  complex<double> pki = Pi(k, i);
+		  
+		  Pi(k, i) = pki /yii;
+		}
 	    }
 	}
     }

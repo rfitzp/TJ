@@ -63,13 +63,12 @@ class TJ
 {
  private:
 
-  // .................................................
-  // Control parameters (read from Inputs/Namelist.nml)
-  // ..................................................
+  // ----------------------
+  // Calculation parameters
+  // ----------------------
   int    NTOR;    // Toroidal mode number (read from namelist)
   int    MMIN;    // Minimum poloidal mode number included in calculation (read from namelist)
   int    MMAX;    // Maximum poloidal mode number included in calculation (read from namelist)
-
   double EPS;     // Solutions launched from magnetic axis at r = EPS (read from namelist)
   double DEL;     // Distance of closest approach to rational surface is DEL (read from namelist)
   int    NFIX;    // Number of fixups performed (read from namelist)
@@ -77,12 +76,21 @@ class TJ
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from namelist)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from namelist)
   int    FREE;    // Flag for free/fixed boundary calculation (read from namelist)
-
   double EPSF;    // Step-length for finite difference determination of derivative
- 
-  // .................................................
+
+  // -------------------------------
+  // Adaptive integration parameters
+  // -------------------------------
+  double acc;     // Integration accuracy (read from namelist)
+  double h0;      // Initial step-length (read from namelist)
+  double hmin;    // Minimum step-length (read from namelist)
+  double hmax;    // Maximum step-length (read from namelist)
+  int    maxrept; // Maximum number of step recalculations
+  int    flag;    // Integration error calcualation flag
+  
+  // -------------------------------------------------
   // Equilibrium data (read from Plots/Equilibrium.nc)
-  // .................................................
+  // -------------------------------------------------
   double             epsa;      // Inverse aspect-ratio
   int                Ns;        // Number of shaping harmonics
   int                Nr;        // Number of radial grid-points
@@ -149,18 +157,18 @@ class TJ
   gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function
   gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function
  
-  // ......................
-  // Calculation parameters
-  // ......................
+  // ----------------
+  // Mode number data
+  // ----------------
   double   ntor;  // Toroidal mode number
   int      J;     // Number of poloidal harmonics included in calculation
   int      K;     // Number of solution vectors: K = J + nres
   int*     MPOL;  // Poloidal mode numbers of included poloidal harmonics
   double*  mpol;  // Poloidal mode numbers of included poloidal harmonics
 
-  // .....................
+  // ---------------------
   // Rational surface data
-  // ....................
+  // ---------------------
   int     nres;    // Number of rational magnetic flux-surfaces
   int*    mres;    // Poloidal mode numbers at rational surfaces
   double* qres;    // Safety-factors at rational surfaces
@@ -253,16 +261,7 @@ class TJ
   double Eta;      // Minimum magnitude of f at root f(x) = 0
   int    Maxiter;  // Maximum number of iterations
 
-  // -------------------------------
-  // Adaptive integration parameters
-  // -------------------------------
-  double acc;     // Integration accuracy (read from namelist)
-  double h0;      // Initial step-length (read from namelist)
-  double hmin;    // Minimum step-length (read from namelist)
-  double hmax;    // Maximum step-length (read from namelist)
-  int    maxrept; // Maximum number of step recalculations
-  int    flag;    // Integration error calcualation flag
-  
+
   // ----------------------------
   // Cash-Karp RK4/RK5 parameters
   // ----------------------------
@@ -446,9 +445,9 @@ class TJ
   // In ZeroFind.cpp
   // ...............
 
-  //  Routine to find approximate root of F(x) = 0 using Ridder's method. 
+  // Routine to find approximate root of F(x) = 0 using Ridder's method
   double RootFind ();
-  // Ridder's method for finding root of F(x) = 0.
+  // Ridder's method for finding root of F(x) = 0
   void Ridder (double x1, double x2, double F1, double F2, double& x);
   
   // ................
@@ -474,7 +473,6 @@ class TJ
   //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
   void CashKarp45Fixed1 (int neqns, double& x, complex<double>* y, complex<double>* err, double h);
  
-  
   // ................
   // In Armadillo.cpp
   // ...............
@@ -498,7 +496,6 @@ class TJ
   double ToroidaldPdz (int m, int n, double z);
   // Return derivative of associated Legendre function Q^m_(n-1/2) (z)
   double ToroidaldQdz (int m, int n, double z);
-
   // Return hyperbolic cosine of toroidal coordinate mu
   double GetCoshMu (double R, double Z);
   // Return toroidal coordinate eta
@@ -512,7 +509,6 @@ class TJ
   void ReadNetcdf ();
   // Write stability data to netcdf file
   void WriteNetcdf ();
-
 };
 
 #endif //TJXX

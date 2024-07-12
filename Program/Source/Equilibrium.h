@@ -6,7 +6,7 @@
 // All lengths (except r) normalized to R_0 (major radius of magnetic axis).
 // All magnetic field-strengths normalized to B_0 (on-axis toroidal magnetic field-strength).
 // Radial coordinate, r, normalized to epsa * R_0, where eps_a is inverse-aspect ratio.
-// So r = 0. is magnetic axis, r = 1 is plasma/vacuum interface.
+// So r = 0 is magnetic axis, r = 1 is plasma/vacuum interface.
 
 // Flux-surfaces:
 
@@ -19,14 +19,15 @@
 
 // Equilibrium profiles:
 //
-//  Lowest order (i.e., cylindrical) safety factor profile is q0(r) = r^2/f1(r)
-//  Pressure profile is p(r) = epsa^2 p2(r)
+//  Lowest order (i.e., cylindrical) safety factor profile is q0(r) = r^2 /f1(r)
+//  Pressure profile is P(r) = epsa^2 p2(r)
 // 
-//  f1(r) = (1/nu/qc) [1 - (1 - r^2)^nu]
+//  f1(r) = (1 /nu/qc) [1 - (1 - r^2)^nu]
 //
 //  p2(r) = pc (1 - r^2)^mu
 //
 // qc is lowest-order safety-factor on magnetic axis.
+// nu * qc is lowest-order safety-factor at plasma/vacuum interface.
 
 // Inputs:
 //  Inputs/Namelist.nml - namelist
@@ -94,6 +95,16 @@ class Equilibrium
   int    Nf;     // Number of radial grid-points for visualization purposes (read from namelist)
   int    Nw;     // Number of angular grid-points for visulalization purposes (read from namelist)
 
+  // -------------------------------
+  // Adaptive integration parameters
+  // -------------------------------
+  double acc;     // Integration accuracy (read from namelist)
+  double h0;      // Initial integration step-length (read from namelist)
+  double hmin;    // Minimum integration step-length (read from namelist)
+  double hmax;    // Maximum integration step-length (read from namelist)
+  int    maxrept; // Maximum number of step recalculations
+  int    flag;    // Integration error calcualation flag
+  
   // ----------------
   // Calculation data
   // ----------------
@@ -178,17 +189,7 @@ class Equilibrium
   double*            dZdtheta;  // dZ/dtheta values on plasma boundary
   double*            R2b;       // R^2 values on plasma boundary
   double*            grr2b;     // |nabla r|^2 values on plasma boundary
-   
-  // -------------------------------
-  // Adaptive integration parameters
-  // -------------------------------
-  double acc;     // Integration accuracy (read from namelist)
-  double h0;      // Initial integration step-length (read from namelist)
-  double hmin;    // Minimum integration step-length (read from namelist)
-  double hmax;    // Maximum integration step-length (read from namelist)
-  int    maxrept; // Maximum number of step recalculations
-  int    flag;    // Integration error calcualation flag
-  
+
   // ----------------------------
   // Cash-Karp RK4/RK5 parameters
   // ----------------------------

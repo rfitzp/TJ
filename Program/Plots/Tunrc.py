@@ -17,9 +17,9 @@ T_f   = ds['Torque_pair_unrc']
 rres  = ds['rres']
 mres  = ds['m_res']
 
-fig = plt.figure (figsize=(12.0, 8.0))
-plt.rc('xtick', labelsize=15) 
-plt.rc('ytick', labelsize=15)
+fig = plt.figure (figsize = (12.0, 8.0))
+plt.rc ('xtick', labelsize = 15) 
+plt.rc ('ytick', labelsize = 15)
 
 nres = len(rres)
 print ("rational surfaces = (%d .. %d)" % (1, nres))
@@ -29,20 +29,20 @@ j   = int(m) - 1
 mp   = input ("rational surface number 2 ? ")
 jp   = int(mp) - 1
 
-plt.subplot(1, 1, 1)
+plt.subplot (1, 1, 1)
 
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
-plt.plot(r, T_f[j,jp,:], color='blue', linewidth = 2, linestyle = 'solid')
+plt.plot (r, T_f[j,jp,:], color = 'blue', linewidth = 2, linestyle = 'solid')
 
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"$T_\phi$", fontsize="15")
+plt.xlabel (r'$\hat{r}$', fontsize = "15")
+plt.ylabel (r"$T_\phi$",  fontsize = "15")
 
-plt.tight_layout()
+plt.tight_layout ()
 
-plt.show()    
+plt.show ()    

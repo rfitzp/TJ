@@ -20,14 +20,14 @@ plt.subplot (1, 2, 1)
 
 arrax = plt.matshow (avacr, fignum=0)
 plt.colorbar (arrax)
-plt.title (r"$Re(H^{mm'})$")
+plt.title (r"$Re(H_{mm'})$")
 
 plt.subplot (1, 2, 2)
 
 ariax = plt.matshow (avaci, fignum=0)
 plt.colorbar (ariax)
-plt.title (r"$Im(H^{mm'})$")
+plt.title (r"$Im(H_{mm'})$")
 
-plt.tight_layout()
+plt.tight_layout ()
 
-plt.show()
+plt.show ()
