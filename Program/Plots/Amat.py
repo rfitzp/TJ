@@ -35,13 +35,13 @@ plt.subplot (2, 2, 3)
 
 arrax = plt.matshow (bvacr, fignum=0)
 plt.colorbar (arrax)
-plt.title (r"$Re(A^{mm'}_{res})$")
+plt.title (r"$Re(A^{mm'}_{anti})$")
 
 plt.subplot (2, 2, 4)
 
 ariax = plt.matshow (bvaci, fignum=0)
 plt.colorbar (ariax)
-plt.title (r"$Im(A_{res}^{mm'})$")
+plt.title (r"$Im(A_{anti}^{mm'})$")
 
 plt.tight_layout()
 

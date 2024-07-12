@@ -36,7 +36,7 @@ psi_i = ds1['Psi_unrc_eig_i']
 z_r   = ds1['Z_unrc_eig_r']
 z_i   = ds1['Z_unrc_eig_i']
 
-fig = plt.figure(figsize=(8.0, 8.0))
+fig = plt.figure (figsize=(8.5, 8.0))
 plt.rc('xtick', labelsize=12) 
 plt.rc('ytick', labelsize=12) 
 
@@ -55,13 +55,22 @@ PPi = np.asarray (Pi)
 ZZr = np.asarray (Zr)
 ZZi = np.asarray (Zi)
 
+prmin = - np.amin (PPr)
+prmax = - np.amax (PPr)
+pimin = - np.amin (PPi)
+pimax = - np.amax (PPi)
+zrmin = - np.amin (ZZr)
+zrmax = - np.amax (ZZr)
+zimin = - np.amin (ZZi)
+zimax = - np.amax (ZZi)
+
 for i in range (np.size(PPr,0)):
     for j in range (np.size(PPr,1)):
         val = PPr[i][j]
         if (val > 0.):
-            val1 = float(val)**float(scl)
+            val1 = float(val /prmax)**float(scl)
         elif (val < 0.):
-            val1 = - (-float(val))**float(scl)
+            val1 = - (float(val /prmin))**float(scl)
         else:
             val1 = 0.
         PPr[i][j] = val1
@@ -70,9 +79,9 @@ for i in range (np.size(PPi,0)):
     for j in range (np.size(PPi,1)):
         val = PPi[i][j]
         if (val > 0.):
-            val1 = float(val)**float(scl)
+            val1 = float(val /pimax)**float(scl)
         elif (val < 0.):
-            val1 = - (-float(val))**float(scl)
+            val1 = - (float(val /pimin))**float(scl)
         else:
             val1 = 0.
         PPi[i][j] = val1
@@ -81,9 +90,9 @@ for i in range (np.size(ZZr,0)):
     for j in range (np.size(ZZr,1)):
         val = ZZr[i][j]
         if (val > 0.):
-            val1 = float(val)**float(scl)
+            val1 = float(val /zrmax)**float(scl)
         elif (val < 0.):
-            val1 = - (-float(val))**float(scl)
+            val1 = - (float(val /zimin))**float(scl)
         else:
             val1 = 0.
         ZZr[i][j] = val1
@@ -92,9 +101,9 @@ for i in range (np.size(ZZi,0)):
     for j in range (np.size(ZZi,1)):
         val = ZZi[i][j]
         if (val > 0.):
-            val1 = float(val)**float(scl)
+            val1 = float(val /zimax)**float(scl)
         elif (val < 0.):
-            val1 = - (-float(val))**float(scl)
+            val1 = - (float(val /zimin))**float(scl)
         else:
             val1 = 0.
         ZZi[i][j] = val1   

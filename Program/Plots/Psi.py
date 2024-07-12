@@ -58,9 +58,9 @@ for i in range (np.size(PPr,0)):
     for j in range (np.size(PPr,1)):
         val = PPr[i][j]
         if (val > 0.):
-            val1 = float(val/prmax)**float(scl)
+            val1 = float(val /prmax)**float(scl)
         elif (val < 0.):
-            val1 = - (float(val/prmin))**float(scl)
+            val1 = - (float(val /prmin))**float(scl)
         else:
             val1 = 0.
         PPr[i][j] = val1
@@ -69,9 +69,9 @@ for i in range (np.size(PPi,0)):
     for j in range (np.size(PPi,1)):
         val = PPi[i][j]
         if (val > 0.):
-            val1 = float(val/pimax)**float(scl)
+            val1 = float(val /pimax)**float(scl)
         elif (val < 0.):
-            val1 = - (float(val/pimin))**float(scl)
+            val1 = - (float(val /pimin))**float(scl)
         else:
             val1 = 0.
         PPi[i][j] = val1        
