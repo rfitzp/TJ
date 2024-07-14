@@ -21,6 +21,7 @@ ns   = Hnn.shape[0] - 1
 ns   = 5
                       
 fig = plt.figure(figsize = (12.0, 8.0))
+fig.canvas.manager.set_window_title (r'TJ Code: Shaping Functions')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 
@@ -34,15 +35,16 @@ plt.axhline (0.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.xlabel (r'$\hat{r}$', fontsize = "15")
 plt.ylabel (r'$g_2$',     fontsize = "15")
 
-plt.subplot(ns, 2, 2)
+plt.subplot (ns, 2, 2)
  
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
 plt.plot    (r, Hn[1],  color = 'blue',  linewidth = 2,   linestyle = 'solid', label = r"$H_1$")
 plt.plot    (r, Hnp[1], color = 'red',   linewidth = 2,   linestyle = 'solid', label = r"$H_1'$")
 plt.axhline (0.,        color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\hat{r}$', fontsize="15")
+plt.ylabel (r'$H_1$',     fontsize = "15")
 
 j = 3
 for n in range (2, ns+1):
@@ -57,6 +59,7 @@ for n in range (2, ns+1):
     plt.axhline (0.,        color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
     plt.xlabel (r'$\hat{r}$', fontsize="15")
+    plt.ylabel (r'$H_{%2d}$'%(n), fontsize = "15")
 
     plt.subplot (ns, 2, j)
     j = j +1
@@ -68,6 +71,7 @@ for n in range (2, ns+1):
     plt.axhline (0.,        color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
     plt.xlabel (r'$\hat{r}$', fontsize="15")
+    plt.ylabel (r'$V_{%2d}$'%(n), fontsize = "15")
 
 plt.tight_layout ()
 

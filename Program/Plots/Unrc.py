@@ -21,9 +21,10 @@ T_u   = ds['Torque_unrc']
 rres  = ds['rres']
 mres  = ds['m_res']
 
-fig = plt.figure (figsize=(12.0, 8.0))
-plt.rc('xtick', labelsize=15) 
-plt.rc('ytick', labelsize=15)
+fig = plt.figure (figsize = (12.0, 8.0))
+fig.canvas.manager.set_window_title (r'TJ Code: Unreconnected Eigenfunctions')
+plt.rc ('xtick', labelsize = 15) 
+plt.rc ('ytick', labelsize  =15)
 
 nres = len(rres)
 print ("rational surface = (%d .. %d)" % (1, nres))
@@ -38,126 +39,126 @@ plt.xlim(0., 1.)
 
 for jp in range (J):
     if (mpol[jp]-mres[j]) % 7 == 0:
-        plt.plot(r, Psi_r[jp,j,:], color='black', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_r[jp,j,:], color = 'black',   linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 1:
-        plt.plot(r, Psi_r[jp,j,:], color='red', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_r[jp,j,:], color = 'red',     linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 2:
-        plt.plot(r, Psi_r[jp,j,:], color='green', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_r[jp,j,:], color = 'green',   linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 3:
-        plt.plot(r, Psi_r[jp,j,:], color='blue', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_r[jp,j,:], color = 'blue',    linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 4:
-        plt.plot(r, Psi_r[jp,j,:], color='yellow', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_r[jp,j,:], color = 'yellow',  linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 5:
-        plt.plot(r, Psi_r[jp,j,:], color='cyan', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_r[jp,j,:], color = 'cyan',    linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 6:
-        plt.plot(r, Psi_r[jp,j,:], color='magenta', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_r[jp,j,:], color = 'magenta', linewidth = 1, linestyle = 'solid')
 
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"real($\psi$)", fontsize="15")
+plt.xlabel (r'$\hat{r}$',    fontsize = "15") 
+plt.ylabel (r"real($\psi$)", fontsize = "15")
 
-plt.subplot(3, 2, 2)
+plt.subplot (3, 2, 2)
 
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
 for jp in range (J):
     if (mpol[jp]-mres[j]) % 7 == 0:
-        plt.plot(r, Psi_i[jp,j,:], color='black', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_i[jp,j,:], color = 'black',   linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 1:
-        plt.plot(r, Psi_i[jp,j,:], color='red', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_i[jp,j,:], color = 'red',     linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 2:
-        plt.plot(r, Psi_i[jp,j,:], color='green', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_i[jp,j,:], color = 'green',   linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 3:
-        plt.plot(r, Psi_i[jp,j,:], color='blue', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_i[jp,j,:], color = 'blue',    linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 4:
-        plt.plot(r, Psi_i[jp,j,:], color='yellow', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_i[jp,j,:], color = 'yellow',  linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 5:
-        plt.plot(r, Psi_i[jp,j,:], color='cyan', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_i[jp,j,:], color = 'cyan',    linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 6:
-        plt.plot(r, Psi_i[jp,j,:], color='magenta', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Psi_i[jp,j,:], color = 'magenta', linewidth = 1, linestyle = 'solid')
 
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"imag($\psi$)", fontsize="15")
+plt.xlabel (r'$\hat{r}$',    fontsize = "15")
+plt.ylabel (r"imag($\psi$)", fontsize = "15")
 
-plt.subplot(3, 2, 3)
+plt.subplot (3, 2, 3)
 
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
 for jp in range (J):
     if (mpol[jp]-mres[j]) % 7 == 0:
-        plt.plot(r, Z_r[jp,j,:], color='black', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_r[jp,j,:], color = 'black',   linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 1:
-        plt.plot(r, Z_r[jp,j,:], color='red', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_r[jp,j,:], color = 'red',     linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 2:
-        plt.plot(r, Z_r[jp,j,:], color='green', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_r[jp,j,:], color = 'green',   linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 3:
-        plt.plot(r, Z_r[jp,j,:], color='blue', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_r[jp,j,:], color = 'blue',    linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 4:
-        plt.plot(r, Z_r[jp,j,:], color='yellow', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_r[jp,j,:], color = 'yellow',  linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 5:
-        plt.plot(r, Z_r[jp,j,:], color='cyan', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_r[jp,j,:], color = 'cyan',    linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 6:
-        plt.plot(r, Z_r[jp,j,:], color='magenta', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_r[jp,j,:], color = 'magenta', linewidth = 1, linestyle = 'solid')
 
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"real($Z$)", fontsize="15")
+plt.xlabel (r'$\hat{r}$', fontsize = "15")
+plt.ylabel (r"real($Z$)", fontsize = "15")
 
-plt.subplot(3, 2, 4)
+plt.subplot (3, 2, 4)
 
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
 for jp in range (J):
     if (mpol[jp]-mres[j]) % 7 == 0:
-        plt.plot(r, Z_i[jp,j,:], color='black', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_i[jp,j,:], color = 'black',   linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 1:
-        plt.plot(r, Z_i[jp,j,:], color='red', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_i[jp,j,:], color = 'red',     linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 2:
-        plt.plot(r, Z_i[jp,j,:], color='green', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_i[jp,j,:], color = 'green',   linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 3:
-        plt.plot(r, Z_i[jp,j,:], color='blue', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_i[jp,j,:], color = 'blue',    linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 4:
-        plt.plot(r, Z_i[jp,j,:], color='yellow', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_i[jp,j,:], color = 'yellow',  linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 5:
-        plt.plot(r, Z_i[jp,j,:], color='cyan', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_i[jp,j,:], color = 'cyan',    linewidth = 1, linestyle = 'solid')
     elif (mpol[jp]-mres[j]) % 7 == 6:
-        plt.plot(r, Z_i[jp,j,:], color='magenta', linewidth = 1, linestyle = 'solid')
+        plt.plot (r, Z_i[jp,j,:], color = 'magenta', linewidth = 1, linestyle = 'solid')
 
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
-
-for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
-
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"imag($Z$)", fontsize="15")
-
-plt.subplot(3, 2, 5)
-
-plt.xlim(0.9, 1.)
-
-plt.plot(r, T_u[j,:], color='blue', linewidth = 2, linestyle = 'solid')
-
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"$T_\phi$", fontsize="15")
+plt.xlabel (r'$\hat{r}$', fontsize = "15")
+plt.ylabel (r"imag($Z$)", fontsize = "15")
 
-plt.tight_layout()
+plt.subplot (3, 2, 5)
 
-plt.show()    
+plt.xlim (0., 1.)
+
+plt.plot (r, T_u[j,:], color = 'blue', linewidth = 2, linestyle = 'solid')
+
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
+for rx in rres:
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
+
+plt.xlabel (r'$\hat{r}$', fontsize = "15")
+plt.ylabel (r"$T_\phi$",  fontsize = "15")
+
+plt.tight_layout ()
+
+plt.show ()    

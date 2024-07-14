@@ -23,6 +23,7 @@ hhh   = np.log10(hh);
 eeerr = np.log10(eerr);
 
 fig = plt.figure (figsize = (12.0, 6.0))
+fig.canvas.manager.set_window_title (r'TJ Code: Cash-Karp RK4/RK5 Adaptive Integration')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 

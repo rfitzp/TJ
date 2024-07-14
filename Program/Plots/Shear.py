@@ -21,6 +21,7 @@ ppp  = ds['ppp']
 para = ds['para']
 
 fig = plt.figure (figsize = (12.0, 8.0))
+fig.canvas.manager.set_window_title (r'TJ Code: Magnetic Shear')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 

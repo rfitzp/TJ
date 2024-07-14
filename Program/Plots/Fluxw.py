@@ -28,6 +28,7 @@ ds1  = nc.Dataset (fn1)
 rres = ds1['rres']
 
 fig = plt.figure (figsize = (8.0, 7.5))
+fig.canvas.manager.set_window_title (r'TJ Code: r, omega Coordinate System')
 plt.rc ('xtick', labelsize = 17) 
 plt.rc ('ytick', labelsize = 17) 
 

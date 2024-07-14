@@ -18,6 +18,7 @@ rres  = ds['rres']
 mres  = ds['m_res']
 
 fig = plt.figure (figsize = (12.0, 8.0))
+fig.canvas.manager.set_window_title (r'TJ Code: Unreconnected Electromagnetic Torques')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 

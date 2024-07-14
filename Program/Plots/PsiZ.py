@@ -7,7 +7,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4 as nc
-ReBu = plt.get_cmap('seismic')
+ReBu = plt.get_cmap ('seismic')
 
 ncont = 160
 
@@ -36,9 +36,10 @@ psi_i = ds1['Psi_unrc_eig_i']
 z_r   = ds1['Z_unrc_eig_r']
 z_i   = ds1['Z_unrc_eig_i']
 
-fig = plt.figure (figsize=(8.5, 8.0))
-plt.rc('xtick', labelsize=12) 
-plt.rc('ytick', labelsize=12) 
+fig = plt.figure (figsize = (8.5, 8.0))
+fig.canvas.manager.set_window_title (r'TJ Code: Psi(R, Z), Z(R, Z)')
+plt.rc ('xtick', labelsize = 12) 
+plt.rc ('ytick', labelsize = 12) 
 
 m = input ("rational surface number ? ")
 k = int(m) - 1
@@ -55,14 +56,14 @@ PPi = np.asarray (Pi)
 ZZr = np.asarray (Zr)
 ZZi = np.asarray (Zi)
 
-prmin = - np.amin (PPr)
-prmax = - np.amax (PPr)
-pimin = - np.amin (PPi)
-pimax = - np.amax (PPi)
-zrmin = - np.amin (ZZr)
-zrmax = - np.amax (ZZr)
-zimin = - np.amin (ZZi)
-zimax = - np.amax (ZZi)
+prmin = np.amin (PPr)
+prmax = np.amax (PPr)
+pimin = np.amin (PPi)
+pimax = np.amax (PPi)
+zrmin = np.amin (ZZr)
+zrmax = np.amax (ZZr)
+zimin = np.amin (ZZi)
+zimax = np.amax (ZZi)
 
 for i in range (np.size(PPr,0)):
     for j in range (np.size(PPr,1)):

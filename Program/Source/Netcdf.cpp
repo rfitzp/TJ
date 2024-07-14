@@ -81,104 +81,103 @@ void Equilibrium::WriteNetcdf (double sa)
       flux_d.push_back (f_d);
       flux_d.push_back (w_d);
 
-      NcVar p_x = dataFile.addVar ("para", ncDouble, p_d);
+      NcVar p_x   = dataFile.addVar ("para", ncDouble, p_d);
       p_x.putVar (para);
-
-      NcVar r_x = dataFile.addVar ("r", ncDouble, r_d);
+      NcVar r_x   = dataFile.addVar ("r",    ncDouble, r_d);
       r_x.putVar (rr);
-      NcVar g2_x = dataFile.addVar ("g_2", ncDouble, r_d);
+      NcVar g2_x  = dataFile.addVar ("g_2",  ncDouble, r_d);
       g2_x.putVar (g2);
-      NcVar p2_x = dataFile.addVar ("p_2", ncDouble, r_d);
+      NcVar p2_x  = dataFile.addVar ("p_2",  ncDouble, r_d);
       p2_x.putVar (p2);
-      NcVar pp_x = dataFile.addVar ("pp", ncDouble, r_d);
+      NcVar pp_x  = dataFile.addVar ("pp",   ncDouble, r_d);
       pp_x.putVar (pp);
-      NcVar ppp_x = dataFile.addVar ("ppp", ncDouble, r_d);
+      NcVar ppp_x = dataFile.addVar ("ppp",  ncDouble, r_d);
       ppp_x.putVar (ppp);
-      NcVar f1_x = dataFile.addVar ("f_1", ncDouble, r_d);
+      NcVar f1_x  = dataFile.addVar ("f_1",  ncDouble, r_d);
       f1_x.putVar (f1);
-      NcVar f3_x = dataFile.addVar ("f_3", ncDouble, r_d);
+      NcVar f3_x  = dataFile.addVar ("f_3",  ncDouble, r_d);
       f3_x.putVar (f3);
-      NcVar q0_x = dataFile.addVar ("q_0", ncDouble, r_d);
+      NcVar q0_x  = dataFile.addVar ("q_0",  ncDouble, r_d);
       q0_x.putVar (q0);
-      NcVar q2_x = dataFile.addVar ("q_2", ncDouble, r_d);
+      NcVar q2_x  = dataFile.addVar ("q_2",  ncDouble, r_d);
       q2_x.putVar (q2);
-      NcVar It_x = dataFile.addVar ("I_t", ncDouble, r_d);
+      NcVar It_x  = dataFile.addVar ("I_t",  ncDouble, r_d);
       It_x.putVar (It);
-      NcVar Ip_x = dataFile.addVar ("I_p", ncDouble, r_d);
+      NcVar Ip_x  = dataFile.addVar ("I_p",  ncDouble, r_d);
       Ip_x.putVar (Ip);
-      NcVar Jt_x = dataFile.addVar ("J_t", ncDouble, r_d);
+      NcVar Jt_x  = dataFile.addVar ("J_t",  ncDouble, r_d);
       Jt_x.putVar (Jt);
-      NcVar Jp_x = dataFile.addVar ("J_p", ncDouble, r_d);
+      NcVar Jp_x  = dataFile.addVar ("J_p",  ncDouble, r_d);
       Jp_x.putVar (Jp);
-      NcVar q_x = dataFile.addVar ("q", ncDouble, r_d);
+      NcVar q_x   = dataFile.addVar ("q",    ncDouble, r_d);
       q_x.putVar (q2);
-      NcVar qq_x = dataFile.addVar ("qq", ncDouble, r_d);
+      NcVar qq_x  = dataFile.addVar ("qq",   ncDouble, r_d);
       qq_x.putVar (qq);
-      NcVar qqq_x = dataFile.addVar ("qqq", ncDouble, r_d);
+      NcVar qqq_x = dataFile.addVar ("qqq",  ncDouble, r_d);
       qqq_x.putVar (qqq);
-      NcVar s_x = dataFile.addVar ("s", ncDouble, r_d);
+      NcVar s_x   = dataFile.addVar ("s",    ncDouble, r_d);
       s_x.putVar (s);
-      NcVar s2_x = dataFile.addVar ("s2", ncDouble, r_d);
+      NcVar s2_x  = dataFile.addVar ("s2",   ncDouble, r_d);
       s2_x.putVar (s2);
-      NcVar S1_x = dataFile.addVar ("S1", ncDouble, r_d);
+      NcVar S1_x  = dataFile.addVar ("S1",   ncDouble, r_d);
       S1_x.putVar (S1);
-      NcVar S2_x = dataFile.addVar ("S2", ncDouble, r_d);
+      NcVar S2_x  = dataFile.addVar ("S2",   ncDouble, r_d);
       S2_x.putVar (S2);
-      NcVar P1_x = dataFile.addVar ("P1", ncDouble, r_d);
+      NcVar P1_x  = dataFile.addVar ("P1",   ncDouble, r_d);
       P1_x.putVar (P1);
-      NcVar P2_x = dataFile.addVar ("P2", ncDouble, r_d);
+      NcVar P2_x  = dataFile.addVar ("P2",   ncDouble, r_d);
       P2_x.putVar (P2);
-      NcVar P3_x = dataFile.addVar ("P3", ncDouble, r_d);
+      NcVar P3_x  = dataFile.addVar ("P3",   ncDouble, r_d);
       P3_x.putVar (P3);
-      NcVar P3a_x = dataFile.addVar ("P3a", ncDouble, r_d);
+      NcVar P3a_x = dataFile.addVar ("P3a",  ncDouble, r_d);
       P3a_x.putVar (P3a);
  
-      NcVar Hn_x = dataFile.addVar ("Hn", ncDouble, shape_d);
+      NcVar Hn_x  = dataFile.addVar ("Hn",  ncDouble, shape_d);
       Hn_x.putVar (Hndata);
       NcVar Hnp_x = dataFile.addVar ("Hnp", ncDouble, shape_d);
       Hnp_x.putVar (Hnpdata);
-      NcVar Vn_x = dataFile.addVar ("Vn", ncDouble, shape_d);
+      NcVar Vn_x  = dataFile.addVar ("Vn",  ncDouble, shape_d);
       Vn_x.putVar (Vndata);
       NcVar Vnp_x = dataFile.addVar ("Vnp", ncDouble, shape_d);
       Vnp_x.putVar (Vnpdata);
 
-      NcVar R_x = dataFile.addVar ("R", ncDouble, flux_d);
+      NcVar R_x  = dataFile.addVar ("R",     ncDouble, flux_d);
       R_x.putVar (Rdata);
-      NcVar Z_x = dataFile.addVar ("Z", ncDouble, flux_d);
+      NcVar Z_x  = dataFile.addVar ("Z",     ncDouble, flux_d);
       Z_x.putVar (Zdata);
-      NcVar Rw_x = dataFile.addVar ("Rw", ncDouble, flux_d);
+      NcVar Rw_x = dataFile.addVar ("Rw",    ncDouble, flux_d);
       Rw_x.putVar (Rwdata);
-      NcVar Zw_x = dataFile.addVar ("Zw", ncDouble, flux_d);
+      NcVar Zw_x = dataFile.addVar ("Zw",    ncDouble, flux_d);
       Zw_x.putVar (Zwdata);
-      NcVar rr_x = dataFile.addVar ("rr", ncDouble, flux_d);
+      NcVar rr_x = dataFile.addVar ("rr",    ncDouble, flux_d);
       rr_x.putVar (rdata);
-      NcVar t_x = dataFile.addVar ("theta", ncDouble, flux_d);
+      NcVar t_x  = dataFile.addVar ("theta", ncDouble, flux_d);
       t_x.putVar (tdata);
-      NcVar w_x = dataFile.addVar ("omega", ncDouble, flux_d);
+      NcVar w_x  = dataFile.addVar ("omega", ncDouble, flux_d);
       w_x.putVar (wdata);
 
-      NcVar n_x = dataFile.addVar ("n", ncDouble, s_d);
+      NcVar n_x   = dataFile.addVar ("n",   ncDouble, s_d);
       n_x.putVar (npol);
       NcVar Hna_x = dataFile.addVar ("Hna", ncDouble, s_d);
       Hna_x.putVar (Hna);
       NcVar Vna_x = dataFile.addVar ("Vna", ncDouble, s_d);
       Vna_x.putVar (Vna);
 
-      NcVar Rbound_x = dataFile.addVar ("Rbound", ncDouble, w_d);
+      NcVar Rbound_x   = dataFile.addVar ("Rbound",    ncDouble, w_d);
       Rbound_x.putVar (Rbound);
-      NcVar Zbound_x = dataFile.addVar ("Zbound", ncDouble, w_d);
+      NcVar Zbound_x   = dataFile.addVar ("Zbound",    ncDouble, w_d);
       Zbound_x.putVar (Zbound);
-      NcVar tbound_x = dataFile.addVar ("tbound", ncDouble, w_d);
+      NcVar tbound_x   = dataFile.addVar ("tbound",    ncDouble, w_d);
       tbound_x.putVar (tbound);
-      NcVar wbound_x = dataFile.addVar ("wbound", ncDouble, w_d);
+      NcVar wbound_x   = dataFile.addVar ("wbound",    ncDouble, w_d);
       wbound_x.putVar (wbound);
-      NcVar R2b_x = dataFile.addVar ("R2bound", ncDouble, w_d);
+      NcVar R2b_x      = dataFile.addVar ("R2bound",   ncDouble, w_d);
       R2b_x.putVar (R2b);
-      NcVar grr2b_x = dataFile.addVar ("grr2bound", ncDouble, w_d);
+      NcVar grr2b_x    = dataFile.addVar ("grr2bound", ncDouble, w_d);
       grr2b_x.putVar (grr2b);
-      NcVar dRdtheta_x = dataFile.addVar ("dRdtheta", ncDouble, w_d);
+      NcVar dRdtheta_x = dataFile.addVar ("dRdtheta",  ncDouble, w_d);
       dRdtheta_x.putVar (dRdtheta);
-      NcVar dZdtheta_x = dataFile.addVar ("dZdtheta", ncDouble, w_d);
+      NcVar dZdtheta_x = dataFile.addVar ("dZdtheta",  ncDouble, w_d);
       dZdtheta_x.putVar (dZdtheta);
     }
   catch (NcException& e)
@@ -403,6 +402,10 @@ void TJ::WriteNetcdf ()
   double* PPV_i   = new double[nres*Nf*(Nw+1)];
   double* ZZV_r   = new double[nres*Nf*(Nw+1)];
   double* ZZV_i   = new double[nres*Nf*(Nw+1)];
+  double* Emat_r  = new double[nres*nres];
+  double* Emat_i  = new double[nres*nres];
+  double* Eant_r  = new double[nres*nres];
+  double* Eant_i  = new double[nres*nres];
 
   for (int n = 0; n <= Ns; n++)
     for (int i = 0; i <= Nr; i++)
@@ -532,6 +535,17 @@ void TJ::WriteNetcdf ()
 	  cnt++;
 	}
 
+  cnt = 0;
+  for (int j = 0; j < nres; j++)
+    for (int jp = 0; jp < nres; jp++)
+      {
+	Emat_r[cnt] = real (Emat(j, jp));
+	Emat_i[cnt] = imag (Emat(j, jp));
+	Eant_r[cnt] = 0.5 * real (Emat(j, jp) - conj (Emat(jp ,j)));
+	Eant_i[cnt] = 0.5 * imag (Emat(j, jp) - conj (Emat(jp ,j)));
+	cnt++;
+      }
+
   try
     {
       NcFile dataFile ("Plots/TJ.nc", NcFile::replace);
@@ -589,41 +603,44 @@ void TJ::WriteNetcdf ()
       v_d.push_back (x_d);
       v_d.push_back (f_d);
       v_d.push_back (w_d);
+
+      vector<NcDim> e_d;
+      e_d.push_back (x_d);
+      e_d.push_back (x_d);
       
-      NcVar r_x = dataFile.addVar ("r", ncDouble, r_d);
+      NcVar r_x   = dataFile.addVar ("r",   ncDouble, r_d);
       r_x.putVar (rr);
-      NcVar pp_x = dataFile.addVar ("pp", ncDouble, r_d);
+      NcVar pp_x  = dataFile.addVar ("pp",  ncDouble, r_d);
       pp_x.putVar (pp);
       NcVar ppp_x = dataFile.addVar ("ppp", ncDouble, r_d);
       ppp_x.putVar (ppp);
-      NcVar q_x = dataFile.addVar ("q", ncDouble, r_d);
+      NcVar q_x  = dataFile.addVar  ("q",   ncDouble, r_d);
       q_x.putVar (q);
-      NcVar s_x = dataFile.addVar ("s", ncDouble, r_d);
+      NcVar s_x  = dataFile.addVar  ("s",   ncDouble, r_d);
       s_x.putVar (s);
-      NcVar s2_x = dataFile.addVar ("s2", ncDouble, r_d);
+      NcVar s2_x = dataFile.addVar  ("s2",  ncDouble, r_d);
       s2_x.putVar (s2);
-      NcVar S1_x = dataFile.addVar ("S1", ncDouble, r_d);
+      NcVar S1_x = dataFile.addVar  ("S1",  ncDouble, r_d);
       S1_x.putVar (S1);
-      NcVar P1_x = dataFile.addVar ("P1", ncDouble, r_d);
+      NcVar P1_x = dataFile.addVar  ("P1",  ncDouble, r_d);
       P1_x.putVar (P1);
-      NcVar P2_x = dataFile.addVar ("P2", ncDouble, r_d);
+      NcVar P2_x = dataFile.addVar  ("P2",  ncDouble, r_d);
       P2_x.putVar (P2);
-      NcVar P3_x = dataFile.addVar ("P3", ncDouble, r_d);
+      NcVar P3_x = dataFile.addVar  ("P3",  ncDouble, r_d);
       P3_x.putVar (P3);
  
-      NcVar Hn_x = dataFile.addVar ("Hn", ncDouble, shape_d);
+      NcVar Hn_x  = dataFile.addVar ("Hn",  ncDouble, shape_d);
       Hn_x.putVar (Hndata);
       NcVar Hnp_x = dataFile.addVar ("Hnp", ncDouble, shape_d);
       Hnp_x.putVar (Hnpdata);
-      NcVar Vn_x = dataFile.addVar ("Vn", ncDouble, shape_d);
+      NcVar Vn_x  = dataFile.addVar ("Vn",  ncDouble, shape_d);
       Vn_x.putVar (Vndata);
       NcVar Vnp_x = dataFile.addVar ("Vnp", ncDouble, shape_d);
       Vnp_x.putVar (Vnpdata);
 
       NcVar rres_x = dataFile.addVar ("rres", ncDouble, x_d);
       rres_x.putVar (rres);
-
-      NcVar mpol_x = dataFile.addVar ("mpol", ncInt, j_d);
+      NcVar mpol_x = dataFile.addVar ("mpol", ncInt,    j_d);
       mpol_x.putVar (MPOL);
 
       NcVar lmmpr_x = dataFile.addVar ("Lmmp_r", ncDouble, matrix_d);
@@ -646,11 +663,11 @@ void TJ::WriteNetcdf ()
       NcVar pmmpi_x = dataFile.addVar ("Pmmp_i", ncDouble, matrix_d);
       pmmpi_x.putVar (Pmmp_i);
 
-      NcVar ltest_x = dataFile.addVar ("Ltest", ncDouble, matrix_d);
+      NcVar ltest_x  = dataFile.addVar ("Ltest",  ncDouble, matrix_d);
       ltest_x.putVar (Ltest);
       NcVar mntest_x = dataFile.addVar ("MNtest", ncDouble, matrix_d);
       mntest_x.putVar (MNtest);
-      NcVar ptest_x = dataFile.addVar ("Ptest", ncDouble, matrix_d);
+      NcVar ptest_x  = dataFile.addVar ("Ptest",  ncDouble, matrix_d);
       ptest_x.putVar (Ptest);
 
       NcVar pvacr_x = dataFile.addVar ("Pvac_r", ncDouble, vacuum_d);
@@ -676,60 +693,60 @@ void TJ::WriteNetcdf ()
       NcVar hmati_x = dataFile.addVar ("Hmat_i", ncDouble, vacuum_d);
       hmati_x.putVar (Hmat_i);
    
-      NcVar rgrid_x = dataFile.addVar ("r_grid", ncDouble, d_d);
+      NcVar rgrid_x = dataFile.addVar ("r_grid",  ncDouble, d_d);
       rgrid_x.putVar (Rgrid);
-      NcVar hode_x = dataFile.addVar ("h_ode", ncDouble, d_d);
+      NcVar hode_x  = dataFile.addVar ("h_ode",   ncDouble, d_d);
       hode_x.putVar (hode);
-      NcVar eode_x = dataFile.addVar ("err_ode", ncDouble, d_d);
+      NcVar eode_x  = dataFile.addVar ("err_ode", ncDouble, d_d);
       eode_x.putVar (eode);
 
-      NcVar t_x = dataFile.addVar ("theta", ncDouble, w_d);
+      NcVar t_x      = dataFile.addVar  ("theta",  ncDouble, w_d);
       t_x.putVar (tbound);
-      NcVar cmu_x = dataFile.addVar ("cosmu", ncDouble, w_d);
+      NcVar cmu_x     = dataFile.addVar ("cosmu",  ncDouble, w_d);
       cmu_x.putVar (cmu);
-      NcVar e_x = dataFile.addVar ("eta", ncDouble, w_d);
+      NcVar e_x      = dataFile.addVar  ("eta",    ncDouble, w_d);
       e_x.putVar (eeta);
-      NcVar ceta_x = dataFile.addVar ("coseta", ncDouble, w_d);
+      NcVar ceta_x   = dataFile.addVar  ("coseta", ncDouble, w_d);
       ceta_x.putVar (ceta);
-      NcVar seta_x = dataFile.addVar ("sineta", ncDouble, w_d);
+      NcVar seta_x   = dataFile.addVar  ("sineta", ncDouble, w_d);
       seta_x.putVar (seta);
-      NcVar R2grgz_x = dataFile.addVar ("R2grgz", ncDouble, w_d);
+      NcVar R2grgz_x = dataFile.addVar  ("R2grgz", ncDouble, w_d);
       R2grgz_x.putVar (R2grgz);
-      NcVar R2grge_x = dataFile.addVar ("R2grge", ncDouble, w_d);
+      NcVar R2grge_x = dataFile.addVar  ("R2grge", ncDouble, w_d);
       R2grge_x.putVar (R2grge);
 
       NcVar ttest_x = dataFile.addVar ("Torque_test", ncDouble, torque_d);
       ttest_x.putVar (Ttest_i);
-      NcVar pnorm_x = dataFile.addVar ("Psi_norm", ncDouble, torque_d);
+      NcVar pnorm_x = dataFile.addVar ("Psi_norm",    ncDouble, torque_d);
       pnorm_x.putVar (Pnorm_i);
-      NcVar znorm_x = dataFile.addVar ("Z_norm", ncDouble, torque_d);
+      NcVar znorm_x = dataFile.addVar ("Z_norm",      ncDouble, torque_d);
       znorm_x.putVar (Znorm_i);
 
       NcVar pppsir_x = dataFile.addVar ("Psi_r", ncDouble, soln_d);
       pppsir_x.putVar (PPPsi_r);
       NcVar pppsii_x = dataFile.addVar ("Psi_i", ncDouble, soln_d);
       pppsii_x.putVar (PPPsi_i);
-      NcVar zzzr_x   = dataFile.addVar ("Z_r", ncDouble, soln_d);
+      NcVar zzzr_x   = dataFile.addVar ("Z_r",   ncDouble, soln_d);
       zzzr_x.putVar (ZZZ_r);
-      NcVar zzzi_x   = dataFile.addVar ("Z_i", ncDouble, soln_d);
+      NcVar zzzi_x   = dataFile.addVar ("Z_i",   ncDouble, soln_d);
       zzzi_x.putVar (ZZZ_i);
 
       NcVar ppfr_x = dataFile.addVar ("Psi_full_r", ncDouble, full_d);
       ppfr_x.putVar (PPF_r);
       NcVar ppfi_x = dataFile.addVar ("Psi_full_i", ncDouble, full_d);
       ppfi_x.putVar (PPF_i);
-      NcVar zzfr_x = dataFile.addVar ("Z_full_r", ncDouble, full_d);
+      NcVar zzfr_x = dataFile.addVar ("Z_full_r",   ncDouble, full_d);
       zzfr_x.putVar (ZZF_r);
-      NcVar zzfi_x = dataFile.addVar ("Z_full_i", ncDouble, full_d);
+      NcVar zzfi_x = dataFile.addVar ("Z_full_i",   ncDouble, full_d);
       zzfi_x.putVar (ZZF_i);
 
       NcVar ppur_x = dataFile.addVar ("Psi_unrc_r", ncDouble, full_d);
       ppur_x.putVar (PPU_r);
       NcVar ppui_x = dataFile.addVar ("Psi_unrc_i", ncDouble, full_d);
       ppui_x.putVar (PPU_i);
-      NcVar zzur_x = dataFile.addVar ("Z_unrc_r", ncDouble, full_d);
+      NcVar zzur_x = dataFile.addVar ("Z_unrc_r",   ncDouble, full_d);
       zzur_x.putVar (ZZU_r);
-      NcVar zzui_x = dataFile.addVar ("Z_unrc_i", ncDouble, full_d);
+      NcVar zzui_x = dataFile.addVar ("Z_unrc_i",   ncDouble, full_d);
       zzui_x.putVar (ZZU_i);
 
       NcVar tf_x = dataFile.addVar ("Torque_full", ncDouble, t_d);
@@ -749,10 +766,20 @@ void TJ::WriteNetcdf ()
       ppvr_x.putVar (PPV_r);
       NcVar ppvi_x = dataFile.addVar ("Psi_unrc_eig_i", ncDouble, v_d);
       ppvi_x.putVar (PPV_i);
-      NcVar zzvr_x = dataFile.addVar ("Z_unrc_eig_r", ncDouble, v_d);
+      NcVar zzvr_x = dataFile.addVar ("Z_unrc_eig_r",   ncDouble, v_d);
       zzvr_x.putVar (ZZV_r);
-      NcVar zzvi_x = dataFile.addVar ("Z_unrc_eig_i", ncDouble, v_d);
+      NcVar zzvi_x = dataFile.addVar ("Z_unrc_eig_i",   ncDouble, v_d);
       zzvi_x.putVar (ZZV_i);
+
+      NcVar ematr_x = dataFile.addVar ("Emat_r", ncDouble, e_d);
+      ematr_x.putVar (Emat_r);
+      NcVar emati_x = dataFile.addVar ("Emat_i", ncDouble, e_d);
+      emati_x.putVar (Emat_i);
+      NcVar eantr_x = dataFile.addVar ("Eant_r", ncDouble, e_d);
+      eantr_x.putVar (Eant_r);
+      NcVar eanti_x = dataFile.addVar ("Eant_i", ncDouble, e_d);
+      eanti_x.putVar (Eant_i);
+ 
     }
   catch (NcException& e)
     {
@@ -774,4 +801,5 @@ void TJ::WriteNetcdf ()
   delete[] PPV_r;   delete[] PPV_i;   delete[] ZZV_r;   delete[] ZZV_i;
   delete[] R2grgz;  delete[] R2grge;  delete[] cmu;     delete[] ceta;
   delete[] seta;    delete[] eeta;    delete[] Aant_r;  delete[] Aant_i;
+  delete[] Emat_r;  delete[] Emat_i;  delete[] Eant_r;  delete[] Eant_i; 
 }

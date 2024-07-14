@@ -19,7 +19,7 @@
 
 &TJ_CONTROL
  NTOR    = 1
- MMIN    = -5
+ MMIN    = -15
  MMAX    = 25
  FREE    = 1
 

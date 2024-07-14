@@ -28,6 +28,7 @@ mntest = ds['MNtest']
 ptest  = ds['Ptest']
 
 fig = plt.figure (figsize = (12.0, 8.0))
+fig.canvas.manager.set_window_title (r'TJ Code: Coupling Matrices')
 plt.rc('xtick', labelsize = 15) 
 plt.rc('ytick', labelsize = 15)
 

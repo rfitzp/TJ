@@ -17,6 +17,7 @@ nn   = np.asarray(n)
 nmax = nn.shape[0]
                       
 fig = plt.figure (figsize = (12.0, 6.0))
+fig.canvas.manager.set_window_title (r'TJ Code: Edge Shaping Values')
 plt.rc ('xtick', labelsize = 17) 
 plt.rc ('ytick', labelsize = 17) 
 

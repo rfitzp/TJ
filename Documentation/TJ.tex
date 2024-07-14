@@ -14,6 +14,12 @@
 \author{Richard Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
 \affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin, TX 78712}
 
+\begin{abstract}
+The   tearing-mode stability of an inverse aspect-ratio expanded tokamak plasma equilibrium of general
+shape  is examined using asymptotic matching theory. Particular emphasis is placed on the
+conservation of toroidal electromagnetic angular momentum. The TJ code, which is a specific implementation of the
+theory presented  in the paper, is described. 
+\end{abstract}
 \maketitle
 
 \section{Introduction} 
@@ -43,14 +49,29 @@ was first presented in Ref.~\onlinecite{connor} in a calculation that allows for
 The
 inverse aspect-ratio expansion approach was extended in Ref.~\onlinecite{am1} in a calculation that allows for seven poloidal harmonics coupled via toroidicity, flux-surface elongation, and
 flux-surface triangularity. In this paper, we intend to generalize the inverse aspect-ratio expansion  approach to allow for an {\em arbitrary}\/ number of poloidal harmonics coupled
-by flux-surfaces of {\em general}\/ shape. Furthermore, unlike Refs.~\onlinecite{connor} and \onlinecite{am1}, we shall not assume that the plasma
+by flux-surfaces of {\em general}\/ shape. Furthermore, unlike Refs.~\onlinecite{connor} and \onlinecite{am1}, we do not assume that the plasma
 equilibrium 
 is up-down symmetric. 
 
-\section{General Plasma Equilibrium}
+This paper is organized as follows. In Sect.~\ref{geq}, we examine a general tokamak plasma equilibrium. In Sect.~\ref{opde}, we
+derive the so-called ``outer-region partial differential equations''  (PDEs), which are a set of two coupled second-order pdes that control   the ideal-MHD solution in the outer region. In
+Sect.~\ref{sode}, we derive the so-called ``outer region ordinary differential equations'' (ODEs), which are a large set of coupled first-order 
+odes that control the ideal-MHD solution in the outer region. We also demonstrate that these odes conserve toroidal electromagnetic
+angular momentum. In Sect.~\ref{snus}, we discuss the general behavior of the outer-region odes in the vicinity of a rational surface. 
+In Sect.~\ref{vacxx}, we obtain the general boundary condition satisfied by the outer-region odes at the plasma/vacuum interface, on the assumption that
+region surrounding the plasma does not contain any non-axisymmetric currents. We also demonstrate that these boundary conditions conserve
+toroidal electromagnetic angular momentum. In Sect.~\ref{large}, we introduce the aspect-ratio expanded tokamak equilibrium, and determine the
+specific forms of the outer regions odes. In Sect.~\ref{etm}, we calculate the matrix equation that constitutes the tearing-mode dispersion relation, and
+demonstrate that this equation must be Hermitian in order to conserve toroidal electromagnetic angular momentum. In Sect.~\ref{rmp}, 
+we discuss how the tearing-mode dispersion relation is modified by non-axisymmetric currents flowing in
+resonant magnetic perturbation (RMP) coils external to the plasma. We also derive expressions for the toroidal electromagnetic
+torques exerted at the various rational surface in the plasma by the RMP coils. In Sect.~\ref{tj}, we discuss the
+TJ code, which is a specific implementation of the theory presented in this paper. Finally, the paper is summarized in Sect.~\ref{sum}.
+
+\section{General Plasma Equilibrium}\label{geq}
 \subsection{Normalization}\label{coords}
 All lengths in this paper are normalized to  the major radius of the plasma magnetic axis, $R_0$. All magnetic field-strengths
-are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All current densities are normalized to $B_0/(\mu_0\,R_0)$. All plasma pressures are normalized to $B_0^{\,2}/\mu_0$.
+are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All currents are normalized to $B_0\,R_0/\mu_0$. All current densities are normalized to $B_0/(\mu_0\,R_0)$.  All plasma pressures are normalized to $B_0^{\,2}/\mu_0$.
 All toroidal electromagnetic torques are normalized to $B_0^{\,2}\,R_0^{\,3}/\mu_0$. 
 
 \subsection{Axisymmetric Tokamak Plasma Equilibrium}\label{s3}
@@ -126,7 +147,7 @@ It is clear from Eqs.~(\ref{jup2}) and (\ref{jup3a}) that $g'=P'=0$ in the  curr
 We shall also assume that $g'=P'=0$ at the plasma/vacuum interface, so as to ensure that the equilibrium plasma
 current density is zero at the interface. 
 
-\section{Derivation of Outer-Region PDEs}
+\section{Derivation of Outer-Region PDEs}\label{opde}
 \subsection{Introduction}
 The outer-region partial differential equations (PDEs) were first presented in Ref.~\onlinecite{connor} without an explicit
 derivation. However, the derivation is sufficiently non-obvious that it is worth outlining in this section. 
@@ -391,7 +412,6 @@ g_m^{\,m'}(r) &= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2
 Here, we have extended the analysis of Ref.~\onlinecite{am3} to take into account the fact that the $A_m^{\,m'}$, $B_m^{\,m'}$, $a_m^{\,m'}$, $b_m^{\,m'}$, et cetera,
 are complex quantities in a realistic non-up-down-symmetric tokamak plasma equilibrium.  Note, that $\delta_m^{\,m'}$ is a Kronecker delta symbol.
 
- 
 \subsection{Outer-Region ODEs}\label{ode2}
 Let 
 \begin{align}
@@ -901,7 +921,7 @@ d{\bf S}\nonumber\\[0.5ex]
 \end{align}
 where use has been made of Eq.~(\ref{e359}). Thus, we conclude that $H_{mm'}^{-1}$, as defined in Eq.~(\ref{e368}), is   Hermitian. It follows that the vacuum response matrix, $H_{mm'}$, is also Hermitian. 
 
-\section{Inverse Aspect-Ratio Expanded Tokamak Equilibrium}
+\section{Inverse Aspect-Ratio Expanded Tokamak Equilibrium}\label{large}
 \subsection{Equilibrium Magnetic Flux-Surfaces}
 Let us assume that the inverse aspect-ratio of the plasma, $\epsilon$, is such that $0<\epsilon\ll 1$.  
 Let $r=\epsilon\,\hat{r}$, $\nabla =\epsilon^{\,-1}\,\hat{\nabla}$, and $'\rightarrow \epsilon^{\,-1}\,'$. 
@@ -1112,8 +1132,7 @@ s(1) &= 2+ \epsilon^{\,2}\left(\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right
 +{\cal O}(\epsilon^4).\label{e223}
 \end{align}
 
-
-\section{Calculation of  Tearing-Mode Dispersion Relation}
+\section{Calculation of  Tearing-Mode Dispersion Relation}\label{etm}
 \subsection{Introduction}
 Let the $m_j$, for $j=1,J$, be the poloidal mode numbers included in the calculation. Here, it is assumed that $m_{j+1}=m_j+1$ for $j=1,J-1$. 
 Let there be $K$ rational surfaces in the plasma, and let the $k$th surface lie at radius $\hat{r}_k$, for $k=1,K$. Here,
@@ -1161,7 +1180,7 @@ Let
 ${\mit\Pi}_{k'k}^s$, for $k'=1,K$ and $k=1,K$,  be the value of ${\mit\Psi}_{k'}$ at the $k'$th rational surface associated with a small solution
 launched from the $k$th rational surface. Note that ${\mit\Pi}_{k'k}^s=0$ for $k' \leq k$.  
 
-\subsection{Tearing-Mode Dispersion Relation}
+\subsection{Tearing-Mode Dispersion Relation}\label{disp}
 The most general expression for the solution of the outer-region ODEs at the plasma/vacuum interface is
 \begin{align}\label{e385}
 \psi_{m_j}(1) &= \sum_{j'=1,J}\psi_{m_j\,m_{j'}}^a(1)\,\alpha_{j'} + \sum_{k=1,K}\psi_{m_j\,k}^s(1)\,{\mit\Delta\Psi}_k,\\[0.5ex]
@@ -1248,7 +1267,8 @@ The previous two equations can be combined to give the ultimate form of the  tea
 \begin{equation}\label{e317u}
 \sum_{k'=1,k}({\mit\Delta}_k\,\delta_{kk'}-E_{kk'})\,{\mit\Psi}_{k'} = 0
 \end{equation}
-for $k=1,K$. It is clear that $E_{kk}$ is the tearing stability index\,\cite{fkr} at the $k$th rational surface when magnetic reconnection  takes place
+for $k=1,K$. 
+Here, $\delta_{kk'}$ is a unit matrix. It is clear that $E_{kk}$ is the tearing stability index\,\cite{fkr} at the $k$th rational surface when magnetic reconnection  takes place
 at this surface, but is suppressed at the other surfaces (as is likely to be the case in the presence of sheared plasma rotation\,\cite{am1}). 
 
 \subsection{Toroidal Electromagnetic Torques}
@@ -1270,6 +1290,82 @@ In other words, the matrix $E_{kk'}$ is Hermitian,\cite{am1} which implies that 
 be interpreted as 
 a dimensionless inductance matrix). 
 
+\section{Resonant Magnetic Perturbation Coils}\label{rmp}
+
+\subsection{Introduction}
+Suppose that the plasma is subject to a static, non-axisymmetric, resonant magnetic perturbation (RMP),
+with $n$ periods in the toroidal direction, that is  generated by currents flowing in magnetic
+field-coils external to the plasma. Let us, rather simplistically, model these RMP coils as a set of $L$ toroidal strands of negligible cross-section in the
+$R$, $Z$ plane. Suppose that the $l$th strand is located at $R=R_l$, $Z=Z_l$, and carries a net current $I_l\,\exp(-{\rm i}\,n\,\phi)$. Here, the
+complex quantity $I_l$ specifies the amplitude and phase of the non-axisymmetric current flowing in the strand. 
+
+\subsection{Externally Generated Perturbed Magnetic Field}
+Reusing the analysis of Sect.~A of Ref.~\onlinecite{nelson}, the non-axisymmetric magnetic field generated by the currents flowing in the external magnetic
+field-coils can be written ${\bf b}^x(R,\phi,Z)= {\bf b}^x(R,Z)\,\exp(-{\rm i}\,n\,\phi)$, where
+\begin{align}\label{e313}
+b^x(R,Z)&= \nabla(R\,A_\phi)\times\nabla\phi,\\[0.5ex]
+A_\phi(R,Z)&= \sum_{l=1,L} I_l\,{\cal G}(R,Z;R_l,Z_l),\\[0.5ex]
+G(R,Z;R',Z') &= \frac{(-1)^{n+1}\,\sqrt{\pi}\, R\,R'}{4\,\Gamma(n+1/2)}\left[\frac{\cosh\eta}{R^{\,2}+R'^{\,2}+(Z-Z')^2}\right]^{1/2}\nonumber\\[0.5ex]
+\nonumber\\[0.5ex]&\phantom{=}\times
+\left[(n-1/2)\,P_{-1/2}^{\,n-1}(\cosh\eta) + \frac{P_{-1/2}^{\,n+1}(\cosh\eta)}{n+1/2}\right],\\[0.5ex]
+\tanh\eta &= \frac{2\,R\,R'}{R^{\,2} + R'^{\,2}+(Z-Z')^2}.
+\end{align}
+Here, the $P_{-1/2}^n(z)$ are toroidal functions.\cite{abrama}
+
+\subsection{Inhomogeneous Boundary Condition at Plasma/Vacuum Interface}
+According to Eqs.~(\ref{jac}), (\ref{e63}), (\ref{e79o}), (\ref{e97}), and (\ref{Zdef})--(\ref{psidef}), the magnetic perturbation at the plasma/vacuum
+interface generated by the currents flowing in the RMP coils is characterized by
+\begin{align}
+\psi_m^x(\epsilon) &=-{\rm i}\oint_{r=\epsilon}{\cal J}\,{\bf b}^x\cdot\nabla r\,\exp(-{\rm i}\,m\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+\frac{Z_m^x(\epsilon)}{m-n\,q(\epsilon)}  &= n^{-1}\oint_{r=\epsilon}R^{\,2}\,{\bf b}^x\cdot\nabla \phi\,\exp(-{\rm i}\,m\,\theta)\,\frac{d\theta}{2\pi}.
+\end{align}
+It follows from Eqs.~(\ref{jac}) and (\ref{e313}) that
+\begin{align}
+\psi_m^x(\epsilon) &= m \oint_{r=\epsilon}R\,A_\phi\,\exp(-{\rm i}\,m\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+\frac{Z_m^x(\epsilon)}{m-n\,q(\epsilon)}  &= 0,
+\end{align}
+where we have integrated by parts. 
+
+In the presence of the perturbed magnetic field generated by the RMP coils, the homogenous boundary condition at the plasma/vacuum
+interface, (\ref{bc}), is modified to give the following inhomogeneous boundary condition:
+\begin{equation}\label{bc1}
+\frac{Z_m(\epsilon)}{m-n\,q(\epsilon)} = \sum_{m'} H_{mm'}\,[\psi_{m'}(\epsilon)-\psi_{m'}^x(\epsilon)].
+\end{equation}
+
+\subsection{Inhomogeneous Tearing-Mode Dispersion Relation}
+The previous boundary condition can be combined with the analysis of Sect.~\ref{disp} to produce the following
+inhomogeneous tearing-mode dispersion relation:\,\cite{am3,nelson}
+\begin{equation}\label{disp1}
+{\mit\Delta\Psi}_k = \sum_{k'=1,K} E_{kk'}\,{\mit\Psi}_{k'} + \chi_k,
+\end{equation}
+for $k=1,K$, where 
+\begin{align}
+\chi_k &= \sum_{k'=1,K}E_{kk'}\,{\mit \Lambda}_{k'},\\[0.5ex]
+{\mit\Lambda}_{k} &= \sum_{j=1,J} {\mit\Pi}_{kj}^a\,{\mit\Upsilon}_{j},\\[0.5ex]
+\sum_{j'=1,J} X_{jj'}\,{\mit\Upsilon}_{j'} &= {\mit\Xi}_{j},\\[0.5ex]
+{\mit\Xi}_{j} &= \sum_{j'=1,J} H_{m_j m_{j'}}\,\psi_{m_{j'}}^x(\epsilon),
+\end{align}
+for $k=1,K$ and $j=1,J$. 
+
+\subsection{Electromagnetic Torques}
+Making use of Eqs.~(\ref{e194t}), (\ref{e403}), and (\ref{disp1}),  the toroidal electromagnetic torque exerted by the RMP at the $k$th rational
+surface in the plasma is 
+\begin{equation}\label{e327}
+\delta T_k = 2\pi^2\,n\,{\rm Im}({\mit\Delta}_k)\,|{\mit\Psi}_k|^2,
+\end{equation}
+where
+\begin{equation}
+\sum_{k'=1,K}({\mit\Delta}_k\,\delta_{kk'}-E_{kk'})\,{\mit\Psi}_{k'} = \chi_k
+\end{equation}
+for $k=1,K$. In situations in which driven magnetic reconnection at the various rational surface in the plasma is
+strongly shielded by plasma rotation,\cite{am3,rfa} so that $|{\mit\Delta}_k|\gg |E_{kk'}|$, for all $k$, $k'$, Eq.~(\ref{e327}) simplifies to give
+\begin{equation}
+\delta T_k\simeq 2\pi^2\,n\,\frac{{\rm Im}({\mit\Delta}_k)}{|{\mit\Delta}_k|^2}\,|{\mit\chi}_k|^2.
+\end{equation}
+
+\section{TJ Code}\label{tj}
+
+\section{Summary}\label{sum}
 
 \section*{Acknowledgements}
 This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
@@ -1320,7 +1416,7 @@ where ${\bf C}({\bf r})$ is a general vector field.
 
 \bibitem{fkr} H.P.~Furth,  J.~Killeen, and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).
 
-\bibitem{con0} J.W.~Connor, and R.J.~Hastie, {\em The Effect of Shaped Plasma Cross Sections on the Ideal Kink Mode in a Tokamak}. (Rep. CLM-M106, Culham Laboratory, Abingdon UK, 1985)
+\bibitem{con0} J.W.~Connor and R.J.~Hastie, {\em The Effect of Shaped Plasma Cross Sections on the Ideal Kink Mode in a Tokamak}. (Rep. CLM-M106, Culham Laboratory, Abingdon UK, 1985)
 
 \bibitem{connor} J.W.~Connor,  S.C.~Cowley, R.J.~Hastie,  T.C.~Hender,  A.~Hood, and T.J.~Martin,  Phys.\ Fluids {\bf 31}, 577 (1988).
 
@@ -1368,13 +1464,13 @@ where ${\bf C}({\bf r})$ is a general vector field.
 
 \bibitem{twist} R. Fitzpatrick, Phys.\ Plasmas {\bf 1}, 3308 (1994).
 
-\bibitem{morse} P.M.~Morse, and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1301. (McGraw-Hill, New York NY, 1953)
+\bibitem{morse} P.M.~Morse and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1301. (McGraw-Hill, New York NY, 1953)
 
-\bibitem{morse1} P.M.~Morse, and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1302. (McGraw-Hill, New York NY, 1953)
+\bibitem{morse1} P.M.~Morse and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1302. (McGraw-Hill, New York NY, 1953)
 
-\bibitem{abrama} M.~Abramowitz, and I.A.~Stegun, {\em Handbook of Mathematical Functions}, sect.~8.11. (Dover, New York NY, 1964)
+\bibitem{abrama} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}, sect.~8.11. (Dover, New York NY, 1964)
 
-\bibitem{abramb} M.~Abramowitz, and I.A.~Stegun, {\em Handbook of Mathematical Functions}, ch.~6. (Dover, New York NY, 1964)
+\bibitem{abramb} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}, ch.~6. (Dover, New York NY, 1964)
 
 \bibitem{gim} R.~Fitzpatrick, C.G.~Gimblett, and R.J.~Hastie, Plasma Phys.\ Control.\ Fusion {\bf 34}, 161 (1992). 
 
@@ -1386,7 +1482,9 @@ where ${\bf C}({\bf r})$ is a general vector field.
 
 \bibitem{layer} R.~Fitzpatrick, Phys.\ Plasmas {\bf 5}, 3325 (1998).
 
-\bibitem{layer1} A. Cole, and R. Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
+\bibitem{layer1} A. Cole and R. Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
+
+\bibitem{nelson} R. Fitzpatrick and A.O. Nelson, Phys.\ Plasmas {\bf 27}, 072501 (2020).
 
 \end{thebibliography}
 

@@ -16,10 +16,10 @@
 
 ## Vacuum matrices:
 
-   	- Vacuum.py      - Visualizes vacuum matrices P_m^m' and R_m^m
-	- Amat.py        - Visualizes vacuum matrix A_m^m'
-	- Hmat.py        - Visualizes vacuum response matrix, H_m^m'
 	- Metric.py      - Plots metric data at plasma boundary
+   	- Vacuum.py      - Visualizes vacuum matrices P_m^m' and R_m^m
+	- Amat.py        - Visualizes vacuum matrix A^mm'
+	- Hmat.py        - Visualizes vacuum response matrix, H_mm'
 
 ## ODE Solution:
 
@@ -43,3 +43,6 @@
 	- Tfull.py       - Plots angular momentum flux associated with pair of fully reconnected solutions versus r
 	- Tunrc.py       - Plots angular momentum flux associated with pair of unreconnected solutions versus r
 
+## Tearing dispersion relation:
+
+   	 - Emat.py	- Visulalizes tearing stability matrix
