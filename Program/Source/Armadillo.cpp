@@ -5,7 +5,7 @@
 // Function to find inverse of complex matrix
 
 // ####################################################################################################################
-// Function to solve linear system of equations A . X = B, for B, where all quantities are complex rectangular matrices
+// Function to solve linear system of equations A . X = B, for X, where all quantities are complex rectangular matrices
 // ####################################################################################################################
 void TJ::SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B)
 {
@@ -35,6 +35,38 @@ void TJ::SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2>
   for (int i = 0; i < size2; i++)
     for (int j = 0; j < size3; j++)
       X(i, j) = Xmat(i, j);
+ }
+
+// ####################################################################################################################
+// Function to solve linear system of equations A . X = B, for X, where A is a complex rectangular matrix, and X and B
+// are complex vectors
+// ####################################################################################################################
+void TJ::SolveLinearSystem (Array<complex<double>,2> A, complex<double>* X, complex<double>* B)
+{
+  int size1 = A.extent(0);
+  int size2 = A.extent(1);
+
+  if (size1 != size2)
+    {
+      printf ("TJ::SolveLinearSystem: Error - over/underdetermined linear system\n");
+      exit (1);
+    }
+ 
+  // Solve problem using Armadillo
+  cx_mat Amat (size1, size1);
+  cx_vec Bvec (size1), Xvec (size1);
+
+  for (int i = 0; i < size1; i++)
+    for (int j = 0; j < size1; j++)
+      Amat(i, j) = A(i, j);
+
+  for (int i = 0; i < size1; i++)
+    Bvec(i) = B[i];
+  
+  solve (Xvec, Amat, Bvec);
+
+  for (int i = 0; i < size1; i++)
+    X[i] = Xvec(i);
  }
 
 // ################################

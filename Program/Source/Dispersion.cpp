@@ -34,6 +34,10 @@ void TJ::FindDispersion ()
   Tunrc.resize(nres, nres, NDIAG);
   Fval = new double[nres];
 
+  Upsilon = new complex<double>[J];
+  Lambda  = new complex<double>[J];
+  Chi     = new complex<double>[J];
+
   // ............
   // Collate data
   // ............
@@ -288,6 +292,46 @@ void TJ::FindDispersion ()
   // Calculate unreconnected eigenfunction visualization data
   // ........................................................
   VisualizeEigenfunctions ();
+
+  // ........................
+  // Calculate Upsilon-vector
+  // ........................
+  SolveLinearSystem (Xmat, Upsilon, Xi);
+
+  // .......................
+  // Calculate Lambda-vector
+  // .......................
+  for (int k = 0; k < nres; k++)
+    {
+      complex<double> sum = complex<double> (0., 0.);
+
+      for (int j = 0; j < J; j++)
+	sum += Pia(k, j) * Upsilon[j];
+
+      Lambda[k] = sum;
+    }
+
+  // .......................
+  // Calculate Chi-vector
+  // .......................
+  for (int k = 0; k < nres; k++)
+    {
+      complex<double> sum = complex<double> (0., 0.);
+
+      for (int kp = 0; kp < nres; kp++)
+	sum += Emat(k, kp) * Lambda[kp];
+      
+      Chi[k] = sum;
+    }
+
+  // .................
+  // Output Chi-vector
+  // .................
+  printf ("Chi vector:\n");
+  for (int k = 0; k < nres; k++)
+    printf ("Rational surface %2d: Chi = (%10.3e, %10.3e) |Chi| = %10.3e\n",
+	    k, real(Chi[k]), imag(Chi[k]), abs(Chi[k]));
+  
 }
 
 // #######################################################################################################

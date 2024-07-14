@@ -174,8 +174,11 @@ void TJ::Solve ()
   // Set toroidal and poloidal mode numbers
   SetModeNumbers ();
 
-  // Read equlibrium data
+  // Read equilibrium data
   ReadEquilibrium ();
+
+  // Read RMP coil data
+  ReadCoils ();
 
   // Calculate metric data at plasma boundary
   CalculateMetric ();
@@ -223,14 +226,16 @@ void TJ::CleanUp ()
 {
   printf ("Cleaning up:\n");
   
-  delete[] MPOL;   delete[] mpol;   delete[] s;      delete[] s2;
-  delete[] rr;     delete[] pp;     delete[] ppp;    delete[] q; 
-  delete[] S1;     delete[] P1;     delete[] P2;     delete[] P3;
-  delete[] mres;   delete[] qres;   delete[] rres;   delete[] sres;      
-  delete[] nuLres; delete[] nuSres; delete[] qerr;   delete[] Jres;
-  delete[] hode;   delete[] eode;   delete[] Rgrid;  delete[] rf;
-  delete[] Rbound; delete[] Zbound; delete[] tbound; delete[] dRdthe;
-  delete[] DIres;  delete[] dZdthe; delete[] Fval;
+  delete[] MPOL;    delete[] mpol;   delete[] s;      delete[] s2;
+  delete[] rr;      delete[] pp;     delete[] ppp;    delete[] q; 
+  delete[] S1;      delete[] P1;     delete[] P2;     delete[] P3;
+  delete[] mres;    delete[] qres;   delete[] rres;   delete[] sres;      
+  delete[] nuLres;  delete[] nuSres; delete[] qerr;   delete[] Jres;
+  delete[] hode;    delete[] eode;   delete[] Rgrid;  delete[] rf;
+  delete[] Rbound;  delete[] Zbound; delete[] tbound; delete[] dRdthe;
+  delete[] DIres;   delete[] dZdthe; delete[] Fval;   delete[] Rcoil;
+  delete[] Zcoil;   delete[] Icoil;  delete[] Psix;   delete[] Xi;
+  delete[] Upsilon; delete[] Lambda; delete[] Chi;
 
   gsl_spline_free (ppspline);
   gsl_spline_free (pppspline);

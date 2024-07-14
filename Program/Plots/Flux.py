@@ -1,7 +1,7 @@
 # Flux.py
 
 # Plots r, theta coordinate system in R, Z plane.
-# Also shows rational surfaces
+# Also shows rational surfaces and RMP coils.
 
 import math
 import numpy as np
@@ -23,9 +23,12 @@ rr = np.asarray(r);
 nf = RR.shape[0]
 nt = RR.shape[1]                
 
-fn1  = 'TJ.nc'
-ds1  = nc.Dataset (fn1)
-rres = ds1['rres']
+fn1   = 'TJ.nc'
+ds1   = nc.Dataset (fn1)
+rres  = ds1['rres']
+Rcoil = np.asarray(ds1['Rcoil'])
+Zcoil = np.asarray(ds1['Zcoil'])
+Icoil = np.asarray(ds1['Icoil'])
 
 fig = plt.figure (figsize = (8.0, 7.5))
 fig.canvas.manager.set_window_title (r'TJ Code: r, theta Coordinate System')
@@ -54,6 +57,12 @@ for n in range (0, nt-1, 10):
 plt.contour (RR, ZZ, rr, rres, colors = 'red', linewidths = 1.)    
 
 plt.plot ([1.], [0.], marker = 'o', markersize = 2, color = "red")
+
+for R, Z, I in zip (Rcoil, Zcoil, Icoil):
+    if I > 0.:
+        plt.plot ([R], [Z], marker = 'o', markersize = 5, color = "blue")
+    if I < 0.:
+        plt.plot ([R], [Z], marker = 'o', markersize = 5, color = "red")
 
 plt.xlabel (r'$R/R_0$', fontsize="20")
 plt.ylabel (r'$Z/R_0$', fontsize="20")

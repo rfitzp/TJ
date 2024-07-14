@@ -406,6 +406,14 @@ void TJ::WriteNetcdf ()
   double* Emat_i  = new double[nres*nres];
   double* Eant_r  = new double[nres*nres];
   double* Eant_i  = new double[nres*nres];
+  double* Psix_r  = new double[J];
+  double* Psix_i  = new double[J];
+  double* Xi_r    = new double[J];
+  double* Xi_i    = new double[J];
+  double* Up_r    = new double[J];
+  double* Up_i    = new double[J];
+  double* Chi_r   = new double[nres];
+  double* Chi_i   = new double[nres];
 
   for (int n = 0; n <= Ns; n++)
     for (int i = 0; i <= Nr; i++)
@@ -546,6 +554,22 @@ void TJ::WriteNetcdf ()
 	cnt++;
       }
 
+  for (int j = 0; j < J; j++)
+    {
+      Psix_r[j] = real (Psix[j]);
+      Psix_i[j] = imag (Psix[j]);
+      Xi_r  [j] = real (Xi[j]);
+      Xi_i  [j] = imag (Xi[j]);
+      Up_r  [j] = real (Upsilon[j]);
+      Up_i  [j] = imag (Upsilon[j]);
+    }
+
+  for (int j = 0; j < nres; j++)
+    {
+      Chi_r[j] = real (Chi[j]);
+      Chi_i[j] = imag (Chi[j]);
+    }
+
   try
     {
       NcFile dataFile ("Plots/TJ.nc", NcFile::replace);
@@ -558,6 +582,7 @@ void TJ::WriteNetcdf ()
       NcDim d_d = dataFile.addDim ("ndiag", NDIAG);
       NcDim f_d = dataFile.addDim ("Nf",    Nf);
       NcDim w_d = dataFile.addDim ("Nw",    Nw+1);
+      NcDim c_d = dataFile.addDim ("Ncoil", ncoil);
 
       vector<NcDim> shape_d;
       shape_d.push_back (s_d);
@@ -779,7 +804,29 @@ void TJ::WriteNetcdf ()
       eantr_x.putVar (Eant_r);
       NcVar eanti_x = dataFile.addVar ("Eant_i", ncDouble, e_d);
       eanti_x.putVar (Eant_i);
- 
+
+      NcVar rcoil_x = dataFile.addVar ("Rcoil",     ncDouble, c_d);
+      rcoil_x.putVar (Rcoil);
+      NcVar zcoil_x = dataFile.addVar ("Zcoil",     ncDouble, c_d);
+      zcoil_x.putVar (Zcoil);
+      NcVar icoil_x = dataFile.addVar ("Icoil",     ncDouble, c_d);
+      icoil_x.putVar (Icoil);
+      NcVar psix_r  = dataFile.addVar ("Psi^x_r",   ncDouble, j_d);
+      psix_r.putVar (Psix_r);
+      NcVar psix_i  = dataFile.addVar ("Psi^x_i",   ncDouble, j_d);
+      psix_i.putVar (Psix_i);
+      NcVar xi_r    = dataFile.addVar ("Xi_r",      ncDouble, j_d);
+      xi_r.putVar (Xi_r);
+      NcVar xi_i    = dataFile.addVar ("Xi_i",      ncDouble, j_d);
+      xi_i.putVar (Xi_i);
+      NcVar up_r    = dataFile.addVar ("Upsilon_r", ncDouble, j_d);
+      up_r.putVar (Up_r);
+      NcVar up_i    = dataFile.addVar ("Upsilon_i", ncDouble, j_d);
+      up_i.putVar (Up_i);
+      NcVar chi_r   = dataFile.addVar ("Chi_r",     ncDouble, x_d);
+      chi_r.putVar (Chi_r);
+      NcVar chi_i   = dataFile.addVar ("Chi_i",     ncDouble, x_d);
+      chi_i.putVar (Chi_i);
     }
   catch (NcException& e)
     {
@@ -801,5 +848,7 @@ void TJ::WriteNetcdf ()
   delete[] PPV_r;   delete[] PPV_i;   delete[] ZZV_r;   delete[] ZZV_i;
   delete[] R2grgz;  delete[] R2grge;  delete[] cmu;     delete[] ceta;
   delete[] seta;    delete[] eeta;    delete[] Aant_r;  delete[] Aant_i;
-  delete[] Emat_r;  delete[] Emat_i;  delete[] Eant_r;  delete[] Eant_i; 
+  delete[] Emat_r;  delete[] Emat_i;  delete[] Eant_r;  delete[] Eant_i;
+  delete[] Psix_r;  delete[] Psix_i;  delete[] Chi_r;   delete[] Chi_i;
+  delete[] Xi_r;    delete[] Xi_i;    delete[] Up_r;    delete[] Up_i;
 }

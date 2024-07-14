@@ -46,7 +46,7 @@ for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\hat{r}$',    fontsize = "15")
-plt.ylabel (r"real($\psi$)", fontsize = "15")
+plt.ylabel (r"real($\psi_m$)", fontsize = "15")
 
 plt.subplot (3, 2, 2)
 
@@ -60,7 +60,7 @@ for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\hat{r}$',    fontsize = "15")
-plt.ylabel (r"imag($\psi$)", fontsize = "15")
+plt.ylabel (r"imag($\psi_m$)", fontsize = "15")
 
 plt.subplot (3, 2, 3)
 
@@ -74,7 +74,7 @@ for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\hat{r}$', fontsize = "15")
-plt.ylabel (r"real($Z$)", fontsize = "15")
+plt.ylabel (r"real($Z_m$)", fontsize = "15")
 
 plt.subplot (3, 2, 4)
 
@@ -88,7 +88,7 @@ for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\hat{r}$', fontsize = "15")
-plt.ylabel (r"imag($Z$)", fontsize = "15")
+plt.ylabel (r"imag($Z_m$)", fontsize = "15")
 
 plt.tight_layout ()
 

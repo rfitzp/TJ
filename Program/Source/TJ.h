@@ -15,7 +15,12 @@
 // Program assumes monotonic safety-factor profile.
 
 // Inputs:
-//  Input/Namelist.nml - namelist
+//  Inputs/Namelist.nml - namelist
+
+//  Inputs/Coils.txt - ncoil (i.e. no of subsequent lines to be read)
+//                     Rcoil[0]  Zcoil[0]  Icoil[0]
+//                     Rcoil[1]  Zcoil[1]  Icoil[1]
+//                     etc.
 
 // Outputs:
 //  Plots/TJ.nc
@@ -254,6 +259,19 @@ class TJ
   double* Zbound;    // Z values on plasma boundary
   double* dRdthe;    // dR/dtheta values on plasma boundary
   double* dZdthe;    // dZ/dtheta values on plasma boundary
+
+  // -------------
+  // RMP coil data
+  // -------------
+  int              ncoil;     // Number of toroidal strands that make up RMP coils
+  double*          Rcoil;     // R coodinates of strands
+  double*          Zcoil;     // Z coodinates of strands
+  double*          Icoil;     // Toroidal currents flowing in strands
+  complex<double>* Psix;      // RMP perturbation at plasma boundary
+  complex<double>* Xi;        // RMP response vector
+  complex<double>* Upsilon;   // RMP response vector
+  complex<double>* Lambda;    // RMP response vector
+  complex<double>* Chi;       // RMP drive at rational surfaces
   
   // -----------------------
   // Root finding parameters
@@ -272,7 +290,7 @@ class TJ
   // ----
   // Misc
   // ----
-  int    count;
+  int    count, rhs_chooser;
   double qval;
   
  public:
@@ -310,6 +328,8 @@ class TJ
 
   // Read equilibrium data from Inputs/Equilibrium.nc
   void ReadEquilibrium ();
+  // Read RMP coil data
+  void ReadCoils ();
   // Calculate metric data at plasma boundary
   void CalculateMetric ();
     
@@ -321,6 +341,10 @@ class TJ
   void GetVacuum ();
   // Evaluate right-hand sides of vacuum odes
   void Rhs1 (double r, complex<double>* Y, complex<double>* dYdr);
+  // Evaluate eta for RMP coil calculation
+  double Geteta (double R, double Z, double Rp, double Zp);
+  // Evaluate G for RMP coil calculation
+  double GetG (double R, double Z, double Rp, double Zp);
   
   // ...............
   // In Rational.cpp
@@ -477,8 +501,11 @@ class TJ
   // In Armadillo.cpp
   // ...............
 
-  // Solve linear system of equations A . X = B, for B, where all quantities are complex rectangular matrices
+  // Solve linear system of equations A . X = B, for X, where all quantities are complex rectangular matrices
   void SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B);
+  // Solve linear system of equations A . X = B, for X, where A is a complex rectangular matrix, and X and B
+  //  are complex vectors
+  void SolveLinearSystem (Array<complex<double>,2> A, complex<double>* X, complex<double>* B);
   // Invert square matrix
   void InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA);
   // Return eigenvalues of Hermitian matix H

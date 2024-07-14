@@ -45,4 +45,9 @@
 
 ## Tearing dispersion relation:
 
-   	 - Emat.py	- Visulalizes tearing stability matrix
+   	 - Emat.py	- Visualizes tearing stability matrix
+
+## RMP coils:
+
+	 - Psix.py      - Plots poloidal harmonics of RMP at plasma boundary
+	 - Chi.py       - Plots RMP drives at rational surfaces

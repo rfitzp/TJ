@@ -349,6 +349,11 @@ void Equilibrium::Solve ()
       printf ("Equilibrium:: Error reading Shape.txt\n");
       exit (1);
     }
+  if (nshape < 0)
+    {
+      printf ("Equilibrium:: nshape cannot be negative\n");
+      exit (1);
+    }
   double* hna = new double[nshape+2];
   double* vna = new double[nshape+2];
 
