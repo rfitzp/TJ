@@ -59,7 +59,7 @@ for rx in rres:
     plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"real($\psi$)", fontsize="15")
+plt.ylabel(r"Re($\psi_m$)", fontsize="15")
 
 plt.subplot(3, 2, 2)
 
@@ -87,7 +87,7 @@ for rx in rres:
     plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"imag($\psi$)", fontsize="15")
+plt.ylabel(r"Im($\psi_m$)", fontsize="15")
 
 plt.subplot(3, 2, 3)
 
@@ -115,7 +115,7 @@ for rx in rres:
     plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"real($Z$)", fontsize="15")
+plt.ylabel(r"Re($Z_m$)", fontsize="15")
 
 plt.subplot(3, 2, 4)
 
@@ -143,7 +143,7 @@ for rx in rres:
     plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"imag($Z$)", fontsize="15")
+plt.ylabel(r"Im($Z_m$)", fontsize="15")
 
 plt.subplot(3, 2, 5)
 
@@ -158,7 +158,7 @@ for rx in rres:
     plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"norm($\psi$)", fontsize="15")
+plt.ylabel(r"norm($\psi_m$)", fontsize="15")
 
 plt.subplot(3, 2, 6)
 

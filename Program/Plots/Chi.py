@@ -22,7 +22,7 @@ for i in range (nres):
     T[i] = math.atan2 (Ci[i], Cr[i]) /math.pi
 
 fig = plt.figure (figsize = (8.5, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Chi-Vector')
+fig.canvas.manager.set_window_title (r'TJ Code: RMP Drive at Rational Surfaces')
 plt.rc ('xtick', labelsize = 17) 
 plt.rc ('ytick', labelsize = 17)
 
