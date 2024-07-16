@@ -22,9 +22,9 @@ Zn    = ds['Z_norm']
 Tq    = ds['Torque_test']
 rres  = ds['rres']
 
-fig = plt.figure (figsize=(12.0, 8.0))
-plt.rc('xtick', labelsize=15) 
-plt.rc('ytick', labelsize=15)
+fig = plt.figure (figsize = (12.0, 8.0))
+plt.rc ('xtick', labelsize = 15) 
+plt.rc ('ytick', labelsize = 15)
 
 nres = len(rres)
 print ("solution number = (%d .. %d) or (%d .. %d)" % (mpol[0], mpol[-1], mpol[-1]+1, mpol[-1]+nres))
@@ -36,91 +36,91 @@ jp  = int(mp) - mpol[0]
 
 J = Psi_r.shape[0]    
 
-plt.subplot(3, 2, 1)
+plt.subplot (3, 2, 1)
 
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
-plt.plot(r, Psi_r[jp,j,:], color='blue', linewidth = 2, linestyle = 'solid')
+plt.plot (r, Psi_r[jp,j,:], color = 'blue', linewidth = 2, linestyle = 'solid')
 
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
+for rx in rres:
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
+
+plt.xlabel (r'$\hat{r}$',    fontsize = "15")
+plt.ylabel (r"Re($\psi_m$)", fontsize = "15")
+
+plt.subplot (3, 2, 2)
+
+plt.xlim (0., 1.)
+
+plt.plot (r, Psi_i[jp,j,:], color = 'blue', linewidth = 2, linestyle = 'solid')
+
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
+for rx in rres:
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
+
+plt.xlabel (r'$\hat{r}$',    fontsize = "15")
+plt.ylabel (r"Im($\psi_m$)", fontsize = "15")
+
+plt.subplot (3, 2, 3)
+
+plt.xlim (0., 1.)
+
+plt.plot (r, Z_r[jp,j,:], color = 'blue', linewidth = 2, linestyle = 'solid')
+
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
     plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"Re($\psi_m$)", fontsize="15")
-
-plt.subplot(3, 2, 2)
-
-plt.xlim(0., 1.)
-
-plt.plot(r, Psi_i[jp,j,:], color='blue', linewidth = 2, linestyle = 'solid')
-
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
-
-for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
-
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"Im($\psi_m$)", fontsize="15")
-
-plt.subplot(3, 2, 3)
-
-plt.xlim(0., 1.)
-
-plt.plot(r, Z_r[jp,j,:], color='blue', linewidth = 2, linestyle = 'solid')
-
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
-
-for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
-
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"Re($Z_m$)", fontsize="15")
+plt.xlabel (r'$\hat{r}$', fontsize = "15")
+plt.ylabel (r"Re($Z_m$)", fontsize = "15")
 
 plt.subplot(3, 2, 4)
 
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
-plt.plot(r, Z_i[jp,j,:], color='blue', linewidth = 2, linestyle = 'solid')
+plt.plot (r, Z_i[jp,j,:], color = 'blue', linewidth = 2, linestyle = 'solid')
 
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
-
-for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
-
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"Im($Z_m$)", fontsize="15")
-
-plt.subplot(3, 2, 5)
-
-plt.xlim(0., 1.)
-
-plt.plot(r, Pn[j,:], color='blue', linewidth = 1, linestyle = 'solid')
-plt.plot(r, Zn[j,:], color='red', linewidth = 1, linestyle = 'solid')
-
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"norm($\psi_m$)", fontsize="15")
+plt.xlabel (r'$\hat{r}$', fontsize = "15")
+plt.ylabel (r"Im($Z_m$)", fontsize = "15")
 
-plt.subplot(3, 2, 6)
+plt.subplot (3, 2, 5)
 
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
-plt.plot(r, Tq[j,:], color='blue', linewidth = 1, linestyle = 'solid')
+plt.plot (r, Pn[j,:], color = 'blue', linewidth = 1, linestyle = 'solid')
+plt.plot (r, Zn[j,:], color = 'red',  linewidth = 1, linestyle = 'solid')
 
-plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
-    plt.axvline (rx, color='black', linewidth = 1.5, linestyle = 'dashed')
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel(r'$\hat{r}$', fontsize="15")
-plt.ylabel(r"$T_\phi$", fontsize="15")
+plt.xlabel (r'$\hat{r}$',      fontsize = "15")
+plt.ylabel (r"norm($\psi_m$)", fontsize = "15")
+
+plt.subplot (3, 2, 6)
+
+plt.xlim (0., 1.)
+
+plt.plot(r, Tq[j,:], color = 'blue', linewidth = 1, linestyle = 'solid')
+
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
+for rx in rres:
+    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
+
+plt.xlabel (r'$\hat{r}$', fontsize = "15")
+plt.ylabel (r"$T_\phi$",  fontsize = "15")
     
-plt.tight_layout()
+plt.tight_layout ()
 
-plt.show()    
+plt.show ()    

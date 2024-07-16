@@ -6,7 +6,7 @@
 // All lengths (except r) normalized to R_0 (major radius of magnetic axis).
 // All magnetic field-strengths normalized to B_0 (on-axis toroidal magnetic field-strength).
 // Radial coordinate, r, normalized to epsa * R_0, where eps_a is inverse-aspect ratio.
-// So r = 0 is magnetic axis, r = 1 is plasma/vacuum interface.
+// So r = 0 is magnetic axis and r = 1 is plasma/vacuum interface.
 
 // Flux-surfaces:
 
@@ -93,7 +93,7 @@ class Equilibrium
   int    Ns;     // Number of shaping harmonics (read from namelist)
   int    Nr;     // Number of radial grid-points for calculation purposes (read from namelist)
   int    Nf;     // Number of radial grid-points for visualization purposes (read from namelist)
-  int    Nw;     // Number of angular grid-points for visulalization purposes (read from namelist)
+  int    Nw;     // Number of angular grid-points for visualization purposes (read from namelist)
 
   // -------------------------------
   // Adaptive integration parameters
@@ -103,7 +103,7 @@ class Equilibrium
   double hmin;    // Minimum integration step-length (read from namelist)
   double hmax;    // Maximum integration step-length (read from namelist)
   int    maxrept; // Maximum number of step recalculations
-  int    flag;    // Integration error calcualation flag
+  int    flag;    // Integration error calculation flag
   
   // ----------------
   // Calculation data
@@ -247,7 +247,7 @@ private:
   double GetdZdr (double r, double w);
   // Return dZdw
   double GetdZdw (double r, double w);
-  // Return theta(r, omega) function
+  // Return theta (r, omega) function
   double Gettheta (double r, double w);
   // Return R2
   double GetR2 (double r, double t);

@@ -161,15 +161,42 @@ class TJ
   gsl_spline*        Zbspline;  // Interpolated Z function on plasma boundary
   gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function
   gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function
- 
-  // ----------------
-  // Mode number data
-  // ----------------
-  double   ntor;  // Toroidal mode number
-  int      J;     // Number of poloidal harmonics included in calculation
-  int      K;     // Number of solution vectors: K = J + nres
-  int*     MPOL;  // Poloidal mode numbers of included poloidal harmonics
-  double*  mpol;  // Poloidal mode numbers of included poloidal harmonics
+
+  // -------------
+  // RMP coil data
+  // -------------
+  int              ncoil;     // Number of toroidal strands that make up RMP coils
+  double*          Rcoil;     // R coodinates of strands
+  double*          Zcoil;     // Z coodinates of strands
+  double*          Icoil;     // Toroidal currents flowing in strands
+  complex<double>* Psix;      // RMP perturbation at plasma boundary
+  complex<double>* Xi;        // RMP response vector
+  complex<double>* Upsilon;   // RMP response vector
+  complex<double>* Lambda;    // RMP response vector
+  complex<double>* Chi;       // RMP drive at rational surfaces
+
+  // --------------------
+  // Plasma boundary data
+  // ---------------------
+  double* tbound;    // theta values on plasma boundary
+  double* Rbound;    // R values on plasma boundary
+  double* Zbound;    // Z values on plasma boundary
+  double* dRdthe;    // dR/dtheta values on plasma boundary
+  double* dZdthe;    // dZ/dtheta values on plasma boundary
+
+  // --------------------
+  // Vacuum solution data
+  // --------------------
+  double                   sa;    // Edge magnetic shear
+  Array<complex<double>,2> Pvac;  // Vacuum solution matrix
+  Array<complex<double>,2> Pdag;  // Hermitian conjugate of Pvac
+  Array<complex<double>,2> Rvac;  // Vacuum solution matrix
+  Array<complex<double>,2> Amat;  // Pdag * Rvac
+  Array<complex<double>,2> Aher;  // Hermitian component of A
+  Array<complex<double>,2> Aant;  // Anti-Hermitian component of A
+  Array<complex<double>,2> Rmat;  // Pdag * Rmat = Aher
+  Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rmat
+  Array<complex<double>,2> Hmat;  // Vacuum response matrix: Rdag * Hmat = Pdag
 
   // ---------------------
   // Rational surface data
@@ -185,20 +212,15 @@ class TJ
   double* nuSres;  // Mercies indices of small solution at rational surfaces
   int*    Jres;    // Index of resonant poloidal harmonic at rational surfaces
 
-  // --------------------
-  // Vacuum solution data
-  // --------------------
-  double                   sa;    // Edge magnetic shear
-  Array<complex<double>,2> Pvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Pdag;  // Hermitian conjugate of Pvac
-  Array<complex<double>,2> Rvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Amat;  // Pdag * Rvac
-  Array<complex<double>,2> Aher;  // Hermitian component of A
-  Array<complex<double>,2> Aant;  // Anti-Hermitian component of A
-  Array<complex<double>,2> Rmat;  // Pdag * Rmat = Aher
-  Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rmat
-  Array<complex<double>,2> Hmat;  // Vacuum response matrix: Rdag * Hmat = Pdag
- 
+  // ----------------
+  // Mode number data
+  // ----------------
+  double   ntor;  // Toroidal mode number
+  int      J;     // Number of poloidal harmonics included in calculation
+  int      K;     // Number of solution vectors: K = J + nres
+  int*     MPOL;  // Poloidal mode numbers of included poloidal harmonics
+  double*  mpol;  // Poloidal mode numbers of included poloidal harmonics
+
   // -----------------
   // ODE Solution data
   // -----------------
@@ -212,7 +234,7 @@ class TJ
   Array<complex<double>,2> Pi;     // Reconnected fluxes at rational surfaces associated with solution vectors
 
   // -------------------------------------
-  // Tearing mode dispersion relation data
+  // Tearing-mode dispersion relation data
   // -------------------------------------
   Array<complex<double>,2> Psia;  // Values of Psi at plasma boundary due to continuous solutions launched from magnetic axis
   Array<complex<double>,2> Za;    // Values of Z at plasma boundary due to continuous solutions launched from magnetic axis
@@ -251,34 +273,11 @@ class TJ
   Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visulalization grid
   Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
 
-  // --------------------
-  // Plasma boundary data
-  // ---------------------
-  double* tbound;    // theta values on plasma boundary
-  double* Rbound;    // R values on plasma boundary
-  double* Zbound;    // Z values on plasma boundary
-  double* dRdthe;    // dR/dtheta values on plasma boundary
-  double* dZdthe;    // dZ/dtheta values on plasma boundary
-
-  // -------------
-  // RMP coil data
-  // -------------
-  int              ncoil;     // Number of toroidal strands that make up RMP coils
-  double*          Rcoil;     // R coodinates of strands
-  double*          Zcoil;     // Z coodinates of strands
-  double*          Icoil;     // Toroidal currents flowing in strands
-  complex<double>* Psix;      // RMP perturbation at plasma boundary
-  complex<double>* Xi;        // RMP response vector
-  complex<double>* Upsilon;   // RMP response vector
-  complex<double>* Lambda;    // RMP response vector
-  complex<double>* Chi;       // RMP drive at rational surfaces
-  
   // -----------------------
   // Root finding parameters
   // -----------------------
   double Eta;      // Minimum magnitude of f at root f(x) = 0
   int    Maxiter;  // Maximum number of iterations
-
 
   // ----------------------------
   // Cash-Karp RK4/RK5 parameters
