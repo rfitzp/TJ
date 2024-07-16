@@ -16,7 +16,7 @@
 
 \begin{abstract}
 The   tearing-mode stability of an inverse aspect-ratio expanded tokamak plasma equilibrium of general
-shape  is investigated using asymptotic matching methods. Particular emphasis is placed on the
+shape  is investigated using asymptotic matching techniques. Particular emphasis is placed on the
 conservation of toroidal electromagnetic angular momentum. The TJ code, which is a specific implementation of the
 results of the investigation, is described. 
 \end{abstract}
@@ -35,10 +35,11 @@ solution in the associated segment of the inner region, which is characterized b
 perturbations with different toroidal mode numbers are independent of one another, whereas perturbations with different poloidal
 mode numbers are coupled together via toroidicity and the non-circular shaping of magnetic flux-surfaces.\cite{con0}
 Consequently, for a tearing perturbation with a given toroidal mode number, 
- the ${\mit\Delta}_k$ values associated with  the various rational surfaces in the plasma are interrelated via a matrix equation.\cite{connor,cht,tokuda,brennan, ham,ham1,am1,am3} [See Eq.~(\ref{e317u}).]
+ the ${\mit\Delta}_k$ values associated with  the various rational surfaces in the plasma are interrelated via a matrix equation.\cite{cht} [See Eq.~(\ref{e317u}).]
 
 In general, the  determination of the elements of the matrix equation that links the various ${\mit\Delta}_k$ values from the ideal-MHD equations 
-in the outer region is a exceptionally challenging computational task.\cite{nish,pletz,pletz1,am2,aglas,aglas1,aglas2}
+in the outer region is a exceptionally challenging computational task.\cite{connor,nish,pletz,pletz1,
+tokuda,brennan,ham,ham1,ham2,am1,am2,am3,aglas,aglas1,aglas2}
 One way of greatly reducing the complexity of this task is to employ an inverse aspect-ratio expanded plasma equilibrium.\cite{greene} In such an equilibrium,
 the metric elements of the flux-coordinate system can be expressed analytically in terms of a relatively small number of  flux-surface functions,
 which represents a major simplification.\cite{con0} Another significant advantage of an inverse aspect-ratio expanded equilibrium is that the magnetic perturbation in the plasma can be efficiently 
@@ -52,7 +53,7 @@ inverse aspect-ratio expansion approach was extended in Ref.~\onlinecite{am1} in
 flux-surface triangularity. In this paper, we  generalize the inverse aspect-ratio expansion  approach to allow for an {\em arbitrary}\/ number of poloidal harmonics coupled
 by flux-surfaces of {\em general}\/ shape. Furthermore, unlike Refs.~\onlinecite{connor} and \onlinecite{am1}, we do not assume that the plasma
 equilibrium 
-is up-down symmetric. 
+is up-down-symmetric. 
 
 This paper is organized as follows. In Sect.~\ref{geq}, we examine a general tokamak plasma equilibrium. In Sect.~\ref{opde}, we
 derive the so-called ``outer-region  partial differential equations" (p.d.e.s), which are a set of two coupled second-order p.d.e.s that control   the ideal-MHD solution in the outer region. In
@@ -67,7 +68,7 @@ demonstrate that this equation must be Hermitian in order to conserve toroidal e
 we discuss how the tearing-mode dispersion relation is modified by non-axisymmetric currents flowing in
  resonant magnetic perturbation (RMP) coils external to the plasma. We also derive expressions for the toroidal electromagnetic
 torques exerted at the various rational surfaces in the plasma by the RMP coils. In Sect.~\ref{tj}, we discuss the
-TJ code, which is a specific implementation of the theory presented in this paper. Finally, the paper is summarized in Sect.~\ref{sum}.
+TJ code, which is a specific implementation of the theory presented in Sects.~\ref{geq}--\ref{rmp}. Finally, the paper is summarized in Sect.~\ref{sum}.
 
 \section{General Plasma Equilibrium}\label{geq}
 \subsection{Normalization}\label{coords}
@@ -229,7 +230,9 @@ r\,R^{\,2}\,j^{\,\theta} &=-{\rm i}\,n\,b_r -\frac{\partial b_\phi}{\partial r},
 r\,R^{\,2}\,j^{\,\phi}&= \frac{\partial b_\theta}{\partial r} -\frac{\partial b_r}{\partial \theta},\label{e59}
 \end{align}
 where use has been made of Eqs.~(\ref{jac}) and (\ref{curl1})--(\ref{curl3}). 
-Now, according to Sect.~\ref{s2}, 
+
+\subsection{Perturbed Magnetic Field}
+According to Sect.~\ref{s2}, 
 \begin{equation}
 {\bf b} = b_r\,\nabla r + b_\theta\,\nabla\theta+b_\phi\,\nabla\phi,
 \end{equation}
@@ -658,7 +661,7 @@ Consider the resonant layer solution in the vicinity of the $k$th  rational surf
 This solution can be separated into independent tearing and twisting parity components.\cite{ggj}
 The tearing parity   component is such that $\psi_{m_k}(r_k-x)=\psi_{m_k}(r_k+x)$ throughout the layer, whereas the  twisting parity component is such that
 $\psi_{m_k}(r_k-x)=-\psi_{m_k}(r_k+x)$. It turns out, however, that the twisting parity response of a resonant layer to the solution in the outer region is generally negligible compared to the tearing parity response.\cite{connor,twist,am3}
-Hence,  we shall neglect the twisting parity responses of the various resonant layers  in the plasma all together. 
+Hence,  in this paper, we shall neglect the twisting parity responses of the various resonant layers  in the plasma all together. 
 
 The neglect of the twisting parity responses of the various resonant layers in the plasma implies that the coefficients of the large solution to the left and to the right of
 each rational surface in the plasma are equal to one another.\cite{am1} In other words,
@@ -722,7 +725,7 @@ surface.
 
 \subsection{Plasma/Vacuum Interface}
 Let the plasma/vacuum interface  correspond to $r=\epsilon$, where  is the inverse aspect-ratio of the
-plasma. In other words, $\epsilon=a/R_0$, where $a$ is the effective minor radius of the plasma. 
+plasma. In other words, let $\epsilon=a/R_0$, where $a$ is the effective minor radius of the plasma. 
 The region external to the plasma, $r>\epsilon$, is assumed to be  free of non-axisymmetric currents.
 
 \subsection{Perturbed Vacuum Magnetic Field}\label{pertb}
@@ -819,13 +822,13 @@ for general $m'$, and
 \end{align}
 for the special case $m'=0$.
 
-\subsection{Boundary Condition at Plasma/Vacuum Interface}
+\subsection{Homogeneous Boundary Condition at Plasma/Vacuum Interface}
 According to Eqs.~(\ref{e66}), (\ref{e79o}), (\ref{e97}), (\ref{Zdef})--(\ref{psidef}),  (\ref{vdef}), and (\ref{e193tt}), 
 \begin{equation}\label{evdef}
 V_m(r)= \frac{Z_m(r)}{m-n\,q(r)},
 \end{equation}
 and the $\psi_m(r)$ defined in Eq.~(\ref{e115}) can be identified with the $\psi_m(r)$ defined in Eqs.~(\ref{ebnm}) and (\ref{ebnm1}). 
-Thus, Eqs.~(\ref{e344}) and (\ref{e352}) yield the following boundary condition at the plasma/vacuum interface,
+Thus, Eqs.~(\ref{e344}) and (\ref{e352}) yield the following homogenous boundary condition at the plasma/vacuum interface,
 \begin{equation}\label{bc}
 \frac{Z_m(\epsilon)}{m-n\,q(\epsilon)} = \sum_{m'} H_{mm'}\,\psi_{m'}(\epsilon),
 \end{equation}
@@ -937,7 +940,7 @@ where $j$ is a positive integer.
 Here, $H_1(\hat{r})$  controls the relative horizontal locations of the flux-surface centroids, $H_2(\hat{r})$ and $V_2(\hat{r})$ control the 
 magnitudes and vertical tilts of the flux-surface ellipticities, $H_3(\hat{r})$ and
 $V_3(\hat{r})$ control the magnitudes and vertical tilts of the flux-surface triangularities, et cetera, whereas $L(\hat{r})$ is a
-re-labelling parameter. Moreover, $\omega(R,Z)$ is a  poloidal angle that is distinct from $\theta$. Note that $V_1$ does not appear in Eq.~(\ref{e20x})
+flux-surface re-labelling parameter. Moreover, $\omega(R,Z)$ is a  poloidal angle that is distinct from $\theta$. Note that $V_1$ does not appear in Eq.~(\ref{e20x})
 because such a factor merely gives rise to a rigid vertical shift of the plasma that can be eliminated by a suitable choice of the
 origin of the flux-coordinate system.\cite{fitz2024}
 
@@ -1082,7 +1085,8 @@ P_0^{\,\pm 1}(\hat{r})&= \lim_{m\rightarrow 0}\,P_{m\pm 1}^{\,m}-\epsilon\,(2-s)
 P_0^{\,\pm j}(\hat{r})&=\lim_{m\rightarrow 0}\,P_m^{\,m\pm j}-\epsilon\,(2-s)\,\frac{(j\mp n\,q)}{j}
 \left[(1-s)\,(H_j'\pm {\rm i}\,V_j')-(j^2-1)\left(\frac{H_j\pm {\rm i}\,V_j}{\hat{r}}\right)\right]\nonumber\\[0.5ex]&\mbox{~~~~~for $j>1$}.
 \end{align}
-Note that the coupling coefficients satisfy the symmetry requirements (\ref{e137})--(\ref{e140}).
+Here, the coupling coefficients are evaluated to ${\cal O}(\epsilon)$, while retaining ${\cal O}(\epsilon^{\,2})$ contributions to diagonal terms.\cite{connor,am1}
+Note that the coupling coefficients exactly satisfy the symmetry requirements (\ref{e137})--(\ref{e140}).
 
 \subsection{Behavior Close to Magnetic Axis}\label{axis}
 In the limit $\hat{r}\ll 1$,  a well-behaved solution of the outer-region o.d.e.s, (\ref{e61x}) and (\ref{e62x}), with a dominant poloidal
@@ -1216,7 +1220,7 @@ for $k,k'=1,K$, where
 \begin{equation}
 F_{kk'}=\sum_{j=0,J}{\mit\Pi}^a_{kj}\,{\mit\Omega}_{jk'} + {\mit\Pi}^s_{kk'}.
 \end{equation}
-Equation~(\ref{e315}) specifies the reconnected magnetic flux, ${\mit\Psi}_k$, driven at each rational surface in the plasma
+Equation~(\ref{e315}) specifies the reconnected helical magnetic flux, ${\mit\Psi}_k$, driven at each rational surface in the plasma
 as a consequence of the current sheets, ${\mit\Delta\Psi}_k$, flowing at the surfaces. It is clear that $F_{kk'}$ is a dimensionless
 inductance matrix.\cite{rfbook}
 
@@ -1232,7 +1236,7 @@ as follows:
 \psi_{m_j\,k}^{f}(\hat{r}) &=\psi^s_{m_j\,k}(\hat{r})+ \sum_{j'=0,J}\psi_{m_j\,m_{j'}}^a(\hat{r})\,{\mit\Omega}_{j'k},\\[0.5ex]
 Z_{m_j\,k}^{f}(\hat{r}) &=Z^s_{m_j\,k}(\hat{r})+ \sum_{j'=0,J}Z_{m_j\,m_{j'}}^a(\hat{r})\,{\mit\Omega}_{j'k}
 \end{align}
-for $j=0,J$. Note that the fully-reconnected solution associated with the $k$th rational surface only has a current sheet at that surface. 
+for $j=0,J$. Here, $\delta_{kk'}$ is a unit matrix.  Note that the fully-reconnected solution associated with the $k$th rational surface only has a current sheet at that surface. 
 (The current sheets at the other surfaces are all zero.)
 
 The homogeneous toroidal tearing-mode dispersion relation can be written in the alternative form\,\cite{cht,am1}
@@ -1263,13 +1267,12 @@ Let
 \end{equation}
  be the complex quantity that characterizes the
 tearing response of the resonant layer at the $k$th rational surface to the ideal-MHD solution in the outer region.\cite{fkr}
-In general, ${\mit\Delta}_k$ is a function of the growth-rate and phase-velocity of the reconnected magnetic flux at the surface.\cite{am1,layer,layer1}
+In general, ${\mit\Delta}_k$ is a function of the growth-rate and phase-velocity of the reconnected helical magnetic flux at the surface.\cite{am1,layer,layer1}
 The previous two equations can be combined to give the ultimate form of the  tearing-mode dispersion relation,
 \begin{equation}\label{e317u}
 \sum_{k'=1,k}({\mit\Delta}_k\,\delta_{kk'}-E_{kk'})\,{\mit\Psi}_{k'} = 0
 \end{equation}
-for $k=1,K$. 
-Here, $\delta_{kk'}$ is a unit matrix. It is clear that $E_{kk}$ is the tearing stability index\,\cite{fkr} at the $k$th rational surface when magnetic reconnection  takes place
+for $k=1,K$.  It is clear that $E_{kk}$ is the tearing stability index\,\cite{fkr} at the $k$th rational surface when magnetic reconnection  takes place
 at this surface, but is suppressed at the other surfaces (as is likely to be the case in the presence of sheared plasma rotation\,\cite{am1}). 
 
 \subsection{Toroidal Electromagnetic Torques}\label{etor}
@@ -1287,7 +1290,8 @@ Thus, it follows that
 \begin{equation}
 E_{kk'} = E_{k'k}^{\,\ast}.
 \end{equation}
-In other words, the matrix $E_{kk'}$ is Hermitian,\cite{am1} which implies that $F_{kk'}$ is also Hermitian (as must  be the case if $F_{kk'}$ can
+In other words, as a
+consequence of the conservation of toroidal electromagnetic angular momentum, the matrix $E_{kk'}$ must be Hermitian,\cite{am1} which implies that $F_{kk'}$ is also Hermitian (as ought to be the case if $F_{kk'}$ can
 be interpreted as 
 a dimensionless inductance matrix). 
 
@@ -1369,7 +1373,8 @@ strongly shielded by plasma rotation,\cite{am3,rfa} so that $|{\mit\Delta}_k|\gg
 The first computer code that was developed in order to calculate the tearing-mode stability of an aspect-ratio expanded tokamak plasma equilibrium was the
   T3 code (1998). The T3 code solves a set of coupled first-order o.d.e.s associated with  the resonant poloidal harmonics at the various rational surfaces in the plasma, together with their upper and lower sidebands driven by toroidal coupling.\cite{connor} The T3 code was quickly followed by the T7  code (1993), which extends the calculation to describe the coupling of
   poloidal harmonics associated with the elliptic and triangular shaping of up-down-symmetric equilibrium magnetic flux-surfaces, necessitating  seven coupled poloidal harmonics for each rational surface in the plasma.\cite{am1} Unfortunately, both the T3 and T7 codes were formulated incorrectly, causing them to only conserve
-  toroidal electromagnetic angular momentum at unrealistically low values of the inverse aspect-ratio. The recently developed TJ code (2024) calculates the
+  toroidal electromagnetic angular momentum at unrealistically low values of the inverse aspect-ratio. The recently developed TJ code (2024),
+  which is an implementation of the analysis of Sects.~\ref{geq}--\ref{rmp} of this paper,  calculates the
   tearing stability of an aspect-ratio expanded tokamak equilibrium with magnetic flux-surfaces of arbitrary shape. Moreover, the code has been formulated in such a
   fashion that it conserves toroidal electromagnetic angular momentum at realistic values of the inverse aspect-ratio. As will become clear in the following discussion, conservation of
   angular momentum is a vitally important property of a toroidal tearing-mode code. 
@@ -1387,7 +1392,7 @@ Figure~\ref{f1} shows the $p_2(\hat{r})$ profile, as well as the final safety-fa
 calculate all of the aspect-ratio expanded quantities described in Sect.~\ref{large}. 
 
 The $\hat{r}$-$\theta$ flux-coordinate system associated with the
-equilibrium is shown in Fig.~\ref{f2}. It can be seen that the plasma equilibrium is not up-down symmetric, and also has a fairly realistic shape. 
+equilibrium is shown in Fig.~\ref{f2}. It can be seen that the plasma equilibrium is not up-down-symmetric, and also has a fairly realistic shape. 
 
 The
 locations of  the four $n=1$
@@ -1447,7 +1452,7 @@ As described in Sect.~\ref{vacxx}, the conservation
  solution of the outer-region o.d.e.s, launched from the magnetic axis, and integrated to the plasma boundary. This
  particular solution is dominated by the $m=1$ harmonic close to the axis. It can be seen that $T_\phi(\hat{r})$ is constant between
  rational surfaces. This demonstrates that the Cash-Karp embedded RK4/RK5 adaptive-step integration scheme\,\cite{press} used to solve the outer-region o.d.e.s
- does in an accurate manner. It can also be seen that there are small jumps in $T_\phi(\hat{r})$ across the rational surfaces. This occurs because the
+ does so in an accurate manner. It can also be seen that there are small jumps in $T_\phi(\hat{r})$ across the rational surfaces. This occurs because the
  jump conditions specified in Sect.~\ref{snus} are based on an expansion in $\delta$ (the closest distance that the outer-region solution approaches the rational
  surface) and are, therefore, only approximate. However, the spurious jumps in $T_\phi(\hat{r})$ across the rational surfaces are 
  relatively insignificant (a jump of unity would be significant). Moreover, these jumps can be made arbitrarily small by
@@ -1497,15 +1502,16 @@ As described in Sect.~\ref{vacxx}, the conservation
  As described in Sect.~\ref{disp}, the general homogeneous toroidal tearing-mode dispersion relation 
  can be written 
  \begin{equation}\label{e337}
-\sum_{k'=1,k}({\mit\Delta}_k\,\delta_{kk'}-E_{kk'})\,{\mit\Psi}_{k'} = 0
+\sum_{k'=1,4}({\mit\Delta}_k\,\delta_{kk'}-E_{kk'})\,{\mit\Psi}_{k'} = 0
 \end{equation}
-for $k=1,K$. 
-Here, $k$ indexes the $K$ rational surfaces in the plasma. Moreover, ${\mit\Delta}_k$ is the complex inner-region layer response
+for $k=1,4$. 
+Here, $k$ indexes the  four $n=1$ rational surfaces in the plasma: namely, the $m=1/n=1$, $m=2/n=1$, $m=3/n=1$, and $m=4/n=1$ surfaces.
+Moreover, ${\mit\Delta}_k$ is the complex inner-region layer response
 index at the $k$th rational surface,\cite{am1} whereas ${\mit\Psi}_k$ is the reconnected helical magnetic flux at the surface. Finally, $E_{kk'}$ is the toroidal
 tearing-mode stability matrix.\cite{cht,am1} As discussed in Sect.~\ref{etor}, the $E_{kk'}$ matrix must be Hermitian, otherwise an 
 isolated tokamak plasma would be able to exert a net toroidal electromagnetic torque on itself, which is unphysical. 
 
-For  our example tokamak equilibrium, there are four $n=1$ rational surfaces in the plasma: namely, the $m=1/n=1$, $m=2/n=1$, $m=3/n=1$, and $m=4/n=1$ surfaces. Table~\ref{t1} shows the toroidal tearing mode matrix calculated for the example equilibrium. It can be seen that the
+ Table~\ref{t1} shows the toroidal tearing mode matrix calculated for the example equilibrium. It can be seen that the
 matrix is Hermitian to a very high degree of accuracy. This constitutes yet another important internal check on the accuracy of the
 calculation.
 
@@ -1522,23 +1528,27 @@ for $k'\neq k$, and
 \begin{equation}\label{cyl}
 {\mit\Delta}_k \simeq E_{kk}.
 \end{equation}
-In other words, we obtain a tearing mode that only reconnects magnetic flux at the $k$th rational surface, and satisfies the
-quasi-cylindrical dispersion relation (\ref{cyl}).\cite{fkr} It follows that the real quantity $E_{kk}$ can be interpreted as
-the  effective ``tearing stability index'' for a mode that only reconnects magnetic flux at the $k$th rational surface. 
+In other words, we obtain a tearing mode that only reconnects significant amounts of magnetic flux at the $k$th rational surface, and satisfies the
+quasi-cylindrical dispersion relation (\ref{cyl}).\cite{fkr} This dispersion relation ensures that $\omega$ is determined by the plasma flow at the
+$k$th rational surface.\cite{am1}
+It follows that the real quantity $E_{kk}$ can be interpreted as
+the  effective ``tearing stability index'' for a mode that only reconnects magnetic flux at the $k$th rational surface. To be more exact,
+$E_{kk}$ is a measure of the amount of free energy available in the outer region, due to
+current gradients and pressure gradients,\cite{mhde} to drive magnetic reconnection at the $k$th rational surface. 
 
 In accordance with the previous discussion, the fact that $E_{11}>0$, $E_{22}>0$, $E_{33}<0$, and $E_{44}<0$ in Tab.~\ref{t1}
 suggests that the plasma is subject to four essentially uncoupled $n=1$ tearing modes. There is an
 intrinsically unstable (i.e., possessing positive free-energy from the outer region) $m=1/n=1$ mode that only reconnects magnetic flux at the $q=1$ surface,\cite{fkr} an
 intrinsically unstable $m=2/n=1$ mode that only reconnects magnetic flux at the $q=2$ surface, as well as 
 intrinsically stable $m=3/n=1$ and $m=4/n=1$ modes. It is interesting to note that the inevitable presence of sheared
-plasma rotation in tokamak plasmas allows the tearing stability of a general equilibrium to be described by a small number
-of real stability indices: namely, the diagonal elements of the $E_{kk'}$ matrix. In fact, there are only as many indices as there are
-rational surfaces in the plasma. Of course, this constitutes a tremendous simplification over the general case. 
+plasma rotation in tokamak plasmas allows the $n=1$ tearing stability of a general equilibrium to be described by a small number
+of real stability indices: namely, the diagonal elements of the $E_{kk'}$ matrix.\cite{am1} In fact, there are only as many indices as there are
+$n=1$ rational surfaces in the plasma. Of course, this constitutes a tremendous simplification over the general case. 
 
 \subsection{Response to RMP}
-As described in Sect.~\ref{troq}, if the plasma is subject to an RMP generated by non-axisymmetric currents
+As described in Sect.~\ref{troq}, if the plasma is subject to an $n=1$ RMP generated by non-axisymmetric currents
 flowing in external magnetic field-coils then, in the presence of sheared plasma rotation, 
-the reconnected magnetic flux driven by the RMP at the $k$th rational surface is
+the reconnected magnetic flux driven by the RMP at the $k$th  $n=1$rational surface is given by
 \begin{equation}
 {\mit\Psi}_k\simeq 
 \frac{\chi_k}{{\mit\Delta}_k},
@@ -1556,30 +1566,31 @@ can write
 \end{equation}
 where $\hat{\chi}_k$ is calculated on the assumption that  unit current circulates around the RMP coils. 
 
-Table~\ref{t2} shows the $|\hat{\chi}_k|$ parameters calculated for the example plasma equilibrium and RMP coil
+Table~\ref{t2} shows the $|\hat{\chi}_k|$ parameters calculated for the example plasma equilibrium and $n=1$ RMP coil
 set pictured in Figs.~\ref{f1} and \ref{f2}. It is interesting to note that, despite the complexity of the RMP (which requires a great number of
 poloidal harmonics to fully describe it), and despite the
 complexity of the plasma response to the RMP (which is a linear combination of 45 independent solutions of the
-outer region o.d.e.s, each possessing 41 poloidal harmonics), the ability of the RMP to either drive magnetic reconnection or exert electromagnetic\
-locking torques at the four rational surfaces in the plasma is encapsulated by just four complex numbers, $\hat{\chi}_k$. Again,
+outer region o.d.e.s, each possessing 41 poloidal harmonics), the ability of the $n=1$ RMP to either drive magnetic reconnection or exert electromagnetic\
+locking torques at the four $n=1$ rational surfaces in the plasma is encapsulated by just four complex numbers, $\hat{\chi}_k$. 
+Again,
 this constitutes a tremendous simplification. 
   
 \section{Summary}\label{sum}
 In Sects.~\ref{geq}--\ref{rmp}, the tearing-mode stability of an inverse aspect-ratio expanded tokamak plasma equilibrium  with magnetic flux-surfaces of general 
-shape is investigated using asymptotic matching methods. The crucial role played by the conservation of
+shape is investigated using asymptotic matching techniques. The crucial role played by the conservation of
 toroidal electromagnetic angular momentum is emphasized throughout the investigation. Note that the inverse aspect-ratio
 expansion is only introduced in Sect.~\ref{large}. So, all of the analysis prior to this section is completely general. 
 
 The TJ code,
-which is a specific implementation of the results of the investigation, is described in Sect.~\ref{tj}. This code, which is
-freely available, is a significant improvement on the previous T3\,\cite{connor} and T7\,\cite{am1} inverse aspect-ratio expanded toroidal tearing-mode
-codes because it is constructed in such a manner as to strictly conserve toroidal electromagnetic
+which is a specific implementation of the analysis of Sects.~\ref{geq}--\ref{rmp}, is described in Sect.~\ref{tj}. This code, which is
+freely available at {\tt https://github.com/rfitzp/TJ}, represents a significant improvement on the previous T3\,\cite{connor} and T7\,\cite{am1} inverse aspect-ratio expanded toroidal tearing-mode
+codes, because it is constructed in such a manner as to strictly conserve toroidal electromagnetic
 angular momentum. In fact, as described in Sect.~\ref{tj}, the requirement of angular momentum conservation leads to a large number of
 stringent self-consistency checks that the TJ code must pass in order for its results to be credible. Fortunately, the TJ code passes all of these
 checks for the example calculation presented in this paper. 
 Unlike the T3 and T7 codes, the TJ code can deal with equilibrium magnetic flux-surfaces of arbitrary shape, and, in particular, 
-is not restricted to up-down symmetric  plasma equilibria. Furthermore, unlike the much more general  PEST-3,\,\cite{pletz1} RDCON,\cite{aglas2} and STRIDE\,\cite{aglas1} toroidal
-tearing-mode codes, the TJ code is comparatively lightweight, and can easily be run on a laptop computer. Thus, the TJ code is ideal for
+is not restricted to up-down-symmetric  plasma equilibria. Furthermore, unlike the much more general  PEST-3,\,\cite{pletz1} RDCON,\cite{aglas2} and STRIDE\,\cite{aglas1} toroidal
+tearing-mode codes, the TJ code is comparatively lightweight (there are only about 7000 lines of code), and can easily be run on a laptop computer. Thus, the TJ code is ideal for
 optimization studies. 
 
 \section*{Acknowledgements}
@@ -1634,29 +1645,31 @@ where ${\bf C}({\bf r})$ is a general vector field.
 
 \bibitem{con0} J.W.~Connor and R.J.~Hastie, {\em The Effect of Shaped Plasma Cross Sections on the Ideal Kink Mode in a Tokamak}. (Rep. CLM-M106, Culham Laboratory, Abingdon UK, 1985)
 
+\bibitem{cht} J.W.~Connor, R.J.~Hastie and J.B.~Taylor, Phys.\ Fluids B {\bf 3}, 1539 (1991).
+
 \bibitem{connor} J.W.~Connor,  S.C.~Cowley, R.J.~Hastie,  T.C.~Hender,  A.~Hood  and T.J.~Martin,  Phys.\ Fluids {\bf 31}, 577 (1988).
 
-\bibitem{cht} J.W.~Connor, R.J.~Hastie and J.B.~Taylor, Phys.\ Fluids B {\bf 3}, 1539 (1991).
+\bibitem{pletz} A.~Pletzer and R.L.~Dewar, J.\ Plasma Physics {\bf 45}, 427 (1991).
 
 \bibitem{am1} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin and C.M.~Roach, Nucl.\ Fusion {\bf 33}, 1533 (1993).
 
-\bibitem{ham} C.J.~Ham, J.W.~Connor, S.C.~Cowley, C.G.~Gimblett, R.J.~Hastie, T.C.~Hender and T.J.~Martin, Plasma Phys.\ Controlled Fusion {\bf 54}, 025009 (2012). 
+\bibitem{pletz1}  A.~Pletzer, A.~Bondeson and R.L.~Dewar, J.\ Comput.\ Phys.\ {\bf 115}, 530 (1994).
 
-\bibitem{ham1}  C.J.~Ham, Y.Q.~Liu, J.W.~Connor, S.C.~Cowley, R.J.~Hastie. T.C.~Hender and T.J.~Martin, Plasma Phys.\ Controlled Fusion {\bf 54}, 105014 (2012). 
+\bibitem{nish} Y.~Nishimura, J.D.~Callen and C.C.~Hegna, Phys.\ Plasmas {\bf 5}, 4292 (1998).
 
 \bibitem{tokuda} S.~Tokuda, Nucl.\ Fusion {\bf 41}, 1037 (2001).
 
 \bibitem{brennan} D.P.~Brennan, R.J.~La Haye, A.D.~Turnbull, M.S.~Chu, T.H.~Jensen, L.L.~Lao, T.C.~Luce, P.A.~Politzer and E.J.~Strait, Phys.\ Plasmas {\bf 10}, 1643 (2003).
 
-\bibitem{am3} R.~Fitzpatrick, Phys.\ Plasmas {\bf 24}, 072506 (2017). 
+\bibitem{ham1}  C.J.~Ham, Y.Q.~Liu, J.W.~Connor, S.C.~Cowley, R.J.~Hastie. T.C.~Hender and T.J.~Martin, Plasma Phys.\ Controlled Fusion {\bf 54}, 105014 (2012). 
 
-\bibitem{nish} Y.~Nishimura, J.D.~Callen and C.C.~Hegna, Phys.\ Plasmas {\bf 5}, 4292 (1998).
+\bibitem{ham} C.J.~Ham, J.W.~Connor, S.C.~Cowley, C.G.~Gimblett, R.J.~Hastie, T.C.~Hender and T.J.~Martin, Plasma Phys.\ Controlled Fusion {\bf 54}, 025009 (2012). 
 
-\bibitem{pletz} A.~Pletzer and R.L.~Dewar, J.\ Plasma Physics {\bf 45}, 427 (1991).
-
-\bibitem{pletz1}  A.~Pletzer, A.~Bondeson and R.L.~Dewar, J.\ Comput.\ Phys.\ {\bf 115}, 530 (1994)
+\bibitem{ham2} C.J.~Ham, J.W.~Connor, S.C.~Cowley, R.J.~Hastie, T.C.~Hender, and Y.Q.~Liu, Plasma Phys.\ Control.\ Fusion {\bf 55} 125015 (2013).
 
 \bibitem{am2} A.H.~Glasser, Z.R.~Wang and J.-K.~Park, Phys.\ Plasmas {\bf 23}, 112506 (2016).
+
+\bibitem{am3} R.~Fitzpatrick, Phys.\ Plasmas {\bf 24}, 072506 (2017). 
 
 \bibitem{aglas} A.S.~Glasser, E.~Kolemen and A.H.~Glasser, Phys.\ Plasmas {\bf 25}, 032507 (2018).
 
@@ -1709,7 +1722,9 @@ where ${\bf C}({\bf r})$ is a general vector field.
 \bibitem{nelson} R. Fitzpatrick and A.O. Nelson, Phys.\ Plasmas {\bf 27}, 072501 (2020).
 
 \bibitem{press} W.H.~Press, S.A.~Teukolsky, W.T.~Vetterling and B.P.~Flannery, {\em Numerical Recipes in C}, 2nd ed., sect.~16.2.
-(Cambridge, Cambridge UK, 1992)
+(Cambridge University Press, Cambridge UK, 1992)
+
+\bibitem{mhde} I.B.~Bernstein, E.A.~Frieman, M.D.~Kruskal and R.M.~Kulsrud, Proc.\ R.\ Soc.\ London Ser.\ A {\bf 244}, 17 (1958).
 
 \end{thebibliography}
 
@@ -1739,7 +1754,7 @@ $|\hat{\chi}_{k}|$:&&&\\[0.5ex]\hline
 $9.008\times 10^{-3}$& $1.294\times 10^{-2}$& $1.262\times 10^{-2}$ & $1.176\times 10^{-2}$
 \\\hline
 \end{tabular}
-\caption{RMP drive parameters for the example tokamak equilibrium and RMP coil set specified in Figs.~\ref{f1} and \ref{f2}. }\label{t2}
+\caption{RMP drive parameters at the $n=1$ rational surfaces for the example tokamak equilibrium and $n=1$ RMP coil set specified in Figs.~\ref{f1} and \ref{f2}. }\label{t2}
 \end{table}
 
 \newpage 
@@ -1772,32 +1787,36 @@ tokamak equilibrium specified in Figs.~\ref{f1} and \ref{f2}.}\label{f4}
 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Plots/Figure5.pdf}}
-\caption{Solution of the $n=1$ outer-region o.d.e.s, launched from the magnetic axis in such a manner that it is dominated by the $m=1$ harmonic close to the axis.
+\caption{Poloidal harmonics of a solution of the $n=1$ outer-region o.d.e.s, launched from the magnetic axis in such a manner that it is dominated by the $m=1$ harmonic close to the axis.
 Black curves correspond to $m=1$, red to $m=0$ or $m=2$, green to $m=-1$ or $m=3$, blue to $m=-2$ or $m=4$, yellow to $m=-3$ or $m=5$,
 cyan to $m=-4$ or $m=6$, magenta to $m=-5$ or $m=7$, black to $m=-6$ or $m=8$, et cetera. The vertical dashed lines show
-the locations of the  $n=1$ rational surfaces. }\label{f5}
+the locations of the  $n=1$ rational surfaces. Here, $T_\phi(\hat{r})$ is the toroidal electromagnetic angular momentum 
+flux associated with the solution.}\label{f5}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Plots/Figure6.pdf}}
-\caption{``Small'' solution of the $n=1$ outer-region o.d.e.s, launched from the $q=2$ surface.
+\caption{Poloidal harmonics of a ``small'' solution of the $n=1$ outer-region o.d.e.s, launched from the $q=2$ surface.
 Black curves correspond to $m=2$, red to $m=1$ or $m=3$, green to $m=0$ or $m=4$, blue to $m=-1$ or $m=5$, yellow to $m=-2$ or $m=6$,
 cyan to $m=-3$ or $m=7$, magenta to $m=-4$ or $m=8$, black to $m=-5$ or $m=9$, et cetera. The vertical dashed lines show
-the locations of the  $n=1$ rational surfaces. }\label{f6}
+the locations of the  $n=1$ rational surfaces. Here, $T_\phi(\hat{r})$ is the toroidal electromagnetic angular momentum 
+flux associated with the solution.}\label{f6}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Plots/Figure7.pdf}}
-\caption{Unreconnected $n=1$ tearing eigenfunction associated with the $q=1$ surface. Black curves correspond to $m=1$, red to $m=0$ or $m=2$, green to $m=-1$ or $m=3$, blue to $m=-2$ or $m=4$, yellow to $m=-3$ or $m=5$,
+\caption{Poloidal harmonics of the  ``unreconnected'' $n=1$ tearing eigenfunction associated with the $q=1$ surface. Black curves correspond to $m=1$, red to $m=0$ or $m=2$, green to $m=-1$ or $m=3$, blue to $m=-2$ or $m=4$, yellow to $m=-3$ or $m=5$,
 cyan to $m=-4$ or $m=6$, magenta to $m=-5$ or $m=7$, black to $m=-6$ or $m=8$, et cetera. The vertical dashed lines show
-the locations of the  $n=1$ rational surfaces.  }\label{f7}
+the locations of the  $n=1$ rational surfaces.  Here, $T_\phi(\hat{r})$ is the toroidal electromagnetic angular momentum 
+flux associated with the eigenfunction.}\label{f7}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Plots/Figure8.pdf}}
-\caption{Unreconnected $n=1$ tearing eigenfunction associated with the $q=2$ surface. Black curves correspond to $m=2$, red to $m=1$ or $m=3$, green to $m=0$ or $m=4$, blue to $m=-1$ or $m=5$, yellow to $m=-2$ or $m=6$,
+\caption{Poloidal harmonics of the ``unreconnected'' $n=1$ tearing eigenfunction associated with the $q=2$ surface. Black curves correspond to $m=2$, red to $m=1$ or $m=3$, green to $m=0$ or $m=4$, blue to $m=-1$ or $m=5$, yellow to $m=-2$ or $m=6$,
 cyan to $m=-3$ or $m=7$, magenta to $m=-4$ or $m=8$, black to $m=-5$ or $m=9$, et cetera.  The vertical dashed lines show
-the locations of the  $n=1$ rational surfaces.  }\label{f8}
+the locations of the  $n=1$ rational surfaces.  Here, $T_\phi(\hat{r})$ is the toroidal electromagnetic angular momentum 
+flux associated with the eigenfunction.}\label{f8}
 \end{figure}
 
 \begin{figure}
