@@ -49,8 +49,7 @@
 
 // ########################################################################################
 
-#ifndef EQUILIBRIUM
-#define EQUILIBRIUM
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -277,5 +276,3 @@ private:
   // Write equilibrium data to netcdf file
   void WriteNetcdf (double sa);
 };
-
-#endif //EQUILIBRIUM

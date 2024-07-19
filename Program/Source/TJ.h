@@ -36,8 +36,7 @@
 
 // #################################################################################
 
-#ifndef TJXX
-#define TJXX
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -536,5 +535,3 @@ class TJ
   // Write stability data to netcdf file
   void WriteNetcdf ();
 };
-
-#endif //TJXX

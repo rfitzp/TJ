@@ -1,6 +1,5 @@
 # Python Scripts for Program TJ
 
-
 ## Plasma equilibrium:
 
 	- Flux.py        - Plots r, theta coordinate system in R, Z plane
