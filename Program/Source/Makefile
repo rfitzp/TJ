@@ -9,14 +9,13 @@ C_FLAGS    = -w -O3 -std=c++11
 C_INCLUDE  = -I/opt/local/include
 C_LIBS     = -L/opt/local/lib -L/opt/local/lib/libgcc -lgfortran.5 -lgsl -lgslcblas -lnetcdf_c++4 -larmadillo -llapack
 
-F_OBJECT = NameListEquilibrium.o NameListTJ.o 
 F_SOURCE = NameListEquilibrium.f90 NameListTJ.f90
+F_OBJECT = $(F_SOURCE:%.f90=%.o)
 
 C_HEADER = TJ.h 
-C_OBJECT = main.o TJ.o Equilibrium.o ReadEquilibrium.o Interpolate.o ZeroFind.o Rational.o Matrix.o\
-	Vacuum.o Armadillo.o Integrate.o ODESolve.o Resonant.o Dispersion.o Toroidal.o Netcdf.o
 C_SOURCE = main.cpp TJ.cpp Equilibrium.cpp ReadEquilibrium.cpp Interpolate.cpp ZeroFind.cpp Rational.cpp Matrix.cpp\
 	Vacuum.cpp Armadillo.cpp Integrate.cpp ODESolve.cpp Resonant.cpp Dispersion.cpp Toroidal.cpp Netcdf.cpp
+C_OBJECT = $(C_SOURCE:%.cpp=%.o)
 
 EXECUTABLE = ../tj
 

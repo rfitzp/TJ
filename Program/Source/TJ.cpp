@@ -149,7 +149,7 @@ TJ::TJ ()
   // -----------------------------
   // Output calculation parameters
   // -----------------------------
-  printf ("\nSubprogram TJ::\n");
+  printf ("\nClass TJ::\n");
   printf ("Calculation parameters:\n");
   printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
 	  NTOR, MMIN, MMAX, EPS, DEL);
@@ -226,16 +226,9 @@ void TJ::CleanUp ()
 {
   printf ("Cleaning up:\n");
   
-  delete[] MPOL;    delete[] mpol;   delete[] s;      delete[] s2;
-  delete[] rr;      delete[] pp;     delete[] ppp;    delete[] q; 
-  delete[] S1;      delete[] P1;     delete[] P2;     delete[] P3;
-  delete[] mres;    delete[] qres;   delete[] rres;   delete[] sres;      
-  delete[] nuLres;  delete[] nuSres; delete[] qerr;   delete[] Jres;
-  delete[] hode;    delete[] eode;   delete[] Rgrid;  delete[] rf;
-  delete[] Rbound;  delete[] Zbound; delete[] tbound; delete[] dRdthe;
-  delete[] DIres;   delete[] dZdthe; delete[] Fval;   delete[] Rcoil;
-  delete[] Zcoil;   delete[] Icoil;  delete[] Psix;   delete[] Xi;
-  delete[] Upsilon; delete[] Lambda; delete[] Chi;
+  delete[] rr; delete[] pp; delete[] ppp; delete[] q; 
+  delete[] s;  delete[] s2; delete[] S1;  delete[] P1;
+  delete[] P2; delete[] P3;
 
   gsl_spline_free (ppspline);
   gsl_spline_free (pppspline);
@@ -272,15 +265,35 @@ void TJ::CleanUp ()
   delete[] HHspline; delete[] VVspline; delete[] HPspline; delete[] VPspline;
   delete[] HHacc;    delete[] VVacc;    delete[] HPacc;    delete[] VPacc;
 
+  delete[] cmu; delete[] ceta; delete[] seta; delete[] eeta; delete[] R2grgz; delete[] R2grge;  
+
   gsl_spline_free (Rrzspline);
   gsl_spline_free (Rrespline);
   gsl_spline_free (Rbspline);
   gsl_spline_free (Zbspline);
 
-  gsl_interp_accel_free (Rbacc);
-  gsl_interp_accel_free (Zbacc);
   gsl_interp_accel_free (Rrzacc);
   gsl_interp_accel_free (Rreacc);
+  gsl_interp_accel_free (Rbacc);
+  gsl_interp_accel_free (Zbacc);
+
+  delete[] Rcoil; delete[] Zcoil;   delete[] Icoil;  delete[] Psix;
+  delete[] Xi;    delete[] Upsilon; delete[] Lambda; delete[] Chi;
+
+  delete[] tbound; delete[] Rbound; delete[] Zbound;
+  delete[] dRdthe; delete[] dZdthe;
+
+  delete[] mres; delete[] qres;  delete[] rres;   delete[] qerr;
+  delete[] sres; delete[] DIres; delete[] nuLres; delete[] nuSres;
+  delete[] Jres;
+
+  delete[] MPOL; delete[] mpol;
+     
+  delete[] Rgrid; delete[] hode; delete[] eode;
+
+  delete[] Fval;  
+
+  delete[] rf;
 }  
  
 // #####################################

@@ -61,7 +61,6 @@ Equilibrium::Equilibrium ()
 		       &eps, &Ns, &Nr, &Nf, &Nw, 
 		       &acc, &h0, &hmin, &hmax);
 
-
   // ------------
   // Sanity check
   // ------------
@@ -188,38 +187,39 @@ void Equilibrium::Solve ()
   VVfunc.resize (Ns+1, Nr+1);
   HPfunc.resize (Ns+1, Nr+1);
   VPfunc.resize (Ns+1, Nr+1);
+  Lfunc = new double[Nr+1];
 
-  Itspline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
-  Ipspline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
-  Itacc    = gsl_interp_accel_alloc ();
-  Ipacc    = gsl_interp_accel_alloc ();
-
+  Itspline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  Ipspline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   g2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
-  g2acc     = gsl_interp_accel_alloc ();
   fspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
-  facc      = gsl_interp_accel_alloc ();
   gr2spline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
-  gr2acc    = gsl_interp_accel_alloc ();
   R2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
-  R2acc     = gsl_interp_accel_alloc ();
   Lspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
-  Lacc      = gsl_interp_accel_alloc ();
   wspline   = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
-  wacc      = gsl_interp_accel_alloc ();
   Rspline   = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
-  Racc      = gsl_interp_accel_alloc ();
   Zspline   = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
-  Zacc      = gsl_interp_accel_alloc ();
+
+  Itacc  = gsl_interp_accel_alloc ();
+  Ipacc  = gsl_interp_accel_alloc ();
+  g2acc  = gsl_interp_accel_alloc ();
+  facc   = gsl_interp_accel_alloc ();
+  gr2acc = gsl_interp_accel_alloc ();
+  R2acc  = gsl_interp_accel_alloc ();
+  Lacc   = gsl_interp_accel_alloc ();
+  wacc   = gsl_interp_accel_alloc ();
+  Racc   = gsl_interp_accel_alloc ();
+  Zacc   = gsl_interp_accel_alloc ();
 
   HHspline = new gsl_spline*[Ns+1];
   VVspline = new gsl_spline*[Ns+1];
   HPspline = new gsl_spline*[Ns+1];
   VPspline = new gsl_spline*[Ns+1];
 
-  HHacc    = new gsl_interp_accel*[Ns+1];
-  VVacc    = new gsl_interp_accel*[Ns+1];
-  HPacc    = new gsl_interp_accel*[Ns+1];
-  VPacc    = new gsl_interp_accel*[Ns+1];
+  HHacc = new gsl_interp_accel*[Ns+1];
+  VVacc = new gsl_interp_accel*[Ns+1];
+  HPacc = new gsl_interp_accel*[Ns+1];
+  VPacc = new gsl_interp_accel*[Ns+1];
 
   for (int n = 0; n <= Ns; n++)
     {
@@ -228,10 +228,10 @@ void Equilibrium::Solve ()
       HPspline[n] = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
       VPspline[n] = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
 
-      HHacc[n]    = gsl_interp_accel_alloc ();
-      VVacc[n]    = gsl_interp_accel_alloc ();
-      HPacc[n]    = gsl_interp_accel_alloc ();
-      VPacc[n]    = gsl_interp_accel_alloc ();
+      HHacc[n] = gsl_interp_accel_alloc ();
+      VVacc[n] = gsl_interp_accel_alloc ();
+      HPacc[n] = gsl_interp_accel_alloc ();
+      VPacc[n] = gsl_interp_accel_alloc ();
     }
 
   RR    .resize (Nf, Nw+1);
@@ -337,6 +337,8 @@ void Equilibrium::Solve ()
 	}
     }
 
+  delete[] y; delete[] err;
+
   // ............................................
   // Read shaping data from file Inputs/Shape.txt
   // ............................................
@@ -376,7 +378,7 @@ void Equilibrium::Solve ()
   double H1a = HPfunc(1, Nr);
   
   printf ("\n");
-  printf ("Subprogram Equilibrium::\n");
+  printf ("Class Equilibrium::\n");
   printf ("Calculation parameters:\n");
   printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
 	  qc, nu, pc, mu, epsa, Ns, Nr, Nf, Nw);
@@ -457,11 +459,11 @@ void Equilibrium::Solve ()
       gsl_spline_init (VPspline[n], rr, data, Nr+1);
     }
 
+  delete[] data;
+  
   // .................................
   // Interpolate relabelling parameter
   // .................................
-  Lfunc = new double[Nr+1];
-
   Lfunc[0] = 0.;
   for (int i = 1; i <= Nr; i++)
     {
@@ -551,6 +553,8 @@ void Equilibrium::Solve ()
       
       tbound0[j] = y3[0];
     }
+
+  delete[] y3; delete[] err3;
   
   double rbb = tbound0[Nw] /(2.*M_PI);
   printf ("rb = %10.3e\n", rbb);
@@ -659,6 +663,8 @@ void Equilibrium::Solve ()
     }
   q2[0] = qc * (1. + epsa*epsa * (H2c*H2c + V2c*V2c));
 
+  delete[] y1; delete[] dy1dr; delete[] err1;
+
   // ........................
   // Calculate magnetic shear
   // ........................
@@ -734,6 +740,8 @@ void Equilibrium::Solve ()
   double betap = 2. * y2[1] /y2[0];
   double betaN = 20. * betat /epsa /ff[Nr] /ggr2[Nr];
 
+  delete[] y2; delete[] err2;
+
   printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It = %10.3e\n",
 	  q2[0], q0[Nr], q2[Nr], Ip[Nr], It[Nr]);
   printf ("li = %10.3e betat = %10.3e betap = %10.3e betaN = %10.3e\n",
@@ -795,22 +803,23 @@ void Equilibrium::Solve ()
   // ........
   printf ("Cleaning up:\n");
   
-  delete[] rr;   delete[] p2;     delete[] f1;     delete[] f3;      delete[] g2;
-  delete[] q0;   delete[] q2;     delete[] ppp;    delete[] qq;      delete[] dRdtheta; 
-  delete[] It;   delete[] Ip;     delete[] Jt;     delete[] Jp;      delete[] pp;   
-  delete[] qqq;  delete[] s;      delete[] s2;     delete[] S1;      delete[] S2;
-  delete[] P1;   delete[] P2;     delete[] y2;     delete[] err2;    delete[] dZdtheta;
-  delete[] P3;   delete[] P3a;    delete[] ff;     delete[] ggr2;    delete[] RR2;
-  delete[] y;    delete[] err;    delete[] y1;     delete[] dy1dr;   delete[] err1; 
-  delete[] data; delete[] Rbound; delete[] Zbound; delete[] tbound;  delete[] wbound;
-  delete[] R2b;  delete[] grr2b;  delete[] Lfunc;  delete[] tbound0; delete[] wbound0;
-
-  gsl_spline_free (g2spline);
+  delete[] rr;  delete[] p2; delete[] f1;  delete[] f3; delete[] g2;
+  delete[] q0;  delete[] q2; delete[] It;  delete[] Ip; delete[] Jt;
+  delete[] Jp;  delete[] pp; delete[] ppp; delete[] qq; delete[] qqq;
+  delete[] s;   delete[] s2; delete[] S1;  delete[] S2; delete[] P1;
+  delete[] P2;  delete[] P3; delete[] P3a; delete[] ff; delete[] ggr2;
+  delete[] RR2;
+ 
   gsl_spline_free (Itspline);
   gsl_spline_free (Ipspline);
+  gsl_spline_free (g2spline);
   gsl_spline_free (fspline);
   gsl_spline_free (gr2spline);
   gsl_spline_free (R2spline);
+  gsl_spline_free (Lspline); 
+  gsl_spline_free (wspline); 
+  gsl_spline_free (Rspline); 
+  gsl_spline_free (Zspline);
 
   gsl_interp_accel_free (g2acc);
   gsl_interp_accel_free (Itacc);
@@ -818,6 +827,10 @@ void Equilibrium::Solve ()
   gsl_interp_accel_free (facc);
   gsl_interp_accel_free (gr2acc);
   gsl_interp_accel_free (R2acc);
+  gsl_interp_accel_free (Lacc);
+  gsl_interp_accel_free (wacc);
+  gsl_interp_accel_free (Racc);
+  gsl_interp_accel_free (Zacc);
 
   for (int i = 0; i <= Ns; i++)
     {
@@ -834,15 +847,9 @@ void Equilibrium::Solve ()
   delete[] HHspline; delete[] VVspline; delete[] HPspline; delete[] VPspline;
   delete[] HHacc;    delete[] VVacc;    delete[] HPacc;    delete[] VPacc;
 
-  gsl_spline_free (Lspline); 
-  gsl_spline_free (wspline); 
-  gsl_spline_free (Rspline); 
-  gsl_spline_free (Zspline);
-  
-  gsl_interp_accel_free (Lacc);
-  gsl_interp_accel_free (wacc);
-  gsl_interp_accel_free (Racc);
-  gsl_interp_accel_free (Zacc);
+  delete[] Rbound;   delete[] Zbound; delete[] tbound; delete[] wbound0; delete[] tbound0;
+  delete[] wbound;   delete[] R2b;    delete[] grr2b;  delete[] Lfunc;   delete[] dRdtheta; 
+  delete[] dZdtheta;
  }
 
 // ########################

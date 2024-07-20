@@ -10,20 +10,9 @@ void Equilibrium::WriteNetcdf (double sa)
 {
   printf ("Writing data to netcdf file Plots/Equilibrium.nc:\n");
 
-  double* Hndata  = new double[(Ns+1)*(Nr+1)];
-  double* Hnpdata = new double[(Ns+1)*(Nr+1)];
-  double* Vndata  = new double[(Ns+1)*(Nr+1)];
-  double* Vnpdata = new double[(Ns+1)*(Nr+1)];
-  double* Rdata   = new double[Nf*(Nw+1)];
-  double* Zdata   = new double[Nf*(Nw+1)];
-  double* Rwdata  = new double[Nf*(Nw+1)];
-  double* Zwdata  = new double[Nf*(Nw+1)];
-  double* rdata   = new double[Nf*(Nw+1)];
-  double* tdata   = new double[Nf*(Nw+1)];
-  double* wdata   = new double[Nf*(Nw+1)];
-  double* Hna     = new double[Ns+1];
-  double* Vna     = new double[Ns+1];
-  double* npol    = new double[Ns+1];
+  double* Hna  = new double[Ns+1];
+  double* Vna  = new double[Ns+1];
+  double* npol = new double[Ns+1];
 
   for (int n = 0; n <= Ns; n++)
     npol[n] = double (n);
@@ -37,27 +26,6 @@ void Equilibrium::WriteNetcdf (double sa)
       Hna[n] = HHfunc(n, Nr);
       Vna[n] = VVfunc(n, Nr);
     }
-
-  for (int n = 0; n <= Ns; n++)
-    for (int i = 0; i <= Nr; i++)
-      {
-	Hndata [i + n*(Nr+1)] = HHfunc(n, i);
-	Hnpdata[i + n*(Nr+1)] = HPfunc(n, i);
-	Vndata [i + n*(Nr+1)] = VVfunc(n, i);
-	Vnpdata[i + n*(Nr+1)] = VPfunc(n, i);
-      }
-
-  for (int n = 0; n < Nf; n++)
-    for (int i = 0; i <= Nw; i++)
-      {
-	Rdata [i + n*(Nw+1)] = RR    (n, i);
-	Zdata [i + n*(Nw+1)] = ZZ    (n, i);
-	Rwdata[i + n*(Nw+1)] = RRw   (n, i);
-	Zwdata[i + n*(Nw+1)] = ZZw   (n, i);
-	rdata [i + n*(Nw+1)] = rvals (n, i);
-	tdata [i + n*(Nw+1)] = thvals(n, i);
-	wdata [i + n*(Nw+1)] = wvals (n, i);
-      }
 
   try
     {
@@ -133,28 +101,28 @@ void Equilibrium::WriteNetcdf (double sa)
       P3a_x.putVar (P3a);
  
       NcVar Hn_x  = dataFile.addVar ("Hn",  ncDouble, shape_d);
-      Hn_x.putVar (Hndata);
+      Hn_x.putVar (HHfunc.data());
       NcVar Hnp_x = dataFile.addVar ("Hnp", ncDouble, shape_d);
-      Hnp_x.putVar (Hnpdata);
+      Hnp_x.putVar (HPfunc.data());
       NcVar Vn_x  = dataFile.addVar ("Vn",  ncDouble, shape_d);
-      Vn_x.putVar (Vndata);
+      Vn_x.putVar (VVfunc.data());
       NcVar Vnp_x = dataFile.addVar ("Vnp", ncDouble, shape_d);
-      Vnp_x.putVar (Vnpdata);
+      Vnp_x.putVar (VPfunc.data());
 
       NcVar R_x  = dataFile.addVar ("R",     ncDouble, flux_d);
-      R_x.putVar (Rdata);
+      R_x.putVar (RR.data());
       NcVar Z_x  = dataFile.addVar ("Z",     ncDouble, flux_d);
-      Z_x.putVar (Zdata);
+      Z_x.putVar (ZZ.data());
       NcVar Rw_x = dataFile.addVar ("Rw",    ncDouble, flux_d);
-      Rw_x.putVar (Rwdata);
+      Rw_x.putVar (RRw.data());
       NcVar Zw_x = dataFile.addVar ("Zw",    ncDouble, flux_d);
-      Zw_x.putVar (Zwdata);
+      Zw_x.putVar (ZZw.data());
       NcVar rr_x = dataFile.addVar ("rr",    ncDouble, flux_d);
-      rr_x.putVar (rdata);
+      rr_x.putVar (rvals.data());
       NcVar t_x  = dataFile.addVar ("theta", ncDouble, flux_d);
-      t_x.putVar (tdata);
+      t_x.putVar (thvals.data());
       NcVar w_x  = dataFile.addVar ("omega", ncDouble, flux_d);
-      w_x.putVar (wdata);
+      w_x.putVar (wvals.data());
 
       NcVar n_x   = dataFile.addVar ("n",   ncDouble, s_d);
       n_x.putVar (npol);
@@ -187,10 +155,7 @@ void Equilibrium::WriteNetcdf (double sa)
       exit (1);
     }
 
-  delete[] Hndata;  delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata;
-  delete[] Rdata;   delete[] Zdata;   delete[] Hna;    delete[] Vna;
-  delete[] rdata;   delete[] tdata;   delete[] npol;   delete[] wdata;
-  delete[] Rwdata;  delete[] Zwdata;   
+  delete[] npol; delete[] Hna; delete[] Vna;
 }
 
 // ##################################################
@@ -336,8 +301,9 @@ void TJ::ReadNetcdf ()
       dRdthe_x.getVar (dRdthe);
       dZdthe_x.getVar (dZdthe);
       
-      delete[] para;   delete[] Hndata; delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata;
-      delete[] RRdata; delete[] ZZdata; delete[] rrdata;  delete[] ttdata;
+      delete[] para;
+      delete[] Hndata; delete[] Hnpdata; delete[] Vndata; delete[] Vnpdata;
+      delete[] RRdata; delete[] ZZdata;  delete[] rrdata; delete[] ttdata;
     }
   catch (NcException& e)
      {
@@ -354,10 +320,6 @@ void TJ::WriteNetcdf ()
 {
   printf ("Writing data to netcdf file TJ.cpp:\n");
  
-  double* Hndata  = new double[(Ns+1)*(Nr+1)];
-  double* Hnpdata = new double[(Ns+1)*(Nr+1)];
-  double* Vndata  = new double[(Ns+1)*(Nr+1)];
-  double* Vnpdata = new double[(Ns+1)*(Nr+1)];
   double* Lmmp_r  = new double[(Nr+1)*J*J];
   double* Mmmp_r  = new double[(Nr+1)*J*J];
   double* Nmmp_r  = new double[(Nr+1)*J*J];
@@ -379,9 +341,6 @@ void TJ::WriteNetcdf ()
   double* Aant_i  = new double[J*J];
   double* Hmat_r  = new double[J*J];
   double* Hmat_i  = new double[J*J];
-  double* Ttest_i = new double[K*NDIAG];
-  double* Pnorm_i = new double[K*NDIAG];
-  double* Znorm_i = new double[K*NDIAG];
   double* PPPsi_r = new double[J*K*NDIAG];
   double* PPPsi_i = new double[J*K*NDIAG];
   double* ZZZ_r   = new double[J*K*NDIAG];
@@ -394,10 +353,6 @@ void TJ::WriteNetcdf ()
   double* PPU_i   = new double[J*nres*NDIAG];
   double* ZZU_r   = new double[J*nres*NDIAG];
   double* ZZU_i   = new double[J*nres*NDIAG];
-  double* TTf     = new double[nres*NDIAG];
-  double* TTu     = new double[nres*NDIAG];
-  double* TFull   = new double[nres*nres*NDIAG];
-  double* TUnrc   = new double[nres*nres*NDIAG];
   double* PPV_r   = new double[nres*Nf*(Nw+1)];
   double* PPV_i   = new double[nres*Nf*(Nw+1)];
   double* ZZV_r   = new double[nres*Nf*(Nw+1)];
@@ -414,15 +369,6 @@ void TJ::WriteNetcdf ()
   double* Up_i    = new double[J];
   double* Chi_r   = new double[nres];
   double* Chi_i   = new double[nres];
-
-  for (int n = 0; n <= Ns; n++)
-    for (int i = 0; i <= Nr; i++)
-      {
-	Hndata [i + n*(Nr+1)] = HHfunc(n, i);
-	Hnpdata[i + n*(Nr+1)] = HPfunc(n, i);
-	Vndata [i + n*(Nr+1)] = VVfunc(n, i);
-	Vnpdata[i + n*(Nr+1)] = VPfunc(n, i);
-      }
 
   int cnt = 0;
   for (int i = 0; i <= Nr; i++)
@@ -467,16 +413,6 @@ void TJ::WriteNetcdf ()
       }
 
   cnt = 0;
-  for (int j = 0; j < K; j++)
-    for (int i = 0; i < NDIAG; i++)
-      {
-	Ttest_i[cnt] = Ttest (j, i);
-	Pnorm_i[cnt] = Pnorm (j, i);
-	Znorm_i[cnt] = Znorm (j, i);
-	cnt++;
-      }
-
-  cnt = 0;
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < K; jp++)
       for (int i = 0; i < NDIAG; i++)
@@ -509,25 +445,6 @@ void TJ::WriteNetcdf ()
 	  PPU_i[cnt] = imag (Psiu(j, jp, i));
 	  ZZU_r[cnt] = real (Zu  (j, jp, i));
 	  ZZU_i[cnt] = imag (Zu  (j, jp, i));
-	  cnt++;
-	}
-
-  cnt = 0;
-  for (int jp = 0; jp < nres; jp++)
-    for (int i = 0; i < NDIAG; i++)
-      {
-	TTf[cnt] = Tf(jp, i);
-	TTu[cnt] = Tu(jp, i);
-	cnt++;
-      }
-
-  cnt = 0;
-  for (int j = 0; j < nres; j++)
-    for (int jp = 0; jp < nres; jp++)
-      for (int i = 0; i < NDIAG; i++)
-	{
-	  TFull[cnt] = Tfull(j, jp, i);
-	  TUnrc[cnt] = Tunrc(j, jp, i);
 	  cnt++;
 	}
 
@@ -655,13 +572,13 @@ void TJ::WriteNetcdf ()
       P3_x.putVar (P3);
  
       NcVar Hn_x  = dataFile.addVar ("Hn",  ncDouble, shape_d);
-      Hn_x.putVar (Hndata);
+      Hn_x.putVar (HHfunc.data());
       NcVar Hnp_x = dataFile.addVar ("Hnp", ncDouble, shape_d);
-      Hnp_x.putVar (Hnpdata);
+      Hnp_x.putVar (HPfunc.data());
       NcVar Vn_x  = dataFile.addVar ("Vn",  ncDouble, shape_d);
-      Vn_x.putVar (Vndata);
+      Vn_x.putVar (VVfunc.data());
       NcVar Vnp_x = dataFile.addVar ("Vnp", ncDouble, shape_d);
-      Vnp_x.putVar (Vnpdata);
+      Vnp_x.putVar (VPfunc.data());
 
       NcVar rres_x = dataFile.addVar ("rres", ncDouble, x_d);
       rres_x.putVar (rres);
@@ -741,11 +658,11 @@ void TJ::WriteNetcdf ()
       R2grge_x.putVar (R2grge);
 
       NcVar ttest_x = dataFile.addVar ("Torque_test", ncDouble, torque_d);
-      ttest_x.putVar (Ttest_i);
+      ttest_x.putVar (Ttest.data());
       NcVar pnorm_x = dataFile.addVar ("Psi_norm",    ncDouble, torque_d);
-      pnorm_x.putVar (Pnorm_i);
+      pnorm_x.putVar (Pnorm.data());
       NcVar znorm_x = dataFile.addVar ("Z_norm",      ncDouble, torque_d);
-      znorm_x.putVar (Znorm_i);
+      znorm_x.putVar (Znorm.data());
 
       NcVar pppsir_x = dataFile.addVar ("Psi_r", ncDouble, soln_d);
       pppsir_x.putVar (PPPsi_r);
@@ -774,18 +691,18 @@ void TJ::WriteNetcdf ()
       NcVar zzui_x = dataFile.addVar ("Z_unrc_i",   ncDouble, full_d);
       zzui_x.putVar (ZZU_i);
 
-      NcVar tf_x = dataFile.addVar ("Torque_full", ncDouble, t_d);
-      tf_x.putVar (TTf);
-      NcVar tu_x = dataFile.addVar ("Torque_unrc", ncDouble, t_d);
-      tu_x.putVar (TTu);
-
       NcVar mres_x = dataFile.addVar ("m_res", ncInt, x_d);
       mres_x.putVar (mres);
 
+      NcVar tf_x = dataFile.addVar ("Torque_full", ncDouble, t_d);
+      tf_x.putVar (Tf.data());
+      NcVar tu_x = dataFile.addVar ("Torque_unrc", ncDouble, t_d);
+      tu_x.putVar (Tu.data());
+
       NcVar tfull_x = dataFile.addVar ("Torque_pair_full", ncDouble, tt_d);
-      tfull_x.putVar (TFull);
+      tfull_x.putVar (Tfull.data());
       NcVar tunrc_x = dataFile.addVar ("Torque_pair_unrc", ncDouble, tt_d);
-      tunrc_x.putVar (TUnrc);
+      tunrc_x.putVar (Tunrc.data());
 
       NcVar ppvr_x = dataFile.addVar ("Psi_unrc_eig_r", ncDouble, v_d);
       ppvr_x.putVar (PPV_r);
@@ -835,20 +752,20 @@ void TJ::WriteNetcdf ()
       exit (1);
     }
 
-  delete[] Hndata;  delete[] Hnpdata; delete[] Vndata;  delete[] Vnpdata;
-  delete[] Lmmp_r;  delete[] Mmmp_r;  delete[] Nmmp_r;  delete[] Pmmp_r;
-  delete[] Lmmp_i;  delete[] Mmmp_i;  delete[] Nmmp_i;  delete[] Pmmp_i;
-  delete[] Ltest;   delete[] MNtest;  delete[] Ptest;
-  delete[] Amat_r;  delete[] Amat_i;  delete[] Pvac_r;  delete[] Pvac_i;
-  delete[] Rvac_r;  delete[] Rvac_i;  delete[] Hmat_r;  delete[] Hmat_i;
-  delete[] Ttest_i; delete[] Pnorm_i; delete[] Znorm_i;
+  delete[] Lmmp_r; delete[] Mmmp_r; delete[] Nmmp_r; delete[] Pmmp_r;
+  delete[] Lmmp_i; delete[] Mmmp_i; delete[] Nmmp_i; delete[] Pmmp_i;
+  delete[] Ltest;  delete[] MNtest; delete[] Ptest;
+
+  delete[] Pvac_r; delete[] Pvac_i; delete[] Rvac_r; delete[] Rvac_i;
+  delete[] Amat_r; delete[] Amat_i; delete[] Aant_r; delete[] Aant_i;
+  delete[] Hmat_r; delete[] Hmat_i;
+
   delete[] PPPsi_r; delete[] PPPsi_i; delete[] ZZZ_r;   delete[] ZZZ_i;
   delete[] PPF_r;   delete[] PPF_i;   delete[] ZZF_r;   delete[] ZZF_i;
-  delete[] TTf;     delete[] TTu;     delete[] TFull;   delete[] TUnrc;
-  delete[] PPV_r;   delete[] PPV_i;   delete[] ZZV_r;   delete[] ZZV_i;
-  delete[] R2grgz;  delete[] R2grge;  delete[] cmu;     delete[] ceta;
-  delete[] seta;    delete[] eeta;    delete[] Aant_r;  delete[] Aant_i;
-  delete[] Emat_r;  delete[] Emat_i;  delete[] Eant_r;  delete[] Eant_i;
-  delete[] Psix_r;  delete[] Psix_i;  delete[] Chi_r;   delete[] Chi_i;
-  delete[] Xi_r;    delete[] Xi_i;    delete[] Up_r;    delete[] Up_i;
+  delete[] PPU_r;   delete[] PPU_i;   delete[] ZZU_r;   delete[] ZZU_i;
+
+  delete[] PPV_r;   delete[] PPV_i;  delete[] ZZV_r;  delete[] ZZV_i;
+  delete[] Emat_r;  delete[] Emat_i; delete[] Eant_r; delete[] Eant_i;
+  delete[] Psix_r;  delete[] Psix_i; delete[] Xi_r;   delete[] Xi_i; 
+  delete[] Up_r;    delete[] Up_i;   delete[] Chi_r;  delete[] Chi_i;
 }

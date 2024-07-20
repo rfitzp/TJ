@@ -4,8 +4,6 @@
 // Class to calculate tearing stability matrix and tearing eigenfunctions in an
 // inverse aspect-ratio expanded tokamak equilibrium.
 
-// See Documentation/TJ.tex
-
 // All lengths (except r) normalized to R_0 (major radius of magnetic axis).
 // All magnetic field-strengths normalized to B_0 (on-axis toroidal magnetic field).
 // Radial coordinate, r, normalized to epsa * R_0, where eps_a is inverse-aspect ratio.
@@ -16,7 +14,6 @@
 
 // Inputs:
 //  Inputs/Namelist.nml - namelist
-
 //  Inputs/Coils.txt - ncoil (i.e. no of subsequent lines to be read)
 //                     Rcoil[0]  Zcoil[0]  Icoil[0]
 //                     Rcoil[1]  Zcoil[1]  Icoil[1]
@@ -28,11 +25,22 @@
 // Plots:
 //  Plots/*.py
 
-// Program uses:
+// Class uses following external libraries:
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
 //  GNU scientific library (https://www.gnu.org/software/gsl)
 //  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
 //  Armadillo library      (https://arma.sourceforge.net)
+
+// Author:
+// Richard Fitzpatrick,
+// Institute of Fusion Studies,
+// Department of Physics
+// University of Texas at Austin
+// rfitzp@utexas.edu
+
+// Source: https://github.com/rfitzp/TJ/
+
+// Documentation: ../Documentation/TJ.pdf
 
 // #################################################################################
 
@@ -125,11 +133,6 @@ class TJ
   gsl_spline*        P2spline;  // Interpolated P2 function
   gsl_spline*        P3spline;  // Interpolated P3 function
   
-  gsl_spline**       HHspline;  // Interpolated horizontal shaping functions
-  gsl_spline**       VVspline;  // Interpolated vertical shaping functions
-  gsl_spline**       HPspline;  // Interpolated radial derivatives of horizontal shaping functions
-  gsl_spline**       VPspline;  // Interpolated radial derivatives of vertical shaping functions
-
   gsl_interp_accel*  ppacc;     // Accelerator for interpolated pp function
   gsl_interp_accel*  pppacc;    // Accelerator for interpolated ppp function
   gsl_interp_accel*  qacc;      // Accelerator for interpolated q function
@@ -139,6 +142,11 @@ class TJ
   gsl_interp_accel*  P1acc;     // Accelerator for interpolated P1 function
   gsl_interp_accel*  P2acc;     // Accelerator for interpolated P2 function
   gsl_interp_accel*  P3acc;     // Accelerator for interpolated P3 function
+
+  gsl_spline**       HHspline;  // Interpolated horizontal shaping functions
+  gsl_spline**       VVspline;  // Interpolated vertical shaping functions
+  gsl_spline**       HPspline;  // Interpolated radial derivatives of horizontal shaping functions
+  gsl_spline**       VPspline;  // Interpolated radial derivatives of vertical shaping functions
    
   gsl_interp_accel** HHacc;     // Accelerator for interpolated horizontal shaping functions
   gsl_interp_accel** VVacc;     // Accelerator for interpolated vertical shaping functions
@@ -154,10 +162,11 @@ class TJ
 
   gsl_spline*        Rrzspline; // Interpolated R2grgz function on plasma boundary
   gsl_spline*        Rrespline; // Interpolated R2grge function on plasma boundary
-  gsl_interp_accel*  Rrzacc;    // Accelerator for interpolated R2grgz function
-  gsl_interp_accel*  Rreacc;    // Accelerator for interpolated R2grge function
   gsl_spline*        Rbspline;  // Interpolated R function on plasma boundary
   gsl_spline*        Zbspline;  // Interpolated Z function on plasma boundary
+
+  gsl_interp_accel*  Rrzacc;    // Accelerator for interpolated R2grgz function
+  gsl_interp_accel*  Rreacc;    // Accelerator for interpolated R2grge function
   gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function
   gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function
 

@@ -42,10 +42,21 @@
 // Plots:
 //  Plots/*.py
 
-// Class uses:
+// Class uses following external libraries:
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
 //  GNU scientific library (https://www.gnu.org/software/gsl)
 //  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
+
+// Author:
+// Richard Fitzpatrick,
+// Institute of Fusion Studies,
+// Department of Physics
+// University of Texas at Austin
+// rfitzp@utexas.edu
+
+// Source: https://github.com/rfitzp/TJ/
+
+// Documentation: ../Documentation/TJ.pdf
 
 // ########################################################################################
 
