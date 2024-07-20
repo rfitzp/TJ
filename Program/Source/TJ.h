@@ -34,8 +34,8 @@
 // Author:
 // Richard Fitzpatrick,
 // Institute of Fusion Studies,
-// Department of Physics
-// University of Texas at Austin
+// Department of Physics,
+// University of Texas at Austin,
 // rfitzp@utexas.edu
 
 // Source: https://github.com/rfitzp/TJ/
