@@ -34,7 +34,7 @@ plt.axhline (0.,       color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.gca().ticklabel_format (axis='y', style='sci', scilimits=(0, 0))
 
 plt.xlabel (r'$k$',            fontsize = "20")
-plt.ylabel (r'$real(\chi_k)$', fontsize = "20")
+plt.ylabel (r'$Re(\chi_k)$', fontsize = "20")
 
 plt.subplot (2, 2, 2)
 
@@ -44,7 +44,7 @@ plt.axhline (0.,       color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.gca().ticklabel_format (axis='y', style='sci', scilimits=(0, 0))
 
 plt.xlabel (r'$k$',            fontsize = "20")
-plt.ylabel (r'$imag(\chi_k)$', fontsize = "20")
+plt.ylabel (r'$Im(\chi_k)$', fontsize = "20")
 
 plt.subplot (2, 2, 3)
 
