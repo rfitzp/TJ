@@ -10,13 +10,30 @@ void Equilibrium::WriteNetcdf (double sa)
 {
   printf ("Writing data to netcdf file Plots/Equilibrium.nc:\n");
 
-  double* Hna  = new double[Ns+1];
-  double* Vna  = new double[Ns+1];
-  double* npol = new double[Ns+1];
+  double  para[2], Input[14];
 
-  for (int n = 0; n <= Ns; n++)
-    npol[n] = double (n);
+  double* Hna   = new double[Ns+1];
+  double* Vna   = new double[Ns+1];
+  double* npol  = new double[Ns+1];
+
+  Input[0]  = qc;
+  Input[1]  = nu;
+  Input[2]  = pc;
+  Input[3]  = mu;
+  Input[4]  = epsa;
+  Input[5]  = eps;
+  Input[6]  = double (Ns);
+  Input[7]  = double (Nr);
+  Input[8]  = double (Nf);
+  Input[9]  = double (Nw);
+  Input[10] = acc;
+  Input[11] = h0;
+  Input[12] = hmin;
+  Input[13] = hmax;
   
+  para[0] = epsa;
+  para[1] = sa;
+    
   Hna[0] = 0.;
   Vna[0] = 0.;
   Hna[1] = HHfunc(1, Nr);
@@ -27,19 +44,19 @@ void Equilibrium::WriteNetcdf (double sa)
       Vna[n] = VVfunc(n, Nr);
     }
 
+  for (int n = 0; n <= Ns; n++)
+    npol[n] = double (n);
+ 
   try
     {
       NcFile dataFile ("Plots/Equilibrium.nc", NcFile::replace);
 
+      NcDim i_d = dataFile.addDim ("Ni", 14);
       NcDim p_d = dataFile.addDim ("Np", 2);
       NcDim r_d = dataFile.addDim ("Nr", Nr+1);
       NcDim s_d = dataFile.addDim ("Ns", Ns+1);
       NcDim f_d = dataFile.addDim ("Nf", Nf);
       NcDim w_d = dataFile.addDim ("Nw", Nw+1);
-
-      double para[2];
-      para[0] = epsa;
-      para[1] = sa;
  
       vector<NcDim> shape_d;
       shape_d.push_back (s_d);
@@ -49,8 +66,11 @@ void Equilibrium::WriteNetcdf (double sa)
       flux_d.push_back (f_d);
       flux_d.push_back (w_d);
 
-      NcVar p_x   = dataFile.addVar ("para", ncDouble, p_d);
+      NcVar i_x = dataFile.addVar ("InputParameters", ncDouble, i_d);
+      i_x.putVar (Input);
+      NcVar p_x = dataFile.addVar ("para",            ncDouble, p_d);
       p_x.putVar (para);
+
       NcVar r_x   = dataFile.addVar ("r",    ncDouble, r_d);
       r_x.putVar (rr);
       NcVar g2_x  = dataFile.addVar ("g_2",  ncDouble, r_d);
@@ -320,6 +340,8 @@ void TJ::WriteNetcdf ()
 {
   printf ("Writing data to netcdf file TJ.cpp:\n");
  
+  double Input[15];
+
   double* Lmmp_r  = new double[(Nr+1)*J*J];
   double* Mmmp_r  = new double[(Nr+1)*J*J];
   double* Nmmp_r  = new double[(Nr+1)*J*J];
@@ -331,6 +353,7 @@ void TJ::WriteNetcdf ()
   double* Ltest   = new double[(Nr+1)*J*J];
   double* MNtest  = new double[(Nr+1)*J*J];
   double* Ptest   = new double[(Nr+1)*J*J];
+
   double* Pvac_r  = new double[J*J];
   double* Pvac_i  = new double[J*J];
   double* Rvac_r  = new double[J*J];
@@ -341,6 +364,7 @@ void TJ::WriteNetcdf ()
   double* Aant_i  = new double[J*J];
   double* Hmat_r  = new double[J*J];
   double* Hmat_i  = new double[J*J];
+
   double* PPPsi_r = new double[J*K*NDIAG];
   double* PPPsi_i = new double[J*K*NDIAG];
   double* ZZZ_r   = new double[J*K*NDIAG];
@@ -370,6 +394,22 @@ void TJ::WriteNetcdf ()
   double* Chi_r   = new double[nres];
   double* Chi_i   = new double[nres];
 
+  Input[0]  = double (NTOR);
+  Input[1]  = double (MMIN);
+  Input[2]  = double (MMAX);
+  Input[3]  = EPS;
+  Input[4]  = DEL;
+  Input[5]  = double (NFIX);
+  Input[6]  = double (NDIAG);
+  Input[7]  = NULC;
+  Input[8]  = double (ITERMAX);
+  Input[9]  = double (FREE);
+  Input[10] = acc;
+  Input[11] = h0;
+  Input[12] = hmin;
+  Input[13] = hmax;
+  Input[14] = EPSF;
+  
   int cnt = 0;
   for (int i = 0; i <= Nr; i++)
     for (int j = 0; j < J; j++)
@@ -491,6 +531,7 @@ void TJ::WriteNetcdf ()
     {
       NcFile dataFile ("Plots/TJ.nc", NcFile::replace);
 
+      NcDim i_d = dataFile.addDim ("Ni",    15);
       NcDim r_d = dataFile.addDim ("Nr",    Nr+1);
       NcDim s_d = dataFile.addDim ("Ns",    Ns+1);
       NcDim x_d = dataFile.addDim ("nres",  nres);
@@ -549,6 +590,9 @@ void TJ::WriteNetcdf ()
       vector<NcDim> e_d;
       e_d.push_back (x_d);
       e_d.push_back (x_d);
+
+      NcVar i_x = dataFile.addVar ("InputParameters", ncDouble, i_d);
+      i_x.putVar (Input);
       
       NcVar r_x   = dataFile.addVar ("r",   ncDouble, r_d);
       r_x.putVar (rr);

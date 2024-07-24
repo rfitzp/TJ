@@ -378,7 +378,7 @@ void Equilibrium::Solve ()
   double H1a = HPfunc(1, Nr);
   
   printf ("\n");
-  printf ("Class Equilibrium::\n");
+  printf ("Class EQUILIBRIUM::\n");
   printf ("Calculation parameters:\n");
   printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
 	  qc, nu, pc, mu, epsa, Ns, Nr, Nf, Nw);
@@ -922,11 +922,17 @@ double Equilibrium::GetL (double r)
   
   double L = r*r*r /8. - r*hn[1] /2.;
 
+  // ...................
+  // Lowest-order result
+  // ...................
   for (int n = 2; n <= Ns; n++)
     {
       L += - double (n - 1) * hn[n] * hn[n] /2./r - double (n - 1) * vn[n] * vn[n] /2./r;
     }
 
+  // .......................
+  // Higher-order correction
+  // .......................
   L += epsa * (r*r * hn[2] /4. - r*r*r * hnp[2] /4.);
 
   for (int n = 2; n <= Ns; n++)
@@ -1231,9 +1237,9 @@ double Equilibrium::Gettheta (double r, double w)
   for (int n = 2; n <= Ns; n++)
     vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
   
-  // .....................
-  // Lowest-order function
-  // .....................
+  // ...................
+  // Lowest-order result
+  // ...................
   double tfun = epsa * r * sin(w) - epsa * hnp[1] * sin(w);
 
   for (int n = 2; n <= Ns; n++)
