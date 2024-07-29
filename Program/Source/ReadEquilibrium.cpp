@@ -2,9 +2,9 @@
 
 #include "TJ.h"
 
-// #############################################################
-// Function to read equilibrium data from Outputs/Equilibrium.nc
-// #############################################################
+// ###########################################################
+// Function to read equilibrium data from Plots/Equilibrium.nc
+// ###########################################################
 void TJ::ReadEquilibrium ()
 {
   // ......................................
@@ -15,6 +15,8 @@ void TJ::ReadEquilibrium ()
   // .....................................................
   // Allocate memory for interpolation of equilibrium data
   // .....................................................
+  g2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  p2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   ppspline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   pppspline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   qspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
@@ -25,6 +27,8 @@ void TJ::ReadEquilibrium ()
   P2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P3spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
 
+  g2acc     = gsl_interp_accel_alloc ();
+  p2acc     = gsl_interp_accel_alloc ();
   ppacc     = gsl_interp_accel_alloc ();
   pppacc    = gsl_interp_accel_alloc ();
   qacc      = gsl_interp_accel_alloc ();
@@ -61,6 +65,8 @@ void TJ::ReadEquilibrium ()
   // ............................
   // Interpolate equilibrium data
   // ............................
+  gsl_spline_init (g2spline,  rr, g2,  Nr+1);
+  gsl_spline_init (p2spline,  rr, p2,  Nr+1);
   gsl_spline_init (ppspline,  rr, pp,  Nr+1);
   gsl_spline_init (pppspline, rr, ppp, Nr+1);
   gsl_spline_init (qspline,   rr, q,   Nr+1);
@@ -101,10 +107,13 @@ void TJ::ReadEquilibrium ()
     }
   delete[] data;
 
+  // .......................
   // Output equilibrium data
+  // .......................
+  apol = epsa * R0;
   printf ("Plasma equilibrium data:\n");
-  printf ("epsa = %10.3e q0 = %10.3e qa = %10.3e sa = %10.3e\n",
-	  epsa, Getq (0.), Getq (1.), sa);
+  printf ("epsa = %10.3e q0 = %10.3e qa = %10.3e sa = %10.3e apol = %10.3e\n",
+	  epsa, Getq (0.), Getq (1.), sa, apol);
   printf ("n = %3d Hna = %10.3e Vna = %10.3e\n", 1, GetHn (1, 1.), 0.);
   for (int n = 2; n <= Ns; n++)
     if (GetHn (n, 1.) > 1.e-15 || GetVn (n, 1.) > 1.e-15)

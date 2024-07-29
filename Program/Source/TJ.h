@@ -66,7 +66,8 @@ using namespace arma;
 // Namelist reading function
 extern "C" void NameListTJ (int* NTOR, int* MMIN, int* MMAX, 
 			    double* EPS, double* DEL, int* NFIX, int* NDIAG, double* NULC, int* ITERMAX, int* FREE, 
-			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF);
+			    double* ACC, double* H0, double* HMIN, double* HMAX, double* EPSF,
+			    double* B0, double* R0, double* n0, double* alpha, double* Zeff, double* Mion, double* Chip);
 
 // ############
 // Class header
@@ -79,6 +80,7 @@ class TJ
   // Calculation parameters
   // ----------------------
   int    NTOR;    // Toroidal mode number (read from namelist)
+
   int    MMIN;    // Minimum poloidal mode number included in calculation (read from namelist)
   int    MMAX;    // Maximum poloidal mode number included in calculation (read from namelist)
   double EPS;     // Solutions launched from magnetic axis at r = EPS (read from namelist)
@@ -88,7 +90,20 @@ class TJ
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from namelist)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from namelist)
   int    FREE;    // Flag for free/fixed boundary calculation (read from namelist)
+
   double EPSF;    // Step-length for finite difference determination of derivative
+
+  // ----------------------------
+  // Layer calculation parameters
+  // ----------------------------
+  double B0;      // On-axis toroidal magnetic field-strength (T) (read from namelist)
+  double R0;      // Plasma minor radius (m) (read from namelist)
+  double n0;      // On-axis electron number density (m^-3) (read from namelist)
+  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from namelist)
+  double Zeff;    // Effective ion charge number (read from namelist)
+  double Mion;    // Ion charge number (read from namelist)
+  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from namelist)
+  double apol;    // Plasma minor radius (m)
 
   // -------------------------------
   // Adaptive integration parameters
@@ -108,8 +123,10 @@ class TJ
   int                Nr;        // Number of radial grid-points
 
   double*            rr;        // Radial grid-points
-  double*            pp;        // First radial derivative of plasma pressure
-  double*            ppp;       // Second radial derivative of plasma pressure 
+  double*            g2;        // Second-order toroidal flux
+  double*            p2;        // Second-order plasma pressure
+  double*            pp;        // First radial derivative of second-order plasma pressure
+  double*            ppp;       // Second radial derivative of second-order plasma pressure 
   double*            q;         // Safety-factor
   double*            s;         // Magnetic shear
   double*            s2;        // Higher-order shear: s2 = r^2 q''/q
@@ -123,6 +140,8 @@ class TJ
   Array<double,2>    HPfunc;    // Radial derivatives of horizontal shaping functions
   Array<double,2>    VPfunc;    // Radial derivatives of vertical shaping functions
 
+  gsl_spline*        g2spline;  // Interpolated p2 function
+  gsl_spline*        p2spline;  // Interpolated p2 function
   gsl_spline*        ppspline;  // Interpolated pp function
   gsl_spline*        pppspline; // Interpolated ppp function
   gsl_spline*        qspline;   // Interpolated q function
@@ -132,7 +151,9 @@ class TJ
   gsl_spline*        P1spline;  // Interpolated P1 function
   gsl_spline*        P2spline;  // Interpolated P2 function
   gsl_spline*        P3spline;  // Interpolated P3 function
-  
+
+  gsl_interp_accel*  g2acc;     // Accelerator for interpolated g2 function
+  gsl_interp_accel*  p2acc;     // Accelerator for interpolated p2 function
   gsl_interp_accel*  ppacc;     // Accelerator for interpolated pp function
   gsl_interp_accel*  pppacc;    // Accelerator for interpolated ppp function
   gsl_interp_accel*  qacc;      // Accelerator for interpolated q function
@@ -219,6 +240,20 @@ class TJ
   double* nuLres;  // Mercier indices of large solution at rational surfaces
   double* nuSres;  // Mercies indices of small solution at rational surfaces
   int*    Jres;    // Index of resonant poloidal harmonic at rational surfaces
+
+  // -------------------
+  // Resonant layer data
+  // -------------------
+  double* Teres;  // Electron temperature (eV)
+  double* S13res; // Cube root of Lunquist number
+  double* taures; // Magnetic reconnection timescale (s)
+  double* ieres;  // Minus ratio of electron diamagnetic frequency to ion diamagnetic frequency
+  double* QEres;  // Normalized ExB frequency
+  double* Qeres;  // Normalized electron diamagnetic frequency
+  double* Qires;  // Normalized ion diamagnetic frequency
+  double* Dres;   // Normalized ion sound radius
+  double* Pmres;  // Mangetic Prandtl number for perpendicular momentum diffusion
+  double* Peres;  // Mangetic Prandtl number for perpendicular energy diffusion
 
   // ----------------
   // Mode number data
@@ -361,6 +396,8 @@ class TJ
   double Feval (double r);
   // Find rational surfaces
   void FindRational ();
+  // Get resonant layer data
+  void GetLayerData ();
 
   // .............
   // In Matrix.cpp

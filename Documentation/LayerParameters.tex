@@ -1,0 +1,68 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage{amsmath}           		          	
+\usepackage{graphicx,epstopdf}					
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{esint}
+\pdfoutput = 1 
+\newcommand {\bxi}{\mbox{\boldmath$\xi$}}
+\allowdisplaybreaks
+
+\begin{document}
+\title{Calculation of Layer Quantities in TJ}
+\maketitle
+
+\section{Additional Plasma Parameters}
+The following additional plasma parameters are required to calculate layer quantities:
+\begin{itemize}
+\item $B_0$ - the toroidal magnetic field-strength at the magnetic axis
+\item $R_0$ - the plasma major radius
+\item $n_0$ - the  electron number density at the magnetic axis
+\item $\alpha$ - the electron density profile is assumed to be $n_e=n_0\,(1-\hat{r}^2)^\alpha$
+\item $Z_{\rm eff}$  - the (assumed spatially uniform) effective ion charge number
+\item $M$ - the ion mass number
+\item $\chi_\perp$ - the (assumed spatially uniform) perpendicular momentum/energy diffusivity
+\end{itemize}
+The following derived parameter is also required:
+\begin{itemize}
+\item $a=\epsilon\,R_0$ - the plasma minor radius
+\end{itemize}
+
+\section{Rational Surface Parameters}
+Let the $k$th rational surface be resonant with poloidal mode number $m_k$ and lie at normalized radius $\hat{r}_k$. 
+We can define
+\begin{align}
+n_{e\,k} &= n_0\,(1-\hat{r}_k^{\,2})^\alpha,\\[0.5ex]
+p_k &= \frac{\epsilon^2\,B_0^{\,2}\,p_2(\hat{r}_k),}{\mu_0}\\[0.5ex]
+T_{e\,k} &= \frac{p_k}{2\,n_{e\,k}\,e},\\[0.5ex]
+\ln{\mit\Lambda}_k &= 24 + 3\,\ln 10-\frac{1}{2}\,\ln n_{e\,k} + \ln T_{e\,k},\\[0.5ex]
+\tau_{ee\,k}&= \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_{e\,k}^{\,3/2}}{\ln{\mit\Lambda}_k\,e^{5/2}\,n_{e\,k}},\\[0.5ex]
+\sigma_{\parallel\,k} &= \frac{\sqrt{2}+13\,Z_{\rm eff}/4}{Z_{\rm eff}\,(\sqrt{2}+Z_{\rm eff})}\,\frac{n_{e\,k}\,e^2\,\tau_{ee\,k}}{m_e},\\[0.5ex]
+g_k &= 1+ \epsilon^2\,g_2(\hat{r}_k),\\[0.5ex]
+L_{s\,k} &= \frac{R_0\,q(\hat{r}_k)}{s(\hat{r}_k)},\\[0.5ex]
+V_{A\,k} &= \frac{B_0\,g_k}{(\mu_0\,n_{e\,k}\,M\,m_p)^{1/2}},\\[0.5ex]
+d_{i\,k} &= \left(\frac{M\,m_p}{n_{e\,k}\,e^2\,\mu_0}\right)^{1/2},\\[0.5ex]
+\beta_k &= \frac{5\,\epsilon^2\,p_2(\hat{r}_k)}{3\,g_k^{\,2}},\\[0.5ex]
+\hat{d}_{\beta\,k} &= \left(\frac{\beta_k}{1+\beta_k}\right)^{1/2}\,\frac{d_{i\,k}}{a\,\hat{r}_k},\\[0.5ex]
+\omega_{\ast\,k} &= \frac{m_k\,B_0\,p_2'(\hat{r}_k)}{\mu_0\,R_0^{\,2}\,e\,n_{e\,k}\,g_k\,\hat{r}_k}, \\[0.5ex]
+\tau_{H\,k} &= \frac{L_{s\,k}}{m_k\,V_{A\,k}},\\[0.5ex]
+\tau_{R\,k} &= \mu_0\,a^2\,\hat{r}_k^{\,2}\,\sigma_\parallel(\hat{r}_k),\\[0.5ex]
+\tau_{\perp\,k} &= \frac{a^2\,\hat{r}_k^{\,2}}{\chi_\perp}.
+\end{align}
+Here, we are assuming that the electrons and ions have the same temperature. 
+
+\section{Layer Parameters}
+Layer physics at the $k$th rational surface is governed by the following normalized parameters:
+\begin{align}
+S_k^{\,1/3} &= \left(\frac{\tau_{R\,k}}{\tau_{H\,k}}\right)^{1/3},\\[0.5ex]
+\tau_k &= S_k^{\,1/3} \,\tau_{H\,k},\\[0.5ex]
+\iota_{e\,k } &= \frac{1}{2},\\[0.5ex]
+Q_{e\,k }&= - \iota_{e\,k}\,\tau_k\,\omega_{\ast\,k},\\[0.5ex]
+Q_{i\,k }&=  (1-\iota_{e\,k})\,\tau_k\,\omega_{\ast\,k},\\[0.5ex]
+D_k &= S_{k}^{\,1/3}\,\iota_{e\,k}^{\,1/2}\,\hat{d}_{\beta\,k},\\[0.5ex]
+P_{\varphi\,k} &= \frac{\tau_{R\,k}}{\tau_{\perp\,k}},\\[0.5ex]
+P_{\perp\,k} &= \frac{\tau_{R\,k}}{\tau_{\perp\,k}}.
+\end{align}
+
+\end{document}

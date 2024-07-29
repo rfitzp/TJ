@@ -86,3 +86,79 @@ void TJ::FindRational ()
       exit (1);
     }
 }
+
+// ###################################
+// Function to get resonant layer data
+// ###################################
+void TJ::GetLayerData ()
+{
+  // ...............
+  // Allocate memory
+  // ...............
+  Teres  = new double[nres];
+  S13res = new double[nres];
+  taures = new double[nres];
+  ieres  = new double[nres];
+  QEres  = new double[nres];
+  Qeres  = new double[nres];
+  Qires  = new double[nres];
+  Dres   = new double[nres];
+  Pmres  = new double[nres];
+  Peres  = new double[nres];
+
+  // .........................
+  // Define physical constants
+  // .........................
+  double e    = 1.602176634e-19;
+  double mp   = 1.672621925956e-27;
+  double me   = 9.1093837139e-31;
+  double mu0  = 4.*M_PI*1.e-7;
+  double eps0 = 8.8541878188e-12;
+
+  // ..........................
+  // Calculate layer quantities
+  // ..........................
+  for (int k = 0; k < nres; k++)
+    {
+      double g2k = gsl_spline_eval (g2spline, rres[k], g2acc);
+      double p2k = gsl_spline_eval (p2spline, rres[k], p2acc);
+      double ppk = gsl_spline_eval (ppspline, rres[k], ppacc);
+
+      double nek  = n0 * pow (1. - rres[k]*rres[k], alpha);
+      double pk   = epsa*epsa * B0*B0 * p2k /mu0;
+      double Tek  = pk /2. /nek /e;
+      double Lnk  = 24. + 3.*log(10.) - 0.5 * log(nek) + log(Tek);
+      double teek = 6.*sqrt(2.)*pow(M_PI, 1.5) * eps0*eps0 * sqrt(me) * pow(Tek, 1.5)
+	/Lnk /pow(e, 2.5) /nek;
+      double sigk = ((sqrt(2.) + 13.*Zeff/4.)/Zeff /(sqrt(2.) + Zeff)) * nek *e*e * teek /me;
+      double gk   = 1. + epsa*epsa * g2k;
+      double Lsk  = R0 * qres[k] /sres[k];
+      double VAk  = B0 * gk /sqrt (mu0 * nek * Mion * mp);
+      double dik  = sqrt (Mion * mp /nek /e/e /mu0);
+      double bek  = (5./3.) * epsa*epsa * p2k /gk/gk;
+      double dbk  = sqrt (bek /(1. + bek)) * dik /apol /rres[k];
+      double wak  = double(mres[k]) * B0 * ppk /mu0 /R0/R0 /e /nek /gk /rres[k];
+      double tHk  = Lsk /double(mres[k]) /VAk;
+      double tRk  = mu0 * apol*apol * rres[k]*rres[k] * sigk;
+      double tPk  = apol*apol * rres[k]*rres[k] /Chip;
+
+      Teres [k] = Tek;
+      S13res[k] = pow (tRk/tHk, 1./3.);
+      taures[k] = S13res[k] * tHk;
+      ieres [k] = 0.5;
+      Qeres [k] = - ieres[k]      * taures[k] * wak;
+      Qires [k] = (1. - ieres[k]) * taures[k] * wak;
+      QEres [k] = - Qires[k];
+      Dres  [k] = S13res[k] * sqrt (ieres[k]) * dbk;
+      Pmres [k] = tRk /tPk;
+      Peres [k] = tRk /tPk;
+    }
+
+  // .......................
+  // Output layer quantities
+  // .......................
+  printf ("Resonant layer data:\n");
+  for (int k = 0; k < nres; k++)
+    printf ("mpol = %3d rs = %9.2e Te = %9.2e S13 = %9.2e tau = %9.2e Qe = %9.2e D = %9.2e P = %9.2e\n",
+	    mres[k], rres[k], Teres[k], S13res[k], taures[k], Qeres[k], Dres[k], Pmres[k]);
+}

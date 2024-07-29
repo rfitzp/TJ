@@ -65,54 +65,55 @@ TJ::TJ ()
   // --------------------------------
   NameListTJ (&NTOR, &MMIN, &MMAX, 
 	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX, &FREE, 
-	      &acc, &h0, &hmin, &hmax, &EPSF);
+	      &acc, &h0, &hmin, &hmax, &EPSF,
+	      &B0, &R0, &n0, &alpha, &Zeff, &Mion, &Chip);
 
   // ............
   // Sanity check
   // ............
   if (NTOR < 1)
     {
-      printf ("TJ: Error - NTOR must be positive");
+      printf ("TJ: Error - NTOR must be positive\n");
       exit (1);
     }
   if (MMAX < MMIN)
     {
-      printf ("TJ: Error - MMIN must be less that MMAX");
+      printf ("TJ: Error - MMIN must be less that MMAX\n");
       exit (1);
     }
   if (MMAX < MMIN)
     {
-      printf ("TJ: Error - MMIN must be less that MMAX");
+      printf ("TJ: Error - MMIN must be less that MMAX\n");
       exit (1);
     }
   if (EPS <= 0.)
     {
-      printf ("TJ: Error - EPS must be positive");
+      printf ("TJ: Error - EPS must be positive\n");
       exit (1);
     }
   if (DEL <= 0.)
     {
-      printf ("TJ: Error - DEL must be positive");
+      printf ("TJ: Error - DEL must be positive\n");
       exit (1);
     }
   if (NFIX < 0)
     {
-      printf ("TJ: Error - NFIX cannot be negative");
+      printf ("TJ: Error - NFIX cannot be negative\n");
       exit (1);
     }
   if (NDIAG < 0)
     {
-      printf ("TJ: Error - NDIAG cannot be less that two");
+      printf ("TJ: Error - NDIAG cannot be less that two\n");
       exit (1);
     }
   if (NULC <= 0.)
     {
-      printf ("TJ: Error - NULC must be positive");
+      printf ("TJ: Error - NULC must be positive\n");
       exit (1);
     }
   if (ITERMAX < 0)
     {
-      printf ("TJ: Error - ITERMAX cannot be negative");
+      printf ("TJ: Error - ITERMAX cannot be negative\n");
       exit (1);
     }
     if (acc <= 0.)
@@ -142,7 +143,32 @@ TJ::TJ ()
     }
   if (EPSF <= 0.)
     {
-      printf ("TJ: Error - EPSF must be positive");
+      printf ("TJ: Error - EPSF must be positive\n");
+      exit (1);
+    }
+  if (R0 <= 0.)
+    {
+      printf ("TJ: Error - R0 must be positive\n");
+      exit (1);
+    }
+  if (n0 <= 0.)
+    {
+      printf ("TJ: Error - n0 must be positive\n");
+      exit (1);
+    }
+  if (Zeff < 1.)
+    {
+      printf ("TJ: Error - Zeff cannot be less than unity\n");
+      exit (1);
+    }
+  if (Mion < 1.)
+    {
+      printf ("TJ: Error - Mion cannot be less than unity\n");
+      exit (1);
+    }
+  if (Chip <= 0.)
+    {
+      printf ("TJ: Error - Chip must be positive\n");
       exit (1);
     }
   
@@ -157,6 +183,8 @@ TJ::TJ ()
 	  NFIX, NDIAG, NULC, ITERMAX, FREE);
   printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
 	  acc, h0, hmin, hmax, EPSF);
+  printf ("B0   = %10.3e R0    = %10.3e n0   = %10.3e alpha   = %10.3e Zeff = %10.3e Mion = %10.3e Chip = %10.3e\n",
+	  B0, R0, n0, alpha, Zeff, Mion, Chip);
 }
 
 // ##########
@@ -188,6 +216,9 @@ void TJ::Solve ()
 
   // Find rational surfaces
   FindRational ();
+
+  // Calculate resonant layer data
+  GetLayerData ();
 
   // Solve outer region odes
   ODESolve ();
@@ -228,8 +259,10 @@ void TJ::CleanUp ()
   
   delete[] rr; delete[] pp; delete[] ppp; delete[] q; 
   delete[] s;  delete[] s2; delete[] S1;  delete[] P1;
-  delete[] P2; delete[] P3;
+  delete[] P2; delete[] P3; delete[] g2;  delete[] p2;
 
+  gsl_spline_free (g2spline);
+  gsl_spline_free (p2spline);
   gsl_spline_free (ppspline);
   gsl_spline_free (pppspline);
   gsl_spline_free (qspline);
@@ -240,6 +273,8 @@ void TJ::CleanUp ()
   gsl_spline_free (P2spline);
   gsl_spline_free (P3spline);
 
+  gsl_interp_accel_free (g2acc);
+  gsl_interp_accel_free (p2acc);
   gsl_interp_accel_free (ppacc);
   gsl_interp_accel_free (pppacc);
   gsl_interp_accel_free (qacc);
@@ -286,6 +321,10 @@ void TJ::CleanUp ()
   delete[] mres; delete[] qres;  delete[] rres;   delete[] qerr;
   delete[] sres; delete[] DIres; delete[] nuLres; delete[] nuSres;
   delete[] Jres;
+
+  delete[] S13res; delete[] taures; delete[] ieres; delete[] QEres;
+  delete[] Qeres;  delete[] Qires;  delete[] Dres;  delete[] Pmres;
+  delete[] Peres;  delete[] Teres;
 
   delete[] MPOL; delete[] mpol;
      

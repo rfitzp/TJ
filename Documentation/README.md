@@ -1,5 +1,6 @@
 # Documentation for Program TJ
 
   - *TJ.pdf*                        - Document detailing TJ code
-  - *HigherOrderEquilibrium.pdf*    - Document specifiying higher-order corrections to aspect-ratio expanded equilibrium
+  - *HigherOrderEquilibrium.pdf*    - Document specifying higher-order corrections to aspect-ratio expanded equilibrium
+  - *LayerParameters.pdf* 	- Document specifying how layer parameters are estimated
   

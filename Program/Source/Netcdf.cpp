@@ -200,6 +200,8 @@ void TJ::ReadNetcdf ()
       sa   = para[1];
       
       NcVar r_x   = dataFile.getVar ("r");
+      NcVar g2_x  = dataFile.getVar ("g_2");
+      NcVar p2_x  = dataFile.getVar ("p_2");
       NcVar pp_x  = dataFile.getVar ("pp");
       NcVar ppp_x = dataFile.getVar ("ppp");
       NcVar q_x   = dataFile.getVar ("q");
@@ -213,6 +215,8 @@ void TJ::ReadNetcdf ()
 
       Nr  = r_d.getSize () - 1;
       rr  = new double[Nr+1];
+      g2  = new double[Nr+1];
+      p2  = new double[Nr+1];
       pp  = new double[Nr+1];
       ppp = new double[Nr+1];
       q   = new double[Nr+1];
@@ -224,6 +228,8 @@ void TJ::ReadNetcdf ()
       P3  = new double[Nr+1];
 
       r_x.  getVar (rr);
+      g2_x. getVar (g2);
+      p2_x. getVar (p2);
       pp_x. getVar (pp);
       ppp_x.getVar (ppp);
       q_x  .getVar (q);
