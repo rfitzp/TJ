@@ -7,7 +7,6 @@
 // All magnetic field-strengths normalized to B_0 (on-axis toroidal magnetic field-strength).
 // Radial coordinate, r, normalized to epsa * R_0, where eps_a is inverse-aspect ratio.
 // So r = 0 is magnetic axis and r = 1 is plasma/vacuum interface.
-
 // Flux-surfaces:
 
 // R(r,w) = 1 - epsa r cosw + epsa^2 H1(r) + epsa^2 sum_{n=2,Ns} [Hn(r) cos(n-1)w + Vn(r) sin(n-1)w]

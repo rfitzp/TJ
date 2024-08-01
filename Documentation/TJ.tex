@@ -10,12 +10,12 @@
 \allowdisplaybreaks
 
 \begin{document}
-\title{Calculation of Tearing-Mode Stability in an Inverse Aspect-Ratio Expanded Tokamak Plasma Equilibrium}
+\title{Calculation of Tearing Mode Stability in an Inverse Aspect-Ratio Expanded Tokamak Plasma Equilibrium}
 \author{Richard Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
 \affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin, TX 78712}
 
 \begin{abstract}
-The   tearing-mode stability of an inverse aspect-ratio expanded tokamak plasma equilibrium of general
+The   tearing mode stability of an inverse aspect-ratio expanded tokamak plasma equilibrium of general
 shape  is investigated using asymptotic matching techniques. Particular emphasis is placed on the
 conservation of toroidal electromagnetic angular momentum. The TJ code, which is a specific implementation of the
 results of the investigation, is described. 
@@ -23,7 +23,7 @@ results of the investigation, is described.
 \maketitle
 
 \section{Introduction} 
-The calculation of the tearing-mode stability of a high temperature, axisymmetric,  tokamak plasma equilibrium is most efficiently formulated as  an asymptotic
+The calculation of the tearing mode stability of a high temperature, axisymmetric,  tokamak plasma equilibrium is most efficiently formulated as  an asymptotic
 matching problem.\cite{fkr} In such a problem, the  plasma is  divided into two regions. In the ``outer region'', which comprises most
 of the plasma, the tearing perturbation is described by the equations of linearized, marginally-stable, ideal magnetohydrodynamics (which, in the following, are
 referred to as the ``ideal-MHD'' equations). (See Sect.~\ref{mhd}.)
@@ -38,15 +38,15 @@ Consequently, for a tearing perturbation with a given toroidal mode number,
  the ${\mit\Delta}_k$ values associated with  the various rational surfaces in the plasma are interrelated via a matrix equation.\cite{cht} [See Eq.~(\ref{e317u}).]
 
 In general, the  determination of the elements of the matrix equation that links the various ${\mit\Delta}_k$ values from the ideal-MHD equations 
-in the outer region is a exceptionally challenging computational task.\cite{connor,nish,pletz,pletz1,
+in the outer region is a exceptionally challenging computational task.\cite{connor,nish,gal,pletz,pletz1,
 tokuda,brennan,ham,ham1,ham2,am1,am2,am3,aglas,aglas1,aglas2}
-One way of greatly reducing the complexity of this task is to employ an inverse aspect-ratio expanded plasma equilibrium.\cite{greene} In such an equilibrium,
+One way of greatly reducing the complexity of this task is to employ an inverse aspect-ratio expanded plasma equilibrium.\cite{greene,gim} In such an equilibrium,
 the metric elements of the flux-coordinate system can be expressed analytically in terms of a relatively small number of  flux-surface functions,
 which represents a major simplification.\cite{con0} Another significant advantage of an inverse aspect-ratio expanded equilibrium is that the magnetic perturbation in the plasma can be efficiently 
-matched to a vacuum solution  expressed as an expansion in toroidal functions.\cite{am1} The alternative approach of using a Green's
-function solution in the vacuum region is much more computationally intensive.\cite{chance,xu}
+matched to an exterior vacuum solution  that is expressed as an expansion in toroidal functions.\cite{am1} The alternative approach of using a Green's
+function solution in the vacuum region is much more computationally intensive.\cite{chance,xu}  
 
- The inverse aspect-ratio expansion approach to determining tearing-mode stability in tokamak plasmas 
+ The inverse aspect-ratio expansion approach to determining tearing mode stability in tokamak plasmas 
 was first presented in Ref.~\onlinecite{connor} in a calculation that  features triplets of  poloidal harmonics coupled via toroidicity. 
 The
 inverse aspect-ratio expansion approach was extended in Ref.~\onlinecite{am1} in a calculation that features septuplets of poloidal harmonics coupled via toroidicity, flux-surface elongation, and
@@ -56,16 +56,16 @@ equilibrium
 is up-down-symmetric. 
 
 This paper is organized as follows. In Sect.~\ref{geq}, we examine a general tokamak plasma equilibrium. In Sect.~\ref{opde}, we
-derive the so-called ``outer-region  partial differential equations" (p.d.e.s), which are a set of two coupled second-order p.d.e.s that control   the ideal-MHD solution in the outer region. In
-Sect.~\ref{sode}, we derive the so-called ``outer region ordinary differential equations'' (o.d.e.s), which are a large set of coupled first-order 
+derive the so-called ``outer-region  partial differential equations (p.d.e.s)", which are a set of two coupled second-order p.d.e.s that control   the ideal-MHD solution in the outer region. In
+Sect.~\ref{sode}, we derive the so-called ``outer region ordinary differential equations  (o.d.e.s)'', which are a large set of coupled first-order 
 o.d.e.s that control the ideal-MHD solution in the outer region. We also demonstrate that these o.d.e.s conserve toroidal electromagnetic
 angular momentum. In Sect.~\ref{snus}, we discuss the general behavior of the outer-region o.d.e.s in the vicinity of a rational surface. 
 In Sect.~\ref{vacxx}, we obtain the general boundary condition satisfied by the outer-region o.d.e.s at the plasma/vacuum interface, on the assumption that
 region surrounding the plasma does not contain any non-axisymmetric currents. We also demonstrate that these boundary conditions conserve
 toroidal electromagnetic angular momentum. In Sect.~\ref{large}, we introduce the aspect-ratio expanded tokamak equilibrium, and determine the
-specific forms of the outer-region o.d.e.s. In Sect.~\ref{etm}, we calculate the matrix equation that constitutes the tearing-mode dispersion relation, and
+specific forms of the outer-region o.d.e.s. In Sect.~\ref{etm}, we calculate the matrix equation that constitutes the tearing mode dispersion relation, and
 demonstrate that this equation must be Hermitian in order to conserve toroidal electromagnetic angular momentum. In Sect.~\ref{rmp}, 
-we discuss how the tearing-mode dispersion relation is modified by non-axisymmetric currents flowing in
+we discuss how the tearing mode dispersion relation is modified by non-axisymmetric currents flowing in
  resonant magnetic perturbation (RMP) coils external to the plasma. We also derive expressions for the toroidal electromagnetic
 torques exerted at the various rational surfaces in the plasma by the RMP coils. In Sect.~\ref{tj}, we discuss the
 TJ code, which is a specific implementation of the theory presented in Sects.~\ref{geq}--\ref{rmp}. Finally, the paper is summarized in Sect.~\ref{sum}.
@@ -594,9 +594,9 @@ where $j\neq 0$.
 
 The coefficients of the large and the small solutions at the $k$th rational surface are evaluated as follows:
 \begin{align}
-\bar{\psi}_{m_k+j} &= \psi_{m_k+j}(r_k+\delta)- (a_j+\delta\,c_j)\,A_{L\,k}\,|\delta|^{\,\nu_{L\,k}}-\tilde{a}_j\,{\rm sgn}(\delta)\,|\delta|^{\nu_{S\,k}}\,A_{S\,k}\nonumber\\[0.5ex]
+\bar{\psi}_{m_k+j} &= \psi_{m_k+j}(r_k+\delta)- (a_j+\delta\,c_j)\,A_{L\,k}\,|\delta|^{\,\nu_{L\,k}}-\tilde{a}_j\,{\rm sgn}(\delta)\,A_{S\,k}\,|\delta|^{\nu_{S\,k}}\nonumber\\[0.5ex]
 &\phantom{=}-\bar{\psi}'_{m_k+j}\,\delta+{\cal O}(\delta^{\,2}),\\[0.5ex]
-\bar{Z}_{m_k+j}&= Z_{m_k+j}(r_k+\delta)- (b_j+\delta\,d_j)\,A_{L\,k}\,|\delta|^{\,\nu_{L\,k}}-\tilde{b}_j\,{\rm sgn}(\delta)\,|\delta|^{\nu_{S\,k}}\,A_{S\,k}\nonumber\\[0.5ex]
+\bar{Z}_{m_k+j}&= Z_{m_k+j}(r_k+\delta)- (b_j+\delta\,d_j)\,A_{L\,k}\,|\delta|^{\,\nu_{L\,k}}-\tilde{b}_j\,{\rm sgn}(\delta)\,A_{S\,k}\,|\delta|^{\nu_{S\,k}}\nonumber\\[0.5ex]
 &\phantom{=}-\bar{Z}'_{m_k+j}\,\delta+{\cal O}(\delta^{\,2}),\\[0.5ex]
 A_{S\,k} &= \frac{Z_{m_k}(r_k+\delta)-b_L\,\psi_{m_k}(r_k+\delta)-\delta\,(B_C-b_L\,A_C)-\delta\,(\gamma_L-b_L\,\lambda_L)\,A_{L\,k}\,|\delta|^{\,\nu_{L\,k}}}{
 (b_S-b_L)\,{\rm sgn}(\delta)\,|\delta|^{\nu_{S\,k}}}\nonumber\\[0.5ex]
@@ -615,21 +615,24 @@ treatment is always needed for  rational  surfaces characterized by $q=1$.
 The most general small-$|x|$ solution of the outer-region o.d.e.s 
 takes the form
 \begin{align}
-\psi_{m_k}(r_k+x)&=A_{L\,k}^\pm \,[1+\nu_{L\,k}\,\ln|x|+\hat{\lambda}_{L}\,x\,(\ln |x|-1)+\mu_{L}\,x\,(\ln^2\!|x|-2\,\ln|x|-2) + \xi_{L}\,x+\cdots]  \nonumber\\[0.5ex]&\phantom{=}+ A_{S\,k}^{\pm}\,x\,(1+\cdots) + \hat{A}_{C}\,x\,(1+\cdots)+ A_{D}\,x\,(\ln |x|-1 + \cdots),\\[0.5ex]
-Z_{m_k}(r_k+x)&= A_{L\,k}^\pm\left(b_L+\hat{\gamma}_{L}\,x\,\ln |x|+\delta_{L}\,x\,\ln^2\!|x|+\cdots\right) +A_{S\,k}^\pm\,x\,(b_{S}+\cdots)\nonumber\\[0.5ex]&\phantom{=} + B_{D}\,x\,(\ln |x|+\cdots),
+\psi_{m_k}(r_k+x)&=A_{L\,k}^\pm \,[1+\nu_{L\,k}\,\ln|x|+\hat{\lambda}_{L}\,x\,(\ln |x|-1)+\mu_{L}\,x\,(\ln^2\!|x|-2\,\ln|x|+2) + \xi_{L}\,x+\cdots]  \nonumber\\[0.5ex]&\phantom{=}+ A_{S\,k}^{\pm}\,x\,(1+\cdots) + \hat{A}_{C}\,x\,(1+\cdots)+ A_{D}\,x\,(\ln |x|-1 + \cdots),\\[0.5ex]
+Z_{m_k}(r_k+x)&= A_{L\,k}^\pm\left(b_L+\hat{\gamma}_{L}\,x\,\ln |x|+\delta_{L}\,x\,\ln^2\!|x|+\cdots\right) +A_{S\,k}^\pm\,x\,(b_{S}+\cdots)
+\nonumber\\[0.5ex]&\phantom{=} + B_{D}\,x\,(\ln |x|+\cdots),
 \end{align}
 and 
 \begin{align}
-\psi_{m_k+j}(r_k+x)&=A_{L\,k}^\pm\,(\hat{a}_j\,\ln |x|+\cdots)+A_{S\,k}^\pm\,x\,(\tilde{a}_j+\cdots)  + \bar{\psi}_{m_k+j}\,(1+\cdots),\\[0.5ex]
-Z_{m_k+j}(r_k+x)&= A_{L\,k}^\pm\,(\hat{b}_j \,\ln |x|+ \cdots) +  A_{S\,k}^\pm\,x\,(\tilde{b}_j + \cdots) +\bar{Z}_{m_k+j}\,(1+\cdots),
+\psi_{m_k+j}(r_k+x)&=A_{L\,k}^\pm\,[\hat{a}_j\,\ln |x|+x\,(\hat{c}_j+\hat{c}_j'\,\ln|x|+\hat{c}_j''\,\ln^2|x|)+\cdots]+A_{S\,k}^\pm\,x\,(\tilde{a}_j+\cdots)  \nonumber\\[0.5ex]
+&\phantom{=}+[ \bar{\psi}_{m_k+j}+
+x\,(\bar{\psi}_{m_k+j}'' + \bar{\psi}_{m_k+j}'''\,\ln|x|\cdots)],\\[0.5ex]
+Z_{m_k+j}(r_k+x)&= A_{L\,k}^\pm\,[\hat{b}_j\,\ln |x|+x\,(\hat{d}_j+\hat{d}_j'\,\ln|x|+\hat{d}_j''\,\ln^2|x|)+\cdots]+A_{S\,k}^\pm\,x\,(\tilde{b}_j+\cdots)  \nonumber\\[0.5ex]
+&\phantom{=}+[ \bar{Z}_{m_k+j}+
+x\,(\bar{Z}_{m_k+j}'' + \bar{Z}_{m_k+j}'''\,\ln|x|\cdots)],
 \end{align}
 for $j\neq 0$. 
 Here, 
 \begin{align}
 \hat{A}_{C} &= \frac{1}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(L_{m_k}^{\,m_k+j}\,\bar{Z}_{m_k+j}+ M_{m_k}^{\,m_k+j}\,\bar{\psi}_{m_k+j}\right)_{r_k},\\[0.5ex]
-A_{D} &=  \frac{L_0}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(N_{m_k}^{\,m_k+j}\,\bar{Z}_{m_k+j}+ P_{m_k}^{\,m_k+j}\,\bar{\psi}_{m_k+j}\right)_{r_k}
-\nonumber\\[0.5ex]&\phantom{=}-
-\frac{\nu_{L\,k}}{r_k}\,\sum_{j\neq 0}\frac{1}{j}\left(L_{m_k}^{\,m_k+j}\,\bar{Z}_{m_k+j}+ M_{m_k}^{\,m_k+j}\,\bar{\psi}_{m_k+j}\right)_{r_k},
+A_{D} &=  \frac{L_0}{r_k}\sum_{j\neq 0}\frac{1}{j}\left(N_{m_k}^{\,m_k+j}\,\bar{Z}_{m_k+j}+ P_{m_k}^{\,m_k+j}\,\bar{\psi}_{m_k+j}\right)_{r_k} -\nu_{L\,k}\,\hat{A}_C,
 \\[0.5ex]
 B_{D} &= \frac{A_{D}}{L_0},\\[0.5ex]
 \hat{\lambda}_{L} &= \frac{P_1\,L_0\,(1+\nu_{L\,k}) }{r_k} + \frac{\nu_{L\,k}\,T_1}{r_k}
@@ -641,18 +644,50 @@ B_{D} &= \frac{A_{D}}{L_0},\\[0.5ex]
 \hat{\gamma}_{L} &=\frac{P_1\,(1+\nu_{L\,k})}{r_k} + \frac{\nu_{L\,k}\,T_1}{L_0\,r_k},\\[0.5ex]
 \delta_{L} &= \frac{\mu_{L}}{L_0},\\[0.5ex]
 \hat{a}_j&=-\frac{1}{(m_k\,s)_{r_k}}\left(\frac{\nu_{L\,k}\,L^{\,m_k}_{m_k+j}}{L_0}+M^{\,m_k}_{m_k+j}\right)_{r_k},\\[0.5ex]
-\hat{b}_j&=- \frac{1}{(m_k\,s)_{r_k}}\left(P^{\,m_k}_{m_k+j}+\frac{\nu_{L\,k}\,N^{\,m_k}_{m_k+j}}{L_0}\right)_{r_k}.
+\hat{b}_j&=- \frac{1}{(m_k\,s)_{r_k}}\left(P^{\,m_k}_{m_k+j}+\frac{\nu_{L\,k}\,N^{\,m_k}_{m_k+j}}{L_0}\right)_{r_k},\\[0.5ex]
+\hat{c}_j&= \frac{1}{r_k}\left\{
+-\hat{a}_j + L_{j\,1}\,b_L + M_{j\,1}\,(1-\nu_{L\,k})\phantom{\frac{a}{a}}\right.\nonumber\\[0.5ex]&\phantom{=} + \frac{r_k}{m_k\,s}\left[L_{m_k+j}^{\,m_k}\,(\hat{\gamma}_L-2\,\delta_L)
++ M_{m_k+j}^{\,m_k}\,(2\,\hat{\lambda}_L-6\,\mu_L-\xi_L)\right]\nonumber\\[0.5ex]&\phantom{=}
+\left.-\sum_{j'\neq 0} \frac{1}{j'}\,(L_{m_k+j}^{\,m_k+j'}\,\hat{b}_{j'}+ M_{m_k+j}^{\,m_k+j'}\,\hat{a}_{j'})
+\right\}_{r_k},\\[0.5ex]
+\hat{c}_j'&= \frac{1}{r_k}\left\{
+ M_{j\,1}\,\nu_{L\,k}- \frac{r_k}{m_k\,s}\left[L_{m_k+j}^{\,m_k}\,(\hat{\gamma}_L-2\,\delta_L)
++ M_{m_k+j}^{\,m_k}\,(\hat{\lambda}_L-4\,\mu_L)\right]\right.\nonumber\\[0.5ex]&\phantom{=}
+\left.+\sum_{j'\neq 0} \frac{1}{j'}\,\,(L_{m_k+j}^{\,m_k+j'}\,\hat{b}_{j'}+ M_{m_k+j}^{\,m_k+j'}\,\hat{a}_{j'})
+\right\}_{r_k},\\[0.5ex]
+\hat{c}_j'' &= \frac{1}{r_k}\left[-\frac{r_k}{m_k\,s}\,(L_{m_k+j}^{\,m_k+j'}\,\delta_L+ M_{m_k+j}^{\,m_k+j'}\,\mu_L)\right]_{r_k},\\[0.5ex]
+\hat{d}_j&= \frac{1}{r_k}\left\{
+-\left(1-\frac{m_k\,s}{j}\right)\hat{b}_j + N_{j\,1}\,b_L + P_{j\,1}\,(1-\nu_{L\,k})\phantom{\frac{a}{a}}\right.\nonumber\\[0.5ex]&\phantom{=} + \frac{r_k}{m_k\,s}\left[N_{m_k+j}^{\,m_k}\,(\hat{\gamma}_L-2\,\delta_L)
++ P_{m_k+j}^{\,m_k}\,(2\,\hat{\lambda}_L-6\,\mu_L-\xi_L)\right]\nonumber\\[0.5ex]&\phantom{=}
+\left.-\sum_{j'\neq 0} \frac{1}{j'}\,(N_{m_k+j}^{\,m_k+j'}\,\hat{b}_{j'}+ P_{m_k+j}^{\,m_k+j'}\,\hat{a}_{j'})
+\right\}_{r_k},\\[0.5ex]
+\hat{d}_j'&= \frac{1}{r_k}\left\{-\frac{m_k\,s}{j}\,\hat{b}_j +
+ P_{j\,1}\,\nu_{L\,k}- \frac{r_k}{m_k\,s}\left[N_{m_k+j}^{\,m_k}\,(\hat{\gamma}_L-2\,\delta_L)
++ P_{m_k+j}^{\,m_k}\,(\hat{\lambda}_L-4\,\mu_L)\right]\right.\nonumber\\[0.5ex]&\phantom{=}
+\left.+\sum_{j'\neq 0} \frac{1}{j'}\,\,(N_{m_k+j}^{\,m_k+j'}\,\hat{b}_{j'}+ P_{m_k+j}^{\,m_k+j'}\,\hat{a}_{j'})
+\right\}_{r_k},\\[0.5ex]
+\hat{d}_j'' &= \frac{1}{r_k}\left[-\frac{r_k}{m_k\,s}\,(N_{m_k+j}^{\,m_k+j'}\,\delta_L+ P_{m_k+j}^{\,m_k+j'}\,\mu_L)\right]_{r_k},\\[0.5ex]
+\bar{\psi}_{m_k+j}'' &= \frac{1}{r_k}\left\{-\frac{r_k}{m_k\,s}\left[-L_{m_k+j}^{\,m_k}\,B_D+ M_{m_k+j}^{m_k}\,(\hat{A}_C-2\,A_D)\right]\right.\nonumber\\[0.5ex]&\phantom{=}\left.
++ \sum_{j'\neq 0} \frac{1}{j'}\left(L_{m_k+j}^{\,m_k+j'}\,\bar{Z}_{m_k+j'} +M_{m_k+j}^{\,m_k+j'}\,\bar{\psi}_{m_k+j'}\right)\right\}_{r_k},\\[0.5ex]
+\bar{\psi}_{m_k+j}''' &= \frac{1}{r_k}\left[-\frac{r_k}{m_k\,s}\left(L_{m_k+j}^{\,m_k}\,B_D+ M_{m_k+j}^{m_k}\,A_D\right)\right]_{r_k},\\[0.5ex]
+\bar{Z}_{m_k+j}'' &= \frac{1}{r_k}\left\{-\frac{m_k\,s}{j}\,\bar{Z}_{m_k+j}-\frac{r_k}{m_k\,s}\left[-N_{m_k+j}^{\,m_k}\,B_D+ P_{m_k+j}^{m_k}\,(\hat{A}_C-2\,A_D)\right]\right.\nonumber\\[0.5ex]&\phantom{=}\left.
++ \sum_{j'\neq 0} \frac{1}{j'}\left(N_{m_k+j}^{\,m_k+j'}\,\bar{Z}_{m_k+j'} +P_{m_k+j}^{\,m_k+j'}\,\bar{\psi}_{m_k+j'}\right)\right\}_{r_k},\\[0.5ex]
+\bar{Z}_{m_k+j}''' &= \frac{1}{r_k}\left[-\frac{r_k}{m_k\,s}\left(N_{m_k+j}^{\,m_k}\,B_D+ P_{m_k+j}^{m_k}\,A_D\right)\right]_{r_k},
 \end{align}
 Moreover, $\tilde{a}_j$ and $\tilde{b}_j$ are again specified by Eqs.~(\ref{e135a})--(\ref{e138}). 
 
 The coefficients of the large and the small solutions at the $k$th rational surface are evaluated as follows:
 \begin{align}
-\bar{\psi}_{m_k+j} &= \psi_{m_k+j}(r_k+\delta)- \hat{a}_j\,A_{L\,k}\,\ln|\delta| +{\cal O}(\delta),\\[0.5ex]
-\bar{Z}_{m_k+j}&= Z_{m_k+j}(r_k+\delta)-\hat{b}_j\,A_{L\,k}\,\ln|\delta|+{\cal O}(\delta),\\[0.5ex]
+\bar{\psi}_{m_k+j} &= \psi_{m_k+j}(r_k+\delta)- [\hat{a}_j\,\ln|\delta|+ \delta\,(\hat{c}_j+\hat{c}_j'\,\ln|\delta|+\hat{c}_j''\,\ln^2|\delta|)]\,A_{L\,k}
+-\tilde{a}_j\,A_{S\,k}\,\delta \nonumber\\[0.5ex]
+&\phantom{=}- (\bar{\psi}_{m_k+j}''+\bar{\psi}_{m_k+j}'''\,\ln|\delta|)\,\delta +{\cal O}(\delta^{\,2}),\\[0.5ex]
+\bar{Z}_{m_k+j}&= Z_{m_k+j}(r_k+\delta)- [\hat{b}_j\,\ln|\delta|+ \delta\,(\hat{d}_j+\hat{d}_j'\,\ln|\delta|+\hat{d}_j''\,\ln^2|\delta|)]\,A_{L\,k}
+-\tilde{b}_j\,A_{S\,k}\,\delta \nonumber\\[0.5ex]
+&\phantom{=}- (\bar{Z}_{m_k+j}''+\bar{Z}_{m_k+j}'''\,\ln|\delta|)\,\delta +{\cal O}(\delta^{\,2}),\\[0.5ex]
 A_{S\,k} &= \frac{Z_{m_k}(r_k+\delta)-b_{L}\,A_{L\,k}-\delta\,\ln|\delta|\,[B_D+(\hat{\gamma}_L+\delta_L\,\ln|\delta|)\,A_{L\,k}]}
 {b_S\,\delta}+{\cal O}(\delta),\\[0.5ex]
-A_{L\,k} &= \frac{\psi_{m_k}(r_k+\delta)-\delta\,[A_{S\,k}+A_C+A_D\,(\ln|\delta|-1)]}
-{1+\nu_{L\,k}\,\ln|\delta|+\delta\,[\hat{\lambda}_L\,(\ln|\delta|-1)+ \mu_L\,(\ln^2|\delta|-2\,\ln|\delta|-2)+\xi_L]}+{\cal O}(\delta^{\,2})
+A_{L\,k} &= \frac{\psi_{m_k}(r_k+\delta)-\delta\,[A_{S\,k}+\hat{A}_C+A_D\,(\ln|\delta|-1)]}
+{1+\nu_{L\,k}\,\ln|\delta|+\delta\,[\hat{\lambda}_L\,(\ln|\delta|-1)+ \mu_L\,(\ln^2|\delta|-2\,\ln|\delta|+2)+\xi_L]}+{\cal O}(\delta^{\,2})
 \end{align}
 for $j\neq 0$. As before, the previous equations can be solved via iteration.
 
@@ -672,25 +707,31 @@ for all $k$.
  Note, however, that the coefficients of the small solution to the left and to the right of a given rational surface are not, in general, equal to one another. 
 
 Consider a solution that is completely continuous across the $k$th rational surface, so that $A_{S\,k}^-=A_{S\,k}^+$. According to the
-preceding analysis, the continuity condition for the resonant harmonic can be written as
+preceding analysis, the continuity conditions for the various poloidal harmonics can be written as
 \begin{align}\label{c1}
 \psi_{m_k}(r_k+|\delta|) &= \psi_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,\lambda_L + A_C] + 2\,A_{S\,k}^-\,|\delta|^{\nu_{S\,k}}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
 Z_{m_k} (r_k+|\delta|) &=  Z_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,\gamma_L + B_C] + 2\,A_{S\,k}^-\,b_S\,|\delta|^{\nu_{S\,k}} 
 \nonumber\\[0.5ex]&\phantom{=}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
-\psi_{m_k+j}(r_k+|\delta|) &= \psi_{m_k+j}(r_k-|\delta|) +2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,c_j + \bar{\psi}_{m_k+j}'] + 2\,A_{S\,k}^-\,a_j\,|\delta|^{\nu_{S\,k}}\nonumber\\[0.5ex]&\phantom{=} +{\cal O}(\delta^{\,2}),\\[0.5ex]
-Z_{m_k+j}(r_k+|\delta|) &= Z_{m_k+j}(r_k-|\delta|) +2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,d_j + \bar{Z}_{m_k+j}'] + 2\,A_{S\,k}^-\,b_j\,|\delta|^{\nu_{S\,k}}
+\psi_{m_k+j}(r_k+|\delta|) &= \psi_{m_k+j}(r_k-|\delta|) +2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,c_j + \bar{\psi}_{m_k+j}'] + 2\,A_{S\,k}^-\,\tilde{a}_j\,|\delta|^{\nu_{S\,k}}\nonumber\\[0.5ex]&\phantom{=} +{\cal O}(\delta^{\,2}),\\[0.5ex]
+Z_{m_k+j}(r_k+|\delta|) &= Z_{m_k+j}(r_k-|\delta|) +2\,|\delta|\,[A_{L\,k}\,|\delta|^{\nu_{L\,k}}\,d_j + \bar{Z}_{m_k+j}'] + 2\,A_{S\,k}^-\,\tilde{b}_j\,|\delta|^{\nu_{S\,k}}
 \nonumber\\[0.5ex]&\phantom{=}+ {\cal O}(\delta^{\,2})
 \end{align}
 in the general case, and 
 \begin{align}
 \psi_{m_k}(r_k+|\delta|) &= \psi_{m_k}(r_k-|\delta|) \nonumber\\[0.5ex]
-&\phantom{=}+ 2\,|\delta|\,\{A_{L\,k}\,[\hat{\lambda}_L\,(\ln|\delta|-1)+\hat{\mu}_L\,(\ln^2|\delta|-2\,\ln|\delta|-2)+ \xi_L]\nonumber\\[0.5ex]
-&\phantom{=}+ A_C
+&\phantom{=}+ 2\,|\delta|\,\{A_{L\,k}\,[\hat{\lambda}_L\,(\ln|\delta|-1)+\hat{\mu}_L\,(\ln^2|\delta|-2\,\ln|\delta|+2)+ \xi_L]\nonumber\\[0.5ex]
+&\phantom{=}+ \hat{A}_C
 +A_D\,(\ln|\delta|-1) + A_{S\,k}^-\}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
 Z_{m_k} (r_k+|\delta|) &=  Z_{m_k}(r_k-|\delta|) + 2\,|\delta|\,[A_{L\,k}\,\ln|\delta| \,(\hat{\gamma}_L+\delta_L\,\ln|\delta|)+ B_D\,\ln|\delta|
 +A_{S\,k}^-\,b_{S}]\nonumber\\[0.5ex]&\phantom{=}+ {\cal O}(\delta^{\,2}),\\[0.5ex]
-\psi_{m_k+j}(r_k+|\delta|) &= \psi_{m_k+j}(r_k-|\delta|)+{\cal O}(\delta),\\[0.5ex]
-Z_{m_k+j}(r_k+|\delta|) &= Z_{m_k+j}(r_k-|\delta|)+{\cal O}(\delta)\label{c2}
+\psi_{m_k+j}(r_k+|\delta|) &= \psi_{m_k+j}(r_k-|\delta|)+2\,|\delta|\left[A_{L\,k}\,(\hat{c}_j+\hat{c}_j'\,\ln|\delta| + \hat{c}_j''\,\ln^2|\delta|) \right.\nonumber\\[0.5ex]
+&\phantom{=}
+\left.+ A_{S\,k}^-\,\tilde{a}_j + \bar{\psi}_{m_k+j}'' + \bar{\psi}_{m_k+j}'''\,\ln|\delta|\right]+{\cal O}(\delta^{\,2}),\\[0.5ex]
+Z_{m_k+j}(r_k+|\delta|) &= Z_{m_k+j}(r_k-|\delta|)
++2\,|\delta|\left[A_{L\,k}\,(\hat{d}_j+\hat{d}_j'\,\ln|\delta| + \hat{d}_j''\,\ln^2|\delta|) \right.\nonumber\\[0.5ex]
+&\phantom{=}
+\left.+ A_{S\,k}^-\,\tilde{b}_j + \bar{Z}_{m_k+j}'' + \bar{Z}_{m_k+j}'''\,\ln|\delta|\right]+{\cal O}(\delta^{\,2})
+\label{c2}
 \end{align}
 in the special case. In both cases, $j\neq 0$.
 
@@ -975,7 +1016,7 @@ L(\hat{r})&= \frac{\hat{r}^{\,3}}{8} -\frac{\hat{r}\,H_1}{2}-\frac{1}{2}\sum_{j>
 \theta &= \omega+\epsilon\,\hat{r}\,\sin\omega - \epsilon\sum_{j>0}\frac{1}{j}\left[H_j'-(j-1)\,\frac{H_j}{\hat{r}}\right]\sin(j\,\omega)
 \nonumber\\[0.5ex]&\phantom{=}+ \epsilon\sum_{j>1}\frac{1}{j}\left[V_j'-(j-1)\,\frac{V_j}{\hat{r}}\right]\cos(j\,\omega),\label{e22y}\\[0.5ex]
 |\hat{\nabla} \hat{r}|^2 &= 1 +2\,\epsilon\sum_{j>0}H_j'\,\cos(j\,\theta) +2\,\epsilon\sum_{j>1}V_j'\,\sin(j\,\theta) \nonumber\\[0.5ex]
-&\phantom{=}+\epsilon^{\,2}\left(\frac{3\,\hat{r}^2}{4}-H_1+
+&\phantom{=}+\epsilon^{\,2}\left(\frac{3\,\hat{r}^{\,2}}{4}-H_1+
 \frac{1}{2}\sum_{j>0}\left[H_j'^{\,2}+(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\right.\nonumber\\[0.5ex]&\phantom{=}\left.+
 \frac{1}{2}\sum_{j>1}\left[V_j'^{\,2}+(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]
 \right),\label{e19}\\[0.5ex]
@@ -1137,7 +1178,7 @@ s(1) &= 2+ \epsilon^{\,2}\left(\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right
 +{\cal O}(\epsilon^4).\label{e223}
 \end{align}
 
-\section{Calculation of  Tearing-Mode Dispersion Relation}\label{etm}
+\section{Calculation of  Tearing Mode Dispersion Relation}\label{etm}
 \subsection{Introduction}
 Let the $m_j$, for $j=0,J$, be the poloidal mode numbers included in the calculation. Here, it is assumed that $m_{j+1}=m_j+1$ for $j=0,J-1$. 
 Let there be $K$ rational surfaces in the plasma, and let the $k$th surface lie at radius $\hat{r}_k$, for $k=1,K$. Here,
@@ -1185,7 +1226,7 @@ Let
 ${\mit\Pi}_{k'k}^s$, for $k'=1,K$ and $k=1,K$,  be the value of ${\mit\Psi}_{k'}$ at the $k'$th rational surface associated with a small solution
 launched from the $k$th rational surface. Note that ${\mit\Pi}_{k'k}^s=0$ for $k' \leq k$.  
 
-\subsection{Homogeneous Toroidal Tearing-Mode Dispersion Relation}\label{disp}
+\subsection{Homogeneous Toroidal Tearing Mode Dispersion Relation}\label{disp}
 The most general expression for the solution of the outer-region o.d.e.s at the plasma/vacuum interface is
 \begin{align}\label{e385}
 \psi_{m_j}(1) &= \sum_{j'=0,J}\psi_{m_j\,m_{j'}}^a(1)\,\alpha_{j'} + \sum_{k=1,K}\psi_{m_j\,k}^s(1)\,{\mit\Delta\Psi}_k,\\[0.5ex]
@@ -1212,7 +1253,7 @@ where
 \sum_{j'=0,J}X_{jj'}\,{\mit\Omega}_{j'k} = Y_{jk}
 \end{equation}
 for $j=0,J$ and $k=1,K$. Our general solution is now free of arbitrary coefficients.
- Finally, making use of the definitions of the ${\mit\Pi}_{kj}^a$ and the ${\mit\Pi}_{kk'}^s$ given in Sects.~\ref{axisl} and \ref{smalll}, we obtain the {\em homogenous toroidal tearing-mode dispersion relation},\cite{connor,cht,am1,pletz}
+ Finally, making use of the definitions of the ${\mit\Pi}_{kj}^a$ and the ${\mit\Pi}_{kk'}^s$ given in Sects.~\ref{axisl} and \ref{smalll}, we obtain the {\em homogenous toroidal tearing mode dispersion relation},\cite{connor,cht,am1,pletz}
 \begin{equation}\label{e315}
 {\mit\Psi}_k = \sum_{k'=1,K}F_{kk'}\,{\mit\Delta\Psi}_{k'}
 \end{equation}
@@ -1239,7 +1280,7 @@ Z_{m_j\,k}^{f}(\hat{r}) &=Z^s_{m_j\,k}(\hat{r})+ \sum_{j'=0,J}Z_{m_j\,m_{j'}}^a(
 for $j=0,J$. Here, $\delta_{kk'}$ is a unit matrix.  Note that the fully-reconnected solution associated with the $k$th rational surface only has a current sheet at that surface. 
 (The current sheets at the other surfaces are all zero.)
 
-The homogeneous toroidal tearing-mode dispersion relation can be written in the alternative form\,\cite{cht,am1}
+The homogeneous toroidal tearing mode dispersion relation can be written in the alternative form\,\cite{cht,am1}
 \begin{equation}\label{e317}
 {\mit\Delta\Psi}_k = \sum_{k'=1,K}E_{kk'}\,{\mit\Psi}_{k'}
 \end{equation}
@@ -1268,7 +1309,7 @@ Let
  be the complex quantity that characterizes the
 tearing response of the resonant layer at the $k$th rational surface to the ideal-MHD solution in the outer region.\cite{fkr}
 In general, ${\mit\Delta}_k$ is a function of the growth-rate and phase-velocity of the reconnected helical magnetic flux at the surface.\cite{am1,layer,layer1}
-Equations~(\ref{e317}) and (\ref{e403})  can be combined to give the ultimate form of the  tearing-mode dispersion relation,
+Equations~(\ref{e317}) and (\ref{e403})  can be combined to give the ultimate form of the  tearing mode dispersion relation,
 \begin{equation}\label{e317u}
 \sum_{k'=1,k}({\mit\Delta}_k\,\delta_{kk'}-E_{kk'})\,{\mit\Psi}_{k'} = 0
 \end{equation}
@@ -1309,7 +1350,7 @@ Reusing the analysis of Sect.~A of Ref.~\onlinecite{nelson}, the non-axisymmetri
 field-coils can be written ${\bf b}^x(R,\phi,Z)= {\bf b}^x(R,Z)\,\exp(-{\rm i}\,n\,\phi)$, where
 \begin{align}\label{e313}
 {\bf b}^x(R,Z)&= \nabla(R\,A_\phi)\times\nabla\phi,\\[0.5ex]
-A_\phi(R,Z)&= \sum_{l=1,L} I_l\,{\cal G}(R,Z;R_l,Z_l),\\[0.5ex]
+A_\phi(R,Z)&= \sum_{l=1,L} I_l\,G(R,Z;R_l,Z_l),\\[0.5ex]
 G(R,Z;R',Z') &= \frac{(-1)^{n+1}\,\sqrt{\pi}\, R\,R'}{4\,\Gamma(n+1/2)}\left[\frac{\cosh\eta}{R^{\,2}+R'^{\,2}+(Z-Z')^2}\right]^{1/2}\nonumber\\[0.5ex]
 \nonumber\\[0.5ex]&\phantom{=}\times
 \left[(n-1/2)\,P_{-1/2}^{\,n-1}(\cosh\eta) + \frac{P_{-1/2}^{\,n+1}(\cosh\eta)}{n+1/2}\right],\\[0.5ex]
@@ -1337,9 +1378,9 @@ interface, (\ref{bc}), is modified to give the following inhomogeneous boundary 
 \frac{Z_m(\epsilon)}{m-n\,q(\epsilon)} = \sum_{m'} H_{mm'}\,[\psi_{m'}(\epsilon)-\psi_{m'}^x(\epsilon)].
 \end{equation}
 
-\subsection{Inhomogeneous Toroidal Tearing-Mode Dispersion Relation}
+\subsection{Inhomogeneous Toroidal Tearing Mode Dispersion Relation}
 The previous boundary condition can be combined with the analysis of Sect.~\ref{disp} to produce the following
-inhomogeneous toroidal tearing-mode dispersion relation:\,\cite{am3,nelson}
+inhomogeneous toroidal tearing mode dispersion relation:\,\cite{am3,nelson}
 \begin{equation}\label{disp1}
 {\mit\Delta\Psi}_k = \sum_{k'=1,K} E_{kk'}\,{\mit\Psi}_{k'} + \chi_k,
 \end{equation}
@@ -1370,14 +1411,14 @@ strongly shielded by plasma rotation,\cite{am3,rfa} so that $|{\mit\Delta}_k|\gg
 
 \section{TJ Code}\label{tj}
 \subsection{Introduction}
-The first computer code that was developed in order to calculate the tearing-mode stability of an aspect-ratio expanded tokamak plasma equilibrium was the
+The first computer code that was developed in order to calculate the tearing mode stability of an aspect-ratio expanded tokamak plasma equilibrium was the
   T3 code (1998). The T3 code solves a set of coupled first-order o.d.e.s associated with  the resonant poloidal harmonics at the various rational surfaces in the plasma, together with their upper and lower sidebands driven by toroidal coupling.\cite{connor} The T3 code was quickly followed by the T7  code (1993), which extends the calculation to describe the coupling of
   poloidal harmonics associated with the elliptic and triangular shaping of up-down-symmetric equilibrium magnetic flux-surfaces, necessitating  seven coupled poloidal harmonics for each rational surface in the plasma.\cite{am1} Unfortunately, both the T3 and T7 codes were formulated incorrectly, causing them to only conserve
   toroidal electromagnetic angular momentum at unrealistically low values of the inverse aspect-ratio. The recently developed TJ code (2024),
   which is an implementation of the analysis of Sects.~\ref{geq}--\ref{rmp} of this paper,  calculates the
   tearing stability of an aspect-ratio expanded tokamak equilibrium with magnetic flux-surfaces of arbitrary shape. Moreover, the code has been formulated in such a
   fashion that it conserves toroidal electromagnetic angular momentum at realistic values of the inverse aspect-ratio. As will become clear in the following discussion, conservation of
-  angular momentum is a vitally important property of a toroidal tearing-mode code. 
+  angular momentum is a vitally important property of a toroidal tearing mode code. 
 
 \subsection{Example Plasma Equilibrium} 
 Let us investigate the stability of an example tokamak equilibrium to $n=1$ tearing modes. 
@@ -1386,7 +1427,7 @@ Let us investigate the stability of an example tokamak equilibrium to $n=1$ tear
 $H_j(1)=V_j(1)=0$ for all $j>3$. (See Sect.~\ref{flux}.) The equilibrium is calculated, according to the method set out in Ref.~\onlinecite{fitz2024}, using the following model pressure and lowest-order (i.e., cylindrical) safety-factor profiles:
 \begin{align}
 p_2(\hat{r})&= 0.1\,(1-\hat{r})^3,\\[0.5ex]
-q_0(\hat{r}) &=\frac{3.15}{1-(1-\hat{r}^2)^{3.5}}.
+q_0(\hat{r}) &=\frac{3.15\,\hat{r}^{\,2}}{1-(1-\hat{r}^{\,2})^{3.5}}.
 \end{align}
 Figure~\ref{f1} shows the $p_2(\hat{r})$ profile, as well as the final safety-factor profile, $q(\hat{r})$. These two functions are used to 
 calculate all of the aspect-ratio expanded quantities described in Sect.~\ref{large}. 
@@ -1406,7 +1447,7 @@ As described in Sect.~\ref{vacxx}, the conservation
  of toroidal electromagnetic angular momentum requires the vacuum response matrix, $H_{m_j m_{j'}}\equiv H_{jj'}$, defined in Eq.~(\ref{ehdef}), to
  be Hermitian. Here, the $m_j$, for $j=0,J$ are the poloidal harmonics included in the calculation. In the present case,
  $J=40$, and the $m_j$ range from $-15$ to $+25$.  (Hence, in accordance with the T3/T7 nomenclature, this
- particular instance of the TJ code could be referred to as the T40 code.) It should be noted that this number of included poloidal harmonics is
+ particular instance of the TJ code could be referred to as the T41 code.) It should be noted that this number of included poloidal harmonics is
  found to be more than sufficient to obtain converged results for the example equilibrium under investigation.
  
   Consider
@@ -1434,7 +1475,7 @@ As described in Sect.~\ref{vacxx}, the conservation
  are shown in Fig.~\ref{f4}.
  
 \subsection{Solution of Outer-Region O.D.E.s}
- As described in Sect.~\ref{axis}, the tearing-mode eigenfunctions are constructed by launching a
+ As described in Sect.~\ref{axis}, the tearing mode eigenfunctions are constructed by launching a
  set of $J+1$ linearly independent, well-behaved solutions of the outer-region o.d.e.s from  the magnetic axis, and then integrating them to the plasma
  boundary. At each rational surface in the plasma, the solutions satisfy   jump conditions  that ensure that the
  coefficients of the large and the small solutions are continuous across the surface. Now,
@@ -1462,7 +1503,7 @@ As described in Sect.~\ref{vacxx}, the conservation
  accurate conservation of angular momentum without unduly slowing down the calculation. (Note that the major results of the code
  exhibit no dependence on $\delta$ when it is this small.) 
  
- The construction of the tearing-mode eigenfunctions also
+ The construction of the tearing mode eigenfunctions also
  requires a set of ``small'' solutions of the outer-region o.d.e.s, launched from each rational surface in the plasma, and  integrated
  to the plasma boundary. (See Sect.~\ref{smalll}.) The launch conditions ensure that the flux of toroidal angular momentum from the rational surface is zero. 
  At each subsequent rational surface in the plasma that the solutions are integrated over, the solutions  satisfy  jump conditions that ensure that the
@@ -1498,8 +1539,8 @@ As described in Sect.~\ref{vacxx}, the conservation
  three criteria. This constitutes an important self-consistency check on the calculation. Incidentally, the T3 and T7 codes fail this
  test badly, except at very small values of the inverse aspect-ratio (i.e., $\epsilon\lessapprox 0.01$).
  
- \subsection{Toroidal Tearing-Mode Stability Matrix}
- As described in Sect.~\ref{disp}, the general homogeneous toroidal tearing-mode dispersion relation 
+ \subsection{Toroidal tearing mode Stability Matrix}
+ As described in Sect.~\ref{disp}, the general homogeneous toroidal tearing mode dispersion relation 
  can be written 
  \begin{equation}\label{e337}
 \sum_{k'=1,4}({\mit\Delta}_k\,\delta_{kk'}-E_{kk'})\,{\mit\Psi}_{k'} = 0
@@ -1508,7 +1549,7 @@ for $k=1,4$.
 Here, $k$ indexes the  four $n=1$ rational surfaces in the plasma: namely, the $m=1/n=1$, $m=2/n=1$, $m=3/n=1$, and $m=4/n=1$ surfaces.
 Moreover, ${\mit\Delta}_k$ is the complex inner-region layer response
 index at the $k$th rational surface,\cite{am1} whereas ${\mit\Psi}_k$ is the reconnected helical magnetic flux at the surface. Finally, $E_{kk'}$ is the toroidal
-tearing-mode stability matrix.\cite{cht,am1} As discussed in Sect.~\ref{etor}, the $E_{kk'}$ matrix must be Hermitian, otherwise an 
+tearing mode stability matrix.\cite{cht,am1} As discussed in Sect.~\ref{etor}, the $E_{kk'}$ matrix must be Hermitian, otherwise an 
 isolated tokamak plasma would be able to exert a net toroidal electromagnetic torque on itself, which is unphysical. 
 
  Table~\ref{t1} shows the toroidal tearing mode matrix calculated for the example equilibrium. It can be seen that the
@@ -1518,7 +1559,7 @@ calculation.
 Now, the ${\mit\Delta}_k$ indices are functions of the angular phase-velocity, $\omega$,  of the tearing mode.\cite{am1,rfa} Tokamak plasmas
 generally contain sufficient levels of sheared plasma rotation to ensure that if $\omega$ is chosen in such a manner as
 to make ${\mit\Delta}_k\sim {\cal O}(1)$  
-at the $k$th rational surface then $|{\mit\Delta}|_{k'\neq k}\gg 1$ at the other rational surfaces.\cite{am1,rfbook} Under these circumstances the dispersion
+at the $k$th rational surface then $|{\mit\Delta}_{k'\neq k}|\gg 1$ at the other rational surfaces.\cite{am1,rfbook} Under these circumstances the dispersion
 relation (\ref{e337}) yields
 \begin{equation}
 \frac{{\mit\Psi}_{k'}}{{\mit\Psi}_k}\simeq 
@@ -1576,21 +1617,21 @@ Again,
 this constitutes a tremendous simplification. 
   
 \section{Summary}\label{sum}
-In Sects.~\ref{geq}--\ref{rmp}, the tearing-mode stability of an inverse aspect-ratio expanded tokamak plasma equilibrium  with magnetic flux-surfaces of general 
+In Sects.~\ref{geq}--\ref{rmp}, the tearing mode stability of an inverse aspect-ratio expanded tokamak plasma equilibrium  with magnetic flux-surfaces of general 
 shape is investigated using asymptotic matching techniques. The crucial role played by the conservation of
 toroidal electromagnetic angular momentum is emphasized throughout the investigation. Note that the inverse aspect-ratio
 expansion is only introduced in Sect.~\ref{large}. So, all of the analysis prior to this section is completely general. 
 
 The TJ code,
 which is a specific implementation of the analysis of Sects.~\ref{geq}--\ref{rmp}, is described in Sect.~\ref{tj}. This code, which is
-freely available at {\tt https://github.com/rfitzp/TJ}, represents a significant improvement on the previous T3\,\cite{connor} and T7\,\cite{am1} inverse aspect-ratio expanded toroidal tearing-mode
+freely available at {\tt https://github.com/rfitzp/TJ}, represents a significant improvement on the previous T3\,\cite{connor} and T7\,\cite{am1} inverse aspect-ratio expanded toroidal tearing mode
 codes, because it is constructed in such a manner as to strictly conserve toroidal electromagnetic
 angular momentum. In fact, as described in Sect.~\ref{tj}, the requirement of angular momentum conservation leads to a large number of
 stringent self-consistency checks that the TJ code must pass in order for its results to be credible. Fortunately, the TJ code passes all of these
 checks for the example calculation presented in this paper. 
 Unlike the T3 and T7 codes, the TJ code can deal with equilibrium magnetic flux-surfaces of arbitrary shape, and, in particular, 
-is not restricted to up-down-symmetric  plasma equilibria. Furthermore, unlike the much more general  PEST-3,\,\cite{pletz1} RDCON,\cite{aglas2} and STRIDE\,\cite{aglas1} toroidal
-tearing-mode codes, the TJ code is comparatively lightweight (there are only about 7000 lines of code), and can easily be run on a laptop computer. Thus, the TJ code is ideal for
+is not restricted to up-down-symmetric  plasma equilibria. Furthermore, unlike the much more general  PEST-III,\,\cite{pletz1} RDCON,\cite{aglas2} and STRIDE\,\cite{aglas1} toroidal
+tearing mode codes, the TJ code is comparatively lightweight (there are only about 7000 lines of code), and can easily be run on a laptop computer. Thus, the TJ code is ideal for
 optimization studies. 
 
 \section*{Acknowledgements}
@@ -1643,7 +1684,7 @@ where ${\bf C}({\bf r})$ is a general vector field.
 
 \bibitem{fkr} H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).
 
-\bibitem{con0} J.W.~Connor and R.J.~Hastie, {\em The Effect of Shaped Plasma Cross Sections on the Ideal Kink Mode in a Tokamak}. (Rep. CLM-M106, Culham Laboratory, Abingdon UK, 1985)
+\bibitem{con0} J.W.~Connor and R.J.~Hastie, {\em The Effect of Shaped Plasma Cross Sections on the Ideal Kink Mode in a Tokamak}\/ (Rep. CLM-M106, Culham Laboratory, Abingdon UK, 1985).
 
 \bibitem{cht} J.W.~Connor, R.J.~Hastie and J.B.~Taylor, Phys.\ Fluids B {\bf 3}, 1539 (1991).
 
@@ -1656,6 +1697,8 @@ where ${\bf C}({\bf r})$ is a general vector field.
 \bibitem{pletz1}  A.~Pletzer, A.~Bondeson and R.L.~Dewar, J.\ Comput.\ Phys.\ {\bf 115}, 530 (1994).
 
 \bibitem{nish} Y.~Nishimura, J.D.~Callen and C.C.~Hegna, Phys.\ Plasmas {\bf 5}, 4292 (1998).
+
+\bibitem{gal} S.A.~Galkin, A.D.~Turnbull, J.M.~Greene and M.S.~Chu, Phys.\ Plasmas {\bf 7}, 4070 (2000). 
 
 \bibitem{tokuda} S.~Tokuda, Nucl.\ Fusion {\bf 41}, 1037 (2001).
 
@@ -1679,13 +1722,15 @@ where ${\bf C}({\bf r})$ is a general vector field.
 
 \bibitem{greene} J.M.~Greene, J.L.~Johnson and K.E.~Weimer,  Phys.\  Fluids  {\bf 14}, 671 (1971).
 
+\bibitem{gim} R.~Fitzpatrick, C.G.~Gimblett and R.J.~Hastie, Plasma Phys.\ Control.\ Fusion {\bf 34}, 161 (1992). 
+
 \bibitem{chance} M.S.~Chance, Phys.\ Plasmas {\bf 4}, 2161 (1997).
 
 \bibitem{xu} T.~Xu and R.~Fitzpatrick, Nucl.\ Fusion {\bf 59}, 064002 (2019).
 
 \bibitem{bussac} M.N.~Bussac, R.~Pellat, D.~Edery and J.L.~Soule, Phys.\ Rev.\ Lett.\ {\bf 35}, 1638 (1975).
 
-\bibitem{gs1} J.P.~Freidberg, {\em Ideal Magnetohydrodynamics}. (Plenum, New York NY, 1987.)
+\bibitem{gs1} J.P.~Freidberg, {\em Ideal Magnetohydrodynamics}\/ (Plenum, New York NY, 1987).
 
 \bibitem{flow} R.~Iacono, A.~Bondeson, F.~Troyon and R.~Gruber, Phys.\ Fluids B {\bf 2}, 1794 (1990).
 
@@ -1699,21 +1744,19 @@ where ${\bf C}({\bf r})$ is a general vector field.
 
 \bibitem{twist} R. Fitzpatrick, Phys.\ Plasmas {\bf 1}, 3308 (1994).
 
-\bibitem{morse} P.M.~Morse and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1301. (McGraw-Hill, New York NY, 1953)
+\bibitem{morse} P.M.~Morse and H.~Feshbach, {\em Methods of Theoretical Physics}\/ (McGraw-Hill, New York NY, 1953), p.~1301.
 
-\bibitem{morse1} P.M.~Morse and H.~Feshbach, {\em Methods of Theoretical Physics}, p.~1302. (McGraw-Hill, New York NY, 1953)
+\bibitem{morse1} P.M.~Morse and H.~Feshbach, {\em Methods of Theoretical Physics}\/ (McGraw-Hill, New York NY, 1953), p.~1302.
 
-\bibitem{abrama} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}, sect.~8.11. (Dover, New York NY, 1964)
+\bibitem{abrama} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}\/ (Dover, New York NY, 1964), sect.~8.11.
 
-\bibitem{abramb} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}, ch.~6. (Dover, New York NY, 1964)
+\bibitem{abramb} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}\/ (Dover, New York NY, 1964), ch.~6.
 
-\bibitem{gim} R.~Fitzpatrick, C.G.~Gimblett and R.J.~Hastie, Plasma Phys.\ Control.\ Fusion {\bf 34}, 161 (1992). 
+\bibitem{fitz2024} R.~Fitzpatrick, {\em Inverse Aspect-Ratio Expanded Tokamak Equilibria}, to appear in  Physics of Plasmas (2024).
 
-\bibitem{fitz2024} R.~Fitzpatrick, {\em Inverse Aspect-Ratio Expanded Tokamak Equilibria}, submitted to Physics of Plasmas (2024).
+\bibitem{shaf}  V.D.~Shafranov, Sov.\ At.\ Energ.\  {\bf 13}, 1149 (1963).
 
-\bibitem{shaf} V.D.~Shafranov, Atomnaya \'{E}nergiya {\bf 3}, 521  (1962).
-
-\bibitem{rfbook} R.~Fitzpatrick, {\em Tearing Mode Dynamics in Tokamak Plasmas}. (IOP, Bristol UK,  2023)
+\bibitem{rfbook} R.~Fitzpatrick, {\em Tearing Mode Dynamics in Tokamak Plasmas} (IOP, Bristol UK,  2023).
 
 \bibitem{layer} R.~Fitzpatrick, Phys.\ Plasmas {\bf 5}, 3325 (1998).
 
@@ -1721,8 +1764,8 @@ where ${\bf C}({\bf r})$ is a general vector field.
 
 \bibitem{nelson} R. Fitzpatrick and A.O. Nelson, Phys.\ Plasmas {\bf 27}, 072501 (2020).
 
-\bibitem{press} W.H.~Press, S.A.~Teukolsky, W.T.~Vetterling and B.P.~Flannery, {\em Numerical Recipes in C}, 2nd ed., sect.~16.2.
-(Cambridge University Press, Cambridge UK, 1992)
+\bibitem{press} W.H.~Press, S.A.~Teukolsky, W.T.~Vetterling and B.P.~Flannery, {\em Numerical Recipes in C}, 2nd ed.\
+(Cambridge University Press, Cambridge UK, 1992), sect.~16.2.
 
 \bibitem{mhde} I.B.~Bernstein, E.A.~Frieman, M.D.~Kruskal and R.M.~Kulsrud, Proc.\ R.\ Soc.\ London Ser.\ A {\bf 244}, 17 (1958).
 
@@ -1744,7 +1787,7 @@ $-3.801\times 10^{-2}$& $-9.925\times 10^{-2}$& $-1.607\times 10^{-8}$&  $+2.811
  $+9.713\times 10^{-2}$& $-2.826\times 10^{-1}$& $-2.811\times 10^{-1}$ &$-1.146\times 10^{-8}$
 \\\hline
 \end{tabular}
-\caption{$n=1$ toroidal tearing-mode stability matrix for the example tokamak equilibrium specified in Figs.~\ref{f1} and \ref{f2}. }\label{t1}
+\caption{$n=1$ toroidal tearing mode stability matrix for the example tokamak equilibrium specified in Figs.~\ref{f1} and \ref{f2}. }\label{t1}
 \end{table}
 
 \begin{table}
