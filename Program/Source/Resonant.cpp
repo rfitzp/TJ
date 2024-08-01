@@ -512,6 +512,7 @@ void TJ::JumpRational (int jres, double& r, Array<complex<double>,2> YY)
 	      ck [k] = complex<double> (0., 0.);
 	      c1k[k] = complex<double> (0., 0.);
 	      c2k[k] = complex<double> (0., 0.);
+
 	      dk [k] = complex<double> (0., 0.);
 	      d1k[k] = complex<double> (0., 0.);
 	      d2k[k] = complex<double> (0., 0.);
@@ -594,6 +595,7 @@ void TJ::JumpRational (int jres, double& r, Array<complex<double>,2> YY)
 		      Pbar1[k] = - (rm /mm /sm) * (- Lmat(k, km) * BD + Mmat(k, km) * (AC - 2.*AD));
 		      Zbar1[k] = - (mm * sm /(mpol[k] - mm)) * Zbar[k]
 			- (rm /mm /sm) * (- Nmat(k, km) * BD + Pmat(k, km) * (AC - 2.*AD));
+
 		      Pbar2[k] = - (rm /mm /sm) * (Lmat(k, km) * BD + Mmat(k, km) * AD);
 		      Zbar2[k] = - (rm /mm /sm) * (Nmat(k, km) * BD + Pmat(k, km) * AD);
 
@@ -610,6 +612,7 @@ void TJ::JumpRational (int jres, double& r, Array<complex<double>,2> YY)
 
 		       Pbar1[k] /= rm;
 		       Zbar1[k] /= rm;
+
 		       Pbar2[k] /= rm;
 		       Zbar2[k] /= rm;
 		    }
@@ -617,6 +620,7 @@ void TJ::JumpRational (int jres, double& r, Array<complex<double>,2> YY)
 		    {
 		      Pbar1[k] = complex<double> (0., 0.);
 		      Zbar1[k] = complex<double> (0., 0.);
+
 		      Pbar2[k] = complex<double> (0., 0.);
 		      Zbar2[k] = complex<double> (0., 0.);
 		    }
