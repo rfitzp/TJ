@@ -125,38 +125,43 @@ void TJ::ReadEquilibrium ()
 // ##############################
 void TJ::ReadCoils ()
 {
-  // ............................................
-  // Read shaping data from file Inputs/Coils.txt
-  // ............................................
-  FILE* file = OpenFiler ("Inputs/Coils.txt");
+  // ..........................................
+  // Read shaping data from file Inputs/TJ.json
+  // ..........................................
+  string         JSONFilename = "Inputs/TJ.json";
+  json           JSONData     = ReadJSONFile (JSONFilename);
+  vector<double> rcoil, zcoil, icoil;
+
+  for (const auto& number : JSONData["TJ_control"]["Rcoil"])
+    {
+      rcoil.push_back (number.get<double> ());
+    }
+  for (const auto& number : JSONData["TJ_control"]["Zcoil"])
+    {
+      zcoil.push_back (number.get<double> ());
+    }
+  for (const auto& number : JSONData["TJ_control"]["Icoil"])
+    {
+      icoil.push_back (number.get<double> ());
+    }
+
+  if (rcoil.size() != zcoil.size() || zcoil.size() != icoil.size())
+    {
+      printf ("TJ:: Error reading Rcoil, Zcoil, and Icoil arrays must be same size\n");
+      exit (1);
+    }
+  ncoil = rcoil.size();
   
-  if (fscanf (file, "%d", &ncoil) != 1)
-    {
-      printf ("TJ:: Error reading Coils.txt\n");
-      exit (1);
-    }
-  if (ncoil < 0)
-    {
-      printf ("TJ:: ncoil cannot be negative\n");
-      exit (1);
-    }
   Rcoil = new double[ncoil];
   Zcoil = new double[ncoil];
   Icoil = new double[ncoil];
   
   for (int i = 0; i < ncoil; i++)
     {
-      double rval, zval, ival;
-      if (fscanf (file, "%lf %lf %lf", &rval, &zval, &ival) != 3)
-	{
-	  printf ("TJ:: Error reading Coils.txt\n");
-	  exit (1);
-	}
-      Rcoil[i] = rval;
-      Zcoil[i] = zval;
-      Icoil[i] = ival;
+      Rcoil[i] = rcoil[i];
+      Zcoil[i] = zcoil[i];
+      Icoil[i] = icoil[i];
      }
-  fclose (file);
 
   printf ("RMP coil data:\n");
   for (int i = 0; i < ncoil; i++)

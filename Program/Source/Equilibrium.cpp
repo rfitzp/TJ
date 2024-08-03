@@ -54,12 +54,35 @@ Equilibrium::Equilibrium ()
   bb64 = 44275./110592.;
   bb65 =   253./4096.;
 
-  // -----------------------------------------
-  // Read namelist file Inputs/Equilibrium.nml
-  // -----------------------------------------
-  NameListEquilibrium (&qc, &nu, &pc, &mu, &epsa,
-		       &eps, &Ns, &Nr, &Nf, &Nw, 
-		       &acc, &h0, &hmin, &hmax);
+  // --------------------------------------
+  // Read control parameters from JSON file
+  // --------------------------------------
+  string JSONFilename = "Inputs/TJ.json";
+  json   JSONData     = ReadJSONFile (JSONFilename);
+
+  qc   = JSONData["Equilibrium_control"]["qc"]  .get<double> ();
+  nu   = JSONData["Equilibrium_control"]["nu"]  .get<double> ();
+  pc   = JSONData["Equilibrium_control"]["pc"]  .get<double> ();
+  mu   = JSONData["Equilibrium_control"]["mu"]  .get<double> ();
+  epsa = JSONData["Equilibrium_control"]["epsa"].get<double> ();
+  eps  = JSONData["Equilibrium_control"]["eps"] .get<double> ();
+  Ns   = JSONData["Equilibrium_control"]["Ns"]  .get<int> ();
+  Nr   = JSONData["Equilibrium_control"]["Nr"]  .get<int> ();
+  Nf   = JSONData["Equilibrium_control"]["Nf"]  .get<int> ();
+  Nw   = JSONData["Equilibrium_control"]["Nw"]  .get<int> ();
+  acc  = JSONData["Equilibrium_control"]["acc"] .get<double> ();
+  h0   = JSONData["Equilibrium_control"]["h0"]  .get<double> ();
+  hmin = JSONData["Equilibrium_control"]["hmin"].get<double> ();
+  hmax = JSONData["Equilibrium_control"]["hmax"].get<double> ();
+
+  for (const auto& number : JSONData["Equilibrium_control"]["Hna"])
+    {
+      Hna.push_back (number.get<double> ());
+    }
+  for (const auto& number : JSONData["Equilibrium_control"]["Vna"])
+    {
+      Vna.push_back (number.get<double> ());
+    }
 
   // ------------
   // Sanity check
@@ -137,6 +160,11 @@ Equilibrium::Equilibrium ()
   if (hmax < hmin)
     {
       printf ("Equilibrium:: Error - hmax must exceed hmin\n");
+      exit (1);
+    }
+  if (Hna.size() != Vna.size())
+    {
+      printf ("Equilibrium:: Error - Hna and Van arrays must be the same size\n");
       exit (1);
     }
  }
@@ -339,37 +367,18 @@ void Equilibrium::Solve ()
 
   delete[] y; delete[] err;
 
-  // ............................................
-  // Read shaping data from file Inputs/Shape.txt
-  // ............................................
-  int    nshape;
-  double hnax, vnax;
-  FILE*  file = OpenFiler ("Inputs/Shape.txt");
-  
-  if (fscanf (file, "%d", &nshape) != 1)
-    {
-      printf ("Equilibrium:: Error reading Shape.txt\n");
-      exit (1);
-    }
-  if (nshape < 0)
-    {
-      printf ("Equilibrium:: nshape cannot be negative\n");
-      exit (1);
-    }
-  double* hna = new double[nshape+2];
-  double* vna = new double[nshape+2];
+  // .....................
+  // Set edge shaping data
+  // .....................
+  int     nshape = Hna.size();
+  double* hna    = new double[nshape+2];
+  double* vna    = new double[nshape+2];
 
   for (int i = 0; i < nshape; i++)
     {
-      if (fscanf (file, "%lf %lf", &hnax, &vnax) != 2)
-	{
-	  printf ("Equilibrium:: Error reading Shape.txt\n");
-	  exit (1);
-	}
-      hna[i+2] = hnax;
-      vna[i+2] = vnax;
+      hna[i+2] = Hna[i];
+      vna[i+2] = Vna[i];
      }
-  fclose (file);
 
   if (nshape > Ns)
     nshape = Ns;
@@ -1658,6 +1667,36 @@ void Equilibrium::CashKarp45Fixed (int neqns, double& x, double* y, double* err,
   x += h;
 
   delete[] dydx; delete[] k1; delete[] k2; delete[] k3; delete[] k4; delete[] k5; delete[] k6; delete[] f;
+}
+
+// ##########################
+// Function to read JSON file
+// ##########################
+json Equilibrium::ReadJSONFile (const string& filename)
+{
+  ifstream JSONFile (filename);
+  json     JSONData;
+
+  if (JSONFile.is_open ())
+    {
+      try
+	{
+	  JSONFile >> JSONData;
+        }
+      catch (json::parse_error& e)
+	{
+	  cerr << "Unable to parse JSON file: " << e.what() << endl;
+	  exit (1);
+        }
+      JSONFile.close ();
+    }
+  else
+    {
+      cerr << "Unable to open JSON file: " << filename << endl;
+      exit (1);
+    }
+
+  return JSONData;
 }
 
 // #####################################

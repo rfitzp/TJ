@@ -13,21 +13,18 @@
 // Program assumes monotonic safety-factor profile.
 
 // Inputs:
-//  Inputs/Namelist.nml - namelist
-//  Inputs/Coils.txt - ncoil (i.e. no of subsequent lines to be read)
-//                     Rcoil[0]  Zcoil[0]  Icoil[0]
-//                     Rcoil[1]  Zcoil[1]  Icoil[1]
-//                     etc.
+//  Inputs/TJ.json.nml - JSON file
 
 // Outputs:
 //  Plots/TJ.nc
 
-// Plots:
+// Ploting scripts:
 //  Plots/*.py
 
 // Class uses following external libraries:
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
 //  GNU scientific library (https://www.gnu.org/software/gsl)
+//  nclohmann JSON library (https://github.com/nlohmann/json)
 //  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
 //  Armadillo library      (https://arma.sourceforge.net)
 
@@ -51,14 +48,19 @@
 #include <unistd.h>
 #include <math.h>
 #include <time.h>
+#include <vector>
+#include <iostream>
+#include <fstream>
 
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
 #include <gsl/gsl_sf_gamma.h>
+#include <nlohmann/json.hpp>
 #include <netcdf>
 #include <armadillo>
 
 using namespace blitz;
+using           json = nlohmann::json;
 using namespace netCDF;
 using namespace netCDF::exceptions;
 using namespace arma;
@@ -79,39 +81,39 @@ class TJ
   // ----------------------
   // Calculation parameters
   // ----------------------
-  int    NTOR;    // Toroidal mode number (read from namelist)
+  int    NTOR;    // Toroidal mode number (read from JSON file)
+  int    MMIN;    // Minimum poloidal mode number included in calculation (read from JSON file)
+  int    MMAX;    // Maximum poloidal mode number included in calculation (read from JSON file)
 
-  int    MMIN;    // Minimum poloidal mode number included in calculation (read from namelist)
-  int    MMAX;    // Maximum poloidal mode number included in calculation (read from namelist)
-  double EPS;     // Solutions launched from magnetic axis at r = EPS (read from namelist)
-  double DEL;     // Distance of closest approach to rational surface is DEL (read from namelist)
-  int    NFIX;    // Number of fixups performed (read from namelist)
-  int    NDIAG;   // Number of radial grid-points for diagnostics (read from namelist)
-  double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from namelist)
-  int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from namelist)
-  int    FREE;    // Flag for free/fixed boundary calculation (read from namelist)
+  double EPS;     // Solutions launched from magnetic axis at r = EPS (read from JSON file)
+  double DEL;     // Distance of closest approach to rational surface is DEL (read from JSON file)
+  int    NFIX;    // Number of fixups performed (read from JSON file)
+  int    NDIAG;   // Number of radial grid-points for diagnostics (read from JSON file)
+  double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from JSON file)
+  int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from JSON file)
+  int    FREE;    // Flag for free/fixed boundary calculation (read from JSON file)
 
   double EPSF;    // Step-length for finite difference determination of derivative
 
   // ----------------------------
   // Layer calculation parameters
   // ----------------------------
-  double B0;      // On-axis toroidal magnetic field-strength (T) (read from namelist)
-  double R0;      // Plasma minor radius (m) (read from namelist)
-  double n0;      // On-axis electron number density (m^-3) (read from namelist)
-  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from namelist)
-  double Zeff;    // Effective ion charge number (read from namelist)
-  double Mion;    // Ion charge number (read from namelist)
-  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from namelist)
+  double B0;      // On-axis toroidal magnetic field-strength (T) (read from JSON file)
+  double R0;      // Plasma minor radius (m) (read from JSON file)
+  double n0;      // On-axis electron number density (m^-3) (read from JSON file)
+  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from JSON file)
+  double Zeff;    // Effective ion charge number (read from JSON file)
+  double Mion;    // Ion charge number (read from JSON file)
+  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from JSON file)
   double apol;    // Plasma minor radius (m)
 
   // -------------------------------
   // Adaptive integration parameters
   // -------------------------------
-  double acc;     // Integration accuracy (read from namelist)
-  double h0;      // Initial step-length (read from namelist)
-  double hmin;    // Minimum step-length (read from namelist)
-  double hmax;    // Maximum step-length (read from namelist)
+  double acc;     // Integration accuracy (read from JSON file)
+  double h0;      // Initial step-length (read from JSON file)
+  double hmin;    // Minimum step-length (read from JSON file)
+  double hmax;    // Maximum step-length (read from JSON file)
   int    maxrept; // Maximum number of step recalculations
   int    flag;    // Integration error calcualation flag
   
@@ -194,10 +196,10 @@ class TJ
   // -------------
   // RMP coil data
   // -------------
-  int              ncoil;     // Number of toroidal strands that make up RMP coils
-  double*          Rcoil;     // R coodinates of strands
-  double*          Zcoil;     // Z coodinates of strands
-  double*          Icoil;     // Toroidal currents flowing in strands
+  int              ncoil;     // Number of toroidal strands that make up RMP coils 
+  double*          Rcoil;     // R coodinates of strands (read from JSON file)
+  double*          Zcoil;     // Z coodinates of strands (read from JSON file)
+  double*          Icoil;     // Toroidal currents flowing in strands (read from JSON file)
   complex<double>* Psix;      // RMP perturbation at plasma boundary
   complex<double>* Xi;        // RMP response vector
   complex<double>* Upsilon;   // RMP response vector
@@ -359,14 +361,16 @@ class TJ
   void SetModeNumbers ();
   // Deallocate memory
   void CleanUp ();
+  // Read JSON file
+  json ReadJSONFile (const string& filename);
   // Open new file for writing
   FILE* OpenFilew (char* filename);
   // Open file for reading
   FILE* OpenFiler (char* filename);
 
-  // ..................
-  // In Equilibrium.cpp
-  // ..................
+  // ......................
+  // In ReadEquilibrium.cpp
+  // ......................
 
   // Read equilibrium data from Inputs/Equilibrium.nc
   void ReadEquilibrium ();

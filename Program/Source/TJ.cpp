@@ -60,13 +60,34 @@ TJ::TJ ()
   bb64 = 44275./110592.;
   bb65 =   253./4096.;
 
-  // --------------------------------
-  // Read namelist file Inputs/TJ.nml
-  // --------------------------------
-  NameListTJ (&NTOR, &MMIN, &MMAX, 
-	      &EPS, &DEL, &NFIX, &NDIAG, &NULC, &ITERMAX, &FREE, 
-	      &acc, &h0, &hmin, &hmax, &EPSF,
-	      &B0, &R0, &n0, &alpha, &Zeff, &Mion, &Chip);
+  // --------------------------------------
+  // Read control parameters from JSON file
+  // --------------------------------------
+  string JSONFilename = "Inputs/TJ.json";
+  json   JSONData     = ReadJSONFile (JSONFilename);
+
+  NTOR    = JSONData["TJ_control"]["NTOR"]   .get<int> ();
+  MMIN    = JSONData["TJ_control"]["MMIN"]   .get<int> ();
+  MMAX    = JSONData["TJ_control"]["MMAX"]   .get<int> ();
+  EPS     = JSONData["TJ_control"]["EPS"]    .get<double> ();
+  DEL     = JSONData["TJ_control"]["DEL"]    .get<double> ();
+  NFIX    = JSONData["TJ_control"]["NFIX"]   .get<int> ();
+  NDIAG   = JSONData["TJ_control"]["NDIAG"]  .get<int> ();
+  NULC    = JSONData["TJ_control"]["NULC"]   .get<double> ();
+  ITERMAX = JSONData["TJ_control"]["ITERMAX"].get<int> ();
+  FREE    = JSONData["TJ_control"]["FREE"]   .get<int> ();
+  acc     = JSONData["TJ_control"]["acc"]    .get<double> ();
+  h0      = JSONData["TJ_control"]["h0"]     .get<double> ();
+  hmin    = JSONData["TJ_control"]["hmin"]   .get<double> ();
+  hmax    = JSONData["TJ_control"]["hmax"]   .get<double> ();
+  EPSF    = JSONData["TJ_control"]["EPSF"]   .get<double> ();
+  B0      = JSONData["TJ_control"]["B0"]     .get<double> ();
+  R0      = JSONData["TJ_control"]["R0"]     .get<double> ();
+  n0      = JSONData["TJ_control"]["n0"]     .get<double> ();
+  alpha   = JSONData["TJ_control"]["alpha"]  .get<double> ();
+  Zeff    = JSONData["TJ_control"]["Zeff"]   .get<double> ();
+  Mion    = JSONData["TJ_control"]["Mion"]   .get<double> ();
+  Chip    = JSONData["TJ_control"]["Chip"]   .get<double> ();
 
   // ............
   // Sanity check
@@ -334,7 +355,37 @@ void TJ::CleanUp ()
 
   delete[] rf;
 }  
- 
+
+// ##########################
+// Function to read JSON file
+// ##########################
+json TJ::ReadJSONFile (const string& filename)
+{
+  ifstream JSONFile (filename);
+  json     JSONData;
+
+  if (JSONFile.is_open ())
+    {
+      try
+	{
+	  JSONFile >> JSONData;
+        }
+      catch (json::parse_error& e)
+	{
+	  cerr << "Unable to parse JSON file: " << e.what() << endl;
+	  exit (1);
+        }
+      JSONFile.close ();
+    }
+  else
+    {
+      cerr << "Unable to open JSON file: " << filename << endl;
+      exit (1);
+    }
+
+  return JSONData;
+}
+
 // #####################################
 // Function to open new file for writing
 // #####################################
