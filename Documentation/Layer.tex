@@ -1,0 +1,430 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage {amsmath}
+\usepackage{amssymb}
+\pdfoutput = 1 
+\usepackage {graphicx}
+\newcommand{\bomega}{\mbox{\boldmath$\omega$}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\title{Solution of Layer Equations}
+\author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies,  Department of Physics,  University of Texas at Austin,  Austin TX 78712, USA}\begin{abstract}
+\end{abstract}
+\maketitle
+
+\section{Derivation of Layer Equations}
+\subsection{Outer Region}
+Let $r$, $\theta$, $\varphi$ be right-handed cylindrical coordinates. 
+Throughout the bulk of the plasma, 
+ the perturbed magnetic field   can be written\,\cite{err1,book}
+\begin{align}
+\delta B_r &= {\rm i}\,\frac{m}{r}\,\delta\psi,\label{e1}\\[0.5ex]
+\delta B_\theta &= -\frac{\partial\delta \psi}{\partial r},\\[0.5ex]
+\delta B_\varphi&\simeq 0,\label{e5}
+\end{align}
+where 
+\begin{equation}\label{e2}
+\delta\psi(r,\zeta,t) = \psi_1(r,t)\,{\rm e}^{\,{\rm i}\,\zeta},
+\end{equation}
+and $\zeta=m\,\theta-n\,\varphi$. Here, $m$ and $n$ are poloidal and toroidal mode numbers, respectively. 
+
+\subsection{Inner Region}
+The {\em rational surface}\/ lies at radius $r_s$, where $q(r_s)=m/n$, and $q(r)$
+is the {\em safety-factor}\/ profile. The inner region is a thin (in $r$) layer centered on the rational surface. 
+The inner region is assumed to be governed by the  four-field model described in Ref.~\onlinecite{err3}. This
+model is an extension of a model introduced in Ref.~\onlinecite{err2}, and is ultimately based on the four-field model of Hazeltine, et alia.\cite{hkm}
+
+\subsection{Useful Definitions}
+The plasma is assumed to consist of two species. First, electrons of mass $m_e$, electrical charge $-e$, 
+number density $n_e$, and temperature $T_e$.  Second, ions of mass $m_i$, electrical charge $+e$,  
+number density $n_e$, and temperature $T_i$. Let $p=n_e\,(T_e+T_i)$ be the total plasma pressure. 
+
+It is helpful to define $n_0 = n_e(r_s)$, $p_0= p(r_s)$,
+\begin{align}
+\eta_e &=\left.\frac{d\ln T_e}{d\ln n_e}\right|_{r=r_s},\label{e211}\\[0.5ex]
+\eta_i &= \left.\frac{d\ln T_i}{d\ln n_e}\right|_{r=r_s},\\[0.5ex]
+\iota &= \left(\frac{T_e}{T_i}\right)_{r=r_s}\left(\frac{1+\eta_e}{1+\eta_i}\right),\label{e213}
+\end{align}
+where $n_e(r)$, $p(r)$, $T_e(r)$, and $T_i(r)$ refer to
+density, pressure, and temperature profiles that are unperturbed by the magnetic perturbation. Note that $\iota$ is the ratio of the
+electron to the ion pressure gradient at the rational surface.
+
+For the sake of simplicity, the perturbed electron and ion temperature profiles are assumed to be functions of
+the perturbed electron number density profile in the immediate vicinity of the rational surface. In other words, $T_e=T_e(n_e)$ and $T_i=T_i(n_e)$. This
+implies that $p=p(n_e)$. 
+The  MHD velocity, which is the velocity of a
+fictional MHD fluid, is defined as ${\bf V}={\bf V}_E + V_{\parallel\,i}\,{\bf b}$, where ${\bf V}_E$ is the
+E-cross-B drift velocity, $V_{\parallel\,i}$ is the parallel component of the ion fluid
+velocity, and ${\bf b}= {\bf B}/|{\bf B}|$. Here, ${\bf B}= [0,\, B_\theta(r),\,B_\varphi]$ is the equilibrium magnetic field. Note
+that $q(r)=r\,B_\varphi/[R_0\,B_\theta(r)]$, where $R_0$ is the plasma minor radius. 
+
+\subsection{Dimensionless Fields}
+The four  dimensionless fields in the four-field model---namely, $\psi$, $\phi$, $N$, and $V$---have the following
+definitions:
+\begin{align}\label{e10}
+\nabla\psi &= \frac{{\bf n}\times{\bf B}} {r_s\,B_\varphi},\\[0.5ex]
+\nabla\phi &= \frac{{\bf n}\times {\bf V}}{r_s\,V_A},\label{e40a}\\[0.5ex]
+N &=-\hat{d}_i\left(\frac{p-p_0}{B_\varphi^{\,2}/\mu_0}\right),\\[0.5ex]
+V &= \hat{d}_i\left(\frac{{\bf n}\cdot {\bf V}}{V_A}\right).\label{e13}
+\end{align}
+Here,   ${\bf n} = (0,\,\epsilon/q_s,\,1)$, $\epsilon = r/R_0$, $q_s=m/n$, 
+$V_A =B_\varphi/\sqrt{\mu_0\,n_0\,m_i}$ is the {\em Alfv\'{e}n speed}, 
+$d_i = \sqrt{m_i/(n_0\,e^{\,2}\,\mu_0)}$ is the {\em collisionless ion skin-depth},
+and $\hat{d}_i=d_i/r_s$. 
+ Our
+model also employs the auxiliary dimensionless  field
+\begin{align}\label{e16}
+J=-\frac{2\,\epsilon_s}{q_s}+\hat{\nabla}^2\psi,
+\end{align}
+where 
+$\epsilon_s=r_s/R_0$, and $\hat{\nabla} = r_s\,\nabla$. Note that 
+\begin{equation}\label{e44}
+\psi(r,\zeta,t) = \frac{\psi_0(r)+ \psi_1(r,t)\,{\rm e}^{\,{\rm i}\,\zeta}}{r_s\,B_\varphi},
+\end{equation}
+where
+\begin{equation}\label{e45}
+\psi_0(r) = \frac{B_\varphi}{R_0}\int_{r_s}^r r'\left[\frac{n}{m}-\frac{1}{q(r')}\right]dr',
+\end{equation}
+and $\psi_1(r,t)$ is defined in Eqs.~(\ref{e1})--(\ref{e2}). 
+
+\subsection{Four-Field Model}
+Our four-field model takes the form:\cite{book,fw,err2,err3}
+\begin{align}
+\frac{\partial\psi}{\partial\hat{t}}&= [\phi,\psi] -\iota_e\,[N,\psi]
++\hat{\eta}_\parallel\,J + \hat{E}_\parallel,\label{e16a}\\[0.5ex]
+\frac{\partial \hat{\nabla}^2\phi}{\partial \hat{t}}&= [\phi,\hat{\nabla}^2\phi] - \frac{\iota_i}{2}\left(\hat{\nabla}^2[\phi,N] + [\hat{\nabla}^2\phi,N] + [\hat{\nabla}^2 N,\phi]\right) + [J,\psi] \nonumber\\[0.5ex]&\phantom{=}+\hat{\chi}_\varphi  \,\hat{\nabla}^4\!\left(\phi + \iota_i\,N\right), \\[0.5ex]
+\frac{\partial N}{\partial \hat{t}}&= [\phi,N] +c_\beta^{\,2}\,[V,\psi] +\hat{d}_\beta^{\,2}\,[J,\psi]
++ \hat{\chi}_\perp\,\hat{\nabla}^{\,2}N,\label{e48}\\[0.5ex]
+\frac{\partial V}{\partial\hat{t}}&= [\phi,V] +[N,\psi] + \hat{\chi}_\varphi\,\hat{\nabla}^2 V.\label{e21}
+\end{align}
+Here, $[A,B]\equiv \hat{\nabla} A\times \hat{\nabla} B\cdot {\bf n}$, $\iota_e=\iota/(1+\iota)$, $\iota_i=1/(1+\iota)$, $\hat{t} = t/(r_s/V_A)$, $\hat{\eta}_{\parallel} = \eta_{\parallel}/(\mu_0\,r_s\,V_A)$, $\hat{E}_\parallel = E_\parallel/(B_\varphi\,V_A)$, 
+$\hat{\chi}_\varphi= \chi_\varphi/(r_s\,V_A)$, $\hat{\chi}_\perp=\chi_\perp/(r_s\,V_A)$, where $\eta_{\parallel}$ is the {\em parallel  plasma electrical
+resistivity}\/ at the rational surface, $E_\parallel$ the parallel inductive electric field that maintains the equilibrium toroidal
+plasma current in the vicinity of the rational surface,  $\chi_\varphi$  the {\em anomalous perpendicular ion momentum
+diffusivity}\/ at the rational surface, and $\chi_\perp$ the {\em anomalous perpendicular energy diffusivity}\/ at the rational surface.
+Moreover, $d_\beta=c_\beta\,d_i$, and $\hat{d}_\beta=d_\beta/r_s$, where $c_\beta = \sqrt{\beta/(1+\beta)}$, and
+$\beta=(5/3)\,\mu_0\,p_0/B_\varphi^{\,2}$. Here, $d_\beta$ is usually referred to as the {\em ion sound radius}. 
+Note that we have neglected parallel energy transport in Eq.~(\ref{e48}) because we expect the radial width of the inner region to be less than the critical width above which parallel transport forces the temperature and density profiles to be magnetic flux-surface functions.\cite{hel}
+
+\subsection{Matching to Plasma Equilibrium}
+The unperturbed plasma equilibrium is such that
+${\bf B} = [0,\,B_\theta(r),\,B_\varphi]$,  $p = p(r)$,
+${\bf V} = [0,\,V_E(r),\,V_\varphi(r)]$,
+where 
+$V_E(r)\simeq E_r/B_\varphi$
+ is the (dominant $\theta$-component of the) E-cross-B drift velocity. Now, the inner region is assumed to have a radial thickness that is
+much smaller than $r_s$.   Hence, we only need to evaluate plasma equilibrium quantities in the immediate vicinity of the rational
+surface. Equations~(\ref{e10})--(\ref{e13}) and (\ref{e44})--(\ref{e45}) suggest that 
+\begin{align}
+\psi(\hat{x})&= \frac{\hat{x}^{\,2}}{2\,\hat{L}_s},\label{e23}\\[0.5ex]
+\phi(\hat{x}) &= - \hat{V}_E\,\hat{x},\\[0.5ex]
+N(\hat{x}) &= -\hat{V}_\ast\,\hat{x},\\[0.5ex]
+V &= \hat{V}_\parallel,\label{e26}
+\end{align}
+where 
+ $\hat{L}_s=L_s/r_s$,  $L_s=R_0\,q_s/s_s$, 
+  $\hat{V}_E= V_E(r_s)/V_A$,
+$\hat{V}_\ast= V_\ast(r_s)/V_A$,
+$V_\ast(r) = (dp/dr)/(e\,n_0\,B_\varphi)$ 
+is the (dominant $\theta$-component of the) diamagnetic velocity,
+  and 
+ $\hat{V}_\parallel=\hat{d}_i\, V_\varphi(r_s)/V_A$. Here, $s_s=s(r_s)$, and $s(r)=d\ln q/\ln r$ is the {\em magnetic shear}.  We also deduce that 
+ \begin{align}\label{e28}
+ J &= -\left(\frac{2}{s_s}-1\right)\frac{1}{\hat{L}_s},
+\end{align} 
+and $ \hat{E}_\parallel =(2/s_s-1) (\hat{\eta}_\parallel/\hat{L}_s)$.
+
+\subsection{Linearized Layer Equations}
+In accordance with Eqs.~(\ref{e16}), (\ref{e44}), and (\ref{e23})--(\ref{e28}), let us write
+\begin{align}\label{e31}
+\psi(\hat{x},\zeta,\hat{t}) &= \frac{\hat{x}^{\,2} }{2\,\hat{L}_s}+ \tilde{\psi}(\hat{x},\hat{t})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
+\phi(\hat{x},\zeta,\hat{t}) &=-\hat{V}_E\,\hat{x}+ \tilde{\phi}(\hat{x},\hat{t})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
+N(\hat{x},\zeta,\hat{t}) &= -\hat{V}_\ast\,\hat{x}+\iota_e\,\tilde{N}(\hat{x},\hat{t})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
+V(\hat{x},\zeta,\hat{t}) &= \hat{V}_\parallel +\iota_e\,\tilde{V}(\hat{x},\hat{t})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
+J(\hat{x},\zeta,\hat{t}) &=-\left(\frac{2}{s_s}-1\right)\!\frac{1}{\hat{L}_s}+ \hat{\nabla}^2\tilde{\psi}(\hat{x},\hat{t})\,{\rm e}^{\,{\rm i}\,\zeta}.\label{e36}
+\end{align}
+Substituting Eqs.~(\ref{e31})--(\ref{e36}) into Eqs.~(\ref{e16a})--(\ref{e21}), 
+ and only retaining terms that
+are first order in perturbed quantities, we obtain the following set of linearized layer equations:
+\begin{align}\label{e37}
+\tau_H\,\frac{\partial\tilde{\psi}}{\partial t}+{\rm i}\,(\omega_E +\omega_{\ast\,e})\,\tau_H\,\tilde{\psi} &= -{\rm i} \,\hat{x}\,(\tilde{\phi}-\tilde{N})+ S^{-1}\,\hat{\nabla}^2\tilde{\psi},\\[0.5ex]
+\tau_H\,\frac{\partial\hat{\nabla}^2\tilde{\phi}}{\partial t}+{\rm i}\,(\omega_E+\omega_{\ast\,i})\,\tau_H\,\hat{\nabla}^2\tilde{\phi} &= -{\rm i}\,\hat{x}\,\hat{\nabla}^2\tilde{\psi}+S^{-1}\,P_\varphi\,\hat{\nabla}^4\!\left(\tilde{\phi} + \frac{\tilde{N}}{\iota}\right),\\[0.5ex]
+\tau_H\,\frac{\partial\tilde{N}}{\partial t}+{\rm i}\,\omega_E\,\tau_H\,\tilde{N} &= -{\rm i}\,\omega_{\ast\,e}\,\tau_H\,\tilde{\phi}-{\rm i}\,c_\beta^{\,2}\,\hat{x}\,\tilde{V} - {\rm i}\,\iota_e\,\hat{d}_\beta^{\,2}\,\hat{x}\,\hat{\nabla}^2\tilde{\psi}\nonumber\\[0.5ex]
+&\phantom{=} + S^{-1}\,P_\perp\,\hat{\nabla}^2 \tilde{N},\label{e60}\\[0.5ex]
+\tau_H\,\frac{\partial\tilde{V}}{\partial t}+{\rm i}\,\omega_E\,\tau_H\,\tilde{V} &= {\rm i}\,\omega_{\ast\,e}\,\tau_H\,\tilde{\psi} - {\rm i}\,\hat{x}\,\tilde{N}
++ S^{-1}\,P_\varphi\,\hat{\nabla}^2\tilde{V}.\label{e40}
+\end{align}
+Here, 
+$\tau_H = L_s/(m\,V_A)$ 
+is the  {\em hydromagnetic time}, 
+$\omega_E =(m/r_s)\,V_E(r_s)$
+  the 
+ {\em E-cross-B frequency}, 
+$\omega_{\ast\,e} = -\iota_e\,(m/r_s)\,V_\ast(r_s)$
+the {\em electron diamagnetic  frequency},
+$\omega_{\ast\,i} =\iota_i\,(m/r_s)\,V_\ast(r_s)$
+ the  {\em ion diamagnetic frequency}, 
+$S=\tau_R/\tau_H$
+ the  {\em Lundquist number}, 
+$\tau_R = \mu_0\,r_s^{\,2}/\eta_\parallel$
+ the {\em resistive diffusion time}, 
+$\tau_\varphi
+= r_s^{\,2}/\chi_\varphi$
+the  {\em toroidal momentum confinement time}, and 
+$\tau_\perp = r_s^{\,2}/\chi_\perp$ the {\em energy confinement time}.
+  Furthermore, $P_\varphi = \tau_R/\tau_\varphi$ and $P_\perp = \tau_R/\tau_\perp$ are {\em magnetic Prandtl numbers}.
+  Note that $\iota=-\omega_{\ast\,e}/\omega_{\ast\,i}$ and $\iota_e=\omega_{\ast\,e}/(\omega_{\ast\,e}-\omega_{\ast\,i})$. 
+
+In the following, in accordance with the analysis of Refs.~\onlinecite{err2} and \onlinecite{err3}, we shall
+neglect the term  $-{\rm i}\,c_\beta^{\,2}\,\hat{x}\,\tilde{V}$ in Eq.~(\ref{e60}). This approximation can be justified {\em a posteriori}. 
+It is equivalent to  the neglect of ion parallel dynamics in the inner region, and  effectively converts our four-field model into the following three-field model:
+\begin{align}\label{e64}
+\tau_H\,\frac{\partial\tilde{\psi}}{\partial t}+{\rm i}\,(\omega_E +\omega_{\ast\,e})\,\tau_H\,\tilde{\psi} &= -{\rm i} \,\hat{x}\,(\tilde{\phi}-\tilde{N})+ S^{-1}\,\hat{\nabla}^2\tilde{\psi},\\[0.5ex]
+\tau_H\,\frac{\partial\hat{\nabla}^2\tilde{\phi}}{\partial t}+{\rm i}\,(\omega_E+\omega_{\ast\,i})\,\tau_H\,\hat{\nabla}^2\tilde{\phi} &= -{\rm i}\,\hat{x}\,\hat{\nabla}^2\tilde{\psi}+S^{-1}\,P_\varphi\,\hat{\nabla}^4\!\left(\tilde{\phi} + \frac{\tilde{N}}{\iota}\right),\\[0.5ex]
+\tau_H\,\frac{\partial\tilde{N}}{\partial t}+{\rm i}\,\omega_E\,\tau_H\,\tilde{N} &= -{\rm i}\,\omega_{\ast\,e}\,\tau_H\,\tilde{\phi} - {\rm i}\,\iota_e\,\hat{d}_\beta^{\,2}\,\hat{x}\,\hat{\nabla}^2\tilde{\psi}+ S^{-1}\,P_\perp\,\hat{\nabla}^2 \tilde{N}.\label{e66}
+\end{align}
+
+Finally, if we write
+\begin{equation}
+\frac{\partial}{\partial t} = g-{\rm i}\,\omega_E,
+\end{equation}
+where $g$ is the complex growth-rate in a frame of reference that co-rotates with the MHD fluid at the rational
+surface, then we get 
+\begin{align}\label{e67a}
+(g+{\rm i}\,\omega_{\ast\,e})\,\tau_H\,\tilde{\psi} &= -{\rm i} \,\hat{x}\,(\tilde{\phi}-\tilde{N})+ S^{-1}\,\hat{\nabla}^2\tilde{\psi},\\[0.5ex]
+(g+{\rm i}\,\omega_{\ast\,i})\,\tau_H\,\hat{\nabla}^2\tilde{\phi} &= -{\rm i}\,\hat{x}\,\hat{\nabla}^2\tilde{\psi}+S^{-1}\,P_\varphi\,\hat{\nabla}^4\!\left(\tilde{\phi} + \frac{\tilde{N}}{\iota}\right),\\[0.5ex]
+g\,\tau_H\,\tilde{N} &= -{\rm i}\,\omega_{\ast\,e}\,\tau_H\,\tilde{\phi} - {\rm i}\,\iota_e\,\hat{d}_\beta^{\,2}\,\hat{x}\,\hat{\nabla}^2\tilde{\psi}+ S^{-1}\,P_\perp\,\hat{\nabla}^2 \tilde{N}.\label{e69a}
+\end{align}
+
+\subsection{Asymptotic Matching}
+The  layer equations, (\ref{e67a})--(\ref{e69a}) possess a trivial twisting parity solution, and a non-trivial tearing parity solution.\cite{twist} 
+The latter solution is such that 
+$\tilde{\psi}(-\hat{x})=\tilde{\psi}(\hat{x})$, $\tilde{\phi}(-\hat{x})=-\tilde{\phi}(\hat{x})$, and $\tilde{N}(-\hat{x})=
+-\tilde{N}(\hat{x})$. When this solution is asymptotically matched to the outer solution, we find that
+\begin{equation}\label{e79}
+\tilde{\psi}(\hat{x})\rightarrow \left(\frac{{\mit\Psi}_s}{r_s\,B_\varphi}\right)\left(1+{\mit\Delta}_s\,\frac{|\hat{x}|}{2}\right)
+\end{equation}
+at the interface between the inner and the outer regions. Here, ${\mit\Psi}_s$ is the (complex) asymptotic reconnected helical magnetic flux at the rational surface,
+whereas ${\mit\Delta}_s$ is the (real, dimensionless) tearing stability index.
+
+\section{Fourier Transformed Layer Equations}
+\subsection{Stretched Radial Coordinate}
+Let us define the stretched radial coordinate $X = S^{1/3}\,\hat{x}$.
+Assuming that $X\sim{\cal O}(1)$ in the resonant layer that constitutes the inner region (i.e., assuming that the thickness of the layer is roughly of order $S^{-1/3}\,r_s$),
+and making use of the fact that $S\gg 1$ in a conventional tokamak plasma,  Eqs.~(\ref{e67a})--(\ref{e69a}) reduce to the following
+set of linear layer equations:
+\begin{align}\label{e80}
+(\hat{g}+{\rm i}\,Q_{e})\,\tilde{\psi}&= - {\rm i}\,X\left(\tilde{\phi}-\tilde{N}\right) + \frac{d^{\,2}\tilde{\psi}}{d X^2},\\[0.5ex]
+(\hat{g}+{\rm i}\,Q_i)\,\frac{d^{\,2}\tilde{\phi}}{d X^2}&= - {\rm i}\,X\,\frac{d^{\,2}\tilde{\psi}}{d X^2}+ P_\varphi\,\frac{d^{\,4}}{d X^4}\!\left(\tilde{\phi} + \frac{\tilde{N}}{\iota}\right),\\[0.5ex]
+\hat{g}\,\tilde{N} &= - {\rm i}\,Q_{e}\,\tilde{\phi}  - {\rm i} \,D^{2}\,X\,\frac{d^{\,2}\tilde{\psi}}{d X^{2}}
++ P_\perp\,\frac{d^{\,2} \tilde{N}}{d X^{2}},\label{e82}
+\end{align}
+where 
+\begin{align}
+\hat{g}& = S^{\,1/3}\,g\,\tau_H, \\[0.5ex]
+Q_{e,i} &= S^{\,1/3}\,\omega_{\ast\,e,i}\,\tau_H,\\[0.5ex]
+D &= S^{\,1/3}\,\iota_e^{1/2}\,\hat{d}_\beta.
+\end{align} 
+
+According to Eq.~(\ref{e79}), the asymptotic behavior of the tearing-parity solutions of Eqs.~(\ref{e80})--(\ref{e82}) is
+such that
+\begin{equation}\label{e47}
+\tilde{\psi}(X)\rightarrow  \left(\frac{{\mit\Psi}_s}{r_s\,B_\varphi}\right)\left[1+ \frac{\hat{\mit\Delta}_s}{2}\,|X| + {\cal O}(X^2)\right]
+\end{equation}
+as $|X|\rightarrow\infty$, where
+\begin{equation}\label{e84}
+\hat{\mit\Delta}_s = S^{-1/3}\,{\mit\Delta}_s.
+\end{equation}
+It follows from Eqs.~(\ref{e80})--(\ref{e82}) that
+\begin{equation}\label{e85}
+\bar{\phi}(X)\rightarrow {\rm i}\,\hat{g}\left(\frac{{\mit\Psi}_s}{r_s\,B_\varphi}\right)\left[\frac{1}{X}+ \frac{\hat{\mit\Delta}_s}{2}\,{\rm sgn}(X) + {\cal O}(X)\right]
+\end{equation}
+as $|X|\rightarrow\infty$. 
+
+\subsection{Fourier Transformation}\label{ft}
+Equations~(\ref{e80})--(\ref{e82}) are most conveniently solved in Fourier transform space.\cite{err2} 
+Let
+\begin{equation}\label{e86a}
+\hat{\phi}(p) = \int_{-\infty}^\infty \tilde{\phi}(X)\,{\rm e}^{-{\rm i}\,p\,X}\,dX,
+\end{equation}
+et cetera. The Fourier transformed linear layer equations become
+\begin{align}\label{e314}
+(\hat{g}+{\rm i}\,Q_e)\,\hat{\psi}&=\frac{d}{d p}\!\left(\hat{\phi}-\hat{N}\right)-p^2\,\hat{\psi},\\[0.5ex]
+(\hat{g}+{\rm i}\,Q_i)\,p^2\,\hat{\phi}&=  \frac{d (p^2\,\hat{\psi})}{d p}- P_\varphi\,p^4\!\left(\hat{\phi} + \frac{\hat{N}}{\iota}\right),\\[0.5ex]
+\hat{g}\,\hat{N} &= - {\rm i}\,Q_{e}\,\hat{\phi} -D^{2}\,\frac{d (p^2\,\hat{\psi})}{d p}
+  - P_\perp\,p^2\hat{N},\label{e316}
+\end{align}
+where, for a tearing parity solution, Eq.~(\ref{e85}) yields\,\cite{ed}
+\begin{equation}\label{e94}
+\hat{\phi}(p)\rightarrow =\pi\,\hat{g}\left(\frac{{\mit\Psi}_s}{r_s\,B_\varphi}\right)\left[\frac{\hat{\mit\Delta}_s}{\pi\,p} + 1+ {\cal O}(p)\right].
+\end{equation}
+as $p\rightarrow 0$. 
+
+Let 
+\begin{align}\label{e95}
+Y_e(p)\equiv \hat{\phi}(p)-\hat{N}(p)= \pi\,(\hat{g}+{\rm i}\,Q_e)\left(\frac{{\mit\Psi}_s}{r_s\,B_\varphi}\right)\,\hat{Y}_e(p).
+\end{align}
+ Equations~(\ref{e314})--(\ref{e316}) can be combined to give 
+\begin{align}\label{e91}
+\frac{d}{dp}\!\left[A(p)\,\frac{d\hat{Y}_e}{dp}\right] - \frac{B(p)}{C(p)}\,p^2\,\hat{Y}_e=0,
+\end{align}
+where
+\begin{align}
+A(p) &= \frac{p^2}{\hat{g}+{\rm i}\,Q_e+p^2},\label{e97a}\\[0.5ex]
+B(p)&=\hat{g}\,(\hat{g}+{\rm i}\,Q_i)+(\hat{g}+{\rm i}\,Q_i)\,(P_\varphi+P_\perp)\,p^2 + P_\varphi\,P_\perp\,p^4,\\[0.5ex]
+C(p) &=\hat{g}+{\rm i}\,Q_e+ [P_\perp+
+(\hat{g}+{\rm i}\,Q_i)\,D^2]\,p^2 + \iota_e^{\,-1}\,P_\varphi\,D^2\,p^4.
+\end{align}
+Note that $\iota_e = Q_e/(Q_e-Q_i)$. 
+Furthermore, because
+\begin{equation}
+\hat{Y}_e(p) = \left(\frac{\hat{g}+{\rm i}\,Q_e}{\hat{g}}\right)\hat{\phi}(p)
+\end{equation}
+as $p\rightarrow 0$, Eqs.~(\ref{e94}) and (\ref{e95})
+yield the following small-$p$ boundary condition that Eq.~(\ref{e91}) must satisfy:\,\cite{ed}
+\begin{equation}\label{e101}
+\hat{Y}_e(p)\rightarrow\frac{\hat{\mit\Delta}_s}{\pi\,p} + 1+ {\cal O}(p)
+\end{equation}
+as $p\rightarrow 0$.  Equation~(\ref{e91}) must also satisfy the  physical boundary condition 
+\begin{equation}\label{e102}
+\hat{Y}_e(p)\rightarrow 0
+\end{equation}
+as $p\rightarrow\infty$. 
+
+\section{Technical Details}
+\subsection{Large-$p$ Limit}\label{large}
+In the large-$p$ limit, if we write
+\begin{align}
+A &=1+\frac{\alpha}{p^2},\\[0.5ex]
+\frac{B}{C} &= \beta+\frac{\gamma}{p^2},
+\end{align}
+and
+look for a solution of Eq.~(\ref{e91}) of the form
+\begin{equation}
+\hat{Y}_e(p) \propto p^x\,\exp\left(\frac{-\sqrt{\beta}\,p^2}{2}\right)
+\end{equation}
+then we find that
+\begin{equation}
+x = \frac{\gamma -\sqrt{\beta}\,(1-\sqrt{\beta}\,\alpha)}{2\sqrt{\beta}}.
+\end{equation}
+It is easily seen that
+\begin{align}
+\alpha &= -(\hat{g}+ {\rm i}\,Q_e),\\[0.5ex]
+\beta&= \frac{P_\varphi\,P_\perp}{\iota_e^{-1}\,P_\varphi\,D^2},\\[0.5ex]
+\gamma&= \frac{P_\varphi\,P_\perp}{\iota_e^{-1}\,P_\varphi\,D^2}\left[1+ (\hat{g}+{\rm i}\,Q_i)\,\frac{P_\varphi+P_\perp}{P_\varphi\,P_\perp}\right.\nonumber\\[0.5ex]
+&\phantom{=}\left.-(P_\perp+[\hat{g}+{\rm i}\,Q_i]\,D^2)\,\frac{1}{\iota_e^{-1}\,P_\varphi\,D^2}\right].
+\end{align}
+
+In order to be in the large-$p$ limit, we require
+\begin{align}
+p&\gg |\hat{g}+{\rm i}\,Q_e|^{1/2},\\[0.5ex]
+p&\gg\left|\frac{(\hat{g}+{\rm i}\,Q_i)\,(P_\varphi + P_\perp)}{P_\varphi\,P_\perp}\right|^{1/2},\\[0.5ex]
+p&\gg \left|\frac{\hat{g}\,(\hat{g}+{\rm i}\,Q_i)}{P_\varphi\,P_\perp}\right|^{1/4},\\[0.5ex]
+p&\gg \left|\frac{P_\perp+(\hat{g}+{\rm i}\,Q_i)\,D^2}{\iota_e^{-1}\,P_\varphi\,D^2}\right|^{1/2},\\[0.5ex]
+p&\gg \left|\frac{\hat{g}+{\rm i}\,Q_e}{\iota_e^{-1}\,P_\varphi\,D^2}\right|^{1/4},\\[0.5ex]
+p&\gg \left(\frac{\iota_e^{-1}\,P_\varphi\,D^2}{P_\varphi\,P_\perp}\right)^{1/4}.
+\end{align} 
+
+\subsection{Low-$D$ Limit}\label{lowd}
+If
+\begin{align}
+D^2\ll \left|\frac{P_\perp}{\hat{g} + {\rm i}\,Q_e}\right|, ~\frac{\iota_e\,P_\perp}{P_\varphi^{2/3}}
+\end{align}
+then the terms in the layer equations involving $D^2$ are negligible. In this case, in the large-$p$ limit,  we can write
+\begin{align}
+A&= 1+\frac{\alpha}{p^2},\\[0.5ex]
+\frac{B}{C} &= \beta\,p^2+\gamma,
+\end{align}
+where
+\begin{align}
+\alpha &= - (\hat{g}+{\rm i}\,Q_e),\\[0.5ex]
+\beta &= P_\varphi,\\[0.5ex]
+\gamma&= -{\rm i}\,(Q_e-Q_i)\,\frac{P_\varphi}{P_\perp} + \hat{g} + {\rm i}\,Q_i.
+\end{align}
+The solution of Eq.~(\ref{e91}) becomes
+\begin{equation}
+\hat{Y}_e\propto p^{-1}\exp\left(x\,p - \frac{\sqrt{\beta}\,p^3}{3}\right),
+\end{equation}
+where
+\begin{equation}
+x = \frac{\alpha\,\beta-\gamma}{2\sqrt{\beta}}.
+\end{equation}
+
+In order to be in the large-$p$ limit, we require
+\begin{align}
+p&\gg |\hat{g}+{\rm i}\,Q_e|^{1/2},\\[0.5ex]
+p&\gg\left|\frac{(\hat{g}+{\rm i}\,Q_i)\,(P_\varphi + P_\perp)}{P_\varphi\,P_\perp}\right|^{1/2},\\[0.5ex]
+p&\gg \left|\frac{\hat{g}\,(\hat{g}+{\rm i}\,Q_i)}{P_\varphi\,P_\perp}\right|^{1/4},\\[0.5ex]
+p&\gg \left|\frac{\hat{g}+{\rm i}\,Q_e}{P_\perp}\right|^{1/2},\\[0.5ex]
+p&\gg P_\varphi^{-1/6}.
+\end{align} 
+
+\subsection{Ricatti Transformation}
+Let 
+\begin{equation}
+W= \frac{p}{\hat{Y}_e}\,\frac{d\hat{Y}_e}{dp}.
+\end{equation}
+Equation~(\ref{e91}) transforms to give
+\begin{equation}\label{e72a}
+\frac{dW}{dp} =- \frac{A'}{p}\,W -\frac{W^{\,2}}{p} + \frac{B}{A\,C}\,p^3,
+\end{equation}
+where
+\begin{equation}
+A' = \frac{\hat{g}+{\rm i}\,Q_e-p^2}{\hat{g}+{\rm i}\,Q_e+p^2}.
+\end{equation}
+According to Sects.~\ref{ft} and \ref{large}, this equation must be solved subject to the boundary condition that
+\begin{equation}\label{e63a}
+W(p) = x-\sqrt{\beta}\,p^2
+\end{equation}
+at large-$p$, and
+\begin{equation}\label{e73a}
+W (p)=-1+\frac{\pi\,p}{\hat{\mit\Delta}_s}
+\end{equation}
+at small-$p$. 
+However, according to Sect.~\ref{lowd}, in the low-$D$ limit,
+\begin{equation}\label{e63aa}
+W(p) = -1 +x\,p-\sqrt{\beta}\,p^3
+\end{equation}
+at large-$p$. 
+
+\subsection{Method of Solution}
+We launch a solution of Eqs~(\ref{e72a})  from large $p$, subject to the  boundary condition (\ref{e63a}) or (\ref{e63aa}), as appropriate,  and
+integrate it to small $p$. We can deduce the value of $\hat{\mit\Delta}_s$ from Eq.~(\ref{e73a}). 
+
+
+\section*{Acknowledgements}
+This research was directly funded by the U.S.\ Department of Energy,  Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
+
+\section*{Data Availability Statement}
+The digital data used in the figures in this paper can be obtained from the author upon reasonable request.
+
+\section*{References}
+\begin{thebibliography}{99}\baselineskip 5ex
+
+\bibitem{err1} R.~Fitzpatrick, Nucl.\ Fusion {\bf 33}, 1049 (1993).
+
+\bibitem{book} R.~Fitzpatrick, {\em Tearing Mode Dynamics in Tokamak Plasmas}. (IOP, Bristol UK,  2023)
+
+\bibitem{err3} R.~Fitzpatrick, Phys.\ Plasmas {\bf 29}, 032507 (2022).
+
+\bibitem{err2} A.~Cole and R.~Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
+
+\bibitem{hkm} R.D.~Hazeltine, M.~Kotschenreuther and P.G.~Morrison, Phys.\ Fluids {\bf 28}, 2466 (1985).
+
+\bibitem{fw} R.~Fitzpatrick and F.L.~Waelbroeck, Phys. Plasmas {\bf 12}, 022307 (2005).
+
+\bibitem{hel} R.~Fitzpatrick, Phys.\ Plasmas {\bf 2}, 825 (1995).
+
+\bibitem{twist} R.~Fitzpatrick, Phys.\ Plasmas {\bf 1}, 3308 (1994).
+
+\bibitem{ed} A.~Erd\'{e}lyi, W.~Magnus, F.~Oberhettinger and F.G.~Tricomi, {\em Tables of Integral Transforms}, Vol.~1. McGraw-Hill (1954).
+
+\bibitem{rf1} R.~Fitzpatrick, Phys.\ Plasmas {\bf 10}, 2304 (2003).
+
+\end{thebibliography}
+
+
+
+\end{document}
