@@ -1,6 +1,7 @@
 // Layer.h
 
 // #####################################################################
+
 // Class to solve three-field resonant layer equations in tokamak plasma
 
 // Inputs:
@@ -65,7 +66,7 @@ private:
   double* r_res;      // Radii of rational surfaces (read from TJ.nc)
   int*    m_res;      // Poloidal mode numbers of rational surfaces (read from TJ.nc)
   double* Delta_res;  // Delta_primes at rational surfaces (read from TJ.nc)
-  double* Deltac_res; // Critcial Delta's at rational surfaces (read from TJ.nc)
+  double* Deltac_res; // Critical Delta_primes at rational surfaces (read from TJ.nc)
   double* S13_res;    // Cube roots of Lundquist numbers at rational surfaces (read from TJ.nc)
   double* tau_res;    // Normalized resistive kink timescales at rational surfaces (read from TJ.nc)
   double* QE_res;     // Normalized ExB frequencies at rational surfaces (read from TJ.nc)
@@ -88,8 +89,8 @@ private:
 
   double          g_r;    // Real part of normalized growth-rate in MHD frame
   double          g_i;    // Imaginary part of normalized growth-rate in MHD frame
-  double          Delta;  // Normalized tearing stability index
-  complex<double> Deltas; // Normalized layer response index
+  double          Delta;  // Normalized effective tearing stability index
+  complex<double> Deltas; // Normalized complex layer response index
 
   // ....................................
   // Layer calculation control parameters
@@ -102,19 +103,19 @@ private:
   // .........................
   // Marginal stability points
   // .........................
-  Array<int,1>    np_marg;  // Number of marginal stability points
-  Array<double,2> gr_marg;  // Real part of normalized growth-rate in MHD frame at marginal stability point
-  Array<double,2> gi_marg;  // Imaginary part of normalized growth-rate in MHD frame at marginal stability point
-  Array<double,2> Dr_marg;  // Real part of normalized tearing stability index at marginal stability point
-  Array<double,2> Di_marg;  // Imaginary part of normalized tearing stability index at marginal stability point
+  Array<int,1>    np_marg;  // Number of marginal stability points at rational surfaces 
+  Array<double,2> gr_marg;  // Real part of normalized growth-rates in MHD frame at marginal stability points at rational surfaces 
+  Array<double,2> gi_marg;  // Imaginary part of normalized growth-rates in MHD frame at marginal stability points at rational surfaces 
+  Array<double,2> Dr_marg;  // Real part of normalized tearing stability indicesat marginal stability points at rational surfaces 
+  Array<double,2> Di_marg;  // Imaginary part of normalized tearing stability indices at marginal stability points at rationaL surfaces
   
   // .................................
   // Growth-rates and real frequencies
   // .................................
-  double* gamma_e; // Electron-branch growth-rate (kHz)
-  double* omega_e; // Electron-branch real frequency (kHz)
-  double* res_e;   // Electron-branch residual of zero search
-  int*    lowD_e;  // Electron-branch low D flag
+  double* gamma_e; // Electron-branch growth-rates at rational surfaces (kHz)
+  double* omega_e; // Electron-branch real frequencies at rational surfaces  (kHz)
+  double* res_e;   // Electron-branch residuas of zero search at rational surfaces 
+  int*    lowD_e;  // Electron-branch low D flags at rational surfaces 
 
   // ...............................
   // Adaptive integration parameters
@@ -162,7 +163,7 @@ private:
   void ReadNetcdf ();
   // Find marginal stability points associated with ith rational surface
   void FindMarginal (int i);
-  // Find complex growth rate of electron branch mode associated with ith rational surface
+  // Find complex growth-rate of electron branch-mode associated with ith rational surface
   void GetElectronBranchGrowth (int i);
   // Write Layer data to netcdf file
   void WriteNetcdf ();

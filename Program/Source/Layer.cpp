@@ -326,52 +326,67 @@ void Layer::WriteNetcdf ()
    printf ("Writing data to netcdf file Plots/Layer.nc:\n");
 
    try
-    {
-      NcFile dataFile ("Plots/Layer.nc", NcFile::replace);
+     {
+       NcFile dataFile ("Plots/Layer.nc", NcFile::replace);
 
-      NcDim x_d = dataFile.addDim ("nres", nres);
+       NcDim x_d = dataFile.addDim ("nres",  nres);
+       NcDim y_d = dataFile.addDim ("nmarg", 10);
 
-      NcVar rres_x      = dataFile.addVar ("r_res",      ncDouble, x_d);
-      rres_x.putVar (r_res);
-      NcVar mres_x      = dataFile.addVar ("m_res",      ncInt,    x_d);
-      mres_x.putVar (m_res);
-      NcVar Deltares_x  = dataFile.addVar ("Delta_res",  ncDouble, x_d);
-      Deltares_x.putVar (Delta_res);
-      NcVar Deltacres_x = dataFile.addVar ("Deltac_res", ncDouble, x_d);
-      Deltacres_x.putVar (Deltac_res);
-      NcVar S13res_x    = dataFile.addVar ("S13_res",    ncDouble, x_d);
-      S13res_x.putVar (S13_res);
-      NcVar taures_x    = dataFile.addVar ("tau_res",    ncDouble, x_d);
-      taures_x.putVar (tau_res);
-      NcVar QEres_x     = dataFile.addVar ("QE_res",     ncDouble, x_d);
-      QEres_x.putVar (QE_res);
-      NcVar Qeres_x     = dataFile.addVar ("Qe_res",     ncDouble, x_d);
-      Qeres_x.putVar (Qe_res);
-      NcVar Qires_x     = dataFile.addVar ("Qi_res",     ncDouble, x_d);
-      Qires_x.putVar (Qi_res);
-      NcVar iotaeres_x  = dataFile.addVar ("iotae_res",  ncDouble, x_d);
-      iotaeres_x.putVar (iotae_res);
-      NcVar Pphires_x   = dataFile.addVar ("Pphi_res",   ncDouble, x_d);
-      Pphires_x.putVar (Pphi_res);
-      NcVar Pperpres_x  = dataFile.addVar ("Pperp_res",  ncDouble, x_d);
-      Pperpres_x.putVar (Pperp_res);
+       vector<NcDim> marg_d;
+       marg_d.push_back (x_d);
+       marg_d.push_back (y_d);
 
-      NcVar gammae_x = dataFile.addVar ("gamma_e", ncDouble, x_d);
-      gammae_x.putVar (gamma_e);
-      NcVar omegae_x = dataFile.addVar ("omega_e", ncDouble, x_d);
-      omegae_x.putVar (omega_e);
-      NcVar rese_x   = dataFile.addVar ("res_e",   ncDouble, x_d);
-      rese_x.putVar (res_e);
-      NcVar lowDe_x  = dataFile.addVar ("lowD_e",  ncInt,    x_d);
-      lowDe_x.putVar (lowD_e);
-      
-    }
+       NcVar rres_x      = dataFile.addVar ("r_res",      ncDouble, x_d);
+       rres_x.putVar (r_res);
+       NcVar mres_x      = dataFile.addVar ("m_res",      ncInt,    x_d);
+       mres_x.putVar (m_res);
+       NcVar Deltares_x  = dataFile.addVar ("Delta_res",  ncDouble, x_d);
+       Deltares_x.putVar (Delta_res);
+       NcVar Deltacres_x = dataFile.addVar ("Deltac_res", ncDouble, x_d);
+       Deltacres_x.putVar (Deltac_res);
+       NcVar S13res_x    = dataFile.addVar ("S13_res",    ncDouble, x_d);
+       S13res_x.putVar (S13_res);
+       NcVar taures_x    = dataFile.addVar ("tau_res",    ncDouble, x_d);
+       taures_x.putVar (tau_res);
+       NcVar QEres_x     = dataFile.addVar ("QE_res",     ncDouble, x_d);
+       QEres_x.putVar (QE_res);
+       NcVar Qeres_x     = dataFile.addVar ("Qe_res",     ncDouble, x_d);
+       Qeres_x.putVar (Qe_res);
+       NcVar Qires_x     = dataFile.addVar ("Qi_res",     ncDouble, x_d);
+       Qires_x.putVar (Qi_res);
+       NcVar iotaeres_x  = dataFile.addVar ("iotae_res",  ncDouble, x_d);
+       iotaeres_x.putVar (iotae_res);
+       NcVar Pphires_x   = dataFile.addVar ("Pphi_res",   ncDouble, x_d);
+       Pphires_x.putVar (Pphi_res);
+       NcVar Pperpres_x  = dataFile.addVar ("Pperp_res",  ncDouble, x_d);
+       Pperpres_x.putVar (Pperp_res);
+       
+       NcVar gammae_x = dataFile.addVar ("gamma_e", ncDouble, x_d);
+       gammae_x.putVar (gamma_e);
+       NcVar omegae_x = dataFile.addVar ("omega_e", ncDouble, x_d);
+       omegae_x.putVar (omega_e);
+       NcVar rese_x   = dataFile.addVar ("res_e",   ncDouble, x_d);
+       rese_x.putVar (res_e);
+       NcVar lowDe_x  = dataFile.addVar ("lowD_e",  ncInt,    x_d);
+       lowDe_x.putVar (lowD_e);
+
+       NcVar np_x = dataFile.addVar ("n_marg",  ncInt,    x_d);
+       np_x.putVar (np_marg.data());
+       NcVar gr_x = dataFile.addVar ("gr_marg", ncDouble, marg_d);
+       gr_x.putVar (gr_marg.data());
+       NcVar gi_x = dataFile.addVar ("gi_marg", ncDouble, marg_d);
+       gi_x.putVar (gi_marg.data());
+       NcVar Dr_x = dataFile.addVar ("Dr_marg", ncDouble, marg_d);
+       Dr_x.putVar (Dr_marg.data());
+       NcVar Di_x = dataFile.addVar ("Di_marg", ncDouble, marg_d);
+       Di_x.putVar (Di_marg.data());
+     }
    catch (NcException& e)
-    {
-      printf ("Error writing data to netcdf file Plots/Latey.nc\n");
-      printf ("%s\n", e.what ());
-      exit (1);
-    }
+     {
+       printf ("Error writing data to netcdf file Plots/Latey.nc\n");
+       printf ("%s\n", e.what ());
+       exit (1);
+     }
 }
 
 // #############################

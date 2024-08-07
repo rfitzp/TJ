@@ -1,6 +1,7 @@
 // Equilibrium.h
 
 // ########################################################################################
+
 // Class to solve inverse aspect-ratio expanded tokamak equilibrium problem.
 
 // All lengths (except r) normalized to R_0 (major radius of magnetic axis).

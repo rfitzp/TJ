@@ -332,11 +332,11 @@ void TJ::ReadNetcdf ()
       delete[] RRdata; delete[] ZZdata;  delete[] rrdata; delete[] ttdata;
     }
   catch (NcException& e)
-     {
-       printf ("Error reading data from netcdf file Inputs/Equilbrium.nc\n");
-       printf ("%s\n", e.what ());
-       exit (1);
-     }
+    {
+      printf ("Error reading data from netcdf file Inputs/Equilbrium.nc\n");
+      printf ("%s\n", e.what ());
+      exit (1);
+    }
 }
 
 // ###############################################

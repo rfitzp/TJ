@@ -88,7 +88,7 @@ class TJ
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from JSON file)
   int    FREE;    // Flag for free/fixed boundary calculation (read from JSON file)
 
-  double EPSF;    // Step-length for finite difference determination of derivative
+  double EPSF;    // Step-length for finite difference determination of derivatives
 
   // ----------------------------
   // Layer calculation parameters
@@ -116,7 +116,7 @@ class TJ
   // -------------------------------------------------
   // Equilibrium data (read from Plots/Equilibrium.nc)
   // -------------------------------------------------
-  double             epsa;      // Inverse aspect-ratio
+  double             epsa;      // Inverse aspect-ratio of plasma
   int                Ns;        // Number of shaping harmonics
   int                Nr;        // Number of radial grid-points
 
@@ -173,7 +173,7 @@ class TJ
   gsl_interp_accel** VPacc;     // Accelerator for interpolated radial derivatives of vertical shaping functions
 
   double*            cmu;       // Cosh(mu) on plasma boundary
-  double*            eeta;      // eta on plasm boundary
+  double*            eeta;      // eta on plasma boundary
   double*            ceta;      // cos(eta) on plasma boundary
   double*            seta;      // sin(eta) on plasma boundary
   double*            R2grgz;    // R^2 nabla r . nabla z   on plasma boundary
@@ -192,38 +192,38 @@ class TJ
   // -------------
   // RMP coil data
   // -------------
-  int              ncoil;     // Number of toroidal strands that make up RMP coils 
-  double*          Rcoil;     // R coodinates of strands (read from JSON file)
-  double*          Zcoil;     // Z coodinates of strands (read from JSON file)
-  double*          Icoil;     // Toroidal currents flowing in strands (read from JSON file)
-  complex<double>* Psix;      // RMP perturbation at plasma boundary
-  complex<double>* Xi;        // RMP response vector
-  complex<double>* Upsilon;   // RMP response vector
-  complex<double>* Lambda;    // RMP response vector
-  complex<double>* Chi;       // RMP drive at rational surfaces
+  int              ncoil;   // Number of toroidal strands that make up RMP coils 
+  double*          Rcoil;   // R coodinates of strands (read from JSON file)
+  double*          Zcoil;   // Z coodinates of strands (read from JSON file)
+  double*          Icoil;   // Toroidal currents flowing in strands (read from JSON file)
+  complex<double>* Psix;    // RMP perturbation at plasma boundary
+  complex<double>* Xi;      // RMP response vector
+  complex<double>* Upsilon; // RMP response vector
+  complex<double>* Lambda;  // RMP response vector
+  complex<double>* Chi;     // RMP drive at rational surfaces
 
   // --------------------
   // Plasma boundary data
   // ---------------------
-  double* tbound;    // theta values on plasma boundary
-  double* Rbound;    // R values on plasma boundary
-  double* Zbound;    // Z values on plasma boundary
-  double* dRdthe;    // dR/dtheta values on plasma boundary
-  double* dZdthe;    // dZ/dtheta values on plasma boundary
+  double* tbound; // theta values on plasma boundary
+  double* Rbound; // R values on plasma boundary
+  double* Zbound; // Z values on plasma boundary
+  double* dRdthe; // dR/dtheta values on plasma boundary
+  double* dZdthe; // dZ/dtheta values on plasma boundary
 
   // --------------------
   // Vacuum solution data
   // --------------------
-  double                   sa;    // Edge magnetic shear
-  Array<complex<double>,2> Pvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Pdag;  // Hermitian conjugate of Pvac
-  Array<complex<double>,2> Rvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Amat;  // Pdag * Rvac
-  Array<complex<double>,2> Aher;  // Hermitian component of A
-  Array<complex<double>,2> Aant;  // Anti-Hermitian component of A
-  Array<complex<double>,2> Rmat;  // Pdag * Rmat = Aher
-  Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rmat
-  Array<complex<double>,2> Hmat;  // Vacuum response matrix: Rdag * Hmat = Pdag
+  double                   sa;   // Edge magnetic shear
+  Array<complex<double>,2> Pvac; // Vacuum solution matrix
+  Array<complex<double>,2> Pdag; // Hermitian conjugate of Pvac
+  Array<complex<double>,2> Rvac; // Vacuum solution matrix
+  Array<complex<double>,2> Amat; // Pdag * Rvac
+  Array<complex<double>,2> Aher; // Hermitian component of A
+  Array<complex<double>,2> Aant; // Anti-Hermitian component of A
+  Array<complex<double>,2> Rmat; // Pdag * Rmat = Aher
+  Array<complex<double>,2> Rdag; // Hermitian conjugate of Rmat
+  Array<complex<double>,2> Hmat; // Vacuum response matrix: Rdag * Hmat = Pdag
 
   // ---------------------
   // Rational surface data
@@ -258,23 +258,23 @@ class TJ
   // ----------------
   // Mode number data
   // ----------------
-  double   ntor;  // Toroidal mode number
-  int      J;     // Number of poloidal harmonics included in calculation
-  int      K;     // Number of solution vectors: K = J + nres
-  int*     MPOL;  // Poloidal mode numbers of included poloidal harmonics
-  double*  mpol;  // Poloidal mode numbers of included poloidal harmonics
+  double   ntor; // Toroidal mode number
+  int      J;    // Number of poloidal harmonics included in calculation
+  int      K;    // Number of solution vectors: K = J + nres
+  int*     MPOL; // Poloidal mode numbers of included poloidal harmonics
+  double*  mpol; // Poloidal mode numbers of included poloidal harmonics
 
   // -----------------
   // ODE Solution data
   // -----------------
-  double*                  Rgrid;  // Radial grid-points for diagnostics
-  Array<double,2>          Ttest;  // Torque test for solution vectors versus radius
-  Array<double,2>          Pnorm;  // Norms of Psi components of solution vectors versus radius
-  Array<double,2>          Znorm;  // Norms of Z components of solution vectors versus radius
-  double*                  hode;   // Step-length versus radius
-  double*                  eode;   // Truncation error versus radius
-  Array<complex<double>,3> YYY;    // Solution vectors versus radius
-  Array<complex<double>,2> Pi;     // Reconnected fluxes at rational surfaces associated with solution vectors
+  double*                  Rgrid; // Radial grid-points for diagnostics
+  Array<double,2>          Ttest; // Torque test for solution vectors versus radius
+  Array<double,2>          Pnorm; // Norms of Psi components of solution vectors versus radius
+  Array<double,2>          Znorm; // Norms of Z components of solution vectors versus radius
+  double*                  hode;  // Step-length versus radius
+  double*                  eode;  // Truncation error versus radius
+  Array<complex<double>,3> YYY;   // Solution vectors versus radius
+  Array<complex<double>,2> Pi;    // Reconnected fluxes at rational surfaces associated with solution vectors
 
   // -------------------------------------
   // Tearing-mode dispersion relation data
@@ -319,8 +319,8 @@ class TJ
   // -----------------------
   // Root finding parameters
   // -----------------------
-  double Eta;      // Minimum magnitude of f at root f(x) = 0
-  int    Maxiter;  // Maximum number of iterations
+  double Eta;     // Minimum magnitude of f at root f(x) = 0
+  int    Maxiter; // Maximum number of iterations
 
   // ----------------------------
   // Cash-Karp RK4/RK5 parameters
