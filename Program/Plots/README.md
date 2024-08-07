@@ -50,3 +50,7 @@
 
 	 - Psix.py      - Plots poloidal harmonics of RMP at plasma boundary
 	 - Chi.py       - Plots RMP drives at rational surfaces
+
+## Resonant layers:
+
+   	 - Torque.py	- Plots torque and sheilding factor versus frequency for given rational surface

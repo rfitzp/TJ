@@ -1,6 +1,6 @@
 # Makefile for Program TJ
 
-C_COMPILER = clang++ 
+C_COMPILER = clang++
 C_FLAGS    = -w -O3 -std=c++11 
 C_INCLUDE  = -I/opt/local/include
 C_LIBS     = -L/opt/local/lib -L/opt/local/lib/libgcc -lgsl -lgslcblas -lnetcdf_c++4 -larmadillo -llapack

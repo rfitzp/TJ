@@ -132,6 +132,21 @@ void Layer::Solve ()
   for (int i = 0; i < nres; i++)
     GetElectronBranchGrowth (i);
 
+  // ............................................
+  // Calculate shielding factor and torque curves
+  // ............................................
+  omega_r.resize (Nscan + 1);
+  Xi_res.resize  (nres, Nscan + 1);
+  T_res.resize   (nres, Nscan + 1);
+
+  printf ("Calculating shielding factor and torque curves:\n");
+  double Qast = (Qe_res[0] - Qi_res[0]) /tau_res[0];
+  for (int i = 0; i <= Nscan; i++)
+    omega_r[i] = - Qast + 2.*Qast * double(i) /double(Nscan);
+
+  for (int i = 0; i < nres; i++)
+    GetTorque (i);
+
   // .....................................
   // Write calculation date to netcdf file
   // .....................................
@@ -154,10 +169,12 @@ void Layer::ReadNetcdf ()
     {
       NcFile dataFile ("Plots/TJ.nc", NcFile::read);
 
+      NcVar input_x  = dataFile.getVar ("InputParameters");
       NcVar rres_x   = dataFile.getVar ("rres");
       NcVar mpol_x   = dataFile.getVar ("m_res");
       NcVar Delta_x  = dataFile.getVar ("Delta");
       NcVar Deltac_x = dataFile.getVar ("Delta_crit");
+      NcVar Chia_x   = dataFile.getVar ("Chi_a");
       NcVar S13_x    = dataFile.getVar ("S13");
       NcVar tau_x    = dataFile.getVar ("tau");
       NcVar QE_x     = dataFile.getVar ("QE");
@@ -170,10 +187,12 @@ void Layer::ReadNetcdf ()
       NcDim n_x      = rres_x.getDim (0);
 
       nres       = n_x.getSize ();
+      input      = new double[100];
       r_res      = new double[nres];
       m_res      = new int[nres];
       Delta_res  = new double[nres];
       Deltac_res = new double[nres];
+      Chi_res    = new double[nres];
       S13_res    = new double[nres];
       tau_res    = new double[nres];
       QE_res     = new double[nres];
@@ -184,10 +203,12 @@ void Layer::ReadNetcdf ()
       Pphi_res   = new double[nres];
       Pperp_res  = new double[nres];
 
+      input_x.getVar  (input);
       rres_x.getVar   (r_res);
       mpol_x.getVar   (m_res);
       Delta_x.getVar  (Delta_res);
       Deltac_x.getVar (Deltac_res);
+      Chia_x.getVar   (Chi_res);
       S13_x.getVar    (S13_res);
       tau_x.getVar    (tau_res);
       QE_x.getVar     (QE_res);
@@ -318,6 +339,27 @@ void Layer::GetElectronBranchGrowth (int i)
 	  i+1, gamma/1.e3, omega/1.e3, F, lowD);
 }
 
+// #############################################################################################
+// Function to calculate shielding factor and torque curves associated with ith rational surface
+// #############################################################################################
+void Layer::GetTorque (int i)
+{
+  for (int j = 0; j <= Nscan; j++)
+    {
+      g_r = 0.;
+      g_i = QE_res[i] - omega_r(j) * tau_res[i];
+
+      SolveLayerEquations ();
+
+      Xi_res(i, j) = fabs (- Delta_res[i] + Deltac_res[i])
+	/abs (S13_res[i] * Deltas - Delta_res[i] + Deltac_res[i]);
+
+      T_res(i, j)  = 2.*M_PI*M_PI * input[0] * imag (S13_res[i] * Deltas) * Chi_res[i]*Chi_res[i]
+	/abs (S13_res[i] * Deltas - Delta_res[i] + Deltac_res[i])
+      	/abs (S13_res[i] * Deltas - Delta_res[i] + Deltac_res[i]);
+    }
+}
+
 // ###########################################
 // Function to write Layer data to netcdf file
 // ###########################################
@@ -331,10 +373,15 @@ void Layer::WriteNetcdf ()
 
        NcDim x_d = dataFile.addDim ("nres",  nres);
        NcDim y_d = dataFile.addDim ("nmarg", 10);
+       NcDim z_d = dataFile.addDim ("Nscan", Nscan+1);
 
        vector<NcDim> marg_d;
        marg_d.push_back (x_d);
        marg_d.push_back (y_d);
+
+       vector<NcDim> torq_d;
+       torq_d.push_back (x_d);
+       torq_d.push_back (z_d);
 
        NcVar rres_x      = dataFile.addVar ("r_res",      ncDouble, x_d);
        rres_x.putVar (r_res);
@@ -380,6 +427,13 @@ void Layer::WriteNetcdf ()
        Dr_x.putVar (Dr_marg.data());
        NcVar Di_x = dataFile.addVar ("Di_marg", ncDouble, marg_d);
        Di_x.putVar (Di_marg.data());
+
+       NcVar om_x = dataFile.addVar ("omega_r", ncDouble, z_d);
+       om_x.putVar (omega_r.data());
+       NcVar xi_x = dataFile.addVar ("Xi_res",  ncDouble, torq_d);
+       xi_x.putVar (Xi_res.data());
+       NcVar t_x = dataFile.addVar  ("T_res",   ncDouble, torq_d);
+       t_x.putVar (T_res.data());
      }
    catch (NcException& e)
      {
@@ -396,7 +450,7 @@ void Layer::CleanUp ()
 {
   delete[] r_res,    delete[] m_res;     delete[] Delta_res; delete[] Deltac_res; delete[] tau_res;
   delete[] QE_res;   delete[] Qe_res;    delete[] Qi_res;    delete[] iotae_res;  delete[] D_res;
-  delete[] Pphi_res; delete[] Pperp_res; delete[] S13_res;
+  delete[] Pphi_res; delete[] Pperp_res; delete[] S13_res;   delete[] Chi_res;    delete[] input;
   delete[] gamma_e;  delete[] omega_e;   delete[] res_e;     delete[] lowD_e;
 }
 

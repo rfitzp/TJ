@@ -62,11 +62,13 @@ private:
   // .............
   // TJ parameters
   // .............
+  double* input;      // TJ input parameters
   int     nres;       // Number of rational surfaces
   double* r_res;      // Radii of rational surfaces (read from TJ.nc)
   int*    m_res;      // Poloidal mode numbers of rational surfaces (read from TJ.nc)
   double* Delta_res;  // Delta_primes at rational surfaces (read from TJ.nc)
   double* Deltac_res; // Critical Delta_primes at rational surfaces (read from TJ.nc)
+  double* Chi_res;    // Absolute values of Chi (read from TJ.nc)
   double* S13_res;    // Cube roots of Lundquist numbers at rational surfaces (read from TJ.nc)
   double* tau_res;    // Normalized resistive kink timescales at rational surfaces (read from TJ.nc)
   double* QE_res;     // Normalized ExB frequencies at rational surfaces (read from TJ.nc)
@@ -98,7 +100,7 @@ private:
   double pstart; // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double pend;   // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double P3max;  // Value of Pmax[3] above which switch to low-D layer equations made (read from JSON file)
-  int    Nscan;  // Number of points in marginal stability scans (read from JSON file)
+  int    Nscan;  // Number of points in marginal stability and frequency scans (read from JSON file)
 
   // .........................
   // Marginal stability points
@@ -115,7 +117,14 @@ private:
   double* gamma_e; // Electron-branch growth-rates at rational surfaces (kHz)
   double* omega_e; // Electron-branch real frequencies at rational surfaces  (kHz)
   double* res_e;   // Electron-branch residuas of zero search at rational surfaces 
-  int*    lowD_e;  // Electron-branch low D flags at rational surfaces 
+  int*    lowD_e;  // Electron-branch low D flags at rational surfaces
+
+  // ..........................................
+  // Shielding factor and locking torque curves
+  // ..........................................
+  Array<double,1> omega_r; // Real frequency of RMP
+  Array<double,2> Xi_res;  // Shielding factor curves
+  Array<double,2> T_res;   // Locking torque curves
 
   // ...............................
   // Adaptive integration parameters
@@ -165,6 +174,8 @@ private:
   void FindMarginal (int i);
   // Find complex growth-rate of electron branch-mode associated with ith rational surface
   void GetElectronBranchGrowth (int i);
+  // Find shielding factor and locking torque curves associated with ith rational surface
+  void GetTorque (int i);
   // Write Layer data to netcdf file
   void WriteNetcdf ();
   // Deallocate memory

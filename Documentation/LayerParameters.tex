@@ -33,6 +33,8 @@ The following derived parameter is also required:
 Let the $k$th rational surface be resonant with poloidal mode number $m_k$ and lie at normalized radius $\hat{r}_k$. 
 We can define
 \begin{align}
+q_k &= q(\hat{r}_k),\\[0.5ex]
+s_k&= s(\hat{r}_k),\\[0.5ex]
 n_{e\,k} &= n_0\,(1-\hat{r}_k^{\,2})^\alpha,\\[0.5ex]
 p_k &= \frac{\epsilon^2\,B_0^{\,2}\,p_2(\hat{r}_k),}{\mu_0}\\[0.5ex]
 T_{e\,k} &= \frac{p_k}{2\,n_{e\,k}\,e},\\[0.5ex]
@@ -40,7 +42,7 @@ T_{e\,k} &= \frac{p_k}{2\,n_{e\,k}\,e},\\[0.5ex]
 \tau_{ee\,k}&= \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_{e\,k}^{\,3/2}}{\ln{\mit\Lambda}_k\,e^{5/2}\,n_{e\,k}},\\[0.5ex]
 \sigma_{\parallel\,k} &= \frac{\sqrt{2}+13\,Z_{\rm eff}/4}{Z_{\rm eff}\,(\sqrt{2}+Z_{\rm eff})}\,\frac{n_{e\,k}\,e^2\,\tau_{ee\,k}}{m_e},\\[0.5ex]
 g_k &= 1+ \epsilon^2\,g_2(\hat{r}_k),\\[0.5ex]
-L_{s\,k} &= \frac{R_0\,q(\hat{r}_k)}{s(\hat{r}_k)},\\[0.5ex]
+L_{s\,k} &= \frac{R_0\,q_k}{s_k},\\[0.5ex]
 V_{A\,k} &= \frac{B_0\,g_k}{(\mu_0\,n_{e\,k}\,M\,m_p)^{1/2}},\\[0.5ex]
 d_{i\,k} &= \left(\frac{M\,m_p}{n_{e\,k}\,e^2\,\mu_0}\right)^{1/2},\\[0.5ex]
 \beta_k &= \frac{5\,\epsilon^2\,p_2(\hat{r}_k)}{3\,g_k^{\,2}},\\[0.5ex]
@@ -64,5 +66,28 @@ D_k &= S_{k}^{\,1/3}\,\iota_{e\,k}^{\,1/2}\,\hat{d}_{\beta\,k},\\[0.5ex]
 P_{\varphi\,k} &= \frac{\tau_{R\,k}}{\tau_{\perp\,k}},\\[0.5ex]
 P_{\perp\,k} &= \frac{\tau_{R\,k}}{\tau_{\perp\,k}}.
 \end{align}
+
+\section{Critical ${\mit\Delta}'$}
+The critical ${\mit\Delta}'$, due to magnetic field-line curvature effects at the rational surface, that must be exceeded before an
+electron-branch tearing mode becomes unstable be written
+\begin{align}
+{\mit\Delta}_{c\,k} = - \frac{\sqrt{2}\,\pi^{3/2}\,D_{R\,k}}{\hat{W}_{d\,k}},
+\end{align}
+where
+\begin{align}
+D_{R\,k} = 
+-\frac{2\,\epsilon^2\,\hat{r}_k\,p_2'(\hat{r}_k)\,(1-q_k^2)}{s_k^2}
+- \frac{2\,\epsilon^2\,p_2'(\hat{r}_k)\,q_k^2\,H_1'(\hat{r}_k)}{s_k},
+\end{align}
+and
+\begin{align}
+\hat{W}_{d\,k} &= \sqrt{8}\left(\frac{\chi_\perp}{\chi_\parallel}\right)_{r_k}^{1/4}
+\frac{1}{(\epsilon\,\hat{r}_k\,s_k\,n)^{1/2}},\\[0.5ex]
+\chi_\parallel &= \frac{\chi_\parallel^{\rm smfp} \,\chi_\parallel^{\rm lmfp}}{\chi_\parallel^{\rm smfp}+\chi_\parallel^{\rm lmfp}},\\[0.5ex]
+\chi_\parallel^{\rm smfp} &= \frac{1.581\,\tau_{ee\,k}\,v_{T\,e\,k}}{1+ 0.2535\,Z_{\rm eff}},\\[0.5ex]
+\chi_\parallel^{\rm lmfp}&= \frac{2\,R_0\,v_{T\,e\,k}}{\pi^{1/2}\,n\,s_k\,\hat{W}_{d\,k}},\\[0.5ex]
+v_{T\,e\,k} &= \left(\frac{2\,T_{e\,k}}{m_e}\right)^{1/2}.
+\end{align}
+
 
 \end{document}

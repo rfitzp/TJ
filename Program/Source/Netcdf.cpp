@@ -399,7 +399,8 @@ void TJ::WriteNetcdf ()
   double* Up_i    = new double[J];
   double* Chi_r   = new double[nres];
   double* Chi_i   = new double[nres];
-  double* Delta_r  = new double[nres];
+  double* Chi_a   = new double[nres];
+  double* Delta_r = new double[nres];
 
   Input[0]  = double (NTOR);
   Input[1]  = double (MMIN);
@@ -532,6 +533,7 @@ void TJ::WriteNetcdf ()
     {
       Chi_r[j] = real (Chi[j]);
       Chi_i[j] = imag (Chi[j]);
+      Chi_a[j] = abs (Chi[j]);
     }
 
   for (int j = 0; j < nres; j++)
@@ -798,6 +800,8 @@ void TJ::WriteNetcdf ()
       chi_r.putVar (Chi_r);
       NcVar chi_i   = dataFile.addVar ("Chi_i",     ncDouble, x_d);
       chi_i.putVar (Chi_i);
+      NcVar chi_a   = dataFile.addVar ("Chi_a",     ncDouble, x_d);
+      chi_a.putVar (Chi_a);
 
       NcVar Te_r  = dataFile.addVar ("Te",         ncDouble, x_d);
       Te_r.putVar (Teres);

@@ -277,7 +277,10 @@ B(p)&=\hat{g}\,(\hat{g}+{\rm i}\,Q_i)+(\hat{g}+{\rm i}\,Q_i)\,(P_\varphi+P_\perp
 C(p) &=\hat{g}+{\rm i}\,Q_e+ [P_\perp+
 (\hat{g}+{\rm i}\,Q_i)\,D^2]\,p^2 + \iota_e^{\,-1}\,P_\varphi\,D^2\,p^4.
 \end{align}
-Note that $\iota_e = Q_e/(Q_e-Q_i)$. 
+Note that 
+\begin{equation}
+\iota_e = \frac{Q_e}{Q_e-Q_i}.
+\end{equation} 
 Furthermore, because
 \begin{equation}
 \hat{Y}_e(p) = \left(\frac{\hat{g}+{\rm i}\,Q_e}{\hat{g}}\right)\hat{\phi}(p)
@@ -391,7 +394,55 @@ at large-$p$.
 
 \subsection{Method of Solution}
 We launch a solution of Eqs~(\ref{e72a})  from large $p$, subject to the  boundary condition (\ref{e63a}) or (\ref{e63aa}), as appropriate,  and
-integrate it to small $p$. We can deduce the value of $\hat{\mit\Delta}_s$ from Eq.~(\ref{e73a}). 
+integrate it to small $p$. We can then deduce the value of $\hat{\mit\Delta}_s(\hat{g},Q_e,Q_i,D,P_\varphi,P_\perp)$ from Eq.~(\ref{e73a}). 
+
+\section{Incorporation into TJ Code}
+\subsection{TJ Data}
+For each of the $K$ rational surface in the plasma, TJ calculates
+\begin{align}
+&S^{1/3}_k,\\[0.5ex]
+&\tau_k \equiv S^{1/3}_k\,\tau_{H\,k},\\[0.5ex]
+&Q_{E\,k},\\[0.5ex]
+&Q_{e\,k},\\[0.5ex]
+&Q_{i\,k},\\[0.5ex]
+&D_k,\\[0.5ex]
+&P_{\varphi\,k},\\[0.5ex]
+&P_{\perp\,k},\\[0.5ex]
+&E_{kk},\\[0.5ex]
+&{\mit\Delta}_{c\,k},\\[0.5ex]
+&|\chi_k|.
+\end{align}
+
+\subsection{Calculation of Growth-Rate and Real Frequency}
+Solve
+\begin{equation}
+E_{kk} - {\mit\Delta}_{c\,k} = S^{1/3}_k\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})
+\end{equation}
+for $\hat{g}$ starting from a suitable marginal stability point. 
+The growth-rate is
+\begin{equation}
+\gamma =\frac{{\rm Re}(\hat{g})}{\tau_k},
+\end{equation}
+and the real frequency is
+\begin{equation}
+\omega = \frac{Q_E-{\rm Im}(\hat{g})}{\tau_k}.
+\end{equation}
+
+\subsection{Calculation of Shielding Factor and Locking Torque}
+The shielding factor at the rational surface is
+\begin{equation}
+{\mit\Xi}_k(\omega) = \left|\frac{-E_{kk} +{\mit\Delta}_{c\,k}}{S_k^{1/3}\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})-E_{kk}+
+{\mit\Delta}_{c\,k}}\right|,
+\end{equation}
+where
+\begin{equation}
+\hat{g} = {\rm i}\,(Q_E-\omega\,\tau_k).
+\end{equation}
+Likewise, the locking torque takes the form
+\begin{equation}
+\delta T_k(\omega) = 2\pi^2\,n \,\frac{{\rm Im}[S_k^{1/3}\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})]}{
+|S_k^{\,1/3}\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})-E_{kk}+{\mit\Delta}_{c\,k}|^2}\,|\chi_k|^2.
+\end{equation}
 
 
 \section*{Acknowledgements}
