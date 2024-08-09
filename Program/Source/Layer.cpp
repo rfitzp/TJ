@@ -99,14 +99,15 @@ void Layer::Solve ()
   // .....................................
   ReadNetcdf ();
 
-  // ..............................
-  // Find marginal stability points
-  // ..............................
+  // ...............
+  // Allocate memory
+  // ...............
   np_marg.resize (nres);
   gr_marg.resize (nres, 10);
   gi_marg.resize (nres, 10);
   Dr_marg.resize (nres, 10);
   Di_marg.resize (nres, 10);
+
   for (int i = 0; i < nres; i++)
     for (int j = 0; j < 10; j++)
       {
@@ -116,6 +117,18 @@ void Layer::Solve ()
 	Di_marg(i, j) = - 1.e15;
       }
 
+  gamma_e = new double[nres];
+  omega_e = new double[nres];
+  res_e   = new double[nres];
+  lowD_e  = new int   [nres];
+
+  omega_r.resize (nres, Nscan + 1);
+  Xi_res.resize  (nres, Nscan + 1);
+  T_res.resize   (nres, Nscan + 1);
+
+  // ..............................
+  // Find marginal stability points
+  // ..............................
   printf ("Marginal stability points:\n");
   for (int i = 0; i < nres; i++)
     FindMarginal (i);
@@ -123,11 +136,6 @@ void Layer::Solve ()
   // ...........................................................
   // Calculate electron-branch growth-rates and real frequencies
   // ...........................................................
-  gamma_e = new double [nres];
-  omega_e = new double [nres];
-  res_e   = new double [nres];
-  lowD_e  = new int    [nres];
-
   printf ("Electron-branch growth-rates and real frequencies:\n");
   for (int i = 0; i < nres; i++)
     GetElectronBranchGrowth (i);
@@ -135,18 +143,10 @@ void Layer::Solve ()
   // ............................................
   // Calculate shielding factor and torque curves
   // ............................................
-  omega_r.resize (Nscan + 1);
-  Xi_res.resize  (nres, Nscan + 1);
-  T_res.resize   (nres, Nscan + 1);
-
   printf ("Calculating shielding factor and torque curves:\n");
-  double Qast = (Qe_res[0] - Qi_res[0]) /tau_res[0];
-  for (int i = 0; i <= Nscan; i++)
-    omega_r[i] = - Qast + 2.*Qast * double(i) /double(Nscan);
-
   for (int i = 0; i < nres; i++)
     GetTorque (i);
-
+     
   // .....................................
   // Write calculation date to netcdf file
   // .....................................
@@ -185,9 +185,11 @@ void Layer::ReadNetcdf ()
       NcVar Pphi_x   = dataFile.getVar ("Pphi");
       NcVar Pperp_x  = dataFile.getVar ("Pperp");
       NcDim n_x      = rres_x.getDim (0);
+      NcDim p_x      = input_x.getDim (0);
 
       nres       = n_x.getSize ();
-      input      = new double[100];
+      int npara  = p_x.getSize ();
+      input      = new double[npara];
       r_res      = new double[nres];
       m_res      = new int[nres];
       Delta_res  = new double[nres];
@@ -257,41 +259,41 @@ void Layer::FindMarginal (int i)
   double* DD_i = new double[Nscan + 1];
   
   g_r = 0.;
-  for (int i = 1; i <= Nscan; i++)
+  for (int j = 1; j <= Nscan; j++)
     {
-      g_i = - Qe - (Qi - Qe) * double (i) /double (Nscan);
+      g_i = - Qe - (Qi - Qe) * double (j) /double (Nscan);
 
       SolveLayerEquations ();
-      gg_i[i] = g_i;
-      DD_i[i] = imag (Deltas);
+      gg_i[j] = g_i;
+      DD_i[j] = imag (Deltas);
     }
 
   // ..............................
   // Find marginal stability points
   // ..............................
-  int index = 0;
+  int cnt = 0;
   np_marg(i)    = 1;
   gr_marg(i, 0) = g_r;
   gi_marg(i, 0) = - Qe;
   Dr_marg(i, 0) = g_r;
   Di_marg(i, 0) = g_r;
 
-  for (int i = 1; i < Nscan; i++)
+  for (int j = 1; j < Nscan; j++)
     {
       double x;
-      if (DD_i[i] * DD_i[i+1] < 0.)
+      if (DD_i[j] * DD_i[j+1] < 0.)
 	{
-	  Ridder (gg_i[i], gg_i[i+1], DD_i[i], DD_i[i+1], x);
+	  Ridder (gg_i[j], gg_i[j+1], DD_i[j], DD_i[j+1], x);
 
 	  g_i = x;
 	  SolveLayerEquations ();
 
-	  index++;
-	  np_marg(i)        += 1;
-	  gr_marg(i, index) = g_r;
-	  gi_marg(i, index) = g_i;
-	  Dr_marg(i, index) = real (Deltas);
-	  Di_marg(i, index) = imag (Deltas);
+	  cnt++;
+	  np_marg(i)     += 1;
+	  gr_marg(i, cnt) = g_r;
+	  gi_marg(i, cnt) = g_i;
+	  Dr_marg(i, cnt) = real (Deltas);
+	  Di_marg(i, cnt) = imag (Deltas);
 	}
     }
 
@@ -299,7 +301,7 @@ void Layer::FindMarginal (int i)
 
   for (int j = 0; j < np_marg(i); j++)
     printf ("Rational surface %3d: g = (%10.3e, %10.3e) Delta_s = (%10.3e, %10.3e)\n",
-	    i, gr_marg(i, j), gi_marg(i, j), Dr_marg(i, j), Di_marg(i, j));
+	    i+1, gr_marg(i, j), gi_marg(i, j), Dr_marg(i, j), Di_marg(i, j));
 }
 
 // #################################################################################################
@@ -345,9 +347,12 @@ void Layer::GetElectronBranchGrowth (int i)
 void Layer::GetTorque (int i)
 {
   for (int j = 0; j <= Nscan; j++)
+    omega_r(i ,j) = (1.1*Qi_res[i] + QE_res[i] + (2.*Qe_res[i] - 1.1*Qi_res[i] + QE_res[i]) * double (j) /double (Nscan)) /tau_res[i];
+  
+  for (int j = 0; j <= Nscan; j++)
     {
       g_r = 0.;
-      g_i = QE_res[i] - omega_r(j) * tau_res[i];
+      g_i = QE_res[i] - omega_r(i, j) * tau_res[i];
 
       SolveLayerEquations ();
 
@@ -367,6 +372,40 @@ void Layer::WriteNetcdf ()
 {
    printf ("Writing data to netcdf file Plots/Layer.nc:\n");
 
+   int*    np_y = new int[nres];
+   double* gr_y = new double[nres*10];
+   double* gi_y = new double[nres*10];
+   double* dr_y = new double[nres*10];
+   double* di_y = new double[nres*10];
+
+   double* om_y = new double[nres*(Nscan+1)];
+   double* xi_y = new double[nres*(Nscan+1)];
+   double* t_y  = new double[nres*(Nscan+1)];
+
+   for (int i = 0; i < nres; i++)
+     np_y[i] = np_marg(i);
+
+   int cnt = 0;
+   for (int i = 0; i < nres; i++)
+     for (int j = 0; j < 10; j++)
+       {
+	 gr_y[cnt] = gr_marg(i, j);
+	 gi_y[cnt] = gi_marg(i, j);
+	 dr_y[cnt] = Dr_marg(i, j);
+	 di_y[cnt] = Di_marg(i, j);
+	 cnt++;
+       }
+
+   cnt = 0;
+   for (int i = 0; i < nres; i++)
+     for (int j = 0; j <= Nscan; j++)
+       {
+	 om_y[cnt] = omega_r(i, j);
+	 xi_y[cnt] = Xi_res(i, j);
+	 t_y[cnt]  = T_res(i, j);
+	 cnt++;
+       }
+      
    try
      {
        NcFile dataFile ("Plots/Layer.nc", NcFile::replace);
@@ -403,6 +442,8 @@ void Layer::WriteNetcdf ()
        Qires_x.putVar (Qi_res);
        NcVar iotaeres_x  = dataFile.addVar ("iotae_res",  ncDouble, x_d);
        iotaeres_x.putVar (iotae_res);
+       NcVar D_x         = dataFile.addVar ("D_res",      ncDouble, x_d);
+       D_x.putVar (D_res);
        NcVar Pphires_x   = dataFile.addVar ("Pphi_res",   ncDouble, x_d);
        Pphires_x.putVar (Pphi_res);
        NcVar Pperpres_x  = dataFile.addVar ("Pperp_res",  ncDouble, x_d);
@@ -418,22 +459,22 @@ void Layer::WriteNetcdf ()
        lowDe_x.putVar (lowD_e);
 
        NcVar np_x = dataFile.addVar ("n_marg",  ncInt,    x_d);
-       np_x.putVar (np_marg.data());
+       np_x.putVar (np_y);
        NcVar gr_x = dataFile.addVar ("gr_marg", ncDouble, marg_d);
-       gr_x.putVar (gr_marg.data());
+       gr_x.putVar (gr_y);
        NcVar gi_x = dataFile.addVar ("gi_marg", ncDouble, marg_d);
-       gi_x.putVar (gi_marg.data());
+       gi_x.putVar (gi_y);
        NcVar Dr_x = dataFile.addVar ("Dr_marg", ncDouble, marg_d);
-       Dr_x.putVar (Dr_marg.data());
+       Dr_x.putVar (dr_y);
        NcVar Di_x = dataFile.addVar ("Di_marg", ncDouble, marg_d);
-       Di_x.putVar (Di_marg.data());
+       Di_x.putVar (di_y);
 
-       NcVar om_x = dataFile.addVar ("omega_r", ncDouble, z_d);
-       om_x.putVar (omega_r.data());
+       NcVar om_x = dataFile.addVar ("omega_r", ncDouble, torq_d);
+       om_x.putVar (om_y);
        NcVar xi_x = dataFile.addVar ("Xi_res",  ncDouble, torq_d);
-       xi_x.putVar (Xi_res.data());
-       NcVar t_x = dataFile.addVar  ("T_res",   ncDouble, torq_d);
-       t_x.putVar (T_res.data());
+       xi_x.putVar (xi_y);
+       NcVar t_x  = dataFile.addVar ("T_res",   ncDouble, torq_d);
+       t_x.putVar (t_y);
      }
    catch (NcException& e)
      {
@@ -441,6 +482,9 @@ void Layer::WriteNetcdf ()
        printf ("%s\n", e.what ());
        exit (1);
      }
+
+   delete[] gr_y; delete[] gi_y; delete[] dr_y; delete[] di_y;
+   delete[] om_y; delete[] xi_y; delete[] t_y;
 }
 
 // #############################

@@ -330,7 +330,7 @@ void TJ::FindDispersion ()
   printf ("Chi vector:\n");
   for (int k = 0; k < nres; k++)
     printf ("Rational surface %2d: Chi = (%10.3e, %10.3e) |Chi| = %10.3e\n",
-	    k, real(Chi[k]), imag(Chi[k]), abs(Chi[k]));
+	    k+1, real(Chi[k]), imag(Chi[k]), abs(Chi[k]));
   
 }
 

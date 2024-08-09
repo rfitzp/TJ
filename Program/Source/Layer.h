@@ -122,7 +122,7 @@ private:
   // ..........................................
   // Shielding factor and locking torque curves
   // ..........................................
-  Array<double,1> omega_r; // Real frequency of RMP
+  Array<double,2> omega_r; // Real frequencies of RMPs
   Array<double,2> Xi_res;  // Shielding factor curves
   Array<double,2> T_res;   // Locking torque curves
 
