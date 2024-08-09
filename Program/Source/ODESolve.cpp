@@ -25,6 +25,10 @@ void TJ::ODESolve ()
     for (int j = 0; j < K; j++)
       Pi(i, j) = complex<double> (0., 0.);
 
+  dPi.resize (nres);
+  for (int i = 0; i < nres; i++)
+       dPi(i) = complex<double> (0., 0.);
+
   Rgrid = new double[NDIAG];
   for (int i = 0; i < NDIAG; i++)
     Rgrid[i] = EPS + (1. - EPS) * double (i) /double (NDIAG - 1);
@@ -292,6 +296,7 @@ void TJ::LaunchRational (int jres, double r, Array<complex<double>,2> YY)
     }
 
   PackYY (PPsi, ZZ, YY);
+  dPi (jres) = complex<double> (1., 0.);
 
   delete[] akt; delete[] bkt;
 }
@@ -494,6 +499,44 @@ void TJ::Fixup (double r, Array<complex<double>,2> YY)
 		    Pi(k, j) = Pi(k, j) - (yij /yii) * Pi(k, i);
 		}
 	    }
+
+	  /*
+	  for (int j = 0; j < nres; j++)
+	    {
+	      complex<double> yij = YY(i, J+j);
+
+	      // Fixup solution vectors
+	      for (int k = 0; k < 2*J; k++)
+		{
+		  complex<double> yki = YY(k, i);
+		  complex<double> ykj = YY(k, J+j);
+
+		  YY(k, J+j) = ykj - (yij /yii) * yki;
+		}
+
+	      // Fixup previously calculated solution vectors
+	      for (int l = 0; l < NDIAG; l++)
+		{
+		  if (r > Rgrid[l])
+		    {
+		      for (int k = 0; k < 2*J; k++)
+			{
+			  complex<double> Yki = YYY(k, i,   l);
+			  complex<double> Ykj = YYY(k, J+j, l);
+			  
+			  YYY(k, J+j, l) = Ykj - (yij /yii) * Yki;
+			}
+		    }
+		}
+	      
+	      // Fixup Pi matrix
+	      for (int k = 0; k < nres; k++)
+		{
+		  if (r > rres[k])
+		    Pi(k, J+j) = Pi(k, J+j) - (yij /yii) * Pi(k, i);
+		}
+	    }
+	  */
 	}
       for (int i = 0; i < i0; i++)
 	{
@@ -574,6 +617,51 @@ void TJ::Fixup (double r, Array<complex<double>,2> YY)
 		  Pi(k, i) = pki /yii;
 		}
 	    }
+	}
+    }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // Renormalize independent solution vectors launched from rational surfaces
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  for (int i = 0; i < nres; i++)
+    {
+      complex<double> yii = YY(Jres[i], J+i);
+
+      if (abs (yii) > 1.e-15)
+	{
+          // Renormalize solution vectors
+	  for (int k = 0; k < 2*J; k++)
+	    {
+	      complex<double> yki = YY(k, J+i);
+	      
+	      YY(k, J+i) = yki /yii;
+	      
+	      for (int l = 0; l < NDIAG; l++)
+		{
+		  if (r > Rgrid[l])
+		    {
+		      complex<double> Yki = YYY(k, J+i, l);
+		      
+		      YYY(k, J+i, l) = Yki /yii;
+		    }
+		}
+	    }
+	  
+	  // Renormalize Pi matrix
+	  for (int k = 0; k < nres; k++)
+	    {
+	      if (r > rres[k])
+		{
+		  complex<double> pki = Pi(k, J+i);
+		  
+		  Pi(k, J+i) = pki /yii;
+		}
+	    }
+
+	  // Renormalize dPi vector
+	  complex<double> dpi = dPi(i);
+	  
+	  dPi(i) = dpi /yii;
 	}
     }
 }

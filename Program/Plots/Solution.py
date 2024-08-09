@@ -1,6 +1,6 @@
 # Solution.py
 
-# Plots mth harmonic of psi and Z components of m'-dominant solution vector versus r.
+# Plots mth poloidal harmonic of psi and Z components of m'-dominant solution vector versus r.
 # User prompted for m and m'.
 # Locations of rational surfaces are shown.
 
@@ -23,6 +23,7 @@ Tq    = ds['Torque_test']
 rres  = ds['rres']
 
 fig = plt.figure (figsize = (12.0, 8.0))
+fig.canvas.manager.set_window_title (r"TJ Code: mth Poloidal Harmonic of m'th Dominant Solution Vector")
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 

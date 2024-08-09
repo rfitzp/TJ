@@ -275,6 +275,7 @@ class TJ
   double*                  eode;  // Truncation error versus radius
   Array<complex<double>,3> YYY;   // Solution vectors versus radius
   Array<complex<double>,2> Pi;    // Reconnected fluxes at rational surfaces associated with solution vectors
+  Array<complex<double>,1> dPi;   // Current sheets at rational surfaces associated with solution vectors
 
   // -------------------------------------
   // Tearing-mode dispersion relation data

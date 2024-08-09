@@ -23,6 +23,7 @@ Tq    = ds['Torque_test']
 rres  = ds['rres']
 
 fig = plt.figure (figsize=(12.0, 8.0))
+fig.canvas.manager.set_window_title (r"TJ Code: mth Poloidal Harmonic Dominant Solution Vector")
 plt.rc('xtick', labelsize=15) 
 plt.rc('ytick', labelsize=15)
 
@@ -171,6 +172,7 @@ plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
+plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
 plt.xlabel (r'$\hat{r}$', fontsize = "15")
 plt.ylabel (r"$T_\phi$",  fontsize = "15")
     

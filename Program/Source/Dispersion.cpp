@@ -89,12 +89,12 @@ void TJ::FindDispersion ()
     for (int jp = 0; jp < nres; jp++)
       {
 	if (FREE)
-	  Ymat(j, jp) = - Zs(j, jp) /(mpol[j] - ntor*qa);
+	  Ymat(j, jp) = - Zs(j, jp) /(mpol[j] - ntor*qa) /dPi(jp);
 	else
 	  Ymat(j, jp) = complex<double> (0., 0.);
 
 	for (int k = 0; k < J; k++)
-	  Ymat(j, jp) += Hmat(j, k) * Psis(k, jp);
+	  Ymat(j, jp) += Hmat(j, k) * Psis(k, jp) /dPi(jp);
       }
 
   // ......................
@@ -108,7 +108,7 @@ void TJ::FindDispersion ()
   for (int j = 0; j < nres; j++)
     for (int jp = 0; jp < nres; jp++)
       {
-	Fmat(j, jp) = Pis(j, jp);
+	Fmat(j, jp) = Pis(j, jp) /dPi(jp);
 
 	for (int k = 0; k < J; k++)
 	  Fmat(j, jp) += Pia(j, k) * Omat(k, jp);
@@ -154,12 +154,12 @@ void TJ::FindDispersion ()
       for (int j = 0; j < J; j++)
 	for (int k = 0; k < nres; k++)
 	  {
-	    Psif(j, k, i) = YYY(j, J+k, i);
+	    Psif(j, k, i) = YYY(j, J+k, i) /dPi(k);
 
 	    for (int jp = 0; jp < J; jp++)
 	      Psif(j, k, i) += YYY(j, jp, i) * Omat(jp, k);
 
-	    Zf(j, k, i) = YYY(J+j, J+k, i);
+	    Zf(j, k, i) = YYY(J+j, J+k, i) /dPi(k);
 
 	    for (int jp = 0; jp < J; jp++)
 	      Zf(j, k, i) += YYY(J+j, jp, i) * Omat(jp, k);

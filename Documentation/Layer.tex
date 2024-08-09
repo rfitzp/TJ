@@ -416,7 +416,7 @@ For each of the $K$ rational surface in the plasma, TJ calculates
 \subsection{Calculation of Growth-Rate and Real Frequency}
 Solve
 \begin{equation}
-E_{kk} - {\mit\Delta}_{c\,k} = S^{1/3}_k\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})
+E_{kk}  = S^{1/3}_k\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})+ {\mit\Delta}_{c\,k}
 \end{equation}
 for $\hat{g}$ starting from a suitable marginal stability point. 
 The growth-rate is
@@ -431,8 +431,8 @@ and the real frequency is
 \subsection{Calculation of Shielding Factor and Locking Torque}
 The shielding factor at the rational surface is
 \begin{equation}
-{\mit\Xi}_k(\omega) = \left|\frac{-E_{kk} +{\mit\Delta}_{c\,k}}{S_k^{1/3}\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})-E_{kk}+
-{\mit\Delta}_{c\,k}}\right|,
+{\mit\Xi}_k(\omega) = \left|\frac{{\mit\Delta}_{c\,k}-E_{kk} }{S_k^{1/3}\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})+
+{\mit\Delta}_{c\,k}-E_{kk}}\right|,
 \end{equation}
 where
 \begin{equation}
@@ -440,16 +440,9 @@ where
 \end{equation}
 Likewise, the locking torque takes the form
 \begin{equation}
-\delta T_k(\omega) = 2\pi^2\,n \,\frac{{\rm Im}[S_k^{1/3}\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})]}{
-|S_k^{\,1/3}\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})-E_{kk}+{\mit\Delta}_{c\,k}|^2}\,|\chi_k|^2.
+\delta T_k(\omega) = 2\pi^2\,n \,|\chi_k|^2\,\frac{{\rm Im}[S_k^{1/3}\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})]}{
+|S_k^{\,1/3}\,\hat{\mit\Delta}_s(\hat{g}, Q_{e\,k},Q_{i\,k},D_k,P_{\varphi\,k},P_{\perp\,k})+{\mit\Delta}_{c\,k}-E_{kk}|^2}.
 \end{equation}
-
-
-\section*{Acknowledgements}
-This research was directly funded by the U.S.\ Department of Energy,  Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
-
-\section*{Data Availability Statement}
-The digital data used in the figures in this paper can be obtained from the author upon reasonable request.
 
 \section*{References}
 \begin{thebibliography}{99}\baselineskip 5ex
@@ -475,7 +468,5 @@ The digital data used in the figures in this paper can be obtained from the auth
 \bibitem{rf1} R.~Fitzpatrick, Phys.\ Plasmas {\bf 10}, 2304 (2003).
 
 \end{thebibliography}
-
-
 
 \end{document}

@@ -123,6 +123,8 @@ void Layer::Solve ()
   lowD_e  = new int   [nres];
 
   omega_r.resize (nres, Nscan + 1);
+  Deltar.resize  (nres, Nscan + 1);
+  Deltai.resize  (nres, Nscan + 1);
   Xi_res.resize  (nres, Nscan + 1);
   T_res.resize   (nres, Nscan + 1);
 
@@ -346,6 +348,21 @@ void Layer::GetElectronBranchGrowth (int i)
 // #############################################################################################
 void Layer::GetTorque (int i)
 {
+  // ....................
+  // Set layer parameters
+  // ....................
+  Qe    = Qe_res[i];
+  Qi    = Qi_res[i];
+  D     = D_res[i];
+  Pphi  = Pphi_res[i];
+  Pperp = Pperp_res[i];
+  iotae = iotae_res[i];
+
+  // .......................................
+  // Calculate torques and shielding factors
+  // .......................................
+  double Dr, Di, A, B;
+  
   for (int j = 0; j <= Nscan; j++)
     omega_r(i ,j) = (1.1*Qi_res[i] + QE_res[i] + (2.*Qe_res[i] - 1.1*Qi_res[i] + QE_res[i]) * double (j) /double (Nscan)) /tau_res[i];
   
@@ -356,12 +373,17 @@ void Layer::GetTorque (int i)
 
       SolveLayerEquations ();
 
-      Xi_res(i, j) = fabs (- Delta_res[i] + Deltac_res[i])
-	/abs (S13_res[i] * Deltas - Delta_res[i] + Deltac_res[i]);
+      B  = Deltac_res[i] - Delta_res[i] ;
+      Dr = S13_res[i] * real (Deltas) + B;
+      Di = S13_res[i] * imag (Deltas);
+      A  = sqrt (Dr*Dr + Di*Di);
+      
+      Deltar(i, j) = Dr;
+      Deltai(i, j) = Di;
 
-      T_res(i, j)  = 2.*M_PI*M_PI * input[0] * imag (S13_res[i] * Deltas) * Chi_res[i]*Chi_res[i]
-	/abs (S13_res[i] * Deltas - Delta_res[i] + Deltac_res[i])
-      	/abs (S13_res[i] * Deltas - Delta_res[i] + Deltac_res[i]);
+      Xi_res(i, j) = fabs (B) /A;
+
+      T_res(i, j)  = 2.*M_PI*M_PI * input[0] * Chi_res[i]*Chi_res[i] * Di /A/A;
     }
 }
 
@@ -379,6 +401,8 @@ void Layer::WriteNetcdf ()
    double* di_y = new double[nres*10];
 
    double* om_y = new double[nres*(Nscan+1)];
+   double* Dr_y = new double[nres*(Nscan+1)];
+   double* Di_y = new double[nres*(Nscan+1)];
    double* xi_y = new double[nres*(Nscan+1)];
    double* t_y  = new double[nres*(Nscan+1)];
 
@@ -401,6 +425,8 @@ void Layer::WriteNetcdf ()
      for (int j = 0; j <= Nscan; j++)
        {
 	 om_y[cnt] = omega_r(i, j);
+	 Dr_y[cnt] = Deltar(i, j);
+	 Di_y[cnt] = Deltai(i, j);
 	 xi_y[cnt] = Xi_res(i, j);
 	 t_y[cnt]  = T_res(i, j);
 	 cnt++;
@@ -469,11 +495,15 @@ void Layer::WriteNetcdf ()
        NcVar Di_x = dataFile.addVar ("Di_marg", ncDouble, marg_d);
        Di_x.putVar (di_y);
 
-       NcVar om_x = dataFile.addVar ("omega_r", ncDouble, torq_d);
+       NcVar om_x = dataFile.addVar  ("omega_r", ncDouble, torq_d);
        om_x.putVar (om_y);
-       NcVar xi_x = dataFile.addVar ("Xi_res",  ncDouble, torq_d);
+       NcVar DDr_x = dataFile.addVar ("Deltar",  ncDouble, torq_d);
+       DDr_x.putVar (Dr_y);
+       NcVar DDi_x = dataFile.addVar ("Deltai",  ncDouble, torq_d);
+       DDi_x.putVar (Di_y);
+       NcVar xi_x = dataFile.addVar  ("Xi_res",  ncDouble, torq_d);
        xi_x.putVar (xi_y);
-       NcVar t_x  = dataFile.addVar ("T_res",   ncDouble, torq_d);
+       NcVar t_x  = dataFile.addVar  ("T_res",   ncDouble, torq_d);
        t_x.putVar (t_y);
      }
    catch (NcException& e)
