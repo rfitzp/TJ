@@ -1,5 +1,6 @@
 // Equilibrium.cpp
 
+#include "LightEquilibrium.h"
 #include "Equilibrium.h"
 
 // ###########
@@ -61,7 +62,7 @@ Equilibrium::Equilibrium ()
   json   JSONData     = ReadJSONFile (JSONFilename);
 
   qc   = JSONData["Equilibrium_control"]["qc"]  .get<double> ();
-  nu   = JSONData["Equilibrium_control"]["nu"]  .get<double> ();
+  qa   = JSONData["Equilibrium_control"]["qa"]  .get<double> ();
   pc   = JSONData["Equilibrium_control"]["pc"]  .get<double> ();
   mu   = JSONData["Equilibrium_control"]["mu"]  .get<double> ();
   epsa = JSONData["Equilibrium_control"]["epsa"].get<double> ();
@@ -92,9 +93,9 @@ Equilibrium::Equilibrium ()
       printf ("Equilibrium:: Error - qc cannot be negative\n");
       exit (1);
     }
-  if (nu < 1.)
+  if (qa < qc)
     {
-      printf ("Equilibrium:: Error - nu cannot be less than unity\n");
+      printf ("Equilibrium:: Error - qa cannot be less than qc\n");
       exit (1);
     }
   if (pc < 0.)
@@ -167,11 +168,20 @@ Equilibrium::Equilibrium ()
       printf ("Equilibrium:: Error - Hna and Van arrays must be the same size\n");
       exit (1);
     }
- }
 
-// ###########
+  // .......................................................
+  // Determine nu value that gives target edge safety-factor
+  // .......................................................
+  {
+    LightEquilibrium lightequilibrium;
+    
+    nu = lightequilibrium.GetNu (qa);
+  }
+}
+
+// ##########
 // Destructor
-// ###########
+// ##########
 Equilibrium::~Equilibrium ()
 {
 }
@@ -481,127 +491,8 @@ void Equilibrium::Solve ()
       Lfunc[i] = GetL (rf);
     }
 
-   gsl_spline_init (Lspline, rr, Lfunc, Nr+1);
+  gsl_spline_init (Lspline, rr, Lfunc, Nr+1);
 
-  // ...........................................................
-  // Calculate magnetic flux-surfaces for visualization purposes
-  // ...........................................................
-  printf ("Calculating magnetic flux-surfaces:\n");
-
-  for (int i = 1; i <= Nf; i++)
-    {
-      double rf = double (i) /double (Nf);
-      
-      for (int j = 0; j <= Nw; j++)
-	{
-	  double t = double (j) * 2.*M_PI /double (Nw);
-	  
-	  double w, wold = t;
-	  for (int i = 0; i < 10; i++)
-	    {
-	      w    = t - Gettheta (rf, wold);
-	      wold = w;
-	    }
-	  
-	  double R = GetR (rf, w);
-	  double Z = GetZ (rf, w);
-	  
-	  RR    (i-1, j) = R;
-	  ZZ    (i-1, j) = Z;
-	  rvals (i-1, j) = rf;
-	  thvals(i-1, j) = t;
-	  wvals (i-1, j) = w;
-	}
-    }
-
-  for (int i = 1; i <= Nf; i++)
-    {
-      double rf = double (i) /double (Nf);
-      
-      for (int j = 0; j <= Nw; j++)
-	{
-	  double w = double (j) * 2.*M_PI /double (Nw);
-	  
-	  double R = GetR (rf, w);
-	  double Z = GetZ (rf, w);
-	  
-	  RRw (i-1, j) = R;
-	  ZZw (i-1, j) = Z;
-	}
-    }
-  
-  // .......................
-  // Calculate boundary data
-  // .......................
-
-  // Set up preliminary omega grid
-  for (int j = 0; j <= Nw; j++)
-    wbound0[j] = double (j) * 2.*M_PI /double (Nw);
-  
-  // Calculate preliminary theta grid
-  tbound0[0] = 0.;
-  
-  double  w;
-  double* y3   = new double[1];
-  double* err3 = new double[1];
-  rhs_chooser  = 3;
-  
-  w     = 0.;
-  h     = h0;
-  count = 0;
-  y3[0] = 0.;
-  
-  for (int j = 1; j <= Nw; j++)
-    {
-      do
-	{
-	  CashKarp45Adaptive (1, w, y3, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
-	}
-      while (w < wbound0[j]);
-      CashKarp45Fixed (1, w, y3, err3, wbound0[j] - w);
-      
-      tbound0[j] = y3[0];
-    }
-
-  delete[] y3; delete[] err3;
-  
-  double rbb = tbound0[Nw] /(2.*M_PI);
-  printf ("rb = %10.3e\n", rbb);
-  
-  for (int j = 0; j < Nw; j++)
-    tbound0[j] /= rbb;
-
-  tbound0[Nw] = 2.*M_PI;
-  
-  // Interpolate preliminary boundary data
-  gsl_spline_init (wspline, tbound0, wbound0, Nw+1);
-  
-  // Calculate final boundary data
-  for (int j = 0; j <= Nw; j++)
-    tbound[j] = double (j) * 2.*M_PI /double (Nw);
-  
-  double rb = 1.;
-  for (int j = 0; j <= Nw; j++)
-    {
-      double t = tbound[j];
-      double w = gsl_spline_eval (wspline, t, wacc);
-      
-      wbound[j] = w;
-      Rbound[j] = GetR    (rb, w);
-      Zbound[j] = GetZ    (rb, w);
-      R2b   [j] = GetR2   (rb, t);
-      grr2b [j] = Getgrr2 (rb, t);
-    }
-  
-  gsl_spline_init (Rspline, tbound, Rbound, Nw+1);
-  gsl_spline_init (Zspline, tbound, Zbound, Nw+1);
-  
-  for (int j = 0; j <= Nw; j++)
-    {
-      dRdtheta[j] = gsl_spline_eval_deriv (Rspline, tbound[j], Racc);
-      dZdtheta[j] = gsl_spline_eval_deriv (Zspline, tbound[j], Zacc);
-    }
-   
   // .....................
   // Integrate f3 equation
   // .....................
@@ -802,6 +693,125 @@ void Equilibrium::Solve ()
   P3[0]  = P3[1]    - (P3[2]    - P3[1]);
   P3[Nr] = P3[Nr-1] + (P3[Nr-1] - P3[Nr-2]);
 
+  // ...........................................................
+  // Calculate magnetic flux-surfaces for visualization purposes
+  // ...........................................................
+  printf ("Calculating magnetic flux-surfaces:\n");
+
+  for (int i = 1; i <= Nf; i++)
+    {
+      double rf = double (i) /double (Nf);
+      
+      for (int j = 0; j <= Nw; j++)
+	{
+	  double t = double (j) * 2.*M_PI /double (Nw);
+	  
+	  double w, wold = t;
+	  for (int i = 0; i < 10; i++)
+	    {
+	      w    = t - Gettheta (rf, wold);
+	      wold = w;
+	    }
+	  
+	  double R = GetR (rf, w);
+	  double Z = GetZ (rf, w);
+	  
+	  RR    (i-1, j) = R;
+	  ZZ    (i-1, j) = Z;
+	  rvals (i-1, j) = rf;
+	  thvals(i-1, j) = t;
+	  wvals (i-1, j) = w;
+	}
+    }
+
+  for (int i = 1; i <= Nf; i++)
+    {
+      double rf = double (i) /double (Nf);
+      
+      for (int j = 0; j <= Nw; j++)
+	{
+	  double w = double (j) * 2.*M_PI /double (Nw);
+	  
+	  double R = GetR (rf, w);
+	  double Z = GetZ (rf, w);
+	  
+	  RRw (i-1, j) = R;
+	  ZZw (i-1, j) = Z;
+	}
+    }
+  
+  // .......................
+  // Calculate boundary data
+  // .......................
+
+  // Set up preliminary omega grid
+  for (int j = 0; j <= Nw; j++)
+    wbound0[j] = double (j) * 2.*M_PI /double (Nw);
+  
+  // Calculate preliminary theta grid
+  tbound0[0] = 0.;
+  
+  double  w;
+  double* y3   = new double[1];
+  double* err3 = new double[1];
+  rhs_chooser  = 3;
+  
+  w     = 0.;
+  h     = h0;
+  count = 0;
+  y3[0] = 0.;
+  
+  for (int j = 1; j <= Nw; j++)
+    {
+      do
+	{
+	  CashKarp45Adaptive (1, w, y3, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+	}
+      while (w < wbound0[j]);
+      CashKarp45Fixed (1, w, y3, err3, wbound0[j] - w);
+      
+      tbound0[j] = y3[0];
+    }
+
+  delete[] y3; delete[] err3;
+  
+  double rbb = tbound0[Nw] /(2.*M_PI);
+  printf ("rb = %10.3e\n", rbb);
+  
+  for (int j = 0; j < Nw; j++)
+    tbound0[j] /= rbb;
+
+  tbound0[Nw] = 2.*M_PI;
+  
+  // Interpolate preliminary boundary data
+  gsl_spline_init (wspline, tbound0, wbound0, Nw+1);
+  
+  // Calculate final boundary data
+  for (int j = 0; j <= Nw; j++)
+    tbound[j] = double (j) * 2.*M_PI /double (Nw);
+  
+  double rb = 1.;
+  for (int j = 0; j <= Nw; j++)
+    {
+      double t = tbound[j];
+      double w = gsl_spline_eval (wspline, t, wacc);
+      
+      wbound[j] = w;
+      Rbound[j] = GetR    (rb, w);
+      Zbound[j] = GetZ    (rb, w);
+      R2b   [j] = GetR2   (rb, t);
+      grr2b [j] = Getgrr2 (rb, t);
+    }
+  
+  gsl_spline_init (Rspline, tbound, Rbound, Nw+1);
+  gsl_spline_init (Zspline, tbound, Zbound, Nw+1);
+  
+  for (int j = 0; j <= Nw; j++)
+    {
+      dRdtheta[j] = gsl_spline_eval_deriv (Rspline, tbound[j], Racc);
+      dZdtheta[j] = gsl_spline_eval_deriv (Zspline, tbound[j], Zacc);
+    }
+   
   // ......................................
   // Output equilibrium data to netcdf file
   // ......................................

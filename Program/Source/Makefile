@@ -5,9 +5,9 @@ C_FLAGS    = -w -O3 -std=c++11
 C_INCLUDE  = -I/opt/local/include
 C_LIBS     = -L/opt/local/lib -L/opt/local/lib/libgcc -lgsl -lgslcblas -lnetcdf_c++4 -larmadillo -llapack
 
-C_HEADER = Equilibrium.h TJ.h Layer.h
-C_SOURCE = main.cpp TJ.cpp Equilibrium.cpp ReadEquilibrium.cpp Interpolate.cpp ZeroFind.cpp Rational.cpp Matrix.cpp\
-	Vacuum.cpp Armadillo.cpp Integrate.cpp ODESolve.cpp Resonant.cpp Dispersion.cpp Toroidal.cpp Netcdf.cpp Layer.cpp
+C_HEADER = LightEquilibrium.h Equilibrium.h TJ.h Layer.h
+C_SOURCE = main.cpp TJ.cpp LightEquilibrium.cpp Equilibrium.cpp ReadEquilibrium.cpp Interpolate.cpp ZeroFind.cpp Rational.cpp\
+	Matrix.cpp Vacuum.cpp Armadillo.cpp Integrate.cpp ODESolve.cpp Resonant.cpp Dispersion.cpp Toroidal.cpp Netcdf.cpp Layer.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
 
 EXECUTABLE = ../tj

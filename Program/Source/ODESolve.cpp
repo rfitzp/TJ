@@ -460,6 +460,7 @@ void TJ::Fixup (double r, Array<complex<double>,2> YY)
   // +++++++++++++++++++++++++++++++++++++++++++++++
   else
     {
+      // Range down positive dominant mode numbers
       for (int i = J-1; i > i0; i--)
 	{
 	  complex<double> yii = YY(i, i);
@@ -499,45 +500,8 @@ void TJ::Fixup (double r, Array<complex<double>,2> YY)
 		    Pi(k, j) = Pi(k, j) - (yij /yii) * Pi(k, i);
 		}
 	    }
-
-	  /*
-	  for (int j = 0; j < nres; j++)
-	    {
-	      complex<double> yij = YY(i, J+j);
-
-	      // Fixup solution vectors
-	      for (int k = 0; k < 2*J; k++)
-		{
-		  complex<double> yki = YY(k, i);
-		  complex<double> ykj = YY(k, J+j);
-
-		  YY(k, J+j) = ykj - (yij /yii) * yki;
-		}
-
-	      // Fixup previously calculated solution vectors
-	      for (int l = 0; l < NDIAG; l++)
-		{
-		  if (r > Rgrid[l])
-		    {
-		      for (int k = 0; k < 2*J; k++)
-			{
-			  complex<double> Yki = YYY(k, i,   l);
-			  complex<double> Ykj = YYY(k, J+j, l);
-			  
-			  YYY(k, J+j, l) = Ykj - (yij /yii) * Yki;
-			}
-		    }
-		}
-	      
-	      // Fixup Pi matrix
-	      for (int k = 0; k < nres; k++)
-		{
-		  if (r > rres[k])
-		    Pi(k, J+j) = Pi(k, J+j) - (yij /yii) * Pi(k, i);
-		}
-	    }
-	  */
 	}
+      // Range up negative dominant mode numbers
       for (int i = 0; i < i0; i++)
 	{
 	  complex<double> yii = YY(i, i);
