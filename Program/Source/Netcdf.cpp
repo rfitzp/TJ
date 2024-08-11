@@ -10,26 +10,27 @@ void Equilibrium::WriteNetcdf (double sa)
 {
   printf ("Writing data to netcdf file Plots/Equilibrium.nc:\n");
 
-  double  para[2], Input[14];
+  double  para[2], Input[15];
 
   double* Hna   = new double[Ns+1];
   double* Vna   = new double[Ns+1];
   double* npol  = new double[Ns+1];
 
   Input[0]  = qc;
-  Input[1]  = nu;
-  Input[2]  = pc;
-  Input[3]  = mu;
-  Input[4]  = epsa;
-  Input[5]  = eps;
-  Input[6]  = double (Ns);
-  Input[7]  = double (Nr);
-  Input[8]  = double (Nf);
-  Input[9]  = double (Nw);
-  Input[10] = acc;
-  Input[11] = h0;
-  Input[12] = hmin;
-  Input[13] = hmax;
+  Input[1]  = qa;
+  Input[2]  = nu;
+  Input[3]  = pc;
+  Input[4]  = mu;
+  Input[5]  = epsa;
+  Input[6]  = eps;
+  Input[7]  = double (Ns);
+  Input[8]  = double (Nr);
+  Input[9]  = double (Nf);
+  Input[10] = double (Nw);
+  Input[11] = acc;
+  Input[12] = h0;
+  Input[13] = hmin;
+  Input[14] = hmax;
   
   para[0] = epsa;
   para[1] = sa;
@@ -51,7 +52,7 @@ void Equilibrium::WriteNetcdf (double sa)
     {
       NcFile dataFile ("Plots/Equilibrium.nc", NcFile::replace);
 
-      NcDim i_d = dataFile.addDim ("Ni", 14);
+      NcDim i_d = dataFile.addDim ("Ni", 15);
       NcDim p_d = dataFile.addDim ("Np", 2);
       NcDim r_d = dataFile.addDim ("Nr", Nr+1);
       NcDim s_d = dataFile.addDim ("Ns", Ns+1);
@@ -346,7 +347,7 @@ void TJ::WriteNetcdf ()
 {
   printf ("Writing data to netcdf file Plots/TJ.nc:\n");
  
-  double Input[15];
+  double Input[23];
 
   double* Lmmp_r  = new double[(Nr+1)*J*J];
   double* Mmmp_r  = new double[(Nr+1)*J*J];
@@ -391,6 +392,8 @@ void TJ::WriteNetcdf ()
   double* Emat_i  = new double[nres*nres];
   double* Eant_r  = new double[nres*nres];
   double* Eant_i  = new double[nres*nres];
+  double* Fvec_r  = new double[nres*nres];
+  double* Fvec_i  = new double[nres*nres];
   double* Psix_r  = new double[J];
   double* Psix_i  = new double[J];
   double* Xi_r    = new double[J];
@@ -417,6 +420,14 @@ void TJ::WriteNetcdf ()
   Input[12] = hmin;
   Input[13] = hmax;
   Input[14] = EPSF;
+  Input[15] = B0;
+  Input[16] = R0;
+  Input[17] = n0;
+  Input[18] = alpha;
+  Input[19] = Zeff;
+  Input[20] = Mion;
+  Input[21] = Chip;
+  Input[22] = Teped;
   
   int cnt = 0;
   for (int i = 0; i <= Nr; i++)
@@ -516,6 +527,8 @@ void TJ::WriteNetcdf ()
 	Emat_i[cnt] = imag (Emat(j, jp));
 	Eant_r[cnt] = 0.5 * real (Emat(j, jp) - conj (Emat(jp ,j)));
 	Eant_i[cnt] = 0.5 * imag (Emat(j, jp) - conj (Emat(jp ,j)));
+	Fvec_r[cnt] = real (Fvec(j, jp));
+	Fvec_i[cnt] = imag (Fvec(j, jp));
 	cnt++;
       }
 
@@ -543,7 +556,7 @@ void TJ::WriteNetcdf ()
     {
       NcFile dataFile ("Plots/TJ.nc", NcFile::replace);
 
-      NcDim i_d = dataFile.addDim ("Ni",    15);
+      NcDim i_d = dataFile.addDim ("Ni",    23);
       NcDim r_d = dataFile.addDim ("Nr",    Nr+1);
       NcDim s_d = dataFile.addDim ("Ns",    Ns+1);
       NcDim x_d = dataFile.addDim ("nres",  nres);
@@ -777,8 +790,12 @@ void TJ::WriteNetcdf ()
       eantr_x.putVar (Eant_r);
       NcVar eanti_x = dataFile.addVar ("Eant_i", ncDouble, e_d);
       eanti_x.putVar (Eant_i);
-      NcVar Feig_x = dataFile.addVar  ("Feig",   ncDouble, x_d);
-      Feig_x.putVar (Fval);
+      NcVar Fval_x = dataFile.addVar  ("Fval",   ncDouble, x_d);
+      Fval_x.putVar (Fval);
+      NcVar Fvecr_x = dataFile.addVar ("Fvec_r", ncDouble, e_d);
+      Fvecr_x.putVar (Fvec_r);
+      NcVar Fveci_x = dataFile.addVar ("Fvec_i", ncDouble, e_d);
+      Fveci_x.putVar (Fvec_i);
 
       NcVar rcoil_x = dataFile.addVar ("Rcoil",     ncDouble, c_d);
       rcoil_x.putVar (Rcoil);
@@ -843,7 +860,7 @@ void TJ::WriteNetcdf ()
 
   delete[] Pvac_r; delete[] Pvac_i; delete[] Rvac_r; delete[] Rvac_i;
   delete[] Amat_r; delete[] Amat_i; delete[] Aant_r; delete[] Aant_i;
-  delete[] Hmat_r; delete[] Hmat_i;
+  delete[] Hmat_r; delete[] Hmat_i; 
 
   delete[] PPPsi_r; delete[] PPPsi_i; delete[] ZZZ_r;   delete[] ZZZ_i;
   delete[] PPF_r;   delete[] PPF_i;   delete[] ZZF_r;   delete[] ZZF_i;
@@ -853,5 +870,5 @@ void TJ::WriteNetcdf ()
   delete[] Emat_r;  delete[] Emat_i; delete[] Eant_r; delete[] Eant_i;
   delete[] Psix_r;  delete[] Psix_i; delete[] Xi_r;   delete[] Xi_i; 
   delete[] Up_r;    delete[] Up_i;   delete[] Chi_r;  delete[] Chi_i;
-  delete[] Delta_r;
+  delete[] Delta_r; delete[] Fvec_r; delete[] Fvec_i;
 }

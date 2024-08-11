@@ -90,22 +90,28 @@ void TJ::InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA
       invA(i, j) = Bmat(i, j);
  }
 
-// ###################################################
-// Function to return eigenvalues of Hermitian matix H
-// ###################################################
-void TJ::GetEigenvalues (Array<complex<double>,2> H, double* evals)
+// ####################################################################
+// Function to return eigenvalues and eigenvectors of Hermitian matix H
+// ####################################################################
+void TJ::GetEigenvalues (Array<complex<double>,2> H, double* evals, Array<complex<double>,2> evecs)
 {
   int size = H.extent(0);
 
   // Solve problem using Armadillo
-  cx_mat Hmat (size, size);
+  cx_mat Hmat   (size, size);
+  vec    eigval (size);
+  cx_mat eigvec (size, size);
 
   for (int i = 0; i < size; i++)
     for (int j = 0; j < size; j++)
       Hmat(i, j) = H(i, j);
 
-  vec eigval = eig_sym (Hmat);
+  eig_sym (eigval, eigvec, Hmat);
 
   for (int i = 0; i < size; i++)
     evals[i] = eigval(i);
+
+  for (int i = 0; i < size; i++)
+    for (int j = 0; j < size; j++)
+      evecs(i, j) = eigvec(i, j);
 }

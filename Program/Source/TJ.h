@@ -292,6 +292,7 @@ class TJ
   Array<complex<double>,2> Fmat;  // Inductance matrix
   Array<complex<double>,2> Fher;  // Symmeterized inductance matrix
   double*                  Fval;  // Eigenvalues of symmeterized F-matrix
+  Array<complex<double>,2> Fvec;  // Eigenvectors of symmeterized F-matrix
   Array<complex<double>,2> Emat;  // Tearing stability matrix
   Array<complex<double>,3> Psif;  // Psi components of fully reconnected tearing eigenfunctions
   Array<complex<double>,3> Zf;    // Z componnents of fully reconnected tearing eigenfunctions
@@ -557,8 +558,8 @@ class TJ
   void SolveLinearSystem (Array<complex<double>,2> A, complex<double>* X, complex<double>* B);
   // Invert square matrix
   void InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA);
-  // Return eigenvalues of Hermitian matix H
-  void GetEigenvalues (Array<complex<double>,2> H, double* evals);
+  // Return eigenvalues and eigenvectors of Hermitian matix H
+  void GetEigenvalues (Array<complex<double>,2> H, double* evals, Array<complex<double>,2> evecs);
 
   // ...............
   // In Toroidal.cpp
