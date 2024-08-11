@@ -777,6 +777,8 @@ void TJ::WriteNetcdf ()
       eantr_x.putVar (Eant_r);
       NcVar eanti_x = dataFile.addVar ("Eant_i", ncDouble, e_d);
       eanti_x.putVar (Eant_i);
+      NcVar Feig_x = dataFile.addVar  ("Feig",   ncDouble, x_d);
+      Feig_x.putVar (Fval);
 
       NcVar rcoil_x = dataFile.addVar ("Rcoil",     ncDouble, c_d);
       rcoil_x.putVar (Rcoil);

@@ -165,9 +165,9 @@ LightEquilibrium::~LightEquilibrium ()
 {
 }
 
-// #########################################################
-// Function to calculate nu value that gives required edge q
-// #########################################################
+// #####################################################################
+// Function to calculate nu value that gives required edge safety-factor
+// #####################################################################
 double LightEquilibrium::GetNu (double _qa)
 {
   qa = _qa;

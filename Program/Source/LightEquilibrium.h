@@ -163,7 +163,7 @@ class LightEquilibrium
   // Destructor
   ~LightEquilibrium ();
 
-  // Solve problem
+  // Calculate nu value that gives required edge safety-factor
   double GetNu (double qa);
 
 private:
