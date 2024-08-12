@@ -290,7 +290,7 @@ class TJ
   Array<complex<double>,2> Ymat;  // Y-matrix
   Array<complex<double>,2> Omat;  // Omega-matrix
   Array<complex<double>,2> Fmat;  // Inductance matrix
-  Array<complex<double>,2> Fher;  // Symmeterized inductance matrix
+  Array<complex<double>,2> Fher;  // Symmeterized F-matrix
   double*                  Fval;  // Eigenvalues of symmeterized F-matrix
   Array<complex<double>,2> Fvec;  // Eigenvectors of symmeterized F-matrix
   Array<complex<double>,2> Emat;  // Tearing stability matrix

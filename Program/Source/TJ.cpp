@@ -357,7 +357,7 @@ void TJ::CleanUp ()
      
   delete[] Rgrid; delete[] hode; delete[] eode;
 
-  delete[] Fval;  
+  delete[] Fval; 
 
   delete[] rf;
 }  

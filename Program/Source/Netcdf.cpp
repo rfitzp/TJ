@@ -388,6 +388,8 @@ void TJ::WriteNetcdf ()
   double* PPV_i   = new double[nres*Nf*(Nw+1)];
   double* ZZV_r   = new double[nres*Nf*(Nw+1)];
   double* ZZV_i   = new double[nres*Nf*(Nw+1)];
+  double* Fmat_r  = new double[nres*nres];
+  double* Fmat_i  = new double[nres*nres];
   double* Emat_r  = new double[nres*nres];
   double* Emat_i  = new double[nres*nres];
   double* Eant_r  = new double[nres*nres];
@@ -523,6 +525,8 @@ void TJ::WriteNetcdf ()
   for (int j = 0; j < nres; j++)
     for (int jp = 0; jp < nres; jp++)
       {
+	Fmat_r[cnt] = real (Fmat(j, jp));
+	Fmat_i[cnt] = imag (Fmat(j, jp));
 	Emat_r[cnt] = real (Emat(j, jp));
 	Emat_i[cnt] = imag (Emat(j, jp));
 	Eant_r[cnt] = 0.5 * real (Emat(j, jp) - conj (Emat(jp ,j)));
@@ -649,8 +653,6 @@ void TJ::WriteNetcdf ()
       NcVar Vnp_x = dataFile.addVar ("Vnp", ncDouble, shape_d);
       Vnp_x.putVar (VPfunc.data());
 
-      NcVar rres_x = dataFile.addVar ("rres", ncDouble, x_d);
-      rres_x.putVar (rres);
       NcVar mpol_x = dataFile.addVar ("mpol", ncInt,    j_d);
       mpol_x.putVar (MPOL);
 
@@ -762,6 +764,14 @@ void TJ::WriteNetcdf ()
 
       NcVar mres_x = dataFile.addVar ("m_res", ncInt, x_d);
       mres_x.putVar (mres);
+      NcVar rres_x = dataFile.addVar ("r_res", ncDouble, x_d);
+      rres_x.putVar (rres);
+      NcVar sres_x = dataFile.addVar ("s_res", ncDouble, x_d);
+      sres_x.putVar (sres);
+      NcVar dires_x = dataFile.addVar ("DI_res", ncDouble, x_d);
+      dires_x.putVar (DIres);
+      NcVar drres_x = dataFile.addVar ("DR_res", ncDouble, x_d);
+      drres_x.putVar (DRres);
 
       NcVar tf_x = dataFile.addVar ("Torque_full", ncDouble, t_d);
       tf_x.putVar (Tf.data());
@@ -782,6 +792,10 @@ void TJ::WriteNetcdf ()
       NcVar zzvi_x = dataFile.addVar ("Z_unrc_eig_i",   ncDouble, v_d);
       zzvi_x.putVar (ZZV_i);
 
+      NcVar fmatr_x = dataFile.addVar ("Fmat_r", ncDouble, e_d);
+      fmatr_x.putVar (Fmat_r);
+      NcVar fmati_x = dataFile.addVar ("Fmat_i", ncDouble, e_d);
+      fmati_x.putVar (Fmat_i);
       NcVar ematr_x = dataFile.addVar ("Emat_r", ncDouble, e_d);
       ematr_x.putVar (Emat_r);
       NcVar emati_x = dataFile.addVar ("Emat_i", ncDouble, e_d);
@@ -870,5 +884,6 @@ void TJ::WriteNetcdf ()
   delete[] Emat_r;  delete[] Emat_i; delete[] Eant_r; delete[] Eant_i;
   delete[] Psix_r;  delete[] Psix_i; delete[] Xi_r;   delete[] Xi_i; 
   delete[] Up_r;    delete[] Up_i;   delete[] Chi_r;  delete[] Chi_i;
-  delete[] Delta_r; delete[] Fvec_r; delete[] Fvec_i;
+  delete[] Delta_r; delete[] Fvec_r; delete[] Fvec_i; delete[] Fmat_r;
+  delete[] Fmat_i; 
 }

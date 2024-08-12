@@ -34,7 +34,7 @@ void TJ::FindDispersion ()
   Tfull.resize(nres, nres, NDIAG);
   Tunrc.resize(nres, nres, NDIAG);
   Fval = new double[nres];
-
+ 
   Upsilon = new complex<double>[J];
   Lambda  = new complex<double>[J];
   Chi     = new complex<double>[J];
@@ -223,7 +223,7 @@ void TJ::FindDispersion ()
       for (int jp = 0; jp < nres; jp++)
 	printf ("%10.3e ", imag (Emat(j, jp)));
       printf ("\n");
-    }
+    } 
   printf ("Re(E_res):\n");
   for (int j = 0; j < nres; j++)
     {

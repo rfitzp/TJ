@@ -162,7 +162,7 @@ void TJ::GetLayerData ()
       ieres [k] = 0.5;
       Qeres [k] = - ieres[k]      * taures[k] * wak;
       Qires [k] = (1. - ieres[k]) * taures[k] * wak;
-      QEres [k] = - Qires[k];
+      QEres [k] = 0.;
       Dres  [k] = S13res[k] * sqrt (ieres[k]) * dbk;
       Pmres [k] = tRk /tPk;
       Peres [k] = tRk /tPk;
