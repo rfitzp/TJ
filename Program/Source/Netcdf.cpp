@@ -10,7 +10,7 @@ void Equilibrium::WriteNetcdf (double sa)
 {
   printf ("Writing data to netcdf file Plots/Equilibrium.nc:\n");
 
-  double  para[2], Input[15];
+  double  para[2], Input[15], Beta[4];
 
   double* Hna   = new double[Ns+1];
   double* Vna   = new double[Ns+1];
@@ -34,6 +34,11 @@ void Equilibrium::WriteNetcdf (double sa)
   
   para[0] = epsa;
   para[1] = sa;
+
+  Beta[0] = li;
+  Beta[1] = betat;
+  Beta[2] = betap;
+  Beta[3] = betaN;
     
   Hna[0] = 0.;
   Vna[0] = 0.;
@@ -54,6 +59,7 @@ void Equilibrium::WriteNetcdf (double sa)
 
       NcDim i_d = dataFile.addDim ("Ni", 15);
       NcDim p_d = dataFile.addDim ("Np", 2);
+      NcDim b_d = dataFile.addDim ("Nb", 4);
       NcDim r_d = dataFile.addDim ("Nr", Nr+1);
       NcDim s_d = dataFile.addDim ("Ns", Ns+1);
       NcDim f_d = dataFile.addDim ("Nf", Nf);
@@ -71,6 +77,8 @@ void Equilibrium::WriteNetcdf (double sa)
       i_x.putVar (Input);
       NcVar p_x = dataFile.addVar ("para",            ncDouble, p_d);
       p_x.putVar (para);
+      NcVar b_x = dataFile.addVar ("beta",            ncDouble, b_d);
+      b_x.putVar (Beta);
 
       NcVar r_x   = dataFile.addVar ("r",    ncDouble, r_d);
       r_x.putVar (rr);
@@ -653,7 +661,7 @@ void TJ::WriteNetcdf ()
       NcVar Vnp_x = dataFile.addVar ("Vnp", ncDouble, shape_d);
       Vnp_x.putVar (VPfunc.data());
 
-      NcVar mpol_x = dataFile.addVar ("mpol", ncInt,    j_d);
+      NcVar mpol_x = dataFile.addVar ("mpol", ncInt, j_d);
       mpol_x.putVar (MPOL);
 
       NcVar lmmpr_x = dataFile.addVar ("Lmmp_r", ncDouble, matrix_d);

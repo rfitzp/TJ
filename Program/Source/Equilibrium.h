@@ -152,6 +152,11 @@ class Equilibrium
   Array<double,2>    VPfunc;    // Radial derivatives of vertical shaping functions
   double*            Lfunc;     // Relabelling function
 
+  double li;                    // Plasma self-inductance
+  double betat;                 // Plasma toroidal beta
+  double betap;                 // Plasma poloidal beta
+  double betaN;                 // Plasma normal beta
+  
   gsl_spline*        Itspline;  // Interpolated It function
   gsl_spline*        Ipspline;  // Interpolated Ip function
   gsl_spline*        g2spline;  // Interpolated g2(r) function
@@ -224,6 +229,12 @@ class Equilibrium
   // Destructor
   ~Equilibrium ();
 
+  // Find nu value that corresponds to edge safety-factor value read from JSON file
+  void Setnu ();
+
+  // Override value of pc from JSON file
+  void Setpc (double _pc);
+  
   // Solve problem
   void Solve ();
 

@@ -1,0 +1,44 @@
+# Machine dependent part of Makefiles
+
+UNAME := $(shell uname)
+IRIS  := $(findstring iris, $(shell uname -n))
+NNAME := $(shell uname -n) 
+
+$(info $$UNAME is [${UNAME}])
+$(info $$IRIS is [${IRIS}])
+$(info $$NNAME is [${NNAME}])
+
+ifeq ($(UNAME), Darwin)
+
+     # ###############################
+     # Machine is one of rfitzp's Macs
+     # ###############################
+
+     C_COMPILER = clang++ 
+     C_FLAGS    = -w -O3 -std=c++11
+     C_INCLUDE  = -I/opt/local/include
+     C_LIBS     = -L/opt/local/lib -L/opt/local/lib/libgcc -lgsl -lgslcblas  -lnetcdf_c++ -larmadillo -llapack
+
+else ifeq ($(NNAME), archimedes.ph.utexas.edu )
+
+     #####################################
+     # Machine is archimedes.ph.utexas.edu
+     #####################################
+
+     C_COMPILER = clang++ 
+     C_FLAGS    = -w -O3 -std=c++11
+     C_INCLUDE  = -I/usr/include 
+     C_LIBS     = -L/usr/lib -L/usr/lib/libgcc -lgsl -lgslcblas  -lnetcdf_c++ -larmadillo -llapack
+
+else
+
+     #########
+     # Default
+     #########
+
+     C_COMPILER = clang++ 
+     C_FLAGS    = -w -O3 -std=c++11
+     C_INCLUDE  = -I/usr/include 
+     C_LIBS     = -L/usr/lib -L/usr/lib/libgcc -lgsl -lgslcblas  -lnetcdf_c++ -larmadillo -llapack
+     
+endif

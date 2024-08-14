@@ -168,15 +168,6 @@ Equilibrium::Equilibrium ()
       printf ("Equilibrium:: Error - Hna and Van arrays must be the same size\n");
       exit (1);
     }
-
-  // .......................................................
-  // Determine nu value that gives target edge safety-factor
-  // .......................................................
-  {
-    LightEquilibrium lightequilibrium;
-    
-    nu = lightequilibrium.GetNu (qa);
-  }
 }
 
 // ##########
@@ -184,6 +175,24 @@ Equilibrium::Equilibrium ()
 // ##########
 Equilibrium::~Equilibrium ()
 {
+}
+
+// ##################################################################################
+// Function to find nu value that gives target edge safety-factor read from JSON file
+// ##################################################################################
+void Equilibrium::Setnu ()
+{
+  LightEquilibrium lightequilibrium;
+      
+  nu = lightequilibrium.GetNu (qa);
+}
+
+// #################################################
+// Function to override pc value read from JSON file
+// #################################################
+void Equilibrium::Setpc (double _pc)
+{
+  pc = _pc;
 }
 
 // #####################################
@@ -635,10 +644,10 @@ void Equilibrium::Solve ()
   while (r < 1. - h);
   CashKarp45Fixed (3, r, y2, err2, 1. - r);
 
-  double li    = 2.*y2[0] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
-  double betat = 2. * epsa*epsa * y2[1] /y2[2];
-  double betap = 2. * y2[1] /y2[0];
-  double betaN = 20. * betat /epsa /ff[Nr] /ggr2[Nr];
+  li    = 2.*y2[0] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
+  betat = 2. * epsa*epsa * y2[1] /y2[2];
+  betap = 2. * y2[1] /y2[0];
+  betaN = 20. * betat /epsa /ff[Nr] /ggr2[Nr];
 
   delete[] y2; delete[] err2;
 

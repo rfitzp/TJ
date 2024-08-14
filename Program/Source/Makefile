@@ -1,5 +1,7 @@
 # Makefile for Program TJ
 
+include ../Machines.in
+
 C_COMPILER = clang++
 C_FLAGS    = -w -O3 -std=c++11 
 C_INCLUDE  = -I/opt/local/include
@@ -12,7 +14,7 @@ C_OBJECT = $(C_SOURCE:%.cpp=%.o)
 
 EXECUTABLE = ../tj
 
-$(EXECUTABLE):	 	$(C_OBJECT) $(F_OBJECT)
+$(EXECUTABLE):	 	$(C_OBJECT) 
 			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(C_LIBS)
 
 $(C_OBJECT):		$(C_SOURCE) $(C_HEADER)

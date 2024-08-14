@@ -172,7 +172,7 @@ void Layer::ReadNetcdf ()
       NcFile dataFile ("Plots/TJ.nc", NcFile::read);
 
       NcVar input_x  = dataFile.getVar ("InputParameters");
-      NcVar rres_x   = dataFile.getVar ("rres");
+      NcVar rres_x   = dataFile.getVar ("r_res");
       NcVar mpol_x   = dataFile.getVar ("m_res");
       NcVar Delta_x  = dataFile.getVar ("Delta");
       NcVar Deltac_x = dataFile.getVar ("Delta_crit");
