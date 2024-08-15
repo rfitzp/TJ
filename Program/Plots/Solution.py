@@ -20,7 +20,7 @@ Z_i   = ds['Z_i']
 Pn    = ds['Psi_norm']
 Zn    = ds['Z_norm']
 Tq    = ds['Torque_test']
-rres  = ds['rres']
+rres  = ds['r_res']
 
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r"TJ Code: mth Poloidal Harmonic of m'th Dominant Solution Vector")

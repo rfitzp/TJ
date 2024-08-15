@@ -30,7 +30,7 @@ nt = RR.shape[1]
 
 fn1   = 'TJ.nc'
 ds1   = nc.Dataset(fn1)
-rres  = ds1['rres']
+rres  = ds1['r_res']
 psi_r = ds1['Psi_unrc_eig_r']
 psi_i = ds1['Psi_unrc_eig_i']
 z_r   = ds1['Z_unrc_eig_r']

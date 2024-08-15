@@ -25,7 +25,7 @@ nt = RR.shape[1]
 
 fn1   = 'TJ.nc'
 ds1   = nc.Dataset (fn1)
-rres  = ds1['rres']
+rres  = ds1['r_res']
 Rcoil = np.asarray(ds1['Rcoil'])
 Zcoil = np.asarray(ds1['Zcoil'])
 Icoil = np.asarray(ds1['Icoil'])

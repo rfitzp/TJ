@@ -17,7 +17,7 @@ Psi_r = ds['Psi_unrc_r']
 Psi_i = ds['Psi_unrc_i']
 Z_r   = ds['Z_unrc_r']
 Z_i   = ds['Z_unrc_i']
-rres  = ds['rres']
+rres  = ds['r_res']
 
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'TJ Code: Unreconnected Eigenfunctions')

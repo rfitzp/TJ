@@ -17,7 +17,7 @@ ifeq ($(UNAME), Darwin)
      C_COMPILER = clang++ 
      C_FLAGS    = -w -O3 -std=c++11
      C_INCLUDE  = -I/opt/local/include
-     C_LIBS     = -L/opt/local/lib -L/opt/local/lib/libgcc -lgsl -lgslcblas  -lnetcdf_c++ -larmadillo -llapack
+     C_LIBS     = -L/opt/local/lib -L/opt/local/lib/libgcc -lgsl -lgslcblas  -lnetcdf_c++4 -larmadillo -llapack
 
 else ifeq ($(NNAME), archimedes.ph.utexas.edu )
 
@@ -28,7 +28,7 @@ else ifeq ($(NNAME), archimedes.ph.utexas.edu )
      C_COMPILER = clang++ 
      C_FLAGS    = -w -O3 -std=c++11
      C_INCLUDE  = -I/usr/include 
-     C_LIBS     = -L/usr/lib -L/usr/lib/libgcc -lgsl -lgslcblas  -lnetcdf_c++ -larmadillo -llapack
+     C_LIBS     = -L/usr/lib -L/usr/lib/libgcc -lgsl -lgslcblas  -lnetcdf_c++4 -larmadillo -llapack
 
 else
 
@@ -39,6 +39,6 @@ else
      C_COMPILER = clang++ 
      C_FLAGS    = -w -O3 -std=c++11
      C_INCLUDE  = -I/usr/include 
-     C_LIBS     = -L/usr/lib -L/usr/lib/libgcc -lgsl -lgslcblas  -lnetcdf_c++ -larmadillo -llapack
+     C_LIBS     = -L/usr/lib -L/usr/lib/libgcc -lgsl -lgslcblas  -lnetcdf_c++4 -larmadillo -llapack
      
 endif

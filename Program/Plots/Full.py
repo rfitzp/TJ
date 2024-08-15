@@ -18,7 +18,7 @@ Psi_i = ds['Psi_full_i']
 Z_r   = ds['Z_full_r']
 Z_i   = ds['Z_full_i']
 T_f   = ds['Torque_full']
-rres  = ds['rres']
+rres  = ds['r_res']
 mres  = ds['m_res']
 
 fig = plt.figure (figsize = (12.0, 8.0))

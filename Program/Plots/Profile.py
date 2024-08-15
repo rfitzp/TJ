@@ -15,7 +15,7 @@ S1   = ds['S1']
 P1   = ds['P1']
 P2   = ds['P2']
 P3   = ds['P3']
-rres = ds['rres']
+rres = ds['r_res']
 
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'TJ Code: Shaping and Profile Functions')

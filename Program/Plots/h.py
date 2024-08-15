@@ -13,7 +13,7 @@ ds   = nc.Dataset(fn)
 r    = ds['r_grid']
 h    = ds['h_ode']
 err  = ds['err_ode']
-rres = ds['rres']
+rres = ds['r_res']
 
 rr   = np.asarray(r)
 hh   = np.asarray(h)

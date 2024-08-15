@@ -1,0 +1,147 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage {amsmath}
+\usepackage{amssymb}
+\pdfoutput = 1 
+\usepackage {graphicx}
+\newcommand{\bomega}{\mbox{\boldmath$\omega$}}
+\newcommand{\bxi}{\mbox{\boldmath$\xi$}}
+\newcommand{\bta}{\mbox{\boldmath$\eta$}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\title{Ideal-MHD Energy Principle Analysis}
+\maketitle
+
+\section{Introduction}
+\subsection{Fundamental Equations}
+Our fundamental equations are
+\begin{align}
+\frac{\partial\rho}{\partial t} + \nabla\cdot(\rho\,{\bf v}) & =0,\label{e1}\\[0.5ex]
+\rho\left[\frac{\partial{\bf v}}{\partial t} + ({\bf v}\cdot\nabla)\,{\bf v}\right]+\nabla p - {\bf j}\times {\bf B}&=0,\label{e2}\\[0.5ex]
+\frac{\partial p}{\partial t}+{\bf v}\cdot\nabla p + \gamma\,p\,\nabla\cdot{\bf v} &=0,\label{e3}\\[0.5ex]
+\frac{\partial {\bf B}}{\partial t} &= \nabla\times({\bf v}\times {\bf B}),\label{e4}\\[0.5ex]
+\mu_0\,{\bf j} &= \nabla\times {\bf B}.\label{e5}
+\end{align}
+Note that Eq.~(\ref{e4}) ensures that 
+\begin{equation}\label{e6}
+\nabla\cdot{\bf B} = 0
+\end{equation}
+is automatically satisfied, provided that it is satisfied initially. 
+
+\section{Stability Analysis}
+\subsection{Equilibrium}
+The equilibrium is such that
+\begin{align}
+\rho({\bf r},t) &= \rho_0({\bf r}),\\[0.5ex]
+{\bf v}({\bf r},t) &= {\bf 0},\\[0.5ex]
+p({\bf r},t) &= p_0({\bf r}),\\[0.5ex]
+{\bf B}({\bf r},t) &= {\bf B}_0({\bf r}),\\[0.5ex]
+{\bf j}({\bf r},t) &= {\bf j}_0({\bf r}),
+\end{align}
+where
+\begin{align}\label{e11}
+\nabla p_0 &= {\bf j}_0\times {\bf B}_0,\\[0.5ex]
+\mu_0\,{\bf j}_0 &= \nabla\times {\bf B}_0.\label{e12}
+\end{align}
+
+\subsection{Perturbed Quantities}
+The perturbation is such that
+\begin{align}
+\rho_1({\bf r},t) &= \rho_1({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},\\[0.5ex]
+{\bf v}_1({\bf r},t) &= {-{\rm i}\,\omega}\,\bxi({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},\\[0.5ex]
+p({\bf r},t) &= p_1({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},\\[0.5ex]
+{\bf B}({\bf r},t) &= {\bf B}_1({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},\\[0.5ex]
+{\bf j}({\bf r},t) &= {\bf j}_1({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},
+\end{align}
+
+The linearized perturbed versions of  Eqs.~(\ref{e1})--(\ref{e5}) are
+\begin{align}
+\rho_1 &=-\nabla\cdot(\rho_0\,\bxi),\\[0.5ex]
+-\omega^2\,\rho_0\,\bxi &=  {\bf j}_1\times {\bf B}_0 + {\bf j}_0\times {\bf B}_1-\nabla p_1,\\[0.5ex]
+p_1&= - \bxi\cdot\nabla p_0-\gamma\,p_0\,\nabla\cdot\bxi,\\[0.5ex]
+{\bf B}_1 &=\nabla\times (\bxi\times {\bf B}_0),\\[0.5ex]
+\mu_0\,{\bf j}_1&= \nabla\times {\bf B}_1.
+\end{align}
+Combining the previous four equations, we obtain
+\begin{equation}
+-\omega^2\,\rho_0\,\bxi= {\bf F}(\bxi),
+\end{equation}
+where
+\begin{align}\label{e24}
+{\bf F}(\bxi) = \mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q} + 
+\nabla(\bxi\cdot \nabla p_0 + \gamma\,p_0\,\nabla\cdot\bxi),
+\end{align}
+and
+\begin{equation}\label{e25}
+{\bf Q} = \nabla\times (\bxi\times {\bf B}_0).
+\end{equation}
+
+\subsection{Self-Adjointness of Force Operator}
+Suppose that the plasma is surrounded by a perfectly conducting wall whose outward unit normal is ${\bf n}$.
+We wish to demonstrate that
+\begin{equation}\label{e26}
+\int \bta\cdot{\bf F}(\bxi)\,d{\bf r} = \int \bxi\cdot {\bf F}(\bta)\,d{\bf r},
+\end{equation}
+where $\bxi({\bf r})$ and $\bta({\bf r})$ are two arbitrary vector fields that satisfy the boundary conditions
+\begin{equation}\label{e27}
+{\bf n}\cdot\bxi={\bf n}\cdot\bta=0
+\end{equation}
+at the wall  
+
+According to Eq.~(\ref{e24}), the integrand of the left-hand side of Eq.~(\ref{e26}) takes the form 
+\begin{equation}
+\bta\cdot {\bf F}(\xi)= \bta\cdot\left[ \mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}
++\nabla(\bxi\cdot\nabla p_0) + \nabla(\gamma\,p_0\,\nabla\cdot\bxi)\right].
+\end{equation}
+The final term can be written
+\begin{equation}
+\bta\cdot \nabla(\gamma\,p_0\,\nabla\cdot\bxi)= \nabla\cdot (\bta\,\gamma\,p_0\,\nabla\cdot\bxi)-\gamma\,p_0\,(\nabla\cdot\bta)\,(\nabla\cdot\bxi).
+\end{equation}
+However, according to Eq.~(\ref{e27}), the divergence term integrates to zero.
+Hence, we obtain
+\begin{equation}
+\bta\cdot {\bf F}(\xi)= \bta\cdot\left[ \mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}
++\nabla(\bxi\cdot\nabla p_0)\right] -\gamma\,p_0\,(\nabla\cdot\bta)\,(\nabla\cdot\bxi).
+\end{equation}
+
+Let us write
+\begin{align}
+\bxi &=\bxi_\perp + \xi_\parallel\,{\bf b},\\[0.5ex]
+\bta&=\bta_\perp+\eta_\parallel\,{\bf b},
+\end{align}
+where 
+\begin{align}
+{\bf b} &=\frac{{\bf B}_0}{B_0},\\[0.5ex]
+{\bf b} \cdot\bxi_\perp &= {\bf b}\cdot\bta_\perp = 0.
+\end{align}
+It follows from Eq.~(\ref{e25}) that
+\begin{equation}\label{e36}
+{\bf Q} = \nabla\times (\bxi_\perp\times {\bf B}_0).
+\end{equation}
+Moreover, Eq.~(\ref{e11}) implies that
+\begin{equation}
+\bxi\cdot\nabla p_0 = \bxi\cdot{\bf j}_0\times {\bf B}_0= \bxi_\perp\cdot{\bf j}_0\times {\bf B}_0= \bxi_\perp\cdot\nabla p_0.
+\end{equation}
+
+Now,
+\begin{equation}
+{\bf B}_0 \cdot \left[\mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0\right] =0,
+\end{equation}
+and
+\begin{align}
+{\bf B}_0\cdot\left[\mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}\right]= {\bf B}_0\cdot{\bf j}_0\times {\bf Q} =-{\bf j}_0\times {\bf B}_0\cdot {\bf Q}
+=-\nabla p_0\cdot{\bf Q},
+\end{align}
+where use has been made of Eqs.~(\ref{e11}) and (\ref{e12}). However, according to Eq.~(\ref{e36}), 
+\begin{align}
+-\nabla p_0\cdot{\bf Q} &= -\nabla p_0\cdot\nabla\times(\bxi_\perp\times {\bf B}_0)=\nabla\cdot\left[\nabla p_0\times(\bxi_\perp\times {\bf B}_0)\right]
+=-\nabla\cdot[(\bxi_\perp\cdot\nabla p_0)\, {\bf B}_0]\nonumber\\[0.5ex]
+&= - {\bf B}_0\cdot\nabla (\bxi_\perp\cdot\nabla p_0),
+\end{align}
+where use has been made of Eqs.~(\ref{e6}) and (\ref{e11}). The previous two equations imply that
+\begin{equation}
+{\bf B}_0\cdot\left[\mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}+\nabla(\bxi_\perp\cdot\nabla p_0)\right] =0.
+\end{equation}
+
+\end{document}

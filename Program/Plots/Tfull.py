@@ -14,7 +14,7 @@ ds    = nc.Dataset(fn)
 mpol  = ds['mpol']
 r     = ds['r_grid']
 T_f   = ds['Torque_pair_full']
-rres  = ds['rres']
+rres  = ds['r_res']
 mres  = ds['m_res']
 
 fig = plt.figure (figsize = (8.0, 6.0))

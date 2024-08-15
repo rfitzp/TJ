@@ -20,7 +20,7 @@ s2   = ds['s2']
 p2   = ds1['p_2']
 pp   = ds['pp']
 ppp  = ds['ppp']
-rres = ds['rres']
+rres = ds['r_res']
 
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'TJ Code: Equilibrium Profiles')
