@@ -6,6 +6,7 @@
 \newcommand{\bomega}{\mbox{\boldmath$\omega$}}
 \newcommand{\bxi}{\mbox{\boldmath$\xi$}}
 \newcommand{\bta}{\mbox{\boldmath$\eta$}}
+\newcommand{\bkappa}{\mbox{\boldmath$\kappa$}}
 \allowdisplaybreaks
 
 \begin{document}
@@ -13,119 +14,172 @@
 \title{Ideal-MHD Energy Principle Analysis}
 \maketitle
 
-\section{Introduction}
+\section{Ideal Stability Analayis}
 \subsection{Fundamental Equations}
-Our fundamental equations are
+The fundamental  equations of ideal magnetohydrodynamics (ideal-MHD) are
 \begin{align}
 \frac{\partial\rho}{\partial t} + \nabla\cdot(\rho\,{\bf v}) & =0,\label{e1}\\[0.5ex]
 \rho\left[\frac{\partial{\bf v}}{\partial t} + ({\bf v}\cdot\nabla)\,{\bf v}\right]+\nabla p - {\bf j}\times {\bf B}&=0,\label{e2}\\[0.5ex]
 \frac{\partial p}{\partial t}+{\bf v}\cdot\nabla p + \gamma\,p\,\nabla\cdot{\bf v} &=0,\label{e3}\\[0.5ex]
 \frac{\partial {\bf B}}{\partial t} &= \nabla\times({\bf v}\times {\bf B}),\label{e4}\\[0.5ex]
-\mu_0\,{\bf j} &= \nabla\times {\bf B}.\label{e5}
+\mu_0\,{\bf j} &= \nabla\times {\bf B},\label{e5}
 \end{align}
-Note that Eq.~(\ref{e4}) ensures that 
-\begin{equation}\label{e6}
-\nabla\cdot{\bf B} = 0
-\end{equation}
-is automatically satisfied, provided that it is satisfied initially. 
+where $\rho$ is the plasma mass density, ${\bf v}$ the plasma velocity, $p$ the (scalar) plasma pressure, $\gamma=5/3$ the ratio of specific heats,
+${\bf B}$ the magnetic field-strength, and ${\bf j}$ the electric current density. 
+Note that Eq.~(\ref{e4}) ensures that the magnetic field remains divergence-free, provided that 
+this is the case initially. 
 
-\section{Stability Analysis}
-\subsection{Equilibrium}
-The equilibrium is such that
+\subsection{Plasma Equilibrium}
+The plasma equilibrium is such that
 \begin{align}
 \rho({\bf r},t) &= \rho_0({\bf r}),\\[0.5ex]
-{\bf v}({\bf r},t) &= {\bf 0},\\[0.5ex]
+{\bf v}({\bf r},t) &= {\bf 0},\label{e7}\\[0.5ex]
 p({\bf r},t) &= p_0({\bf r}),\\[0.5ex]
 {\bf B}({\bf r},t) &= {\bf B}_0({\bf r}),\\[0.5ex]
 {\bf j}({\bf r},t) &= {\bf j}_0({\bf r}),
 \end{align}
 where
-\begin{align}\label{e11}
-\nabla p_0 &= {\bf j}_0\times {\bf B}_0,\\[0.5ex]
+\begin{align}
+\nabla\cdot{\bf B}_0&= 0,\label{e6}\\[0.5ex]
+\nabla p_0 &= {\bf j}_0\times {\bf B}_0,\label{e11}\\[0.5ex]
 \mu_0\,{\bf j}_0 &= \nabla\times {\bf B}_0.\label{e12}
 \end{align}
+Note that we are neglecting equilibrium plasma flows, as these are generally unimportant provided that they remain sub-sonic and sub-Alfv\'{e}nic. 
 
 \subsection{Perturbed Quantities}
-The perturbation is such that
+Let us formulate the linear stability problem as a normal mode problem. This goal is
+achieved by letting all perturbed quantities vary in time as $\exp(-{\rm i}\,\omega\,t)$. 
+Thus, the perturbation to the plasma equilibrium  is written
 \begin{align}
 \rho_1({\bf r},t) &= \rho_1({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},\\[0.5ex]
-{\bf v}_1({\bf r},t) &= {-{\rm i}\,\omega}\,\bxi({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},\\[0.5ex]
+{\bf v}_1({\bf r},t) &={\bf v}_1({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t}=  {-{\rm i}\,\omega}\,\bxi({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},\label{e15}\\[0.5ex]
 p({\bf r},t) &= p_1({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},\\[0.5ex]
 {\bf B}({\bf r},t) &= {\bf B}_1({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},\\[0.5ex]
-{\bf j}({\bf r},t) &= {\bf j}_1({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t},
+{\bf j}({\bf r},t) &= {\bf j}_1({\bf r})\,{\rm e}^{-{\rm i}\,\omega\,t}.
 \end{align}
+Note that $\bxi({\bf r})$ represents the displacement of the plasma from its equilibrium position.
 
 The linearized perturbed versions of  Eqs.~(\ref{e1})--(\ref{e5}) are
-\begin{align}
+\begin{align}\label{e19}
 \rho_1 &=-\nabla\cdot(\rho_0\,\bxi),\\[0.5ex]
 -\omega^2\,\rho_0\,\bxi &=  {\bf j}_1\times {\bf B}_0 + {\bf j}_0\times {\bf B}_1-\nabla p_1,\\[0.5ex]
 p_1&= - \bxi\cdot\nabla p_0-\gamma\,p_0\,\nabla\cdot\bxi,\\[0.5ex]
-{\bf B}_1 &=\nabla\times (\bxi\times {\bf B}_0),\\[0.5ex]
+{\bf B}_1 &=\nabla\times (\bxi\times {\bf B}_0),\label{e22}\\[0.5ex]
 \mu_0\,{\bf j}_1&= \nabla\times {\bf B}_1.
 \end{align}
-Combining the previous four equations, we obtain
-\begin{equation}
+Note that Eq.~(\ref{e19}) is not coupled to the other linearized equations. 
+Combining the previous four equations, we obtain the perturbed plasma equation of motion, 
+\begin{equation}\label{e24a}
 -\omega^2\,\rho_0\,\bxi= {\bf F}(\bxi),
 \end{equation}
 where
 \begin{align}\label{e24}
 {\bf F}(\bxi) = \mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q} + 
-\nabla(\bxi\cdot \nabla p_0 + \gamma\,p_0\,\nabla\cdot\bxi),
+\nabla(\bxi\cdot \nabla p_0 + \gamma\,p_0\,\nabla\cdot\bxi)
 \end{align}
+is known as the {\em force operator}, 
 and
 \begin{equation}\label{e25}
-{\bf Q} = \nabla\times (\bxi\times {\bf B}_0).
+{\bf Q} = \nabla\times (\bxi\times {\bf B}_0)
 \end{equation}
+is the perturbed magnetic field. The force operator clearly specifies the perturbed force density that develops in the plasma in
+response to the displacement $\bxi$. 
 
-\subsection{Self-Adjointness of Force Operator}
-Suppose that the plasma is surrounded by a perfectly conducting wall whose outward unit normal is ${\bf n}$.
-We wish to demonstrate that
+\subsection{Perfectly Conducting Wall}
+Suppose that the plasma is surrounded by a perfectly conducting wall whose inner surface has the outward-directed unit normal  ${\bf n}$. 
+Both the electric field and the magnetic field are zero within the wall. Standard electromagnetic boundary conditions 
+require that
+\begin{align}\label{e27a}
+{\bf n}\times {\bf E}&= 0,\\[0.5ex]
+{\bf n} \cdot {\bf B}&=0,\label{e27b}
+\end{align}
+at the wall. Here, ${\bf E}$ is the electric field. 
+
+The plasma velocity is assumed to be dominated by the ${\bf E}\times {\bf B}$ drift velocity. In other words,
+\begin{equation}
+{\bf v} = \frac{{\bf E}\times {\bf B}}{B^2}.
+\end{equation}
+If we write ${\bf E}({\bf r},t)= {\bf E}_0({\bf r})+ {\bf E}_1({\bf r})\,\exp(-{\rm i}\,\omega\,t)$
+then it is clear from Eq.~(\ref{e7}) that ${\bf E}_0={\bf 0}$. It follows from the previous equation that
+\begin{equation}\label{e30a}
+{\bf v}_1 = \frac{{\bf E}_1\times {\bf B}_0}{B_0^{\,2}}.
+\end{equation}
+Now, Eqs.~(\ref{e27a}) and (\ref{e27b}) imply that
+\begin{equation}\label{e31x}
+{\bf n} \cdot {\bf B}_0=0,
+\end{equation}
+and 
+\begin{align}
+{\bf n}\times {\bf E}_1&= 0,\label{e31a}\\[0.5ex]
+{\bf n} \cdot {\bf B}_1&=0\label{e33}
+\end{align}
+at the wall. 
+Equations~(\ref{e30a}) and (\ref{e31a}) yield
+\begin{equation}
+{\bf n}\cdot{\bf v}_1=0
+\end{equation}
+at the wall. Hence, it follows from Eq.~(\ref{e15}) that
+\begin{equation}\label{e35}
+{\bf n}\cdot\bxi = 0
+\end{equation}
+at the wall. 
+
+\subsection{Self-Adjoint Property of Force Operator}
+We wish to demonstrate that the force operator is {\em self-adjoint}. In other words, we wish to prove that 
 \begin{equation}\label{e26}
 \int \bta\cdot{\bf F}(\bxi)\,d{\bf r} = \int \bxi\cdot {\bf F}(\bta)\,d{\bf r},
 \end{equation}
-where $\bxi({\bf r})$ and $\bta({\bf r})$ are two arbitrary vector fields that satisfy the boundary conditions
+where the integrals are taken over the whole plasma volume, and  $\bxi({\bf r})$ and $\bta({\bf r})$ are two arbitrary vector fields that satisfy the 
+physical boundary conditions
 \begin{equation}\label{e27}
 {\bf n}\cdot\bxi={\bf n}\cdot\bta=0
 \end{equation}
-at the wall  
+at the wall.
 
 According to Eq.~(\ref{e24}), the integrand of the left-hand side of Eq.~(\ref{e26}) takes the form 
 \begin{equation}
-\bta\cdot {\bf F}(\xi)= \bta\cdot\left[ \mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}
+\bta\cdot {\bf F}(\bxi)= \bta\cdot\left[ \mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}
 +\nabla(\bxi\cdot\nabla p_0) + \nabla(\gamma\,p_0\,\nabla\cdot\bxi)\right].
 \end{equation}
 The final term can be written
 \begin{equation}
 \bta\cdot \nabla(\gamma\,p_0\,\nabla\cdot\bxi)= \nabla\cdot (\bta\,\gamma\,p_0\,\nabla\cdot\bxi)-\gamma\,p_0\,(\nabla\cdot\bta)\,(\nabla\cdot\bxi).
 \end{equation}
-However, according to Eq.~(\ref{e27}), the divergence term integrates to zero.
-Hence, we obtain
-\begin{equation}
-\bta\cdot {\bf F}(\xi)= \bta\cdot\left[ \mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}
-+\nabla(\bxi\cdot\nabla p_0)\right] -\gamma\,p_0\,(\nabla\cdot\bta)\,(\nabla\cdot\bxi).
-\end{equation}
+However, according to Eq.~(\ref{e27}), the divergence term integrates to zero in Eq.~(\ref{e26}). Hence, we can safely neglect this term, 
+to give 
+\begin{align}
+\bta\cdot {\bf F}(\xi)&= \bta\cdot\left[ \mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}
++\nabla(\bxi\cdot\nabla p_0)\right]\nonumber\\[0.5ex]
+&\phantom{=} -\gamma\,p_0\,(\nabla\cdot\bta)\,(\nabla\cdot\bxi).\label{e31}
+\end{align}
 
 Let us write
-\begin{align}
+\begin{align}\label{e32}
 \bxi &=\bxi_\perp + \xi_\parallel\,{\bf b},\\[0.5ex]
-\bta&=\bta_\perp+\eta_\parallel\,{\bf b},
+\bta&=\bta_\perp+\eta_\parallel\,{\bf b},\label{e33x}
 \end{align}
 where 
 \begin{align}
 {\bf b} &=\frac{{\bf B}_0}{B_0},\\[0.5ex]
 {\bf b} \cdot\bxi_\perp &= {\bf b}\cdot\bta_\perp = 0.
 \end{align}
+Thus, $\xi_\parallel\,{\bf b}$ and $\bxi_\perp$ are the component of $\bxi$ that are parallel to and perpendicular to the equilibrium magnetic field, et cetera.
+According to Eqs.~(\ref{e31x}) and (\ref{e27}),
+\begin{equation}\label{ecc}
+{\bf n}\cdot\bxi_\perp = {\bf n}\cdot\bta_\perp
+\end{equation}
+at the wall. 
 It follows from Eq.~(\ref{e25}) that
 \begin{equation}\label{e36}
 {\bf Q} = \nabla\times (\bxi_\perp\times {\bf B}_0).
 \end{equation}
 Moreover, Eq.~(\ref{e11}) implies that
-\begin{equation}
+\begin{equation}\label{e37}
 \bxi\cdot\nabla p_0 = \bxi\cdot{\bf j}_0\times {\bf B}_0= \bxi_\perp\cdot{\bf j}_0\times {\bf B}_0= \bxi_\perp\cdot\nabla p_0.
 \end{equation}
 
 Now,
-\begin{equation}
+\begin{equation}\label{e38}
 {\bf B}_0 \cdot \left[\mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0\right] =0,
 \end{equation}
 and
@@ -139,9 +193,404 @@ where use has been made of Eqs.~(\ref{e11}) and (\ref{e12}). However, according 
 =-\nabla\cdot[(\bxi_\perp\cdot\nabla p_0)\, {\bf B}_0]\nonumber\\[0.5ex]
 &= - {\bf B}_0\cdot\nabla (\bxi_\perp\cdot\nabla p_0),
 \end{align}
-where use has been made of Eqs.~(\ref{e6}) and (\ref{e11}). The previous two equations imply that
+where use has been made of Eqs.~(\ref{e6}) and (\ref{e11}). The previous two equations, combined with Eq.~(\ref{e37}), imply that
+\begin{equation}\label{e41}
+{\bf B}_0\cdot\left[\mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}+\nabla(\bxi\cdot\nabla p_0)\right] =0.
+\end{equation}
+Thus, Eqs.~(\ref{e31}), (\ref{e33x}), (\ref{e37}), (\ref{e38}), and (\ref{e41}) yield 
+\begin{align}\label{e52x}
+\bta\cdot {\bf F}(\bxi)&= \bta_\perp\cdot\left[ \mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}
++\nabla(\bxi_\perp\cdot\nabla p_0)\right] \nonumber\\[0.5ex]
+&\phantom{=}-\gamma\,p_0\,(\nabla\cdot\bta)\,(\nabla\cdot\bxi).
+\end{align}
+Note that $\xi_\parallel$ and $\eta_\parallel$ only occur on the right-hand side of the previous equation in the final term. 
+
+Let 
+\begin{equation}\label{e43}
+I= \bta_\perp\cdot\left[ \mu_0^{-1}\,(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}
++\nabla(\bxi_\perp\cdot\nabla p_0)\right].
+\end{equation}
+Now,
 \begin{equation}
-{\bf B}_0\cdot\left[\mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}+\nabla(\bxi_\perp\cdot\nabla p_0)\right] =0.
+\bta_\perp\cdot\nabla (\bxi_\perp\cdot\nabla p_0)= \nabla\cdot[\bta_\perp\,(\bxi_\perp\cdot \nabla p_0)] - (\bxi_\perp\cdot\nabla p_0)\,(\nabla\cdot
+\bta_\perp) =-(\bxi_\perp\cdot\nabla p_0)\,(\nabla\cdot
+\bta_\perp),
+\end{equation}
+where the divergence term has integrated to zero because of Eq.~(\ref{ecc}). Furthermore, 
+\begin{equation}
+(\nabla\times {\bf Q})\times{\bf B}_0+ \mu_0^{-1}\, (\nabla\times {\bf B}_0)\times {\bf Q}= {\bf Q}\cdot\nabla{\bf B}_0
++ {\bf B}_0\cdot\nabla{\bf Q} - \nabla({\bf B}_0\cdot{\bf Q}).
+\end{equation}
+Hence,
+\begin{equation}\label{e46}
+I = \mu_0^{-1}\,\bta_\perp\cdot\left[ {\bf Q}\cdot\nabla{\bf B}_0
++ {\bf B}_0\cdot\nabla{\bf Q} - \nabla({\bf B}_0\cdot{\bf Q})\right]  - (\bxi_\perp\cdot\nabla p_0)\,(\nabla\cdot
+\bta_\perp).
+\end{equation}
+
+Note that
+\begin{equation}\label{e47}
+Q_i = \frac{\partial}{\partial x_j}\,(\xi_{\perp\,i}\,B_{0\,j} - \xi_{\perp\,j}\,B_{0\,i}).
+\end{equation}
+It follows that
+\begin{align}
+({\bf Q}\cdot\nabla {\bf B}_0)_i&= Q_j\,\frac{\partial B_{0\,i}}{\partial x_j} 
+= \frac{\partial}{\partial x_k}\,(\xi_{\perp\,j}\,B_{0\,k} - \xi_{\perp\,k}\,B_{0\,j})\,\frac{\partial B_{0\,i}}{\partial x_j}\nonumber\\[0.5ex]
+&= B_{0\,k}\,\frac{\partial\xi_{\perp\,j}}{\partial x_k}\,\frac{\partial B_{0\,i}}{\partial x_j}-\xi_{\perp\,k}\,\frac{\partial B_{0\,j}}{\partial x_k}\,\frac{\partial B_{0\,i}}{\partial x_j}
+-B_{0\,j}\,\frac{\partial B_{0\,i}}{\partial x_j}\,\frac{\partial \xi_{\perp\,k}}{\partial x_k} \nonumber\\[0.5ex]
+&= \left[ ({\bf B}_0\cdot
+\nabla\bxi_\perp)\cdot\nabla {\bf B}_0 - (\bxi_\perp\cdot \nabla{\bf B}_0)\cdot\nabla {\bf B}_0- ({\bf B}_0\cdot\nabla {\bf B}_0)\,(\nabla\cdot\bxi_\perp)\right]_i,
+\end{align}
+where use has been made of Eq.~(\ref{e6}). However,
+\begin{equation}\label{e49}
+({\bf B}_0\cdot\nabla {\bf B}_0) = B_0^{\,2}\,\bkappa+ ({\bf B}_0\cdot\nabla B_0)\,{\bf b},
+\end{equation}
+where
+\begin{equation}
+\bkappa = {\bf b}\cdot\nabla {\bf b} = \frac{{\bf R}_c}{R_c^{\,2}}
+\end{equation}
+is the curvature vector of the equilibrium magnetic field (i.e., ${\bf R}_c$ is the local radius of curvature of equilibrium magnetic field-lines).
+Hence, we deduce that
+\begin{equation}\label{e51}
+\bta_\perp \cdot({\bf Q}\cdot\nabla {\bf B}_0)= \bta_\perp\cdot\left[({\bf B}_0\cdot
+\nabla\bxi_\perp)\cdot\nabla {\bf B}_0 - (\bxi_\perp\cdot \nabla{\bf B}_0)\cdot\nabla {\bf B}_0- B_0^{\,2}\,(\nabla\cdot\bxi_\perp)\,\bkappa\right].
+\end{equation}
+
+Now,
+\begin{align}
+\bta_\perp\cdot({\bf B}_0\cdot\nabla{\bf Q}) 
+= \eta_{\perp\,i}\,B_{0\,j}\,\frac{\partial Q_i}{\partial x_j}=
+\frac{\partial}{\partial x_j}\,(\eta_{\perp i}\,Q_i\,B_{0\,j})
+- Q_i\,B_{0\,j}\,\frac{\partial\eta_{\perp\,i}}{\partial x_j}\nonumber\\[0.5ex]
+= \nabla\cdot[(\bta_\perp\cdot {\bf Q})\,{\bf B}_0] - {\bf Q}\cdot ({\bf B}_0\cdot\nabla \bta_\perp)=- {\bf Q}\cdot ({\bf B}_0\cdot\nabla \bta_\perp),
+\end{align}
+where we have  used Eq.~(\ref{e6}), and the divergence term has integrated to zero because of Eq.~(\ref{e31x}). 
+However, from Eqs.~(\ref{e6}) and (\ref{e47}),
+\begin{equation}\label{e53}
+{\bf Q}  ={\bf B}_0\cdot\nabla \bxi_\perp - \bxi_\perp\cdot\nabla {\bf B}_0 - (\nabla\cdot\bxi_\perp)\,{\bf B}_0.
+\end{equation}
+Thus,
+\begin{align}
+\bta_\perp \cdot({\bf B}_0\cdot\nabla {\bf Q})&=- ({\bf B}_0\cdot\nabla\bxi_\perp)\cdot({\bf B}_0\cdot\nabla \bta_\perp)+ (\bxi_\perp\cdot\nabla {\bf B}_0)\cdot({\bf B}_0\cdot\nabla \bta_\perp) \nonumber\\[0.5ex]
+&\phantom{=}+ (\nabla\cdot\bxi_\perp)\,{\bf B}_0\cdot({\bf B}_0\cdot\nabla \bta_\perp). 
+\end{align}
+But,
+\begin{align}
+{\bf B}_0\cdot({\bf B}_0\cdot\nabla \bta_\perp)&= B_{0\,i}\,B_{0\,j}\,\frac{\partial \eta_{\perp\,i}}{\partial x_j}= \frac{\partial}{\partial x_j}\,( B_{0\,i}\,B_{0\,j}\, \eta_{\perp\,i}) - B_{0\,i}\,\frac{\partial B_{0\,j}}{\partial x_j}\,\eta_{\perp\,i}\nonumber\\[0.5ex]
+&= \nabla\cdot [({\bf B}_0\cdot\bta_\perp)\,{\bf B}_0] -B_0^{\,2}\,\bkappa\cdot \bta_\perp=-B_0^{\,2}\,\bkappa\cdot \bta_\perp,
+\end{align}
+where we have made use of Eq.~(\ref{e6}), as well as Eq.~(\ref{e49}), and the divergence term has integrated to zero because of Eq.~(\ref{e31x}). Thus, we arrive at
+\begin{equation}\label{e56}
+\bta_\perp \cdot({\bf B}_0\cdot\nabla {\bf Q})=- ({\bf B}_0\cdot\nabla\bxi_\perp)\cdot({\bf B}_0\cdot\nabla \bta_\perp)+ (\bxi_\perp\cdot\nabla {\bf B}_0)\cdot({\bf B}_0\cdot\nabla \bta_\perp) - B_0^{\,2}\,(\bta_\perp\cdot\bkappa)\,(\nabla\cdot\bxi_\perp).
+\end{equation}
+
+Now,
+\begin{align}
+-\bta_\perp\cdot\nabla ({\bf B}_0\cdot{\bf Q}) &= -\eta_{\perp i}\,\frac{\partial}{\partial x_i}\,(B_{0\,j}\,Q_j) = - \frac{\partial}{\partial x_i}\,(\eta_{\perp\,i}\,B_{0\,j}\,Q_j)+ B_{0\,j}\,Q_j\,\frac{\partial \eta_{\perp i}}{\partial x_i}\nonumber\\[0.5ex]
+&= -\nabla\cdot[({\bf B}_0\cdot {\bf Q})\,\bta_\perp]  +({\bf B}_0\cdot{\bf Q})\,(\nabla\cdot\bta_\perp)=   ({\bf B}_0\cdot{\bf Q})\,(\nabla\cdot\bta_\perp),
+\end{align}
+where the divergence term has  integrated to zero because of Eq.~(\ref{ecc}). 
+But, from Eq.~(\ref{e53}), 
+\begin{align}
+{\bf B}_0\cdot{\bf Q} &= - B_0^{\,2}\,\nabla\cdot\bxi_\perp + {\bf B}_0\cdot ({\bf B}_0\cdot\nabla\bxi_\perp) - {\bf B}_0\cdot
+(\bxi_\perp\cdot\nabla {\bf B}_0)\nonumber\\[0.5ex]
+&=- B_0^{\,2}\,\nabla\cdot\bxi_\perp - \bxi_\perp\cdot\nabla(B_0^{\,2}/2) + {\bf B}_0\cdot ({\bf B}_0\cdot\nabla\bxi_\perp).
+\end{align}
+However,
+\begin{align}
+ {\bf B}_0\cdot ({\bf B}_0\cdot\nabla\bxi_\perp) &= 
+ B_{0\,i}\,B_{0\,j}\,\frac{\partial \xi_{\perp\,i}}{\partial x_j}= \frac{\partial}{\partial x_j}\,(B_{0\,i}\,B_{0\,j}\,\xi_{\perp\,i})- B_{0\,j} \,\frac{\partial B_{0\,i}}{\partial x_j}\,\xi_{\perp\,i}\nonumber\\[0.5ex]
+ &= \nabla\cdot[({\bf B}_0\cdot\bxi_\perp)\,{\bf B}_0] - \bxi_\perp\cdot({\bf B}_0\cdot\nabla{\bf B}_0) = -B_0^{\,2}\,(\bxi_\perp\cdot\bkappa),
+ \end{align}
+ where we have  used Eqs.~(\ref{e6}) and (\ref{e49}), and the divergence term has  integrated to zero because of Eq.~(\ref{e31x}). 
+ Thus, we deduce that
+ \begin{equation}\label{e60}
+ -\bta_\perp\cdot\nabla ({\bf B}_0\cdot{\bf Q}) = -B_0^{\,2}\,(\nabla\cdot\bxi_\perp)\,(\nabla\cdot\bta_\perp)
+ -[\bxi_\perp\cdot\nabla(B_0^{\,2}/2) + B_0^{\,2}\,(\bxi_\perp\cdot\bkappa)]\,(\nabla\cdot\bta_\perp).
+ \end{equation}
+ 
+ Hence, it follows from Eqs.~(\ref{e31}), (\ref{e43}), (\ref{e46}),  (\ref{e51}), (\ref{e56}), and (\ref{e60}) that
+ \begin{align}\label{e61}
+\bta\cdot {\bf F}(\bxi) &=\frac{B_0^{\,2}}{\mu_0}\,(\nabla\cdot\bxi_\perp)\,(\nabla\cdot\bta_\perp) 
+ - \frac{1}{\mu_0}\,({\bf B}_0\cdot\nabla\bxi_\perp)\cdot
+ ({\bf B}_0\cdot\nabla\bta_\perp)-\gamma\,p_0\,(\nabla\cdot\bxi)\,(\nabla\cdot\bta)\nonumber\\[0.5ex]
+ &-\left[\bxi_\perp\cdot\nabla\left(p_0+\frac{B_0^{\,2}}{2\,\mu_0}\right)+ \frac{B_0^{\,2}}{\mu_0}\,\bxi_\perp\cdot\bkappa\right]\nabla\cdot\bta_\perp\nonumber
+\\[0.5ex]&
+-\frac{2\,B_0^{\,2}}{\mu_0}\,(\bta_\perp\cdot\bkappa)\,(\nabla\cdot\bxi_\perp) +R,
+ \end{align}
+ where
+ \begin{equation}
+ \mu_0\,R= \bta_\perp\cdot\left[({\bf B}_0\cdot\nabla\bxi_\perp)\cdot\nabla {\bf B}_0 - (\bxi_\perp\cdot\nabla {\bf B}_0)\cdot\nabla {\bf B}_0\right]
+ + (\bxi_\perp\cdot\nabla {\bf B}_0)\cdot({\bf B}_0\cdot\nabla\bta_\perp).
+ \end{equation}
+ 
+ However, from Eqs.~(\ref{e11}) and (\ref{e12}), 
+ \begin{equation}\label{e64}
+ \nabla p_0 = \mu_0^{-1}\,(\nabla\times{\bf B}_0)\times {\bf B}_0= \mu_0^{-1}\left[({\bf B}_0\cdot\nabla)\,{\bf B}_0-\nabla(B_0^{\,2}/2)\right].
+ \end{equation}
+ Thus, Eq.~(\ref{e49}) yields
+ \begin{equation}
+ \bxi_\perp\cdot\nabla\left(p_0 +\frac{B_0^{\,2}}{2}\right) = \frac{B_0^{\,2}}{\mu_0}\,\bxi_\perp\cdot\bkappa.
+ \end{equation}
+ Hence, Eq.~(\ref{e61}) simplifies to give 
+ \begin{align}\label{e65}
+\bta\cdot {\bf F}(\bxi) &=\frac{B_0^{\,2}}{\mu_0}\,(\nabla\cdot\bxi_\perp)\,(\nabla\cdot\bta_\perp) 
+ - \frac{1}{\mu_0}\,({\bf B}_0\cdot\nabla\bxi)\cdot
+ ({\bf B}_0\cdot\nabla\bta_\perp)-\gamma\,p_0\,(\nabla\cdot\bxi)\,(\nabla\cdot\bta)\nonumber\\[0.5ex]
+ &-\frac{2\,B_0^{\,2}}{\mu_0}\,(\bxi_\perp\cdot\bkappa)\, (\nabla\cdot\bta_\perp)-\frac{2\,B_0^{\,2}}{\mu_0}\,(\bta_\perp\cdot\bkappa)\,(\nabla\cdot\bxi_\perp) +R.
+ \end{align}
+
+Now, 
+\begin{align}
+\mu_0\,R &= \eta_{\perp\,i}\,B_{0\,k}\,\frac{\partial\xi_{\perp\,j}}{\partial x_k}\,\frac{\partial B_{0\,i}}{\partial x_j}
+- \eta_{\perp\,i}\,\xi_{\perp\,k}\,\frac{\partial B_{0\,j}}{\partial x_k}\,\frac{\partial B_{0\,i}}{\partial x_j}
++\xi_{\perp\,j}\,\frac{\partial B_{0\,i}}{\partial x_j}\,B_{0\,k}\,\frac{\partial\eta_{\perp\,i}}{\partial x_k}\nonumber\\[0.5ex]
+&= \frac{\partial}{\partial x_k}\!\left(\eta_{\perp\,i}\,B_{0\,k}\,\xi_{\perp\,j}\,\frac{\partial B_{0\,i}}{\partial x_j}\right)
+-\xi_{\perp\,j}\,\frac{\partial}{\partial x_k}\!\left(\eta_{\perp\,i}\,B_{0\,k}\,\frac{\partial B_{0\,i}}{\partial x_j}\right)\nonumber\\[0.5ex]
+&\phantom{=}- \eta_{\perp\,i}\,\xi_{\perp\,k}\,\frac{\partial B_{0\,j}}{\partial x_k}\,\frac{\partial B_{0\,i}}{\partial x_j}
++\xi_{\perp\,j}\,\frac{\partial B_{0\,i}}{\partial x_j}\,B_{0\,k}\,\frac{\partial\eta_{\perp\,i}}{\partial x_k}\nonumber\\[0.5ex]
+&=-\eta_{\perp\,i}\,\xi_{\perp\,j}\,\frac{\partial}{\partial x_k}\!\left(B_{0\,k}\,\frac{\partial B_{0\,i}}{\partial x_j}\right)- \eta_{\perp\,i}\,\xi_{\perp\,j}\,\frac{\partial B_{0\,k}}{\partial x_j}\,\frac{\partial B_{0\,i}}{\partial x_k}\nonumber\\[0.5ex]
+&=-\eta_{\perp\,i}\,\xi_{\perp\,j}\,B_{0\,k}\,\frac{\partial^2 B_{0\,i}}{\partial x_j\,\partial x_k}- \eta_{\perp\,i}\,\xi_{\perp\,j}\,\frac{\partial B_{0\,k}}{\partial x_j}\,\frac{\partial B_{0\,i}}{\partial x_k} \nonumber\\[0.5ex]
+&=- \eta_{\perp\,i}\,\xi_{\perp\,j}\,\frac{\partial}{\partial x_j}\!\left(B_{0\,k}\,\frac{\partial B_{0\,i}}{\partial x_k}\right),
+\end{align}
+where the divergence term has integrated to zero because of Eq.~(\ref{e31x}), and use has been made of Eq.~(\ref{e6}). 
+However, from Eq.~(\ref{e64}), 
+\begin{equation}
+\mu_0^{-1}\,B_{0\,k}\,\frac{\partial B_{0\,i}}{\partial x_k} = \frac{\partial}{\partial x_i}\!\left(p_0 + \frac{B_0^{\,2}}{2\,\mu_0}\right).
+\end{equation}
+Thus,
+\begin{equation}
+R=  -\eta_{\perp\,i}\,\xi_{\perp\,j}\,\frac{\partial^2}{\partial x_i\,\partial x_j}\!\left(p_0 + \frac{B_0^{\,2}}{2\,\mu_0}\right)=-
+(\bta_\perp\,\bxi_\perp : \nabla\nabla)\left(p_0 + \frac{B_0^{\,2}}{2\,\mu_0}\right).
+\end{equation}
+
+Thus, it follows from Eq.~(\ref{e65}) that 
+ \begin{align}
+ \bta\cdot {\bf F}(\bxi) &= - \frac{1}{\mu_0}\,({\bf B}_0\cdot\nabla\bxi_\perp)\cdot
+ ({\bf B}_0\cdot\nabla\bta_\perp)-\gamma\,p_0\,(\nabla\cdot\bxi)\,(\nabla\cdot\bta)+\frac{B_0^{\,2}}{\mu_0}\,(\nabla\cdot\bxi_\perp)\,(\nabla\cdot\bta_\perp) 
+\nonumber\\[0.5ex]
+ &\phantom{=}-\frac{2\,B_0^{\,2}}{\mu_0}\,(\bxi_\perp\cdot\bkappa)\, (\nabla\cdot\bta_\perp)-\frac{2\,B_0^{\,2}}{\mu_0}\,(\bta_\perp\cdot\bkappa)\,(\nabla\cdot\bxi_\perp)\nonumber\\[0.5ex]
+ &\phantom{=}
+ -(\bta_\perp\,\bxi_\perp : \nabla\nabla)\left(p_0 + \frac{B_0^{\,2}}{2\,\mu_0}\right).
+\end{align}
+The self-adjointness property (\ref{e26}) is now obviously satisfied. 
+
+\subsection{Boundary Conditions at Perfectly Conducting Wall}
+Equations~(\ref{e31x}), (\ref{e35}), and (\ref{e32}) can be combined to give 
+\begin{equation}\label{e79}
+{\bf n} \cdot\bxi_\perp = 0
+\end{equation}
+at the wall. Making use of Eqs.~(\ref{e22}), (\ref{e33}) and (\ref{e32}),
+we also require
+\begin{equation}\label{e81}
+{\bf n}\cdot\nabla\times(\bxi_\perp\times {\bf B}_0) = 0
+\end{equation}
+at the wall. Now, Eqs.~(\ref{e31x}) and (\ref{e79})  imply that
+\begin{equation}
+\bxi_\perp\times {\bf B}_0= f\,{\bf n}
+\end{equation}
+at the wall, where $f$ is some scalar.
+Thus, the boundary condition (\ref{e81}) becomes
+\begin{equation}
+{\bf n}\cdot \nabla\times (f\,{\bf n}) = {\bf n}\cdot[\nabla f\times {\bf n} + f\,\nabla\times {\bf n})= f\,{\bf n}\cdot\nabla\times {\bf n} = 0.
+\end{equation}
+Now, according to Eq.~(\ref{e31x}), the inner surface of the perfectly conducting wall must correspond to a contour of the equilibrium poloidal
+magnetic flux,  $\psi({\bf r})$. 
+It follows that
+\begin{equation}
+{\bf n} = \frac{\nabla\psi}{|\nabla\psi|}.
+\end{equation}
+Thus,
+\begin{equation}
+{\bf n}\cdot\nabla\times {\bf n} = \frac{\nabla\psi}{|\nabla\psi|}\cdot \left[\nabla\left(\frac{1}{|\nabla\psi|}\right)\times \nabla\psi\right]=0.
+\end{equation}
+Hence, we deduce that the boundary condition (\ref{e81}) is satisfied provided that the boundary condition (\ref{e79}) is satisfied. 
+
+\subsection{Reality of $\omega^2$}
+Consider a discrete normal mode with frequency $\omega$ and displacment $\bxi({\bf r})$. 
+Taking the scalar product of Eq.~(\ref{e24}) with $\bxi^\ast({\bf r})$, and integrating over the plasma volume, we obtain
+\begin{equation}
+\omega^2\int\rho_0\,|\bxi|^2\,d{\bf r} = - \int\bxi^\ast\cdot {\bf F}(\bxi)\,d{\bf r}.
+\end{equation}
+Likewise, taking the scalar product of the complex conjugate of Eq.~(\ref{e24}) with $\bxi({\bf r})$, and integrating over the whole plasma
+volume, we get
+\begin{equation}
+(\omega^2)^\ast\int\rho_0\,|\bxi|^2\,d{\bf r} = - \int\bxi\cdot {\bf F}(\bxi^\ast)\,d{\bf r}.
+\end{equation}
+Here, we have made use of the fact that $[{\bf F}(\bxi)]^\ast={\bf F}(\bxi^\ast)$. 
+Taking the difference between the previous two equations, we obtain
+\begin{equation}
+\left[\omega^2 - (\omega^2)^\ast\right]\int\rho_0\,|\bxi|^2\,d{\bf r}=  - \int\bxi^\ast\cdot {\bf F}(\bxi)\,d{\bf r}+ \int\bxi\cdot {\bf F}(\bxi^\ast)\,d{\bf r}.
+\end{equation}
+However, the self-adjoint property of the force operator, (\ref{e26}), which is validated by the physical boundary condition (\ref{e79}), 
+yields
+\begin{equation}
+\left[\omega^2 - (\omega^2)^\ast\right]\int\rho_0\,|\bxi|^2\,d{\bf r}=0.
+\end{equation}
+Given that the integral in the previous expression is positive-definite, we deduce that 
+\begin{equation}
+\omega^2 = (\omega^2)^\ast.
+\end{equation}
+In other words, $\omega^2$ is a real quantity. Furthermore, the fact that all of the differential operators appearing on the right-hand side of
+Eq.~(\ref{e24a}) are real implies that $\bxi({\bf r})$ is real. More generally, $\bxi({\bf r})$ is a real function multiplied by a spatially uniform complex
+number. 
+
+In terms of the usual definition of exponential stability, a discrete normal mode with $\omega^2>0$ corresponds to a pure oscillation, and would, therefore,
+be considered stable. Conversely, a discrete mode with $\omega^2<0$ has one branch that grows exponentially in time, and
+would, therefore, be considered unstable. Clearly, the transition from stability to instability occurs when $\omega^2=0$. 
+
+\subsection{Orthogonality of Normal Modes}\label{orth}
+Consider two discrete normal modes. Let the first have the frequency $\omega_a$ and the displacement $\bxi_a({\bf r})$. Let the
+second have the frequency $\omega_b$ and the displacement $\bxi_b({\bf r})$. Let the modes satisfy the
+physical boundary conditions 
+\begin{equation}\label{e91}
+{\bf n}\cdot\bxi_{a\,\perp}={\bf n}\cdot\bxi_{b\,\perp} = 0
+\end{equation}
+at the wall. It follows from Eq.~(\ref{e24a}) that
+\begin{align}
+\omega_a^{\,2}\,\rho_0\,\bxi_a &= -{\bf F}(\bxi_a),\\[0.5ex]
+\omega_b^{\,2}\,\rho_0\,\bxi_b &=- {\bf F}(\bxi_b).
+\end{align}
+Forming the scalar product of the first equation with $\bxi_b$, and the second with $\bxi_a$, taking the difference, and integrating over the
+plasma volume, we obtain
+\begin{equation}
+(\omega_a^{\,2}-\omega_b^{\,2})\int \rho_0\,\bxi_a\cdot\bxi_b\,d{\bf r} = - \int [\bxi_b\cdot {\bf F}(\bxi_a)-\bxi_a\cdot {\bf F}(\bxi_b)]\,d{\bf r}.
+\end{equation}
+However, the self-adjoint property of the force operator, (\ref{e26}), which is validated by the physical boundary conditions (\ref{e91}), 
+yields
+\begin{equation}
+(\omega_a^{\,2}-\omega_b^{\,2})\int \rho_0\,\bxi_a\cdot\bxi_b\,d{\bf r}=0.
+\end{equation}
+Hence, we deduce that two discrete normal modes with different frequencies are orthogonal, in the sense that 
+\begin{equation}
+\int \rho_0\,\bxi_a\cdot\bxi_b\,d{\bf r}=0.
+\end{equation}
+
+Of course, the previous proof fails if we encounter multiple  distinct normal modes that share the same frequency, $\omega$. However, any
+linear combination of such degenerate modes is also a valid normal mode with frequency $\omega$, and it is always possible to form linear
+combinations that are mutually orthogonal. With this caveat, we can state that discrete normal modes are mutually orthogonal. 
+
+\subsection{Energy Conservation}
+Taking the scalar product of the perturbed plasma equation of motion, (\ref{e24a}), with $(1/2)\,\bxi^\ast$, and integrating over the
+plasma volume, we obtain
+\begin{equation}\label{e97}
+\delta K +\delta W = 0,
+\end{equation}
+where
+\begin{align}
+\delta K(\bxi^\ast,\bxi) &= -\omega^2\,K(\bxi^\ast,\bxi),\\[0.5ex]
+K(\bxi^\ast,\bxi) &= \frac{1}{2}\int\rho_0\,|\bxi|^2\,d{\bf r},\label{e99}\\[0.5ex]
+\delta W(\bxi^\ast,\bxi) &= -\frac{1}{2}\int \bxi^\ast\cdot {\bf F}(\bxi)\,d{\bf r}.\label{e100}
+\end{align}
+Equation~(\ref{e97}) is clearly an energy conservation equation. We recognize $\delta K$ as the perturbed kinetic
+energy associated with the normal mode. (Actually, for purely growing modes it is the perturbed {\em kinetic energy}\/ at $t=0$, and
+for purely oscillatory modes it is the peak perturbed kinetic energy.) It follows that $\delta W$ is the perturbed {\em potential
+energy}\/ associated with the mode. (With the same caveats as for the kinetic energy.)  Of course, energy is conserved because
+the ideal-MHD equations, (\ref{e1})--(\ref{e5}), contain no dissipative terms. 
+
+\subsection{Variational Formulation}
+Equations~(\ref{e97})--(\ref{e99}) can be rearranged to give
+\begin{equation}\label{e101}
+\omega^2 = \frac{\delta W(\bxi^\ast,\bxi)}{K(\bxi^\ast,\bxi)}
+\end{equation}
+We wish to demonstrate that any allowable $\bxi({\bf r})$ function for which $\omega^2$ becomes an extremum satisfies the perturbed plasma equation of motion, (\ref{e24a}). The proof follows by letting $\bxi\rightarrow \bxi + \delta\bxi$ and $\omega^2\rightarrow \omega^2+\delta\omega^2$,
+and setting $\delta\omega^2=0$ (corresponding to $\omega^2$ being an extremum). 
+Neglecting terms that are quadratic in small quantities, we obtain
+\begin{equation}
+\omega^2+\delta\omega^2= \frac{\delta W(\bxi^\ast,\bxi)+\delta W(\delta\bxi^\ast,\bxi)+\delta W(\bxi^\ast,\delta\bxi)}
+{K(\bxi^\ast,\bxi)+K(\delta\bxi^\ast,\bxi)+K(\bxi^\ast,\delta\bxi)}.
+\end{equation}
+Rearranging the previous equation, making use of Eq.~(\ref{e101}), and again neglecting terms that are quadratic in small quantities,
+we get
+\begin{equation}
+\delta \omega^2 = \frac{\delta W(\delta\bxi^\ast,\bxi)+\delta W(\bxi^\ast,\delta\bxi)-\omega^2\,[K(\delta\bxi^\ast,\bxi)+K(\bxi^\ast,\delta\bxi)]}
+{K(\bxi^\ast,\bxi)}. 
+\end{equation}
+Setting $\delta\omega^2$ to zero yields
+\begin{equation}
+\omega^2\,K(\delta\bxi^\ast,\bxi)-\delta W(\delta\bxi^\ast,\bxi) + \omega^2\,K(\bxi^\ast,\delta\bxi) + \delta W(\bxi^\ast,\delta\bxi)=0.
+\end{equation}
+Making use of Eqs.~(\ref{e99}) and (\ref{e100}), as well as the self-adjoint property of the force operator, (\ref{e26}), we get
+\begin{equation}
+\int \left\{\delta\bxi^\ast\cdot[\omega^2\,\rho_0\,\bxi-{\bf F}(\bxi)]+ \delta\bxi\cdot[\omega^2\,\rho_0\,\bxi^\ast + {\bf F}(\bxi^\ast)]\right\}d{\bf r} = 0.
+\end{equation}
+However, in order for $\omega^2$ to be an extremum, the previous equation must hold for arbitrary $\delta\bxi$. Hence, 
+we obtain
+\begin{equation}
+-\omega^2\,\rho_0\,\bxi = {\bf F}(\bxi),
+\end{equation}
+which is identical to Eq.~(\ref{e24a}). 
+
+\subsection{Energy Principle}
+The ideal-MHD energy principle states that if
+\begin{equation}
+\delta W(\bxi^\ast,\bxi) \geq 0
+\end{equation}
+for all allowable plasma displacements (i.e., bounded in energy and satisfying appropriate boundary conditions) then
+the plasma is ideally stable. In other words, there exist no normal modes with $\omega^2<0$. Conversely, if $\delta W$ is negative
+for any allowable displacement then the plasma is ideally unstable. In other words, there exists at least one normal mode with $\omega^2<0$. 
+
+The proof of the energy principle is straightforward if one assumes that the normal modes are discrete, and form a complete set of
+basis functions, $\bxi_n({\bf r})$, each satisfying
+\begin{equation}
+-\omega_n^{\,2}\,\rho_0\,\bxi_n = {\bf F}({\bxi}_n).
+\end{equation}
+In this case, any arbitrary trial function, $\bxi({\bf r})$, can be represented as
+\begin{equation}
+\bxi({\bf r}) = \sum_n a_n\,\bxi_n({\bf r}).
+\end{equation}
+Now, we demonstrated in Sect.~\ref{orth} that the normal modes are orthogonal with respect to the weight function $\rho_0$. Let us
+normalize them such that they are orthonormal with respect to this weight function:
+\begin{equation}
+\int \rho_0\,\bxi_n^{\,\ast}\,\cdot\bxi_m\,d{\bf r} = \delta_{nm}.
+\end{equation}
+It follows that
+\begin{align}
+\delta W(\bxi^\ast,\bxi) &= -\frac{1}{2}\int\bxi^\ast\cdot {\bf F}(\bxi)\,d{\bf r}\nonumber\\[0.5ex]
+&= -\frac{1}{2}\sum_{n,m}a_n^{\ast}\,a_m\int \bxi_n^{\,\ast}\cdot {\bf F}(\bxi_m)\,d{\bf r}=\frac{1}{2}\sum_{n,m}a_n^{\ast}\,a_m\,\omega_m^{\,2}\int \rho_0\,\bxi_n^{\,\ast}\cdot \bxi_m\,d{\bf r}\nonumber\\[0.5ex]
+&= \frac{1}{2}\sum_n|a_n|^2\,\omega_n^{\,2}.
+\end{align}
+The previous equation implies that if a $\bxi({\bf r})$ can be found for which $\delta W <0$ then at least
+one of the $\omega_n^{\,2}$ is negative, indicating instability. Conversely, if $\delta W\geq 0$ for all
+$\bxi({\bf r})$ then all of the $\omega_n^{\,2}$ are non-negative, indicating stability. 
+
+\subsection{Perturbed Potential Energy}
+According to Eqs.~(\ref{e12}), (\ref{e52x}) and (\ref{e100}), the perturbed plasma potential energy can be written
+\begin{equation}\label{e112}
+\delta W =\frac{1}{2}\int\left\{\bxi^\ast\cdot\left[\mu_0^{-1}\,(\nabla\times {\bf Q})\times {\bf B}_0 - {\bf j}_0\times {\bf Q} -\nabla(\bxi_\perp\cdot\nabla p_0)\right]
++\gamma\,p_0\,|\nabla\cdot\bxi|^2\right\}d{\bf r}.
+\end{equation}
+However, Eqs.~(\ref{e12}), (\ref{e37}), and (\ref{e41}) imply that 
+\begin{equation}
+{\bf b}\cdot [{\bf j}_0\times {\bf Q} +\nabla(\bxi_\perp\cdot\nabla p_0)]= 0.
+\end{equation}
+Hence, Eq.~(\ref{e112}) becomes
+\begin{equation}\label{e114}
+\delta W = \frac{1}{2}\int\left[\mu_0^{-1}\,(\nabla\times {\bf Q})\cdot(\bxi_\perp^{\,\ast}\times {\bf B}_0) - \bxi_\perp^{\,\ast}\cdot{\bf j}_0\times {\bf Q}
+- \bxi_\perp^{\,\ast}\cdot\nabla(\bxi_\perp\cdot\nabla p_0)+\gamma\,p_0\,|\nabla\cdot\bxi|^2\right]d{\bf r}
+\end{equation}
+Now,
+\begin{align}\label{e115}
+\int (\nabla\times {\bf Q})\cdot(\bxi_\perp^{\,\ast}\times {\bf B}_0) \,d{\bf r}&=\int\left\{\nabla\cdot[{\bf Q}\times(\bxi_\perp^{\,\ast}\times {\bf B}_0)]
++{\bf Q}\cdot\nabla\times(\bxi_\perp^{\,\ast}\times {\bf B}_0)\right\}d{\bf r}\nonumber\\[0.5ex]
+&=\int |{\bf Q}|^2\,d{\bf r},
+\end{align}
+where use has been made of Eq.~(\ref{e36}). Here, the divergence term integrates to zero because
+\begin{equation}
+{\bf n}\cdot {\bf Q}\times(\bxi_\perp^{\,\ast}\times {\bf B}_0)= ({\bf Q}\cdot{\bf B}_0)\,({\bf n}\cdot\bxi_\perp^{\,\ast})- ({\bf Q}\cdot\bxi_\perp^{\,\ast})\,({\bf n}\cdot{\bf B}_0)
+=0
+\end{equation}
+at the wall, where use has been made of Eqs.~(\ref{e31x}) and (\ref{e79}). Furthermore, 
+\begin{align}\label{e117}
+\int \bxi_\perp^{\,\ast}\cdot\nabla(\bxi_\perp\cdot\nabla p_0)\,d{\bf r} &= \int\left\{\nabla\cdot[(\bxi_\perp\cdot\nabla p_0)\,\bxi_\perp^{\,\ast}]
+-(\bxi_\perp\cdot \nabla p_0)\,(\nabla\cdot\bxi_\perp^{\,\ast})\right\}d{\bf r}\nonumber\\[0.5ex]
+&= -\int (\bxi_\perp\cdot \nabla p_0)\,(\nabla\cdot\bxi_\perp^{\,\ast})\,d{\bf r}.
+\end{align}
+Here, the divergence term has integrated to zero because of Eq.~(\ref{e79}). Combining Eqs.~(\ref{e114}), (\ref{e115}), and (\ref{e117}),
+we obtain the following standard expression for the perturbed potential energy
+\begin{equation}
+\delta W = \frac{1}{2}\int\left[\mu_0^{-1}\,|{\bf Q}|^2 - \bxi_\perp^{\,\ast}\cdot{\bf j}_0\times {\bf Q} + (\bxi_\perp\cdot\nabla p_0)\,(\nabla\cdot\bxi_\perp^{\,\ast})
++ \gamma\,p_0\,|\nabla\cdot\bxi|^2\right]d{\bf r}.
 \end{equation}
 
 \end{document}
