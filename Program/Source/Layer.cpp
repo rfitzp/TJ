@@ -63,10 +63,11 @@ Layer::Layer ()
   string JSONFilename = "Inputs/TJ.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  pstart = JSONData["Layer_control"]["pstart"].get<double> ();
-  pend   = JSONData["Layer_control"]["pend"]  .get<double> ();
-  P3max  = JSONData["Layer_control"]["P3max"] .get<double> ();
-  Nscan  = JSONData["Layer_control"]["Nscan"] .get<int>    ();
+  LAYER   = JSONData["Layer_control"]["LAYER"] .get<int>    ();
+  pstart  = JSONData["Layer_control"]["pstart"].get<double> ();
+  pend    = JSONData["Layer_control"]["pend"]  .get<double> ();
+  P3max   = JSONData["Layer_control"]["P3max"] .get<double> ();
+  Nscan   = JSONData["Layer_control"]["Nscan"] .get<int>    ();
 
   acc  = JSONData["Layer_control"]["acc"] .get<double> ();
   h0   = JSONData["Layer_control"]["h0"]  .get<double> ();
@@ -79,14 +80,17 @@ Layer::Layer ()
   Eta     = JSONData["Layer_control"]["Eta"]    .get<double> ();
   Maxiter = JSONData["Layer_control"]["Maxiter"].get<int>    ();
 
-  printf ("\n");
-  printf ("Class LAYER::\n");
-  printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan = %4d\n",
-	  pstart, pend, P3max, Nscan);
-  printf ("acc    = %10.3e h0   = %10.3e hmin  = %10.3e hmax  = %10.3e\n",
-	  acc, h0, hmin, hmax);
-  printf ("eps    = %10.3e smax = %10.3e smin  = %10.3e Eta   = %10.3e Maxiter = %4d\n",
-	  eps, smax, smin, Eta, Maxiter);
+  if (LAYER)
+    {
+      printf ("\n");
+      printf ("Class LAYER::\n");
+      printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan = %4d\n",
+	      pstart, pend, P3max, Nscan);
+      printf ("acc    = %10.3e h0   = %10.3e hmin  = %10.3e hmax  = %10.3e\n",
+	      acc, h0, hmin, hmax);
+      printf ("eps    = %10.3e smax = %10.3e smin  = %10.3e Eta   = %10.3e Maxiter = %4d\n",
+	      eps, smax, smin, Eta, Maxiter);
+    }
 }
 
 // #########################
@@ -94,6 +98,12 @@ Layer::Layer ()
 // #########################
 void Layer::Solve ()
 {
+  // ....................................
+  // Skip calculation unless LAYER is set
+  // ....................................
+  if (!LAYER)
+    return;
+  
   // .....................................
   // Read in rational surface data from TJ
   // .....................................

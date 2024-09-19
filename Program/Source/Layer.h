@@ -97,6 +97,7 @@ private:
   // ....................................
   // Layer calculation control parameters
   // ....................................
+  int    LAYER;  // Switch to enable layer calculation (read from JSON file)
   double pstart; // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double pend;   // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double P3max;  // Value of Pmax[3] above which switch to low-D layer equations made (read from JSON file)

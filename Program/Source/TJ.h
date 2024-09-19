@@ -189,19 +189,6 @@ class TJ
   gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function
   gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function
 
-  // -------------
-  // RMP coil data
-  // -------------
-  int              ncoil;   // Number of toroidal strands that make up RMP coils 
-  double*          Rcoil;   // R coodinates of strands (read from JSON file)
-  double*          Zcoil;   // Z coodinates of strands (read from JSON file)
-  double*          Icoil;   // Toroidal currents flowing in strands (read from JSON file)
-  complex<double>* Psix;    // RMP perturbation at plasma boundary
-  complex<double>* Xi;      // RMP response vector
-  complex<double>* Upsilon; // RMP response vector
-  complex<double>* Lambda;  // RMP response vector
-  complex<double>* Chi;     // RMP drive at rational surfaces
-
   // --------------------
   // Plasma boundary data
   // ---------------------
@@ -303,6 +290,27 @@ class TJ
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
 
+  // --------
+  // RMP data
+  // --------
+  int                      ncoil;   // Number of toroidal strands that make up RMP coils 
+  double*                  Rcoil;   // R coodinates of strands (read from JSON file)
+  double*                  Zcoil;   // Z coodinates of strands (read from JSON file)
+  double*                  Icoil;   // Toroidal currents flowing in strands (read from JSON file)
+  complex<double>*         Psix;    // RMP perturbation at plasma boundary
+  complex<double>*         Xi;      // RMP response vector
+  complex<double>*         Upsilon; // RMP response vector
+  complex<double>*         Lambda;  // RMP response vector
+  complex<double>*         Chi;     // RMP drive at rational surfaces
+  Array<complex<double>,2> Psirmp;  // Psi component of ideal RMP response eigenfunction
+  Array<complex<double>,2> Zrmp;    // Z component of ideal RMP response eigenfunction
+
+  // --------------------
+  // Ideal stability data
+  // --------------------
+  Array<complex<double>,3> Psii;    // Psi components of ideal solutions lauched from magnetic axis
+  Array<complex<double>,3> Zi;      // Z components of ideal solutions lauched from magnetic axis
+
   // ------------------------------------------------
   // Visualization of tearing eigenfunctions and RMPs
   // ------------------------------------------------
@@ -317,6 +325,10 @@ class TJ
   Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visulalization grid
   Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
+  Array<complex<double>,2> Psirf;  // Psi components of Fourier-transformed ideal RMP response eigenfunction
+  Array<complex<double>,2> Zrf;    // Z components of Fourier-transformed ideal RMP response eigenfunction
+  Array<complex<double>,2> Psirv;  // Psi components of ideal RMP response eigenfunction
+  Array<complex<double>,2> Zrv;    // Z components of ideal RMP response eigenfunction
 
   // -----------------------
   // Root finding parameters
