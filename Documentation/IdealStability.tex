@@ -1,0 +1,308 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage {amsmath}
+\usepackage{amssymb}
+\pdfoutput = 1 
+\usepackage {graphicx}
+\newcommand{\bomega}{\mbox{\boldmath$\omega$}}
+\newcommand{\bxi}{\mbox{\boldmath$\xi$}}
+\newcommand{\bbeta}{\mbox{\boldmath$\beta$}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\title{Calculation of Ideal Stability}
+\author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies,  Department of Physics,  University of Texas at Austin,  Austin TX 78712, USA}\begin{abstract}
+\end{abstract}
+\maketitle
+
+\section{Analysis}
+\subsection{Reference Document}
+The document ``{\em Calculation of Tearing Mode Stability in an Inverse Aspect-Ratio Expanded Tokamak Equilibrium}", by R.~Fitzpatrick,  is, henceforth,
+referred to as TJ. The document ``{\em An Extended Variational Method for the Resistive Wall Mode in Toroidal Confinement Devices}",
+by R.~Fitzpatrick,  is, henceforth,
+referred to as RWM. 
+
+\subsection{Normalization}\label{coords}
+All lengths are normalized to  the major radius of the plasma magnetic axis, $R_0$. All magnetic field-strengths
+are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All currents are normalized to $B_0\,R_0/\mu_0$. All current densities are normalized to $B_0/(\mu_0\,R_0)$.  All plasma pressures are normalized to $B_0^{\,2}/\mu_0$.
+All toroidal electromagnetic torques are normalized to $B_0^{\,2}\,R_0^{\,3}/\mu_0$. 
+
+\subsection{Plasma Potential Energy}
+The perturbed magnetic field in the plasma is written 
+\begin{equation}
+{\bf b} = \nabla\times (\bxi\times{\bf B}).
+\end{equation}
+The force operator in the plasma takes the form 
+\begin{equation}
+{\bf F}(\bxi)= \nabla({\mit\Gamma}\,P\,\nabla\cdot\bxi) - {\bf B}\times(\nabla\times {\bf b})+\nabla(\bxi\cdot\nabla P)+{\bf J}\times  {\bf b}.
+\end{equation}
+Finally, the plasma potential energy is written 
+\begin{equation}
+\delta W_p = \frac{1}{2}\int\left[{\mit\Gamma}\,P\,(\nabla\cdot\bxi^\ast)\,(\nabla\cdot\bxi)+ \nabla\times (\bxi^\ast\times {\bf B})\cdot {\bf b}
++(\nabla\cdot\bxi^\ast)\,(\bxi\cdot\nabla P)+
+{\bf J}\times \bxi^\ast\,\cdot{\bf b}\right]d\tau,
+\end{equation}
+where $d\tau$ denotes a volume element, and the integral is over the plasma volume. 
+
+Now,
+\begin{align}
+{\mit\Gamma}\,P\,(\nabla\cdot\bxi^\ast)\,(\nabla\cdot\bxi)&=\nabla\cdot[{\mit\Gamma}\,P\,\bxi^\ast\,\nabla\cdot\bxi)]-\bxi^\ast\cdot\nabla(
+{\mit\Gamma}\,P\,\nabla\cdot\bxi),\\[0.5ex]
+ \nabla\times (\bxi^\ast\times {\bf B})\cdot {\bf b}&= \nabla\cdot[(\bxi^\ast\times {\bf B})\times {\bf b}] + \bxi^\ast\times {\bf B}\cdot\nabla\times {\bf b},\\[0.5ex]
+ (\nabla\cdot\bxi^\ast)\,(\bxi\cdot\nabla P)&=\nabla\cdot(\bxi^\ast\,\bxi\cdot\nabla P) -\bxi^\ast\cdot\nabla(\bxi\cdot\nabla P),
+\end{align}
+so
+\begin{align}
+\delta W_p &= \frac{1}{2}\int\left\{\nabla\cdot[{\mit\Gamma}\,P\,\bxi^\ast\,\nabla\cdot\bxi+ (\bxi^\ast\times {\bf B})\times {\bf b}+\bxi^\ast\,\bxi\cdot\nabla P]\right.\nonumber\\[0.5ex]&\left.-\bxi^\ast\cdot[ \nabla({\mit\Gamma}\,P\,\nabla\cdot\bxi) - {\bf B}\times(\nabla\times {\bf b})+\nabla(\bxi\cdot\nabla P)+{\bf J}\times  {\bf b}]\right\}d\tau,
+\end{align}
+which yields
+\begin{align}
+\delta W_p &= \frac{1}{2}\left(\oint\oint{\cal J}\,\nabla r\cdot[{\mit\Gamma}\,P\,\bxi^\ast\,\nabla\cdot\bxi+ (\bxi^\ast\times {\bf B})\times {\bf b}+\bxi^\ast\,\bxi\cdot\nabla P]\,d\theta\,d\phi\right)_{\hat{r}=1-}\nonumber\\[0.5ex]
+&-\frac{1}{2}\int\bxi^\ast\cdot{\bf F}(\bxi)\,d\tau,
+\end{align}
+or
+\begin{align}
+\delta W_p &= \frac{1}{2}\left(\oint\oint{\cal J}\,\xi^{r\,\ast}\,[{\mit\Gamma}\,P\,\nabla\cdot\bxi -{\bf B}\cdot{\bf b} + \xi^r\,P']\,d\theta\,d\phi\right)_{\hat{r}=1_{-}}-\frac{1}{2}\int\bxi^\ast\cdot{\bf F}(\bxi)\,d\tau,
+\end{align}
+where use has been made of the fact that ${\bf B}\cdot\nabla r = 0$. However, the trial function is calculated with ${\bf F}(\bxi)={\bf 0}$ and
+$\nabla\cdot\bxi=0$  in the plasma. Moreover, $P'=0$ at the plasma boundary. Thus,
+\begin{equation}
+\delta W_p = -\frac{1}{2}\left(\oint\oint {\cal J}\,\xi^{r\,\ast}\,{\bf B}\cdot{\bf b}\,d\theta\,d\phi\right)_{\hat{r}=1_{-}}.
+\end{equation}
+
+Now, 
+\begin{equation}
+{\bf B}\cdot{\bf b} = B^\theta\,b_\theta+B^\phi\,b_\phi = \frac{f}{{\cal J}}\left({\rm i}\,\frac{\partial z}{\partial \theta} + n\,q\,z\right),
+\end{equation}
+where use has been made of Eqs.~(4), (6), (7), (47), (48), and (78) of TJ.
+But, according to Eq.~(26) of TJ,
+\begin{equation}
+\xi^r = \frac{y}{f}.
+\end{equation}
+Thus, we obtain
+\begin{equation}
+\delta W_p = -\frac{1}{2}\left(\oint\oint y^\ast\left[{\rm i}\,\frac{\partial z}{\partial \theta}+q\,n\,z\right]d\theta\,d\phi\right)_{\hat{r}=1_{-}}=
+\pi^2\left[\sum_m y_m^{\,\ast}\,(m-n\,q)\,z_m\right]_{\hat{r}=1_{-}},
+\end{equation}
+which yields 
+\begin{equation}
+\delta W_p  = \pi^2\left(\sum_m \frac{\psi_m^{\,\ast}\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}},
+\end{equation}
+where use has been made of Eqs.~(98) and (99) of TJ.
+
+\subsection{Electromagnetic Torque and Plasma Energy}
+According to Eq.~(117) of TJ, the net toroidal electromagnetic torque acting on a plasma is given by
+\begin{align}
+T_\phi&={\rm i}\,n\,\pi^2\left(\sum_m\frac{Z_m^\ast\,\psi_m-\psi_m^\ast\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}}
+=2\,n\,\pi^2\,{\rm Im}\left(\sum_m\frac{\psi_m^\ast\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}}.
+\end{align}
+The previous two equations imply that
+\begin{equation}
+T_\phi = 2\,n\,{\rm Im}(\delta W_p).
+\end{equation}
+However, an ideal plasma has zero torque acting on it, so 
+\begin{equation}
+\left(\sum_m\frac{Z_m^\ast\,\psi_m-\psi_m^\ast\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}}=0,
+\end{equation}
+which implies that $\delta W_p$ is real. 
+
+\subsection{Boundary Current Sheet}
+According to RWM, the trial solutions used to calculate $\delta W$ are such that  $\psi_m(\hat{r})$ is continuous at the edge of the plasma, $\hat{r}=1$, 
+but $Z_m(\hat{r})$ is, in general, discontinuous. The discontinuity in $Z_m$ at the plasma boundary is due to the fact that the pressure balance
+matching condition is not satisfied. The discontinuity is also associated with a (fictitious) current sheet flowing around the plasma boundary.
+
+Now, $\alpha_p=\alpha_g=0$ at $\hat{r}=1$, assuming that there are no edge equilibrium currents. It follows from Eqs.~ (78) and
+(99) of TJ that 
+\begin{equation}
+x_m= \frac{n\,Z_m}{m-n\,q}
+\end{equation}
+at the plasma boundary. Thus, if ${\bf K}$ is the current sheet density then Eqs.~(66) and (67) of TJ suggest that
+\begin{align}
+{\cal J}\,K_m^{\,\theta} &= - \frac{n}{m-n\,q(1)}\,[Z_m]_{1_{-}}^{1_{+}},\\[0.5ex]
+{\cal J}\,K_m^{\,\phi} &=-\frac{m}{m-n\,q(1)}\,[Z_m]_{1_{-}}^{1_{+}}.
+\end{align}
+Let us write
+\begin{equation}
+{\bf K} = {\rm i}\,\nabla J\times \nabla r,
+\end{equation}
+which ensures that $\nabla\cdot{\bf K}=0$. It follows from (A8) and (A9) of TJ that
+\begin{align}
+{\cal J}\,K^\theta&= {\rm i}\,\frac{\partial J}{\partial \phi},\\[0.5ex]
+{\cal J}\,K^\phi &=-{\rm i}\,\frac{\partial J}{\partial\theta}.
+\end{align}
+Hence, we deduce that 
+\begin{equation}
+J_m =-\frac{[Z_m]_{1_-}^{1_+}}{m-n\,q(1)}.
+\end{equation}
+
+\subsection{Vacuum Potential Energy}
+In the vacuum region, we can write
+\begin{equation}
+{\bf b} = {\rm i}\,\nabla V,
+\end{equation}
+where
+\begin{equation}
+\nabla^2 V =0.
+\end{equation}
+Hence, the vacuum potential energy is
+\begin{align}
+\delta W_v &= \frac{1}{2}\int \nabla V\,\cdot\nabla V^\ast\,d\tau= \frac{1}{2}\int  \nabla\cdot(V\,\nabla V^\ast)\,d\tau\nonumber\\[0.5ex]
+&=-\frac{1}{2}\left(\oint\oint {\cal J}\,\nabla r\cdot\nabla V^\ast\,V\,d\theta\,d\phi\right)_{1_+} .
+\end{align}
+But, Eq.~(209) of TJ implies that 
+\begin{equation}
+{\cal J}\,\nabla V\cdot\nabla r = \psi,
+\end{equation}
+so we deduce that
+\begin{equation}
+\delta W_v = -\frac{1}{2}\left(\oint\oint \psi^\ast\,V\,d\theta\,d\phi\right)_{1_{+}} =- \pi^2\left(\sum \psi_m^\ast\,V_m\right)_{1_{+}}.
+\end{equation}
+However, making use of Eq.~(214) of TJ, we get
+\begin{equation}
+\delta W_v = - \pi^2\left(\sum \frac{\psi_m^\ast\,Z_m}{m-n\,q}\right)_{1_{+}}.
+\end{equation}
+
+\subsection{Potential Energy}
+The total potential energy associated with the trial function is
+\begin{equation}
+\delta W = \delta W_p + \delta W_v = -\pi^2\sum_m \frac{\psi_m^\ast(1)\,[Z_m]_{1_{-}}^{1_{+}}}{m-n\,q(1)},
+\end{equation}
+which implies that
+\begin{equation}
+\delta W =\pi^2\sum_m\,\psi_m^\ast(1)\,J_m.
+\end{equation}
+
+\subsection{Ideal Eigenfunctions}
+The complete set of ideal solutions of the outer region o.d.e.s is written
+\begin{align}
+\psi_{m\,m'}^i(\hat{r})&= \psi_{m\,m'}^a(\hat{r})-\sum_{k}\psi_{m\,k}^u(\hat{r})\,{\mit\Pi}_{k\,m'}^a,\\[0.5ex]
+Z_{m\,m'}^i(\hat{r})&= Z_{m\,m'}^a(\hat{r})-\sum_{k}Z_{m\,k}^u(\hat{r})\,{\mit\Pi}_{k\,m'}^a,
+\end{align}
+where $m=m_j$, $m'=m_{j'}$, and all other quantities are defined in Sects.~VIII.B and VIII.D of TJ. 
+Here, $m$ is the poloidal harmonic, and $m'$ is the dominant poloidal harmonic close to the magnetic axis. It follows
+from the definitions of the various quantities that the reconnected fluxes at the rational surfaces in the plasma
+associated with these eigenfunctions are all zero. 
+
+\subsection{Energy Matrix}
+We can write a general ideal solution as
+\begin{align}
+\psi_m(\hat{r}) &= \sum_{m'}\psi_{m\,m'}^i(\hat{r})\,\alpha_{m'},\\[0.5ex]
+Z_m(\hat{r}) &= \sum_{m'}Z_{m\,m'}^i(\hat{r})\,\alpha_{m'}.
+\end{align}
+According to Eq,~(215) of TJ, the boundary condition at the plasma/vacuum interface is
+\begin{equation}
+\frac{Z_m(1_+)}{m-n\,q(1)} = \sum_{m'}H_{m\,m'}\,\psi_{m'}(1).
+\end{equation}
+It follows that
+\begin{equation}
+J_m = \frac{Z_m(1_-)}{m-n\,q(1)}-\sum_{m'} H_{m\,m'}\,\psi_{m'}(1).
+\end{equation}
+Thus, we can write 
+\begin{equation}
+J_m = \sum_{m'}\,J_{m\,m'}^i\,\alpha_{m'},
+\end{equation}
+where
+\begin{equation}
+J_{m\,m'}^i = \frac{Z_{m\,m'}^i(1_-)}{m-n\,q(1)}-\sum_{m''} H_{m\,m''}\,\psi_{m''\,m'}^i(1).
+\end{equation}
+
+It follows that
+\begin{equation}
+\delta W = \sum_{m,m'} \alpha_m^{\,\ast}\,W_{m\,m'}\,\alpha_{m'},
+\end{equation}
+where
+\begin{equation}
+W_{m\,m'} =\pi^2\sum_{m''} \psi_{m''\,m}^{i\,\ast}(1)\,J_{m''\,m'}^i.
+\end{equation}
+Moreover, 
+\begin{equation}
+W_{m\,m'} =\pi^2\left[\sum_{m''}\frac{\psi_{m''\,m}^{i\,\ast}(1)\,Z_{m''\,m'}^i(1_-)}{m''-n\,q(1)}
+-\sum_{m'',m'''}\psi_{m''\,m}^{i\,\ast}(1)\,H_{m''\,m'''}\,\psi^i_{m'''\,m'}(1)\right]
+\end{equation}
+Now,
+\begin{equation}
+W_{m'\,m}^\ast =\pi^2\left[\sum_{m''}\frac{Z_{m''\,m}^{i\,\ast}(1_-)\,\psi_{m''\,m'}^i(1)}{m''-n\,q(1)}
+-\sum_{m'',m'''}\psi_{m''\,m'}^{i\,\ast}(1)\,H^\ast_{m'''\,m''}\,\psi^i_{m'''\,m'}(1)\right]
+\end{equation}
+However, $H_{m\,m'}$ is Hermitian, so
+\begin{equation}
+W_{m\,m'}-W_{m'\,m}^\ast =-\pi^2\left(\sum_{m''} \frac{Z_{m''\,m}^{i\,\ast}\,\psi_{m''\,m'}^i -\psi_{m''\,m}^{i\,\ast}\,Z_{m''\,m'}^i}{m''-n\,q}\right)_{\hat{r}=1_-}.
+\end{equation}
+But, the toroidal electromagnetic torque acting on the plasma is
+\begin{equation}
+T_\phi={\rm i}\,n\,\pi^2\left(\sum_m\frac{Z_m^\ast\,\psi_m-\psi_m^\ast\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}}=\sum_{m,m'}\alpha_m^{\,\ast}\,T_{m\,m'}\,\alpha_{m'},
+\end{equation}
+where
+\begin{equation}
+T_{m\,m'} = {\rm i}\,n\,\pi^2\left(\sum_{m''} \frac{Z_{m''\,m}^{i\,\ast}\,\psi_{m''\,m'}^i -\psi_{m''\,m}^{i\,\ast}\,Z_{m''\,m'}^i}{m''-n\,q}\right)_{\hat{r}=1_-}
+\end{equation}
+However, $T_\phi=0$ for an ideal plasma, irrespective of the values of the $\alpha_m$. Hence, we deduce that $T_{m\,m'}=0$ for all
+$m$ and $m'$. It immediately follows that the energy matrix, $W_{m\,m'}$, is Hermitian. 
+
+\subsection{Diagonalization of Energy Matrix}
+Given that the energy matrix, $W_{m\,m'}$, is Hermitian, it possesses real eigenvalues, $\delta W_m$, and orthonormal
+eigenvectors $\bbeta_m$. Let $(\bbeta_m)_{m'} = \beta_{m'\,m}$. 
+We have
+\begin{align}
+\sum_{m''} W_{m\,m''}\,\beta_{m''\,m'} &= \delta W_{m'}\,\beta_{m\,m'},\\[0.5ex]
+\sum_{m''} \beta_{m''\,m}^\ast\,\beta_{m''\,m'} &= \delta_{mm'}.
+\end{align}
+Now,
+\begin{align}
+\sum_{m'',m'''}\beta^\ast_{m''\,m}\,W_{m''\,m'''}\,\beta_{m'''\,m'} = \sum_{m''} \beta^\ast_{m''\,m}\,\beta_{m''\,m'}\,\delta W_{m'}=\delta W_{m'}\,\delta_{mm'}.
+\end{align}
+It follows that
+\begin{equation}
+\pi^2\sum_{m'',m''',m''''}\beta^\ast_{m''\,m}\,\psi^{i\,\ast}_{m''''\,m''}(1)\,J^i_{m'''',m'''}\,\beta_{m'''\,m'} = \delta W_{m'}\,\delta_{mm'}.
+\end{equation}
+Let,
+\begin{align}
+\hat{\psi}^i_{m\,m'}(\hat{r}) &= \sum_{m''}\psi^i_{m\,m''}(\hat{r})\,\beta_{m''\,m'},\\[0.5ex]
+\hat{Z}^i_{m\,m'}(\hat{r}) &= \sum_{m''}Z^i_{m\,m''}(\hat{r})\,\beta_{m''\,m'},\\[0.5ex]
+\hat{J}^i_{m\,m'} &= \sum_{m''}J^i_{m\,m''}\,\beta_{m''\,m'}.
+\end{align}
+It follows that
+\begin{equation}
+\sum_{m''} \hat{\psi}^{i\,\ast}_{m''\,m}(1)\,\hat{J}^i_{m''\,m'} = \delta\hat{W}_{m'}\,\delta_{mm'},
+\end{equation}
+where
+\begin{equation}
+\delta\hat{W}_m = \frac{\delta W_m}{\pi^2}.
+\end{equation}
+Thus, we can write
+\begin{align}
+\hat{J}^i_{m'\,m} &= \delta\hat{W}_m\,\hat{\psi}^i_{m'\,m}(1),\\[0.5ex]
+\sum_{m'' }\hat{\psi}^{i\,\ast}_{m''\,m}(1)\,\hat{\psi}^i_{m''\,m'}(1)&=\delta_{mm'}.
+\end{align}
+We can also write
+\begin{align}
+\psi^i_{m\,m'}(\hat{r}) &= \sum_{m''}\,\hat{\psi}^i_{m\,m''}(\hat{r})\,\beta_{m'\,m''}^\ast\,\\[0.5ex]
+Z^i_{m\,m'}(\hat{r}) &= \sum_{m''}\hat{Z}^i_{m\,m''}(\hat{r})\,\beta_{m'\,m''}^\ast\,. 
+\end{align}
+
+\subsection{Response to RMP}
+We have
+\begin{align}
+\psi_m^{rmp}(\hat{r})&=-\sum \psi^i_{m\,m'}(\hat{r})\,{\mit\Upsilon}_{m'},\\[0.5ex]
+Z_m^{rmp}(\hat{r})&=-\sum Z^i_{m\,m'}(\hat{r})\,{\mit\Upsilon}_{m'}.
+\end{align}
+Thus, we can write 
+\begin{align}
+\psi_m^{rmp}(\hat{r})&=\sum \hat{\psi}^i_{m\,m'}(\hat{r})\,\hat{\mit\Upsilon}_{m'},\\[0.5ex]
+Z_m^{rmp}(\hat{r})&=\sum \hat{Z}^i_{m\,m'}(\hat{r})\,\hat{\mit\Upsilon}_{m'},
+\end{align}
+where
+\begin{align}
+\hat{\mit\Upsilon}_{m} =- \sum_{m'}\beta_{m'\,m}^\ast\,{\mit\Upsilon}_{m'},
+\end{align}
+It is easily seen that
+\begin{equation}
+\psi^x_m = \sum_{m'}\,\psi^i_{m\,m'}(1)\,\hat{\mit\Upsilon}_{m'}^x,
+\end{equation}
+where
+\begin{equation}
+\hat{\mit\Upsilon}_{m'}^x= \sum_{m'} \psi_{m'}^x\,\hat{\psi}_{m'\,m}^{i\,\ast}(1).
+\end{equation}
+
+\end{document}
