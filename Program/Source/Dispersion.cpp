@@ -34,13 +34,6 @@ void TJ::FindDispersion ()
   Tfull.resize(nres, nres, NDIAG);
   Tunrc.resize(nres, nres, NDIAG);
   Fval = new double[nres];
- 
-  Upsilon = new complex<double>[J];
-  Lambda  = new complex<double>[J];
-  Chi     = new complex<double>[J];
-
-  Psirmp.resize(J, NDIAG);
-  Zrmp  .resize(J, NDIAG);
 
   // ............
   // Collate data
@@ -299,6 +292,22 @@ void TJ::FindDispersion ()
   // Calculate torques associated with pairs of unreconnected eigenfunctions
   // .......................................................................
   GetTorqueUnrc ();
+}
+
+// #########################################################
+// Function to calculate resonant magnetic perturbation data
+// #########################################################
+void TJ::CalculateResonantMagneticPerturbation ()
+{
+  // ...............
+  // Allocate memory
+  // .............
+  Upsilon = new complex<double>[J];
+  Lambda  = new complex<double>[J];
+  Chi     = new complex<double>[J];
+
+  Psirmp.resize(J, NDIAG);
+  Zrmp  .resize(J, NDIAG);
 
   // ........................
   // Calculate Upsilon-vector
@@ -318,9 +327,9 @@ void TJ::FindDispersion ()
       Lambda[k] = sum;
     }
 
-  // .......................
+  // ....................
   // Calculate Chi-vector
-  // .......................
+  // ....................
   for (int k = 0; k < nres; k++)
     {
       complex<double> sum = complex<double> (0., 0.);
@@ -368,17 +377,8 @@ void TJ::FindDispersion ()
 	  Zrmp  (j, i) = sumz;
 	}
     }
-
-  // .........................................................................
-  // Calculate unreconnected eigenfunction and RMP response visualization data
-  // .........................................................................
-  VisualizeEigenfunctions ();
-
-  // .........................
-  // Calculate ideal stability
-  // .........................
-  IdealStability ();
 }
+
 // #######################################################################################################
 // Function to calculate angular momentum flux associated with pairs of fully-reconnected solution vectors
 // #######################################################################################################
@@ -446,8 +446,224 @@ void TJ::GetTorqueUnrc ()
 // ###############################################
 // Function to calculate ideal stabiltiy of plasma
 // ###############################################
-void TJ::IdealStability ()
+void TJ::CalculateIdealStability ()
 {
+  // ---------------
+  // Allocate memory
+  // ---------------
+  Psii.resize(J, J, NDIAG);
+  Zi  .resize(J, J, NDIAG);
+  Ji  .resize(J, J);
+  Wmat.resize(J, J);
+  Wher.resize(J, J);
+  Want.resize(J, J);
+  Wvec.resize(J, J);
+  
+  Psie.resize(J, J, NDIAG);
+  Ze  .resize(J, J, NDIAG);
+  Je  .resize(J, J);
+  Pres.resize(J, J);
+
+  Wval   = new double[J];
+  deltaW = new double[J];
+  
+  // -----------------------------------------------------
+  // Calculate ideal solutions launched from magnetic axis
+  // -----------------------------------------------------
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      for (int i = 0; i < NDIAG; i++)
+	{
+	  complex<double> sump = YYY(j,   jp, i);
+	  complex<double> sumz = YYY(J+j, jp, i);
+	  
+	  for (int k = 0; k < nres; k++)
+	    {
+	      sump -= Psiu(j, k, i) * Pia(k, jp);
+	      sumz -= Zu  (j, k, i) * Pia(k, jp);
+	    }
+	  
+	  Psii(j, jp, i) = sump;
+	  Zi  (j, jp, i) = sumz;
+	}
+
+  // -----------------------------------------------------
+  // Normalize ideal solutions launched from magnetic axis
+  // -----------------------------------------------------
+  for (int jp = 0; jp < J; jp++)
+    {
+      double norm = 0.;
+
+      for (int j = 0; j < J; j++)
+	norm += real (conj (Psii(j, jp, NDIAG-1)) * Psii(j, jp, NDIAG-1));
+
+      for (int i = 0; i < NDIAG; i++)
+	for (int j = 0; j < J; j++)
+	  {
+	    Psii(j, jp, i) /= sqrt(norm);
+	    Zi  (j, jp, i) /= sqrt(norm);
+	  }
+    }
+  
+  // ---------------------------------------------------------------------------------------
+  // Calculate boundary currents associated with ideal solutions launched from magnetic axis
+  // ---------------------------------------------------------------------------------------
+  double qa = Getq (1.);
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = Zi(j, jp, NDIAG-1) /(mpol[j] - ntor*qa);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum -= Hmat(j, jpp) * Psii(jpp, jp, NDIAG-1);
+
+	Ji(j, jp) = sum;
+      }
+
+  // -----------------------------
+  // Calculate ideal energy matrix
+  // -----------------------------
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += conj (Psii(jpp, j, NDIAG-1)) * Ji(jpp, jp);
+	
+	Wmat(j, jp) = sum;	      
+      }
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	Wher (j, jp) = 0.5 * (Wmat (j, jp) + conj (Wmat (jp, j)));
+	Want (j, jp) = 0.5 * (Wmat (j, jp) - conj (Wmat (jp, j)));
+      }
+
+  // ............................
+  // Calculate W-matrix residuals
+  // ............................
+  double Whmax = 0., Wamax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double whval = abs (Wher (j, jp));
+	double waval = abs (Want (j, jp));
+
+	if (whval > Whmax)
+	  Whmax = whval;
+	if (waval > Wamax)
+	  Wamax = waval;	
+      }
+
+  printf ("Energy matrix residual: %10.4e\n", Wamax /Whmax);
+
+  // --------------------------------------------------
+  // Calculate eigenvalues and eigenvectors of W-matrix
+  // --------------------------------------------------
+  GetEigenvalues (Wher, Wval, Wvec);
+
+  // -----------------------------
+  // Calculate ideal eigenfuctions
+  // -----------------------------
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      for (int i = 0; i < NDIAG; i++)
+	{
+	  complex<double> sump = complex<double> (0., 0.);
+	  complex<double> sumz = complex<double> (0., 0.);
+	  
+	  for (int jpp = 0; jpp < J; jpp++)
+	    {
+	      sump += Psii(j, jpp, i) * Wvec(jpp, jp);
+	      sumz += Zi  (j, jpp, i) * Wvec(jpp, jp);
+	    }
+	  
+	  Psie(j, jp, i) = sump;
+	  Ze  (j, jp, i) = sumz;
+	}
+
+  // ------------------------------
+  // Normalize ideal eigenfunctions
+  // ------------------------------
+  for (int jp = 0; jp < J; jp++)
+    {
+      double norm = 0.;
+
+      for (int j = 0; j < J; j++)
+	norm += real (conj (Psie(j, jp, NDIAG-1)) * Psie(j, jp, NDIAG-1));
+
+      for (int i = 0; i < NDIAG; i++)
+	for (int j = 0; j < J; j++)
+	  {
+	    Psie(j, jp, i) /= sqrt(norm);
+	    Ze  (j, jp, i) /= sqrt(norm);
+	  }
+    }
+
+  // ----------------------------------------------------------------
+  // Calculate boundary currents associated with ideal eigenfunctions
+  // ----------------------------------------------------------------
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = Ze(j, jp, NDIAG-1) /(mpol[j] - ntor*qa);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum -= Hmat(j, jpp) * Psie(jpp, jp, NDIAG-1);
+
+	Je(j, jp) = sum;
+      }
+
+  // ------------------------
+  // Calculate delta-W values
+  // ------------------------
+  for (int j = 0; j < J; j++)
+    {
+      double sum = 0.;
+
+      for (int jp = 0; jp < J; jp++)
+	sum += real (conj (Psie(jp, j, NDIAG-1)) * Je(jp, j));
+
+      deltaW[j] = sum;
+    }
+
+  printf ("Ideal eigenvalues:\n");
+  for (int j = 0; j < J; j++)
+    printf ("j = %3d  Wval = %10.3e  deltaW = %10.3e\n", j, Wval[j], deltaW[j]);
+  
+  // --------------------------------------------
+  // Check orthonormality of ideal eigenfunctions
+  // --------------------------------------------
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += conj (Psie(jpp, j, NDIAG-1)) * Je(jpp, jp) /deltaW[jp];
+
+	if (j == jp)
+	  Pres(j, jp) = sum - complex<double> (1., 0.);
+	else
+	  Pres(j, jp) = sum;
+      }
+
+  // ---------------------------------
+  // Calculate orthogonality residuals
+  // ---------------------------------
+  double Pmax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double pval = abs (Pres (j, jp));
+
+	if (pval > Pmax)
+	  Pmax = pval;
+      }
+
+  printf ("Ideal eigenfunction othogonality residual: %10.4e\n", Pmax);
 }
 
 // ##############################################################################

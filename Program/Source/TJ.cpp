@@ -252,8 +252,17 @@ void TJ::Solve ()
 
   // Determine tearing mode dispersion relation and tearing eigenfunctions
   FindDispersion ();
+
+  // Calculate resonant magnetic perturbation data
+  CalculateResonantMagneticPerturbation ();
+
+  // Calculate unreconnected eigenfunction and RMP response visualization data
+  VisualizeEigenfunctions ();
+
+  // Calculate ideal stability
+  CalculateIdealStability ();
   
-  // Write program data
+  // Write program data to Netcdf file
   WriteNetcdf ();
 
   // Clean up
@@ -357,7 +366,7 @@ void TJ::CleanUp ()
      
   delete[] Rgrid; delete[] hode; delete[] eode;
 
-  delete[] Fval; 
+  delete[] Fval; delete[] Wval; delete[] deltaW;
 
   delete[] rf;
 }  

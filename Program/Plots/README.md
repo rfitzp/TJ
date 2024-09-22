@@ -59,7 +59,7 @@
 
 ## Tearing dispersion relation:
 
-   	- Emat.py	 - Visualizes tearing stability matrix
+   	- Emat.py	 - Visualizes tearing stability matrix, E_kk'
 
 ## RMP coils:
 
@@ -77,3 +77,15 @@
 
    	- Torque.py	 - Plots torque and shielding factor versus frequency for  
 	   		    given rational surface
+
+## Ideal stability:
+
+   	- Ideal.py       - Plots psi and Z Fourier harmonics of ideal solutions
+	   		    launched from magnetic axis versus r
+	- Ideal1.py      - Plots kth poloidal harmomics of psi and Z components
+	   		    of ideal solutions launched from magnetic axis versus r
+	- Wmat.py	 - Visualizes ideal energy matrix, W_mm'
+	- Ideale.py      - Plots psi and Z Fourier harmonics of ideal eigenfunctions
+	   		    versus r
+	- Ideale1.py     - Plots kth poloidal harmomics of psi and Z components
+	   		    of ideal eigenfunctions versus r

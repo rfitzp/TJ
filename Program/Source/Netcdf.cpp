@@ -406,6 +406,7 @@ void TJ::WriteNetcdf ()
   double* Fvec_i  = new double[nres*nres];
   double* Psix_r  = new double[J];
   double* Psix_i  = new double[J];
+
   double* Xi_r    = new double[J];
   double* Xi_i    = new double[J];
   double* Up_r    = new double[J];
@@ -422,6 +423,19 @@ void TJ::WriteNetcdf ()
   double* PPRV_i  = new double[Nf*(Nw+1)];
   double* ZZRV_r  = new double[Nf*(Nw+1)];
   double* ZZRV_i  = new double[Nf*(Nw+1)];
+
+  double* Psii_r  = new double[J*J*NDIAG];
+  double* Psii_i  = new double[J*J*NDIAG];
+  double* Zi_r    = new double[J*J*NDIAG];
+  double* Zi_i    = new double[J*J*NDIAG];
+  double* Wmat_r  = new double[J*J];
+  double* Wmat_i  = new double[J*J];
+  double* Want_r  = new double[J*J];
+  double* Want_i  = new double[J*J];
+  double* Psie_r  = new double[J*J*NDIAG];
+  double* Psie_i  = new double[J*J*NDIAG];
+  double* Ze_r    = new double[J*J*NDIAG];
+  double* Ze_i    = new double[J*J*NDIAG];
 
   Input[0]  = double (NTOR);
   Input[1]  = double (MMIN);
@@ -593,7 +607,42 @@ void TJ::WriteNetcdf ()
 	ZZRV_i[cnt] = imag (Zrv  (i, l));
 	cnt++;
       }
+
+  cnt = 0;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      for (int i = 0; i < NDIAG; i++)
+      {
+	Psii_r[cnt] = real (Psii(j, jp, i));
+	Psii_i[cnt] = imag (Psii(j, jp, i));
+	Zi_r  [cnt] = real (Zi  (j, jp, i));
+	Zi_i  [cnt] = imag (Zi  (j, jp, i));
+	cnt++;
+      }
   
+  cnt = 0;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	Wmat_r[cnt] = Wmat(j, jp).real();
+	Wmat_i[cnt] = Wmat(j, jp).imag();
+	Want_r[cnt] = Want(j, jp).real();
+	Want_i[cnt] = Want(j, jp).imag();
+	cnt++;
+      }
+
+  cnt = 0;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      for (int i = 0; i < NDIAG; i++)
+      {
+	Psie_r[cnt] = real (Psie(j, jp, i));
+	Psie_i[cnt] = imag (Psie(j, jp, i));
+	Ze_r  [cnt] = real (Ze  (j, jp, i));
+	Ze_i  [cnt] = imag (Ze  (j, jp, i));
+	cnt++;
+      }
+    
   try
     {
       NcFile dataFile ("Plots/TJ.nc", NcFile::replace);
@@ -665,6 +714,11 @@ void TJ::WriteNetcdf ()
       vector<NcDim> vr_d;
       vr_d.push_back (f_d);
       vr_d.push_back (w_d);
+
+      vector<NcDim> ideal_d;
+      ideal_d.push_back (j_d);
+      ideal_d.push_back (j_d);
+      ideal_d.push_back (d_d);
 
       NcVar i_x = dataFile.addVar ("InputParameters", ncDouble, i_d);
       i_x.putVar (Input);
@@ -808,11 +862,11 @@ void TJ::WriteNetcdf ()
       NcVar zzui_x = dataFile.addVar ("Z_unrc_i",   ncDouble, full_d);
       zzui_x.putVar (ZZU_i);
 
-      NcVar mres_x = dataFile.addVar ("m_res", ncInt, x_d);
+      NcVar mres_x = dataFile.addVar  ("m_res",  ncInt,    x_d);
       mres_x.putVar (mres);
-      NcVar rres_x = dataFile.addVar ("r_res", ncDouble, x_d);
+      NcVar rres_x = dataFile.addVar  ("r_res",  ncDouble, x_d);
       rres_x.putVar (rres);
-      NcVar sres_x = dataFile.addVar ("s_res", ncDouble, x_d);
+      NcVar sres_x = dataFile.addVar  ("s_res",  ncDouble, x_d);
       sres_x.putVar (sres);
       NcVar dires_x = dataFile.addVar ("DI_res", ncDouble, x_d);
       dires_x.putVar (DIres);
@@ -924,6 +978,34 @@ void TJ::WriteNetcdf ()
       zzrvr_x.putVar (ZZRV_r);
       NcVar zzrvi_x = dataFile.addVar ("Z_rmp_eig_i",   ncDouble, vr_d);
       zzrvi_x.putVar (ZZRV_i);
+
+      NcVar psiir_x = dataFile.addVar ("Psi_i_r", ncDouble, ideal_d);
+      psiir_x.putVar (Psii_r);
+      NcVar psiii_x = dataFile.addVar ("Psi_i_i", ncDouble, ideal_d);
+      psiii_x.putVar (Psii_i);
+      NcVar zir_x = dataFile.addVar   ("Z_i_r",   ncDouble, ideal_d);
+      zir_x.putVar (Zi_r);
+      NcVar zii_x = dataFile.addVar   ("Z_i_i",   ncDouble, ideal_d);
+      zii_x.putVar (Zi_i);
+
+      NcVar wvacr_x = dataFile.addVar ("Wmat_r", ncDouble, vacuum_d);
+      wvacr_x.putVar (Wmat_r);
+      NcVar wvaci_x = dataFile.addVar ("Wmat_i", ncDouble, vacuum_d);
+      wvaci_x.putVar (Wmat_i);
+      NcVar wantr_x = dataFile.addVar ("Want_r", ncDouble, vacuum_d);
+      wantr_x.putVar (Want_r);
+      NcVar wanti_x = dataFile.addVar ("Want_i", ncDouble, vacuum_d);
+      wanti_x.putVar (Want_i);
+
+      NcVar psier_x = dataFile.addVar ("Psi_e_r", ncDouble, ideal_d);
+      psier_x.putVar (Psie_r);
+      NcVar psiei_x = dataFile.addVar ("Psi_e_i", ncDouble, ideal_d);
+      psiei_x.putVar (Psie_i);
+      NcVar zer_x = dataFile.addVar   ("Z_e_r",   ncDouble, ideal_d);
+      zer_x.putVar (Ze_r);
+      NcVar zei_x = dataFile.addVar   ("Z_e_i",   ncDouble, ideal_d);
+      zei_x.putVar (Ze_i);
+
     }
   catch (NcException& e)
     {
@@ -953,4 +1035,8 @@ void TJ::WriteNetcdf ()
 
   delete[] PPR_r;  delete[] PPR_i;  delete[] ZZR_r;  delete[] ZZR_i;
   delete[] PPRV_r; delete[] PPRV_i; delete[] ZZRV_r; delete[] ZZRV_i;
+
+  delete[] Psii_r; delete[] Psii_i; delete[] Zi_r;   delete[] Zi_i;
+  delete[] Wmat_r; delete[] Wmat_i; delete[] Want_r; delete[] Want_i;
+  delete[] Psie_r; delete[] Psie_i; delete[] Ze_r;   delete[] Ze_i;
 }

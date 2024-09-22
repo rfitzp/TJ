@@ -254,13 +254,13 @@ Now,
 \end{align}
 It follows that
 \begin{equation}
-\pi^2\sum_{m'',m''',m''''}\beta^\ast_{m''\,m}\,\psi^{i\,\ast}_{m''''\,m''}(1)\,J^i_{m'''',m'''}\,\beta_{m'''\,m'} = \delta W_{m'}\,\delta_{mm'}.
+\pi^2\sum_{m'',m''',m''''}\beta^\ast_{m''\,m}\,\psi^{i\,\ast}_{m''''\,m''}(1)\,J^i_{m''''\,m'''}\,\beta_{m'''\,m'} = \delta W_{m'}\,\delta_{mm'}.
 \end{equation}
 Let,
 \begin{align}
 \hat{\psi}^i_{m\,m'}(\hat{r}) &= \sum_{m''}\psi^i_{m\,m''}(\hat{r})\,\beta_{m''\,m'},\\[0.5ex]
 \hat{Z}^i_{m\,m'}(\hat{r}) &= \sum_{m''}Z^i_{m\,m''}(\hat{r})\,\beta_{m''\,m'},\\[0.5ex]
-\hat{J}^i_{m\,m'} &= \sum_{m''}J^i_{m\,m''}\,\beta_{m''\,m'}.
+\hat{J}^i_{m\,m'} &=  \frac{\hat{Z}_{m\,m'}^i(1_-)}{m-n\,q(1)}-\sum_{m''} H_{m\,m''}\,\hat{\psi}_{m''\,m'}^i(1).
 \end{align}
 It follows that
 \begin{equation}
@@ -275,34 +275,17 @@ Thus, we can write
 \hat{J}^i_{m'\,m} &= \delta\hat{W}_m\,\hat{\psi}^i_{m'\,m}(1),\\[0.5ex]
 \sum_{m'' }\hat{\psi}^{i\,\ast}_{m''\,m}(1)\,\hat{\psi}^i_{m''\,m'}(1)&=\delta_{mm'}.
 \end{align}
-We can also write
-\begin{align}
-\psi^i_{m\,m'}(\hat{r}) &= \sum_{m''}\,\hat{\psi}^i_{m\,m''}(\hat{r})\,\beta_{m'\,m''}^\ast\,\\[0.5ex]
-Z^i_{m\,m'}(\hat{r}) &= \sum_{m''}\hat{Z}^i_{m\,m''}(\hat{r})\,\beta_{m'\,m''}^\ast\,. 
-\end{align}
 
 \subsection{Response to RMP}
-We have
+We can write
 \begin{align}
-\psi_m^{rmp}(\hat{r})&=-\sum \psi^i_{m\,m'}(\hat{r})\,{\mit\Upsilon}_{m'},\\[0.5ex]
-Z_m^{rmp}(\hat{r})&=-\sum Z^i_{m\,m'}(\hat{r})\,{\mit\Upsilon}_{m'}.
-\end{align}
-Thus, we can write 
-\begin{align}
-\psi_m^{rmp}(\hat{r})&=\sum \hat{\psi}^i_{m\,m'}(\hat{r})\,\hat{\mit\Upsilon}_{m'},\\[0.5ex]
-Z_m^{rmp}(\hat{r})&=\sum \hat{Z}^i_{m\,m'}(\hat{r})\,\hat{\mit\Upsilon}_{m'},
+\psi_m^{rmp}(1)&=\sum_{m'} \hat{\psi}^i_{m\,m'}(1)\,\gamma_{m'},\\[0.5ex]
+\psi^x_m(1)&=\sum_{m'} \hat{\psi}^i_{m\,m'}(1)\,\gamma_{m'}^x,
 \end{align}
 where
 \begin{align}
-\hat{\mit\Upsilon}_{m} =- \sum_{m'}\beta_{m'\,m}^\ast\,{\mit\Upsilon}_{m'},
+\gamma_{m}&= \sum_{m'} \psi_{m'}^{rmp}(1)\,\hat{\psi}_{m'\,m}^{i\,\ast}(1),\\[0.5ex]
+\gamma_{m}^x&= \sum_{m'} \psi_{m'}^x(1)\,\hat{\psi}_{m'\,m}^{i\,\ast}(1).
 \end{align}
-It is easily seen that
-\begin{equation}
-\psi^x_m = \sum_{m'}\,\psi^i_{m\,m'}(1)\,\hat{\mit\Upsilon}_{m'}^x,
-\end{equation}
-where
-\begin{equation}
-\hat{\mit\Upsilon}_{m'}^x= \sum_{m'} \psi_{m'}^x\,\hat{\psi}_{m'\,m}^{i\,\ast}(1).
-\end{equation}
 
 \end{document}

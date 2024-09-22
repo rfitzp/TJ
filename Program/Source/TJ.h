@@ -1,6 +1,6 @@
 // TJ.h
 
-// #################################################################################
+// ###################################################################################
 
 // Class to calculate tearing stability matrix and tearing eigenfunctions in an
 // inverse aspect-ratio expanded tokamak equilibrium.
@@ -40,7 +40,7 @@
 
 // Documentation: ../Documentation/TJ.pdf
 
-// #################################################################################
+// ###################################################################################
 
 #pragma once
 
@@ -206,8 +206,8 @@ class TJ
   Array<complex<double>,2> Pdag; // Hermitian conjugate of Pvac
   Array<complex<double>,2> Rvac; // Vacuum solution matrix
   Array<complex<double>,2> Amat; // Pdag * Rvac
-  Array<complex<double>,2> Aher; // Hermitian component of A
-  Array<complex<double>,2> Aant; // Anti-Hermitian component of A
+  Array<complex<double>,2> Aher; // Hermitian component of Amat
+  Array<complex<double>,2> Aant; // Anti-Hermitian component of Amat
   Array<complex<double>,2> Rmat; // Pdag * Rmat = Aher
   Array<complex<double>,2> Rdag; // Hermitian conjugate of Rmat
   Array<complex<double>,2> Hmat; // Vacuum response matrix: Rdag * Hmat = Pdag
@@ -290,9 +290,9 @@ class TJ
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
 
-  // --------
-  // RMP data
-  // --------
+  // -----------------------------------
+  // Resonant magnetic perturbation data
+  // -----------------------------------
   int                      ncoil;   // Number of toroidal strands that make up RMP coils 
   double*                  Rcoil;   // R coodinates of strands (read from JSON file)
   double*                  Zcoil;   // Z coodinates of strands (read from JSON file)
@@ -310,6 +310,17 @@ class TJ
   // --------------------
   Array<complex<double>,3> Psii;    // Psi components of ideal solutions lauched from magnetic axis
   Array<complex<double>,3> Zi;      // Z components of ideal solutions lauched from magnetic axis
+  Array<complex<double>,2> Ji;      // Poloidal harmonics of current on plasma boundary associated with ideal solutions launched from magnetic axis
+  Array<complex<double>,2> Wmat;    // Idea energy matrix
+  Array<complex<double>,2> Wher;    // Hermitian component of Wmat
+  Array<complex<double>,2> Want;    // Anti-Hermitian component of Wmat
+  double*                  Wval;    // Eigenvalues of symmeterized W-matrix
+  Array<complex<double>,2> Wvec;    // Eigenvectors of symmeterized W-matrix
+  Array<complex<double>,3> Psie;    // Psi components of ideal eigenfunctions
+  Array<complex<double>,3> Ze;      // Z components of ideal eigenfunctions
+  Array<complex<double>,2> Je;      // Poloidal harmomics of current on plasma boundary associated with ideal eigenfunctions
+  double*                  deltaW;  // delta W values
+  Array<complex<double>,2> Pres;    // Residuals of Psie, Je orthogonality matrix
 
   // ------------------------------------------------
   // Visualization of tearing eigenfunctions and RMPs
@@ -323,7 +334,7 @@ class TJ
   Array<double,2>          thvals; // theta values of visualization grid-points
   Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 
   Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
-  Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visulalization grid
+  Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visualization grid
   Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
   Array<complex<double>,2> Psirf;  // Psi components of Fourier-transformed ideal RMP response eigenfunction
   Array<complex<double>,2> Zrf;    // Z components of Fourier-transformed ideal RMP response eigenfunction
@@ -489,8 +500,12 @@ class TJ
   void GetTorqueFull ();
   // Calculate angular momentum flux associated with pairs of unreconnected solution vectors
   void GetTorqueUnrc ();
-  // Output visualization data for unreconnected tearing eigenfunctions
+  // Calculate resonant magnetic perturbation data
+  void CalculateResonantMagneticPerturbation ();
+  // Calculate unreconnected eigenfunction and RMP response visualization data
   void VisualizeEigenfunctions ();
+  // Calculate ideal stability
+  void CalculateIdealStability ();
    
   // ..................
   // In Interpolate.cpp
