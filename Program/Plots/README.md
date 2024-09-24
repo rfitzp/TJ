@@ -72,7 +72,7 @@
 	                      in R, Z plane
 	- PsiZr.py         - Plots psi and Z components of ideal response of plasma to  
 	   		      RMP in R, Z plane
-        - PsiRmpSurface.py - Plots RMP data on plasma boundary
+	- PsiRmpSurface.py - Plots RMP data on plasma boundary
 	- Gamma.py         - Plots expansions of Psi_x and Psi^rmp at plasma boundary
 	  		      in terms of ideal eigenfunctions
 
