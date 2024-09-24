@@ -348,8 +348,9 @@ void TJ::CleanUp ()
   gsl_interp_accel_free (Rbacc);
   gsl_interp_accel_free (Zbacc);
 
-  delete[] Rcoil; delete[] Zcoil;   delete[] Icoil;  delete[] Psix;
-  delete[] Xi;    delete[] Upsilon; delete[] Lambda; delete[] Chi;
+  delete[] Rcoil;   delete[] Zcoil;   delete[] Icoil;  delete[] Psix;
+  delete[] Xi;      delete[] Upsilon; delete[] Lambda; delete[] Chi;
+  delete[] Psirmps; delete[] Psixs;
 
   delete[] tbound; delete[] Rbound; delete[] Zbound;
   delete[] dRdthe; delete[] dZdthe;
@@ -366,9 +367,9 @@ void TJ::CleanUp ()
      
   delete[] Rgrid; delete[] hode; delete[] eode;
 
-  delete[] Fval; delete[] Wval; delete[] deltaW;
+  delete[] Fval; delete[] Wval; delete[] deltaW; delete[] Wperm;
 
-  delete[] rf;
+  delete[] rf; delete[] gammax; delete[] gamma;
 }  
 
 // ##########################

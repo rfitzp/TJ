@@ -19,9 +19,7 @@
 \section{Analysis}
 \subsection{Reference Document}
 The document ``{\em Calculation of Tearing Mode Stability in an Inverse Aspect-Ratio Expanded Tokamak Equilibrium}", by R.~Fitzpatrick,  is, henceforth,
-referred to as TJ. The document ``{\em An Extended Variational Method for the Resistive Wall Mode in Toroidal Confinement Devices}",
-by R.~Fitzpatrick,  is, henceforth,
-referred to as RWM. 
+referred to as TJ. 
 
 \subsection{Normalization}\label{coords}
 All lengths are normalized to  the major radius of the plasma magnetic axis, $R_0$. All magnetic field-strengths
@@ -170,7 +168,11 @@ The total potential energy associated with the trial function is
 \end{equation}
 which implies that
 \begin{equation}
-\delta W =\pi^2\sum_m\,\psi_m^\ast(1)\,J_m.
+\delta \hat{W} =\sum_m\,\psi_m^\ast(1)\,J_m,
+\end{equation}
+where
+\begin{equation}
+\delta \hat{W} = \frac{\delta W}{\pi^2}.
 \end{equation}
 
 \subsection{Ideal Eigenfunctions}
@@ -182,7 +184,11 @@ Z_{m\,m'}^i(\hat{r})&= Z_{m\,m'}^a(\hat{r})-\sum_{k}Z_{m\,k}^u(\hat{r})\,{\mit\P
 where $m=m_j$, $m'=m_{j'}$, and all other quantities are defined in Sects.~VIII.B and VIII.D of TJ. 
 Here, $m$ is the poloidal harmonic, and $m'$ is the dominant poloidal harmonic close to the magnetic axis. It follows
 from the definitions of the various quantities that the reconnected fluxes at the rational surfaces in the plasma
-associated with these eigenfunctions are all zero. 
+associated with these eigenfunctions are all zero. The ideal solutions are conveniently normalized such
+that
+\begin{equation}
+\sum_{m'}\psi_{m'\,m}^{i\,\ast}(1)\,\psi_{m'\,m}^i(1) = 1.
+\end{equation}
 
 \subsection{Energy Matrix}
 We can write a general ideal solution as
@@ -209,21 +215,21 @@ J_{m\,m'}^i = \frac{Z_{m\,m'}^i(1_-)}{m-n\,q(1)}-\sum_{m''} H_{m\,m''}\,\psi_{m'
 
 It follows that
 \begin{equation}
-\delta W = \sum_{m,m'} \alpha_m^{\,\ast}\,W_{m\,m'}\,\alpha_{m'},
+\delta \hat{W} = \sum_{m,m'} \alpha_m^{\,\ast}\,W_{m\,m'}\,\alpha_{m'},
 \end{equation}
 where
 \begin{equation}
-W_{m\,m'} =\pi^2\sum_{m''} \psi_{m''\,m}^{i\,\ast}(1)\,J_{m''\,m'}^i.
+W_{m\,m'} =\sum_{m''} \psi_{m''\,m}^{i\,\ast}(1)\,J_{m''\,m'}^i.
 \end{equation}
 Moreover, 
 \begin{equation}
-W_{m\,m'} =\pi^2\left[\sum_{m''}\frac{\psi_{m''\,m}^{i\,\ast}(1)\,Z_{m''\,m'}^i(1_-)}{m''-n\,q(1)}
--\sum_{m'',m'''}\psi_{m''\,m}^{i\,\ast}(1)\,H_{m''\,m'''}\,\psi^i_{m'''\,m'}(1)\right]
+W_{m\,m'} =\sum_{m''}\frac{\psi_{m''\,m}^{i\,\ast}(1)\,Z_{m''\,m'}^i(1_-)}{m''-n\,q(1)}
+-\sum_{m'',m'''}\psi_{m''\,m}^{i\,\ast}(1)\,H_{m''\,m'''}\,\psi^i_{m'''\,m'}(1)
 \end{equation}
 Now,
 \begin{equation}
-W_{m'\,m}^\ast =\pi^2\left[\sum_{m''}\frac{Z_{m''\,m}^{i\,\ast}(1_-)\,\psi_{m''\,m'}^i(1)}{m''-n\,q(1)}
--\sum_{m'',m'''}\psi_{m''\,m'}^{i\,\ast}(1)\,H^\ast_{m'''\,m''}\,\psi^i_{m'''\,m'}(1)\right]
+W_{m'\,m}^\ast =\sum_{m''}\frac{Z_{m''\,m}^{i\,\ast}(1_-)\,\psi_{m''\,m'}^i(1)}{m''-n\,q(1)}
+-\sum_{m'',m'''}\psi_{m''\,m'}^{i\,\ast}(1)\,H^\ast_{m'''\,m''}\,\psi^i_{m'''\,m'}(1)
 \end{equation}
 However, $H_{m\,m'}$ is Hermitian, so
 \begin{equation}
@@ -231,7 +237,7 @@ W_{m\,m'}-W_{m'\,m}^\ast =-\pi^2\left(\sum_{m''} \frac{Z_{m''\,m}^{i\,\ast}\,\ps
 \end{equation}
 But, the toroidal electromagnetic torque acting on the plasma is
 \begin{equation}
-T_\phi={\rm i}\,n\,\pi^2\left(\sum_m\frac{Z_m^\ast\,\psi_m-\psi_m^\ast\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}}=\sum_{m,m'}\alpha_m^{\,\ast}\,T_{m\,m'}\,\alpha_{m'},
+T_\phi={\rm i}\,n\,\,\pi^2\left(\sum_m\frac{Z_m^\ast\,\psi_m-\psi_m^\ast\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}}=\sum_{m,m'}\alpha_m^{\,\ast}\,T_{m\,m'}\,\alpha_{m'},
 \end{equation}
 where
 \begin{equation}
@@ -250,31 +256,43 @@ We have
 \end{align}
 Now,
 \begin{align}
-\sum_{m'',m'''}\beta^\ast_{m''\,m}\,W_{m''\,m'''}\,\beta_{m'''\,m'} = \sum_{m''} \beta^\ast_{m''\,m}\,\beta_{m''\,m'}\,\delta W_{m'}=\delta W_{m'}\,\delta_{mm'}.
+\sum_{m'',m'''}\beta^\ast_{m''\,m}\,W_{m''\,m'''}\,\beta_{m'''\,m'} = \sum_{m''} \beta^\ast_{m''\,m}\,\beta_{m''\,m'}\,\delta W_{m'}=\delta W_{m'}\,\delta_{mm'},
 \end{align}
-It follows that
+which implies that 
 \begin{equation}
-\pi^2\sum_{m'',m''',m''''}\beta^\ast_{m''\,m}\,\psi^{i\,\ast}_{m''''\,m''}(1)\,J^i_{m''''\,m'''}\,\beta_{m'''\,m'} = \delta W_{m'}\,\delta_{mm'}.
+\sum_{m'',m''',m''''}\beta^\ast_{m''\,m}\,\psi^{i\,\ast}_{m''''\,m''}(1)\,J^i_{m''''\,m'''}\,\beta_{m'''\,m'} = \delta W_{m'}\,\delta_{mm'}.
 \end{equation}
-Let,
+Let us define the new ideal solutions, 
 \begin{align}
 \hat{\psi}^i_{m\,m'}(\hat{r}) &= \sum_{m''}\psi^i_{m\,m''}(\hat{r})\,\beta_{m''\,m'},\\[0.5ex]
 \hat{Z}^i_{m\,m'}(\hat{r}) &= \sum_{m''}Z^i_{m\,m''}(\hat{r})\,\beta_{m''\,m'},\\[0.5ex]
-\hat{J}^i_{m\,m'} &=  \frac{\hat{Z}_{m\,m'}^i(1_-)}{m-n\,q(1)}-\sum_{m''} H_{m\,m''}\,\hat{\psi}_{m''\,m'}^i(1).
+\hat{J}^i_{m\,m'} &=  \frac{\hat{Z}_{m\,m'}^i(1_-)}{m-n\,q(1)}-\sum_{m''} H_{m\,m''}\,\hat{\psi}_{m''\,m'}^i(1),
 \end{align}
+which are conveniently normalized such that 
+\begin{equation}
+\sum_{m'}\hat{\psi}_{m'\,m}^{i\,\ast}(1)\,\hat{\psi}_{m'\,m}^i(1) = 1.
+\end{equation}
 It follows that
 \begin{equation}
-\sum_{m''} \hat{\psi}^{i\,\ast}_{m''\,m}(1)\,\hat{J}^i_{m''\,m'} = \delta\hat{W}_{m'}\,\delta_{mm'},
+\sum_{m''} \hat{\psi}^{i\,\ast}_{m''\,m}(1)\,\hat{J}^i_{m''\,m'} = \delta W_{m'}\,\delta_{mm'}.
 \end{equation}
-where
-\begin{equation}
-\delta\hat{W}_m = \frac{\delta W_m}{\pi^2}.
-\end{equation}
-Thus, we can write
+
+Thus, if we write
 \begin{align}
-\hat{J}^i_{m'\,m} &= \delta\hat{W}_m\,\hat{\psi}^i_{m'\,m}(1),\\[0.5ex]
-\sum_{m'' }\hat{\psi}^{i\,\ast}_{m''\,m}(1)\,\hat{\psi}^i_{m''\,m'}(1)&=\delta_{mm'}.
+\psi_m(\hat{r}) &=\sum_m \hat{\psi}_{m\,m'}^i(\hat{r})\,\alpha_{m'},\\[0.5ex]
+Z_m(\hat{r}) &=\sum_m \hat{Z}_{m\,m'}^i(\hat{r})\,\alpha_{m'},
 \end{align}
+which implies that
+\begin{align}
+J_m &= \sum_m\,\hat{J}_{m\,m'}^i\,\alpha_{m'},
+\end{align}
+then
+\begin{equation}
+\delta\hat{W} = \sum_{m}\,\psi_m^{\,\ast}(1)\,J_m=\sum_{m,m',m''}\alpha_{m'}^\ast\,\hat{\psi}_{m\,m'}^{i\,\ast}(1)\,\hat{J}_{m\,m''}^i\,\alpha_{m''}
+=\sum_m |\alpha_m|^2\,\delta W_m.
+\end{equation}
+Hence, it is clear that if any of the $\delta W_m$ are zero then an acceptable trial function can be chosen such that $\delta \hat{W}<0$, which
+means that the plasma is ideally unstable. 
 
 \subsection{Response to RMP}
 We can write
@@ -284,8 +302,8 @@ We can write
 \end{align}
 where
 \begin{align}
-\gamma_{m}&= \sum_{m'} \psi_{m'}^{rmp}(1)\,\hat{\psi}_{m'\,m}^{i\,\ast}(1),\\[0.5ex]
-\gamma_{m}^x&= \sum_{m'} \psi_{m'}^x(1)\,\hat{\psi}_{m'\,m}^{i\,\ast}(1).
+\delta W_m\,\gamma_{m}&= \sum_{m'} \psi_{m'}^{rmp}(1)\,\hat{J}_{m'\,m}^{i\,\ast},\\[0.5ex]
+\delta W_m\,\gamma_{m}^x&= \sum_{m'} \psi_{m'}^x(1)\,\hat{J}_{m'\,m}^{i\,\ast}.
 \end{align}
 
 \end{document}

@@ -63,15 +63,18 @@
 
 ## RMP coils:
 
-	- Psix.py        - Plots poloidal harmonics of RMP at plasma boundary
-	- Chi.py         - Plots RMP drives at rational surfaces
-	- Rmp.py         - Plots ideal response of plasma to RMP
-	- Rmp1.py        - Plots kth poloidal harmonics of ideal response of plasma to  
-	   		    RMP
-	- Psir.py        - Plots psi components of ideal response of plasma to RMP
-	                    in R, Z plane
-	- PsiZr.py       - Plots psi and Z components of ideal response of plasma to  
-	   		    RMP in R, Z plane
+	- Psix.py          - Plots poloidal harmonics of RMP at plasma boundary
+	- Chi.py           - Plots RMP drives at rational surfaces
+	- Rmp.py           - Plots ideal response of plasma to RMP
+	- Rmp1.py          - Plots kth poloidal harmonics of ideal response of plasma
+	                      to RMP
+	- Psir.py          - Plots psi components of ideal response of plasma to RMP
+	                      in R, Z plane
+	- PsiZr.py         - Plots psi and Z components of ideal response of plasma to  
+	   		      RMP in R, Z plane
+        - PsiRmpSurface.py - Plots RMP data on plasma boundary
+	- Gamma.py         - Plots expansions of Psi_x and Psi^rmp at plasma boundary
+	  		      in terms of ideal eigenfunctions
 
 ## Resonant layers:
 
@@ -89,3 +92,7 @@
 	   		    versus r
 	- Ideale1.py     - Plots kth poloidal harmomics of psi and Z components
 	   		    of ideal eigenfunctions versus r
+	- deltaW.py	 - Plots delta W values versus eigenfunction number
+   	                    (m=0 delta W is omitted because it is very large)
+	- PsiJSurface.py - Plots psi and J on plasma boundary associated with
+	  		    ideal eigenfunctions

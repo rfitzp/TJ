@@ -309,6 +309,9 @@ void TJ::CalculateResonantMagneticPerturbation ()
   Psirmp.resize(J, NDIAG);
   Zrmp  .resize(J, NDIAG);
 
+  Psirmps = new complex<double>[Nw+1];
+  Psixs   = new complex<double>[Nw+1];
+
   // ........................
   // Calculate Upsilon-vector
   // ........................
@@ -377,7 +380,27 @@ void TJ::CalculateResonantMagneticPerturbation ()
 	  Zrmp  (j, i) = sumz;
 	}
     }
-}
+
+  // ..............................................
+  // Calculate Psi_x and Psi_rmp on plasma boundary
+  // ..............................................
+  for (int i = 0; i <= Nw; i++)
+    {
+      double theta = tbound[i];
+      
+      complex<double> sump = complex<double> (0., 0.);
+      complex<double> sumx = complex<double> (0., 0.);
+      
+      for (int j = 0; j < J; j++)
+	{
+	  sump += Psirmp(j, NDIAG-1) * complex<double> (cos (mpol[j] * theta), sin (mpol[j] * theta));
+	  sumx += Psix[j]            * complex<double> (cos (mpol[j] * theta), sin (mpol[j] * theta));
+	}
+      
+      Psirmps[i] = sump;
+      Psixs  [i] = sumx;
+    }
+ }
 
 // #######################################################################################################
 // Function to calculate angular momentum flux associated with pairs of fully-reconnected solution vectors
@@ -395,13 +418,13 @@ void TJ::GetTorqueFull ()
 	  
 	  for (int j = 0; j < J; j++)
 	    {
-	  double mj  = mpol[j];
-	  double mnq = mj - ntor * q;
-	  
-	  Sum += (+ conj(Zf  (j, k, i) + I * Zf  (j, kp, i))
-		  * (Psif(j, k, i) + I * Psif(j, kp, i))
-		  - conj(Psif(j, k, i) + I * Psif(j, kp, i))
-		  * (Zf  (j, k, i) + I * Zf  (j, kp, i))) /mnq;
+	      double mj  = mpol[j];
+	      double mnq = mj - ntor * q;
+	      
+	      Sum += (+ conj(Zf  (j, k, i) + I * Zf  (j, kp, i))
+		      * (Psif(j, k, i) + I * Psif(j, kp, i))
+		      - conj(Psif(j, k, i) + I * Psif(j, kp, i))
+		      * (Zf  (j, k, i) + I * Zf  (j, kp, i))) /mnq;
 	    }
 	  Sum *= I * M_PI*M_PI * ntor;
 	  
@@ -458,6 +481,7 @@ void TJ::CalculateIdealStability ()
   Wher.resize(J, J);
   Want.resize(J, J);
   Wvec.resize(J, J);
+  Wres.resize(J, J);
   
   Psie.resize(J, J, NDIAG);
   Ze  .resize(J, J, NDIAG);
@@ -466,6 +490,14 @@ void TJ::CalculateIdealStability ()
 
   Wval   = new double[J];
   deltaW = new double[J];
+  Wperm  = new size_t[J];
+
+  Psiy.resize(J, Nw+1);
+  Jy  .resize(J, Nw+1);
+  PsiJ.resize(J, Nw+1);
+
+  gamma  = new complex<double>[J];
+  gammax = new complex<double>[J];
   
   // -----------------------------------------------------
   // Calculate ideal solutions launched from magnetic axis
@@ -504,7 +536,7 @@ void TJ::CalculateIdealStability ()
 	    Zi  (j, jp, i) /= sqrt(norm);
 	  }
     }
-  
+
   // ---------------------------------------------------------------------------------------
   // Calculate boundary currents associated with ideal solutions launched from magnetic axis
   // ---------------------------------------------------------------------------------------
@@ -541,9 +573,9 @@ void TJ::CalculateIdealStability ()
 	Want (j, jp) = 0.5 * (Wmat (j, jp) - conj (Wmat (jp, j)));
       }
 
-  // ............................
+  // ----------------------------
   // Calculate W-matrix residuals
-  // ............................
+  // ----------------------------
   double Whmax = 0., Wamax = 0.;
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
@@ -563,6 +595,38 @@ void TJ::CalculateIdealStability ()
   // Calculate eigenvalues and eigenvectors of W-matrix
   // --------------------------------------------------
   GetEigenvalues (Wher, Wval, Wvec);
+
+  // ------------------------------------
+  // Check orthonormality of eigenvectors
+  // ------------------------------------
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += conj (Wvec(jpp, j)) * Wvec(jpp, jp);
+
+	if (j == jp)
+	  Wres(j, jp) = sum - complex<double> (1., 0.);
+	else
+	  Wres(j, jp) = sum;
+      }
+
+  // -----------------------------------
+  // Calculate orthonormaility residuals
+  // -----------------------------------
+  double Wmax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double wval = abs (Wres (j, jp));
+
+	if (wval > Wmax)
+	  Wmax = wval;
+      }
+
+  printf ("Energy matrix eigenvector orthonormality residual: %10.4e\n", Wmax);
 
   // -----------------------------
   // Calculate ideal eigenfuctions
@@ -629,9 +693,14 @@ void TJ::CalculateIdealStability ()
       deltaW[j] = sum;
     }
 
+  // ----------------------------------------
+  // Sort delta-W values into ascending order
+  // ----------------------------------------
+  gsl_sort_index (Wperm, deltaW, 1, J);
+ 
   printf ("Ideal eigenvalues:\n");
   for (int j = 0; j < J; j++)
-    printf ("j = %3d  Wval = %10.3e  deltaW = %10.3e\n", j, Wval[j], deltaW[j]);
+    printf ("j = %3d  Wval = %10.3e  deltaW = %10.3e\n", j, Wval[Wperm[j]], deltaW[Wperm[j]]);
   
   // --------------------------------------------
   // Check orthonormality of ideal eigenfunctions
@@ -650,9 +719,9 @@ void TJ::CalculateIdealStability ()
 	  Pres(j, jp) = sum;
       }
 
-  // ---------------------------------
-  // Calculate orthogonality residuals
-  // ---------------------------------
+  // -----------------------------------
+  // Calculate orthonormaility residuals
+  // -----------------------------------
   double Pmax = 0.;
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
@@ -663,7 +732,49 @@ void TJ::CalculateIdealStability ()
 	  Pmax = pval;
       }
 
-  printf ("Ideal eigenfunction othogonality residual: %10.4e\n", Pmax);
+  printf ("Ideal eigenfunction orthonormality residual: %10.4e\n", Pmax);
+
+  // ----------------------------------------------------------------------------------
+  // Calculate Psi and J values at plasma boundary associated with ideal eigenfunctions
+  // ----------------------------------------------------------------------------------
+  for (int j = 0; j < J; j++)
+    {
+      for (int i = 0; i <= Nw; i++)
+	{
+	  double theta = tbound[i];
+
+	  complex<double> sump = complex<double> (0., 0.);
+	  complex<double> sumj = complex<double> (0., 0.);
+
+	  for (int jp = 0; jp < J; jp++)
+	    {
+	      sump += Psie(jp, int (Wperm[j]), NDIAG-1) * complex<double> (cos (mpol[jp] * theta), sin (mpol[jp] * theta));
+	      sumj += Je  (jp, int (Wperm[j]))          * complex<double> (cos (mpol[jp] * theta), sin (mpol[jp] * theta));
+	    }
+
+	  Psiy(j, i) = sump;
+	  Jy  (j, i) = sumj;
+	  PsiJ(j, i) = conj (sump) * sumj;
+	}
+    }
+
+  // -------------------------------------------------------------------------------------
+  // Calculate expansion of Psi_x and Psi_rmp at boundary in terms of ideal eigenfunctions
+  // -------------------------------------------------------------------------------------
+  for (int j = 0; j < J; j++)
+    {
+      complex<double> sumx = complex<double> (0., 0.);
+      complex<double> sum  = complex<double> (0., 0.);
+
+      for (int jp = 0; jp < J; jp++)
+	{
+	  sumx += Psix[jp]            * conj (Je(jp, j));
+	  sum  += Psirmp(jp, NDIAG-1) * conj (Je(jp, j));
+	}
+
+      gammax[j] = sumx /deltaW[j];
+      gamma [j] = sum  /deltaW[j];
+    }
 }
 
 // ##############################################################################

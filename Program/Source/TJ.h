@@ -56,6 +56,7 @@
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
 #include <gsl/gsl_sf_gamma.h>
+#include <gsl/gsl_sort.h>
 #include <nlohmann/json.hpp>
 #include <netcdf>
 #include <armadillo>
@@ -304,6 +305,8 @@ class TJ
   complex<double>*         Chi;     // RMP drive at rational surfaces
   Array<complex<double>,2> Psirmp;  // Psi component of ideal RMP response eigenfunction
   Array<complex<double>,2> Zrmp;    // Z component of ideal RMP response eigenfunction
+  complex<double>*         Psixs;   // Psix on plasma boundary
+  complex<double>*         Psirmps; // Psirmp on plasma boundary
 
   // --------------------
   // Ideal stability data
@@ -316,11 +319,18 @@ class TJ
   Array<complex<double>,2> Want;    // Anti-Hermitian component of Wmat
   double*                  Wval;    // Eigenvalues of symmeterized W-matrix
   Array<complex<double>,2> Wvec;    // Eigenvectors of symmeterized W-matrix
+  Array<complex<double>,2> Wres;    // Residuals of Wvec orthonormaility matrix
   Array<complex<double>,3> Psie;    // Psi components of ideal eigenfunctions
   Array<complex<double>,3> Ze;      // Z components of ideal eigenfunctions
   Array<complex<double>,2> Je;      // Poloidal harmomics of current on plasma boundary associated with ideal eigenfunctions
   double*                  deltaW;  // delta W values
   Array<complex<double>,2> Pres;    // Residuals of Psie, Je orthogonality matrix
+  size_t*                  Wperm;   // Permutation for sorting deltaW values
+  Array<complex<double>,2> Psiy;    // Psi values on plasma boundry associated with ideal eigenfunctions
+  Array<complex<double>,2> Jy;      // Current on plasma boundry associated with ideal eigenfunctions
+  Array<complex<double>,2> PsiJ;    // Psiy^ast J values associated with ideal eigenfunctions
+  complex<double>*         gammax;  // Expansion of Psi_x at boundary in ideal eigenfunctions
+  complex<double>*         gamma;   // Expansion of Psi_rmp at boundary in ideal eigenfunctions
 
   // ------------------------------------------------
   // Visualization of tearing eigenfunctions and RMPs
