@@ -229,6 +229,7 @@ void Equilibrium::Solve ()
   ff   = new double[Nr+1];
   ggr2 = new double[Nr+1];
   RR2  = new double[Nr+1];
+  Psi  = new double[Nr+1];
 
   HHfunc.resize (Ns+1, Nr+1);
   VVfunc.resize (Ns+1, Nr+1);
@@ -240,6 +241,7 @@ void Equilibrium::Solve ()
   Ipspline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   g2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   fspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  q2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   gr2spline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   R2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   Lspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
@@ -251,6 +253,7 @@ void Equilibrium::Solve ()
   Ipacc  = gsl_interp_accel_alloc ();
   g2acc  = gsl_interp_accel_alloc ();
   facc   = gsl_interp_accel_alloc ();
+  q2acc  = gsl_interp_accel_alloc ();
   gr2acc = gsl_interp_accel_alloc ();
   R2acc  = gsl_interp_accel_alloc ();
   Lacc   = gsl_interp_accel_alloc ();
@@ -506,9 +509,9 @@ void Equilibrium::Solve ()
   // Integrate f3 equation
   // .....................
   printf ("Calculating f3 equation:\n");
-  double* y1    = new double[1];
-  double* dy1dr = new double[1];
-  double* err1  = new double[1];
+  double* y1    = new double[2];
+  double* dy1dr = new double[2];
+  double* err1  = new double[2];
   rhs_chooser   = 1;
 
   f1c        = 1. /qc;
@@ -518,6 +521,7 @@ void Equilibrium::Solve ()
   h       = h0;
   count   = 0;
   f3[0]   = 0.;
+  Psi[0]  = 0.;
   q0[0]   = qc;
   qq[0]   = 0.;
   ff[0]   = 0.;
@@ -533,15 +537,16 @@ void Equilibrium::Solve ()
     {
       do
 	{
-	  CashKarp45Adaptive (1, r, y1, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+	  CashKarp45Adaptive (2, r, y1, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
 	}
       while (r < rr[i] - h);
-      CashKarp45Fixed (1, r, y1, err1, rr[i] - r);
+      CashKarp45Fixed (2, r, y1, err1, rr[i] - r);
       Rhs (rr[i], y1, dy1dr);
       
-      f3[i] = y1[0];
-      q0[i] = rr[i]*rr[i] /f1[i];
-      q2[i] = rr[i]*rr[i] * (1. + epsa*epsa*(g2[i] - f3[i]/f1[i])) /f1[i];
+      f3[i]  = y1[0];
+      Psi[i] = y1[1];
+      q0[i]  = rr[i]*rr[i] /f1[i];
+      q2[i]  = rr[i]*rr[i] * (1. + epsa*epsa*(g2[i] - f3[i]/f1[i])) /f1[i];
 
       double ff1 = f1[i];
       double ff3 = f3[i];
@@ -612,6 +617,7 @@ void Equilibrium::Solve ()
   // Interpolate equilibrium splines
   // ...............................
   gsl_spline_init (fspline,   rr, ff,   Nr+1);
+  gsl_spline_init (q2spline,  rr, q2,   Nr+1);
   gsl_spline_init (gr2spline, rr, ggr2, Nr+1);
   gsl_spline_init (R2spline,  rr, RR2,  Nr+1);
   gsl_spline_init (Itspline,  rr, It,   Nr+1);
@@ -825,6 +831,11 @@ void Equilibrium::Solve ()
   // Output equilibrium data to netcdf file
   // ......................................
   WriteNetcdf (sa);
+
+  // ...................
+  // Calculate EFIT data
+  // ...................
+  CalculateEFIT ();
   
   // ........
   // Clean up
@@ -842,6 +853,7 @@ void Equilibrium::Solve ()
   gsl_spline_free (Ipspline);
   gsl_spline_free (g2spline);
   gsl_spline_free (fspline);
+  gsl_spline_free (q2spline);
   gsl_spline_free (gr2spline);
   gsl_spline_free (R2spline);
   gsl_spline_free (Lspline); 
@@ -853,6 +865,7 @@ void Equilibrium::Solve ()
   gsl_interp_accel_free (Itacc);
   gsl_interp_accel_free (Ipacc);
   gsl_interp_accel_free (facc);
+  gsl_interp_accel_free (q2acc);
   gsl_interp_accel_free (gr2acc);
   gsl_interp_accel_free (R2acc);
   gsl_interp_accel_free (Lacc);
@@ -877,8 +890,297 @@ void Equilibrium::Solve ()
 
   delete[] Rbound;   delete[] Zbound; delete[] tbound; delete[] wbound0; delete[] tbound0;
   delete[] wbound;   delete[] R2b;    delete[] grr2b;  delete[] Lfunc;   delete[] dRdtheta; 
-  delete[] dZdtheta;
+  delete[] dZdtheta; delete[] Psi;
  }
+
+// ###############################
+// Function to calculate EFIT data
+// ###############################
+void Equilibrium::CalculateEFIT ()
+{
+  // ----------------------
+  // Set physical constants
+  // ----------------------
+  double mu_0 = 4.*M_PI*1.e-7;
+
+  // --------------------------------------
+  // Read control parameters from JSON file
+  // --------------------------------------
+  string JSONFilename = "Inputs/TJ.json";
+  json   JSONData     = ReadJSONFile (JSONFilename);
+
+  NRBOX = JSONData["Equilibrium_control"]["NRBOX"].get<int> ();
+  NZBOX = JSONData["Equilibrium_control"]["NZBOX"].get<int> ();
+
+  B0EXP = JSONData["TJ_control"]["B0"].get<double> ();
+  R0EXP = JSONData["TJ_control"]["R0"].get<double> ();
+
+  RAXIS   = R0EXP;
+  ZAXIS   = 0.;
+  CURRENT = epsa*epsa * (B0EXP * R0EXP /mu_0) * It[Nr];
+
+  // ---------------
+  // Allocate memory
+  // ---------------
+  PSI  = new double[NRBOX];
+  rPSI = new double[NRBOX];
+  T    = new double[NRBOX];
+  TTp  = new double[NRBOX];
+  P    = new double[NRBOX];
+  Pp   = new double[NRBOX];
+  Q    = new double[NRBOX];
+
+  RBOUND   = new double [Nw+1];
+  ZBOUND   = new double [Nw+1];
+  RLIMITER = new double [4];
+  ZLIMITER = new double [4];
+
+  RGRID = new double[NRBOX];
+  ZGRID = new double[NZBOX];
+  PSIRZ = new double[NRBOX*NZBOX];
+
+  rPsispline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  PSIrspline = gsl_spline_alloc (gsl_interp_cspline, NRBOX);
+  rPsiacc    = gsl_interp_accel_alloc ();
+  PSIracc    = gsl_interp_accel_alloc ();
+
+  // ------------------------
+  // Set up Psi and PSI grids
+  // ------------------------
+  for (int i = 0; i <= Nr; i++)
+    Psi[i] *= epsa*epsa * B0EXP * R0EXP*R0EXP;
+
+  for (int i = 0; i <= Nr; i++)
+    Psi[i] -= Psi[Nr];
+
+  PSIAXIS  = Psi[0];
+  PSIBOUND = Psi[Nr];
+
+  for (int i = 0; i < NRBOX; i++)
+    PSI[i] = PSIAXIS * (double (NRBOX - 1 - i) /double (NRBOX - 1));
+
+  // ---------------------------
+  // Interpolate r onto Psi grid
+  // ---------------------------
+  gsl_spline_init (rPsispline, Psi, rr, Nr+1);
+
+  // ----------------
+  // Set up rPSI grid
+  // ----------------
+  rPSI[0]       = 0.;
+  rPSI[NRBOX-1] = 1.;
+  for (int i = 1; i < NRBOX - 1; i++)
+    rPSI[i] = gsl_spline_eval (rPsispline, PSI[i], rPsiacc);
+
+  // ---------------------------
+  // Interpolate PSI onto r grid
+  // ---------------------------
+  gsl_spline_init (PSIrspline, rPSI, PSI, NRBOX);
+
+  // ---------------------------
+  // Calculate profile functions
+  // ---------------------------
+  double f1c   = 1./qc;
+  double f3c   = - f1c *  (HHfunc(2, 0) * HHfunc(2, 0) + VVfunc(2, 0) * VVfunc(2, 0));
+  double p2ppc = - 2. * pc * mu;
+  double g2pc  = - 2. * (f1c*f1c + p2ppc/2.);
+
+  T  [0] = B0EXP * R0EXP;
+  TTp[0] = B0EXP                      * g2pc  /(f1c + eps*eps * f3c);
+  P  [0] = (B0EXP*B0EXP /mu_0)        * epsa*epsa * pc;
+  Pp [0] = (B0EXP /mu_0 /R0EXP/R0EXP) * p2ppc /(f1c + eps*eps * f3c);
+  Q  [0] = q2[0];
+  
+  for (int i = 1; i < NRBOX; i++)
+    {
+      double rp = rPSI[i];
+
+      double f1  = Getf1 (rp);
+      double f1p = Getf1p(rp);
+      double p2  = Getp2 (rp);
+      double p2p = Getp2p(rp);
+
+      double g2  = gsl_spline_eval (g2spline, rp, g2acc);
+      double f   = gsl_spline_eval (fspline,  rp, facc);
+      double q   = gsl_spline_eval (q2spline, rp, q2acc);
+
+      double g   = 1. + epsa*epsa * g2;
+      double g2p = - p2p - f1*f1p/rp/rp;
+
+      T  [i] = B0EXP * R0EXP              * g;
+      TTp[i] = B0EXP                      * rp * g2p * g /f;
+      P  [i] = (B0EXP*B0EXP /mu_0)        * epsa*epsa * p2;
+      Pp [i] = (B0EXP /mu_0 /R0EXP/R0EXP) * rp * p2p     /f;
+      Q  [i] = q;                             
+    }
+
+  // -------------------------
+  // Calculate boundary points
+  // -------------------------
+  NPBOUND = Nw + 1;
+  for (int i = 0; i < NPBOUND; i++)
+    {
+      RBOUND[i] = R0EXP * Rbound[i];
+      ZBOUND[i] = R0EXP * Zbound[i];
+    }
+
+  // -----------------------------------------
+  // Calculate bounding box and limiter points
+  // -----------------------------------------
+  double Rmin = 1.e6, Rmax = -1.e6, Zmin = 1.e6, Zmax = -1.e6;
+
+  for (int i = 0; i < NPBOUND; i++)
+    {
+      if (RBOUND[i] < Rmin)
+	Rmin = RBOUND[i];
+      if (RBOUND[i] > Rmax)
+	Rmax = RBOUND[i];
+      if (ZBOUND[i] < Zmin)
+	Zmin = ZBOUND[i];
+      if (ZBOUND[i] > Zmax)
+	Zmax = ZBOUND[i];
+    }
+
+  Rmin = Rmin - 0.05 * (Rmax - Rmin);
+  Rmax = Rmax + 0.05 * (Rmax - Rmin);
+  Zmin = Zmin - 0.05 * (Zmax - Zmin);
+  Zmax = Zmax + 0.05 * (Zmax - Zmin);
+
+  RBOXLFT = Rmin;
+  RBOXLEN = Rmax - Rmin;
+  ZOFF    = (Zmin + Zmax) /2.;
+  ZBOXLEN = Zmax - Zmin;
+
+  NLIMITER = 4;
+
+  RLIMITER[0] = Rmin; ZLIMITER[0] = Zmin;
+  RLIMITER[1] = Rmax; ZLIMITER[1] = Zmin;
+  RLIMITER[2] = Rmax; ZLIMITER[2] = Zmax;
+  RLIMITER[3] = Rmin; ZLIMITER[3] = Zmax;
+
+  // -------------------------
+  // Set up R and Z gridpoints
+  // -------------------------
+  for (int i = 0; i < NRBOX; i++)
+    RGRID[i] = (RBOXLFT           + RBOXLEN * double (i) /double (NRBOX - 1)) /R0EXP;
+  for (int j = 0; j < NZBOX; j++)
+    ZGRID[j] = (ZOFF - ZBOXLEN/2. + ZBOXLEN * double (j) /double (NZBOX - 1)) /R0EXP;
+
+  // -----------------------
+  // Calculate PSIRZ on grid
+  // -----------------------
+  int cnt = 0;
+  for (int i = 0; i < NRBOX; i++)
+    for (int j = 0; j < NZBOX; j++)
+      {
+	double R = RGRID[i];
+	double Z = ZGRID[j];
+
+	double r = sqrt ((R - 1.) * (R - 1.) + Z*Z) /epsa;
+	double w = atan2 (Z, 1. - R);
+
+	for (int k = 0; k < 10; k++)
+	  {
+	    double Rhat = R - Getf_R (r, w);
+	    double Zhat = Z - Getf_Z (r, w);
+
+	    r = sqrt ((Rhat - 1.) * (Rhat - 1.) + Zhat*Zhat) /epsa;
+	    w = atan2 (Zhat, 1. - Rhat);
+	  }
+
+	if (r >= 1.)
+	  PSIRZ[cnt] = epsa*epsa * B0EXP*R0EXP*R0EXP * 0.5 * (r*r - 1.) * (f1[Nr] + epsa*epsa * f3[Nr]);
+	else
+	  PSIRZ[cnt] = gsl_spline_eval (PSIrspline, r, PSIracc);
+
+	cnt++;
+      }
+
+  // -------------------------------
+  // Output EFIT data to netcdf file
+  // -------------------------------
+  printf ("Writing data to netcdf file EFIT/EFIT.nc:\n");
+  
+  int pint[4];
+
+  pint[0] = NRBOX;
+  pint[1] = NZBOX;
+  pint[2] = NPBOUND;
+  pint[3] = NLIMITER;
+
+  double preal[11];
+
+  preal[0]  = RBOXLEN;
+  preal[1]  = ZBOXLEN;
+  preal[2]  = RBOXLFT;
+  preal[3]  = ZOFF;
+  preal[4]  = R0EXP;
+  preal[5]  = B0EXP;
+  preal[6]  = RAXIS;
+  preal[7]  = ZAXIS;
+  preal[8]  = PSIAXIS;
+  preal[9]  = PSIBOUND;
+  preal[10] = CURRENT;
+
+  try
+    {
+      NcFile dataFile ("EFIT/EFIT.nc", NcFile::replace);
+
+      NcDim i_d = dataFile.addDim ("Ni", 4);
+      NcDim r_d = dataFile.addDim ("Nr", 11);
+      NcDim p_d = dataFile.addDim ("Np", NRBOX);
+      NcDim z_d = dataFile.addDim ("Nz", NZBOX);
+      NcDim b_d = dataFile.addDim ("Nb", NPBOUND);
+      NcDim l_d = dataFile.addDim ("Nl", NLIMITER);
+
+      vector<NcDim> psi_d;
+      psi_d.push_back (p_d);
+      psi_d.push_back (z_d);
+
+      NcVar i_x   = dataFile.addVar ("IntegerParameters", ncInt,    i_d);
+      i_x.putVar (pint);
+      NcVar r_x   = dataFile.addVar ("RealParameters",    ncDouble, r_d);
+      r_x.putVar (preal);
+      NcVar T_x   = dataFile.addVar ("T",                 ncDouble, p_d);
+      T_x.putVar (T);
+      NcVar P_x   = dataFile.addVar ("P",                 ncDouble, p_d);
+      P_x.putVar (P);
+      NcVar TTp_x = dataFile.addVar ("TTp",               ncDouble, p_d);
+      TTp_x.putVar (TTp);
+      NcVar Pp_x  = dataFile.addVar ("Pp",                ncDouble, p_d);
+      Pp_x.putVar (Pp);
+      NcVar PSI_x = dataFile.addVar ("PSI",               ncDouble, psi_d);
+      PSI_x.putVar (PSIRZ);
+      NcVar Q_x   = dataFile.addVar ("Q",                 ncDouble, p_d);
+      Q_x.putVar (Q);
+      NcVar R_x   = dataFile.addVar ("RBOUND",            ncDouble, b_d);
+      R_x.putVar (RBOUND);
+      NcVar Z_x   = dataFile.addVar ("ZBOUND",            ncDouble, b_d);
+      Z_x.putVar (ZBOUND);
+      NcVar rr_x  = dataFile.addVar ("RLIMITER",          ncDouble, l_d);
+      rr_x.putVar (RLIMITER);
+      NcVar zz_x  = dataFile.addVar ("ZLIMITER",          ncDouble, l_d);
+      zz_x.putVar (ZLIMITER);
+    }
+  catch (NcException& e)
+    {
+      printf ("Error writing data to netcdf file EFIT/EFIT.nc\n");
+      printf ("%s\n", e.what ());
+      exit (1);
+    }
+
+   // --------
+  // Clean up
+  // --------
+  delete[] PSI;    delete[] rPSI;   delete[] T;        delete[] TTp;      delete[] Pp;    delete[] Q;
+  delete[] RBOUND; delete[] ZBOUND; delete[] RLIMITER; delete[] ZLIMITER; delete[] PSIRZ;
+  delete[] RGRID;  delete[] ZGRID;  delete[] P;
+
+  gsl_spline_free (rPsispline);    gsl_spline_free (PSIrspline);
+  gsl_interp_accel_free (rPsiacc); gsl_interp_accel_free (PSIracc);
+
+  exit(1);
+}
 
 // ########################
 // Function to return f1(r)
@@ -1206,6 +1508,78 @@ double Equilibrium::GetR2 (double r, double t)
   return R2;
 }
 
+// ######################
+// Function to return f_R
+// ######################
+double Equilibrium::Getf_R (double r, double w)
+{
+  if (r > 1.)
+    r = 1.;
+
+  double L = GetL (r);
+  
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double R = epsa*epsa*epsa * L * cos (w) + epsa*epsa * hn[1];
+
+  for (int n = 2; n <= Ns; n++)
+    R += epsa*epsa * (hn[n] * cos (double (n - 1) * w) + vn[n] * sin (double (n - 1) * w));
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return R;
+}
+
+// ######################
+// Function to return f_Z
+// ######################
+double Equilibrium::Getf_Z (double r, double w)
+{
+  if (r > 1.)
+    r = 1.;
+  
+  double L = GetL (r);
+
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+  
+  double Z = - epsa*epsa*epsa * L * sin (w);
+
+  for (int n = 2; n <= Ns; n++)
+    Z += epsa*epsa * (hn[n] * sin (double (n - 1) * w) - vn[n] * cos (double (n - 1) * w));
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return Z;
+}
+
 // ##############################
 // Function to return |nabla r|^2
 // ##############################
@@ -1437,6 +1811,7 @@ void Equilibrium::Rhs (double r, double* y, double* dydr)
 	+ r*r*p2p * (g2 + r*r/2. - 3.*r*Hnp[1] - 2.*Hn[1]) /f1;
 
       dydr[0] = f3p;
+      dydr[1] = r * (f1 + epsa*epsa * y[0]);
 
       delete[] Hn; delete[] Hnp; delete[] Vn; delete[] Vnp;
     }

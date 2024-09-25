@@ -323,7 +323,8 @@ class TJ
   Array<complex<double>,3> Psie;    // Psi components of ideal eigenfunctions
   Array<complex<double>,3> Ze;      // Z components of ideal eigenfunctions
   Array<complex<double>,2> Je;      // Poloidal harmomics of current on plasma boundary associated with ideal eigenfunctions
-  double*                  deltaW;  // delta W values
+  double*                  deltaW;  // Total perturbed ideal potential energy 
+  double*                  deltaWp; // Plasma contribution to perturbed potential energy
   Array<complex<double>,2> Pres;    // Residuals of Psie, Je orthogonality matrix
   size_t*                  Wperm;   // Permutation for sorting deltaW values
   Array<complex<double>,2> Psiy;    // Psi values on plasma boundry associated with ideal eigenfunctions

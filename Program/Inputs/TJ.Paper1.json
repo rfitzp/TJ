@@ -19,7 +19,10 @@
 	"acc":  1.0e-12,
 	"h0":   1.0e-4,
 	"hmin": 1.0e-10,
-	"hmax": 1.0e-3
+	"hmax": 1.0e-3,
+
+	"NRBOX": 256,
+	"NZBOX": 256
     },
 
     "TJ_control":

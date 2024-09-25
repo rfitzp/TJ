@@ -88,14 +88,14 @@ class Equilibrium
   // ------------------
   // Physics parameters
   // ------------------
-  double epsa;        // Inverse aspect-ratio of plasma (read from JSON file)
-  double qc;          // Lowest-order safety-factor on magnetic axis (read from JSON file)
-  double qa;          // Edge safety-factor value (read from JSON file)
-  double pc;          // Normalized plasma pressure on magnetic axis (read from JSON file)
-  double mu;          // Pressure peaking parameter (read from JSON file)
-  vector<double> Hna; // H2(1), H3(1), etc (read from JSON file)
-  vector<double> Vna; // V2(1), V3(1), etc (read from JSON file)
-  double nu;          // Toroidal current peaking parameter (determined from qa);
+  double         epsa; // Inverse aspect-ratio of plasma (read from JSON file)
+  double         qc;   // Lowest-order safety-factor on magnetic axis (read from JSON file)
+  double         qa;   // Edge safety-factor value (read from JSON file)
+  double         pc;   // Normalized plasma pressure on magnetic axis (read from JSON file)
+  double         mu;   // Pressure peaking parameter (read from JSON file)
+  vector<double> Hna;  // H2(1), H3(1), etc (read from JSON file)
+  vector<double> Vna;  // V2(1), V3(1), etc (read from JSON file)
+  double         nu;   // Toroidal current peaking parameter (determined from qa);
 
   // ----------------------
   // Calculation parameters
@@ -115,7 +115,7 @@ class Equilibrium
   double hmax;    // Maximum integration step-length (read from JSON file)
   int    maxrept; // Maximum number of step recalculations
   int    flag;    // Integration error calculation flag
-  
+
   // ----------------
   // Calculation data
   // ----------------
@@ -145,6 +145,7 @@ class Equilibrium
   double* ff;    // f profile
   double* ggr2;  // <|nabla r|^2> profile
   double* RR2;   // <R^2> profile
+  double* Psi;   // Psi(r) array
    
   Array<double,2>    HHfunc;    // Horizontal shaping functions
   Array<double,2>    VVfunc;    // Vertical shaping functions
@@ -152,10 +153,10 @@ class Equilibrium
   Array<double,2>    VPfunc;    // Radial derivatives of vertical shaping functions
   double*            Lfunc;     // Relabelling function
 
-  double li;                    // Plasma self-inductance
-  double betat;                 // Plasma toroidal beta
-  double betap;                 // Plasma poloidal beta
-  double betaN;                 // Plasma normal beta
+  double             li;        // Plasma self-inductance
+  double             betat;     // Plasma toroidal beta
+  double             betap;     // Plasma poloidal beta
+  double             betaN;     // Plasma normal beta
   
   gsl_spline*        Itspline;  // Interpolated It function
   gsl_spline*        Ipspline;  // Interpolated Ip function
@@ -169,6 +170,7 @@ class Equilibrium
   gsl_spline*        Rspline;   // Interpolated R(theta) function
   gsl_spline*        Zspline;   // Interpolated Z(theta) function
   gsl_spline*        fspline;   // Interpolated f function versus r
+  gsl_spline*        q2spline;  // Interpolated q2 versus r
   gsl_spline*        gr2spline; // Interpolated <|nabla r|^2> function versus r
   gsl_spline*        R2spline;  // Interpolated <R^2> function versus r
 
@@ -184,6 +186,7 @@ class Equilibrium
   gsl_interp_accel*  Racc;      // Accelerator for interpolated R(theta)
   gsl_interp_accel*  Zacc;      // Accelerator for interpolated Z(theta)
   gsl_interp_accel*  facc;      // Accelerator for interpolated f function
+  gsl_interp_accel*  q2acc;     // Accelerator for interpolated q2 function
   gsl_interp_accel*  gr2acc;    // Accelerator for interpolated <|nabla r|^2> function
   gsl_interp_accel*  R2acc;     // Accelerator for interpolated <R^2> function
 
@@ -206,6 +209,45 @@ class Equilibrium
   double*            R2b;       // R^2 values on plasma boundary
   double*            grr2b;     // |nabla r|^2 values on plasma boundary
 
+  // ---------------
+  // EFIT parameters
+  // ---------------
+  int     NRBOX;    // Number of R gridpoints (read from JSON file)
+  int     NZBOX;    // Number of Z gridpoints (read from JSON file)
+  int     NPBOUND;  // Number of boundary points (= NW-1)
+  int     NLIMITER; // Number of limiter points (= 4)
+  double  RBOXLFT;  // Left-hand coordinate of R box (deduced from boundary values)
+  double  RBOXLEN;  // Length of R box (deduced from boundary values)
+  double  ZOFF;     // Offset of centroid of Z box (deduced from boundary values)
+  double  ZBOXLEN;  // Length of Z box (deduced from boundary values)
+  double  R0EXP;    // Major radius of magnetic axis (read from JSON file)
+  double  B0EXP;    // Toroidal magnetic field-strength on magnetic axis (read from JSON file)
+  double  RAXIS;    // R coordinate of magnetic axis (= R0)
+  double  ZAXIS;    // Z coordinate of magnetic axis (= Z0)
+  double  PSIAXIS;  // PSI value on magnetic axis
+  double  PSIBOUND; // PSI value on plasma boundary (= 0)
+  double  CURRENT;  // Toroidal plasma current
+  double* PSI;      // Equally-space PSI array
+  double* rPSI;     // r values that coincide with PSI values
+  double* PSIr;     // PSI values that coincide with r values
+  double* T;        // Toroidal magnetic flux evaluated on PSI grid
+  double* TTp;      // T T' evaluated on PSI grid
+  double* P;        // P evaluated on PSI grid
+  double* Pp;       // P' evaluated on PSI grid
+  double* Q;        // Safety-factor evaluated on PSI grid
+  double* RBOUND;   // R values on plasma boundary
+  double* ZBOUND;   // Z values on plasma boundary
+  double* RLIMITER; // R values on limiter
+  double* ZLIMITER; // Z values on limiter
+  double* RGRID;    // R gridpoints
+  double* ZGRID;    // Z gridpoints
+  double* PSIRZ;    // PSI evaluated on R, Z grid
+
+  gsl_spline*        rPsispline;  // Interpolated r function versus Psi
+  gsl_spline*        PSIrspline;  // Interpolated PSI function versus r
+  gsl_interp_accel*  rPsiacc;     // Accelerator for interpolated r function versus Psi
+  gsl_interp_accel*  PSIracc;     // Accelerator for interpolated PSI function versus r
+  
   // ----------------------------
   // Cash-Karp RK4/RK5 parameters
   // ----------------------------
@@ -226,6 +268,7 @@ class Equilibrium
   
   // Constructor
   Equilibrium ();
+
   // Destructor
   ~Equilibrium ();
 
@@ -244,6 +287,9 @@ private:
   // in Equilibrium.cpp
   // ..................
 
+  // Calculate EFIT data
+  void CalculateEFIT ();
+  
   // Return f1(r)
   double Getf1 (double r);
   // Return f1'(r)
@@ -273,6 +319,10 @@ private:
   double Gettheta (double r, double w);
   // Return R2
   double GetR2 (double r, double t);
+  // Return f_R
+  double Getf_R (double r, double w);
+  // Return f_Z
+  double Getf_Z (double r, double w);
   // Return |nabla r|^2
   double Getgrr2 (double r, double t);
   

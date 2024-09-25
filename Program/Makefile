@@ -1,4 +1,4 @@
 # Makefile for Program TJ
 
 all:
-	(cd Source; make)
+	(cd TJ_Source; make)

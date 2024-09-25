@@ -98,7 +98,7 @@ void TJ::GetVacuum ()
 	  Aamax = aaval;	
       }
 
-  printf ("Vacuum residual: %10.4e\n", Aamax/Ahmax);
+  printf ("Vacuum Hermitian test residual: %10.4e\n", Aamax/Ahmax);
 
   // ..................
   // Calculate H-matrix

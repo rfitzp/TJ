@@ -244,7 +244,7 @@ void TJ::FindDispersion ()
 	if (eval > Eerr)
 	  Eerr = eval;	
       }
-  printf ("E-matrix Hermitian test: %10.3e\n", Eerr);
+  printf ("E-matrix Hermitian test residual: %10.3e\n", Eerr);
 
   // ..............................................
   // Calculate unreconnected tearing eigenfunctions
@@ -488,9 +488,10 @@ void TJ::CalculateIdealStability ()
   Je  .resize(J, J);
   Pres.resize(J, J);
 
-  Wval   = new double[J];
-  deltaW = new double[J];
-  Wperm  = new size_t[J];
+  Wval    = new double[J];
+  deltaW  = new double[J];
+  deltaWp = new double[J];
+  Wperm   = new size_t[J];
 
   Psiy.resize(J, Nw+1);
   Jy  .resize(J, Nw+1);
@@ -589,7 +590,7 @@ void TJ::CalculateIdealStability ()
 	  Wamax = waval;	
       }
 
-  printf ("Energy matrix residual: %10.4e\n", Wamax /Whmax);
+  printf ("Energy matrix Hermitian test residual: %10.4e\n", Wamax /Whmax);
 
   // --------------------------------------------------
   // Calculate eigenvalues and eigenvectors of W-matrix
@@ -626,7 +627,7 @@ void TJ::CalculateIdealStability ()
 	  Wmax = wval;
       }
 
-  printf ("Energy matrix eigenvector orthonormality residual: %10.4e\n", Wmax);
+  printf ("Energy matrix eigenvector orthonormality test residual: %10.4e\n", Wmax);
 
   // -----------------------------
   // Calculate ideal eigenfuctions
@@ -685,12 +686,16 @@ void TJ::CalculateIdealStability ()
   // ------------------------
   for (int j = 0; j < J; j++)
     {
-      double sum = 0.;
+      double sum = 0., sum1 = 0.;;
 
       for (int jp = 0; jp < J; jp++)
-	sum += real (conj (Psie(jp, j, NDIAG-1)) * Je(jp, j));
+	{
+	  sum  += real (conj (Psie(jp, j, NDIAG-1)) * Je(jp, j));
+	  sum1 += real (conj (Psie(jp, j, NDIAG-1)) * Ze(jp, j, NDIAG-1) /(mpol[jp] - ntor*qa));
+	}
 
-      deltaW[j] = sum;
+      deltaW [j] = sum;
+      deltaWp[j] = sum1;
     }
 
   // ----------------------------------------
@@ -700,7 +705,8 @@ void TJ::CalculateIdealStability ()
  
   printf ("Ideal eigenvalues:\n");
   for (int j = 0; j < J; j++)
-    printf ("j = %3d  Wval = %10.3e  deltaW = %10.3e\n", j, Wval[Wperm[j]], deltaW[Wperm[j]]);
+    printf ("j = %3d  Wval = %10.3e  deleta-W_p = %10.3e  delta-W_v = %10.3e  delta-W = %10.3e\n",
+	    j, Wval[Wperm[j]], deltaWp[Wperm[j]], deltaW[Wperm[j]] - deltaWp[Wperm[j]], deltaW[Wperm[j]]);
   
   // --------------------------------------------
   // Check orthonormality of ideal eigenfunctions
@@ -732,7 +738,7 @@ void TJ::CalculateIdealStability ()
 	  Pmax = pval;
       }
 
-  printf ("Ideal eigenfunction orthonormality residual: %10.4e\n", Pmax);
+  printf ("Ideal eigenfunction orthonormality test residual: %10.4e\n", Pmax);
 
   // ----------------------------------------------------------------------------------
   // Calculate Psi and J values at plasma boundary associated with ideal eigenfunctions
@@ -748,8 +754,10 @@ void TJ::CalculateIdealStability ()
 
 	  for (int jp = 0; jp < J; jp++)
 	    {
-	      sump += Psie(jp, int (Wperm[j]), NDIAG-1) * complex<double> (cos (mpol[jp] * theta), sin (mpol[jp] * theta));
-	      sumj += Je  (jp, int (Wperm[j]))          * complex<double> (cos (mpol[jp] * theta), sin (mpol[jp] * theta));
+	      sump += Psie(jp, int (Wperm[j]), NDIAG-1)
+		* complex<double> (cos (mpol[jp] * theta), sin (mpol[jp] * theta));
+	      sumj += Je  (jp, int (Wperm[j]))
+		* complex<double> (cos (mpol[jp] * theta), sin (mpol[jp] * theta));
 	    }
 
 	  Psiy(j, i) = sump;

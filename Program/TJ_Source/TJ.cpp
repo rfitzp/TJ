@@ -367,7 +367,8 @@ void TJ::CleanUp ()
      
   delete[] Rgrid; delete[] hode; delete[] eode;
 
-  delete[] Fval; delete[] Wval; delete[] deltaW; delete[] Wperm;
+  delete[] Fval;    delete[] Wval; delete[] deltaW; delete[] Wperm;
+  delete[] deltaWp; 
 
   delete[] rf; delete[] gammax; delete[] gamma;
 }  
