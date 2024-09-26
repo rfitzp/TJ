@@ -32,6 +32,10 @@ magnetic axis, respectively. Let ${\mit\Psi}=0$ at the plasma boundary, $r=\epsi
 \begin{equation}
 {\mit\Psi}(r) = B_0\,R_0^{\,2}\int_r^\epsilon f(r')\,dr'.
 \end{equation}
+Also,
+\begin{equation}
+q =\frac{r\,g}{f}.
+\end{equation}
 
 Let $\hat{r}=r/\epsilon$. It follows that
 \begin{equation}
@@ -50,43 +54,44 @@ and
 \frac{dP}{d{\mit\Psi}}= \frac{B_0}{\mu_0\,R_0^{\,2}}\,\frac{1}{\epsilon\,f}\,\frac{dP}{d\hat{r}}.
 \end{equation}
 
-
+Let $\hat{r}\,f = \epsilon\,f_1+\epsilon^3\,f_3$. 
 It follows that
 \begin{align}
-{\mit\Psi}(\hat{r}) &= \epsilon^2\,B_0\,R_0^{\,2}\int_{\hat{r}}^1\hat{r}'\left[f_1(\hat{r}') +\epsilon^2\,f_3(\hat{r}')\right]d\hat{r}',\\[0.5ex]
-T({\mit\Psi}) &= B_0\,R_0\left[1+\epsilon^2\,g_2(\hat{r})\right],\\[0.5ex]
+{\mit\Psi}(\hat{r}) &= \epsilon^2\,B_0\,R_0^{\,2}\int_{\hat{r}}^1\frac{f_1(\hat{r}') +\epsilon^2\,f_3(\hat{r}')}{\hat{r}'}\,d\hat{r}',\\[0.5ex]
+q({\mit\Psi})&= \frac{\hat{r}^2\,(1+\epsilon^2\,g_2)}{f_1+\epsilon^2\,f_3},\\[0.5ex]
+T({\mit\Psi}) &= B_0\,R_0\left(1+\epsilon^2\,g_2\right),\\[0.5ex]
 p({\mit\Psi})&= \frac{B_0^{\,2}}{\mu_0}\,\epsilon^2\,p_2(\hat{r}),\\[0.5ex]
 T\,\frac{dT}{d{\mit\Psi}}&= B_0\,\frac{1}{f_1+\epsilon^2\,f_3}\,\hat{r}\,\frac{dg_2}{d\hat{r}}\left(1+\epsilon^2\,g_2\right),\\[0.5ex]
 \frac{dP}{d{\mit\Psi}} &=\frac{B_0}{\mu_0\,R_0^{\,2}}\,\frac{1}{f_1+\epsilon^2\,f_3}\,\hat{r}\,\frac{dp_2}{d\hat{r}}.
 \end{align}
-At small $\hat{r}$, $g_2=0$, $f_1=f_{1\,c}\,\hat{r}^2$,  $f_3=f_{3\,c}\,\hat{r}^2$, $\hat{r}\,p_2'=p_{2\,c}''\,\hat{r}^2$, $\hat{r}\,g_2' = g_{2\,c}'\,\hat{r}^2$, 
+At small $\hat{r}$, $g_2=0$, $f_1=f_{1\,c}\,\hat{r}^{\,2}$,  $f_3=f_{3\,c}\,\hat{r}^{\,2}$, $\hat{r}\,p_2'=p_{2\,c}''\,\hat{r}^{\,2}$, $\hat{r}\,g_2' = g_{2\,c}'\,\hat{r}^{\,2}$, 
+${\mit\Psi}= {\mit\Psi}(0) + \epsilon^2\,B_0\,R_0^{\,2}\,(1/2)\,(f_{1\,c}+\epsilon^2\,f_{3\,c})\,\hat{r}^{\,2}$, 
 where $g_{2\,c}'= -2\,(f_{1\,c}^{\,2}+p_{2\,c}''/2)$, and $f_{3\,c}=-f_{1\,c}\,(\hat{H}_{2\,c}^{\,2}+\hat{V}_{2\,c}^{\,2})$. 
 For $\hat{r}>1$, 
 \begin{equation}
-{\mit\Psi}(\hat{r}) = \epsilon^2\,B_0\,R_0^{\,2}\left(\frac{\hat{r}^2-1}{2}\right)[f_1(1)+\epsilon^2\,f_3(1)].
+{\mit\Psi}(\hat{r}) = \epsilon^2\,B_0\,R_0^{\,2}\,\ln\hat{r}\,[f_1(1)+\epsilon^2\,f_3(1)].
 \end{equation}
 
 TJ flux surfaces are parameterized via
 \begin{align}
-R(\hat{r},\omega) &= 1 -\epsilon\,\hat{r}\,\cos\omega + \epsilon^{\,2}\sum_{j>0}H_j(\hat{r})\,\cos[(j-1)\,\omega] + \epsilon^{\,2}\sum_{j>1}V_j(\hat{r})\,\sin[(j-1)\,\omega] \nonumber\\[0.5ex]
+R(\hat{r},\omega) &= 1 -\epsilon\,\hat{r}\,\cos\omega +f_R(\hat{r},\omega),\\[0.5ex]
+Z(\hat{r},\omega)&= \epsilon\,\hat{r}\,\sin\omega +f_Z(\hat{r},\omega),
+\end{align}
+where 
+\begin{align}
+f_R(\hat{r},\omega) &=  \epsilon^{\,2}\sum_{j>0}H_j(\hat{r})\,\cos[(j-1)\,\omega] + \epsilon^{\,2}\sum_{j>1}V_j(\hat{r})\,\sin[(j-1)\,\omega]\nonumber\\[0.5ex]
 &\phantom{=}+\epsilon^{\,3}\,[L_3(\hat{r})+\epsilon\,L_4(\hat{r})]\,\cos\omega,\\[0.5ex]
-Z(\hat{r},\omega)&= \epsilon\,\hat{r}\,\sin\omega +\epsilon^{\,2}\,\sum_{j>1}H_j(\hat{r})\,\sin[(j-1)\,\omega]
+f_Z(\hat{r},\omega)&= \epsilon^{\,2}\,\sum_{j>1}H_j(\hat{r})\,\sin[(j-1)\,\omega]
 -\epsilon^{\,2}\sum_{j>1}V_j(\hat{r})\,\cos[(j-1)\,\omega]\nonumber\\[0.5ex]&\phantom{=}-
 \epsilon^{\,3}\,[L_3(\hat{r})+\epsilon\,L_4(\hat{r})]\,\sin\omega.
 \end{align}
-For $\hat{r}>1$, let $L_3(\hat{r}) = L_3(1)$, $L_4(\hat{r})=L_4(1)$, $H_j(\hat{r})= H_j(1)$, and $V_j(\hat{r})= V_j(1)$. Let
-\begin{align}
-f_R(\hat{r},\omega) &=  \epsilon^{\,2}\sum_{j>0}H_j(\hat{r})\,\cos[(j-1)\,\omega] + \epsilon^{\,2}\sum_{j>1}V_j(\hat{r})\,\sin[(j-1)\,\omega]+\epsilon^{\,3}\,[L_3(\hat{r})+\epsilon\,L_4(\hat{r})]\,\cos\omega,\\[0.5ex]
-f_Z(\hat{r},\omega)&= \epsilon^{\,2}\,\sum_{j>1}H_j(\hat{r})\,\sin[(j-1)\,\omega]
--\epsilon^{\,2}\sum_{j>1}V_j(\hat{r})\,\cos[(j-1)\,\omega]-
-\epsilon^{\,3}\,[L_3(\hat{r})+\epsilon\,L_4(\hat{r})]\,\sin\omega.
-\end{align}
+For $\hat{r}>1$, let $L_3(\hat{r}) = L_3(1)$, $L_4(\hat{r})=L_4(1)$, $H_j(\hat{r})= H_j(1)$, and $V_j(\hat{r})= V_j(1)$. 
 To obtain the $\hat{r}$, $\omega$ coordinates that correspond to the point $R$, $Z$, our initial guess is
 \begin{align}
 \hat{r} &= \frac{[(R-1)^2+Z^2]^{1/2}}{\epsilon},\\[0.5ex]
 \frac{\sin\omega}{\cos\omega} &= \frac{Z}{1-R}.
 \end{align}
-We can then iterate the following equations
+We can then iterate the following equations:
 \begin{align}
 \hat{r} &= \frac{[(\hat{R}-1)^2+\hat{Z}^2]^{1/2}}{\epsilon},\\[0.5ex]
 \frac{\sin\omega}{\cos\omega} &= \frac{\hat{Z}}{1-\hat{R}},

@@ -8,7 +8,7 @@
 // #################################################
 void Equilibrium::WriteNetcdf (double sa)
 {
-  printf ("Writing data to netcdf file Plots/Equilibrium.nc:\n");
+  printf ("Writing equilibrium data to netcdf file Plots/Equilibrium.nc:\n");
 
   double  para[2], Input[15], Beta[4];
 
@@ -353,7 +353,7 @@ void TJ::ReadNetcdf ()
 // ###############################################
 void TJ::WriteNetcdf ()
 {
-  printf ("Writing data to netcdf file Plots/TJ.nc:\n");
+  printf ("Writing stability data to netcdf file Plots/TJ.nc:\n");
  
   double Input[23];
 

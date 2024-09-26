@@ -67,6 +67,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <cstdlib>  
 
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
@@ -214,8 +215,8 @@ class Equilibrium
   // ---------------
   int     NRBOX;    // Number of R gridpoints (read from JSON file)
   int     NZBOX;    // Number of Z gridpoints (read from JSON file)
-  int     NPBOUND;  // Number of boundary points (= NW-1)
-  int     NLIMITER; // Number of limiter points (= 4)
+  int     NPBOUND;  // Number of boundary points (= NW+1)
+  int     NLIMITER; // Number of limiter points (= 5)
   double  RBOXLFT;  // Left-hand coordinate of R box (deduced from boundary values)
   double  RBOXLEN;  // Length of R box (deduced from boundary values)
   double  ZOFF;     // Offset of centroid of Z box (deduced from boundary values)
@@ -227,7 +228,8 @@ class Equilibrium
   double  PSIAXIS;  // PSI value on magnetic axis
   double  PSIBOUND; // PSI value on plasma boundary (= 0)
   double  CURRENT;  // Toroidal plasma current
-  double* PSI;      // Equally-space PSI array
+  double* PSI;      // Equally-spaced PSI array
+  double* PSIN;     // PSI_N array
   double* rPSI;     // r values that coincide with PSI values
   double* PSIr;     // PSI values that coincide with r values
   double* T;        // Toroidal magnetic flux evaluated on PSI grid

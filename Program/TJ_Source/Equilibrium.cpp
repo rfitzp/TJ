@@ -531,7 +531,8 @@ void Equilibrium::Solve ()
   Ip[0]   = 0.;
 
   r     = eps;
-  y1[0] = - f1c * (H2c*H2c + V2c*V2c) * r*r;
+  y1[0] = - f1c * (H2c*H2c + V2c*V2c)   * r*r;
+  y1[1] = 0.5 * (f1c * eps*eps * y1[0]) * r*r;
   
   for (int i = 1; i <= Nr; i++)
     {
@@ -836,6 +837,11 @@ void Equilibrium::Solve ()
   // Calculate EFIT data
   // ...................
   CalculateEFIT ();
+
+  // ...............
+  // Write EFIT file
+  // ...............
+  system ("./wefit");
   
   // ........
   // Clean up
@@ -923,6 +929,7 @@ void Equilibrium::CalculateEFIT ()
   // Allocate memory
   // ---------------
   PSI  = new double[NRBOX];
+  PSIN = new double[NRBOX];
   rPSI = new double[NRBOX];
   T    = new double[NRBOX];
   TTp  = new double[NRBOX];
@@ -930,10 +937,10 @@ void Equilibrium::CalculateEFIT ()
   Pp   = new double[NRBOX];
   Q    = new double[NRBOX];
 
-  RBOUND   = new double [Nw+1];
-  ZBOUND   = new double [Nw+1];
-  RLIMITER = new double [4];
-  ZLIMITER = new double [4];
+  RBOUND   = new double[Nw+1];
+  ZBOUND   = new double[Nw+1];
+  RLIMITER = new double[5];
+  ZLIMITER = new double[5];
 
   RGRID = new double[NRBOX];
   ZGRID = new double[NZBOX];
@@ -959,6 +966,9 @@ void Equilibrium::CalculateEFIT ()
   for (int i = 0; i < NRBOX; i++)
     PSI[i] = PSIAXIS * (double (NRBOX - 1 - i) /double (NRBOX - 1));
 
+  for (int i = 0; i < NRBOX; i++)
+    PSIN[i] = (PSI[i] - PSIAXIS) /(PSIBOUND - PSIAXIS);
+
   // ---------------------------
   // Interpolate r onto Psi grid
   // ---------------------------
@@ -971,7 +981,7 @@ void Equilibrium::CalculateEFIT ()
   rPSI[NRBOX-1] = 1.;
   for (int i = 1; i < NRBOX - 1; i++)
     rPSI[i] = gsl_spline_eval (rPsispline, PSI[i], rPsiacc);
-
+  
   // ---------------------------
   // Interpolate PSI onto r grid
   // ---------------------------
@@ -981,7 +991,7 @@ void Equilibrium::CalculateEFIT ()
   // Calculate profile functions
   // ---------------------------
   double f1c   = 1./qc;
-  double f3c   = - f1c *  (HHfunc(2, 0) * HHfunc(2, 0) + VVfunc(2, 0) * VVfunc(2, 0));
+  double f3c   = - f1c * (HHfunc(2, 0) * HHfunc(2, 0) + VVfunc(2, 0) * VVfunc(2, 0));
   double p2ppc = - 2. * pc * mu;
   double g2pc  = - 2. * (f1c*f1c + p2ppc/2.);
 
@@ -1040,7 +1050,7 @@ void Equilibrium::CalculateEFIT ()
       if (ZBOUND[i] > Zmax)
 	Zmax = ZBOUND[i];
     }
-
+  
   Rmin = Rmin - 0.05 * (Rmax - Rmin);
   Rmax = Rmax + 0.05 * (Rmax - Rmin);
   Zmin = Zmin - 0.05 * (Zmax - Zmin);
@@ -1051,16 +1061,17 @@ void Equilibrium::CalculateEFIT ()
   ZOFF    = (Zmin + Zmax) /2.;
   ZBOXLEN = Zmax - Zmin;
 
-  NLIMITER = 4;
+  NLIMITER = 5;
 
   RLIMITER[0] = Rmin; ZLIMITER[0] = Zmin;
   RLIMITER[1] = Rmax; ZLIMITER[1] = Zmin;
   RLIMITER[2] = Rmax; ZLIMITER[2] = Zmax;
   RLIMITER[3] = Rmin; ZLIMITER[3] = Zmax;
+  RLIMITER[4] = Rmin; ZLIMITER[4] = Zmin;
 
-  // -------------------------
-  // Set up R and Z gridpoints
-  // -------------------------
+  // ------------------------------------
+  // Set up normalized R and Z gridpoints
+  // ------------------------------------
   for (int i = 0; i < NRBOX; i++)
     RGRID[i] = (RBOXLFT           + RBOXLEN * double (i) /double (NRBOX - 1)) /R0EXP;
   for (int j = 0; j < NZBOX; j++)
@@ -1089,17 +1100,25 @@ void Equilibrium::CalculateEFIT ()
 	  }
 
 	if (r >= 1.)
-	  PSIRZ[cnt] = epsa*epsa * B0EXP*R0EXP*R0EXP * 0.5 * (r*r - 1.) * (f1[Nr] + epsa*epsa * f3[Nr]);
+	  PSIRZ[cnt] = epsa*epsa * B0EXP*R0EXP*R0EXP * log(r) * (f1[Nr] + epsa*epsa * f3[Nr]);
 	else
 	  PSIRZ[cnt] = gsl_spline_eval (PSIrspline, r, PSIracc);
 
 	cnt++;
       }
 
+  // --------------------------------------
+  // Set up unnormalized R and Z gridpoints
+  // --------------------------------------
+  for (int i = 0; i < NRBOX; i++)
+    RGRID[i] *= R0EXP;
+  for (int j = 0; j < NZBOX; j++)
+    ZGRID[j] *= R0EXP;
+
   // -------------------------------
   // Output EFIT data to netcdf file
   // -------------------------------
-  printf ("Writing data to netcdf file EFIT/EFIT.nc:\n");
+  printf ("Writing EFIT data to netcdf file EFIT/EFIT.nc:\n");
   
   int pint[4];
 
@@ -1108,7 +1127,7 @@ void Equilibrium::CalculateEFIT ()
   pint[2] = NPBOUND;
   pint[3] = NLIMITER;
 
-  double preal[11];
+  double preal[15];
 
   preal[0]  = RBOXLEN;
   preal[1]  = ZBOXLEN;
@@ -1121,13 +1140,17 @@ void Equilibrium::CalculateEFIT ()
   preal[8]  = PSIAXIS;
   preal[9]  = PSIBOUND;
   preal[10] = CURRENT;
-
+  preal[11] = Rmin;
+  preal[12] = Rmax;
+  preal[13] = Zmin;
+  preal[14] = Zmax;
+  
   try
     {
       NcFile dataFile ("EFIT/EFIT.nc", NcFile::replace);
 
       NcDim i_d = dataFile.addDim ("Ni", 4);
-      NcDim r_d = dataFile.addDim ("Nr", 11);
+      NcDim r_d = dataFile.addDim ("Nr", 15);
       NcDim p_d = dataFile.addDim ("Np", NRBOX);
       NcDim z_d = dataFile.addDim ("Nz", NZBOX);
       NcDim b_d = dataFile.addDim ("Nb", NPBOUND);
@@ -1136,11 +1159,13 @@ void Equilibrium::CalculateEFIT ()
       vector<NcDim> psi_d;
       psi_d.push_back (p_d);
       psi_d.push_back (z_d);
-
+ 
       NcVar i_x   = dataFile.addVar ("IntegerParameters", ncInt,    i_d);
       i_x.putVar (pint);
       NcVar r_x   = dataFile.addVar ("RealParameters",    ncDouble, r_d);
       r_x.putVar (preal);
+      NcVar pn_x   = dataFile.addVar ("PSI_N",            ncDouble, p_d);
+      pn_x.putVar (PSIN);
       NcVar T_x   = dataFile.addVar ("T",                 ncDouble, p_d);
       T_x.putVar (T);
       NcVar P_x   = dataFile.addVar ("P",                 ncDouble, p_d);
@@ -1161,6 +1186,10 @@ void Equilibrium::CalculateEFIT ()
       rr_x.putVar (RLIMITER);
       NcVar zz_x  = dataFile.addVar ("ZLIMITER",          ncDouble, l_d);
       zz_x.putVar (ZLIMITER);
+      NcVar rg_x  = dataFile.addVar ("RGRID",             ncDouble, p_d);
+      rg_x.putVar (RGRID);
+      NcVar zg_x  = dataFile.addVar ("ZGRID",             ncDouble, z_d);
+      zg_x.putVar (ZGRID);
     }
   catch (NcException& e)
     {
@@ -1169,17 +1198,15 @@ void Equilibrium::CalculateEFIT ()
       exit (1);
     }
 
-   // --------
+  // --------
   // Clean up
   // --------
   delete[] PSI;    delete[] rPSI;   delete[] T;        delete[] TTp;      delete[] Pp;    delete[] Q;
   delete[] RBOUND; delete[] ZBOUND; delete[] RLIMITER; delete[] ZLIMITER; delete[] PSIRZ;
-  delete[] RGRID;  delete[] ZGRID;  delete[] P;
+  delete[] RGRID;  delete[] ZGRID;  delete[] P;        delete[] PSIN;
 
   gsl_spline_free (rPsispline);    gsl_spline_free (PSIrspline);
   gsl_interp_accel_free (rPsiacc); gsl_interp_accel_free (PSIracc);
-
-  exit(1);
 }
 
 // ########################
@@ -1811,7 +1838,7 @@ void Equilibrium::Rhs (double r, double* y, double* dydr)
 	+ r*r*p2p * (g2 + r*r/2. - 3.*r*Hnp[1] - 2.*Hn[1]) /f1;
 
       dydr[0] = f3p;
-      dydr[1] = r * (f1 + epsa*epsa * y[0]);
+      dydr[1] = (f1 + epsa*epsa * y[0]) /r;
 
       delete[] Hn; delete[] Hnp; delete[] Vn; delete[] Vnp;
     }
