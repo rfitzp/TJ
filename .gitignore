@@ -20,5 +20,7 @@
 *.sh
 *.bib
 *.bat
-tj
+tj_
+write_efit_
+flux_
 Runs
