@@ -1,0 +1,344 @@
+\documentclass[notitlepage,12pt]{article}
+\pdfoutput = 1
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\allowdisplaybreaks
+
+\title{\bf Program FLUX}
+\date{\today}
+\author{Richard Fitzpatrick}
+
+\begin{document}
+\maketitle
+
+\section{Construction of Flux Coordinate System}
+Let us adopt
+a normalization scheme in which all lengths are normalized to $R_0$, all magnetic field-strengths to $B_0$, and all pressures to $B_0^{\,2}/\mu_0$. In the following, all quantities are assumed to be normalized. 
+
+Let $R$, $\phi$, $Z$ be conventional right-handed cylindrical coordinates, such that 
+\begin{equation}
+\nabla R\times\nabla\phi\cdot\nabla Z =\frac{1}{R},
+\end{equation}
+where $|\nabla\phi|= 1/R$. 
+
+We can write the equilibrium magnetic field in the form 
+\begin{equation}
+{\bf B} =\nabla\phi\times \nabla\psi_p +g(\psi_p)\,\nabla\phi=\nabla(\phi-q\,\theta)\times \nabla\psi_p,
+\end{equation}
+where the poloidal flux, $\psi_p(R,Z)$,  and the toroidal flux function, $g(\psi_p)$, are both given. Furthermore, 
+\begin{equation}
+\nabla\psi_p\times \nabla\theta\cdot\nabla\phi = \frac{g}{q\,R^{\,2}},
+\end{equation}
+where $q=q(\psi_p)$. Here,  $\theta$ is a so-called  ``straight" poloidal angle, and $q(\psi_p)$ is the safety-factor. 
+
+Let ${\mit\Psi}=\psi_p/\psi_c = 1-{\mit\Psi}_N$, where $\psi_c$ is the value
+of $\psi_p$ on the magnetic axis. (It is assumed that $\psi_p=0$ on the magnetic separatrix.)  Thus, ${\mit\Psi}=1$ on the
+magnetic axis, and ${\mit\Psi}=0$ on the magnetic separatrix. 
+The previous equation implies that
+\begin{equation}
+\frac{d\theta}{dl} = \frac{g}{q}\,\frac{1}{|\psi_c|\,R\,\sqrt{{\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2}}},
+\end{equation}
+where $dl$ is an element of poloidal path-length  along a constant-${\mit\Psi}$ surface, and ${\mit\Psi}_R\equiv \partial{\mit\Psi}/\partial R$, et cetera. Furthermore,
+\begin{align}
+dR &= -\frac{{\mit\Psi}_Z\,dl}{\sqrt{{\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2}}},\\[0.5ex]
+dZ&= \frac{{\mit\Psi}_R\,dl}{\sqrt{{\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2}}}.
+\end{align}
+It follows that
+\begin{equation}
+\frac{q({\mit\Psi})}{g({\mit\Psi})} = \frac{1}{2\pi\,|\psi_c|}\oint \frac{dl}{R\,\sqrt{{\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2}}}.
+\end{equation}
+
+If we define
+\begin{equation}
+\tan\zeta = \frac{Z-Z_{\rm axis}}{R_{\rm axis}-R}
+\end{equation}
+then
+\begin{align}
+\frac{dR}{d\zeta} &= -{\mit\Psi}_Z\,F,\\[0.5ex]
+\frac{dZ}{d\zeta} &= {\mit\Psi}_R\,F,\\[0.5ex]
+\frac{q({\mit\Psi})}{g({\mit\Psi})} &= \frac{1}{|\psi_c|}\oint \frac{F}{R}\,\frac{d\zeta}{2\pi},
+\end{align}
+where
+\begin{equation}
+F = \frac{(R_{\rm axis}-R)^{\,2} + (Z-Z_{\rm axis})^{\,2}}{-(Z-Z_{\rm axis})\,{\mit\Psi}_Z + (R_{\rm axis}-R)\,{\mit\Psi}_R}.
+\end{equation}
+Note that $\zeta=0$ on the inboard mid-plane.
+
+It is helpful to define the length-like flux-surface label $r({\mit\Psi})$, such that 
+\begin{equation}
+\nabla r\times \nabla\theta\cdot\nabla \phi = \frac{1}{r\,R^{\,2}}.
+\end{equation}
+It follows that
+\begin{equation}
+r({\mit\Psi}) = \left[2\,|\psi_c|\int_{{\mit\Psi}}^1\frac{q({\mit\Psi}')}
+{g({\mit\Psi}')}\,d{\mit\Psi}'\right]^{1/2}.
+\end{equation}
+Let
+\begin{equation}
+a = r ({\mit\Psi}_v),
+\end{equation}
+where ${\mit\Psi}_v$ is the value of ${\mit\Psi}$ at the plasma/vacuum boundary. 
+Note that ${\mit\Psi}_v>0$ and $f(r)=d\psi_p/dr$. 
+
+We can calculate $R(r,\theta)$ and $Z(r,\theta)$ by integrating 
+\begin{align}
+\frac{dR}{d\theta}&=-|\psi_c|\,\frac{q}{g}\,R\,{\mit\Psi}_Z,\\[0.5ex]
+\frac{dZ}{d\theta} &= |\psi_c|\,\frac{q}{g}\,R\,{\mit\Psi}_R,
+\end{align}
+along constant-$r$ surfaces. Here, $\theta=0$ on the inboard mid-plane. 
+
+\section{Profile Functions}
+Program TJ also needs the following profile functions:
+\begin{align}
+s(r) &= r\,\frac{d\ln q}{dr},\\[0.5ex]
+\alpha_g(r)&=\frac{dg}{d\psi_p},\\[0.5ex]
+\alpha_p(r) &=\frac{q}{g}\,\frac{dP}{d\psi_p},\\[0.5ex]
+\alpha_f(r) &= -r\,\frac{d\ln(q/g)}{dr},\\[0.5ex]
+\alpha_g'(r) &= \frac{d\alpha_g}{dr},\\[0.5ex]
+\alpha_p'(r) &= \frac{d\alpha_p}{dr}.
+\end{align}
+where $P(r)$ is the equilibrium pressure profile. 
+
+\section{Metric Elements}
+Let $R_r=\left.\partial R/\partial r\right|_\theta$, et cetera. It follows that
+\begin{align}
+R_\theta&=-|\psi_c|\,\frac{q}{g}\,R\,{\mit\Psi}_Z,\\[0.5ex]
+Z_\theta&= |\psi_c|\,\frac{q}{g}\,R\,{\mit\Psi}_R,\\[0.5ex]
+r\,R&= R_\theta\,Z_r-R_r\,Z_\theta,\\[0.5ex]
+|\nabla r|^{-2} &= \frac{r^2\,R^{\,2}}{R_\theta^{\,2} + Z_\theta^{\,2}},\\[0.5ex]
+\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^{\,2}} &= -\frac{r\,(R_r\,R_\theta + Z_r\,Z_\theta)}{R_\theta^{\,2}+Z_\theta^{\,2}}.
+\end{align}
+
+Let 
+\begin{align}
+a(r,\theta)&= R^{\,2},\\[0.5ex]
+b(r,\theta) &= |\nabla r|^{-2}\,R^{-2},\\[0.5ex]
+c(r,\theta)&= |\nabla r|^{-2},\\[0.5ex]
+d(r,\theta)&= |\nabla r|^{-2}\,R^{\,2},\\[0.5ex]
+e(r,\theta)&=|\nabla r|^{-2}\,R^{\,4},\\[0.5ex]
+f(r,\theta)&= \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^{\,2}},\\[0.5ex]
+g(r,\theta)&=\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^{\,2}}\,R^{\,2}.
+\end{align}
+
+Program TJ requires the following metric functions:
+\begin{align}
+a^c_j(r) &= \oint a(r,\theta)\,\cos(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+b^c_j(r) &= \oint b(r,\theta)\,\cos(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+c^c_j(r) &= \oint c(r,\theta)\,\cos(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+d^{\,c}_j(r)&=  \oint d(r,\theta)\,\cos(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+e^c_j(r) &= \oint e(r,\theta)\,\cos(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+f^c_j(r) &=  \oint f(r,\theta)\,\cos(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+g^c_j(r)&= \oint g(r,\theta)\,\cos(j\,\theta)\,\frac{d\theta}{2\pi},
+\end{align}
+for $j=0,J$,
+\begin{align}
+a^s_j(r) &= \oint a(r,\theta)\,\sin(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+b^s_j(r) &= \oint b(r,\theta)\,\sin(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+c^s_j(r) &= \oint c(r,\theta)\,\sin(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+d^{\,s}_j(r)&=  \oint d(r,\theta)\,\sin(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+e^s_j(r) &= \oint e(r,\theta)\,\sin(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+f^s_j(r) &=  \oint f(r,\theta)\,\sin(j\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
+g^s_j(r)&= \oint g(r,\theta)\,\sin(j\,\theta)\,\frac{d\theta}{2\pi},
+\end{align}
+for $j=1,J$. 
+The program also requires $da^c_j/dr$, for $j=0,J$, $da^s_j/dr$, for $j=1,J$, $dc_0^c/dr$, $c_0^s/dr$, $d d_0^c/dr$, and $dd_0^s/dr$. 
+
+\section{Neoclassical Coordinate System}
+The neoclassical poloidal angle is defined
+\begin{equation}
+{\bf b}\cdot\nabla {\mit\Theta} = \frac{1}{\gamma({\mit\Psi})}.
+\end{equation}
+It follows that
+\begin{equation}
+\frac{d{\mit\Theta}}{dl} = \frac{B\,R}{|\psi_c|\,\gamma\,\sqrt{{\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2}}},
+\end{equation}
+where
+\begin{equation}
+B\,R = \left[g^{\,2} + |\psi_c|^{\,2}\,({\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2})\right]^{1/2}.
+\end{equation}
+Hence,
+\begin{equation}
+\gamma({\mit\Psi}) = \frac{1}{2\pi\,|\psi_c|}\oint\frac{B\,R\,dl}{\sqrt{{\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2}}}= \frac{1}{|\psi_c|}\oint B\,R\,F\,\frac{d\zeta}{2\pi}.
+\end{equation}
+We can calculate $R(r,{\mit\Theta})$ and $Z(r,{\mit\Theta})$ from 
+\begin{align}
+\frac{dR}{d{\mit\Theta}} &=-|\psi_c|\,\frac{\gamma\,{\mit\Psi}_Z}{B\,R},\\[0.5ex]
+\frac{dZ}{d{\mit\Theta}} &=|\psi_c|\,\frac{\gamma\,{\mit\Psi}_R}{B\,R}.
+\end{align}
+Note that
+\begin{equation}
+\frac{d\theta} {d{\mit\Theta}}= \left(\frac{\gamma\,g}{q}\right)\frac{1}{B\,R^{\,2}}.
+\end{equation}
+
+\section{Vacuum Solution}
+The plasma/vacuum interface lie at ${\mit\Psi}= {\mit\Psi}_{v}$. Let us solve
+\begin{equation}
+\nabla^2{\mit\Phi} = 0
+\end{equation}
+subject to the boundary conditions ${\mit\Phi}=0$ on the plasma/vacuum boundary, and ${\mit\Phi}=1$ on the
+bounding box. Let
+\begin{equation}
+\nabla{\mit\Phi}\times\nabla\hat{\theta}\cdot\nabla\phi = \frac{1}{{\mit\Gamma}({\mit\Phi})\,R^{\,2}}.
+\end{equation} 
+It follows that
+\begin{equation}
+\frac{d\hat{\theta}}{dl} = \frac{1}{{\mit\Gamma}\,R\,\sqrt{{\mit\Phi}_R^{\,2}+{\mit\Phi}_Z^{\,2}}}.
+\end{equation}
+\begin{align}
+\frac{dR}{d\zeta} &= {\mit\Phi}_Z\,\hat{F},\\[0.5ex]
+\frac{dZ}{d\zeta} &= -{\mit\Phi}_R\,\hat{F},\\[0.5ex]
+{\mit\Gamma} &= \oint \frac{\hat{F}}{R}\,\frac{d\zeta}{2\pi},
+\end{align}
+where
+\begin{equation}
+\hat{F} = \frac{(R_{\rm axis}-R)^{\,2} + (Z-Z_{\rm axis})^{\,2}}{(Z-Z_{\rm axis})\,{\mit\Phi}_Z - (R_{\rm axis}-R)\,{\mit\Phi}_R}.
+\end{equation}
+
+We wish to define the length-like flux surface label $\hat{r}({\mit\Phi})$ such that
+\begin{equation}
+\nabla \hat{r}\times\nabla\hat{\theta}\,\cdot\nabla\phi = \frac{1}{r\,R^{\,2}},
+\end{equation}
+and $\hat{r}=a$ on the plasma/vacuum boundary.
+It follows that
+\begin{equation}
+\hat{r}^{\,2}= a^{2} + 2\,\int_0^{{\mit\Phi}}{\mit\Gamma}({\mit\Phi}')\,d{\mit\Phi}'.
+\end{equation}
+
+
+We can calculate $R(\hat{r},\hat{\theta})$ and $Z(\hat{r},\hat{\theta})$ by integrating 
+\begin{align}
+\frac{dR}{d\hat{\theta}}&={\mit\Gamma}\,R\,{\mit\Phi}_Z,\\[0.5ex]
+\frac{dZ}{d\hat{\theta}} &=-{\mit\Gamma}\,R\,{\mit\Phi}_R,
+\end{align}
+along constant-$\hat{r}$ surfaces. Here, $\hat{\theta}=0$ on the inboard mid-plane. 
+
+
+\end{document}
+\section{Neoclassical Coordinate System}
+The neoclassical poloidal angle is defined 
+\begin{equation}
+{\bf b}\cdot\nabla {\mit\Theta} = \gamma(r).
+\end{equation}
+Note that
+\begin{equation}
+\nabla\psi_p\times\nabla{\mit\Theta}\cdot\nabla\phi = B\,\gamma.
+\end{equation}
+It follows that
+\begin{equation}
+\frac{d{\mit\Theta}}{dl} = \frac{\gamma\,B\,R}{|\psi_c|\,\sqrt{{\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2}}},
+\end{equation}
+where
+\begin{equation}
+B\,R = \left[g^{\,2} + |\psi_c|^{\,2}\,({\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2})\right]^{1/2}.
+\end{equation}
+Hence,
+\begin{equation}
+\frac{1}{\gamma(r)} = \frac{1}{2\pi\,|\psi_c|}\oint\frac{B\,R\,dl}{\sqrt{{\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2}}}= \frac{1}{2\pi\,|\psi_c|}\oint B\,R\,F\,d\zeta.
+\end{equation}
+We can calculate $R(r,{\mit\Theta})$ and $Z(r,{\mit\Theta})$ from 
+\begin{align}
+\frac{dR}{d{\mit\Theta}} &=-|\psi_c|\,\frac{{\mit\Psi}_Z}{\gamma\,B\,R},\\[0.5ex]
+\frac{dZ}{d{\mit\Theta}} &=|\psi_c|\,\frac{{\mit\Psi}_R}{\gamma\,B\,R}.
+\end{align}
+Note that
+\begin{equation}
+\frac{d{\mit\Theta}}{d\theta} = \left(\frac{\gamma\,q}{g}\right)B\,R^{\,2}.
+\end{equation}
+Thus,
+\begin{equation}
+\frac{1}{\gamma} = \frac{q}{g}\oint B\,R^{\,2}\,\frac{d\theta}{2\pi}.
+\end{equation}
+Also,
+\begin{equation}
+\frac{\partial B}{\partial{\mit\Theta}} = - \frac{B}{R}\,\frac{\partial R}{\partial{\mit\Theta}} + \frac{|\psi_c|^{\,2}}{B\,R^{\,2}}
+\left[({\mit\Psi}_R\,{\mit\Psi}_{RR}+{\mit\Psi}_Z\,{\mit\Psi}_{RZ})\,\frac{\partial R}{\partial{\mit\Theta}}
++({\mit\Psi}_R\,{\mit\Psi}_{RZ}+{\mit\Psi}_Z\,{\mit\Psi}_{ZZ})\,\frac{\partial Z}{\partial{\mit\Theta}}\right].
+\end{equation}
+
+\section{Neoclassical Parameters}
+The flux-surface average operator has the following
+properties:
+\begin{align}
+\langle 1\rangle &= 1,\\[0.5ex]
+\langle {\bf B}\cdot\nabla A\rangle &= 0.
+\end{align}
+It follows that
+\begin{equation}\label{e140}
+\langle A\rangle =\left.\oint R^{\,2}\,A\,\frac{d\theta}{2\pi}\right/\oint R^{\,2}\,\frac{d\theta}{2\pi}=\left.\oint
+\frac{A}{B}\,\frac{d{\mit\Theta}}{2\pi}\right/\oint
+\frac{1}{B}\,\frac{d{\mit\Theta}}{2\pi}.
+\end{equation}
+
+Let
+\begin{align}
+I_0 &= \oint \frac{1}{B\,R^{\,2}}\,\frac{d{\mit\Theta}}{2\pi}=\frac{\gamma\,q}{g},\\[0.5ex]
+I_1 &=\oint \frac{1}{B}\,\frac{d{\mit\Theta}}{2\pi},\\[0.5ex]
+I_2 &=\oint B\,\frac{d{\mit\Theta}}{2\pi},\\[0.5ex]
+I_3 &=\oint\left(\frac{\partial B}{\partial{\mit\Theta}}\right)^2\frac{1}{B}\,\frac{d{\mit\Theta}}{2\pi},\\[0.5ex]
+I_{4,k}&= \sqrt{\frac{2}{k}}\oint \frac{\sin(k\,{\mit\Theta})}{B^{\,2}}\,\frac{\partial B}{\partial{\mit\Theta}}\,\frac{d{\mit\Theta}}{2\pi}=\oint\frac{\sqrt{2\,k}\,\cos(k\,{\mit\Theta})}{B}\,\frac{d{\mit\Theta}}{2\pi},\\[0.5ex]
+I_{5,k} &= \sqrt{\frac{2}{k}}\oint \frac{\sin(k\,{\mit\Theta})}{B^{\,3}}\,\frac{\partial B}{\partial{\mit\Theta}}\,\frac{d{\mit\Theta}}{2\pi}=\oint\frac{\sqrt{2\,k}\,\cos(k\,{\mit\Theta})}{2\,B^{\,2}}\,\frac{d{\mit\Theta}}{2\pi},\\[0.5ex]
+I_6(\lambda) &=\oint \frac{\sqrt{1-\lambda\,B/B_{\rm max}}}{B}\,\frac{d{\mit\Theta}}{2\pi},\\[0.5ex]
+I_7 &= \oint\frac{R^{\,2}}{B}\,\frac{d{\mit\Theta}}{2\pi},\\[0.5ex]
+I_8 &= \oint \frac{1}{B^{\,3}\,R^{\,2}}\,\frac{d{\mit\Theta}}{2\pi}.
+\end{align}
+It follows that
+\begin{align}
+\langle B\rangle &= \frac{1}{I_1},\\[0.5ex]
+C_1=\left\langle \frac{1}{R^{\,2}}\right\rangle&= \frac{\gamma\,q}{I_1\,g},\\[0.5ex]\langle R^{\,2}\rangle &= \frac{I_7}{I_1},\\[0.5ex]
+\langle B^{\,2}\rangle &= \frac{I_2}{I_1},\\[0.5ex]
+C_2 = g^{\,2}\left\langle \frac{1}{B^{\,2}\,R^{\,2}}\right\rangle&= \frac {g^{\,2}\,I_8}{I_1},\\[0.5ex]
+\left\langle \frac{|\nabla r|^{\,2}}{R^{\,2}}\right\rangle &= \frac{\gamma\,q\,a_{jj}}{I_1\,g},\\[0.5ex]
+\langle ({\bf b}\cdot\nabla B)^{\,2}\rangle&= \gamma^{\,2}\,\frac{I_3}{I_1},\\[0.5ex]
+|\langle {\bf B}\cdot \nabla \theta\rangle|&= \frac{g}{|q|}\,\frac{I_0}{I_1} = \frac{|\gamma|}{I_1},
+\\[0.5ex]
+\left\langle \sqrt{\frac{2}{k}}\,\sin(k\,{\mit\Theta}) \,({\bf b}\cdot\nabla \ln B)\right\rangle &= \gamma\,\frac{I_{4,k}}{I_1},\\[0.5ex]
+\left\langle \sqrt{\frac{2}{k}}\,\sin(k\,{\mit\Theta}) \,\frac{({\bf b}\cdot\nabla \ln B)}{B}\right\rangle &= \gamma\,\frac{I_{5,k}}{I_1}.
+\end{align}
+Hence,
+\begin{align}
+L_c &= \frac{1}{|\gamma|}\,\frac{I_2^{\,2}}{I_1^{\,2}\,I_3}\sum_{k>0}
+I_{4,k}\,I_{5,k},\\[0.5ex]
+\omega_{t\,a}&\equiv \frac{v_{T\,a}}{L_c} = K_{t}\,|\gamma|\,v_{T\,a},\\[0.5ex]
+\nu_{\ast\,a} &\equiv \frac{8}{3\pi}\,\frac{\langle B^{\,2}\rangle}{\langle
+({\bf b}\cdot\nabla B)^{\,2}\rangle}\,\frac{g_t\,\omega_{t\,a}}{v_{T\,a}^{\,2}\,\tau_{aa}}= K_{\ast}\,\frac{g_t}{\omega_{t\,a}\,\tau_{aa}},\\[0.5ex]
+f_c &=\frac{3}{4} \frac{I_2}{B_{\rm max}^{\,2}}\int_0^{1}\frac{\lambda\,d\lambda}{I_6(\lambda)},
+\end{align}
+where 
+\begin{align}
+K_{t} &= \frac{I_1^{\,2}\,I_3}{I_2^{\,2}\,\sum_{k>0}I_{4,k}\,I_{5,k}},\\[0.5ex]
+K_{\ast}&= \frac{8}{3\pi}\,\frac{I_2}{I_3}\,K_{t}^{\,2}.
+\end{align}
+Also,
+\begin{align}
+Q^{\,2} &= \frac{q^{\,2}}{2\,r^{\,2}}\left.\left(\left\langle \frac{1}{R^{\,2}}\right\rangle - \frac{1}{\langle R^{\,2}\rangle}\right)\right/\left\langle\frac{|\nabla r|^{\,2}}{R^{\,2}}\right\rangle = \frac{q^{\,2}}{2\,r^{\,2}\,a_{jj}}\left(
+1-\frac{I_1^{\,2}}{I_7}\,\frac{g}{\gamma\,q}\right),\\[0.5ex]
+\frac{\langle B_T^{\,2}\rangle}{\langle B_p^{\,2}\rangle}&= \frac{q^{\,2}}{r^{\,2}\,a_{jj}}.
+\end{align}
+
+\section{Glasser-Greene-Johnson Parameters}
+Let
+\begin{align}
+J_1 &= \frac{1}{2\pi\,|\psi_c|}\oint R\,F\,d\zeta,\\[0.5ex]
+J_2 &= \frac{1}{2\pi\,|\psi_c|}\oint R\,B^{\,2}\,F\,d\zeta,\\[0.5ex]
+J_3 &= \frac{1}{2\pi\,|\psi_c|}\oint \frac{R\,F}{B^{\,2}}\,d\zeta,\\[0.5ex]
+J_4 &= \frac{1}{2\pi\,|\psi_c|^{\,3}}\oint \frac{R\,F}{{\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2}}\,d\zeta,\\[0.5ex]
+J_5 &= \frac{1}{2\pi\,|\psi_c|^{\,3}}\oint \frac{R\,B^{\,2}\,F}{{\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2}}\,d\zeta,\\[0.5ex]
+J_6 &= \frac{1}{2\pi\,|\psi_c|^{\,3}}\oint \frac{R\,F}{B^{\,2}\,({\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2})}\,d\zeta,
+\end{align}
+where 
+\begin{equation}
+B^{\,2} = \frac{g^{\,2} + \psi_c^{\,2}\,({\mit\Psi}_R^{\,2}+{\mit\Psi}_Z^{\,2})}{R^{\,2}}.
+\end{equation}
+It follows that
+\begin{align}
+E &= - \frac{dp/dr}{(dq/dr)^{\,2}}\left(\frac{dJ_0}{dr} - g\,\frac{dq}{dr}\,\frac{J_1}{J_2}\right)J_5,\\[0.5ex]
+F&= \frac{(dp/dr)^{\,2}}{(dq/dr)^{\,2}}\left[g^{\,2}\left(J_5\,J_6-J_4^{\,2}\right)+ J_3\,J_5\right],\\[0.5ex]
+H&= \frac{dp/dr}{dq/dr}\left(J_4- \frac{J_1\,J_5}{J_2}\right)g.
+\end{align}
+Finally,
+\begin{equation}
+D_R = E+ F+ H^{\,2}.
+\end{equation}
+
+\end{document}
