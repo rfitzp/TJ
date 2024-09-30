@@ -1151,6 +1151,8 @@ void Equilibrium::CalculateEFIT ()
   PSIRZ = new double[NRBOX*NZBOX];
   rRZ   = new double[NRBOX*NZBOX];
   wRZ   = new double[NRBOX*NZBOX];
+  cwRZ  = new double[NRBOX*NZBOX];
+  swRZ  = new double[NRBOX*NZBOX];
 
   rPsispline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   PSIrspline = gsl_spline_alloc (gsl_interp_cspline, NRBOX);
@@ -1305,8 +1307,10 @@ void Equilibrium::CalculateEFIT ()
 	      r = sqrt ((RR - 1.) * (RR - 1.) + ZZ*ZZ) /epsa;
 	      w = atan2 (ZZ, 1. - RR);
 	    }
-	  rRZ[cnt] = r;
-	  wRZ[cnt] = w;
+	  rRZ [cnt] = r;
+	  wRZ [cnt] = w;
+	  cwRZ[cnt] = cos (w);
+	  swRZ[cnt] = sin (w);
 	  
 	  if (r > rc)
 	    PSIRZ[cnt] = epsa*epsa * B0EXP*R0EXP*R0EXP * GetPSIvac (rc) * r*r/rc/rc;
@@ -1319,7 +1323,7 @@ void Equilibrium::CalculateEFIT ()
 	}
       if (i%128 == 0)
 	{
-	  printf ("%4d ", i); fflush (stdout);
+	  printf ("%04d ", i); fflush (stdout);
 	}
     }
   printf ("\n");
@@ -1397,6 +1401,10 @@ void Equilibrium::CalculateEFIT ()
       rx_x.putVar (rRZ); 
       NcVar w_x = dataFile.addVar   ("w",                 ncDouble, psi_d);
       w_x.putVar (wRZ);
+      NcVar cw_x = dataFile.addVar  ("cosw",              ncDouble, psi_d);
+      cw_x.putVar (cwRZ);
+      NcVar sw_x = dataFile.addVar  ("sinw",              ncDouble, psi_d);
+      sw_x.putVar (swRZ);
       NcVar Q_x   = dataFile.addVar ("Q",                 ncDouble, p_d);
       Q_x.putVar (Q);
       NcVar R_x   = dataFile.addVar ("RBOUND",            ncDouble, b_d);
@@ -1438,7 +1446,7 @@ void Equilibrium::CalculateEFIT ()
   delete[] PSI;    delete[] rPSI;   delete[] T;        delete[] TTp;      delete[] Pp;   
   delete[] RBOUND; delete[] ZBOUND; delete[] RLIMITER; delete[] ZLIMITER; delete[] PSIRZ;
   delete[] RGRID;  delete[] ZGRID;  delete[] P;        delete[] PSIN;     delete[] rRZ;
-  delete[] wRZ;    delete[] Q;
+  delete[] wRZ;    delete[] Q;      delete[] cwRZ;     delete[] swRZ; 
 
   gsl_spline_free (rPsispline);    gsl_spline_free (PSIrspline);
   gsl_interp_accel_free (rPsiacc); gsl_interp_accel_free (PSIracc);

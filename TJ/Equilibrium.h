@@ -248,6 +248,8 @@ class Equilibrium
   double* PSIRZ;    // PSI evaluated on R, Z grid
   double* rRZ;      // r evaluated on R, Z grid
   double* wRZ;      // w evaluated on R, Z grid
+  double* cwRZ;     // cos(w) evaluated on R, Z grid
+  double* swRZ;     // sin(w) evaluated on R, Z grid
 
   gsl_spline*        rPsispline;  // Interpolated r function versus Psi
   gsl_spline*        PSIrspline;  // Interpolated PSI function versus r
