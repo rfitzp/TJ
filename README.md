@@ -18,6 +18,8 @@ functions in the vacuum region surrounding the plasma.
 The free boundary response of the plasma to specified non-axisymmetric currents
 flowing in external magnetic field coils is calculated.
 
+The ideal stability of the plasma is calculated.
+
 The growth-rates and real frequencies of the unreconnected modes as well
 as the torque curves and shielding factors at the various rational
 surfaces are optionally calculated using a three-field reduced-MHD resonant

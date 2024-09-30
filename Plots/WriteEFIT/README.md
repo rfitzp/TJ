@@ -1,4 +1,4 @@
-# Python Scripts for WriteEFIT 
+# Python Scripts for Class WriteEFIT 
 
   - *Flux.py*:	        Plots magnetic flux-surfaces in R, Z plane
   - *Coordinates.py*:   Plots r, omega coordinate system in R, Z plane	
