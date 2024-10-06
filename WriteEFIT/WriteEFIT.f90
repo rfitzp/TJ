@@ -17,7 +17,7 @@ double precision :: RAXIS, ZAXIS, PSIAXIS, PSIBOUND, CURRENT
 double precision, dimension (:),    allocatable :: T, P, TTP, PP, Q, RBOUND, ZBOUND, RLIMITER, ZLIMITER
 double precision, dimension (:, :), allocatable :: PSI
 
-character(len=*), parameter :: filename = 'Outputs/Equilibrium/EFIT.nc'
+character(len=*), parameter :: filename = '../Outputs/Equilibrium/EFIT.nc'
 character(len=*), parameter :: comment  = ' Output from TJ code: '
 character(len=8)  :: date_str
 character(len=10) :: time_str
@@ -134,7 +134,7 @@ if (err /= nf90_noerr) then
    stop
 end if
 
-open (unit = 101, file = 'Outputs/Equilibrium/PsiSequential.txt')
+open (unit = 101, file = '../Outputs/Equilibrium/PsiSequential.txt')
 do i = 1, NRBOX
    do j = 1, NZBOX
       read (101, '(i4,1x,i4,1x,e17.9)') k, k, PSI (i, j)
@@ -253,7 +253,7 @@ end if
 ! ---------------
 ! Write EFIT file
 ! ---------------
-efit_name = "Outputs/WriteEFIT/EFIT.txt"
+efit_name = "../Outputs/WriteEFIT/EFIT.txt"
   
 open (unit = 10, file = efit_name, status = "replace", action = "write", iostat = file_unit)
     

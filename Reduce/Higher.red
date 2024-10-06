@@ -1,7 +1,7 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Recreation of Jim Hastie and Richard Fitzpatrick's T7 calculation
 % Extended for TJ calculation
-% Extension for limied higher order calculation
+% Extended for limited higher order calculation
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 out "Higher.out"$

@@ -23,7 +23,7 @@
 //  Lowest order (i.e., cylindrical) safety factor profile is q0(r) = r^2 /f1(r)
 //  Pressure profile is P(r) = epsa^2 p2(r)
 // 
-//  f1(r) = (1 /nu/qc) [1 - (1 - r^2)^nu]
+//  f1(r) = (1 /nu/qc) [1 - (1 - r^2)^nu] 
 //
 //  p2(r) = pc (1 - r^2)^mu
 //
@@ -89,14 +89,14 @@ class Equilibrium
   // ------------------
   // Physics parameters
   // ------------------
-  double         epsa; // Inverse aspect-ratio of plasma (read from JSON file)
-  double         qc;   // Lowest-order safety-factor on magnetic axis (read from JSON file)
-  double         qa;   // Edge safety-factor value (read from JSON file)
-  double         pc;   // Normalized plasma pressure on magnetic axis (read from JSON file)
-  double         mu;   // Pressure peaking parameter (read from JSON file)
-  vector<double> Hna;  // H2(1), H3(1), etc (read from JSON file)
-  vector<double> Vna;  // V2(1), V3(1), etc (read from JSON file)
-  double         nu;   // Toroidal current peaking parameter (determined from qa);
+  double         epsa;   // Inverse aspect-ratio of plasma (read from JSON file)
+  double         qc;     // Lowest-order safety-factor on magnetic axis (read from JSON file)
+  double         qa;     // Edge safety-factor value (read from JSON file)
+  double         pc;     // Normalized plasma pressure on magnetic axis (read from JSON file)
+  double         mu;     // Pressure peaking parameter (read from JSON file)
+  vector<double> Hna;    // H2(1), H3(1), etc (read from JSON file)
+  vector<double> Vna;    // V2(1), V3(1), etc (read from JSON file)
+  double         nu;     // Toroidal current peaking parameter (determined from qa);
 
   // ----------------------
   // Calculation parameters
@@ -124,7 +124,7 @@ class Equilibrium
   double* p2;    // Plasma pressure profile
   double* f1;    // Lowest-order poloidal flux function
   double* f3;    // Higher-order poloidal flux function
-  double* g2;    // Toroidal flux function
+  double* g2;    // Lowest order toroidal flux function
   double* q0;    // Lowest-order safety-factor
   double* q2;    // Higher-order safety-factor
   double* It;    // Toroidal plasma current

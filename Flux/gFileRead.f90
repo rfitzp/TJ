@@ -21,7 +21,7 @@ subroutine gFileRead () bind (c, name = 'gFileRead')
   double precision, dimension (:, :), allocatable :: PSI, PSIT
   double precision, dimension (:),    allocatable :: xt, xp, xttp, xpp, xq;
 
-  character (len = *), parameter :: file = "Outputs/Flux/Stage1.nc"
+  character (len = *), parameter :: file = "../Outputs/Flux/Stage1.nc"
 
   integer          :: err = 0, file_id
   integer          :: para_d_id, para_id, NPARA = 10, bound_d_id, rbound_id, zbound_id
@@ -35,7 +35,7 @@ subroutine gFileRead () bind (c, name = 'gFileRead')
   ! --------------
   ! Read EFIT file
   ! --------------
-  open (unit = 100, file = 'Outputs/WriteEFIT/EFIT.txt', status = 'old')
+  open (unit = 100, file = '../Outputs/WriteEFIT/EFIT.txt', status = 'old')
   
   read (100, '(a48, 3i4)') string,  i3,      NRBOX,   NZBOX
   read (100, '(5e16.9)'  ) RBOXLEN, ZBOXLEN, R0,      RBOXLFT,  ZOFF
@@ -127,31 +127,31 @@ subroutine gFileRead () bind (c, name = 'gFileRead')
   ! --------------------------------------
   ! Output equilibrium data to ascii files
   ! --------------------------------------  
-  open  (unit = 101, file = 'Outputs/Flux/R0B0.txt')
+  open  (unit = 101, file = '../Outputs/Flux/R0B0.txt')
   write (101, '(2e17.9)') R0, dabs(B0)
   close (unit = 101)
 
-  open  (unit = 101, file = 'Outputs/Flux/Box.txt')
+  open  (unit = 101, file = '../Outputs/Flux/Box.txt')
   write (101, '(4e17.9)') RLEFT, ZLOW, RRIGHT, ZHIGH
   close (unit = 101)
 
-  open  (unit = 101, file = 'Outputs/Flux/Axis.txt')
+  open  (unit = 101, file = '../Outputs/Flux/Axis.txt')
   write (101, '(2e17.9)') RAXIS, ZAXIS
   close (unit = 101)
  
-  open  (unit = 101, file = 'Outputs/Flux/R.txt')
+  open  (unit = 101, file = '../Outputs/Flux/R.txt')
   do i = 1, NRBOX
      write (101, '(1e17.9)') R (i)
   end do
   close (unit = 101)
 
-  open  (unit = 101, file = 'Outputs/Flux/Z.txt')
+  open  (unit = 101, file = '../Outputs/Flux/Z.txt')
   do j = 1, NZBOX
      write (101, '(1e17.9)') Z (j)
   end do
   close (unit = 101)
   
-  open (unit = 101, file = 'Outputs/Flux/PsiSequential.txt')
+  open (unit = 101, file = '../Outputs/Flux/PsiSequential.txt')
   do i = 1, NRBOX
      do j = 1, NZBOX
          write (101, '(2i4,e17.9)') i, j, PSI (i, j)
@@ -174,19 +174,19 @@ subroutine gFileRead () bind (c, name = 'gFileRead')
      xq   (i) = Q   (i)
   end do
 
-  open  (unit = 101, file = 'Outputs/Flux/Profiles.txt')
+  open  (unit = 101, file = '../Outputs/Flux/Profiles.txt')
   write (101, '(6e17.9)') (PSIN (i), xt (i), xp (i), xttp (i), xpp (i), xq (i), i = 1, NRBOX)
   close (unit = 101)
   
-  open  (unit = 101, file = 'Outputs/Flux/Points.txt')
+  open  (unit = 101, file = '../Outputs/Flux/Points.txt')
   write (101, '(4i5)') NRBOX, NZBOX, NBOUND, NLIM
   close (unit = 101)
  
-  open  (unit = 101, file = 'Outputs/Flux/Boundary.txt')
+  open  (unit = 101, file = '../Outputs/Flux/Boundary.txt')
   write (101, '(2e17.9)') (RBOUND (i), ZBOUND (i), i = 1, NBOUND)
   close (unit = 101)
 
-  open  (unit = 101, file = 'Outputs/Flux/Limiter.txt')
+  open  (unit = 101, file = '../Outputs/Flux/Limiter.txt')
   write (101, '(2e17.9)') (RLIM (i), ZLIM (i), i = 1, NLIM)
   close (unit = 101)
   

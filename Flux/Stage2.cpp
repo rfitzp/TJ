@@ -74,7 +74,7 @@ void Flux::WriteStage2Netcdfc ()
 {
   try
     {
-      NcFile dataFile ("Outputs/Flux/Stage2.nc", NcFile::replace);
+      NcFile dataFile ("../Outputs/Flux/Stage2.nc", NcFile::replace);
 
       double parameters[10];
       parameters[0] = R0;

@@ -58,7 +58,7 @@ Equilibrium::Equilibrium ()
   // --------------------------------------
   // Read control parameters from JSON file
   // --------------------------------------
-  string JSONFilename = "Inputs/Equilibrium.json";
+  string JSONFilename = "../Inputs/Equilibrium.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
   qc   = JSONData["qc"]  .get<double> ();
@@ -184,7 +184,7 @@ void Equilibrium::Setnu ()
 {
   LightEquilibrium lightequilibrium;
       
-  nu = lightequilibrium.GetNu (qa);
+  lightequilibrium.GetNu (qa, nu);
 }
 
 // #################################################
@@ -574,7 +574,7 @@ void Equilibrium::Solve ()
       ff  [i] = ff1 + epsa*epsa * ff3;
       ggr2[i] = 1.  + epsa*epsa * gr2;
       RR2 [i] = 1.  - epsa*epsa * R2;
-      It  [i] =   2.*M_PI * (f1[i] * (1. + epsa*epsa * gr2) + epsa*epsa * f3[i]);
+      It  [i] =   2.*M_PI * (f1[i] + epsa*epsa * f3[i] + epsa*epsa * f1[i] * gr2);
       Ip  [i] = - 2.*M_PI * g2[i];
     }
   q2[0] = qc * (1. + epsa*epsa * (H2c*H2c + V2c*V2c));
@@ -599,7 +599,7 @@ void Equilibrium::Solve ()
 	+ HPfunc(n, Nr) * HPfunc(n, Nr) + 2. * double (n*n - 1) * HPfunc(n, Nr) * HHfunc(n, Nr) - double (n*n - 1) * HHfunc(n, Nr) * HHfunc(n, Nr)
 	+ VPfunc(n, Nr) * VPfunc(n, Nr) + 2. * double (n*n - 1) * VPfunc(n, Nr) * VVfunc(n, Nr) - double (n*n - 1) * VVfunc(n, Nr) * VVfunc(n, Nr);
     }
-   double sa = 2. + epsa*epsa * sum * q0[Nr] /q2[Nr];
+   double sa = 2. + epsa*epsa * sum * f1[Nr] /(f1[Nr] + epsa*epsa * f3[Nr]);
    
   // ........................
   // Calculate s2 = r^2 q''/q
@@ -843,7 +843,7 @@ void Equilibrium::Solve ()
   // ...............
   // Write EFIT file
   // ...............
-  int serr = system ("./write_efit_");
+  int serr = system ("../bin/write_efit");
   if (serr != 0)
     printf ("TJ:: Warning: Error runing WriteEFIT\n");
   
@@ -857,7 +857,7 @@ void Equilibrium::Solve ()
   delete[] Jp;  delete[] pp; delete[] ppp; delete[] qq; delete[] qqq;
   delete[] s;   delete[] s2; delete[] S1;  delete[] S2; delete[] P1;
   delete[] P2;  delete[] P3; delete[] P3a; delete[] ff; delete[] ggr2;
-  delete[] RR2;
+  delete[] RR2; 
  
   gsl_spline_free (Itspline);
   gsl_spline_free (Ipspline);
@@ -955,7 +955,7 @@ void Equilibrium::WriteNetcdf (double sa)
  
   try
     {
-      NcFile dataFile ("Outputs/Equilibrium/Equilibrium.nc", NcFile::replace);
+      NcFile dataFile ("../Outputs/Equilibrium/Equilibrium.nc", NcFile::replace);
 
       NcDim i_d = dataFile.addDim ("Ni", 15);
       NcDim p_d = dataFile.addDim ("Np", 2);
@@ -1101,7 +1101,7 @@ void Equilibrium::CalculateEFIT ()
   // Read control parameters from JSON file
   // --------------------------------------
   {
-    string JSONFilename = "Inputs/Equilibrium.json";
+    string JSONFilename = "../Inputs/Equilibrium.json";
     json   JSONData     = ReadJSONFile (JSONFilename);
 
     EFIT  = JSONData["EFIT"].get<int>     ();
@@ -1116,7 +1116,7 @@ void Equilibrium::CalculateEFIT ()
   printf ("NRBOX = %4d        NZBOX = %4d       rc = %10.3e\n", NRBOX, NZBOX, rc);
 
   {
-    string JSONFilename = "Inputs/TJ.json";
+    string JSONFilename = "../Inputs/TJ.json";
     json   JSONData     = ReadJSONFile (JSONFilename);
     
     B0EXP = JSONData["B0"].get<double> ();
@@ -1368,7 +1368,7 @@ void Equilibrium::CalculateEFIT ()
   
   try
     {
-      NcFile dataFile ("Outputs/Equilibrium/EFIT.nc", NcFile::replace);
+      NcFile dataFile ("../Outputs/Equilibrium/EFIT.nc", NcFile::replace);
 
       NcDim i_d = dataFile.addDim ("Ni", 4);
       NcDim r_d = dataFile.addDim ("Nr", 15);
@@ -1430,7 +1430,7 @@ void Equilibrium::CalculateEFIT ()
   // -------------------
   // Output PSI in ascii
   // -------------------
-  FILE* file = OpenFilew ("Outputs/Equilibrium/PsiSequential.txt");
+  FILE* file = OpenFilew ("../Outputs/Equilibrium/PsiSequential.txt");
   cnt = 0;
   for (int i = 0; i < NRBOX; i++)
     for (int j = 0; j < NRBOX; j++)
@@ -1460,7 +1460,7 @@ double Equilibrium::Getf1 (double r)
   if (r < 0.1)
     return r*r * (1. - (nu-1.)*r*r/2. + (nu-1.)*(nu-2.)*r*r*r*r/6. - (nu-1.)*(nu-2.)*(nu-3.)*r*r*r*r*r*r/24.)/qc;
   else
-    return (1. - pow (1. - r*r, nu)) /nu/qc; 
+    return (1. - pow (1. - r*r, nu)) /nu/qc;
 }
 
 // #########################
@@ -2332,10 +2332,10 @@ void Equilibrium::Rhs (double r, double* y, double* dydr)
 	- f1 * (3.*r*r/2. - 2.*r*Hnp[1] + Hnp[1]*Hnp[1] + fac1)/r
 	+ f1p * (g2 - 3.*r*r/4. + Hn[1] + 3.*Hnp[1]*Hnp[1]/2. + fac2)
 	+ r*r*p2p * (g2 + r*r/2. - 3.*r*Hnp[1] - 2.*Hn[1]) /f1;
-
+ 
       dydr[0] = f3p;
       dydr[1] = (f1 + epsa*epsa * y[0]) /r;
-
+ 
       delete[] Hn; delete[] Hnp; delete[] Vn; delete[] Vnp;
     }
   else if (rhs_chooser == 2)

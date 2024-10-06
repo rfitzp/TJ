@@ -7,7 +7,7 @@ C_SOURCE = main.cpp TJ.cpp LightEquilibrium.cpp Equilibrium.cpp ReadEquilibrium.
 	Matrix.cpp Vacuum.cpp Armadillo.cpp Integrate.cpp ODESolve.cpp Resonant.cpp Dispersion.cpp Toroidal.cpp Netcdf.cpp Layer.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
 
-EXECUTABLE = ../tj_
+EXECUTABLE = ../bin/tj
 
 $(EXECUTABLE):	 	$(C_OBJECT) 
 			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(C_LIBS)

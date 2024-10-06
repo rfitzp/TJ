@@ -364,10 +364,18 @@ xx0 := coeffn(xx,eps,0);
 xx1 := coeffn(xx,eps,1);
 xx2 := coeffn(xx,eps,2);
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%
-% Evaluate parallel gradient
-% %%%%%%%%%%%%%%%%%%%%%%%%%%
-procedure lgrd(ex)$ df(ex,t) - i*n*q*ex$
+
+%write "c00 := c000 + eps*c001 + eps**2*c002";
+%c00  := igr2$
+%c000 := coeffn(c00,eps,0);
+%c001 := coeffn(c00,eps,1);
+%c002 := coeffn(c00,eps,2);
+
+%write "d00 := d000 + eps*d001 + eps**2*d002";
+%d00  := x2*igr2$
+%d000 := coeffn(d00,eps,0);
+%d001 := coeffn(d00,eps,1);
+%d002 := coeffn(d00,eps,2);
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Evaluate primitive coupling coefficients

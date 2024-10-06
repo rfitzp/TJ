@@ -336,8 +336,6 @@ x2grt20 - x2grt20_target;
 x2grt21 - x2grt21_target;
 x2grt22 - x2grt22_target;
 
-;bye;
-
 igr2 := av2(inv(gr2,eps),eps,t)$
 ix2  := av2(inv(x2,eps),eps,t)$
 
@@ -946,6 +944,14 @@ lamp4 := sub(kk=m,  lamp4)$
 lamm4 := sub(m=kk-4,lam00)$
 lamm4 := sub(kk=m,  lamm4)$
 
+% %%%%%%%%%%%%%
+% Calculate kmp
+% %%%%%%%%%%%%%
+kmp  := lam0/n + gf/n$
+kmp0 := coeffn(kmp,eps,0)$
+kmp1 := coeffn(kmp,eps,1)$
+kmp2 := coeffn(kmp,eps,2)$
+
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Calculate j=0 coupling coefficients
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1379,6 +1385,22 @@ V2pp_target := - (3-2*sh)*df(V2,r)/r + (2*2-1)*V2/r**2$
 V3pp_target := - (3-2*sh)*df(V3,r)/r + (3*3-1)*V3/r**2$
 V4pp_target := - (3-2*sh)*df(V4,r)/r + (4*4-1)*V4/r**2$
 
+sp4 :=    df(H1,r)**2 
+       +  df(H2,r)**2 + df(H3,r)**2 +  df(H4,r)**2
+       +  df(V2,r)**2 + df(V3,r)**2 +  df(V4,r)**2$
+sp5 :=    (1*1-1)*df(H1,r)*H1/r
+       +  (2*2-1)*df(H2,r)*H2/r + (3*3-1)*df(H3,r)*H3/r +  (4*4-1)*df(H4,r)*H4/r
+       +  (2*2-1)*df(V2,r)*V2/r + (3*3-1)*df(V3,r)*V3/r +  (4*4-1)*df(V4,r)*V4/r$
+sp6 :=    (1*1-1)*H1**2/r**2
+       +  (2*2-1)*H2**2/r**2 + (3*3-1)*H3**2/r**2 +  (4*4-1)*H4**2/r**2
+       +  (2*2-1)*V2**2/r**2 + (3*3-1)*V3**2/r**2 +  (4*4-1)*V4**2/r**2$
+
+kmp0_target := - (2 - sh)/m$
+kmp1_target := 0$
+kmp2_target := (r*pp - (3/2)*r**2 + 2*r*df(H1,r) - sp4 - 2*sp5 + sp6
+   + (2-sh) * (- (3/4)*r**2 + r**2/q**2 + H1 + (1/2)*(3*sp4 - sp6)))/m
+   + (n*r/m**2) * (-pp*q - r*(2-sh)*(m-n*q)/m/q)$
+
 write "Equilibrium residuals:";
 dg2p  := g2p  - g2p_target;
 dg4p  := g4p  - g4p_target;
@@ -1389,6 +1411,10 @@ dH3pp := H3pp - H3pp_target;
 dV3pp := V3pp - V3pp_target;
 dH4pp := H4pp - H4pp_target;
 dV4pp := V4pp - V4pp_target;
+
+dkmp0 := kmp0 - kmp0_target;
+dkmp1 := kmp1 - kmp1_target;
+dkmp2 := kmp2 - kmp2_target;
 
 out T$
 

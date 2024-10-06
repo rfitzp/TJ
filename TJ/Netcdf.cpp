@@ -11,7 +11,7 @@ void TJ::ReadNetcdf ()
   
   try
     {
-      NcFile dataFile ("Outputs/Equilibrium/Equilibrium.nc", NcFile::read);
+      NcFile dataFile ("../Outputs/Equilibrium/Equilibrium.nc", NcFile::read);
       
       NcVar p_x = dataFile.getVar ("para");
       NcDim p_d = p_x.getDim (0);
@@ -510,7 +510,7 @@ void TJ::WriteNetcdf ()
     
   try
     {
-      NcFile dataFile ("Outputs/TJ/TJ.nc", NcFile::replace);
+      NcFile dataFile ("../Outputs/TJ/TJ.nc", NcFile::replace);
 
       NcDim i_d = dataFile.addDim ("Ni",    23);
       NcDim r_d = dataFile.addDim ("Nr",    Nr+1);

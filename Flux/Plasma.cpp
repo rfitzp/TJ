@@ -20,10 +20,10 @@ void Flux::Stage2ReadData ()
   // ..............
   // Read R0 and B0
   // ..............
-  FILE* file = OpenFiler ((char*) "Outputs/Flux/R0B0.txt");
+  FILE* file = OpenFiler ((char*) "../Outputs/Flux/R0B0.txt");
   if (fscanf (file, "%lf %lf", &R0, &B0) != 2)
     {
-      printf ("FLUX::Stage2ReadData: Error reading Outputs/Flux/R0B0.txt\n");
+      printf ("FLUX::Stage2ReadData: Error reading ../Outputs/Flux/R0B0.txt\n");
       exit (1);
     }
   fclose (file);
@@ -31,7 +31,7 @@ void Flux::Stage2ReadData ()
   // ......................
   // Read bounding box data
   // ......................
-  file = OpenFiler ((char*) "Outputs/Flux/Box.txt");
+  file = OpenFiler ((char*) "../Outputs/Flux/Box.txt");
   if (fscanf (file, "%lf %lf %lf %lf", &RLEFT, &ZLOW, &RRIGHT, &ZHIGH) != 4)
     {
       printf ("FLUX::Stage2ReadData: Error reading Outputs/Flux/Box.txt\n");
@@ -42,7 +42,7 @@ void Flux::Stage2ReadData ()
   // .......................
   // Read magnetic axis data
   // .......................
-  file = OpenFiler ((char*) "Outputs/Flux/Axis.txt");
+  file = OpenFiler ((char*) "../Outputs/Flux/Axis.txt");
   if (fscanf (file, "%lf %lf", &Raxis, &Zaxis) != 2)
     {
       printf ("FLUX::Stage2ReadData: Error reading Outputs/Flux/Axis.txt\n");
@@ -53,7 +53,7 @@ void Flux::Stage2ReadData ()
   // ................
   // Read array sizes
   // ................
-  file = OpenFiler ((char*) "Outputs/Flux/Points.txt");
+  file = OpenFiler ((char*) "../Outputs/Flux/Points.txt");
   if (fscanf (file, "%d %d %d %d", &NRPTS, &NZPTS, &NBPTS, &NLPTS) != 4)
     {
       printf ("FLUX::Stage2ReadData: Error reading Outputs/Flux/Points.txt\n");
@@ -67,7 +67,7 @@ void Flux::Stage2ReadData ()
   RPTS = new double[NRPTS];  // R array
   ZPTS = new double[NZPTS];  // Z array
 
-  file = OpenFiler ((char*) "Outputs/Flux/R.txt");
+  file = OpenFiler ((char*) "../Outputs/Flux/R.txt");
   for (int i = 0; i < NRPTS; i++)
     if (fscanf (file, "%lf", &RPTS[i]) != 1)
       {
@@ -75,7 +75,7 @@ void Flux::Stage2ReadData ()
 	exit (1);
       }
   fclose (file);
-  file = OpenFiler ((char*) "Outputs/Flux/Z.txt");
+  file = OpenFiler ((char*) "../Outputs/Flux/Z.txt");
   for (int j = 0; j < NZPTS; j++)
     if (fscanf (file, "%lf", &ZPTS[j]) != 1)
       {
@@ -90,7 +90,7 @@ void Flux::Stage2ReadData ()
   RBPTS = new double[NBPTS];  // R coordinates of boundary
   ZBPTS = new double[NBPTS];  // Z coordinates of boundary
 
-  file = OpenFiler ((char*) "Outputs/Flux/Boundary.txt");
+  file = OpenFiler ((char*) "../Outputs/Flux/Boundary.txt");
   for (int i = 0; i < NBPTS; i++)
     if (fscanf (file, "%lf %lf", &RBPTS[i], &ZBPTS[i]) != 2)
       {
@@ -102,7 +102,7 @@ void Flux::Stage2ReadData ()
   RLPTS = new double[NLPTS];  // R coordinates of limiter
   ZLPTS = new double[NLPTS];  // Z coordinates of limiter
 
-  file = OpenFiler ((char*) "Outputs/Flux/Limiter.txt");
+  file = OpenFiler ((char*) "../Outputs/Flux/Limiter.txt");
   for (int i = 0; i < NLPTS; i++)
     if (fscanf (file, "%lf %lf", &RLPTS[i], &ZLPTS[i]) != 2)
       {
@@ -120,7 +120,7 @@ void Flux::Stage2ReadData ()
   PSIARRAY.resize (NRPTS, NZPTS);  // Psi (R, Z)
 
   double val; int ival;
-  file = OpenFiler ((char*) "Outputs/Flux/PsiSequential.txt");
+  file = OpenFiler ((char*) "../Outputs/Flux/PsiSequential.txt");
   for (int i = 0; i < NRPTS; i++)
     for (int j = 0; j < NZPTS; j++)
       {	
@@ -168,7 +168,7 @@ void Flux::Stage2ReadData ()
   Prp  = new double[NRPTS]; // dp/dpsi
   Q    = new double[NRPTS]; // q
 
-  file = OpenFiler ((char*) "Outputs/Flux/Profiles.txt");
+  file = OpenFiler ((char*) "../Outputs/Flux/Profiles.txt");
   for (int i = 0; i < NRPTS; i++)
     if (fscanf (file, "%lf %lf %lf %lf %lf %lf", &PSIN[i], &G[i], &Pr[i], &GGp[i], &Prp[i], &Q[i]) != 6)
       {

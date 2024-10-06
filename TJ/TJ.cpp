@@ -63,7 +63,7 @@ TJ::TJ ()
   // --------------------------------------
   // Read control parameters from JSON file
   // --------------------------------------
-  string JSONFilename = "Inputs/TJ.json";
+  string JSONFilename = "../Inputs/TJ.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
   NTOR    = JSONData["NTOR"]   .get<int>    ();

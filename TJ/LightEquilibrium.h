@@ -24,7 +24,7 @@
 //  Lowest order (i.e., cylindrical) safety factor profile is q0(r) = r^2 /f1(r)
 //  Pressure profile is P(r) = epsa^2 p2(r)
 // 
-//  f1(r) = (1 /nu/qc) [1 - (1 - r^2)^nu]
+//  f1(r) = (1 /nu/qc) [1 - (1 - r^2)^nu] 
 //
 //  p2(r) = pc (1 - r^2)^mu
 //
@@ -32,7 +32,7 @@
 // nu * qc is lowest-order safety-factor at plasma/vacuum interface.
 
 // Inputs:
-//  Inputs/TJ.json - JSON file
+//  Inputs/Equilibrium.json - JSON file
 
 // Class uses following external libraries:
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
@@ -48,7 +48,7 @@
 
 // Source: https://github.com/rfitzp/TJ
 
-// Documentation: ../Documentation/TJ.pdf
+// Documentation: ../Documentation/TJPaper/TJ.pdf
 
 // ########################################################################################
 
@@ -87,7 +87,7 @@ class LightEquilibrium
   vector<double> Vna; // V2(1), V3(1), etc (read from JSON file)
 
   double qa;          // Target edge safety-factor value
-  double nu;          // Toroidal current peaking parameter 
+  double nu;          // Toroidal current peaking parameter
 
   // ----------------------
   // Calculation parameters
@@ -150,7 +150,7 @@ class LightEquilibrium
   // ----
   // Misc
   // ----
-  int count, rhs_chooser;
+  int count, rhs_chooser, fun_chooser;
 
  public:
 
@@ -164,7 +164,7 @@ class LightEquilibrium
   ~LightEquilibrium ();
 
   // Calculate nu value that gives required edge safety-factor
-  double GetNu (double qa);
+  void GetNu (double qa, double& nu_);
 
 private:
 
@@ -173,7 +173,7 @@ private:
   // .......................
 
   // Function to return central and edge q-values
-  void GetSafety (double _nu, double& qcentral, double& qedge);
+  void GetSafety (double _nu, double& qcentral, double& qedge, double& sa, double &sat);
   
   // Return f1(r)
   double Getf1 (double r);

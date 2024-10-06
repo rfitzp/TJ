@@ -62,7 +62,7 @@ void Flux::SetParameters ()
   // --------------------------------------
   // Read control parameters from JSON file
   // --------------------------------------
-  string JSONFilename = "Inputs/Flux.json";
+  string JSONFilename = "../Inputs/Flux.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
   
   NPSI   = JSONData["NPSI"]  .get<int>   ();

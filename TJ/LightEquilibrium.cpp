@@ -64,20 +64,20 @@ LightEquilibrium::LightEquilibrium ()
   // --------------------------------------
   // Read control parameters from JSON file
   // --------------------------------------
-  string JSONFilename = "Inputs/Equilibrium.json";
+  string JSONFilename = "../Inputs/Equilibrium.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  qc   = JSONData["qc"]  .get<double> ();
-  pc   = JSONData["pc"]  .get<double> ();
-  mu   = JSONData["mu"]  .get<double> ();
-  epsa = JSONData["epsa"].get<double> ();
-  eps  = JSONData["eps"] .get<double> ();
-  Ns   = JSONData["Ns"]  .get<int>    ();
-  Nr   = JSONData["Nr"]  .get<int>    ();
-  acc  = JSONData["acc"] .get<double> ();
-  h0   = JSONData["h0"]  .get<double> ();
-  hmin = JSONData["hmin"].get<double> ();
-  hmax = JSONData["hmax"].get<double> ();
+  qc      = JSONData["qc"]  .get<double> ();
+  pc      = JSONData["pc"]  .get<double> ();
+  mu      = JSONData["mu"]  .get<double> ();
+  epsa    = JSONData["epsa"].get<double> ();
+  eps     = JSONData["eps"] .get<double> ();
+  Ns      = JSONData["Ns"]  .get<int>    ();
+  Nr      = JSONData["Nr"]  .get<int>    ();
+  acc     = JSONData["acc"] .get<double> ();
+  h0      = JSONData["h0"]  .get<double> ();
+  hmin    = JSONData["hmin"].get<double> ();
+  hmax    = JSONData["hmax"].get<double> ();
 
   for (const auto& number : JSONData["Hna"])
     {
@@ -168,38 +168,39 @@ LightEquilibrium::~LightEquilibrium ()
 // #####################################################################
 // Function to calculate nu value that gives required edge safety-factor
 // #####################################################################
-double LightEquilibrium::GetNu (double _qa)
+void LightEquilibrium::GetNu (double _qa, double& _nu)
 {
   qa = _qa;
 
   double nustart = 0.5 * qa /qc;
   double nuend   = 2.  * qa /qc;
 
-  double _nu = RootFind (nustart, nuend);
+  _nu = RootFind (nustart, nuend);
 
-  double qcentral, qedge, res;
-  GetSafety (_nu, qcentral, qedge);
+  double qcentral, qedge, res, sa, sat;
+  GetSafety (_nu, qcentral, qedge, sa, sat);
   res = fabs (qedge - qa);
-
+  
   printf ("\nClass LIGHTEQUILIBRIUM::\n");
-  printf ("nu = %10.3e q_central = %10.3e q_edge = %10.3e res = %10.3e\n", _nu, qcentral, qedge, res);
+  printf ("nu     = %10.3e q_central     = %10.3e q_edge = %10.3e res = %10.3e\n",
+	  _nu, qcentral, qedge, res);
+  printf ("s_edge = %10.3e s_edge_target = %10.3e                     res = %10.3e\n",
+	  sa, sat, fabs (sa - sat));
 
   if (res > 1.e-3)
     {
       printf ("LightEquilibrium:: Error - search residual too large: %10.3e\n", res);
       exit (1);
     }
-
-  return _nu;
 }
 
 // ############################################
 // Function to return central and edge q-values
 // ############################################
-void LightEquilibrium::GetSafety (double _nu, double& qcentral, double& qedge)
+void LightEquilibrium::GetSafety (double _nu, double& qcentral, double& qedge, double& sa, double& sat)
 {
   nu = _nu;
-
+  
   // ...............
   // Allocate memory
   // ...............
@@ -450,18 +451,43 @@ void LightEquilibrium::GetSafety (double _nu, double& qcentral, double& qedge)
       
       f3[i] = y1[0];
       q0[i] = rr[i]*rr[i] /f1[i];
-      q2[i] = rr[i]*rr[i] * (1. + epsa*epsa*(g2[i] - f3[i]/f1[i])) /f1[i];
+      q2[i] = rr[i]*rr[i] * (1. + epsa*epsa*g2[i]) /(f1[i] + epsa*epsa*f3[i]);
 
     }
   q2[0] = qc * (1. + epsa*epsa * (H2c*H2c + V2c*V2c));
 
+  double ff1 = f1[Nr];
+  double ff3 = f3[Nr];
+  double f1p = Getf1p (1.);
+  double p2p = Getp2p (1.);
+  double gg2 = g2[Nr];
+  double g2p = - p2p - ff1*f1p;
+  double f3p = dy1dr[0];
+  
+  sa = (2. * (1. + epsa*epsa*gg2) /(ff1 + epsa*epsa*ff3)
+	+ (epsa*epsa*g2p) /(ff1 + epsa*epsa*ff3)
+	- (1. + epsa*epsa*gg2) * (f1p + epsa*epsa*f3p)
+	/(ff1 + epsa*epsa*ff3) /(ff1 + epsa*epsa*ff3)) /q2[Nr];
+
   delete[] y1; delete[] dy1dr; delete[] err1;
+
+  // ....................................
+  // Calculate target edge magnetic shear
+  // ....................................
+  double sum  = 1.5 - 2. * HPfunc(1, Nr) + HPfunc(1, Nr) * HPfunc(1, Nr);
+  for (int n = 2; n <= Ns; n++)
+    {
+      sum +=
+	+ HPfunc(n, Nr) * HPfunc(n, Nr) + 2. * double (n*n - 1) * HPfunc(n, Nr) * HHfunc(n, Nr) - double (n*n - 1) * HHfunc(n, Nr) * HHfunc(n, Nr)
+	+ VPfunc(n, Nr) * VPfunc(n, Nr) + 2. * double (n*n - 1) * VPfunc(n, Nr) * VVfunc(n, Nr) - double (n*n - 1) * VVfunc(n, Nr) * VVfunc(n, Nr);
+    }
+  sat = 2. + epsa*epsa * sum * ff1 /(ff1 + epsa*epsa * ff3);
 
   // ........
   // Clean up
   // ........
   delete[] rr;  delete[] f1; delete[] f3; delete[] g2; delete[] q0;  delete[] q2; 
- 
+  
   gsl_spline_free (g2spline);
  
   gsl_interp_accel_free (g2acc);
@@ -485,6 +511,7 @@ void LightEquilibrium::GetSafety (double _nu, double& qcentral, double& qedge)
   qedge    = q2[Nr];
 }
 
+
 // ########################
 // Function to return f1(r)
 // ########################
@@ -493,7 +520,7 @@ double LightEquilibrium::Getf1 (double r)
   if (r < 0.1)
     return r*r * (1. - (nu-1.)*r*r/2. + (nu-1.)*(nu-2.)*r*r*r*r/6. - (nu-1.)*(nu-2.)*(nu-3.)*r*r*r*r*r*r/24.)/qc;
   else
-    return (1. - pow (1. - r*r, nu)) /nu/qc; 
+    return (1. - pow (1. - r*r, nu)) /nu/qc;
 }
 
 // #########################
@@ -504,7 +531,7 @@ double LightEquilibrium::Getf1p (double r)
   if (r < 0.1)
     return 2.*r * (1. - (nu-1.)*r*r + (nu-1.)*(nu-2.)*r*r*r*r/2. - (nu-1.)*(nu-2.)*(nu-3.)*r*r*r*r*r*r/6.)/qc;
   else
-    return 2. * r * pow (1. - r*r, nu-1.) /qc;
+    return 2.*r * pow (1. - r*r, nu-1.) /qc;
 }
 
 // #########################
@@ -846,18 +873,18 @@ void LightEquilibrium::CashKarp45Fixed (int neqns, double& x, double* y, double*
 // ################################
 double LightEquilibrium::Feval (double x)
 {
- double qcentral, qedge;
+  double qcentral, qedge, sa, sat;
 
- GetSafety (x, qcentral, qedge);
+  GetSafety (x, qcentral, qedge, sa, sat);
 
- return qedge - qa;
+  return qedge - qa;
 }
 
-// ###################################################################
+// ##################################################################
 // Routine to find approximate root of F(x) = 0 using Ridder's method 
 // Search takes place in interval (x1, x2)
 // Interval is chopped into nint equal segments
-// ###################################################################
+// ##################################################################
 double LightEquilibrium::RootFind (double x1, double x2)
 {
   double F1, F2 = 0., root;

@@ -9,7 +9,7 @@ C_HEADER = Flux.h
 C_SOURCE = main.cpp Flux.cpp Stage2.cpp Interpolate.cpp Integrate.cpp Plasma.cpp 
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
 
-EXECUTABLE = ../flux_
+EXECUTABLE = ../bin/flux
 
 $(EXECUTABLE):	 	$(C_OBJECT) $(F_OBJECT)
 			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(F_OBJECT) $(C_LIBS) $(F_LIBS)

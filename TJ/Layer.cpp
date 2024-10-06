@@ -60,7 +60,7 @@ Layer::Layer ()
   // ......................................
   // Read control parameters from JSON file
   // ......................................
-  string JSONFilename = "Inputs/Layer.json";
+  string JSONFilename = "../Inputs/Layer.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
   LAYER   = JSONData["LAYER"] .get<int>    ();
@@ -179,7 +179,7 @@ void Layer::ReadNetcdf ()
 
   try
     {
-      NcFile dataFile ("Outputs/TJ/TJ.nc", NcFile::read);
+      NcFile dataFile ("../Outputs/TJ/TJ.nc", NcFile::read);
 
       NcVar input_x  = dataFile.getVar ("InputParameters");
       NcVar rres_x   = dataFile.getVar ("r_res");
@@ -444,7 +444,7 @@ void Layer::WriteNetcdf ()
       
    try
      {
-       NcFile dataFile ("Outputs/Layer/Layer.nc", NcFile::replace);
+       NcFile dataFile ("../Outputs/Layer/Layer.nc", NcFile::replace);
 
        NcDim x_d = dataFile.addDim ("nres",  nres);
        NcDim y_d = dataFile.addDim ("nmarg", 10);

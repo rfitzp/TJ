@@ -5,7 +5,7 @@ include ../Machines.in
 F_SOURCE = WriteEFIT.f90
 F_OBJECT = $(F_SOURCE:%.f90=%.o)
 
-EXECUTABLE = ../write_efit_
+EXECUTABLE = ../bin/write_efit
 
 $(EXECUTABLE):	 	$(F_OBJECT) 
 			$(F_COMPILER) -o $(EXECUTABLE) $(F_OBJECT) $(F_LIBS)
