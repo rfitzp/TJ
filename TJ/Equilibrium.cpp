@@ -547,7 +547,7 @@ void Equilibrium::Solve ()
       f3[i]  = y1[0];
       Psi[i] = y1[1];
       q0[i]  = rr[i]*rr[i] /f1[i];
-      q2[i]  = rr[i]*rr[i] * (1. + epsa*epsa*g2[i]) /(f1[i] + epsa*epsa*f3[i]);
+      q2[i]  = rr[i]*rr[i] * (1. + epsa*epsa*g2[i]) * exp(- epsa*epsa * f3[i]/f1[i]) /f1[i];
 
       double ff1 = f1[i];
       double ff3 = f3[i];
@@ -557,10 +557,10 @@ void Equilibrium::Solve ()
       double g2p = - p2p - ff1*f1p/r/r;
       double f3p = dy1dr[0];
 
-      qq[i] = 2.*rr[i]*rr[i] * (1. + epsa*epsa*g2[i]) /(f1[i] + epsa*epsa*f3[i])
-	+ rr[i]*rr[i]*rr[i] * (epsa*epsa*g2p) /(f1[i] + epsa*epsa*f3[i])
-	- rr[i]*rr[i]*rr[i] * (1. + epsa*epsa*g2[i]) * (f1p + epsa*epsa*f3p)
-	/(f1[i] + epsa*epsa*f3[i]) /(f1[i] + epsa*epsa*f3[i]);
+      qq[i] =     2.*rr[i]*rr[i] * (1. + epsa*epsa*g2[i])                                           * exp(- epsa*epsa * f3[i]/f1[i]) /f1[i]
+	     + rr[i]*rr[i]*rr[i] * (     epsa*epsa*g2p  )                                           * exp(- epsa*epsa * f3[i]/f1[i]) /f1[i]
+	     - rr[i]*rr[i]*rr[i] * (1. + epsa*epsa*g2[i]) * epsa*epsa * (f3p/ff1 - f1p*ff3/ff1/ff1) * exp(- epsa*epsa * f3[i]/f1[i]) /f1[i]
+	     - rr[i]*rr[i]*rr[i] * (1. + epsa*epsa*g2[i])                                           * exp(- epsa*epsa * f3[i]/f1[i]) * f1p/ff1/ff1;
   
       double gr2 = 3.*rr[i]*rr[i]/4. - HHfunc(1, i) + HPfunc(1, i) * HPfunc(1, i) /2.;
       for (int n = 2; n <= Ns; n++)
@@ -593,13 +593,13 @@ void Equilibrium::Solve ()
   // Calculate target edge magnetic shear
   // ....................................
   double sum  = 1.5 - 2. * HPfunc(1, Nr) + HPfunc(1, Nr) * HPfunc(1, Nr);
-   for (int n = 2; n <= Ns; n++)
+  for (int n = 2; n <= Ns; n++)
     {
       sum +=
 	+ HPfunc(n, Nr) * HPfunc(n, Nr) + 2. * double (n*n - 1) * HPfunc(n, Nr) * HHfunc(n, Nr) - double (n*n - 1) * HHfunc(n, Nr) * HHfunc(n, Nr)
 	+ VPfunc(n, Nr) * VPfunc(n, Nr) + 2. * double (n*n - 1) * VPfunc(n, Nr) * VVfunc(n, Nr) - double (n*n - 1) * VVfunc(n, Nr) * VVfunc(n, Nr);
     }
-   double sa = 2. + epsa*epsa * sum * f1[Nr] /(f1[Nr] + epsa*epsa * f3[Nr]);
+  double sa = 2. + epsa*epsa * sum;
    
   // ........................
   // Calculate s2 = r^2 q''/q

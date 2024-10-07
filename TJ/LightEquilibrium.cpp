@@ -451,8 +451,7 @@ void LightEquilibrium::GetSafety (double _nu, double& qcentral, double& qedge, d
       
       f3[i] = y1[0];
       q0[i] = rr[i]*rr[i] /f1[i];
-      q2[i] = rr[i]*rr[i] * (1. + epsa*epsa*g2[i]) /(f1[i] + epsa*epsa*f3[i]);
-
+      q2[i] = rr[i]*rr[i] * (1. + epsa*epsa*g2[i]) * exp(- epsa*epsa * f3[i]/f1[i]) /f1[i];
     }
   q2[0] = qc * (1. + epsa*epsa * (H2c*H2c + V2c*V2c));
 
@@ -464,10 +463,7 @@ void LightEquilibrium::GetSafety (double _nu, double& qcentral, double& qedge, d
   double g2p = - p2p - ff1*f1p;
   double f3p = dy1dr[0];
   
-  sa = (2. * (1. + epsa*epsa*gg2) /(ff1 + epsa*epsa*ff3)
-	+ (epsa*epsa*g2p) /(ff1 + epsa*epsa*ff3)
-	- (1. + epsa*epsa*gg2) * (f1p + epsa*epsa*f3p)
-	/(ff1 + epsa*epsa*ff3) /(ff1 + epsa*epsa*ff3)) /q2[Nr];
+  sa = 2. - epsa*epsa * f3p/ff1;
 
   delete[] y1; delete[] dy1dr; delete[] err1;
 
@@ -481,7 +477,7 @@ void LightEquilibrium::GetSafety (double _nu, double& qcentral, double& qedge, d
 	+ HPfunc(n, Nr) * HPfunc(n, Nr) + 2. * double (n*n - 1) * HPfunc(n, Nr) * HHfunc(n, Nr) - double (n*n - 1) * HHfunc(n, Nr) * HHfunc(n, Nr)
 	+ VPfunc(n, Nr) * VPfunc(n, Nr) + 2. * double (n*n - 1) * VPfunc(n, Nr) * VVfunc(n, Nr) - double (n*n - 1) * VVfunc(n, Nr) * VVfunc(n, Nr);
     }
-  sat = 2. + epsa*epsa * sum * ff1 /(ff1 + epsa*epsa * ff3);
+  sat = 2. + epsa*epsa * sum;
 
   // ........
   // Clean up
