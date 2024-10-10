@@ -15,6 +15,7 @@ void TJ::ReadEquilibrium ()
   // .....................................................
   // Allocate memory for interpolation of equilibrium data
   // .....................................................
+  Pspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   g2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   p2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   ppspline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
@@ -27,6 +28,7 @@ void TJ::ReadEquilibrium ()
   P2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P3spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
 
+  Pacc      = gsl_interp_accel_alloc ();
   g2acc     = gsl_interp_accel_alloc ();
   p2acc     = gsl_interp_accel_alloc ();
   ppacc     = gsl_interp_accel_alloc ();
@@ -65,17 +67,18 @@ void TJ::ReadEquilibrium ()
   // ............................
   // Interpolate equilibrium data
   // ............................
-  gsl_spline_init (g2spline,  rr, g2,  Nr+1);
-  gsl_spline_init (p2spline,  rr, p2,  Nr+1);
-  gsl_spline_init (ppspline,  rr, pp,  Nr+1);
-  gsl_spline_init (pppspline, rr, ppp, Nr+1);
-  gsl_spline_init (qspline,   rr, q,   Nr+1);
-  gsl_spline_init (sspline,   rr, s,   Nr+1);
-  gsl_spline_init (s2spline,  rr, s2,  Nr+1);
-  gsl_spline_init (S1spline,  rr, S1,  Nr+1);
-  gsl_spline_init (P1spline,  rr, P1,  Nr+1);
-  gsl_spline_init (P2spline,  rr, P2,  Nr+1);
-  gsl_spline_init (P3spline,  rr, P3,  Nr+1);
+  gsl_spline_init (Pspline,   rr, PsiN, Nr+1);
+  gsl_spline_init (g2spline,  rr, g2,   Nr+1);
+  gsl_spline_init (p2spline,  rr, p2,   Nr+1);
+  gsl_spline_init (ppspline,  rr, pp,   Nr+1);
+  gsl_spline_init (pppspline, rr, ppp,  Nr+1);
+  gsl_spline_init (qspline,   rr, q,    Nr+1);
+  gsl_spline_init (sspline,   rr, s,    Nr+1);
+  gsl_spline_init (s2spline,  rr, s2,   Nr+1);
+  gsl_spline_init (S1spline,  rr, S1,   Nr+1);
+  gsl_spline_init (P1spline,  rr, P1,   Nr+1);
+  gsl_spline_init (P2spline,  rr, P2,   Nr+1);
+  gsl_spline_init (P3spline,  rr, P3,   Nr+1);
 
   double* data = new double[Nr+1];
 

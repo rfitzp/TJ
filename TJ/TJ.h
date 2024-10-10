@@ -121,6 +121,7 @@ class TJ
   int                Nr;        // Number of radial grid-points
 
   double*            rr;        // Radial grid-points
+  double*            PsiN;      // PsiN values at grid-points
   double*            g2;        // Second-order toroidal flux
   double*            p2;        // Second-order plasma pressure
   double*            pp;        // First radial derivative of second-order plasma pressure
@@ -138,7 +139,8 @@ class TJ
   Array<double,2>    HPfunc;    // Radial derivatives of horizontal shaping functions
   Array<double,2>    VPfunc;    // Radial derivatives of vertical shaping functions
 
-  gsl_spline*        g2spline;  // Interpolated p2 function
+  gsl_spline*        Pspline;   // Interpolated PsiN function
+  gsl_spline*        g2spline;  // Interpolated g2 function
   gsl_spline*        p2spline;  // Interpolated p2 function
   gsl_spline*        ppspline;  // Interpolated pp function
   gsl_spline*        pppspline; // Interpolated ppp function
@@ -150,6 +152,7 @@ class TJ
   gsl_spline*        P2spline;  // Interpolated P2 function
   gsl_spline*        P3spline;  // Interpolated P3 function
 
+  gsl_interp_accel*  Pacc;      // Accelerator for interpolated P function
   gsl_interp_accel*  g2acc;     // Accelerator for interpolated g2 function
   gsl_interp_accel*  p2acc;     // Accelerator for interpolated p2 function
   gsl_interp_accel*  ppacc;     // Accelerator for interpolated pp function
@@ -255,6 +258,7 @@ class TJ
   // ODE Solution data
   // -----------------
   double*                  Rgrid; // Radial grid-points for diagnostics
+  double*                  Pgrid; // PsiN values for grid-points for diagnostics
   Array<double,2>          Ttest; // Torque test for solution vectors versus radius
   Array<double,2>          Pnorm; // Norms of Psi components of solution vectors versus radius
   Array<double,2>          Znorm; // Norms of Z components of solution vectors versus radius

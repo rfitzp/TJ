@@ -230,6 +230,7 @@ void Equilibrium::Solve ()
   ggr2 = new double[Nr+1];
   RR2  = new double[Nr+1];
   Psi  = new double[Nr+1];
+  PsiN = new double[Nr+1];
 
   HHfunc.resize (Ns+1, Nr+1);
   VVfunc.resize (Ns+1, Nr+1);
@@ -579,6 +580,9 @@ void Equilibrium::Solve ()
     }
   q2[0] = qc * (1. + epsa*epsa * (H2c*H2c + V2c*V2c));
 
+  for (int i = 0; i <= Nr; i++)
+    PsiN[i] = Psi[i] /Psi[Nr];
+
   delete[] y1; delete[] dy1dr; delete[] err1;
 
   // ........................
@@ -900,8 +904,8 @@ void Equilibrium::Solve ()
 
   delete[] Rbound;   delete[] Zbound; delete[] tbound; delete[] wbound0; delete[] tbound0;
   delete[] wbound;   delete[] R2b;    delete[] grr2b;  delete[] Lfunc;   delete[] dRdtheta; 
-  delete[] dZdtheta; delete[] Psi;
- }
+  delete[] dZdtheta; delete[] Psi;    delete[] PsiN;
+ } 
 
 // #################################################
 // Function to write equilibrium data to netcdf file
@@ -982,6 +986,10 @@ void Equilibrium::WriteNetcdf (double sa)
 
       NcVar r_x   = dataFile.addVar ("r",    ncDouble, r_d);
       r_x.putVar (rr);
+      NcVar psi_x = dataFile.addVar ("Psi",  ncDouble, r_d);
+      psi_x.putVar (Psi);
+      NcVar psn_x = dataFile.addVar ("PsiN", ncDouble, r_d);
+      psn_x.putVar (PsiN);
       NcVar g2_x  = dataFile.addVar ("g_2",  ncDouble, r_d);
       g2_x.putVar (g2);
       NcVar p2_x  = dataFile.addVar ("p_2",  ncDouble, r_d);

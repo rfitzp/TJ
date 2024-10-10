@@ -294,10 +294,12 @@ void TJ::CleanUp ()
 {
   printf ("Cleaning up:\n");
   
-  delete[] rr; delete[] pp; delete[] ppp; delete[] q; 
-  delete[] s;  delete[] s2; delete[] S1;  delete[] P1;
-  delete[] P2; delete[] P3; delete[] g2;  delete[] p2;
+  delete[] rr;   delete[] pp; delete[] ppp; delete[] q; 
+  delete[] s;    delete[] s2; delete[] S1;  delete[] P1;
+  delete[] P2;   delete[] P3; delete[] g2;  delete[] p2;
+  delete[] PsiN;
 
+  gsl_spline_free (Pspline);
   gsl_spline_free (g2spline);
   gsl_spline_free (p2spline);
   gsl_spline_free (ppspline);
@@ -310,6 +312,7 @@ void TJ::CleanUp ()
   gsl_spline_free (P2spline);
   gsl_spline_free (P3spline);
 
+  gsl_interp_accel_free (Pacc);
   gsl_interp_accel_free (g2acc);
   gsl_interp_accel_free (p2acc);
   gsl_interp_accel_free (ppacc);
@@ -366,7 +369,7 @@ void TJ::CleanUp ()
 
   delete[] MPOL; delete[] mpol;
      
-  delete[] Rgrid; delete[] hode; delete[] eode;
+  delete[] Rgrid; delete[] hode; delete[] eode; delete[] Pgrid;
 
   delete[] Fval;
 

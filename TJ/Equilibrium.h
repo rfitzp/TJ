@@ -147,6 +147,7 @@ class Equilibrium
   double* ggr2;  // <|nabla r|^2> profile
   double* RR2;   // <R^2> profile
   double* Psi;   // Psi(r) array
+  double* PsiN;  // PsiN(r) array
    
   Array<double,2>    HHfunc;    // Horizontal shaping functions
   Array<double,2>    VVfunc;    // Vertical shaping functions

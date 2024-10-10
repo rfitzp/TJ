@@ -24,6 +24,7 @@ void TJ::ReadNetcdf ()
       sa   = para[1];
       
       NcVar r_x   = dataFile.getVar ("r");
+      NcVar P_x   = dataFile.getVar ("PsiN");
       NcVar g2_x  = dataFile.getVar ("g_2");
       NcVar p2_x  = dataFile.getVar ("p_2");
       NcVar pp_x  = dataFile.getVar ("pp");
@@ -37,21 +38,23 @@ void TJ::ReadNetcdf ()
       NcVar P3_x  = dataFile.getVar ("P3");
       NcDim r_d   = r_x.getDim (0);
 
-      Nr  = r_d.getSize () - 1;
-      rr  = new double[Nr+1];
-      g2  = new double[Nr+1];
-      p2  = new double[Nr+1];
-      pp  = new double[Nr+1];
-      ppp = new double[Nr+1];
-      q   = new double[Nr+1];
-      s   = new double[Nr+1];
-      s2  = new double[Nr+1];
-      S1  = new double[Nr+1];
-      P1  = new double[Nr+1];
-      P2  = new double[Nr+1];
-      P3  = new double[Nr+1];
+      Nr   = r_d.getSize () - 1;
+      rr   = new double[Nr+1];
+      PsiN = new double[Nr+1];
+      g2   = new double[Nr+1];
+      p2   = new double[Nr+1];
+      pp   = new double[Nr+1];
+      ppp  = new double[Nr+1];
+      q    = new double[Nr+1];
+      s    = new double[Nr+1];
+      s2   = new double[Nr+1];
+      S1   = new double[Nr+1];
+      P1   = new double[Nr+1];
+      P2   = new double[Nr+1];
+      P3   = new double[Nr+1];
 
       r_x.  getVar (rr);
+      P_x.  getVar (PsiN);
       g2_x. getVar (g2);
       p2_x. getVar (p2);
       pp_x. getVar (pp);
@@ -683,11 +686,13 @@ void TJ::WriteNetcdf ()
       NcVar hmati_x = dataFile.addVar ("Hmat_i", ncDouble, vacuum_d);
       hmati_x.putVar (Hmat_i);
    
-      NcVar rgrid_x = dataFile.addVar ("r_grid",  ncDouble, d_d);
+      NcVar rgrid_x = dataFile.addVar ("r_grid",    ncDouble, d_d);
       rgrid_x.putVar (Rgrid);
-      NcVar hode_x  = dataFile.addVar ("h_ode",   ncDouble, d_d);
+      NcVar pgrid_x = dataFile.addVar ("PsiN_grid", ncDouble, d_d);
+      pgrid_x.putVar (Pgrid);
+      NcVar hode_x  = dataFile.addVar ("h_ode",     ncDouble, d_d);
       hode_x.putVar (hode);
-      NcVar eode_x  = dataFile.addVar ("err_ode", ncDouble, d_d);
+      NcVar eode_x  = dataFile.addVar ("err_ode",   ncDouble, d_d);
       eode_x.putVar (eode);
 
       NcVar t_x      = dataFile.addVar  ("theta",  ncDouble, w_d);

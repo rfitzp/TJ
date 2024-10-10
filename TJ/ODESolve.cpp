@@ -33,6 +33,10 @@ void TJ::ODESolve ()
   for (int i = 0; i < NDIAG; i++)
     Rgrid[i] = EPS + (1. - EPS) * double (i) /double (NDIAG - 1);
 
+  Pgrid = new double[NDIAG];
+  for (int i = 0; i < NDIAG; i++)
+    Pgrid[i] = gsl_spline_eval (Pspline, Rgrid[i], Pacc);
+
   hode = new double[NDIAG];
   eode = new double[NDIAG];
 
