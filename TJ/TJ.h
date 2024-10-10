@@ -56,7 +56,6 @@
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
 #include <gsl/gsl_sf_gamma.h>
-#include <gsl/gsl_sort.h>
 #include <nlohmann/json.hpp>
 #include <netcdf>
 #include <armadillo>
@@ -114,9 +113,9 @@ class TJ
   int    maxrept; // Maximum number of step recalculations
   int    flag;    // Integration error calculation flag
   
-  // -------------------------------------------------
-  // Equilibrium data (read from Plots/Equilibrium.nc)
-  // -------------------------------------------------
+  // ---------------------------------------------------------------
+  // Equilibrium data (read from Outputs/Equilibrium/Equilibrium.nc)
+  // ---------------------------------------------------------------
   double             epsa;      // Inverse aspect-ratio of plasma
   int                Ns;        // Number of shaping harmonics
   int                Nr;        // Number of radial grid-points
@@ -313,26 +312,30 @@ class TJ
   // --------------------
   // Ideal stability data
   // --------------------
-  Array<complex<double>,3> Psii;    // Psi components of ideal solutions lauched from magnetic axis
-  Array<complex<double>,3> Zi;      // Z components of ideal solutions lauched from magnetic axis
+  int                      XiFlag;  // Flag for using Xi, rather than Psi, as ideal eigenfunction basis (read from JSON file)
+  Array<complex<double>,3> Psii;    // Psi components of ideal solutions launched from magnetic axis
+  Array<complex<double>,3> Zi;      // Z components of ideal solutions launched from magnetic axis
+  Array<complex<double>,3> Xii;     // Xi components of ideal solutions launched from magnetic axis
   Array<complex<double>,2> Ji;      // Poloidal harmonics of current on plasma boundary associated with
                                     //  ideal solutions launched from magnetic axis
-  Array<complex<double>,2> Wmat;    // Idea energy matrix
-  Array<complex<double>,2> Wher;    // Hermitian component of Wmat
-  Array<complex<double>,2> Want;    // Anti-Hermitian component of Wmat
-  double*                  Wval;    // Eigenvalues of symmeterized W-matrix
-  Array<complex<double>,2> Wvec;    // Eigenvectors of symmeterized W-matrix
-  Array<complex<double>,2> Wres;    // Residuals of Wvec orthonormaility matrix
+  Array<complex<double>,2> Wmat;    // Plasma ideal energy matrix
+  Array<complex<double>,2> Vmat;    // Vacuum ideal energy matrix
+  Array<complex<double>,2> Umat;    // Total ideal energy matrix
+  Array<complex<double>,2> Uher;    // Hermitian component of Umat
+  Array<complex<double>,2> Uant;    // Anti-Hermitian component of Umat
+  double*                  Uval;    // Eigenvalues of symmeterized U-matrix
+  Array<complex<double>,2> Uvec;    // Eigenvectors of symmeterized U-matrix
+  Array<complex<double>,2> Ures;    // Residuals of Uvec orthonormaility matrix
   Array<complex<double>,3> Psie;    // Psi components of ideal eigenfunctions
   Array<complex<double>,3> Ze;      // Z components of ideal eigenfunctions
+  Array<complex<double>,3> Xie;     // Xi components of ideal eigenfunctions
   Array<complex<double>,2> Je;      // Poloidal harmomics of current on plasma boundary associated with ideal eigenfunctions
   double*                  deltaW;  // Total perturbed ideal potential energy 
-  double*                  deltaWp; // Plasma contribution to perturbed potential energy
-  Array<complex<double>,2> Pres;    // Residuals of Psie, Je orthogonality matrix
-  size_t*                  Wperm;   // Permutation for sorting deltaW values
-  Array<complex<double>,2> Psiy;    // Psi values on plasma boundry associated with ideal eigenfunctions
-  Array<complex<double>,2> Jy;      // Current on plasma boundry associated with ideal eigenfunctions
-  Array<complex<double>,2> PsiJ;    // Psiy^ast J values associated with ideal eigenfunctions
+  double*                  deltaWp; // Plasma contribution to perturbed ideal potential energy
+  double*                  deltaWv; // Plasma contribution to perturbed ideal potential energy
+  Array<complex<double>,2> Psiy;    // Psi values on plasma boundary associated with ideal eigenfunctions
+  Array<complex<double>,2> Jy;      // Current on plasma boundary associated with ideal eigenfunctions
+  Array<complex<double>,2> Xiy;     // Xi values on plasma boundary associated with ideal eigenfunctions
   complex<double>*         gammax;  // Expansion of Psi_x at boundary in ideal eigenfunctions
   complex<double>*         gamma;   // Expansion of Psi_rmp at boundary in ideal eigenfunctions
 
@@ -342,8 +345,8 @@ class TJ
   int                      Nf;     // Number of radial grid-points on visualization grid
   int                      Nw;     // Number of angular grid-points on visualization grid
   double*                  rf;     // Radial grid-points on visualization grif
-  Array<double,2>          RR;     // R coodinates of visualization grid-points
-  Array<double,2>          ZZ;     // Z coodinates of visualization grid-points
+  Array<double,2>          RR;     // R coordinates of visualization grid-points
+  Array<double,2>          ZZ;     // Z coordinates of visualization grid-points
   Array<double,2>          rvals;  // r values of visulalization grid-points
   Array<double,2>          thvals; // theta values of visualization grid-points
   Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 
@@ -594,10 +597,12 @@ class TJ
 
   // Solve linear system of equations A . X = B, for X, where all quantities are complex rectangular matrices
   void SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B);
+  // Solve linear system of equations X . A = B, for X, where all quantities are complex rectangular matrices
+  void SolveLinearSystemTranspose (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B);
   // Solve linear system of equations A . X = B, for X, where A is a complex rectangular matrix, and X and B
   //  are complex vectors
   void SolveLinearSystem (Array<complex<double>,2> A, complex<double>* X, complex<double>* B);
-  // Invert square matrix
+  // Invert square complex matrix
   void InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA);
   // Return eigenvalues and eigenvectors of Hermitian matix H
   void GetEigenvalues (Array<complex<double>,2> H, double* evals, Array<complex<double>,2> evecs);

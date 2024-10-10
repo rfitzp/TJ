@@ -63,20 +63,20 @@ private:
   // .............
   double* input;      // TJ input parameters
   int     nres;       // Number of rational surfaces
-  double* r_res;      // Radii of rational surfaces (read from TJ.nc)
-  int*    m_res;      // Poloidal mode numbers of rational surfaces (read from TJ.nc)
-  double* Delta_res;  // Delta_primes at rational surfaces (read from TJ.nc)
-  double* Deltac_res; // Critical Delta_primes at rational surfaces (read from TJ.nc)
-  double* Chi_res;    // Absolute values of Chi (read from TJ.nc)
-  double* S13_res;    // Cube roots of Lundquist numbers at rational surfaces (read from TJ.nc)
-  double* tau_res;    // Normalized resistive kink timescales at rational surfaces (read from TJ.nc)
-  double* QE_res;     // Normalized ExB frequencies at rational surfaces (read from TJ.nc)
-  double* Qe_res;     // Normalized electron diamagnetic frequencies at rational surfaces (read from TJ.nc)
-  double* Qi_res;     // Normalized ion diamagnetic frequencies at rational surfaces (read from TJ.nc)
-  double* iotae_res;  // Ratio of electron diamagnetic frequencies to total diamagnetic frequencies at rational surfaces (read from TJ.nc)
-  double* D_res;      // Normalized ion sound radii at rational surfaces (read from TJ.nc)
-  double* Pphi_res;   // Normalized momentum diffusivities at rational surfaces (read from TJ.nc)
-  double* Pperp_res;  // Normalized energy diffusivities at rational surfaces (read from TJ.nc)
+  double* r_res;      // Radii of rational surfaces (read from Outputs/TJ/TJ.nc)
+  int*    m_res;      // Poloidal mode numbers of rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* Delta_res;  // Delta_primes at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* Deltac_res; // Critical Delta_primes at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* Chi_res;    // Absolute values of Chi (read from Outputs/TJ/TJ.nc)
+  double* S13_res;    // Cube roots of Lundquist numbers at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* tau_res;    // Normalized resistive kink timescales at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* QE_res;     // Normalized ExB frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* Qe_res;     // Normalized electron diamagnetic frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* Qi_res;     // Normalized ion diamagnetic frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* iotae_res;  // Ratio of electron diamagnetic frequencies to total diamagnetic frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* D_res;      // Normalized ion sound radii at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* Pphi_res;   // Normalized momentum diffusivities at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* Pperp_res;  // Normalized energy diffusivities at rational surfaces (read from Outputs/TJ/TJ.nc
 
   // .........................
   // Layer equation parameters

@@ -46,7 +46,7 @@
 
 - *Ideal.py*:		Plots poloidal harmonics of ideal solutions launched from magnetic axis versus r
 - *Ideal1.py*:		Plots kth poloidal harmomic of ideal solutions launched from magnetic axis versus r
-- *Wmat.py*:		Visualizes ideal energy matrix
+- *Umat.py*:		Visualizes total ideal energy matrix
 - *Ideale.py*:      	Plots polidal harmonics of ideal eigenfunctions versus r
 - *Ideale1.py*:     	Plots kth poloidal harmomic of ideal eigenfunctions versus r
 - *deltaW.py*:	 	Plots delta W values versus eigenfunction number

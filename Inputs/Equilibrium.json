@@ -19,7 +19,7 @@
     "hmin": 1.0e-10,
     "hmax": 1.0e-3,
 
-    "EFIT":  1,
+    "EFIT":  0,
     "NRBOX": 1024,
     "NZBOX": 1024,
     "rc":    1.1

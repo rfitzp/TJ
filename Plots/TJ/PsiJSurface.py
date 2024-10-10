@@ -1,6 +1,6 @@
 # PsiJSurface.py
 
-# Plots psi and J on plasma boundary associated with ideal eigenfunction.
+# Plots psi, J, and Xi on plasma boundary associated with ideal eigenfunction.
 # User prompted for eigenfunction number.
 
 import math
@@ -15,8 +15,8 @@ Psi_r  = ds['Psi_surface_r']
 Psi_i  = ds['Psi_surface_i']
 J_r    = ds['J_surface_r']
 J_i    = ds['J_surface_i']
-PsiJ_r = ds['PsiJ_surface_r']
-PsiJ_i = ds['PsiJ_surface_i']
+Xi_r   = ds['Xi_surface_r']
+Xi_i   = ds['Xi_surface_i']
 
 t  = np.asarray(theta);
 tt = t/math.pi
@@ -58,13 +58,13 @@ plt.subplot (3, 1, 3)
 
 plt.xlim (0., 2.)
 
-plt.plot (tt, PsiJ_r[j,:], color = 'blue', linewidth = 2, linestyle = 'solid')
-plt.plot (tt, PsiJ_i[j,:], color = 'red',  linewidth = 2, linestyle = 'solid')
+plt.plot (tt, Xi_r[j,:], color = 'blue', linewidth = 2, linestyle = 'solid')
+plt.plot (tt, Xi_i[j,:], color = 'red',  linewidth = 2, linestyle = 'solid')
 
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\theta/\pi$',   fontsize = "15")
-plt.ylabel (r"$\psi^\ast\,J$", fontsize = "15")
+plt.xlabel (r'$\theta/\pi$', fontsize = "15")
+plt.ylabel (r"$\Xi$",          fontsize = "15")
 
 plt.tight_layout ()
 

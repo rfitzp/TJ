@@ -76,6 +76,7 @@ TJ::TJ ()
   NULC    = JSONData["NULC"]   .get<double> ();
   ITERMAX = JSONData["ITERMAX"].get<int>    ();
   FREE    = JSONData["FREE"]   .get<int>    ();
+  XiFlag  = JSONData["XiFlag"] .get<int>    ();
   acc     = JSONData["acc"]    .get<double> ();
   h0      = JSONData["h0"]     .get<double> ();
   hmin    = JSONData["hmin"]   .get<double> ();
@@ -206,8 +207,8 @@ TJ::TJ ()
   printf ("Calculation parameters:\n");
   printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
 	  NTOR, MMIN, MMAX, EPS, DEL);
-  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d\n",
-	  NFIX, NDIAG, NULC, ITERMAX, FREE);
+  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d         xflg = %1d\n",
+	  NFIX, NDIAG, NULC, ITERMAX, FREE, XiFlag);
   printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
 	  acc, h0, hmin, hmax, EPSF);
   printf ("B0   = %10.3e R0    = %10.3e n0   = %10.3e alpha   = %10.3e Zeff = %10.3e Mion = %10.3e Chip = %10.3e Teped = %10.3e\n",
@@ -367,10 +368,12 @@ void TJ::CleanUp ()
      
   delete[] Rgrid; delete[] hode; delete[] eode;
 
-  delete[] Fval;    delete[] Wval; delete[] deltaW; delete[] Wperm;
-  delete[] deltaWp; 
+  delete[] Fval;
 
-  delete[] rf; delete[] gammax; delete[] gamma;
+  delete[] Uval;    delete[] deltaW; delete[] deltaWv;
+  delete[] deltaWp; delete[] gammax; delete[] gamma;
+
+  delete[] rf; 
 }  
 
 // ##########################

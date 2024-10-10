@@ -2,8 +2,6 @@
 
 #include "TJ.h"
 
-// Function to find inverse of complex matrix
-
 // ####################################################################################################################
 // Function to solve linear system of equations A . X = B, for X, where all quantities are complex rectangular matrices
 // ####################################################################################################################
@@ -38,6 +36,39 @@ void TJ::SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2>
  }
 
 // ####################################################################################################################
+// Function to solve linear system of equations X . A = B, for X, where all quantities are complex rectangular matrices
+// ####################################################################################################################
+void TJ::SolveLinearSystemTranspose (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B)
+{
+  int size1 = A.extent(1);
+  int size2 = A.extent(0);
+  int size3 = B.extent(0);
+
+  if (size1 != size2)
+    {
+      printf ("TJ::SolveLinearSystemTranspose: Error - over/underdetermined linear system\n");
+      exit (1);
+    }
+ 
+  // Solve problem using Armadillo
+  cx_mat Amat (size1, size2), Xmat (size2, size3), Bmat (size1, size3);
+
+  for (int i = 0; i < size1; i++)
+    for (int j = 0; j < size2; j++)
+      Amat(i, j) = A(j, i);
+
+  for (int i = 0; i < size1; i++)
+    for (int j = 0; j < size3; j++)
+      Bmat(i, j) = B(j, i);
+  
+  solve (Xmat, Amat, Bmat);
+
+  for (int i = 0; i < size2; i++)
+    for (int j = 0; j < size3; j++)
+      X(i, j) = Xmat(j, i);
+ }
+
+// ####################################################################################################################
 // Function to solve linear system of equations A . X = B, for X, where A is a complex rectangular matrix, and X and B
 // are complex vectors
 // ####################################################################################################################
@@ -69,9 +100,9 @@ void TJ::SolveLinearSystem (Array<complex<double>,2> A, complex<double>* X, comp
     X[i] = Xvec(i);
  }
 
-// ################################
-// Function to invert square matrix
-// ################################
+// ########################################
+// Function to invert square complex matrix
+// ########################################
 void TJ::InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA)
 {
   int size = A.extent(0);
