@@ -624,6 +624,31 @@ void TJ::CalculateIdealStability ()
   // --------------------------------------------------
   GetEigenvalues (Uher, Uval, Uvec);
 
+  // --------------------------------------------------------------------
+  // Adjust eigenvectors such that element with largest magnitude is real
+  // --------------------------------------------------------------------
+  for (int j = 0; j < J; j++)
+    {
+      int    jmax = 0;
+      double norm = -1.;
+
+      for (int jp = 0; jp < J; jp++)
+	{
+	  if (abs (Uvec(jp, j)) > norm)
+	    {
+	      norm = abs (Uvec(jp, j));
+	      jmax = jp;
+	    }
+	}
+
+      complex<double> Ufac = conj(Uvec(jmax, j)) /abs(Uvec(jmax, j));
+
+      for (int jp = 0; jp < J; jp++)
+	{
+	  Uvec(jp, j) *= Ufac;
+	}
+    }
+
   // ------------------------------------
   // Check orthonormality of eigenvectors
   // ------------------------------------

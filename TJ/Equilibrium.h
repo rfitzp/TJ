@@ -96,7 +96,10 @@ class Equilibrium
   double         mu;     // Pressure peaking parameter (read from JSON file)
   vector<double> Hna;    // H2(1), H3(1), etc (read from JSON file)
   vector<double> Vna;    // V2(1), V3(1), etc (read from JSON file)
-  double         nu;     // Toroidal current peaking parameter (determined from qa);
+  double         nu;     // Toroidal current peaking parameter (determined from qa)
+
+  double         R0;     // Major radius of magnetic axis (read from TJ.json file)
+  double         B0;     // Toroidal magnetic field-strength on magnetic axis (read from TJ.json file)
 
   // ----------------------
   // Calculation parameters
@@ -146,8 +149,13 @@ class Equilibrium
   double* ff;    // f profile
   double* ggr2;  // <|nabla r|^2> profile
   double* RR2;   // <R^2> profile
+  double* IR2;   // <|nabla r|^2/R^2> profile
   double* Psi;   // Psi(r) array
   double* PsiN;  // PsiN(r) array
+  double* Tf;    // Toroidal flux-function
+  double* mu0P;  // mu_0 times pressure
+  double* DI;    // Ideal Mercier index
+  double* DR;    // Resistive Mercier index
    
   Array<double,2>    HHfunc;    // Horizontal shaping functions
   Array<double,2>    VVfunc;    // Vertical shaping functions
@@ -155,10 +163,13 @@ class Equilibrium
   Array<double,2>    VPfunc;    // Radial derivatives of vertical shaping functions
   double*            Lfunc;     // Relabelling function
 
-  double             li;        // Plasma self-inductance
+  double             amean;     // Mean minor radius
+  double             li;        // Normalized plasma self-inductance
   double             betat;     // Plasma toroidal beta
   double             betap;     // Plasma poloidal beta
   double             betaN;     // Plasma normal beta
+  double             betat1;    // Alternative plasma toroidal beta
+  double             betap1;    // Alternative plasma poloidal beta
   
   gsl_spline*        Itspline;  // Interpolated It function
   gsl_spline*        Ipspline;  // Interpolated Ip function
@@ -175,6 +186,9 @@ class Equilibrium
   gsl_spline*        q2spline;  // Interpolated q2 versus r
   gsl_spline*        gr2spline; // Interpolated <|nabla r|^2> function versus r
   gsl_spline*        R2spline;  // Interpolated <R^2> function versus r
+  gsl_spline*        I2spline;  // Interpolated <|nabla r|^2/R^2> function versus r
+  gsl_spline*        sspline;   // Interpolated s function versus r
+  gsl_spline*        qspline;   // Interpolated q function versus r
 
   gsl_interp_accel*  Itacc;     // Accelerator for interpolated It function
   gsl_interp_accel*  Ipacc;     // Accelerator for interpolated Ip function
@@ -191,6 +205,9 @@ class Equilibrium
   gsl_interp_accel*  q2acc;     // Accelerator for interpolated q2 function
   gsl_interp_accel*  gr2acc;    // Accelerator for interpolated <|nabla r|^2> function
   gsl_interp_accel*  R2acc;     // Accelerator for interpolated <R^2> function
+  gsl_interp_accel*  I2acc;     // Accelerator for interpolated <R^2> function
+  gsl_interp_accel*  sacc;      // Accelerator for interpolated s function
+  gsl_interp_accel*  qacc;      // Accelerator for interpolated q function
 
   Array<double,2>    RR;        // R coodinates of magnetic flux-surfaces for visualization purposes (uniform theta grid)
   Array<double,2>    ZZ;        // Z coodinates of magnetic flux-surfaces for visualization purposes (uniform theta grid)
@@ -312,6 +329,16 @@ private:
   double Getp2p (double r);
   // Return p2''(r)
   double Getp2pp (double r);
+  // Return q
+  double Getq (double r);
+  // Return s
+  double Gets (double r);
+  // Return DI
+  double GetDI (double r);
+  // Return DR
+  double GetDR (double r);
+  // Return Hnp
+  double GetHnp (int n, double r);
 
   // Return relabelling parameter
   double GetL (double r, int order);

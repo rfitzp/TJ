@@ -315,7 +315,7 @@ x2gr22 - x2gr22_target;
 
 write "x2grt2  := x2grt20 + eps*x2grt21 + eps**2*x2grt22";
 x2grt2  := av2(x2*grt2,eps,t)$
-x2grt20 := coeffn(x2grt2,eps,0);
+x2grt20 := 
 x2grt21 := coeffn(x2grt2,eps,1);
 x2grt22 := coeffn(x2grt2,eps,2);
 x2grt22 := 0;
@@ -338,6 +338,25 @@ x2grt22 - x2grt22_target;
 
 igr2 := av2(inv(gr2,eps),eps,t)$
 ix2  := av2(inv(x2,eps),eps,t)$
+
+gr2ix2 := av2(gr2*ix2,eps,t)$
+
+gr2ix20 := coeffn(gr2ix2,eps,0);
+gr2ix22 := coeffn(gr2ix2,eps,2);
+
+write "Residuals of gr2ix2 element:";
+gr2ix22_target := (13/4) * r*r - 3*H1 + r*df(H1,r)
+   + (df(H1,r)*df(H1,r) + (1*1-1)*H1*H1/r/r)/2
+   + (df(H2,r)*df(H2,r) + (2*2-1)*H2*H2/r/r)/2
+   + (df(H3,r)*df(H3,r) + (3*3-1)*H3*H3/r/r)/2
+   + (df(H4,r)*df(H4,r) + (4*4-1)*H4*H4/r/r)/2
+   + (df(V2,r)*df(V2,r) + (2*2-1)*V2*V2/r/r)/2
+   + (df(V3,r)*df(V3,r) + (3*3-1)*V3*V3/r/r)/2
+   + (df(V4,r)*df(V4,r) + (4*4-1)*V4*V4/r/r)/2$
+
+gr2ix22 - gr2ix22_target;
+
+;bye;
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Expand Grad-Shafranov equation to order eps**2

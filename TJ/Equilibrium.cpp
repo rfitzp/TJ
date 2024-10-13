@@ -85,6 +85,12 @@ Equilibrium::Equilibrium ()
       Vna.push_back (number.get<double> ());
     }
 
+  JSONFilename = "../Inputs/TJ.json";
+  JSONData     = ReadJSONFile (JSONFilename);
+
+  B0 = JSONData["B0"].get<double> ();
+  R0 = JSONData["R0"].get<double> ();
+
   // ------------
   // Sanity check
   // ------------
@@ -229,8 +235,13 @@ void Equilibrium::Solve ()
   ff   = new double[Nr+1];
   ggr2 = new double[Nr+1];
   RR2  = new double[Nr+1];
+  IR2  = new double[Nr+1];
   Psi  = new double[Nr+1];
   PsiN = new double[Nr+1];
+  Tf   = new double[Nr+1];
+  mu0P = new double[Nr+1];
+  DI   = new double[Nr+1];
+  DR   = new double[Nr+1];
 
   HHfunc.resize (Ns+1, Nr+1);
   VVfunc.resize (Ns+1, Nr+1);
@@ -244,7 +255,10 @@ void Equilibrium::Solve ()
   fspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   q2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   gr2spline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
-  R2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  R2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1); 
+  I2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  sspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  qspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   Lspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   wspline   = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
   Rspline   = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
@@ -257,6 +271,9 @@ void Equilibrium::Solve ()
   q2acc  = gsl_interp_accel_alloc ();
   gr2acc = gsl_interp_accel_alloc ();
   R2acc  = gsl_interp_accel_alloc ();
+  I2acc  = gsl_interp_accel_alloc ();
+  sacc   = gsl_interp_accel_alloc ();
+  qacc   = gsl_interp_accel_alloc ();
   Lacc   = gsl_interp_accel_alloc ();
   wacc   = gsl_interp_accel_alloc ();
   Racc   = gsl_interp_accel_alloc ();
@@ -528,6 +545,7 @@ void Equilibrium::Solve ()
   ff[0]   = 0.;
   ggr2[0] = 1. + epsa*epsa * (H2c*H2c + V2c*V2c);
   RR2[0]  = 1.;
+  IR2[0]  = 1.;
   It[0]   = 0.;
   Ip[0]   = 0.;
 
@@ -563,11 +581,14 @@ void Equilibrium::Solve ()
 	     - rr[i]*rr[i]*rr[i] * (1. + epsa*epsa*g2[i]) * epsa*epsa * (f3p/ff1 - f1p*ff3/ff1/ff1) * exp(- epsa*epsa * f3[i]/f1[i]) /f1[i]
 	     - rr[i]*rr[i]*rr[i] * (1. + epsa*epsa*g2[i])                                           * exp(- epsa*epsa * f3[i]/f1[i]) * f1p/ff1/ff1;
   
-      double gr2 = 3.*rr[i]*rr[i]/4. - HHfunc(1, i) + HPfunc(1, i) * HPfunc(1, i) /2.;
+      double gr2 = 3. *rr[i]*rr[i]/4. -    HHfunc(1, i)                  + HPfunc(1, i) * HPfunc(1, i) /2.;
+      double ir2 = 13.*rr[i]*rr[i]/4. - 3.*HHfunc(1, i) + r*HPfunc(1, i) + HPfunc(1, i) * HPfunc(1, i) /2.;
       for (int n = 2; n <= Ns; n++)
 	{
 	  gr2 += (HPfunc(n, i) * HPfunc(n, i) + double (n*n - 1) * HHfunc(n, i) * HHfunc(n, i) /r/r)/2.;
 	  gr2 += (VPfunc(n, i) * VPfunc(n, i) + double (n*n - 1) * VVfunc(n, i) * VVfunc(n, i) /r/r)/2.;
+	  ir2 += (HPfunc(n, i) * HPfunc(n, i) + double (n*n - 1) * HHfunc(n, i) * HHfunc(n, i) /r/r)/2.;
+	  ir2 += (VPfunc(n, i) * VPfunc(n, i) + double (n*n - 1) * VVfunc(n, i) * VVfunc(n, i) /r/r)/2.;
 	}
 
       double R2 = rr[i]*rr[i]/2. - rr[i]*HPfunc(1, i) - 2.*HHfunc(1, i);
@@ -575,13 +596,18 @@ void Equilibrium::Solve ()
       ff  [i] = ff1 + epsa*epsa * ff3;
       ggr2[i] = 1.  + epsa*epsa * gr2;
       RR2 [i] = 1.  - epsa*epsa * R2;
+      IR2 [i] = 1.  + epsa*epsa * ir2;
       It  [i] =   2.*M_PI * (f1[i] + epsa*epsa * f3[i] + epsa*epsa * f1[i] * gr2);
       Ip  [i] = - 2.*M_PI * g2[i];
     }
   q2[0] = qc * (1. + epsa*epsa * (H2c*H2c + V2c*V2c));
 
   for (int i = 0; i <= Nr; i++)
-    PsiN[i] = Psi[i] /Psi[Nr];
+    {
+      Tf[i]   = B0*R0 * (1. + epsa*epsa*g2[i]);
+      mu0P[i] = B0*B0 * epsa*epsa * p2[i];
+      PsiN[i] = Psi[i] /Psi[Nr];
+    }
 
   delete[] y1; delete[] dy1dr; delete[] err1;
 
@@ -626,6 +652,9 @@ void Equilibrium::Solve ()
   gsl_spline_init (q2spline,  rr, q2,   Nr+1);
   gsl_spline_init (gr2spline, rr, ggr2, Nr+1);
   gsl_spline_init (R2spline,  rr, RR2,  Nr+1);
+  gsl_spline_init (I2spline,  rr, IR2,  Nr+1);
+  gsl_spline_init (sspline,   rr, s,    Nr+1);
+  gsl_spline_init (qspline,   rr, q2,   Nr+1);
   gsl_spline_init (Itspline,  rr, It,   Nr+1);
   gsl_spline_init (Ipspline,  rr, Ip,   Nr+1);
 
@@ -633,40 +662,48 @@ void Equilibrium::Solve ()
     {
       Jt[i] = gsl_spline_eval_deriv (Itspline, rr[i], Itacc);
       Jp[i] = gsl_spline_eval_deriv (Ipspline, rr[i], Ipacc);
+      DI[i] = GetDI (rr[i]);
+      DR[i] = GetDR (rr[i]);
     }
+  DI[0] = DI[1];
+  DR[0] = DR[1];
 
   // ............................
   // Calculate li and beta values
   // ............................
-  double* y2   = new double[3];
-  double* err2 = new double[3];
+  double* y2   = new double[4];
+  double* err2 = new double[4];
   rhs_chooser  = 2;
 
   r     = eps;
   h     = h0;
   count = 0;
   y2[0] = 0.;
-  y2[1] = 0.;
+  y2[1] = 0.; 
   y2[2] = 0.;
+  y2[3] = 0.;
 
   do
     {
-      CashKarp45Adaptive (3, r, y2, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+      CashKarp45Adaptive (4, r, y2, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
     }
   while (r < 1. - h);
-  CashKarp45Fixed (3, r, y2, err2, 1. - r);
+  CashKarp45Fixed (4, r, y2, err2, 1. - r);
 
-  li    = 2.*y2[0] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
-  betat = 2. * epsa*epsa * y2[1] /y2[2];
-  betap = 2. * y2[1] /y2[0];
-  betaN = 20. * betat /epsa /ff[Nr] /ggr2[Nr];
+  amean  = (GetR (1., M_PI, 1) - GetR (1., 0., 1)) /2.;
+  li     = 2.*y2[0] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
+  betat  = 2. * epsa*epsa * y2[1] /y2[2];
+  betap  = 2. * y2[1] /y2[0];
+  betat1 = 2. * epsa*epsa * y2[1] /y2[3];
+  betap1 = 2. * y2[1] /y2[3] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
+  betaN  = 20. * betat * (amean /epsa) /epsa /ff[Nr] /ggr2[Nr];
 
   delete[] y2; delete[] err2;
 
-  printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It = %10.3e\n",
+  printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It     = %10.3e\n",
 	  q2[0], q0[Nr], q2[Nr], Ip[Nr], It[Nr]);
-  printf ("li = %10.3e betat = %10.3e betap = %10.3e betaN = %10.3e\n",
-  	  li, betat, betap, betaN);
+  printf ("li = %10.3e betat = %10.3e betap = %10.3e betaN = %10.3e betat1 = %10.3e betap1 = %10.3e\n",
+  	  li, betat, betap, betaN, betat1, betap1);
 
   // ...........................
   // Calculate shaping functions
@@ -856,12 +893,12 @@ void Equilibrium::Solve ()
   // ........
   printf ("Cleaning up:\n");
   
-  delete[] rr;  delete[] p2; delete[] f1;  delete[] f3; delete[] g2;
-  delete[] q0;  delete[] q2; delete[] It;  delete[] Ip; delete[] Jt;
-  delete[] Jp;  delete[] pp; delete[] ppp; delete[] qq; delete[] qqq;
-  delete[] s;   delete[] s2; delete[] S1;  delete[] S2; delete[] P1;
-  delete[] P2;  delete[] P3; delete[] P3a; delete[] ff; delete[] ggr2;
-  delete[] RR2; 
+  delete[] rr;  delete[] p2;  delete[] f1;  delete[] f3; delete[] g2;
+  delete[] q0;  delete[] q2;  delete[] It;  delete[] Ip; delete[] Jt;
+  delete[] Jp;  delete[] pp;  delete[] ppp; delete[] qq; delete[] qqq;
+  delete[] s;   delete[] s2;  delete[] S1;  delete[] S2; delete[] P1;
+  delete[] P2;  delete[] P3;  delete[] P3a; delete[] ff; delete[] ggr2;
+  delete[] RR2; delete[] IR2;
  
   gsl_spline_free (Itspline);
   gsl_spline_free (Ipspline);
@@ -870,6 +907,9 @@ void Equilibrium::Solve ()
   gsl_spline_free (q2spline);
   gsl_spline_free (gr2spline);
   gsl_spline_free (R2spline);
+  gsl_spline_free (I2spline);
+  gsl_spline_free (sspline);
+  gsl_spline_free (qspline);
   gsl_spline_free (Lspline); 
   gsl_spline_free (wspline); 
   gsl_spline_free (Rspline); 
@@ -882,6 +922,9 @@ void Equilibrium::Solve ()
   gsl_interp_accel_free (q2acc);
   gsl_interp_accel_free (gr2acc);
   gsl_interp_accel_free (R2acc);
+  gsl_interp_accel_free (I2acc);
+  gsl_interp_accel_free (sacc);
+  gsl_interp_accel_free (qacc);
   gsl_interp_accel_free (Lacc);
   gsl_interp_accel_free (wacc);
   gsl_interp_accel_free (Racc);
@@ -904,7 +947,8 @@ void Equilibrium::Solve ()
 
   delete[] Rbound;   delete[] Zbound; delete[] tbound; delete[] wbound0; delete[] tbound0;
   delete[] wbound;   delete[] R2b;    delete[] grr2b;  delete[] Lfunc;   delete[] dRdtheta; 
-  delete[] dZdtheta; delete[] Psi;    delete[] PsiN;
+  delete[] dZdtheta; delete[] Psi;    delete[] PsiN;   delete[] Tf;      delete[] mu0P;
+  delete[] DI;       delete[] DR;
  } 
 
 // #################################################
@@ -1036,6 +1080,14 @@ void Equilibrium::WriteNetcdf (double sa)
       P3_x.putVar (P3);
       NcVar P3a_x = dataFile.addVar ("P3a",  ncDouble, r_d);
       P3a_x.putVar (P3a);
+      NcVar T_x   = dataFile.addVar ("T",    ncDouble, r_d);
+      T_x.putVar (Tf);
+      NcVar mP_x  = dataFile.addVar ("mu0P", ncDouble, r_d);
+      mP_x.putVar (mu0P);
+      NcVar DI_x  = dataFile.addVar ("DI",   ncDouble, r_d);
+      DI_x.putVar (DI);
+      NcVar DR_x  = dataFile.addVar ("DR",   ncDouble, r_d);
+      DR_x.putVar (DR);
  
       NcVar Hn_x  = dataFile.addVar ("Hn",  ncDouble, shape_d);
       Hn_x.putVar (HHfunc.data());
@@ -1112,7 +1164,7 @@ void Equilibrium::CalculateEFIT ()
     string JSONFilename = "../Inputs/Equilibrium.json";
     json   JSONData     = ReadJSONFile (JSONFilename);
 
-    EFIT  = JSONData["EFIT"].get<int>     ();
+    EFIT  = JSONData["EFIT"] .get<int>    ();
     NRBOX = JSONData["NRBOX"].get<int>    ();
     NZBOX = JSONData["NZBOX"].get<int>    ();
     rc    = JSONData["rc"]   .get<double> ();
@@ -1507,6 +1559,63 @@ double Equilibrium::Getp2pp (double r)
     + 4. * pc * mu * (mu-1.) * r*r * pow (1. - r*r, mu-2.);
 }
 
+// ####################
+// Function to return q
+// ####################
+double Equilibrium::Getq (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (qspline, 1., qacc);
+  else
+    return gsl_spline_eval (qspline, r, qacc);
+}
+
+// ####################
+// Function to return s
+// ####################
+double Equilibrium::Gets (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (sspline, 1., qacc);
+  else
+    return gsl_spline_eval (sspline, r, qacc);
+}
+
+// #####################
+// Function to return DI
+// #####################
+double Equilibrium::GetDI (double r)
+{
+  double pp = Getp2p (r);
+  double q  = Getq (r);
+  double s  = Gets (r);
+
+  return - 0.25 - epsa*epsa * 2. * r*pp * (1. - q*q) /s/s; 
+}
+
+// #####################
+// Function to return DR
+// #####################
+double Equilibrium::GetDR (double r)
+{
+  double pp  = Getp2p (r);
+  double H1p = GetHnp (1, r);
+  double q   = Getq (r);
+  double s   = Gets (r);
+
+  return - epsa*epsa * 2. * r*pp * (1. - q*q) /s/s - epsa*epsa * 2. * pp * q*q * H1p /s; 
+}
+
+// ######################
+// Function to return Hnp
+// ######################
+double Equilibrium::GetHnp (int n, double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (HPspline[n], 1., HPacc[n]);
+  else
+    return gsl_spline_eval (HPspline[n], r, HPacc[n]);
+}
 // #######################################
 // Function to return relabeling parameter
 // #######################################
@@ -2361,6 +2470,7 @@ void Equilibrium::Rhs (double r, double* y, double* dydr)
       dydr[0] = f*f * gr2 /r;
       dydr[1] = r * p2 * R2;
       dydr[2] = r * (1. + eps*eps * g2) * (1. + eps*eps * g2);
+      dydr[3] = r * R2;
     }
   else if (rhs_chooser == 3)
     {

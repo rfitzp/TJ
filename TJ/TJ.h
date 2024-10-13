@@ -87,6 +87,7 @@ class TJ
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from JSON file)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from JSON file)
   int    FREE;    // Flag for free/fixed boundary calculation (read from JSON file)
+  int    EQLB;    // Flag for equilibrium calculation only (read from JSON file)
 
   double EPSF;    // Step-length for finite difference determination of derivatives
 
@@ -336,7 +337,7 @@ class TJ
   Array<complex<double>,2> Je;      // Poloidal harmomics of current on plasma boundary associated with ideal eigenfunctions
   double*                  deltaW;  // Total perturbed ideal potential energy 
   double*                  deltaWp; // Plasma contribution to perturbed ideal potential energy
-  double*                  deltaWv; // Plasma contribution to perturbed ideal potential energy
+  double*                  deltaWv; // Vacuum contribution to perturbed ideal potential energy
   Array<complex<double>,2> Psiy;    // Psi values on plasma boundary associated with ideal eigenfunctions
   Array<complex<double>,2> Jy;      // Current on plasma boundary associated with ideal eigenfunctions
   Array<complex<double>,2> Xiy;     // Xi values on plasma boundary associated with ideal eigenfunctions
