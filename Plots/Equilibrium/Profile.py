@@ -8,10 +8,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4 as nc
 
+fn1 = '../../Outputs/Equilibrium/Equilibrium.nc'
+ds1 = nc.Dataset(fn1)
+r1  = ds1['r']
+S1  = ds1['S1']
+S2  = ds1['S2']
+S3  = ds1['S3']
+S4  = ds1['S4']
+
 fn   = '../../Outputs/TJ/TJ.nc'
 ds   = nc.Dataset(fn)
 r    = ds['r']
-S1   = ds['S1']
 P1   = ds['P1']
 P2   = ds['P2']
 P3   = ds['P3']
@@ -26,14 +33,18 @@ plt.subplot (2, 2, 1)
 
 plt.xlim (0., 1.)
 
-plt.plot    (r, S1, color = 'blue',  linewidth = 2,   linestyle = 'solid')
-plt.axhline (0.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.plot    (r1, S1, color = 'blue',   linewidth = 2,   linestyle = 'solid',  label = '$S_1$')
+plt.plot    (r1, S2, color = 'green',  linewidth = 2,   linestyle = 'solid',  label = '$S_2$')
+plt.plot    (r1, S3, color = 'yellow', linewidth = 2,   linestyle = 'solid',  label = '$S_3$')
+plt.plot    (r1, S4, color = 'cyan',   linewidth = 2,   linestyle = 'solid',  label = '$S_4$')
+plt.axhline (0.,     color = 'black',  linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
     plt.axvline (rx, color = 'red', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\hat{r}$', fontsize = "15")
-plt.ylabel (r'$S_1$',     fontsize = "15")
+plt.ylabel (r'$S_n$',     fontsize = "15")
+plt.legend (fontsize = "15")
 
 plt.subplot (2, 2, 2)
 

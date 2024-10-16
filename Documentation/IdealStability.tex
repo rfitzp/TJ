@@ -16,7 +16,7 @@
 \end{abstract}
 \maketitle
 
-\section{Analysis}
+\section{Introduction}
 \subsection{Reference Document}
 The document ``{\em Calculation of Tearing Mode Stability in an Inverse Aspect-Ratio Expanded Tokamak Equilibrium}", by R.~Fitzpatrick,  is, henceforth,
 referred to as TJ. 
@@ -26,113 +26,350 @@ All lengths are normalized to  the major radius of the plasma magnetic axis, $R_
 are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All currents are normalized to $B_0\,R_0/\mu_0$. All current densities are normalized to $B_0/(\mu_0\,R_0)$.  All plasma pressures are normalized to $B_0^{\,2}/\mu_0$.
 All toroidal electromagnetic torques are normalized to $B_0^{\,2}\,R_0^{\,3}/\mu_0$. 
 
-\subsection{Plasma Potential Energy}
-The perturbed magnetic field in the plasma is written 
+\subsection{Axisymmetric Tokamak Plasma Equilibrium}\label{s3}
+Let $R$, $\phi$, $Z$ be right-handed cylindrical coordinates whose Jacobian 
+is
 \begin{equation}
-{\bf b} = \nabla\times (\bxi\times{\bf B}).
+(\nabla R\times \nabla\phi\cdot\nabla Z)^{-1} = R.
 \end{equation}
+Note that $|\nabla\phi|=1/R$. 
+
+Let $r$, $\theta$, $\phi$ be right-handed flux-coordinates whose
+Jacobian is
+\begin{equation}\label{jac}
+{\cal J}(r,\theta)\equiv (\nabla r\times \nabla\theta\cdot\nabla\phi)^{-1}= r\,R^{\,2}.
+\end{equation}
+Note that $r=r(R,Z)$ and $\theta=\theta(R,Z)$. 
+The magnetic axis corresponds to $r=0$. The inboard mid-plane corresponds to $\theta=0$. 
+
+Consider an axisymmetric tokamak equilibrium whose magnetic field takes the form
+\begin{equation}
+{\bf B}(r,\theta) = f(r)\,\nabla\phi\times \nabla r + g(r)\,\nabla\phi = f\,\nabla(\phi-q\,\theta)\times \nabla r,
+\end{equation}
+where
+\begin{equation}\label{q}
+q(r) = \frac{r\,g}{f}
+\end{equation}
+is the safety-factor. Note that ${\bf B}\cdot\nabla r=0$, which implies that $r$ is a magnetic flux-surface label.
+We require $g=1$ on the magnetic axis in order to ensure that the normalized toroidal magnetic field-strength at the  axis is unity.  
+Note that 
+\begin{align}
+B^\theta&= \frac{f}{\cal J},\\[0.5ex]
+B^\phi &=\frac{f\,q}{\cal J}.
+\end{align}
+
+Equilibrium force balance requires that
+\begin{equation}\label{e15c}
+ \nabla P={\bf J}\times {\bf B},
+\end{equation}
+where $P(r)$ is the equilibrium scalar plasma pressure, and ${\bf J}=\nabla\times {\bf B}$ the equilibrium plasma current density. 
+
+\subsection{Plasma Perturbation}
+The perturbed magnetic field is written 
+\begin{equation}
+{\bf b} = \nabla\times (\bxi\times{\bf B}),
+\end{equation}
+where $\bxi$ is the plasma displacement. All perturbed quantities are assumed to vary as $\exp(-{\rm i}\,n\,\phi)$. According to Eqs.~(2), (25), and (26) of TJ, 
+\begin{align}
+{\cal J}\,b^r&=\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y,
+\end{align}
+where
+\begin{align}\label{e10}
+y(r,\theta)&= f\,\xi^r.
+\end{align}
+Furthermore, if
+\begin{align}
+b_\phi = n\,z(r,\theta)
+\end{align}
+then Eqs.~(38), (39), (47), (48), and (78) of TJ yield
+\begin{align}
+b_\theta = -\frac{\alpha_g}{{\rm i}\,n}\left(\frac{\partial}{\partial\theta} - {\rm i}\,n\,q\right)y +\alpha_p\,R^2\,y +{\rm i}\,\frac{\partial z}{\partial\theta},
+\end{align}
+where
+\begin{align}
+\alpha_p(r) &= \frac{r\,P'}{f^2},\label{ap}\\[0.5ex]
+\alpha_g (r)&= \frac{g'}{f}.\label{ag}
+\end{align}
+Thus,
+\begin{equation}\label{e15}
+{\bf B}\cdot{\bf b} -\xi^r\,P' = B^\theta\,b_\theta+B^\phi\,b_\phi - \xi^r\,P'=
+\frac{{\rm i}\,f}{\cal J}\,\left(\frac{\partial}{\partial\theta}- {\rm i}\,n\,q\right)\left(\frac{\alpha_g}{n}\,y+z\right).
+\end{equation}
+
+\subsection{Plasma Potential Energy}
 The force operator in the plasma takes the form 
 \begin{equation}
 {\bf F}(\bxi)= \nabla({\mit\Gamma}\,P\,\nabla\cdot\bxi) - {\bf B}\times(\nabla\times {\bf b})+\nabla(\bxi\cdot\nabla P)+{\bf J}\times  {\bf b}.
 \end{equation}
-Finally, the plasma potential energy is written 
-\begin{equation}
-\delta W_p = \frac{1}{2}\int\left[{\mit\Gamma}\,P\,(\nabla\cdot\bxi^\ast)\,(\nabla\cdot\bxi)+ \nabla\times (\bxi^\ast\times {\bf B})\cdot {\bf b}
-+(\nabla\cdot\bxi^\ast)\,(\bxi\cdot\nabla P)+
-{\bf J}\times \bxi^\ast\,\cdot{\bf b}\right]d\tau,
-\end{equation}
-where $d\tau$ denotes a volume element, and the integral is over the plasma volume. 
+The plasma potential energy in the region lying between the magnetic  flux-surfaces whose labels are $r_1$ and $r_2$ is 
+\begin{align}
+\delta W_{12} &= \frac{1}{2}\int_{r_1}^{r_2}\oint\oint\left[{\mit\Gamma}\,P\,(\nabla\cdot\bxi^\ast)\,(\nabla\cdot\bxi)+ \nabla\times (\bxi^\ast\times {\bf B})\cdot {\bf b}
++(\nabla\cdot\bxi^\ast)\,(\bxi\cdot\nabla P)\right.\nonumber\\[0.5ex]&\phantom{=}
+\left.+{\bf J}\times \bxi^\ast\,\cdot{\bf b}\right]{\cal J}\,dr\,d\theta\,d\phi.
+\end{align}
 
 Now,
 \begin{align}
-{\mit\Gamma}\,P\,(\nabla\cdot\bxi^\ast)\,(\nabla\cdot\bxi)&=\nabla\cdot[{\mit\Gamma}\,P\,\bxi^\ast\,\nabla\cdot\bxi)]-\bxi^\ast\cdot\nabla(
+{\mit\Gamma}\,P\,(\nabla\cdot\bxi^\ast)\,(\nabla\cdot\bxi)&=\nabla\cdot[{\mit\Gamma}\,P\,\bxi^\ast\,\nabla\cdot\bxi]-\bxi^\ast\cdot\nabla(
 {\mit\Gamma}\,P\,\nabla\cdot\bxi),\\[0.5ex]
  \nabla\times (\bxi^\ast\times {\bf B})\cdot {\bf b}&= \nabla\cdot[(\bxi^\ast\times {\bf B})\times {\bf b}] + \bxi^\ast\times {\bf B}\cdot\nabla\times {\bf b},\\[0.5ex]
  (\nabla\cdot\bxi^\ast)\,(\bxi\cdot\nabla P)&=\nabla\cdot(\bxi^\ast\,\bxi\cdot\nabla P) -\bxi^\ast\cdot\nabla(\bxi\cdot\nabla P),
 \end{align}
 so
 \begin{align}
-\delta W_p &= \frac{1}{2}\int\left\{\nabla\cdot[{\mit\Gamma}\,P\,\bxi^\ast\,\nabla\cdot\bxi+ (\bxi^\ast\times {\bf B})\times {\bf b}+\bxi^\ast\,\bxi\cdot\nabla P]\right.\nonumber\\[0.5ex]&\left.-\bxi^\ast\cdot[ \nabla({\mit\Gamma}\,P\,\nabla\cdot\bxi) - {\bf B}\times(\nabla\times {\bf b})+\nabla(\bxi\cdot\nabla P)+{\bf J}\times  {\bf b}]\right\}d\tau,
+\delta W_{12} &= \frac{1}{2}\int_{r_1}^{r_2}\oint\oint\left\{\nabla\cdot[{\mit\Gamma}\,P\,\bxi^\ast\,\nabla\cdot\bxi+ (\bxi^\ast\times {\bf B})\times {\bf b}+\bxi^\ast\,\bxi\cdot\nabla P]\right.\nonumber\\[0.5ex]&\left.-\bxi^\ast\cdot[ \nabla({\mit\Gamma}\,P\,\nabla\cdot\bxi) - {\bf B}\times(\nabla\times {\bf b})+\nabla(\bxi\cdot\nabla P)+{\bf J}\times  {\bf b}]\right\}{\cal J}\,dr\,d\theta\,d\phi,
 \end{align}
 which yields
 \begin{align}
-\delta W_p &= \frac{1}{2}\left(\oint\oint{\cal J}\,\nabla r\cdot[{\mit\Gamma}\,P\,\bxi^\ast\,\nabla\cdot\bxi+ (\bxi^\ast\times {\bf B})\times {\bf b}+\bxi^\ast\,\bxi\cdot\nabla P]\,d\theta\,d\phi\right)_{\hat{r}=1-}\nonumber\\[0.5ex]
-&-\frac{1}{2}\int\bxi^\ast\cdot{\bf F}(\bxi)\,d\tau,
+\delta W_{12} &= \frac{1}{2}\left(\oint\oint{\cal J}\,\nabla r\cdot[{\mit\Gamma}\,P\,\bxi^\ast\,\nabla\cdot\bxi+ (\bxi^\ast\times {\bf B})\times {\bf b}+\bxi^\ast\,\bxi\cdot\nabla P]\,d\theta\,d\phi\right)_{r_1}^{r_2}\nonumber\\[0.5ex]
+&-\frac{1}{2}\int_{r_1}^{r_2}\oint\oint \bxi^\ast\cdot{\bf F}(\bxi)\,{\cal J}\,dr\,d\theta\,d\phi,
 \end{align}
 or
 \begin{align}
-\delta W_p &= \frac{1}{2}\left(\oint\oint{\cal J}\,\xi^{r\,\ast}\,[{\mit\Gamma}\,P\,\nabla\cdot\bxi -{\bf B}\cdot{\bf b} + \xi^r\,P']\,d\theta\,d\phi\right)_{\hat{r}=1_{-}}-\frac{1}{2}\int\bxi^\ast\cdot{\bf F}(\bxi)\,d\tau,
+\delta W_{12} &= \frac{1}{2}\left[\oint\oint{\cal J}\,\xi^{r\,\ast}\,({\mit\Gamma}\,P\,\nabla\cdot\bxi -{\bf B}\cdot{\bf b} + \xi^r\,P')\,d\theta\,d\phi\right]_{r_1}^{r_2}\nonumber\\[0.5ex]&\phantom{=}-\frac{1}{2}\int_{r_1}^{r_2}\oint\oint\bxi^\ast\cdot{\bf F}(\bxi)\,{\cal J}\,dr\,d\theta\,d\phi,
 \end{align}
-where use has been made of the fact that ${\bf B}\cdot\nabla r = 0$. However, the trial function is calculated with ${\bf F}(\bxi)={\bf 0}$ and
-$\nabla\cdot\bxi=0$  in the plasma. Moreover, $P'=0$ at the plasma boundary. Thus,
+where use has been made of the fact that ${\bf B}\cdot\nabla r = 0$.  However, the plasma perturbation is calculated assuming that ${\bf F}(\bxi)={\bf 0}$ and
+$\nabla\cdot\bxi=0$.   Thus, making use of Eqs.~(\ref{e10}) and (\ref{e15}), we get
 \begin{equation}
-\delta W_p = -\frac{1}{2}\left(\oint\oint {\cal J}\,\xi^{r\,\ast}\,{\bf B}\cdot{\bf b}\,d\theta\,d\phi\right)_{\hat{r}=1_{-}}.
+\delta W_{12} = \frac{1}{2}\int_{r_1}^{r_2}\left[-{\rm i}\,y^\ast\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)\left(\frac{\alpha_g}{n}\,y+z\right)d\theta\,d\phi\right]_{r_1}^{r_2},
 \end{equation}
+which reduces to
+\begin{equation}
+\delta W_{12}= \pi^2\left[\sum_m\,y_m^\ast\,(m-n\,q)\left(\frac{\alpha_g}{n}\,y_m+z_m\right)\right]_{r_1}^{r_2}.
+\end{equation}
+Now, according to Eqs.~(98) and (99) of TJ, 
+\begin{align}\label{epsi}
+y_m(r) &= \left(\frac{\psi_m}{m-n\,q}\right)_r,\\[0.5ex]
+z_m(r)&= \left(\frac{k_m\,\psi_m+Z_m}{m-n\,q}\right)_r,
+\end{align}
+where
+$k_m(r)$ is real, and is specified in Eq.~(100) of TJ. Thus, we get 
+\begin{equation}
+\delta W_{12}=\left(\sum_m\psi_m^\ast\,\chi_m\right)_r
+\end{equation}
+where
+\begin{align}\label{e29}
+\chi_m(r)&=
+ \left[\frac{\pi^2\,(k_m'\,\psi_m+Z_m)}{m-n\,q}\right]_r,\\[0.5ex]
+k_m'(r) &=\left( k_m + \frac{\alpha_g}{n} \right)_r= \left[\frac{\alpha_g\,(m\,q\,c_m^m+n\,r^2)+\alpha_p\,m\,d_m^m}{m^2\,c_m^m+n^2\,r^2}\right]_r,\label{e30}
+\end{align}
+and use has been made of Eq.~(100) of TJ. 
 
-Now, 
+\subsection{Magnetic Axis}
+Let the $\psi_m(r)$ and the $Z_m(r)$ be solutions of the outer region o.d.e.s that are well behaved at $r=0$. It follows that
 \begin{equation}
-{\bf B}\cdot{\bf b} = B^\theta\,b_\theta+B^\phi\,b_\phi = \frac{f}{{\cal J}}\left({\rm i}\,\frac{\partial z}{\partial \theta} + n\,q\,z\right),
+\left(\sum_m\psi_m^\ast\,\chi_m\right)_{0}=0.
 \end{equation}
-where use has been made of Eqs.~(4), (6), (7), (47), (48), and (78) of TJ.
-But, according to Eq.~(26) of TJ,
-\begin{equation}
-\xi^r = \frac{y}{f}.
+Hence, 
+\begin{equation}\label{e1}
+\delta W_p(r) =\left(\sum_m\psi_m^\ast\,\chi_m\right)_r
 \end{equation}
-Thus, we obtain
-\begin{equation}
-\delta W_p = -\frac{1}{2}\left(\oint\oint y^\ast\left[{\rm i}\,\frac{\partial z}{\partial \theta}+q\,n\,z\right]d\theta\,d\phi\right)_{\hat{r}=1_{-}}=
-\pi^2\left[\sum_m y_m^{\,\ast}\,(m-n\,q)\,z_m\right]_{\hat{r}=1_{-}},
-\end{equation}
-which yields 
-\begin{equation}
-\delta W_p  = \pi^2\left(\sum_m \frac{\psi_m^{\,\ast}\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}},
-\end{equation}
-where use has been made of Eqs.~(98) and (99) of TJ.
+is the plasma potential energy in the region lying between the magnetic axis and the magnetic flux-surface whose label is $r$. 
 
-\subsection{Electromagnetic Torque and Plasma Energy}
-According to Eq.~(117) of TJ, the net toroidal electromagnetic torque acting on a plasma is given by
+\subsection{Rational Surfaces}
+At a rational surface, $r=r_m$, at which $m-n\,q(r_m)=0$ for some $m$, the non-resonant components of $\psi_m$ and $\chi_m$ are continuous, the 
+large solution is absent (i.e., there is zero reconnected magnetic flux), and the small solution is discontinuous (i.e., there is a current sheet). It is easily shown that 
+\begin{equation}
+\left(\sum_m\psi_m^\ast\,\chi_m\right)_{r_{m-}}^{r_{m+}}=0.
+\end{equation}
+In other words, there is no contribution to the potential energy from the surface. Thus, Eq.~(\ref{e1}) holds even when the region between the
+magnetic axis and the flux-surface whose label is $r$ contains rational surfaces. 
+
+\subsection{Toroidal Electromagnetic Torques}
+The toroidal electromagnetic torque acting on the plasma lying between the magnetic axis and the flux-surface whose label is $r$ is
+\begin{equation}
+T_\phi(r) = {\rm i}\,n\,\pi^2\left(\sum_m\frac{Z_m^\ast\,\psi_m-\psi_m^\ast\,Z_m}{m-n\,q}\right)_{r}.
+\end{equation}
+However, this torque is zero for ideal solutions, which are characterized by zero reconnected magnetic flux at the various rational surfaces in the plasma.
+It follows that
+\begin{equation}
+\sum_m\frac{Z_m^\ast\,\psi_m}{m-n\,q} = \sum_m\frac{\psi_m^{\ast}\,Z_m}{m-n\,q},
+\end{equation}
+which implies that
+\begin{equation}\label{e36}
+\sum_m\psi_m^\ast\,\chi_m= \sum_m \chi_m^\ast\,\psi_m,
+\end{equation}
+where use has been made of Eq.~(\ref{e29}). 
+Hence, we deduce that the potential energy specified in Eq.~(\ref{e1}) is a real quantity. 
+
+\subsection{Ideal Eigenfunctions}
+The complete set of ideal solutions of the outer region o.d.e.s is written
 \begin{align}
-T_\phi&={\rm i}\,n\,\pi^2\left(\sum_m\frac{Z_m^\ast\,\psi_m-\psi_m^\ast\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}}
-=2\,n\,\pi^2\,{\rm Im}\left(\sum_m\frac{\psi_m^\ast\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}}.
+\psi_{m\,m'}^i(r)&= \psi_{m\,m'}^a(r)-\sum_{k}\psi_{m\,k}^u(r)\,{\mit\Pi}_{k\,m'}^a,\\[0.5ex]
+Z_{m\,m'}^i(r)&= Z_{m\,m'}^a(r)-\sum_{k}Z_{m\,k}^u(r)\,{\mit\Pi}_{k\,m'}^a,
 \end{align}
-The previous two equations imply that
+where $m=m_j$, $m'=m_{j'}$, and all other quantities are defined in Sects.~VIII.B and VIII.D of TJ. 
+Here, $m$ is the poloidal harmonic,  $m'$ is the dominant poloidal harmonic close to the magnetic axis, and $k$ denotes the $k$th rational surface. It follows
+from the definitions of the various quantities that the reconnected fluxes at the rational surfaces in the plasma
+associated with these eigenfunctions are all zero. We can also write
 \begin{equation}
-T_\phi = 2\,n\,{\rm Im}(\delta W_p).
+\chi^i_{m\,m'}(r) = \left[\frac{\pi^2\,(k_{m}'\,\psi^i_{m\,m'}+Z_{m\,m'}^i)}{m-n\,q}\right]_r,
 \end{equation}
-However, an ideal plasma has zero torque acting on it, so 
-\begin{equation}
-\left(\sum_m\frac{Z_m^\ast\,\psi_m-\psi_m^\ast\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}}=0,
-\end{equation}
-which implies that $\delta W_p$ is real. 
+where use has been made of Eq.~(\ref{e29}).
 
-\subsection{Boundary Current Sheet}
-According to RWM, the trial solutions used to calculate $\delta W$ are such that  $\psi_m(\hat{r})$ is continuous at the edge of the plasma, $\hat{r}=1$, 
-but $Z_m(\hat{r})$ is, in general, discontinuous. The discontinuity in $Z_m$ at the plasma boundary is due to the fact that the pressure balance
-matching condition is not satisfied. The discontinuity is also associated with a (fictitious) current sheet flowing around the plasma boundary.
+\section{Stability to Internal Ideal Modes}
+\subsection{Plasma Energy Matrix}
+We can write a general ideal solution as
+\begin{align}
+\psi_m(r) &= \sum_{m'}\psi_{m\,m'}^i(r)\,\alpha_{m'},\\[0.5ex]
+\chi_m(r) &= \sum_{m'}\chi_{m\,m'}^i(r)\,\alpha_{m'}.
+\end{align}
+The previous two equations can be written more succinctly as
+\begin{align}\label{e41}
+\underline{\psi}&= \underline{\underline{\psi}}^i\,\underline{\alpha},\\[0.5ex]
+\underline{\chi}&= \underline{\underline{\chi}}^i\,\underline{\alpha},\label{e42}
+\end{align}
+where $\underline{\psi}$ is the column vector of the $\psi_m$ values, $\underline{\underline{\psi}}^i$ is the matrix of the $\psi_{mm'}^i$ values,
+et cetera. 
+Equation~(\ref{e1}) then becomes
+\begin{equation}
+\delta W_p= \underline{\psi}^\dag\,\underline{\chi},
+\end{equation} 
+or
+\begin{equation}\label{e44}
+\delta W_p = \underline{\alpha}^\dag\,\underline{\underline{\psi}}^{i\,\dag}\,\underline{\underline{\chi}}^i\,\underline{\alpha}.
+\end{equation}
+Furthermore, Eq.~(\ref{e36}) gives
+\begin{equation}
+\underline{\psi}^\dag\,\underline{\chi} = \underline{\chi}^\dag\,\underline{\psi},
+\end{equation}
+which implies that 
+\begin{equation}
+ \underline{\alpha}^\dag\,\underline{\underline{\psi}}^{i\,\dag}\,\underline{\underline{\chi}}^i\,\underline{\alpha}= 
+ \underline{\alpha}^\dag\,\underline{\underline{\chi}}^{i\,\dag}\,\underline{\underline{\psi}}^i\,\underline{\alpha}.
+ \end{equation}
+ However, because the $\alpha_m$ are arbitrary, we deduce that
+ \begin{equation}\label{e47}
+ \underline{\underline{\psi}}^{i\,\dag}\,\underline{\underline{\chi}}^i= \underline{\underline{\chi}}^{i\,\dag}\,\underline{\underline{\psi}}^i.
+ \end{equation}
 
-Now, $\alpha_p=\alpha_g=0$ at $\hat{r}=1$, assuming that there are no edge equilibrium currents. It follows from Eqs.~ (78) and
-(99) of TJ that 
-\begin{equation}
-x_m= \frac{n\,Z_m}{m-n\,q}
+Let us define the plasma energy matrix, $\underline{\underline{W}}$, such that 
+\begin{equation}\label{e48}
+\underline{\underline{\chi}}^i = \underline{\underline{W}}\,\underline{\underline{\psi}}^i.
 \end{equation}
-at the plasma boundary. Thus, if ${\bf K}$ is the current sheet density then Eqs.~(66) and (67) of TJ suggest that
+ It is easily seen that
+ \begin{align}
+ \underline{\underline{\psi}}^{i\,\dag}\,\underline{\underline{\chi}}^i= \underline{\underline{\psi}}^{i\,\dag}\underline{\underline{W}}\,
+ \underline{\underline{\psi}}^i,\\[0.5ex]
+ \underline{\underline{\chi}}^{i\,\dag}\,\underline{\underline{\psi}}^i= \underline{\underline{\psi}}^{i\,\dag}\underline{\underline{W}}^{\dag}\,
+ \underline{\underline{\psi}}^i.
+ \end{align}
+ Making use of Eq.~(\ref{e47}), we obtain
+ \begin{equation}
+ \underline{\underline{\psi}}^{i\,\dag}\underline{\underline{W}}\,
+ \underline{\underline{\psi}}^i=
+ \underline{\underline{\psi}}^{i\,\dag}\underline{\underline{W}}^{\dag}\,
+ \underline{\underline{\psi}}^i,
+ \end{equation}
+ which implies that $\underline{\underline{W}}$ is an Hermitian matrix. Equations~(\ref{e44}) and (\ref{e48}) yield
+ \begin{equation}\label{e52}
+ \delta W_p = \underline{\alpha}^\dag\,\underline{\underline{\psi}}^{i\,\dag}\,\underline{\underline{W}}\,\underline{\underline{\psi}}^i\,\underline{\alpha}.
+ \end{equation}
+ The fact that $\underline{\underline{W}}$ is Hermitian ensures that $\delta W_p$ is real. 
+
+\subsection{Diagonalization of Plasma Energy Matrix}
+Given that the plasma energy matrix, $W_{m\,m'}$, is Hermitian, it possesses real eigenvalues, $\lambda_m$, and orthonormal
+eigenvectors $\underline{\beta}_m$. Let $(\underline{\beta}_m)_{m'} = \beta_{m'\,m}$. 
+We have
 \begin{align}
-{\cal J}\,K_m^{\,\theta} &= - \frac{n}{m-n\,q(1)}\,[Z_m]_{1_{-}}^{1_{+}},\\[0.5ex]
-{\cal J}\,K_m^{\,\phi} &=-\frac{m}{m-n\,q(1)}\,[Z_m]_{1_{-}}^{1_{+}}.
+\sum_{m''} W_{m\,m''}\,\beta_{m''\,m'} &= \beta_{m\,m'}\,\lambda_{m'},\\[0.5ex]
+\sum_{m''} \beta_{m''\,m}^\ast\,\beta_{m''\,m'} &= \delta_{mm'}.
 \end{align}
-Let us write
-\begin{equation}
-{\bf K} = {\rm i}\,\nabla J\times \nabla r,
-\end{equation}
-which ensures that $\nabla\cdot{\bf K}=0$. It follows from (A8) and (A9) of TJ that
+The previous two equations can be written more succinctly as
 \begin{align}
-{\cal J}\,K^\theta&= {\rm i}\,\frac{\partial J}{\partial \phi},\\[0.5ex]
-{\cal J}\,K^\phi &=-{\rm i}\,\frac{\partial J}{\partial\theta}.
+\underline{\underline{W}}\,\underline{\underline{\beta}}&=\underline{\underline{\beta}}\,\underline{\underline{{\mit\Lambda}}},\label{e55}\\[0.5ex]
+\underline{\underline{\beta}}^\dag\,\underline{\underline{\beta}}&= \underline{\underline{1}},\label{e56}
 \end{align}
-Hence, we deduce that 
+where $\underline{\underline{\beta}}$ is the matrix of the $\beta_{m\,m'}$ values, $\underline{\underline{{\mit\Lambda}}}$ is the diagonal
+matrix of the $\lambda_m$ values, and $\underline{\underline{1}}$ is the unit matrix. 
+
+Let us define the new ideal solutions
+\begin{align}\label{e57}
+\underline{\underline{\psi}}^i&=\underline{\underline{\beta}}\,\underline{\underline{\hat{\psi}}}^i,\\[0.5ex]
+\underline{\underline{\chi}}^i&=\underline{\underline{\beta}}\,\underline{\underline{\hat{\chi}}}^{\,i}.\label{e58}
+\end{align}
+These expression can be inverted, with the aid of Eq.~(\ref{e56}), to give
+\begin{align}
+\underline{\underline{\hat{\psi}}}^i&=\underline{\underline{\beta}}^\dag\,\underline{\underline{\psi}}^i,\\[0.5ex]
+\underline{\underline{\hat{\chi}}}^{\,i}&=\underline{\underline{\beta}}^\dag\,\underline{\underline{\chi}}^{i}.
+\end{align}
+Equations~(\ref{e48}) and (\ref{e55})--(\ref{e58}) imply that
 \begin{equation}
-J_m =-\frac{[Z_m]_{1_-}^{1_+}}{m-n\,q(1)}.
+\underline{\underline{\hat{\chi}}}^{\,i}= \underline{\underline{{\mit\Lambda}}}\,\underline{\underline{\hat{\psi}}}^i.
 \end{equation}
+Moreover, Eq.~(\ref{e52}) yields
+\begin{equation}\label{e62}
+ \delta W_p= \underline{\alpha}^\dag\,\underline{\underline{\hat{\psi}}}^{i\,\dag}\,\underline{\underline{{\mit\Lambda}}}\,\underline{\underline{\hat{\psi}}}^i\,\underline{\alpha}.
+ \end{equation}
+ If we define
+ \begin{equation}\label{e64a}
+\underline{\hat{\alpha}} = \underline{\underline{\hat{\psi}}}^i\,\underline{\alpha}
+\end{equation}
+then Eq.~(\ref{e62}) becomes
+\begin{equation}\label{e64}
+ \delta W_p= \underline{\hat{\alpha}}^\dag\,\underline{\underline{{\mit\Lambda}}}\,\underline{\hat{\alpha}}= \sum_m |\hat{\alpha}_m|^2\,\lambda_m.
+ \end{equation}
+ Finally, Eqs.~(\ref{e41}), (\ref{e42}), (\ref{e48}), (\ref{e55})--(\ref{e57}), and (\ref{e64a}) yield
+\begin{align}\label{e65}
+\underline{\psi}&= \underline{\underline{\beta}}\,\underline{\hat{\alpha}},\\[0.5ex]
+\underline{\chi}&= \underline{\underline{\beta}}\,\underline{\underline{\mit\Lambda}}\,\underline{\hat{\alpha}},\label{e66}\\[0.5ex]
+\underline{\hat{\alpha}}&= \underline{\underline{\beta}}^\dag\,\underline{\psi}= \underline{\underline{\mit\Lambda}}^{-1}\,\underline{\underline{\beta}}^\dag\,
+\underline{\chi}.
+\end{align}
+
+\subsection{Stability to Internal Ideal Modes}
+Suppose that
+\begin{equation}
+\hat{\alpha}_m = \delta_{m\,m_0}\,\hat{\alpha}_{m_0}.
+\end{equation}
+Equations~(\ref{e64})--(\ref{e66}) yield
+\begin{align}
+\delta W_p &= \lambda_{m_0}\,|\hat{\alpha}_{m_0}|^2,\\[0.5ex]
+\psi_m &= \beta_{m\,m_0}\,\hat{\alpha}_{m_0},\label{e73}\\[0.5ex]
+\chi_m &=  \beta_{m\,m_0}\,\lambda_{m_0}\,\hat{\alpha}_{m_0}.\label{e74}
+\end{align}
+Let 
+\begin{equation}
+\tilde{\alpha}_{m_0} = \lambda_{m_0}\,\hat{\alpha}_{m_0}.
+\end{equation}
+It follows that 
+\begin{align}
+\delta W_p&= \lambda_{m_0}^{-1}\,|\tilde{\alpha}_{m_0}|^2,\\[0.5ex]
+\psi_m &= \beta_{m\,m_0}\,\lambda_{m_0}^{-1}\,\tilde{\alpha}_{m_0},\\[0.5ex]
+\chi_m&=  \beta_{m\,m_0}\,\tilde{\alpha}_{m_0}.
+\end{align}
+
+Suppose that $\lambda_{m_0}^{-1}=0$ at $r=r_c$. Assuming that $\tilde{\alpha}_{m_0}$ is finite, we deduce that
+\begin{align}
+\delta W_p(r_c) &=0,\\[0.5ex]
+\psi_m(r_c) &= 0.
+\end{align}
+It follows that the solutions (\ref{e73}) and (\ref{e74}) represent physical solutions for a marginally stable ideal mode in the presence of a
+perfectly conducting wall at $r=r_c$. It stands to reason that if we remove the wall then the mode would become unstable. Moreover, the
+presence of a perfectly conducting wall at the plasma boundary would not stabilize the mode. Thus, the criterion for stability to internal ideal
+modes is that all of the $\lambda_m(r)$ must remain finite in the region $r=0$ to $r=\epsilon$. In other words, we require that none of the
+eigenvalues of $\underline{\underline{W}}^{-1}$, where 
+\begin{equation}
+\underline{\underline{\psi}}^i = \underline{\underline{W}}^{-1}\,\underline{\underline{\chi}}^i,
+\end{equation}
+pass through zero in the region $r=0$ to $r=\epsilon$. 
+
+\section{Stability to External Ideal Modes}
+\subsection{Total Potential Energy}
+The total potential energy can be written
+\begin{equation}\label{e79}
+\delta W= \delta W_p + \delta W_v,
+\end{equation}
+where
+\begin{equation}\label{e80}
+\delta W_p= \left(\sum_m\psi_m^\ast\,\chi_m\right)_{\epsilon-}
+\end{equation}
+is the plasma potential energy, 
+and
+\begin{equation}
+\delta W_v = \frac{1}{2}\int_{\epsilon+}^\infty\oint\oint {\bf b}^\ast\cdot{\bf b} \,{\cal J}\,dr\,d\theta\,d\phi
+\end{equation}
+is the vacuum potential energy.
 
 \subsection{Vacuum Potential Energy}
 In the vacuum region, we can write
@@ -145,165 +382,297 @@ where
 \end{equation}
 Hence, the vacuum potential energy is
 \begin{align}
-\delta W_v &= \frac{1}{2}\int \nabla V\,\cdot\nabla V^\ast\,d\tau= \frac{1}{2}\int  \nabla\cdot(V\,\nabla V^\ast)\,d\tau\nonumber\\[0.5ex]
-&=-\frac{1}{2}\left(\oint\oint {\cal J}\,\nabla r\cdot\nabla V^\ast\,V\,d\theta\,d\phi\right)_{1_+} .
+\delta W_v &= \frac{1}{2}\int_{\epsilon+}^\infty\oint\oint\nabla V\,\cdot\nabla V^\ast\,{\cal J}\,dr\,d\theta\,d\phi\nonumber\\[0.5ex]
+&= \frac{1}{2}\int_{\epsilon+}^\infty\oint\oint  \nabla\cdot(V\,\nabla V^\ast)\,{\cal J}\,dr\,d\theta\,d\phi\nonumber\\[0.5ex]
+&=-\frac{1}{2}\left(\oint\oint {\cal J}\,\nabla r\cdot\nabla V^\ast\,V\,d\theta\,d\phi\right)_{\epsilon_+},
 \end{align}
+assuming that $V\rightarrow 0$ as $r\rightarrow \infty$. 
 But, Eq.~(209) of TJ implies that 
 \begin{equation}
 {\cal J}\,\nabla V\cdot\nabla r = \psi,
 \end{equation}
 so we deduce that
-\begin{equation}
-\delta W_v = -\frac{1}{2}\left(\oint\oint \psi^\ast\,V\,d\theta\,d\phi\right)_{1_{+}} =- \pi^2\left(\sum \psi_m^\ast\,V_m\right)_{1_{+}}.
+\begin{equation}\label{e87}
+\delta W_v = -\frac{1}{2}\left(\oint\oint \psi^\ast\,V\,d\theta\,d\phi\right)_{\epsilon_{+}} =- \pi^2\left(\sum_m \psi_m^\ast\,V_m\right)_{\epsilon_{+}}.
 \end{equation}
 However, making use of Eq.~(214) of TJ, we get
-\begin{equation}
-\delta W_v = - \pi^2\left(\sum \frac{\psi_m^\ast\,Z_m}{m-n\,q}\right)_{1_{+}}.
-\end{equation}
-
-\subsection{Potential Energy}
-The total potential energy associated with the trial function is
-\begin{equation}
-\delta W = \delta W_p + \delta W_v = -\pi^2\sum_m \frac{\psi_m^\ast(1)\,[Z_m]_{1_{-}}^{1_{+}}}{m-n\,q(1)},
-\end{equation}
-which implies that
-\begin{equation}
-\delta \hat{W} =\sum_m\,\psi_m^\ast(1)\,J_m,
+\begin{equation}\label{e88}
+\delta W_v =-\left(\sum_m\psi_m^\ast\,\chi_m\right)_{\epsilon_+},
 \end{equation}
 where
-\begin{equation}
-\delta \hat{W} = \frac{\delta W}{\pi^2}.
+\begin{equation}\label{e89}
+\chi_m=\frac{\pi^2\,Z_m}{m-n\,q}.
+ \end{equation}
+ Note that the previous equation is consistent with Eq.~(\ref{e29}) because, according to Eq.~(\ref{e30}),  $k_m'=0$ in the vacuum region, given that $\alpha_g=\alpha_p=0$ in the vacuum. 
+
+Combining Eqs.~(\ref{e79}), (\ref{e80}), and (\ref{e88}), we deduce that
+\begin{equation}\label{e89a}
+\delta W = \left(\sum_m\psi_m^\ast\,J_m\right)_\epsilon,
+\end{equation}
+where
+\begin{equation}\label{e90}
+J_m= -\left[\chi_m\right]_{\epsilon_-}^{\epsilon_+}.
 \end{equation}
 
-\subsection{Ideal Eigenfunctions}
-The complete set of ideal solutions of the outer region o.d.e.s is written
-\begin{align}
-\psi_{m\,m'}^i(\hat{r})&= \psi_{m\,m'}^a(\hat{r})-\sum_{k}\psi_{m\,k}^u(\hat{r})\,{\mit\Pi}_{k\,m'}^a,\\[0.5ex]
-Z_{m\,m'}^i(\hat{r})&= Z_{m\,m'}^a(\hat{r})-\sum_{k}Z_{m\,k}^u(\hat{r})\,{\mit\Pi}_{k\,m'}^a,
-\end{align}
-where $m=m_j$, $m'=m_{j'}$, and all other quantities are defined in Sects.~VIII.B and VIII.D of TJ. 
-Here, $m$ is the poloidal harmonic, and $m'$ is the dominant poloidal harmonic close to the magnetic axis. It follows
-from the definitions of the various quantities that the reconnected fluxes at the rational surfaces in the plasma
-associated with these eigenfunctions are all zero. The ideal solutions are conveniently normalized such
-that
-\begin{equation}
-\sum_{m'}\psi_{m'\,m}^{i\,\ast}(1)\,\psi_{m'\,m}^i(1) = 1.
+\subsection{Boundary Current Sheet}
+Now, $\alpha_p=\alpha_g=0$ at the plasma boundary, assuming that there are no edge equilibrium currents,
+which implies that $k_m=k_m'=0$ at the boundary, where use has been made of Eq.~(\ref{e30}),
+as well as Eq.~(100) of TJ.  It follows from Eqs.~(78) and (99) of TJ, combined with Eq.~(\ref{e88}),  that 
+\begin{equation}\label{e91}
+x_m= \pi^{-2}\,n\,\chi_m
 \end{equation}
+at the plasma boundary. Suppose that there is a perturbed current sheet on the plasma boundary. 
+Thus, if ${\bf K}$ is the current sheet density then Eqs.~(66) and (67) of TJ suggest that
+\begin{align}
+{\cal J}\,K_m^{\,\theta} &=  \pi^{-2}\,n\,J_m,\\[0.5ex]
+{\cal J}\,K_m^{\,\phi} &=\pi^{-2}\,m\,J_m,
+\end{align}
+where use has been made of Eq.~(\ref{e90}).
+Let us write
+\begin{equation}\label{e94}
+{\bf K} = {\rm i}\,\pi^{-2}\,\nabla J\times \nabla r,
+\end{equation}
+which ensures that $\nabla\cdot{\bf K}=0$. It follows from (A8) and (A9) of TJ that
+\begin{align}
+{\cal J}\,K^\theta&= {\rm i}\,\pi^{-2}\,\frac{\partial J}{\partial \phi},\\[0.5ex]
+{\cal J}\,K^\phi &=-{\rm i}\,\pi^{-2}\,\frac{\partial J}{\partial\theta}.
+\end{align}
+Hence, we deduce that 
+\begin{align}
+{\cal J}\,K^\theta_m&= \pi^{-2}\,n\,J_m,\\[0.5ex]
+{\cal J}\,K^\phi_m &=\pi^{-2}\,m\,J_m.
+\end{align}
+Thus, it is clear that the $J_m$ are the Fourier components of the $J$ function introduced in Eq.~(\ref{e94}). 
+
+\subsection{Plasma Displacement}
+From Eqs.~(\ref{e10}) and (\ref{epsi}) imply that
+\begin{equation}
+\xi^r_m = \frac{\psi_m}{f\,(m-n\,q)}.
+\end{equation}
+Likewise, if ${\mit\Psi}$ is the poloidal magnetic flux then $f=d{\mit\Psi}/dr$ and ${\mit\Xi}=\bxi\cdot\nabla{\mit\Psi}= f\,\xi^r$, so
+\begin{equation}
+{\mit\Xi}_m = \frac{\psi_m}{m-n\,q}.
+\end{equation}
+It is clear that
+\begin{equation}
+\underline{\underline{\psi}}^i = \underline{\underline{Q}}\,\underline{\underline{\mit\Xi}}^i,
+\end{equation}
+where $\underline{\underline{Q}}$ is the diagonal matrix of the $m-n\,q$ values. 
 
 \subsection{Energy Matrix}
-We can write a general ideal solution as
-\begin{align}
-\psi_m(\hat{r}) &= \sum_{m'}\psi_{m\,m'}^i(\hat{r})\,\alpha_{m'},\\[0.5ex]
-Z_m(\hat{r}) &= \sum_{m'}Z_{m\,m'}^i(\hat{r})\,\alpha_{m'}.
-\end{align}
-According to Eq,~(215) of TJ, the boundary condition at the plasma/vacuum interface is
+According to Eq.~(215) of TJ, combined with Eq.~(\ref{e88}), 
 \begin{equation}
-\frac{Z_m(1_+)}{m-n\,q(1)} = \sum_{m'}H_{m\,m'}\,\psi_{m'}(1).
+\chi_m(\epsilon_+)=\pi^2\sum_{m'}\,H_{m\,m'}\,\psi_{m'}(\epsilon).
 \end{equation}
-It follows that
+Hence, it follows from Eq.~(\ref{e90}) that
 \begin{equation}
-J_m = \frac{Z_m(1_-)}{m-n\,q(1)}-\sum_{m'} H_{m\,m'}\,\psi_{m'}(1).
+J_m = \chi_m(\epsilon_-)-\pi^2\sum_{m'} H_{m\,m'}\,\psi_m(\epsilon).
 \end{equation}
-Thus, we can write 
+Making use of Eq.~(\ref{e89a}), we can write
 \begin{equation}
-J_m = \sum_{m'}\,J_{m\,m'}^i\,\alpha_{m'},
+\delta W = \underline{\psi}^\dag\,\underline{J},
 \end{equation}
-where
+where 
 \begin{equation}
-J_{m\,m'}^i = \frac{Z_{m\,m'}^i(1_-)}{m-n\,q(1)}-\sum_{m''} H_{m\,m''}\,\psi_{m''\,m'}^i(1).
+\underline{J} = \underline{\chi}+ \underline{\underline{V}}\,\underline{\psi},
 \end{equation}
-
-It follows that
+where  $\underline{\psi}$ is the column matrix of the $\psi_m(\epsilon)$ values, $\underline{J}$ is the column vector of the $J_m$ values, $\underline{\chi}$ is the column vector of the $\chi_m(\epsilon_-)$ values,
+and $\underline{\underline{V}}$ is the matrix of the $-\pi^2\,H_{m\,m'}$ values. 
+Making use of Eqs.~(\ref{e41}), (\ref{e42}), and (\ref{e48}), we get 
 \begin{equation}
-\delta \hat{W} = \sum_{m,m'} \alpha_m^{\,\ast}\,W_{m\,m'}\,\alpha_{m'},
+\underline{J} = \underline{\underline{U}}\,\underline{\psi},
 \end{equation}
-where
+and
 \begin{equation}
-W_{m\,m'} =\sum_{m''} \psi_{m''\,m}^{i\,\ast}(1)\,J_{m''\,m'}^i.
-\end{equation}
-Moreover, 
-\begin{equation}
-W_{m\,m'} =\sum_{m''}\frac{\psi_{m''\,m}^{i\,\ast}(1)\,Z_{m''\,m'}^i(1_-)}{m''-n\,q(1)}
--\sum_{m'',m'''}\psi_{m''\,m}^{i\,\ast}(1)\,H_{m''\,m'''}\,\psi^i_{m'''\,m'}(1)
-\end{equation}
-Now,
-\begin{equation}
-W_{m'\,m}^\ast =\sum_{m''}\frac{Z_{m''\,m}^{i\,\ast}(1_-)\,\psi_{m''\,m'}^i(1)}{m''-n\,q(1)}
--\sum_{m'',m'''}\psi_{m''\,m'}^{i\,\ast}(1)\,H^\ast_{m'''\,m''}\,\psi^i_{m'''\,m'}(1)
-\end{equation}
-However, $H_{m\,m'}$ is Hermitian, so
-\begin{equation}
-W_{m\,m'}-W_{m'\,m}^\ast =-\pi^2\left(\sum_{m''} \frac{Z_{m''\,m}^{i\,\ast}\,\psi_{m''\,m'}^i -\psi_{m''\,m}^{i\,\ast}\,Z_{m''\,m'}^i}{m''-n\,q}\right)_{\hat{r}=1_-}.
-\end{equation}
-But, the toroidal electromagnetic torque acting on the plasma is
-\begin{equation}
-T_\phi={\rm i}\,n\,\,\pi^2\left(\sum_m\frac{Z_m^\ast\,\psi_m-\psi_m^\ast\,Z_m}{m-n\,q}\right)_{\hat{r}=1_{-}}=\sum_{m,m'}\alpha_m^{\,\ast}\,T_{m\,m'}\,\alpha_{m'},
+\delta W = \underline{\alpha}^\dag\,\underline{\underline{\psi}}^{i\,\dag}\,(\underline{\underline{\chi}}^i + \underline{\underline{V}}\,\underline{\underline{\psi}}^i)\,\underline{\alpha}=  \underline{\alpha}^\dag\,\underline{\underline{\psi}}^{i\,\dag}\,\underline{\underline{U}}\,\underline{\underline{\psi}}^i\,\underline{\alpha},
 \end{equation}
 where
 \begin{equation}
-T_{m\,m'} = {\rm i}\,n\,\pi^2\left(\sum_{m''} \frac{Z_{m''\,m}^{i\,\ast}\,\psi_{m''\,m'}^i -\psi_{m''\,m}^{i\,\ast}\,Z_{m''\,m'}^i}{m''-n\,q}\right)_{\hat{r}=1_-}
+\underline{\underline{U}}=\underline{\underline{W}}+\underline{\underline{V}}.
 \end{equation}
-However, $T_\phi=0$ for an ideal plasma, irrespective of the values of the $\alpha_m$. Hence, we deduce that $T_{m\,m'}=0$ for all
-$m$ and $m'$. It immediately follows that the energy matrix, $W_{m\,m'}$, is Hermitian. 
 
-\subsection{Diagonalization of Energy Matrix}
-Given that the energy matrix, $W_{m\,m'}$, is Hermitian, it possesses real eigenvalues, $\delta W_m$, and orthonormal
-eigenvectors $\bbeta_m$. Let $(\bbeta_m)_{m'} = \beta_{m'\,m}$. 
-We have
-\begin{align}
-\sum_{m''} W_{m\,m''}\,\beta_{m''\,m'} &= \delta W_{m'}\,\beta_{m\,m'},\\[0.5ex]
-\sum_{m''} \beta_{m''\,m}^\ast\,\beta_{m''\,m'} &= \delta_{mm'}.
+Note that $\underline{\underline{W}}$ and $\underline{\underline{V}}$ are both Hermitian, so $\underline{\underline{U}}$ is also
+Hermitian. Let 
+ the  $\lambda_m$ and the $\underline{\beta}_m$ be the real eigenvalues and orthonormal eigenvectors of $\underline{\underline{U}}$. Let $(\underline{\beta}_m)_{m'} = \beta_{m'\,m}$. It follows that 
+ \begin{align}
+\underline{\underline{U}}\,\underline{\underline{\beta}}&=\underline{\underline{\beta}}\,\underline{\underline{{\mit\Lambda}}},\\[0.5ex]
+\underline{\underline{\beta}}^\dag\,\underline{\underline{\beta}}&= \underline{\underline{1}},\label{e56a}
 \end{align}
-Now,
+where $\underline{\underline{\mit\Lambda}}$ is the diagonal matrix of the $\lambda_m$ values. 
+
+Let us define the new ideal solutions
 \begin{align}
-\sum_{m'',m'''}\beta^\ast_{m''\,m}\,W_{m''\,m'''}\,\beta_{m'''\,m'} = \sum_{m''} \beta^\ast_{m''\,m}\,\beta_{m''\,m'}\,\delta W_{m'}=\delta W_{m'}\,\delta_{mm'},
+\underline{\underline{\hat{\psi}}}^i(r)&=\underline{\underline{\psi}}^i(r)\,[\underline{\underline{\psi}}^i(1)]^{-1}\,\underline{\underline{\beta}},\\[0.5ex]
+\underline{\underline{\hat{Z}}}^i(r)   &=\underline{\underline{Z}}^i(r)\,[\underline{\underline{\psi}}^{i}(1)]^{-1}\,\underline{\underline{\beta}},\\[0.5ex]
+\underline{\underline{\hat{\mit\Xi}}}^i(r)   &=\underline{\underline{\mit\Xi}}^i(r)\,[\underline{\underline{\psi}}^{i}(1)]^{-1}\,\underline{\underline{\beta}}.
 \end{align}
-which implies that 
-\begin{equation}
-\sum_{m'',m''',m''''}\beta^\ast_{m''\,m}\,\psi^{i\,\ast}_{m''''\,m''}(1)\,J^i_{m''''\,m'''}\,\beta_{m'''\,m'} = \delta W_{m'}\,\delta_{mm'}.
-\end{equation}
-Let us define the new ideal solutions, 
-\begin{align}
-\hat{\psi}^i_{m\,m'}(\hat{r}) &= \sum_{m''}\psi^i_{m\,m''}(\hat{r})\,\beta_{m''\,m'},\\[0.5ex]
-\hat{Z}^i_{m\,m'}(\hat{r}) &= \sum_{m''}Z^i_{m\,m''}(\hat{r})\,\beta_{m''\,m'},\\[0.5ex]
-\hat{J}^i_{m\,m'} &=  \frac{\hat{Z}_{m\,m'}^i(1_-)}{m-n\,q(1)}-\sum_{m''} H_{m\,m''}\,\hat{\psi}_{m''\,m'}^i(1),
-\end{align}
-which are conveniently normalized such that 
-\begin{equation}
-\sum_{m'}\hat{\psi}_{m'\,m}^{i\,\ast}(1)\,\hat{\psi}_{m'\,m}^i(1) = 1.
-\end{equation}
 It follows that
+\begin{align}
+\underline{\underline{\hat{\psi}}}^i(1)&=\underline{\underline{\beta}},\\[0.5ex]
+\underline{\underline{\hat{\mit\Xi}}}^i(1)&=\underline{\underline{Q}}^{-1}\,\underline{\underline{\beta}}.
+\end{align}
+We can also define
 \begin{equation}
-\sum_{m''} \hat{\psi}^{i\,\ast}_{m''\,m}(1)\,\hat{J}^i_{m''\,m'} = \delta W_{m'}\,\delta_{mm'}.
+\underline{\underline{\hat{J}}}^i=\underline{\underline{U}}\,\underline{\underline{\hat{\psi}}}^i(1)= \underline{\underline{\beta}}\,\underline{\underline{\mit\Lambda}}.
 \end{equation}
 
-Thus, if we write
+If we write
 \begin{align}
-\psi_m(\hat{r}) &=\sum_m \hat{\psi}_{m\,m'}^i(\hat{r})\,\alpha_{m'},\\[0.5ex]
-Z_m(\hat{r}) &=\sum_m \hat{Z}_{m\,m'}^i(\hat{r})\,\alpha_{m'},
-\end{align}
-which implies that
-\begin{align}
-J_m &= \sum_m\,\hat{J}_{m\,m'}^i\,\alpha_{m'},
+\underline{\psi}(r)&= \underline{\underline{\hat{\psi}}}^i(r)\,\underline{\hat{\alpha}},\\[0.5ex]
+\underline{Z}(r)&= \underline{\underline{\hat{Z}}}^i(r)\,\underline{\hat{\alpha}},\\[0.5ex]
+\underline{{\mit\Xi}}(r)&= \underline{\underline{\hat{\mit\Xi}}}^i(r)\,\underline{\hat{\alpha}},
 \end{align}
 then
-\begin{equation}
-\delta\hat{W} = \sum_{m}\,\psi_m^{\,\ast}(1)\,J_m=\sum_{m,m',m''}\alpha_{m'}^\ast\,\hat{\psi}_{m\,m'}^{i\,\ast}(1)\,\hat{J}_{m\,m''}^i\,\alpha_{m''}
-=\sum_m |\alpha_m|^2\,\delta W_m.
-\end{equation}
-Hence, it is clear that if any of the $\delta W_m$ are zero then an acceptable trial function can be chosen such that $\delta \hat{W}<0$, which
-means that the plasma is ideally unstable. 
-
-\subsection{Response to RMP}
-We can write
 \begin{align}
-\psi_m^{rmp}(1)&=\sum_{m'} \hat{\psi}^i_{m\,m'}(1)\,\gamma_{m'},\\[0.5ex]
-\psi^x_m(1)&=\sum_{m'} \hat{\psi}^i_{m\,m'}(1)\,\gamma_{m'}^x,
+\underline{\psi}(1) &=\underline{\underline{\beta}}\,\underline{\hat{\alpha}},\\[0.5ex]
+\underline{J} &=\underline{\underline{\beta}}\,\underline{\underline{\mit\Lambda}}\,\underline{\hat{\alpha}},
 \end{align}
+and 
+\begin{equation}
+ \delta W= \underline{\psi}^\dag\,\underline{J}=\underline{\hat{\alpha}}^\dag\,\underline{\underline{{\mit\Lambda}}}\,\underline{\hat{\alpha}}= \sum_m |\hat{\alpha}_m|^2\,\lambda_m.
+ \end{equation}
+Thus, it is clear that if any of the $\lambda_m$ are negative then solutions exist for which $\delta W$ is negative, and the plasma
+is consequently unstable to ideal external modes.
+
+ Futhermore,
+\begin{equation}
+\underline{\underline{{\mit\Lambda}}}=\underline{\underline{\beta}}^\dag\,\underline{\underline{W}}\,\underline{\underline{\beta}}
++\underline{\underline{\beta}}^\dag\,\underline{\underline{V}}\,\underline{\underline{\beta}}.
+\end{equation}
+Thus, the diagonal components of $\underline{\underline{\beta}}^\dag\,\underline{\underline{W}}\,\underline{\underline{\beta}}$ and 
+$\underline{\underline{\beta}}^\dag\,\underline{\underline{V}}\,\underline{\underline{\beta}}$ can be thought of as the
+plasma and vacuum contributions to the $\lambda_m$, respectively. 
+
+Finally, we can expand the rmp field and the ideal response to the rmp field as
+\begin{align}
+\underline{\psi}^x(1) &=\underline{\underline{\hat{\psi}}}^i(1)\,\underline{\gamma}^x,\\[0.5ex]
+\underline{\psi}^{rmp}(1) &=\underline{\underline{\hat{\psi}}}^i(1)\,\underline{\gamma},
+\end{align}
+where 
+\begin{align}
+\underline{\gamma}^x&= \underline{\underline{\beta}}^\dag\,\underline{\psi}^x(1),\\[0.5ex]
+\underline{\gamma}^x&= \underline{\underline{\beta}}^\dag\,\underline{\psi}^{rmp}(1).
+\end{align}
+
+\subsection{Alternative Formulation}
+We can also write
+\begin{equation}
+\delta W =   \underline{\alpha}^\dag\,\underline{\underline{\psi}}^{i\,\dag}\,\underline{\underline{U}}\,\underline{\underline{\psi}}^i\,\underline{\alpha}
+  = \underline{\alpha}^\dag\,\underline{\underline{\mit\Xi}}^{i\,\dag}\,\underline{\underline{\tilde{U}}}\,\underline{\underline{\mit\Xi}}^i\,\underline{\alpha},
+\end{equation}
+where
+\begin{equation}
+\underline{\underline{\tilde{U}}}= \underline{\underline{Q}}\,\underline{\underline{U}}\,\underline{\underline{Q}}.
+\end{equation}
+
+Let 
+  $\underline{\underline{\tilde{\mit\Lambda}}}$
+  and $\underline{\underline{\tilde{\beta}}}$ be the real eigenvalues and orthonormal eigenvectors of $\underline{\underline{\tilde{U}}}$. 
+   It follows that 
+ \begin{align}
+\underline{\underline{\tilde{U}}}\,\underline{\underline{\tilde{\beta}}}&=\underline{\underline{\tilde{\beta}}}\,\underline{\underline{\tilde{\mit\Lambda}}},\\[0.5ex]
+\underline{\underline{\tilde{\beta}}}^\dag\,\underline{\underline{\tilde{\beta}}}&= \underline{\underline{1}}.
+\end{align}
+
+Let us define the new ideal solutions
+\begin{align}
+\underline{\underline{\hat{\psi}}}^i(r)&=\underline{\underline{\psi}}^i(r)\,[\underline{\underline{\mit\Xi}}^i(1)]^{-1}\,\underline{\underline{\tilde{\beta}}},\\[0.5ex]
+\underline{\underline{\hat{Z}}}^i(r)   &=\underline{\underline{Z}}^i(r)\,[\underline{\underline{\mit\Xi}}^{i}(1)]^{-1}\,\underline{\underline{\tilde{\beta}}},\\[0.5ex]
+\underline{\underline{\hat{\mit\Xi}}}^i(r)   &=\underline{\underline{\mit\Xi}}^i(r)\,[\underline{\underline{\mit\Xi}}^{i}(1)]^{-1}\,\underline{\underline{\tilde{\beta}}}.
+\end{align}
+It follows that
+\begin{align}
+\underline{\underline{\hat{\psi}}}^i(1)&=\underline{\underline{Q}}\,\underline{\underline{\tilde{\beta}}},\\[0.5ex]
+\underline{\underline{\hat{\mit\Xi}}}^i(1)&=\underline{\underline{\tilde{\beta}}}.
+\end{align}
+We can also define
+\begin{equation}
+\underline{\underline{\hat{J}}}^i=\underline{\underline{U}}\,\underline{\underline{\hat{\psi}}}^i(1)= \underline{\underline{Q}}^{-1}\,\underline{\underline{\tilde{\beta}}}\,
+\underline{\underline{\tilde{\mit\Lambda}}}.
+\end{equation}
+
+If we write
+\begin{align}
+\underline{\psi}(r)&= \underline{\underline{\hat{\psi}}}^i(r)\,\underline{\hat{\alpha}},\\[0.5ex]
+\underline{Z}(r)&= \underline{\underline{\hat{Z}}}^i(r)\,\underline{\hat{\alpha}},\\[0.5ex]
+\underline{{\mit\Xi}}(r)&= \underline{\underline{\hat{\mit\Xi}}}^i(r)\,\underline{\hat{\alpha}},
+\end{align}
+then
+\begin{align}
+\underline{{\mit\Xi}}(1) &=\underline{\underline{\tilde{\beta}}}\,\underline{\hat{\alpha}},
+\end{align}
+and 
+\begin{equation}
+ \delta W= \underline{\underline{\mit\Xi}}^\dag\,\underline{\underline{\tilde{U}}}\,\underline{\underline{{\mit\Xi}}}=\underline{\hat{\alpha}}^\dag\,\underline{\underline{\tilde{\mit\Lambda}}}\,\underline{\hat{\alpha}}= \sum_m |\hat{\alpha}_m|^2\,\tilde{\lambda}_m.
+ \end{equation}
+Thus, it is clear that if any of the $\tilde{\lambda}_m$ are negative then solutions exist for which $\delta W$ is negative, and the plasma
+is consequently unstable to ideal external modes. 
+
+ Furthermore,
+\begin{equation}
+\underline{\underline{\tilde{\mit\Lambda}}}=\underline{\underline{\tilde{\beta}}}^\dag\,\underline{\underline{\tilde{W}}}\,\underline{\underline{\tilde{\beta}}}
++\underline{\underline{\tilde{\beta}}}^\dag\,\underline{\underline{\tilde{V}}}\,\underline{\underline{\tilde{\beta}}},
+\end{equation}
 where
 \begin{align}
-\delta W_m\,\gamma_{m}&= \sum_{m'} \psi_{m'}^{rmp}(1)\,\hat{J}_{m'\,m}^{i\,\ast},\\[0.5ex]
-\delta W_m\,\gamma_{m}^x&= \sum_{m'} \psi_{m'}^x(1)\,\hat{J}_{m'\,m}^{i\,\ast}.
+\underline{\underline{\tilde{W}}}&= \underline{\underline{Q}}\,\underline{\underline{W}}\,\underline{\underline{Q}},\\[0.5ex]
+\underline{\underline{\tilde{V}}}&= \underline{\underline{Q}}\,\underline{\underline{V}}\,\underline{\underline{Q}}.
 \end{align}
+Thus, the diagonal components of $\underline{\underline{\tilde{\beta}}}^\dag\,\underline{\underline{\tilde{W}}}\,\underline{\underline{\tilde{\beta}}}$ and 
+$\underline{\underline{\tilde{\beta}}}^\dag\,\underline{\underline{\tilde{V}}}\,\underline{\underline{\tilde{\beta}}}$ can be thought of as the
+plasma and vacuum contributions to the $\tilde{\lambda}_m$, respectively. 
+
+Finally, we can expand the rmp field and the ideal response to the rmp field as
+\begin{align}
+\underline{\mit\Xi}^x(1)&=\underline{\underline{Q}}^{-1}\,\underline{\psi}^x(1) =\underline{\underline{\hat{\mit\Xi}}}^i(1)\,\underline{\gamma}^x,\\[0.5ex]
+\underline{\mit\Xi}^{rmp}(1) &=\underline{\underline{Q}}^{-1}\,\underline{\psi}^{rmp}(1) =\underline{\underline{\hat{\mit\Xi}}}^i(1)\,\underline{\gamma},
+\end{align}
+where 
+\begin{align}
+\underline{\gamma}^x&= \underline{\underline{\tilde{\beta}}}^\dag\,\underline{\underline{Q}}^{-1}\underline{\psi}^x(1),\\[0.5ex]
+\underline{\gamma}&= \underline{\underline{\tilde{\beta}}}^\dag\,\underline{\underline{Q}}^{-1}\underline{\psi}^{rmp}(1).
+\end{align}
+
+\subsection{$D_I$ and $D_R$}
+The Mercier indices $D_I$ and $D_R$ are given by
+\begin{align}
+D_I &= - \epsilon^2\,\frac{2\,\hat{r}\,p_2'\,(1-q^2)}{s^2} -\frac{1}{4},\\[0.5ex]
+D_R &= - \epsilon^2\,\frac{2\,\hat{r}\,p_2'\,(1-q^2)}{s^2} -\epsilon^2\,\frac{2\,p_2'\,q^2\,H_1'}{s}.
+\end{align}
+
+\subsection{$k_m'$}
+The variable $k_m'$ is given by 
+\begin{align}
+k_m'&= -\frac{2-s}{m}
+-\frac{\epsilon^2}{m}\left(-\hat{r}\,p_2'+
+\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right.\nonumber\\[0.5ex]
+&\phantom{===}
++\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
+&\phantom{===}\left.+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
+&\phantom{=}
++\epsilon^2\,\frac{(2-s)}{m}\left(-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1 +\frac{1}{2}\sum_{j>0}\left[3\,H_j'^{\,2}- (j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]
+\right.\nonumber\\[0.5ex]
+&\phantom{===}\left.+\frac{1}{2}\sum_{j>1}\left[3\,V_j'^{\,2}- (j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
+&\phantom{=}
++\epsilon^2\,\frac{n\,\hat{r}}{m^2}\left[-q\,p_2' + \frac{\hat{r}}{m\,q}\,(2-s)\,(m-n\,q)\right].
+\end{align}
+For the special case, $m=0$, we get
+\begin{align}
+k_0' &= - \frac{q\,p_2'}{n\,\hat{r}} - \frac{(2-s)}{n\,q} 
+\nonumber\\[0.5ex]
+&\phantom{=}-\frac{\epsilon^2}{n\,q}\left(
+\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right.\nonumber\\[0.5ex]
+&\phantom{===}
++\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
+&\phantom{===}\left.+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
+&\phantom{=}
++\epsilon^2\,\frac{(2-s)}{n\,q}\,\left(-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1 +\frac{1}{2}\sum_{j>0}\left[3\,H_j'^{\,2}- (j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]
+\right.\nonumber\\[0.5ex]
+&\phantom{===}\left.+\frac{1}{2}\sum_{j>1}\left[3\,V_j'^{\,2}- (j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
+&\phantom{=}
++\epsilon^2\,\frac{q\,p_2'}{n\,\hat{r}}\left(2\,g_2+\frac{\hat{r}^{\,2}}{2}+\frac{\hat{r}^{\,2}}{q^2}-2\,H_1-3\,\hat{r}\,H_1'\right).
+\end{align}
+Note that both $k_m'$ and $k_0'$ are zero at the plasma boundary. 
+
 
 \end{document}

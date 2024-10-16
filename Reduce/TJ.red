@@ -356,8 +356,6 @@ gr2ix22_target := (13/4) * r*r - 3*H1 + r*df(H1,r)
 
 gr2ix22 - gr2ix22_target;
 
-;bye;
-
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Expand Grad-Shafranov equation to order eps**2
 % Plasma pressure and safety-factor are not expanded
@@ -971,6 +969,11 @@ kmp0 := coeffn(kmp,eps,0)$
 kmp1 := coeffn(kmp,eps,1)$
 kmp2 := coeffn(kmp,eps,2)$
 
+k0p  := gf/n$
+k0p0 := coeffn(k0p,eps,0)$
+k0p1 := coeffn(k0p,eps,1)$
+k0p2 := coeffn(k0p,eps,2)$
+
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Calculate j=0 coupling coefficients
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1420,6 +1423,12 @@ kmp2_target := (r*pp - (3/2)*r**2 + 2*r*df(H1,r) - sp4 - 2*sp5 + sp6
    + (2-sh) * (- (3/4)*r**2 + r**2/q**2 + H1 + (1/2)*(3*sp4 - sp6)))/m
    + (n*r/m**2) * (-pp*q - r*(2-sh)*(m-n*q)/m/q)$
 
+k0p0_target := - q*pp/n/r - (2-sh)/n/q$
+k0p1_target := 0$
+k0p2_target := - ((3/2)*r**2 - 2*r*df(H1,r) + sp4 + 2*sp5 - sp6)/n/q
+   + (2-sh) * (- (3/4)*r**2 + r**2/q**2 + H1 + (3/2)*sp4 - (1/2)*sp6)/n/q
+   + q*pp * (2*g2 + r**2/2 + r**2/q**2 - 2*H1 - 3*r*df(H1,r))/n/r$
+
 write "Equilibrium residuals:";
 dg2p  := g2p  - g2p_target;
 dg4p  := g4p  - g4p_target;
@@ -1434,6 +1443,10 @@ dV4pp := V4pp - V4pp_target;
 dkmp0 := kmp0 - kmp0_target;
 dkmp1 := kmp1 - kmp1_target;
 dkmp2 := kmp2 - kmp2_target;
+
+dk0p0 := k0p0 - k0p0_target;
+dk0p1 := k0p1 - k0p1_target;
+dk0p2 := k0p2 - k0p2_target;
 
 out T$
 

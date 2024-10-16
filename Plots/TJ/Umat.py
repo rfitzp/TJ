@@ -1,7 +1,7 @@
-# Wmat.py
+# Umat.py
 
-# Visualizes ideal energy matrix W_m^m'
-# Also shows anti-Hermitian component of W_m^m'
+# Visualizes ideal energy matrix U_m^m'
+# Also shows anti-Hermitian component of U_m^m'
 
 import math
 import numpy as np
@@ -15,11 +15,19 @@ avacr = ds['Umat_r']
 avaci = ds['Umat_i']
 bvacr = ds['Uant_r']
 bvaci = ds['Uant_i']
+mpol  = ds['mpol']
+
+j0 = 0
+for j in range (len(mpol)):
+    if (mpol[j] == 0):
+        j0 = j
 
 ar = np.asarray(avacr)
 ai = np.asarray(avaci)
 br = np.asarray(bvacr)
 bi = np.asarray(bvaci)
+
+ar[j0,j0] = 0
 
 arp = np.amax(ar)
 arm = np.amin(ar)

@@ -30,6 +30,14 @@ double TJ::Getq (double r)
     return gsl_spline_eval (qspline, r, qacc);
 }
 
+double TJ::Getg2 (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (g2spline, 1., g2acc);
+  else
+    return gsl_spline_eval (g2spline, r, g2acc);
+}
+
 double TJ::Gets (double r)
 {
   if (r >= 1.)
@@ -52,6 +60,22 @@ double TJ::GetS1 (double r)
     return gsl_spline_eval (S1spline, 1., S1acc);
   else
     return gsl_spline_eval (S1spline, r, S1acc);
+}
+
+double TJ::GetS3 (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (S3spline, 1., S3acc);
+  else
+    return gsl_spline_eval (S3spline, r, S3acc);
+}
+
+double TJ::GetS4 (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (S4spline, 1., S4acc);
+  else
+    return gsl_spline_eval (S4spline, r, S4acc);
 }
 
 double TJ::GetP1 (double r)

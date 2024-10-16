@@ -29,11 +29,11 @@ ptest  = ds['Ptest']
 
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'TJ Code: Coupling Matrices')
-plt.rc('xtick', labelsize = 15) 
-plt.rc('ytick', labelsize = 15)
+plt.rc ('xtick', labelsize = 15) 
+plt.rc ('ytick', labelsize = 15)
 
-m   = input ("m  ? ")
-mp  = input ("m' ? ")
+m   = input ("m  (%d .. %d) ? " % (mpol[0], mpol[-1]))
+mp  = input ("m' (%d .. %d) ? " % (mpol[0], mpol[-1]))
 j   = int(m)  - mpol[0]
 jp  = int(mp) - mpol[0]
 if j < 0 or jp < 0:

@@ -209,45 +209,47 @@ void Equilibrium::Solve ()
   // ...............
   // Allocate memory
   // ...............
-  rr   = new double[Nr+1];
-  p2   = new double[Nr+1];
-  f1   = new double[Nr+1];
-  f3   = new double[Nr+1];
-  g2   = new double[Nr+1];
-  q0   = new double[Nr+1];
-  q2   = new double[Nr+1];
-  It   = new double[Nr+1];
-  Ip   = new double[Nr+1];
-  Jt   = new double[Nr+1];
-  Jp   = new double[Nr+1];
-  pp   = new double[Nr+1];
-  ppp  = new double[Nr+1];
-  qq   = new double[Nr+1];
-  qqq  = new double[Nr+1];
-  s    = new double[Nr+1];
-  s2   = new double[Nr+1];
-  S1   = new double[Nr+1];
-  S2   = new double[Nr+1];
-  P1   = new double[Nr+1];
-  P2   = new double[Nr+1];
-  P3   = new double[Nr+1];
-  P3a  = new double[Nr+1];
-  ff   = new double[Nr+1];
-  ggr2 = new double[Nr+1];
-  RR2  = new double[Nr+1];
-  IR2  = new double[Nr+1];
-  Psi  = new double[Nr+1];
-  PsiN = new double[Nr+1];
-  Tf   = new double[Nr+1];
-  mu0P = new double[Nr+1];
-  DI   = new double[Nr+1];
-  DR   = new double[Nr+1];
+  rr    = new double[Nr+1];
+  p2    = new double[Nr+1];
+  f1    = new double[Nr+1];
+  f3    = new double[Nr+1];
+  g2    = new double[Nr+1];
+  q0    = new double[Nr+1];
+  q2    = new double[Nr+1];
+  It    = new double[Nr+1];
+  Ip    = new double[Nr+1];
+  Jt    = new double[Nr+1];
+  Jp    = new double[Nr+1];
+  pp    = new double[Nr+1];
+  ppp   = new double[Nr+1];
+  qq    = new double[Nr+1];
+  qqq   = new double[Nr+1];
+  s     = new double[Nr+1];
+  s2    = new double[Nr+1];
+  S1    = new double[Nr+1];
+  S2    = new double[Nr+1];
+  S3    = new double[Nr+1];
+  S4    = new double[Nr+1];
+  P1    = new double[Nr+1];
+  P2    = new double[Nr+1];
+  P3    = new double[Nr+1];
+  P3a   = new double[Nr+1];
+  ff    = new double[Nr+1];
+  ggr2  = new double[Nr+1];
+  RR2   = new double[Nr+1];
+  IR2   = new double[Nr+1];
+  Psi   = new double[Nr+1];
+  PsiN  = new double[Nr+1];
+  Tf    = new double[Nr+1];
+  mu0P  = new double[Nr+1];
+  DI    = new double[Nr+1];
+  DR    = new double[Nr+1];
+  Lfunc = new double[Nr+1];
 
   HHfunc.resize (Ns+1, Nr+1);
   VVfunc.resize (Ns+1, Nr+1);
   HPfunc.resize (Ns+1, Nr+1);
   VPfunc.resize (Ns+1, Nr+1);
-  Lfunc = new double[Nr+1];
 
   Itspline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   Ipspline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
@@ -300,7 +302,7 @@ void Equilibrium::Solve ()
       VVacc[n] = gsl_interp_accel_alloc ();
       HPacc[n] = gsl_interp_accel_alloc ();
       VPacc[n] = gsl_interp_accel_alloc ();
-    }
+     }
 
   RR    .resize (Nf, Nw+1);
   ZZ    .resize (Nf, Nw+1);
@@ -712,6 +714,8 @@ void Equilibrium::Solve ()
     {
       double sum1 = 1.5 * HPfunc(1, i) * HPfunc(1, i);
       double sum2 = - (1. - s[i]) * (HPfunc(1, i) * HHfunc(1, i) /rr[i] + (1./3.) * HHfunc(1, i) * HHfunc(1, i) /rr[i]/rr[i]);
+      double sum3 = 1.5 * rr[i]*rr[i] - 2. * rr[i] * HPfunc(1, i) + HPfunc(1, i)*HPfunc(1, i);
+      double sum4 = - 0.75 * rr[i]*rr[i] + rr[i]*rr[i] /q2[i]/q2[i] + HHfunc(1, i) + 1.5 * HPfunc(1, i)*HPfunc(1, i);
  
       for (int n = 2; n <= Ns; n++)
 	{
@@ -722,13 +726,22 @@ void Equilibrium::Solve ()
 					+ double (n*n) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i)*VVfunc(n, i)) /rr[i]/rr[i])
 	    - (1. - s[i]) * (            (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
 			     + (1./3.) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i]);
+	  sum3 +=                            HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)
+	          + 2. * double (n*n - 1) * (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
+	          -      double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i];
+	  sum4 += (                    3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
+		       - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i])/2.;
 	}
 
       S1[i] = sum1;
       S2[i] = sum2;
+      S3[i] = sum3;
+      S4[i] = sum4;
     }
   S1[0] = 0.;
   S2[0] = S2[1];
+  S3[0] = S3[1];
+  S4[0] = 0.;
 
   // ...........................
   // Calculate profile functions
@@ -898,7 +911,7 @@ void Equilibrium::Solve ()
   delete[] Jp;  delete[] pp;  delete[] ppp; delete[] qq; delete[] qqq;
   delete[] s;   delete[] s2;  delete[] S1;  delete[] S2; delete[] P1;
   delete[] P2;  delete[] P3;  delete[] P3a; delete[] ff; delete[] ggr2;
-  delete[] RR2; delete[] IR2;
+  delete[] RR2; delete[] IR2; delete[] S3;  delete[] S4;
  
   gsl_spline_free (Itspline);
   gsl_spline_free (Ipspline);
@@ -936,12 +949,12 @@ void Equilibrium::Solve ()
       gsl_spline_free (VVspline[i]);
       gsl_spline_free (HPspline[i]);
       gsl_spline_free (VPspline[i]);
-
+ 
       gsl_interp_accel_free (HHacc[i]);
       gsl_interp_accel_free (VVacc[i]);
       gsl_interp_accel_free (HPacc[i]);
       gsl_interp_accel_free (VPacc[i]);
-    }
+     }
   delete[] HHspline; delete[] VVspline; delete[] HPspline; delete[] VPspline;
   delete[] HHacc;    delete[] VVacc;    delete[] HPacc;    delete[] VPacc;
 
@@ -1072,6 +1085,10 @@ void Equilibrium::WriteNetcdf (double sa)
       S1_x.putVar (S1);
       NcVar S2_x  = dataFile.addVar ("S2",   ncDouble, r_d);
       S2_x.putVar (S2);
+      NcVar S3_x  = dataFile.addVar ("S3",   ncDouble, r_d);
+      S3_x.putVar (S3);
+      NcVar S4_x  = dataFile.addVar ("S4",   ncDouble, r_d);
+      S4_x.putVar (S4);
       NcVar P1_x  = dataFile.addVar ("P1",   ncDouble, r_d);
       P1_x.putVar (P1);
       NcVar P2_x  = dataFile.addVar ("P2",   ncDouble, r_d);

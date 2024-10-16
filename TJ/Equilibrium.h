@@ -14,7 +14,7 @@
 // R(r,w) = 1 - epsa r cosw + epsa^2 H1(r) + epsa^2 sum_{n=2,Ns} [Hn(r) cos(n-1)w + Vn(r) sin(n-1)w]
 // Z(r,w) =     epsa r sinw                + epsa^2 sum_{n=2,Ns} [Hn(r) sin(n-1)w - Vn(r) cos(n-1)w]
 //
-// Here, R, phi, Z are cylindrical polar coordinates while r, w, phi are flux coordinates
+// Here, R, phi, Z are cylindrical polar coordinates while r, w, phi are (PEST) straight field-line coordinates
 
 // Edge shaping: Hna = Hn(1), Vna = Vn(1)
 
@@ -142,6 +142,8 @@ class Equilibrium
   double* s2;    // Second-order magnetic shear: s2 = r^2 q2''/q2
   double* S1;    // First shaping function
   double* S2;    // Second shaping function
+  double* S3;    // Third shaping function
+  double* S4;    // Fourth shaping function
   double* P1;    // First profile function:  (2-s) /q2
   double* P2;    // Second profile function: r dP1/dr
   double* P3;    // Third profile function
@@ -162,7 +164,7 @@ class Equilibrium
   Array<double,2>    HPfunc;    // Radial derivatives of horizontal shaping functions
   Array<double,2>    VPfunc;    // Radial derivatives of vertical shaping functions
   double*            Lfunc;     // Relabelling function
-
+ 
   double             amean;     // Mean minor radius
   double             li;        // Normalized plasma self-inductance
   double             betat;     // Plasma toroidal beta
@@ -193,10 +195,10 @@ class Equilibrium
   gsl_interp_accel*  Itacc;     // Accelerator for interpolated It function
   gsl_interp_accel*  Ipacc;     // Accelerator for interpolated Ip function
   gsl_interp_accel*  g2acc;     // Accelerator for interpolated g2 function
-  gsl_interp_accel** HHacc;     // Accelerator for interpolated horizontal shaping functions
-  gsl_interp_accel** VVacc;     // Accelerator for interpolated vertical shaping functions
-  gsl_interp_accel** HPacc;     // Accelerator for interpolated radial derivatives of horizontal shaping functions
-  gsl_interp_accel** VPacc;     // Accelerator for interpolated radial derivatives of vertical shaping functions
+  gsl_interp_accel** HHacc;     // Accelerators for interpolated horizontal shaping functions
+  gsl_interp_accel** VVacc;     // Accelerators for interpolated vertical shaping functions
+  gsl_interp_accel** HPacc;     // Accelerators for interpolated radial derivatives of horizontal shaping functions
+  gsl_interp_accel** VPacc;     // Accelerators for interpolated radial derivatives of vertical shaping functions
   gsl_interp_accel*  Lacc;      // Accelerator for interpolated relabelling function
   gsl_interp_accel*  wacc;      // Accelerator for interpolated omega function
   gsl_interp_accel*  Racc;      // Accelerator for interpolated R(theta)

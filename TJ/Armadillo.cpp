@@ -146,3 +146,24 @@ void TJ::GetEigenvalues (Array<complex<double>,2> H, double* evals, Array<comple
     for (int j = 0; j < size; j++)
       evecs(i, j) = eigvec(i, j);
 }
+
+// ###################################################
+// Function to return eigenvalues of Hermitian matix H
+// ###################################################
+void TJ::GetEigenvalues (Array<complex<double>,2> H, double* evals)
+{
+  int size = H.extent(0);
+
+  // Solve problem using Armadillo
+  cx_mat Hmat   (size, size);
+  vec    eigval (size);
+
+  for (int i = 0; i < size; i++)
+    for (int j = 0; j < size; j++)
+      Hmat(i, j) = H(i, j);
+
+  eig_sym (eigval, Hmat);
+
+  for (int i = 0; i < size; i++)
+    evals[i] = eigval(i);
+}

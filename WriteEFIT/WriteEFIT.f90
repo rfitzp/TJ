@@ -1,4 +1,4 @@
-! WriteEFIT.f
+! WriteEFIT.f90
 
 ! Program to input data from Outputs/Equilibrium/EFIT.nc and write EFIT file Outputs/WriteEFIT/EFIT.txt      
 

@@ -131,6 +131,8 @@ class TJ
   double*            s;         // Magnetic shear
   double*            s2;        // Higher-order shear: s2 = r^2 q''/q
   double*            S1;        // First shaping function
+  double*            S3;        // Third shaping function
+  double*            S4;        // Fourth shaping function
   double*            P1;        // First profile function: (2-s)/q
   double*            P2;        // Second profile function: r dP1/dr
   double*            P3;        // Third profile function
@@ -149,6 +151,8 @@ class TJ
   gsl_spline*        sspline;   // Interpolated s function
   gsl_spline*        s2spline;  // Interpolated s2 function
   gsl_spline*        S1spline;  // Interpolated S1 function
+  gsl_spline*        S3spline;  // Interpolated S3 function
+  gsl_spline*        S4spline;  // Interpolated S4 function
   gsl_spline*        P1spline;  // Interpolated P1 function
   gsl_spline*        P2spline;  // Interpolated P2 function
   gsl_spline*        P3spline;  // Interpolated P3 function
@@ -162,6 +166,8 @@ class TJ
   gsl_interp_accel*  sacc;      // Accelerator for interpolated s function
   gsl_interp_accel*  s2acc;     // Accelerator for interpolated s2 function
   gsl_interp_accel*  S1acc;     // Accelerator for interpolated S1 function
+  gsl_interp_accel*  S3acc;     // Accelerator for interpolated S3 function
+  gsl_interp_accel*  S4acc;     // Accelerator for interpolated S4 function
   gsl_interp_accel*  P1acc;     // Accelerator for interpolated P1 function
   gsl_interp_accel*  P2acc;     // Accelerator for interpolated P2 function
   gsl_interp_accel*  P3acc;     // Accelerator for interpolated P3 function
@@ -227,8 +233,8 @@ class TJ
   double* sres;    // Magnetic shears at rational surfaces
   double* DIres;   // DI values at rational surfaces
   double* DRres;   // DR values at rational surfaces
-  double* nuLres;  // Mercier indices of large solution at rational surfaces
-  double* nuSres;  // Mercies indices of small solution at rational surfaces
+  double* nuLres;  // Ideal Mercier indices of large solution at rational surfaces
+  double* nuSres;  // Ideal Mercier indices of small solution at rational surfaces
   int*    Jres;    // Index of resonant poloidal harmonic at rational surfaces
 
   // -------------------
@@ -321,16 +327,21 @@ class TJ
   Array<complex<double>,3> Psii;    // Psi components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Zi;      // Z components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Xii;     // Xi components of ideal solutions launched from magnetic axis
+  Array<complex<double>,3> Qsii;    // Q Psi components of ideal solutions launched from magnetic axis
+  Array<complex<double>,3> Chii;    // Chi components of ideal solutions launched from magnetic axis
   Array<complex<double>,2> Ji;      // Poloidal harmonics of current on plasma boundary associated with
                                     //  ideal solutions launched from magnetic axis
   Array<complex<double>,2> Wmat;    // Plasma ideal energy matrix
-  Array<complex<double>,2> Vmat;    // Vacuum ideal energy matrix
+  Array<complex<double>,2> Vmat;    // Vacuum ideal energy matrix 
   Array<complex<double>,2> Umat;    // Total ideal energy matrix
   Array<complex<double>,2> Uher;    // Hermitian component of Umat
   Array<complex<double>,2> Uant;    // Anti-Hermitian component of Umat
   double*                  Uval;    // Eigenvalues of symmeterized U-matrix
   Array<complex<double>,2> Uvec;    // Eigenvectors of symmeterized U-matrix
   Array<complex<double>,2> Ures;    // Residuals of Uvec orthonormaility matrix
+  Array<complex<double>,2> U1mat;   // Total ideal energy matrix (theta=0 on outboard midplane)
+  double*                  U1val;   // Eigenvalues of U1-matrix
+  Array<complex<double>,2> U1vec;   // Eigenvectors of U1-matrix
   Array<complex<double>,3> Psie;    // Psi components of ideal eigenfunctions
   Array<complex<double>,3> Ze;      // Z components of ideal eigenfunctions
   Array<complex<double>,3> Xie;     // Xi components of ideal eigenfunctions
@@ -343,6 +354,7 @@ class TJ
   Array<complex<double>,2> Xiy;     // Xi values on plasma boundary associated with ideal eigenfunctions
   complex<double>*         gammax;  // Expansion of Psi_x at boundary in ideal eigenfunctions
   complex<double>*         gamma;   // Expansion of Psi_rmp at boundary in ideal eigenfunctions
+  Array<double,2>          lcrit;   // Eigenvalues of inverse plasma energy matrix
 
   // ------------------------------------------------
   // Visualization of tearing eigenfunctions and RMPs
@@ -460,6 +472,8 @@ class TJ
   void GetMatrices (double r, int m, int mp,
 		    complex<double>& Lmmp, complex<double>& Mmmp,
 		    complex<double>& Nmmp, complex<double>& Pmmp);
+  // Get values of km 
+  double Getkm (double r, int m);
 
   // ...............
   // In Resonant.cpp
@@ -539,12 +553,18 @@ class TJ
   double Getppp (double r);
   // Return value of q
   double Getq (double r);
+  // Return value of g2
+  double Getg2 (double r);
   // Return value of s
   double Gets (double r);
   // Return value of s2
   double Gets2 (double r);
   // Return value of S1
   double GetS1 (double r);
+  // Return value of S3
+  double GetS3 (double r);
+  // Return value of S4
+  double GetS4 (double r);
   // Return value of P1
   double GetP1 (double r);
   // Return value of P2
@@ -611,6 +631,8 @@ class TJ
   void InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA);
   // Return eigenvalues and eigenvectors of Hermitian matix H
   void GetEigenvalues (Array<complex<double>,2> H, double* evals, Array<complex<double>,2> evecs);
+  // Return eigenvalues of Hermitian matix H
+  void GetEigenvalues (Array<complex<double>,2> H, double* evals);
 
   // ...............
   // In Toroidal.cpp

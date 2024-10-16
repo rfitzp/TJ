@@ -10,6 +10,7 @@
 ## ODE Solution:
 
 - *Matrix.py*:      Plots coupling matrices versus r
+= *km.py*:          Plots km values versus r
 - *Solutions.py*:   Plots components of m-dominant solution vector versus r
 - *Solution.py*:    Plots mth harmonic of components of m-dominant solution vector versus r
 - *h.py*:           Plots adaptive ode integration data
@@ -46,6 +47,7 @@
 
 - *Ideal.py*:		Plots poloidal harmonics of ideal solutions launched from magnetic axis versus r
 - *Ideal1.py*:		Plots kth poloidal harmomic of ideal solutions launched from magnetic axis versus r
+- *Internal.py*:        Plots poloidal harmonics of internal ideal solutions launched from magnetic axis versus r
 - *Umat.py*:		Visualizes total ideal energy matrix
 - *Ideale.py*:      	Plots polidal harmonics of ideal eigenfunctions versus r
 - *Ideale1.py*:     	Plots kth poloidal harmomic of ideal eigenfunctions versus r

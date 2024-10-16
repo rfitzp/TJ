@@ -474,23 +474,29 @@ void TJ::CalculateIdealStability ()
   // ---------------
   // Allocate memory
   // ---------------
-  Psii.resize(J, J, NDIAG);
-  Zi  .resize(J, J, NDIAG);
-  Xii .resize(J, J, NDIAG);
-  Ji  .resize(J, J);
-  Wmat.resize(J, J);
-  Vmat.resize(J, J);
-  Umat.resize(J, J);
-  Uher.resize(J, J);
-  Uant.resize(J, J);
-  Uvec.resize(J, J);
-  Ures.resize(J, J);
-  Psie.resize(J, J, NDIAG);
-  Ze  .resize(J, J, NDIAG);
-  Xie .resize(J, J, NDIAG);
-  Je  .resize(J, J);
+  Psii .resize(J, J, NDIAG);
+  Zi   .resize(J, J, NDIAG);
+  Xii  .resize(J, J, NDIAG);
+  Qsii .resize(J, J, NDIAG);
+  Chii .resize(J, J, NDIAG);
+  Ji   .resize(J, J);
+  Wmat .resize(J, J);
+  Vmat .resize(J, J);
+  Umat .resize(J, J);
+  Uher .resize(J, J);
+  Uant .resize(J, J);
+  Uvec .resize(J, J);
+  Ures .resize(J, J);
+  U1mat.resize(J, J);
+  U1vec.resize(J, J);
+  Psie .resize(J, J, NDIAG);
+  Ze   .resize(J, J, NDIAG);
+  Xie  .resize(J, J, NDIAG);
+  Je   .resize(J, J);
+  lcrit.resize(J, NDIAG);
 
   Uval    = new double[J];
+  U1val   = new double[J];
   deltaW  = new double[J];
   deltaWp = new double[J];
   deltaWv = new double[J];
@@ -511,6 +517,7 @@ void TJ::CalculateIdealStability ()
 	{
 	  complex<double> sump = YYY(j,   jp, i);
 	  complex<double> sumz = YYY(J+j, jp, i);
+	  double          km   = Getkm (Rgrid[j], MPOL[j]);
 	  
 	  for (int k = 0; k < nres; k++)
 	    {
@@ -520,9 +527,20 @@ void TJ::CalculateIdealStability ()
 	  
 	  Psii(j, jp, i) = sump;
 	  Zi  (j, jp, i) = sumz;
-	  Xii (j, jp, i) = sump /(mpol[j] - ntor * Getq(Rgrid[i]));
+	  Xii (j, jp, i) = sump /(mpol[j] - ntor * Getq (Rgrid[i]));
+	  
+	  if (XiFlag)
+	    {
+	      Qsii(j, jp, i) = sump /(mpol[j] - ntor * Getq (Rgrid[i]));
+	      Chii(j, jp, i) = M_PI*M_PI * (km * sump + sumz);
+	    }
+	  else
+	    {
+	      Qsii(j, jp, i) = sump;
+	      Chii(j, jp, i) = M_PI*M_PI * (km * sump + sumz) /(mpol[j] - ntor * Getq (Rgrid[i]));
+	    }
 	}
-
+  
   // -----------------------------------------------------
   // Normalize ideal solutions launched from magnetic axis
   // -----------------------------------------------------
@@ -539,9 +557,11 @@ void TJ::CalculateIdealStability ()
 	    Psii(j, jp, i) /= sqrt(norm);
 	    Zi  (j, jp, i) /= sqrt(norm);
 	    Xii (j, jp, i) /= sqrt(norm);
+	    Qsii(j, jp, i) /= sqrt(norm);
+	    Chii(j, jp, i) /= sqrt(norm);
 	  }
     }
-
+  
   // ---------------------------------------------------------------------------------------
   // Calculate boundary currents associated with ideal solutions launched from magnetic axis
   // ---------------------------------------------------------------------------------------
@@ -564,7 +584,7 @@ void TJ::CalculateIdealStability ()
     for (int jp = 0; jp < J; jp++)
       {
 	Umat(j, jp) = Psii(j, jp, NDIAG-1);
-	Vmat(j, jp) = M_PI*M_PI * Zi  (j, jp, NDIAG-1) /(mpol[j] - ntor*qa);
+	Vmat(j, jp) = M_PI*M_PI * Zi(j, jp, NDIAG-1) /(mpol[j] - ntor*qa);
       }
   SolveLinearSystemTranspose (Umat, Wmat, Vmat);
 
@@ -620,9 +640,17 @@ void TJ::CalculateIdealStability ()
   printf ("Total ideal energy matrix Hermitian test residual: %10.4e\n", Uamax /Uhmax);
 
   // --------------------------------------------------
-  // Calculate eigenvalues and eigenvectors of W-matrix
+  // Calculate eigenvalues and eigenvectors of U-matrix
   // --------------------------------------------------
   GetEigenvalues (Uher, Uval, Uvec);
+  
+  // ---------------------------------------------------
+  // Calculate eigenvalues and eigenvectors of U1-matrix
+  // ---------------------------------------------------
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      U1mat(j, jp) = conj (Uher(j, jp)) * cos (M_PI * (mpol[j] - mpol[jp]));
+  GetEigenvalues (U1mat, U1val, U1vec);
 
   // --------------------------------------------------------------------
   // Adjust eigenvectors such that element with largest magnitude is real
@@ -646,6 +674,28 @@ void TJ::CalculateIdealStability ()
       for (int jp = 0; jp < J; jp++)
 	{
 	  Uvec(jp, j) *= Ufac;
+	}
+    }
+
+  for (int j = 0; j < J; j++)
+    {
+      int    jmax = 0;
+      double norm = -1.;
+
+      for (int jp = 0; jp < J; jp++)
+	{
+	  if (abs (U1vec(jp, j)) > norm)
+	    {
+	      norm = abs (U1vec(jp, j));
+	      jmax = jp;
+	    }
+	}
+
+      complex<double> Ufac = conj(U1vec(jmax, j)) /abs(U1vec(jmax, j));
+
+      for (int jp = 0; jp < J; jp++)
+	{
+	  U1vec(jp, j) *= Ufac;
 	}
     }
 
@@ -806,6 +856,46 @@ void TJ::CalculateIdealStability ()
       gammax[j] = sumx;
       gamma [j] = sum;
     }
+
+  /*
+  // -----------------------------------------------------
+  // Calculate eigenvalues of inverse plasma energy matrix
+  // -----------------------------------------------------
+  for (int i = 1; i < NDIAG; i++)
+    {
+      Array<complex<double>,2> Qsimat(J, J);
+      Array<complex<double>,2> Chimat(J, J);
+      Array<complex<double>,2> inWmat(J, J);
+      Array<complex<double>,2> hWmat (J, J);
+
+      double* evals = new double[J];
+
+      for (int j = 0; j < J; j++)
+	for (int jp = 0; jp < J; jp++)
+	  {
+	    Qsimat(j, jp) = Qsii(j, jp, i);
+	    Chimat(j, jp) = Chii(j, jp, i);
+	  }
+
+      SolveLinearSystemTranspose (Chimat, inWmat, Qsimat);
+
+      for (int j = 0; j < J; j++)
+	for (int jp = 0; jp < J; jp++)
+	  {
+	    hWmat(j, jp) = (inWmat(j, jp) + conj (inWmat(jp, j))) /2.;
+	  }
+
+      GetEigenvalues (hWmat, evals);
+
+      for (int j = 0; j < J; j++)
+	lcrit(j, i) = evals[j];
+
+      delete[] evals;
+    }
+  
+  for (int j = 0; j < J; j++)
+    lcrit(j, 0) = lcrit(j, 1);
+  */
 }
 
 // ##############################################################################
@@ -955,6 +1045,8 @@ void TJ::VisualizeEigenfunctions ()
       gsl_spline_init (z_r_spline,   Rgrid, z_r,   NDIAG);
       gsl_spline_init (z_i_spline,   Rgrid, z_i,   NDIAG);
       
+
+
       // Interpolate data onto visualization grid
       for (int i = 0; i < Nf; i++)
 	{
