@@ -23,12 +23,16 @@ void TJ::ReadEquilibrium ()
   qspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   sspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   s2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  s0spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   S1spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   S3spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   S4spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P1spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  P1aspline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  P2aspline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P3spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  P4spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
 
   Pacc      = gsl_interp_accel_alloc ();
   g2acc     = gsl_interp_accel_alloc ();
@@ -38,12 +42,16 @@ void TJ::ReadEquilibrium ()
   qacc      = gsl_interp_accel_alloc ();
   sacc      = gsl_interp_accel_alloc ();
   s2acc     = gsl_interp_accel_alloc ();
+  s0acc     = gsl_interp_accel_alloc ();
   S1acc     = gsl_interp_accel_alloc ();
   S3acc     = gsl_interp_accel_alloc ();
   S4acc     = gsl_interp_accel_alloc ();
   P1acc     = gsl_interp_accel_alloc ();
   P2acc     = gsl_interp_accel_alloc ();
+  P1aacc    = gsl_interp_accel_alloc ();
+  P2aacc    = gsl_interp_accel_alloc ();
   P3acc     = gsl_interp_accel_alloc ();
+  P4acc     = gsl_interp_accel_alloc ();
 
   HHspline  = new gsl_spline* [Ns+1];
   VVspline  = new gsl_spline* [Ns+1];
@@ -79,12 +87,16 @@ void TJ::ReadEquilibrium ()
   gsl_spline_init (qspline,   rr, q,    Nr+1);
   gsl_spline_init (sspline,   rr, s,    Nr+1);
   gsl_spline_init (s2spline,  rr, s2,   Nr+1);
+  gsl_spline_init (s0spline,  rr, s0,   Nr+1);
   gsl_spline_init (S1spline,  rr, S1,   Nr+1);
   gsl_spline_init (S3spline,  rr, S3,   Nr+1);
   gsl_spline_init (S4spline,  rr, S4,   Nr+1);
   gsl_spline_init (P1spline,  rr, P1,   Nr+1);
   gsl_spline_init (P2spline,  rr, P2,   Nr+1);
+  gsl_spline_init (P1aspline, rr, P1a,  Nr+1);
+  gsl_spline_init (P2aspline, rr, P2a,  Nr+1);
   gsl_spline_init (P3spline,  rr, P3,   Nr+1);
+  gsl_spline_init (P4spline,  rr, P4,   Nr+1);
 
   double* data = new double[Nr+1];
 

@@ -51,6 +51,8 @@
 - *Umat.py*:		Visualizes total ideal energy matrix
 - *Ideale.py*:      	Plots polidal harmonics of ideal eigenfunctions versus r
 - *Ideale1.py*:     	Plots kth poloidal harmomic of ideal eigenfunctions versus r
+- *Evals.py*:	 	Plots eigenvalues of W, V, U matrices 
 - *deltaW.py*:	 	Plots delta W values versus eigenfunction number
 - *Xi.py*:              Plots Xi Fourier harmonics on plasma boundary
 - *PsiJSurface.py*: 	Plots psi and J on plasma boundary associated with ideal eigenfunctions
+- *laambda.py*:         Plots eigenvalues of plasma energy matrix versus r

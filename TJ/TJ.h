@@ -44,6 +44,8 @@
 
 #pragma once
 
+#define ARMA_WARN_LEVEL 0
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -130,12 +132,16 @@ class TJ
   double*            q;         // Safety-factor
   double*            s;         // Magnetic shear
   double*            s2;        // Higher-order shear: s2 = r^2 q''/q
+  double*            s0;        // Lower order magnetic shear
   double*            S1;        // First shaping function
   double*            S3;        // Third shaping function
   double*            S4;        // Fourth shaping function
   double*            P1;        // First profile function: (2-s)/q
   double*            P2;        // Second profile function: r dP1/dr
+  double*            P1a;       // Modified first profile function: (2-s)/q (s=2 at boundary)
+  double*            P2a;       // Modified second profile function: r dP1a/dr
   double*            P3;        // Third profile function
+  double*            P4;        // Fourth profile function
 
   Array<double,2>    HHfunc;    // Horizontal shaping functions
   Array<double,2>    VVfunc;    // Vertical shaping functions
@@ -150,12 +156,16 @@ class TJ
   gsl_spline*        qspline;   // Interpolated q function
   gsl_spline*        sspline;   // Interpolated s function
   gsl_spline*        s2spline;  // Interpolated s2 function
+  gsl_spline*        s0spline;  // Interpolated s0 function
   gsl_spline*        S1spline;  // Interpolated S1 function
   gsl_spline*        S3spline;  // Interpolated S3 function
   gsl_spline*        S4spline;  // Interpolated S4 function
   gsl_spline*        P1spline;  // Interpolated P1 function
   gsl_spline*        P2spline;  // Interpolated P2 function
+  gsl_spline*        P1aspline; // Interpolated P1a function
+  gsl_spline*        P2aspline; // Interpolated P2a function
   gsl_spline*        P3spline;  // Interpolated P3 function
+  gsl_spline*        P4spline;  // Interpolated P4 function
 
   gsl_interp_accel*  Pacc;      // Accelerator for interpolated P function
   gsl_interp_accel*  g2acc;     // Accelerator for interpolated g2 function
@@ -165,12 +175,16 @@ class TJ
   gsl_interp_accel*  qacc;      // Accelerator for interpolated q function
   gsl_interp_accel*  sacc;      // Accelerator for interpolated s function
   gsl_interp_accel*  s2acc;     // Accelerator for interpolated s2 function
+  gsl_interp_accel*  s0acc;     // Accelerator for interpolated s0 function
   gsl_interp_accel*  S1acc;     // Accelerator for interpolated S1 function
   gsl_interp_accel*  S3acc;     // Accelerator for interpolated S3 function
   gsl_interp_accel*  S4acc;     // Accelerator for interpolated S4 function
   gsl_interp_accel*  P1acc;     // Accelerator for interpolated P1 function
   gsl_interp_accel*  P2acc;     // Accelerator for interpolated P2 function
+  gsl_interp_accel*  P1aacc;    // Accelerator for interpolated P1a function
+  gsl_interp_accel*  P2aacc;    // Accelerator for interpolated P2a function
   gsl_interp_accel*  P3acc;     // Accelerator for interpolated P3 function
+  gsl_interp_accel*  P4acc;     // Accelerator for interpolated P4 function
 
   gsl_spline**       HHspline;  // Interpolated horizontal shaping functions
   gsl_spline**       VVspline;  // Interpolated vertical shaping functions
@@ -327,12 +341,17 @@ class TJ
   Array<complex<double>,3> Psii;    // Psi components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Zi;      // Z components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Xii;     // Xi components of ideal solutions launched from magnetic axis
-  Array<complex<double>,3> Qsii;    // Q Psi components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Chii;    // Chi components of ideal solutions launched from magnetic axis
   Array<complex<double>,2> Ji;      // Poloidal harmonics of current on plasma boundary associated with
                                     //  ideal solutions launched from magnetic axis
   Array<complex<double>,2> Wmat;    // Plasma ideal energy matrix
-  Array<complex<double>,2> Vmat;    // Vacuum ideal energy matrix 
+  Array<complex<double>,2> Wher;    // Hermitian component of Wmat
+  Array<complex<double>,2> Want;    // Anti-Hermitian component of Wmat
+  double*                  Wval;    // Eigenvalues of symmeterized W-matrix
+  Array<complex<double>,2> Vmat;    // Vacuum ideal energy matrix
+  Array<complex<double>,2> Vher;    // Hermitian component of Vmat
+  Array<complex<double>,2> Vant;    // Anti-Hermitian component of Vmat
+  double*                  Vval;    // Eigenvalues of symmeterized V-matrix
   Array<complex<double>,2> Umat;    // Total ideal energy matrix
   Array<complex<double>,2> Uher;    // Hermitian component of Umat
   Array<complex<double>,2> Uant;    // Anti-Hermitian component of Umat
@@ -354,8 +373,8 @@ class TJ
   Array<complex<double>,2> Xiy;     // Xi values on plasma boundary associated with ideal eigenfunctions
   complex<double>*         gammax;  // Expansion of Psi_x at boundary in ideal eigenfunctions
   complex<double>*         gamma;   // Expansion of Psi_rmp at boundary in ideal eigenfunctions
-  Array<double,2>          lcrit;   // Eigenvalues of inverse plasma energy matrix
-
+  Array<double,2>          lvals;   // Eigenvalues of plasma energy matrix versus r
+ 
   // ------------------------------------------------
   // Visualization of tearing eigenfunctions and RMPs
   // ------------------------------------------------
@@ -559,6 +578,8 @@ class TJ
   double Gets (double r);
   // Return value of s2
   double Gets2 (double r);
+  // Return value of s0
+  double Gets0 (double r);
   // Return value of S1
   double GetS1 (double r);
   // Return value of S3
@@ -569,8 +590,14 @@ class TJ
   double GetP1 (double r);
   // Return value of P2
   double GetP2 (double r);
+  // Return value of P1a
+  double GetP1a (double r);
+  // Return value of P2a
+  double GetP2a (double r);
   // Return value of P3
   double GetP3 (double r);
+  // Return value of P4
+  double GetP4 (double r);
   // Return value of Hn
   double GetHn (int n, double r);
   // Return value of Hnp

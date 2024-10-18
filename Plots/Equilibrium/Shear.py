@@ -13,6 +13,7 @@ ds   = nc.Dataset(fn)
 r    = ds['r']
 q    = ds['q_2']
 s    = ds['s']
+s0   = ds['s0']
 s2   = ds['s2']
 qq   = ds['qq']
 qqq  = ds['qqq']
@@ -50,7 +51,9 @@ plt.subplot (3, 2, 3)
 plt.xlim (0., 1.)
 
 plt.plot    (r, s,    color = 'blue',  linewidth = 2,   linestyle = 'solid')
+plt.plot    (r, s0,   color = 'blue',  linewidth = 2,   linestyle = 'dashed')
 plt.axhline (para[1], color = 'red',   linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (2.     , color = 'red',   linewidth = 1.5, linestyle = 'dotted')
 plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\hat{r}$', fontsize = "15")

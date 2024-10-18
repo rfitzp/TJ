@@ -477,11 +477,14 @@ void TJ::CalculateIdealStability ()
   Psii .resize(J, J, NDIAG);
   Zi   .resize(J, J, NDIAG);
   Xii  .resize(J, J, NDIAG);
-  Qsii .resize(J, J, NDIAG);
   Chii .resize(J, J, NDIAG);
   Ji   .resize(J, J);
   Wmat .resize(J, J);
+  Wher .resize(J, J);
+  Want .resize(J, J);
   Vmat .resize(J, J);
+  Vher .resize(J, J);
+  Vant .resize(J, J);
   Umat .resize(J, J);
   Uher .resize(J, J);
   Uant .resize(J, J);
@@ -493,8 +496,10 @@ void TJ::CalculateIdealStability ()
   Ze   .resize(J, J, NDIAG);
   Xie  .resize(J, J, NDIAG);
   Je   .resize(J, J);
-  lcrit.resize(J, NDIAG);
+  lvals.resize(J, NDIAG);
 
+  Wval    = new double[J];
+  Vval    = new double[J];
   Uval    = new double[J];
   U1val   = new double[J];
   deltaW  = new double[J];
@@ -517,7 +522,7 @@ void TJ::CalculateIdealStability ()
 	{
 	  complex<double> sump = YYY(j,   jp, i);
 	  complex<double> sumz = YYY(J+j, jp, i);
-	  double          km   = Getkm (Rgrid[j], MPOL[j]);
+	  double          km   = Getkm (Rgrid[i], MPOL[j]);
 	  
 	  for (int k = 0; k < nres; k++)
 	    {
@@ -528,17 +533,7 @@ void TJ::CalculateIdealStability ()
 	  Psii(j, jp, i) = sump;
 	  Zi  (j, jp, i) = sumz;
 	  Xii (j, jp, i) = sump /(mpol[j] - ntor * Getq (Rgrid[i]));
-	  
-	  if (XiFlag)
-	    {
-	      Qsii(j, jp, i) = sump /(mpol[j] - ntor * Getq (Rgrid[i]));
-	      Chii(j, jp, i) = M_PI*M_PI * (km * sump + sumz);
-	    }
-	  else
-	    {
-	      Qsii(j, jp, i) = sump;
-	      Chii(j, jp, i) = M_PI*M_PI * (km * sump + sumz) /(mpol[j] - ntor * Getq (Rgrid[i]));
-	    }
+	  Chii(j, jp, i) = M_PI*M_PI * (km * sump + sumz);
 	}
   
   // -----------------------------------------------------
@@ -557,7 +552,6 @@ void TJ::CalculateIdealStability ()
 	    Psii(j, jp, i) /= sqrt(norm);
 	    Zi  (j, jp, i) /= sqrt(norm);
 	    Xii (j, jp, i) /= sqrt(norm);
-	    Qsii(j, jp, i) /= sqrt(norm);
 	    Chii(j, jp, i) /= sqrt(norm);
 	  }
     }
@@ -617,28 +611,54 @@ void TJ::CalculateIdealStability ()
    for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
+ 	Wher (j, jp) = 0.5 * (Wmat (j, jp) + conj (Wmat (jp, j)));
+	Want (j, jp) = 0.5 * (Wmat (j, jp) - conj (Wmat (jp, j)));
+	Vher (j, jp) = 0.5 * (Vmat (j, jp) + conj (Vmat (jp, j)));
+	Vant (j, jp) = 0.5 * (Vmat (j, jp) - conj (Vmat (jp, j)));
 	Uher (j, jp) = 0.5 * (Umat (j, jp) + conj (Umat (jp, j)));
 	Uant (j, jp) = 0.5 * (Umat (j, jp) - conj (Umat (jp, j)));
       }
 
-  // ----------------------------
-  // Calculate U-matrix residuals
-  // ----------------------------
+  // --------------------------
+  // Calculate matrix residuals
+  // --------------------------
+  double Whmax = 0., Wamax = 0.;
+  double Vhmax = 0., Vamax = 0.;
   double Uhmax = 0., Uamax = 0.;
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
+	double whval = abs (Wher (j, jp));
+	double waval = abs (Want (j, jp));
+	double vhval = abs (Vher (j, jp));
+	double vaval = abs (Vant (j, jp));
 	double uhval = abs (Uher (j, jp));
 	double uaval = abs (Uant (j, jp));
 
+	if (whval > Whmax)
+	  Whmax = whval;
+	if (waval > Wamax)
+	  Wamax = waval;
+	if (vhval > Vhmax)
+	  Vhmax = vhval;
+	if (vaval > Vamax)
+	  Vamax = vaval;
 	if (uhval > Uhmax)
 	  Uhmax = uhval;
 	if (uaval > Uamax)
-	  Uamax = uaval;	
+	  Uamax = uaval;
       }
 
-  printf ("Total ideal energy matrix Hermitian test residual: %10.4e\n", Uamax /Uhmax);
+  printf ("Plasma ideal energy matrix Hermitian test residual: %10.4e\n", Wamax /Whmax);
+  printf ("Vacuum ideal energy matrix Hermitian test residual: %10.4e\n", Vamax /Vhmax);
+  printf ("Total  ideal energy matrix Hermitian test residual: %10.4e\n", Uamax /Uhmax);
 
+  // ------------------------------------------
+  // Calculate eigenvalues of W- and V-matrices
+  // ------------------------------------------
+  GetEigenvalues (Wher, Wval);
+  GetEigenvalues (Vher, Vval);
+  
   // --------------------------------------------------
   // Calculate eigenvalues and eigenvectors of U-matrix
   // --------------------------------------------------
@@ -669,7 +689,7 @@ void TJ::CalculateIdealStability ()
 	    }
 	}
 
-      complex<double> Ufac = conj(Uvec(jmax, j)) /abs(Uvec(jmax, j));
+      complex<double> Ufac = conj (Uvec(jmax, j)) /abs (Uvec(jmax, j));
 
       for (int jp = 0; jp < J; jp++)
 	{
@@ -691,7 +711,7 @@ void TJ::CalculateIdealStability ()
 	    }
 	}
 
-      complex<double> Ufac = conj(U1vec(jmax, j)) /abs(U1vec(jmax, j));
+      complex<double> Ufac = conj (U1vec(jmax, j)) /abs (U1vec(jmax, j));
 
       for (int jp = 0; jp < J; jp++)
 	{
@@ -857,45 +877,43 @@ void TJ::CalculateIdealStability ()
       gamma [j] = sum;
     }
 
-  /*
-  // -----------------------------------------------------
-  // Calculate eigenvalues of inverse plasma energy matrix
-  // -----------------------------------------------------
+  // ------------------------------------------------------
+  // Calculate eigenvalues of plasma energy matrix versus r
+  // ------------------------------------------------------
   for (int i = 1; i < NDIAG; i++)
     {
-      Array<complex<double>,2> Qsimat(J, J);
+      Array<complex<double>,2> Xiimat(J, J);
       Array<complex<double>,2> Chimat(J, J);
-      Array<complex<double>,2> inWmat(J, J);
-      Array<complex<double>,2> hWmat (J, J);
+      Array<complex<double>,2> Emat  (J, J);
+      Array<complex<double>,2> hEmat (J, J);
 
       double* evals = new double[J];
 
       for (int j = 0; j < J; j++)
 	for (int jp = 0; jp < J; jp++)
 	  {
-	    Qsimat(j, jp) = Qsii(j, jp, i);
+	    Xiimat(j, jp) = Xii (j, jp, i);
 	    Chimat(j, jp) = Chii(j, jp, i);
 	  }
 
-      SolveLinearSystemTranspose (Chimat, inWmat, Qsimat);
+      SolveLinearSystemTranspose (Xiimat, Emat, Chimat);
 
       for (int j = 0; j < J; j++)
 	for (int jp = 0; jp < J; jp++)
 	  {
-	    hWmat(j, jp) = (inWmat(j, jp) + conj (inWmat(jp, j))) /2.;
+	    hEmat(j, jp) = (Emat(j, jp) + conj (Emat(jp, j))) /2.;
 	  }
 
-      GetEigenvalues (hWmat, evals);
+      GetEigenvalues (Emat, evals);
 
       for (int j = 0; j < J; j++)
-	lcrit(j, i) = evals[j];
+	lvals(j, i) = evals[j];
 
       delete[] evals;
     }
   
   for (int j = 0; j < J; j++)
-    lcrit(j, 0) = lcrit(j, 1);
-  */
+    lvals(j, 0) = lvals(j, 1);
 }
 
 // ##############################################################################

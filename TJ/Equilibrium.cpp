@@ -226,14 +226,19 @@ void Equilibrium::Solve ()
   qqq   = new double[Nr+1];
   s     = new double[Nr+1];
   s2    = new double[Nr+1];
+  s0    = new double[Nr+1];
   S1    = new double[Nr+1];
   S2    = new double[Nr+1];
   S3    = new double[Nr+1];
   S4    = new double[Nr+1];
   P1    = new double[Nr+1];
   P2    = new double[Nr+1];
+  P1a   = new double[Nr+1];
+  P2a   = new double[Nr+1];
   P3    = new double[Nr+1];
   P3a   = new double[Nr+1];
+  P4    = new double[Nr+1];
+  P4a   = new double[Nr+1];
   ff    = new double[Nr+1];
   ggr2  = new double[Nr+1];
   RR2   = new double[Nr+1];
@@ -620,7 +625,13 @@ void Equilibrium::Solve ()
     {
       s[i] = qq[i] /q2[i];
     }
-  
+
+  for (int i = 1; i <= Nr; i++)
+    {
+      s0[i] = 2. - rr[i] * Getf1p (rr[i]) /Getf1 (rr[i]);
+    }
+  s0[0] = 0.;
+
   // ....................................
   // Calculate target edge magnetic shear
   // ....................................
@@ -693,7 +704,7 @@ void Equilibrium::Solve ()
   CashKarp45Fixed (4, r, y2, err2, 1. - r);
 
   amean  = (GetR (1., M_PI, 1) - GetR (1., 0., 1)) /2.;
-  li     = 2.*y2[0] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
+  li     = 2. * y2[0] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
   betat  = 2. * epsa*epsa * y2[1] /y2[2];
   betap  = 2. * y2[1] /y2[0];
   betat1 = 2. * epsa*epsa * y2[1] /y2[3];
@@ -713,7 +724,7 @@ void Equilibrium::Solve ()
   for (int i = 1; i <= Nr; i++)
     {
       double sum1 = 1.5 * HPfunc(1, i) * HPfunc(1, i);
-      double sum2 = - (1. - s[i]) * (HPfunc(1, i) * HHfunc(1, i) /rr[i] + (1./3.) * HHfunc(1, i) * HHfunc(1, i) /rr[i]/rr[i]);
+      double sum2 = 0.;
       double sum3 = 1.5 * rr[i]*rr[i] - 2. * rr[i] * HPfunc(1, i) + HPfunc(1, i)*HPfunc(1, i);
       double sum4 = - 0.75 * rr[i]*rr[i] + rr[i]*rr[i] /q2[i]/q2[i] + HHfunc(1, i) + 1.5 * HPfunc(1, i)*HPfunc(1, i);
  
@@ -721,11 +732,11 @@ void Equilibrium::Solve ()
 	{
 	  sum1 += (                  3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
 		     - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i])/2.;
-	  sum2 += 2. * double (n*n - 1) * (+ HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)
-					- (11./3.) * (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
-					+ double (n*n) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i)*VVfunc(n, i)) /rr[i]/rr[i])
-	    - (1. - s[i]) * (            (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
-			     + (1./3.) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i]);
+	  sum2 += 2. * double (n*n - 1) * ((+ HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)
+					    - (11./3.) * (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
+					    + double (n*n) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i)*VVfunc(n, i)) /rr[i]/rr[i])
+	                    - (1. - s[i])* (             (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
+					     + (1./3.) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i]));
 	  sum3 +=                            HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)
 	          + 2. * double (n*n - 1) * (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
 	          -      double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i];
@@ -746,6 +757,7 @@ void Equilibrium::Solve ()
   // ...........................
   // Calculate profile functions
   // ...........................
+    
   for (int i = 0; i <= Nr; i++)
     {
       P1[i]  = (2. - s[i]) /q2[i];
@@ -754,15 +766,24 @@ void Equilibrium::Solve ()
         + rr[i]*rr[i]   * (2. - s[i]) /q2[i]/q2[i]/q2[i]
 	+ (s[i] /q2[i]) * (3. * rr[i]*rr[i] /4. - HHfunc(1, i) - S1[i])
 	- (2.   /q2[i]) * (3. * rr[i]*rr[i] /2. - HHfunc(1, i) - rr[i] * HPfunc(1, i) - 2. * S1[i] /3.);
+      P1a[i] = (2. - s0[i]) /q0[i];
+      P4a[i] = - (2. - s[i]) * S4[i] /q2[i] + S3[i] /q2[i];
     }
-  P1[0] = P1[1];
 
   for (int i = 1; i < Nr; i++)
     {
-      P3[i] = 2. * rr[i] * pp[i] * (2. - s[i]) + q2[i] * rr[i] * (P3a[i+1] - P3a[i-1]) /2./hh - S2[i];
+      P3[i]  = 2. * rr[i] * pp[i] * (2. - s[i]) + q2[i] * rr[i] * (P3a[i+1] - P3a[i-1]) /2./hh - S2[i];
+      P2a[i] = rr[i] * (P1a[i+1] - P1a[i-1]) /2./hh;
+      P4[i]  = 2. * rr[i] * pp[i] * (2. - s[i]) - q2[i] * rr[i] * (P4a[i+1] - P4a[i-1]) /2./hh;
     }
   P3[0]  = P3[1]    - (P3[2]    - P3[1]);
   P3[Nr] = P3[Nr-1] + (P3[Nr-1] - P3[Nr-2]);
+
+  P2a[0]  = P2a[1]    - (P2a[2]    - P2a[1]);
+  P2a[Nr] = P2a[Nr-1] + (P2a[Nr-1] - P2a[Nr-2]);
+
+  P4[0]  = P4[1]    - (P4[2]    - P4[1]);
+  P4[Nr] = P4[Nr-1] + (P4[Nr-1] - P4[Nr-2]);
 
   // ...........................................................
   // Calculate magnetic flux-surfaces for visualization purposes
@@ -906,12 +927,13 @@ void Equilibrium::Solve ()
   // ........
   printf ("Cleaning up:\n");
   
-  delete[] rr;  delete[] p2;  delete[] f1;  delete[] f3; delete[] g2;
-  delete[] q0;  delete[] q2;  delete[] It;  delete[] Ip; delete[] Jt;
-  delete[] Jp;  delete[] pp;  delete[] ppp; delete[] qq; delete[] qqq;
-  delete[] s;   delete[] s2;  delete[] S1;  delete[] S2; delete[] P1;
-  delete[] P2;  delete[] P3;  delete[] P3a; delete[] ff; delete[] ggr2;
-  delete[] RR2; delete[] IR2; delete[] S3;  delete[] S4;
+  delete[] rr;  delete[] p2;  delete[] f1;  delete[] f3;  delete[] g2;
+  delete[] q0;  delete[] q2;  delete[] It;  delete[] Ip;  delete[] Jt;
+  delete[] Jp;  delete[] pp;  delete[] ppp; delete[] qq;  delete[] qqq;
+  delete[] s;   delete[] s2;  delete[] S1;  delete[] S2;  delete[] P1;
+  delete[] P2;  delete[] P3;  delete[] P3a; delete[] ff;  delete[] ggr2;
+  delete[] RR2; delete[] IR2; delete[] S3;  delete[] S4;  delete[] P1a;
+  delete[] P2a; delete[] s0;  delete[] P4;  delete[] P4a;
  
   gsl_spline_free (Itspline);
   gsl_spline_free (Ipspline);
@@ -1081,6 +1103,8 @@ void Equilibrium::WriteNetcdf (double sa)
       s_x.putVar (s);
       NcVar s2_x  = dataFile.addVar ("s2",   ncDouble, r_d);
       s2_x.putVar (s2);
+      NcVar s0_x  = dataFile.addVar ("s0",   ncDouble, r_d);
+      s0_x.putVar (s0);
       NcVar S1_x  = dataFile.addVar ("S1",   ncDouble, r_d);
       S1_x.putVar (S1);
       NcVar S2_x  = dataFile.addVar ("S2",   ncDouble, r_d);
@@ -1093,8 +1117,14 @@ void Equilibrium::WriteNetcdf (double sa)
       P1_x.putVar (P1);
       NcVar P2_x  = dataFile.addVar ("P2",   ncDouble, r_d);
       P2_x.putVar (P2);
+      NcVar P1a_x = dataFile.addVar ("P1a",  ncDouble, r_d);
+      P1a_x.putVar (P1a);
+      NcVar P2a_x = dataFile.addVar ("P2a",  ncDouble, r_d);
+      P2a_x.putVar (P2a);
       NcVar P3_x  = dataFile.addVar ("P3",   ncDouble, r_d);
       P3_x.putVar (P3);
+      NcVar P4_x  = dataFile.addVar ("P4",   ncDouble, r_d);
+      P4_x.putVar (P4);
       NcVar P3a_x = dataFile.addVar ("P3a",  ncDouble, r_d);
       P3a_x.putVar (P3a);
       NcVar T_x   = dataFile.addVar ("T",    ncDouble, r_d);

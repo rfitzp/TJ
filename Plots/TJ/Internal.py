@@ -13,8 +13,8 @@ fn    = '../../Outputs/TJ/TJ.nc'
 ds    = nc.Dataset(fn)
 mpol  = ds['mpol']
 r     = ds['r_grid']
-Psi_r = ds['Qsi_i_r']
-Psi_i = ds['Qsi_i_i']
+Psi_r = ds['Xi_i_r']
+Psi_i = ds['Xi_i_i']
 Chi_r = ds['Chi_i_r']
 Chi_i = ds['Chi_i_i']
 rres  = ds['r_res']
@@ -57,7 +57,7 @@ for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\hat{r}$',            fontsize = "15")
-plt.ylabel (r"Re($\tilde{\psi}_m$)", fontsize = "15")
+plt.ylabel (r"Re($\Xi_m$)", fontsize = "15")
 
 plt.subplot(2, 2, 2)
 
@@ -85,7 +85,7 @@ for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\hat{r}$',            fontsize = "15")
-plt.ylabel (r"Im($\tilde{\psi}_m$)", fontsize = "15")
+plt.ylabel (r"Im($\Xi_m$)", fontsize = "15")
 
 plt.subplot (2, 2, 3)
 

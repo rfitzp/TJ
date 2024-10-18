@@ -41,10 +41,14 @@ void TJ::GetMatrices (double r, int m, int mp,
   double q   = Getq   (r);
   double s   = Gets   (r);
   double s2  = Gets2  (r);
+  double s0  = Gets0  (r);
   double S1  = GetS1  (r);
   double P1  = GetP1  (r);
   double P2  = GetP2  (r);
+  double P1a = GetP1a (r);
+  double P2a = GetP2a (r);
   double P3  = GetP3  (r);
+  double P4  = GetP4  (r);
 
   double* Hn  = new double[Ns+1];
   double* Hnp = new double[Ns+1];
@@ -84,8 +88,8 @@ void TJ::GetMatrices (double r, int m, int mp,
     {
       double pmm0 = mnq*mnq + mnq * (q /mm) * P2;
       double pmm2 = mnq*mnq * (1.75*r2 - Hn[1] - 3.*r*Hnp[1] + S1
-			       + (1./mm2) * ((ntor /mm) * r2 * (2.*P1 + P2) - r2*P1*P1 - r*pp - r2*ppp))
-	- (mnq /mm) * P3 + 2*r*pp*(1. - q2);
+                    + (1./mm2) * ((ntor /mm) * r2 * (2.*P1 + P2) - r2*P1*P1 - r*pp - r2*ppp))
+	            - (mnq /mm) * P4 + 2*r*pp*(1. - q2);
       
       Lmmp = complex<double> (mm2 + eps2 * mm2 * (- 0.75*r2 + Hn[1] + S1) + eps2*nt2*r2, 0.);
       Mmmp = complex<double> (0.,                                                        0.);

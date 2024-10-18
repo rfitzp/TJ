@@ -10,15 +10,15 @@
 \allowdisplaybreaks
 
 \begin{document}
-\title{Calculation of Tearing Mode Stability in an Inverse Aspect-Ratio Expanded Tokamak Plasma Equilibrium}
+\title{Calculation of Tearing Mode Stability in an Inverse Aspect-Ratio Expanded Tokamak Plasma Equilibrium: Reference Version}
 \author{Richard Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
 \affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin, TX 78712}
 
 \begin{abstract}
 The   tearing mode stability of an inverse aspect-ratio expanded tokamak plasma equilibrium of general
 shape  is investigated using asymptotic matching techniques. Particular emphasis is placed on the
-conservation of toroidal electromagnetic angular momentum. The TJ code, which is a specific implementation of the
-results of the investigation, is described. 
+conservation of toroidal electromagnetic angular momentum.
+% The TJ code, which is a specific implementation of theresults of the investigation, is described. 
 \end{abstract}
 \maketitle
 
@@ -67,8 +67,9 @@ specific forms of the outer-region o.d.e.s. In Sect.~\ref{etm}, we calculate the
 demonstrate that this equation must be Hermitian in order to conserve toroidal electromagnetic angular momentum. In Sect.~\ref{rmp}, 
 we discuss how the tearing mode dispersion relation is modified by non-axisymmetric currents flowing in
  resonant magnetic perturbation (RMP) coils external to the plasma. We also derive expressions for the toroidal electromagnetic
-torques exerted at the various rational surfaces in the plasma by the RMP coils. In Sect.~\ref{tj}, we discuss the
-TJ code, which is a specific implementation of the theory presented in Sects.~\ref{geq}--\ref{rmp}. Finally, the paper is summarized in Sect.~\ref{sum}.
+torques exerted at the various rational surfaces in the plasma by the RMP coils.
+% In Sect.~\ref{tj}, we discuss the
+%TJ code, which is a specific implementation of the theory presented in Sects.~\ref{geq}--\ref{rmp}. Finally, the paper is summarized in Sect.~\ref{sum}.
 
 \section{General Plasma Equilibrium}\label{geq}
 \subsection{Normalization}\label{coords}
@@ -1053,16 +1054,18 @@ H_1''&= -(3-2\,s)\,\frac{H_1' }{\hat{r}}
 H_j''&= -(3-2\,s)\,\frac{H_j'}{\hat{r}}+(j^2-1)\,\frac{H_j}{\hat{r}^{\,2}}~~~~~\mbox{for $j>1$},\label{e33x}\\[0.5ex]
 V_j''&= -(3-2\,s)\,\frac{V_j'}{\hat{r}}+(j^2-1)\,\frac{V_j}{\hat{r}^{\,2}}~~~~~~\mbox{for $j>1$},\label{e28}\\[0.5ex]
 g_4'&= -\frac{\hat{r}}{q^2}\left(
-\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right.\nonumber\\[0.5ex]
-&\phantom{===}
-+\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
-&\phantom{===}\left.+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
+\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'+S_2\right)\nonumber\\[0.5ex]
 &\phantom{=}
-+\frac{\hat{r}}{q^2}\,(2-s)\left(-g_2-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1 +\frac{1}{2}\sum_{j>0}\left[3\,H_j'^{\,2}- (j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]
-\right.\nonumber\\[0.5ex]
-&\phantom{===}\left.+\frac{1}{2}\sum_{j>1}\left[3\,V_j'^{\,2}- (j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
++\frac{\hat{r}}{q^2}\,(2-s)\left(-g_2-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1 +S_1\right)\nonumber\\[0.5ex]
 &\phantom{=}
-+p_2'\left(g_2+\frac{\hat{r}^{\,2}}{2}+\frac{\hat{r}^{\,2}}{q^2}-2\,H_1-3\,\hat{r}\,H_1'\right).\label{e31}
++p_2'\left(g_2+\frac{\hat{r}^{\,2}}{2}+\frac{\hat{r}^{\,2}}{q^2}-2\,H_1-3\,\hat{r}\,H_1'\right),\label{e31}
+\end{align}
+where
+\begin{align}
+S_1(\hat{r})&=\frac{1}{2}\sum_{j>0} \left[3\,H_j'^{\,2} -(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^2}\right]
+ +\frac{1}{2}\sum_{j>1} \left[3\,V_j'^{\,2} -(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^2}\right],\\[0.5ex]
+S_2(\hat{r})&=\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
+&\phantom{===}+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right].
 \end{align}
 Note that the relative horizontal shift of magnetic flux-surfaces, $H_1$, otherwise known as the {\em Shafranov shift},\cite{shaf} is driven by toroidicity [the second term on
 the right-hand side of Eq.~(\ref{e27})], and plasma pressure gradients (the third term). All of the other shaping terms (i.e., the $H_j$, for $j>1$, and
@@ -1079,21 +1082,17 @@ Finally, it follows from Eqs.~(\ref{ap}), (\ref{ag}), (\ref{af}), and (\ref{e26v
 The conventionally defined normalized self-inductance, toroidal beta, poloidal beta, and normalized beta values of the plasma equilibrium 
 can be written\,\cite{gs1}
 \begin{align}
-l_i&= \frac{2\int_0^1 \hat{r}\,f^2\,\langle |\nabla r|^2\rangle\,d\hat{r}}{(f^2\,\langle|\nabla r|^2\rangle^2)_{\hat{r}=1}},\\[0.5ex]
-\beta_t &=  \frac{2\,\epsilon^{\,2}\int_0^1 \hat{r}\,\langle R^{\,2}\rangle\,p_2\,d\hat{r}}{\int_0^1 \hat{r}\,(1+2\,\epsilon^{\,2}\,g_2)\,d\hat{r}},\\[0.5ex]
+l_i&= \frac{2\int_0^1 \hat{r}\,f^2\,\langle |\hat{\nabla} \hat{r}|^2\rangle\,d\hat{r}}{(f\,\langle|\hat{\nabla} \hat{r}|^2\rangle)_{\hat{r}=1}^2},\\[0.5ex]
+\beta_t &=  \frac{2\,\epsilon^{\,2}\int_0^1 \hat{r}\,\langle R^{\,2}\rangle\,p_2\,d\hat{r}}{\int_0^1 \hat{r}\,\langle R^{\,2}\rangle\,d\hat{r}},\\[0.5ex]
 \beta_p &=  \frac{2\,\epsilon^{\,2}\int_0^1 \hat{r}\,\langle R^{\,2}\rangle\,p_2\,d\hat{r}}
-{\int_0^1\hat{r}\,f^2\,\langle|\nabla r|^2\rangle\,d\hat{r}},\\[0.5ex]
-\beta_N &=  \frac{20\,\beta_t}
-{\epsilon\,(f\,\langle|\nabla r|^2\rangle)_{\hat{r}=1}},
+{\int_0^1\hat{r}\,\langle R^{\,2}\rangle\,d\hat{r}\,\,(f\,\langle|\hat{\nabla} \hat{r}|^2\rangle)_{\hat{r}=1}^2},\\[0.5ex]
+\beta_N &=  \frac{20\,\beta_t\,\hat{a}}
+{(f\,\langle|\hat{\nabla} \hat{r}|^2\rangle)_{\hat{r}=1}}
 \end{align}
-respectively. Here, $\langle\cdots\rangle \equiv \oint (\cdots)\,d\theta/2\pi$.
+respectively. Here, $\langle\cdots\rangle \equiv \oint (\cdots)\,d\theta/2\pi$. Moreover, 
+$\hat{a}= [R(\hat{r}=1,\omega=\pi)-R(\hat{r}=1,\omega=0)]/(2\,\epsilon)$ 
 
 \subsection{Coupling Coefficients}\label{coupl}
-Let
-\begin{align}
-S_1(\hat{r})&= \frac{1}{2}\sum_{j>0}\left[3\,(H_j'^{\,2}+V_j'^{\,2}) - (j^2-1)\,\frac{H_j^{\,2}+V_j^{\,2}}{\hat{r}^{\,2}}\right],\\[0.5ex]
-S_2(\hat{r})&= \sum_{j>1}2\,(j^2-1)\left(H_j'^{\,2}+V_j'^{\,2}-\frac{11}{3}\,\frac{H_j'\,H_j+V_j'\,V_j}{\hat{r}}+j^2\,\frac{H_j^{\,2}+V_j^{\,2}}{\hat{r}^{\,2}}\right)\nonumber\\[0.5ex]&\phantom{=} -\sum_{j>0}(1-s)\left(\frac{H_j'\,H_j+V_j'\,V_j}{\hat{r}}+\frac{1}{3}\,\frac{H_j^{\,2}+V_j^{\,2}}{\hat{r}^{\,2}}\right).
-\end{align}
 The analysis of Sects.~\ref{ode1}, \ref{ode2}, \ref{metric}, and \ref{exp} can be combined to give
 the following expressions for the coupling coefficients appearing in the outer-region  o.d.e.s, (\ref{e61x}) and (\ref{e62x}):\,\cite{am1}
 \begin{align}
@@ -1104,9 +1103,10 @@ P_m^{\,m}(\hat{r}) &= (m-n\,q)^2+ \frac{m-n\,q}{m}\,q\,\hat{r}\,\frac{d}{d\hat{r
 &\phantom{=}+\epsilon^{\,2}\,(m-n\,q)^2\left\{\frac{7\,\hat{r}^{\,2}}{4} -H_1-3\,\hat{r}\,H_1'+S_1\right.\nonumber\\[0.5ex]
 &\phantom{=} \left.+\frac{1}{m^2}\left[\frac{n}{m}\,\hat{r}\,\frac{d}{d\hat{r}}\!\left(\hat{r}^{\,2}\,\frac{2-s}{q}\right)
 -\hat{r}^{\,2}\,\frac{(2-s)^2}{q^2}-\hat{r}\,\frac{d}{d\hat{r}}(\hat{r}\,p_2')\right]\right\}\nonumber\\[0.5ex]
-&\phantom{=}-\epsilon^{\,2}\,\frac{m-n\,q}{m}\left\{2\,\hat{r}\,p_2'\,(2-s) +q\,\hat{r}\,\frac{d}{d\hat{r}}\!\left[
-\hat{r}^{\,2}\,\frac{2-s}{q^3}+\frac{s}{q}\left(\frac{3\,\hat{r}^{\,2}}{4}-H_1-S_1\right)\right.\right.\nonumber\\[0.5ex]
-&\left.\left.-\frac{2}{q}\left(\frac{3\,\hat{r}^{\,2}}{2}-H_1-\hat{r}\,H_1'-\frac{2}{3}\,S_1\right)\right]-S_2\right\}+\epsilon^{\,2}\,2\,\hat{r}\,p_2'\,(1-q^2),\\[0.5ex]
+&\phantom{=}-\epsilon^{\,2}\,\frac{m-n\,q}{m}\left\{
+2\,\hat{r}\,p_2'\,(2-s) -q\,\hat{r}\,\frac{d}{d\hat{r}}\!\left[
+-\frac{2-s}{q}\left(-\frac{3\,\hat{r}^2}{4} +\frac{\hat{r}^2}{q^2} +H_1+S_1\right)\right.\right.\nonumber\\[0.5ex]
+&\phantom{=}\left.\left.+\frac{1}{q}\left(\frac{3\,\hat{r}^2}{2}-2\,\hat{r}\,H_1'+S_2\right)\right]\right\}+\epsilon^{\,2}\,2\,\hat{r}\,p_2'\,(1-q^2),\\[0.5ex]
 L_m^{\,m\pm 1}(\hat{r}) &= -\epsilon\,m\,(m\pm 1)\,H_1',\\[0.5ex]
 L_m^{\,m\pm j}(\hat{r})&= - \epsilon\,m\,(m\pm j)\,(H_j'\pm {\rm i}\,V_j')\mbox{~~~~~for $j>1$},\\[0.5ex]
 M_m^{\,m\pm 1}(\hat{r}) &= \mp \epsilon\,m\,(m-n\,q)\,p_2'\,q^2\pm \epsilon\,m\,(m\pm 1-n\,q)\,[\hat{r}+ (1-s)\,H_1'],\\[0.5ex]
@@ -1176,10 +1176,7 @@ We require the equilibrium plasma current to be zero at the plasma/vacuum interf
 implies that $g'(1)=P'(1)= 0$. (See Sect.~\ref{s3}.) It follows from Eqs.~(\ref{e27v})--(\ref{e26}) and (\ref{e31}) that we need\,\cite{am1}
 \begin{align}
 p_2'(1) &= 0,\label{e222}\\[0.5ex]
-s(1) &= 2+ \epsilon^{\,2}\left(\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right.\nonumber\\[0.5ex]
-&\phantom{===}
-+\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
-&\phantom{===}\left.+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)_{\hat{r}=1}
+s(1) &= 2+ \epsilon^{\,2}\left(\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'+S_2\right)_{\hat{r}=1}
 +{\cal O}(\epsilon^4).\label{e223}
 \end{align}
 
@@ -1428,6 +1425,7 @@ strongly shielded by plasma rotation,\cite{am3,rfa} so that $|{\mit\Delta}_k|\gg
 \delta T_k\simeq 2\pi^2\,n\,\frac{{\rm Im}({\mit\Delta}_k)}{|{\mit\Delta}_k|^2}\,|{\mit\chi}_k|^2.
 \end{equation}
 
+\iffalse
 \section{TJ Code}\label{tj}
 \subsection{Introduction}
 The first computer code that was developed in order to calculate the tearing mode stability of an aspect-ratio expanded tokamak plasma equilibrium was the
@@ -1660,6 +1658,7 @@ outer region o.d.e.s, each possessing 41 poloidal harmonics), the ability of the
 locking torques at the four $n=1$ rational surfaces in the plasma is encapsulated by just four complex numbers, $\hat{\chi}_k$. 
 Again,
 this constitutes a tremendous simplification. 
+\fi
   
 \section{Summary}\label{sum}
 In Sects.~\ref{geq}--\ref{rmp}, the tearing mode stability of an inverse aspect-ratio expanded tokamak plasma equilibrium  with magnetic flux-surfaces of general 
@@ -1667,8 +1666,10 @@ shape is investigated using asymptotic matching techniques. The crucial role pla
 toroidal electromagnetic angular momentum is emphasized throughout the investigation. Note that the inverse aspect-ratio
 expansion is only introduced in Sect.~\ref{large}. So, all of the analysis prior to this section is completely general. 
 
+\iffalse
 The TJ code,
-which is a specific implementation of the analysis of Sects.~\ref{geq}--\ref{rmp}, is described in Sect.~\ref{tj}. This code, which is
+which is a specific implementation of the analysis of Sects.~\ref{geq}--\ref{rmp}, is described in Sect.~\ref{tj}
+. This code, which is
 freely available at {\tt https://github.com/rfitzp/TJ}, represents a significant improvement on the previous T3\,\cite{connor} and T7\,\cite{am1} inverse aspect-ratio expanded toroidal tearing mode
 codes, because it is constructed in such a manner as to strictly conserve toroidal electromagnetic
 angular momentum. In fact, as described in Sect.~\ref{tj}, the requirement of angular momentum conservation leads to a large number of
@@ -1686,14 +1687,15 @@ surfaces in the plasma by an RMP. It turns out that the information generated by
 matrix.\cite{gs1} Hence, we intend to add an ideal stability module to the code (because there is little point in studying the resistive stability of
 an ideally unstable plasma). Other envisaged improvements to the code include the addition of a resistive wall, as well as the
 calculation of neoclassical viscous torques. 
+\fi
 
 \section*{Acknowledgements}
 This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
 The analytic calculations  described  this paper have been verified using the {\sc REDUCE} computer algebra system which is available at {\tt https://reduce-algebra.sourceforge.io}. The TJ code is freely 
 available at {\tt https://github.com/rfitzp/TJ}.
 
-\section*{Data Availability Statement}
-The digital data used in the figures in this paper can be obtained from the author upon reasonable request.
+%\section*{Data Availability Statement}
+%The digital data used in the figures in this paper can be obtained from the author upon reasonable request.
 
 \appendix
 \section{Nonorthogonal Curvilinear Coordinates}\label{s2}
@@ -1826,6 +1828,7 @@ where ${\bf C}({\bf r})$ is a general vector field.
 
 \end{thebibliography}
 
+\iffalse
 \newpage
 \begin{table}[h]
 \centering
@@ -1941,6 +1944,7 @@ flux associated with the eigenfunction.}\label{f8}
 pictured in Fig.~\ref{f7} added to ${\rm i}$ times the eigenfunction pictured in Fig.~\ref{f8}.  The vertical dashed lines show
 the locations of the $n=1$ rational surfaces.  }\label{f9}
 \end{figure}
+\fi
 
 \end{document}
 

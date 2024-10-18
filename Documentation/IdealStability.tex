@@ -348,11 +348,42 @@ It follows that the solutions (\ref{e73}) and (\ref{e74}) represent physical sol
 perfectly conducting wall at $r=r_c$. It stands to reason that if we remove the wall then the mode would become unstable. Moreover, the
 presence of a perfectly conducting wall at the plasma boundary would not stabilize the mode. Thus, the criterion for stability to internal ideal
 modes is that all of the $\lambda_m(r)$ must remain finite in the region $r=0$ to $r=\epsilon$. In other words, we require that none of the
-eigenvalues of $\underline{\underline{W}}^{-1}$, where 
+eigenvalues of $\underline{\underline{W}}$ become infinite in the region $r=0$ to $r=\epsilon$. 
+
+\subsection{Plasma Displacement}
+From Eqs.~(\ref{e10}) and (\ref{epsi}) imply that
 \begin{equation}
-\underline{\underline{\psi}}^i = \underline{\underline{W}}^{-1}\,\underline{\underline{\chi}}^i,
+\xi^r_m = \frac{\psi_m}{f\,(m-n\,q)}.
 \end{equation}
-pass through zero in the region $r=0$ to $r=\epsilon$. 
+Likewise, if ${\mit\Psi}$ is the poloidal magnetic flux then $f=d{\mit\Psi}/dr$ and ${\mit\Xi}=\bxi\cdot\nabla{\mit\Psi}= f\,\xi^r$, so
+\begin{equation}
+{\mit\Xi}_m = \frac{\psi_m}{m-n\,q}.
+\end{equation}
+It is clear that
+\begin{equation}
+\underline{\underline{\psi}}^i = \underline{\underline{Q}}\,\underline{\underline{\mit\Xi}}^i,
+\end{equation}
+where $\underline{\underline{Q}}$ is the diagonal matrix of the $m-n\,q$ values. 
+
+\subsection{Alternative Formulation}
+Let
+\begin{equation}
+\tilde{Z}^i_{m\,m'}(r) = \pi^2\,(k_{m}'\,\psi^i_{m\,m'}+Z_{m\,m'}^i),
+\end{equation}
+which implies that
+\begin{equation}
+\underline{\underline{\tilde{Z}}}^i = \underline{\underline{Q}}\,\underline{\underline{Z}}^i.
+\end{equation}
+Thus,
+\begin{equation}
+\underline{\underline{\tilde{Z}}}^i= \underline{\underline{\widetilde{W}}}\,\underline{\underline{\mit\Xi}}^i,
+\end{equation}
+where
+\begin{equation}
+\underline{\underline{\widetilde{W}}}= \underline{\underline{Q}}\,\underline{\underline{W}}\,\underline{\underline{Q}}.
+\end{equation}
+Note that $\underline{\underline{\widetilde{W}}}$ has one zero eigenvalue at a rational surface. Furthermore, if
+$\underline{\underline{W}}$ has an infinite eigenvalue then so does $\underline{\underline{\widetilde{W}}}$.
 
 \section{Stability to External Ideal Modes}
 \subsection{Total Potential Energy}
@@ -443,21 +474,6 @@ Hence, we deduce that
 {\cal J}\,K^\phi_m &=\pi^{-2}\,m\,J_m.
 \end{align}
 Thus, it is clear that the $J_m$ are the Fourier components of the $J$ function introduced in Eq.~(\ref{e94}). 
-
-\subsection{Plasma Displacement}
-From Eqs.~(\ref{e10}) and (\ref{epsi}) imply that
-\begin{equation}
-\xi^r_m = \frac{\psi_m}{f\,(m-n\,q)}.
-\end{equation}
-Likewise, if ${\mit\Psi}$ is the poloidal magnetic flux then $f=d{\mit\Psi}/dr$ and ${\mit\Xi}=\bxi\cdot\nabla{\mit\Psi}= f\,\xi^r$, so
-\begin{equation}
-{\mit\Xi}_m = \frac{\psi_m}{m-n\,q}.
-\end{equation}
-It is clear that
-\begin{equation}
-\underline{\underline{\psi}}^i = \underline{\underline{Q}}\,\underline{\underline{\mit\Xi}}^i,
-\end{equation}
-where $\underline{\underline{Q}}$ is the diagonal matrix of the $m-n\,q$ values. 
 
 \subsection{Energy Matrix}
 According to Eq.~(215) of TJ, combined with Eq.~(\ref{e88}), 
@@ -645,14 +661,9 @@ The variable $k_m'$ is given by
 \begin{align}
 k_m'&= -\frac{2-s}{m}
 -\frac{\epsilon^2}{m}\left(-\hat{r}\,p_2'+
-\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right.\nonumber\\[0.5ex]
-&\phantom{===}
-+\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
-&\phantom{===}\left.+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
+\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1' +S_2\right)\nonumber\\[0.5ex]
 &\phantom{=}
-+\epsilon^2\,\frac{(2-s)}{m}\left(-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1 +\frac{1}{2}\sum_{j>0}\left[3\,H_j'^{\,2}- (j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]
-\right.\nonumber\\[0.5ex]
-&\phantom{===}\left.+\frac{1}{2}\sum_{j>1}\left[3\,V_j'^{\,2}- (j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
++\epsilon^2\,\frac{(2-s)}{m}\left(-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1+S_1\right)\nonumber\\[0.5ex]
 &\phantom{=}
 +\epsilon^2\,\frac{n\,\hat{r}}{m^2}\left[-q\,p_2' + \frac{\hat{r}}{m\,q}\,(2-s)\,(m-n\,q)\right].
 \end{align}
@@ -661,14 +672,9 @@ For the special case, $m=0$, we get
 k_0' &= - \frac{q\,p_2'}{n\,\hat{r}} - \frac{(2-s)}{n\,q} 
 \nonumber\\[0.5ex]
 &\phantom{=}-\frac{\epsilon^2}{n\,q}\left(
-\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'\right.\nonumber\\[0.5ex]
-&\phantom{===}
-+\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
-&\phantom{===}\left.+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
+\frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1+S_2\right)\nonumber\\[0.5ex]
 &\phantom{=}
-+\epsilon^2\,\frac{(2-s)}{n\,q}\,\left(-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1 +\frac{1}{2}\sum_{j>0}\left[3\,H_j'^{\,2}- (j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]
-\right.\nonumber\\[0.5ex]
-&\phantom{===}\left.+\frac{1}{2}\sum_{j>1}\left[3\,V_j'^{\,2}- (j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right]\right)\nonumber\\[0.5ex]
++\epsilon^2\,\frac{(2-s)}{n\,q}\,\left(-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1 +S_1\right)\nonumber\\[0.5ex]
 &\phantom{=}
 +\epsilon^2\,\frac{q\,p_2'}{n\,\hat{r}}\left(2\,g_2+\frac{\hat{r}^{\,2}}{2}+\frac{\hat{r}^{\,2}}{q^2}-2\,H_1-3\,\hat{r}\,H_1'\right).
 \end{align}

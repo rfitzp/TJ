@@ -297,10 +297,11 @@ void TJ::CleanUp ()
 {
   printf ("Cleaning up:\n");
   
-  delete[] rr;   delete[] pp; delete[] ppp; delete[] q; 
-  delete[] s;    delete[] s2; delete[] S1;  delete[] P1;
-  delete[] P2;   delete[] P3; delete[] g2;  delete[] p2;
-  delete[] PsiN; delete[] S3; delete[] S4;
+  delete[] rr;   delete[] pp;  delete[] ppp; delete[] q; 
+  delete[] s;    delete[] s2;  delete[] S1;  delete[] P1;
+  delete[] P2;   delete[] P3;  delete[] g2;  delete[] p2;
+  delete[] PsiN; delete[] S3;  delete[] S4;  delete[] s0;
+  delete[] P4;   delete[] P1a; delete[] P2a;
 
   gsl_spline_free (Pspline);
   gsl_spline_free (g2spline);
@@ -310,12 +311,16 @@ void TJ::CleanUp ()
   gsl_spline_free (qspline);
   gsl_spline_free (sspline);
   gsl_spline_free (s2spline);
+  gsl_spline_free (s0spline);
   gsl_spline_free (S1spline);
   gsl_spline_free (S3spline);
   gsl_spline_free (S4spline);
   gsl_spline_free (P1spline);
   gsl_spline_free (P2spline);
+  gsl_spline_free (P1aspline);
+  gsl_spline_free (P2aspline);
   gsl_spline_free (P3spline);
+  gsl_spline_free (P4spline);
 
   gsl_interp_accel_free (Pacc);
   gsl_interp_accel_free (g2acc);
@@ -325,12 +330,16 @@ void TJ::CleanUp ()
   gsl_interp_accel_free (qacc);
   gsl_interp_accel_free (sacc);
   gsl_interp_accel_free (s2acc);
+  gsl_interp_accel_free (s0acc);
   gsl_interp_accel_free (S1acc);
   gsl_interp_accel_free (S3acc);
   gsl_interp_accel_free (S4acc);
   gsl_interp_accel_free (P1acc);
   gsl_interp_accel_free (P2acc);
+  gsl_interp_accel_free (P1aacc);
+  gsl_interp_accel_free (P2aacc);
   gsl_interp_accel_free (P3acc);
+  gsl_interp_accel_free (P4acc);
 
   for (int i = 0; i <= Ns; i++)
     {
@@ -382,7 +391,7 @@ void TJ::CleanUp ()
 
   delete[] Uval;    delete[] deltaW; delete[] deltaWv;
   delete[] deltaWp; delete[] gammax; delete[] gamma;
-  delete[] U1val;
+  delete[] U1val;   delete[] Wval;   delete[] Vval;
 
   delete[] rf; 
 }  

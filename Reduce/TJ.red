@@ -996,6 +996,14 @@ sp2  :=   2*(2*2-1) * (df(H2,r)**2 - (11/3)*df(H2,r)*H2/r + 2*2*(H2/r)**2 - (1-s
         + 2*(3*3-1) * (df(V3,r)**2 - (11/3)*df(V3,r)*V3/r + 3*3*(V3/r)**2 - (1-sh)*(df(V3,r)*V3/r + (1/3)*(V3/r)**2))
 	+ 2*(4*4-1) * (df(V4,r)**2 - (11/3)*df(V4,r)*V4/r + 4*4*(V4/r)**2 - (1-sh)*(df(V4,r)*V4/r + (1/3)*(V4/r)**2))$
 
+sp3 :=   df(H1,r)**2
+       + df(H2,r)**2 + 2*(2*2-1)*df(H2,r)*H2/r - (2*2-1)*(H2/r)**2
+       + df(H3,r)**2 + 2*(3*3-1)*df(H3,r)*H3/r - (3*3-1)*(H3/r)**2
+       + df(H4,r)**2 + 2*(4*4-1)*df(H4,r)*H4/r - (4*4-1)*(H4/r)**2
+       + df(V2,r)**2 + 2*(2*2-1)*df(V2,r)*V2/r - (2*2-1)*(V2/r)**2
+       + df(V3,r)**2 + 2*(3*3-1)*df(V3,r)*V3/r - (3*3-1)*(V3/r)**2
+       + df(V4,r)**2 + 2*(4*4-1)*df(V4,r)*V4/r - (4*4-1)*(V4/r)**2$
+
 sp4  :=   (2-1) * (2+sh/2) * (df(H2,r)*V2 - df(V2,r)*H2)/r
         + (3-1) * (2+sh/3) * (df(H3,r)*V3 - df(V3,r)*H3)/r
 	+ (4-1) * (2+sh/4) * (df(H4,r)*V4 - df(V4,r)*H4)/r$
@@ -1029,10 +1037,15 @@ pm00_target := nmq0**2 + (nmq0/m)*(q*r)*df(jcy,r)$
 
 res1 := (r**2/q**3)*(2-sh) + (sh/q)*(3*r**2/4 - H1 - sp1) - (2/q)*((3/2)*r**2 - H1 - df(H1,r)*r - (2/3)*sp1)$
 res2 := (n/m)*r*df(r*df(r2q,r),r) - df(r2q,r)**2 - r*df(r*pp,r) + m**2*(7*r**2/4 - H1 - 3*r*df(H1,r) + sp1)$
+res3 := (2-sh) * (- r**2/q**2 + (3/4)*r**2 - H1 - sp1) /q + ((3/2)*r**2 - 2*r*df(H1,r) + sp3) /q$
 
 pm02_target :=   (2*pp*r)*(1-q**2)
 	       - (nmq0/m)*((2*pp*r)*(2-sh) + (r*q)*df(res1,r) - sp2)
 	       + (nmq0/m)**2*res2$
+
+pm02_target_new :=   (2*pp*r)*(1-q**2)
+	           - (nmq0/m)*((2*pp*r)*(2-sh) - (r*q)*df(res3,r))
+	           + (nmq0/m)**2*res2$
 
 write "Residuals of j=0 coupling coefficients:";
 dlm00 := lm00 - lm00_target;
@@ -1043,6 +1056,8 @@ dnm00 := nm00 - nm00_target;
 dnm02 := nm02 - nm02_target;
 dpm00 := pm00 - pm00_target;
 dpm02 := pm02 - pm02_target;
+
+dpm02_new := pm02 - pm02_target_new;
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Calculate j=+1 coupling coefficients
@@ -1250,7 +1265,7 @@ pm002_target := 0$
 
 write "Residuals of special j=0 coupling coefficients:";
 dpm000 := pm000 - pm000_target;
-dpm000 := pm002 - pm002_target;
+dpm002 := pm002 - pm002_target;
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Calculate special case j=1 coupling coefficients
@@ -1387,14 +1402,6 @@ g2p0 := coeffn(g2p,eps,0)$
 g2p2 := coeffn(g2p,eps,2)$
 g4p  := coeffn(g4p,eps,0)$
 
-sp3 :=   df(H1,r)**2
-       + df(H2,r)**2 + 2*(2*2-1)*df(H2,r)*H2/r - (2*2-1)*(H2/r)**2
-       + df(H3,r)**2 + 2*(3*3-1)*df(H3,r)*H3/r - (3*3-1)*(H3/r)**2
-       + df(H4,r)**2 + 2*(4*4-1)*df(H4,r)*H4/r - (4*4-1)*(H4/r)**2
-       + df(V2,r)**2 + 2*(2*2-1)*df(V2,r)*V2/r - (2*2-1)*(V2/r)**2
-       + df(V3,r)**2 + 2*(3*3-1)*df(V3,r)*V3/r - (3*3-1)*(V3/r)**2
-       + df(V4,r)**2 + 2*(4*4-1)*df(V4,r)*V4/r - (4*4-1)*(V4/r)**2$
-
 g2p_target  := - pp - r*(2-sh)/q**2$
 g4p_target  := - (3*r*r/2 - 2*r*df(H1,r) + sp3)*r/q**2
                + (- g2 - 3*r**2/4 + r**2/q**2 + H1 + sp1)*(2-sh)*r/q**2
@@ -1407,9 +1414,9 @@ V2pp_target := - (3-2*sh)*df(V2,r)/r + (2*2-1)*V2/r**2$
 V3pp_target := - (3-2*sh)*df(V3,r)/r + (3*3-1)*V3/r**2$
 V4pp_target := - (3-2*sh)*df(V4,r)/r + (4*4-1)*V4/r**2$
 
-sp4 :=    df(H1,r)**2 
-       +  df(H2,r)**2 + df(H3,r)**2 +  df(H4,r)**2
-       +  df(V2,r)**2 + df(V3,r)**2 +  df(V4,r)**2$
+sp4a :=   df(H1,r)**2 
+       +  df(H2,r)**2 + df(H3,r)**2 + df(H4,r)**2
+       +  df(V2,r)**2 + df(V3,r)**2 + df(V4,r)**2$
 sp5 :=    (1*1-1)*df(H1,r)*H1/r
        +  (2*2-1)*df(H2,r)*H2/r + (3*3-1)*df(H3,r)*H3/r +  (4*4-1)*df(H4,r)*H4/r
        +  (2*2-1)*df(V2,r)*V2/r + (3*3-1)*df(V3,r)*V3/r +  (4*4-1)*df(V4,r)*V4/r$
@@ -1419,14 +1426,14 @@ sp6 :=    (1*1-1)*H1**2/r**2
 
 kmp0_target := - (2 - sh)/m$
 kmp1_target := 0$
-kmp2_target := (r*pp - (3/2)*r**2 + 2*r*df(H1,r) - sp4 - 2*sp5 + sp6
-   + (2-sh) * (- (3/4)*r**2 + r**2/q**2 + H1 + (1/2)*(3*sp4 - sp6)))/m
+kmp2_target := (r*pp - (3/2)*r**2 + 2*r*df(H1,r) - sp4a - 2*sp5 + sp6
+   + (2-sh) * (- (3/4)*r**2 + r**2/q**2 + H1 + (1/2)*(3*sp4a - sp6)))/m
    + (n*r/m**2) * (-pp*q - r*(2-sh)*(m-n*q)/m/q)$
 
 k0p0_target := - q*pp/n/r - (2-sh)/n/q$
 k0p1_target := 0$
-k0p2_target := - ((3/2)*r**2 - 2*r*df(H1,r) + sp4 + 2*sp5 - sp6)/n/q
-   + (2-sh) * (- (3/4)*r**2 + r**2/q**2 + H1 + (3/2)*sp4 - (1/2)*sp6)/n/q
+k0p2_target := - ((3/2)*r**2 - 2*r*df(H1,r) + sp4a + 2*sp5 - sp6)/n/q
+   + (2-sh) * (- (3/4)*r**2 + r**2/q**2 + H1 + (3/2)*sp4a - (1/2)*sp6)/n/q
    + q*pp * (2*g2 + r**2/2 + r**2/q**2 - 2*H1 - 3*r*df(H1,r))/n/r$
 
 write "Equilibrium residuals:";

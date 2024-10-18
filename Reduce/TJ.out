@@ -1376,6 +1376,8 @@ dpm00 := 0
 
 dpm02 := 0
 
+dpm02_new := 0
+
 Residuals of j=+1 coupling coefficients:
 
 dlmp11 := 0
@@ -1460,7 +1462,7 @@ Residuals of special j=0 coupling coefficients:
 
 dpm000 := 0
 
-dpm000 := 0
+dpm002 := 0
 
 Residuals of special j=1 coupling coefficients:
 

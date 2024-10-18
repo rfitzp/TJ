@@ -54,6 +54,14 @@ double TJ::Gets2 (double r)
     return gsl_spline_eval (s2spline, r, s2acc);
 }
 
+double TJ::Gets0 (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (s0spline, 1., s0acc);
+  else
+    return gsl_spline_eval (s0spline, r, s0acc);
+}
+
 double TJ::GetS1 (double r)
 {
   if (r >= 1.)
@@ -94,12 +102,36 @@ double TJ::GetP2 (double r)
     return gsl_spline_eval (P2spline, r, P2acc);
 }
 
+double TJ::GetP1a (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (P1aspline, 1., P1aacc);
+  else
+    return gsl_spline_eval (P1aspline, r, P1aacc);
+}
+
+double TJ::GetP2a (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (P2aspline, 1., P2aacc);
+  else
+    return gsl_spline_eval (P2aspline, r, P2aacc);
+}
+
 double TJ::GetP3 (double r)
 {
   if (r >= 1.)
     return gsl_spline_eval (P3spline, 1., P3acc);
   else
     return gsl_spline_eval (P3spline, r, P3acc);
+}
+
+double TJ::GetP4 (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (P4spline, 1., P4acc);
+  else
+    return gsl_spline_eval (P4spline, r, P4acc);
 }
 
 double TJ::GetHn (int n, double r)

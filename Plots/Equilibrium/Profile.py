@@ -15,13 +15,15 @@ S1  = ds1['S1']
 S2  = ds1['S2']
 S3  = ds1['S3']
 S4  = ds1['S4']
+P1  = ds1['P1']
+P2  = ds1['P2']
+P1a = ds1['P1a']
+P2a = ds1['P2a']
+P3  = ds1['P3']
+P4  = ds1['P4']
 
 fn   = '../../Outputs/TJ/TJ.nc'
 ds   = nc.Dataset(fn)
-r    = ds['r']
-P1   = ds['P1']
-P2   = ds['P2']
-P3   = ds['P3']
 rres = ds['r_res']
 
 fig = plt.figure (figsize = (12.0, 8.0))
@@ -50,8 +52,9 @@ plt.subplot (2, 2, 2)
 
 plt.xlim (0., 1.)
 
-plt.plot    (r, P1, color = 'blue',  linewidth = 2,   linestyle = 'solid')
-plt.axhline (0.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.plot    (r1, P1,  color = 'blue',  linewidth = 2,   linestyle = 'solid')
+plt.plot    (r1, P1a, color = 'blue',  linewidth = 2,   linestyle = 'dashed')
+plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
     plt.axvline (rx, color='red', linewidth = 1.5, linestyle = 'dashed')
@@ -63,8 +66,9 @@ plt.subplot (2, 2, 3)
 
 plt.xlim (0., 1.)
 
-plt.plot    (r, P2, color = 'blue',  linewidth = 2,   linestyle = 'solid')
-plt.axhline (0.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.plot    (r1, P2,  color = 'blue',  linewidth = 2,   linestyle = 'solid')
+plt.plot    (r1, P2a, color = 'blue',  linewidth = 2,   linestyle = 'dashed')
+plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
     plt.axvline (rx, color = 'red', linewidth = 1.5, linestyle = 'dashed')
@@ -76,8 +80,9 @@ plt.subplot (2, 2, 4)
 
 plt.xlim (0., 1.)
 
-plt.plot    (r, P3, color = 'blue',  linewidth = 2,   linestyle = 'solid')
-plt.axhline (0.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.plot    (r1, P4, color = 'blue',  linewidth = 2,   linestyle = 'solid')
+plt.plot    (r1, P3, color = 'blue',  linewidth = 2,   linestyle = 'dashed')
+plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
     plt.axvline (rx, color = 'red', linewidth = 1.5, linestyle = 'dashed')
