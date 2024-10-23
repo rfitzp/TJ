@@ -301,9 +301,11 @@ void TJ::CleanUp ()
   delete[] s;    delete[] s2;  delete[] S1;  delete[] P1;
   delete[] P2;   delete[] P3;  delete[] g2;  delete[] p2;
   delete[] PsiN; delete[] S3;  delete[] S4;  delete[] s0;
-  delete[] P4;   delete[] P1a; delete[] P2a;
+  delete[] P4;   delete[] P1a; delete[] P2a; delete[] f;
+  delete[] Psi;
 
   gsl_spline_free (Pspline);
+  gsl_spline_free (fspline);
   gsl_spline_free (g2spline);
   gsl_spline_free (p2spline);
   gsl_spline_free (ppspline);
@@ -323,6 +325,7 @@ void TJ::CleanUp ()
   gsl_spline_free (P4spline);
 
   gsl_interp_accel_free (Pacc);
+  gsl_interp_accel_free (facc);
   gsl_interp_accel_free (g2acc);
   gsl_interp_accel_free (p2acc);
   gsl_interp_accel_free (ppacc);
@@ -377,7 +380,7 @@ void TJ::CleanUp ()
 
   delete[] mres; delete[] qres;  delete[] rres;   delete[] qerr;
   delete[] sres; delete[] DIres; delete[] nuLres; delete[] nuSres;
-  delete[] Jres; delete[] DRres;
+  delete[] Jres; delete[] DRres; delete[] Flarge; delete[] Fsmall;
 
   delete[] S13res; delete[] taures; delete[] ieres; delete[] QEres;
   delete[] Qeres;  delete[] Qires;  delete[] Dres;  delete[] Pmres;

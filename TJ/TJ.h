@@ -124,7 +124,9 @@ class TJ
   int                Nr;        // Number of radial grid-points
 
   double*            rr;        // Radial grid-points
+  double*            Psi;       // Psi values at grid-points
   double*            PsiN;      // PsiN values at grid-points
+  double*            f;         // Radial derivative of poloidal flux 
   double*            g2;        // Second-order toroidal flux
   double*            p2;        // Second-order plasma pressure
   double*            pp;        // First radial derivative of second-order plasma pressure
@@ -149,6 +151,7 @@ class TJ
   Array<double,2>    VPfunc;    // Radial derivatives of vertical shaping functions
 
   gsl_spline*        Pspline;   // Interpolated PsiN function
+  gsl_spline*        fspline;   // Interpolated f function
   gsl_spline*        g2spline;  // Interpolated g2 function
   gsl_spline*        p2spline;  // Interpolated p2 function
   gsl_spline*        ppspline;  // Interpolated pp function
@@ -168,6 +171,7 @@ class TJ
   gsl_spline*        P4spline;  // Interpolated P4 function
 
   gsl_interp_accel*  Pacc;      // Accelerator for interpolated P function
+  gsl_interp_accel*  facc;      // Accelerator for interpolated f function
   gsl_interp_accel*  g2acc;     // Accelerator for interpolated g2 function
   gsl_interp_accel*  p2acc;     // Accelerator for interpolated p2 function
   gsl_interp_accel*  ppacc;     // Accelerator for interpolated pp function
@@ -250,6 +254,8 @@ class TJ
   double* nuLres;  // Ideal Mercier indices of large solution at rational surfaces
   double* nuSres;  // Ideal Mercier indices of small solution at rational surfaces
   int*    Jres;    // Index of resonant poloidal harmonic at rational surfaces
+  double* Flarge;  // TJ/RDCON scaling factors for large solution
+  double* Fsmall;  // TJ/RDCON scaling factors for small solution
 
   // -------------------
   // Resonant layer data
@@ -566,6 +572,8 @@ class TJ
   // In Interpolate.cpp
   // ..................
 
+  // Return value of f
+  double Getf (double r);
   // Return value of pp
   double Getpp (double r);
   // Return value of ppp
@@ -610,6 +618,10 @@ class TJ
   double GetDI (double r);
   // Return value of DR
   double GetDR (double r);
+  // Return value of Flarge
+  double GetFlarge (double r, int m);
+  // Return value of Fsmall
+  double GetFsmall (double r, int m);
 
   // ...............
   // In ZeroFind.cpp

@@ -1,7 +1,7 @@
 {
     "NTOR":    1,
-    "MMIN":   -10,
-    "MMAX":   16,
+    "MMIN":   -12,
+    "MMAX":   20,
     "FREE":   1,
     "EQLB":   0,
     "XiFlag": 1,

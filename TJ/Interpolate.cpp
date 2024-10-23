@@ -6,6 +6,14 @@
 // Functions to return interpolated values of equilibrium quantities
 // #################################################################
 
+double TJ::Getf (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (fspline, 1., facc);
+  else
+    return gsl_spline_eval (fspline, r, facc);
+}
+
 double TJ::Getpp (double r)
 {
   if (r >= 1.)
@@ -183,4 +191,60 @@ double TJ::GetDR (double r)
   double s   = Gets (r);
 
   return - epsa*epsa * 2. * r*pp * (1. - q*q) /s/s - epsa*epsa * 2. * pp * q*q * H1p /s; 
+}
+
+double TJ::GetFlarge (double r, int m)
+{
+  double f   = Getf (r);
+  double F   = Psi[Nr];
+  double s   = Gets (r);
+  double S1  = GetS1 (r);
+  double H1  = GetHn (1, r);
+  double DI  = GetDI (r);
+  double nuL = 0.5 - sqrt (- DI);
+  double nuS = 0.5 + sqrt (- DI);
+
+  // Assume that DCON psi is PsiN
+  double rho   = f /F;
+  double dPNdP = 1.;
+
+  // double rho   = 2.*r*r;
+  //double dPNdP = f /2. /r /F;
+
+  double mm   = double (m);
+  double eps2 = epsa*epsa;
+  double r2   = r*r;
+  double mm2  = mm*mm;
+  double nt2  = ntor*ntor;
+  double Lmm  = mm2 + eps2 * mm2 * (- 0.75*r2 + H1 + S1) + eps2*nt2*r2;
+
+  return pow (rho, nuL - 1.) * sqrt ((nuS - nuL) /Lmm) * s * mm * F * dPNdP;
+}
+
+double TJ::GetFsmall (double r, int m)
+{
+  double f   = Getf (r);
+  double F   = Psi[Nr];
+  double s   = Gets (r);
+  double S1  = GetS1 (r);
+  double H1  = GetHn (1, r);
+  double DI  = GetDI (r);
+  double nuL = 0.5 - sqrt (- DI);
+  double nuS = 0.5 + sqrt (- DI);
+
+  // Assume that DCON psi is PsiN
+  double rho   = f /F;
+  double dPNdP = 1.;
+
+  //double rho   = 2.*r*r;
+  //double dPNdP = f /2. /r /F;
+
+  double mm   = double (m);
+  double eps2 = epsa*epsa;
+  double r2   = r*r;
+  double mm2  = mm*mm;
+  double nt2  = ntor*ntor;
+  double Lmm  = mm2 + eps2 * mm2 * (- 0.75*r2 + H1 + S1) + eps2*nt2*r2;
+
+  return pow (rho, nuS - 1.) * sqrt ((nuS - nuL) /Lmm) * s * mm * F * dPNdP;
 }

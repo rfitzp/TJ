@@ -114,14 +114,14 @@ Equilibrium::Equilibrium ()
       printf ("Equilibrium:: Error - mu cannot be less than unity\n");
       exit (1);
     }
-  if (epsa < 0.)
+  if (epsa <= 0.)
     {
-      printf ("Equilibrium:: Error - epsa cannot be less than unity\n");
+      printf ("Equilibrium:: Error - epsa must be positive\n");
       exit (1);
     }
-  if (eps < 0.)
+  if (eps <= 0.)
     {
-      printf ("Equilibrium:: Error - eps cannot be less than unity\n");
+      printf ("Equilibrium:: Error - eps must be positive\n");
       exit (1);
     }
   if (Ns < 1)
@@ -1081,6 +1081,8 @@ void Equilibrium::WriteNetcdf (double sa)
       f1_x.putVar (f1);
       NcVar f3_x  = dataFile.addVar ("f_3",  ncDouble, r_d);
       f3_x.putVar (f3);
+      NcVar f_x   = dataFile.addVar ("f",    ncDouble, r_d);
+      f_x.putVar (ff);
       NcVar q0_x  = dataFile.addVar ("q_0",  ncDouble, r_d);
       q0_x.putVar (q0);
       NcVar q2_x  = dataFile.addVar ("q_2",  ncDouble, r_d);

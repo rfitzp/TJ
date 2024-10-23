@@ -47,6 +47,8 @@ void TJ::FindRational ()
   nuLres = new double[nres];
   nuSres = new double[nres];
   Jres   = new int   [nres];
+  Flarge = new double[nres];
+  Fsmall = new double[nres];
   
   for (int i = 0; i < nres; i++)
     {
@@ -67,8 +69,11 @@ void TJ::FindRational ()
 	  exit (1);
 	}
       
-      nuLres[i] = 0.5 - sqrt(-DIres[i]);
-      nuSres[i] = 0.5 + sqrt(-DIres[i]);
+      nuLres[i] = 0.5 - sqrt (- DIres[i]);
+      nuSres[i] = 0.5 + sqrt (- DIres[i]);
+
+      Flarge[i] = GetFlarge (rres[i], mres[i]);
+      Fsmall[i] = GetFsmall (rres[i], mres[i]);
     }
 
   for (int k = 0; k < nres; k++)

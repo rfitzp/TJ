@@ -16,6 +16,7 @@ void TJ::ReadEquilibrium ()
   // Allocate memory for interpolation of equilibrium data
   // .....................................................
   Pspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  fspline   = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   g2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   p2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   ppspline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
@@ -35,6 +36,7 @@ void TJ::ReadEquilibrium ()
   P4spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
 
   Pacc      = gsl_interp_accel_alloc ();
+  facc      = gsl_interp_accel_alloc ();
   g2acc     = gsl_interp_accel_alloc ();
   p2acc     = gsl_interp_accel_alloc ();
   ppacc     = gsl_interp_accel_alloc ();
@@ -80,6 +82,7 @@ void TJ::ReadEquilibrium ()
   // Interpolate equilibrium data
   // ............................
   gsl_spline_init (Pspline,   rr, PsiN, Nr+1);
+  gsl_spline_init (fspline,   rr, f,    Nr+1);
   gsl_spline_init (g2spline,  rr, g2,   Nr+1);
   gsl_spline_init (p2spline,  rr, p2,   Nr+1);
   gsl_spline_init (ppspline,  rr, pp,   Nr+1);

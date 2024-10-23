@@ -25,6 +25,8 @@ void TJ::ReadNetcdf ()
       
       NcVar r_x   = dataFile.getVar ("r");
       NcVar P_x   = dataFile.getVar ("PsiN");
+      NcVar PP_x  = dataFile.getVar ("Psi");
+      NcVar f_x   = dataFile.getVar ("f");
       NcVar g2_x  = dataFile.getVar ("g_2");
       NcVar p2_x  = dataFile.getVar ("p_2");
       NcVar pp_x  = dataFile.getVar ("pp");
@@ -47,6 +49,8 @@ void TJ::ReadNetcdf ()
       Nr   = r_d.getSize () - 1;
       rr   = new double[Nr+1];
       PsiN = new double[Nr+1];
+      Psi  = new double[Nr+1];
+      f    = new double[Nr+1];
       g2   = new double[Nr+1];
       p2   = new double[Nr+1];
       pp   = new double[Nr+1];
@@ -67,6 +71,8 @@ void TJ::ReadNetcdf ()
 
       r_x.  getVar (rr);
       P_x.  getVar (PsiN);
+      PP_x. getVar (Psi);
+      f_x.  getVar (f);
       g2_x. getVar (g2);
       p2_x. getVar (p2);
       pp_x. getVar (pp);
@@ -661,19 +667,19 @@ void TJ::WriteNetcdf ()
       pp_x.putVar (pp);
       NcVar ppp_x = dataFile.addVar ("ppp", ncDouble, r_d);
       ppp_x.putVar (ppp);
-      NcVar q_x  = dataFile.addVar  ("q",   ncDouble, r_d);
+      NcVar q_x   = dataFile.addVar ("q",   ncDouble, r_d);
       q_x.putVar (q);
-      NcVar s_x  = dataFile.addVar  ("s",   ncDouble, r_d);
+      NcVar s_x   = dataFile.addVar ("s",   ncDouble, r_d);
       s_x.putVar (s);
-      NcVar s2_x = dataFile.addVar  ("s2",  ncDouble, r_d);
+      NcVar s2_x  = dataFile.addVar ("s2",  ncDouble, r_d);
       s2_x.putVar (s2);
-      NcVar S1_x = dataFile.addVar  ("S1",  ncDouble, r_d);
+      NcVar S1_x  = dataFile.addVar ("S1",  ncDouble, r_d);
       S1_x.putVar (S1);
-      NcVar P1_x = dataFile.addVar  ("P1",  ncDouble, r_d);
+      NcVar P1_x  = dataFile.addVar ("P1",  ncDouble, r_d);
       P1_x.putVar (P1);
-      NcVar P2_x = dataFile.addVar  ("P2",  ncDouble, r_d);
+      NcVar P2_x  = dataFile.addVar ("P2",  ncDouble, r_d);
       P2_x.putVar (P2);
-      NcVar P3_x = dataFile.addVar  ("P3",  ncDouble, r_d);
+      NcVar P3_x  = dataFile.addVar ("P3",  ncDouble, r_d);
       P3_x.putVar (P3);
  
       NcVar Hn_x  = dataFile.addVar ("Hn",  ncDouble, shape_d);
@@ -798,16 +804,20 @@ void TJ::WriteNetcdf ()
       NcVar zzui_x = dataFile.addVar ("Z_unrc_i",   ncDouble, full_d);
       zzui_x.putVar (ZZU_i);
 
-      NcVar mres_x = dataFile.addVar  ("m_res",  ncInt,    x_d);
+      NcVar mres_x = dataFile.addVar   ("m_res",  ncInt,    x_d);
       mres_x.putVar (mres);
-      NcVar rres_x = dataFile.addVar  ("r_res",  ncDouble, x_d);
+      NcVar rres_x = dataFile.addVar   ("r_res",  ncDouble, x_d);
       rres_x.putVar (rres);
-      NcVar sres_x = dataFile.addVar  ("s_res",  ncDouble, x_d);
+      NcVar sres_x = dataFile.addVar   ("s_res",  ncDouble, x_d);
       sres_x.putVar (sres);
-      NcVar dires_x = dataFile.addVar ("DI_res", ncDouble, x_d);
+      NcVar dires_x = dataFile.addVar  ("DI_res", ncDouble, x_d);
       dires_x.putVar (DIres);
-      NcVar drres_x = dataFile.addVar ("DR_res", ncDouble, x_d);
+      NcVar drres_x = dataFile.addVar  ("DR_res", ncDouble, x_d);
       drres_x.putVar (DRres);
+      NcVar flarge_x = dataFile.addVar ("Flarge", ncDouble, x_d);
+      flarge_x.putVar (Flarge);
+      NcVar fsmall_x = dataFile.addVar ("Fsmall", ncDouble, x_d);
+      fsmall_x.putVar (Fsmall);
 
       NcVar tf_x = dataFile.addVar ("Torque_full", ncDouble, t_d);
       tf_x.putVar (Tf.data());
