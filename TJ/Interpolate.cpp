@@ -6,6 +6,14 @@
 // Functions to return interpolated values of equilibrium quantities
 // #################################################################
 
+double TJ::GetPsiN (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (Pspline, 1., Pacc);
+  else
+    return gsl_spline_eval (Pspline, r, Pacc);
+}
+
 double TJ::Getf (double r)
 {
   if (r >= 1.)

@@ -247,6 +247,7 @@ class TJ
   int*    mres;    // Poloidal mode numbers at rational surfaces
   double* qres;    // Safety-factors at rational surfaces
   double* rres;    // Minor radii of rational surfaces
+  double* Pres;    // PsiN values at rational surfaces
   double* qerr;    // Residual in determination of rational surface
   double* sres;    // Magnetic shears at rational surfaces
   double* DIres;   // DI values at rational surfaces
@@ -254,8 +255,8 @@ class TJ
   double* nuLres;  // Ideal Mercier indices of large solution at rational surfaces
   double* nuSres;  // Ideal Mercier indices of small solution at rational surfaces
   int*    Jres;    // Index of resonant poloidal harmonic at rational surfaces
-  double* Flarge;  // TJ/RDCON scaling factors for large solution
-  double* Fsmall;  // TJ/RDCON scaling factors for small solution
+  double* Flarge;  // TJ/STRIDE scaling factors for large solution
+  double* Fsmall;  // TJ/STRIDE scaling factors for small solution
 
   // -------------------
   // Resonant layer data
@@ -572,6 +573,8 @@ class TJ
   // In Interpolate.cpp
   // ..................
 
+  // Return value of PsiN
+  double GetPsiN (double r);
   // Return value of f
   double Getf (double r);
   // Return value of pp

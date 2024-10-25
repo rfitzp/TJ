@@ -25,8 +25,7 @@ plt.xlim (0., 1.)
  
 plt.plot    (r, psi, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axhline (1.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (rs,     color = 'black', linewidth = 2.0, linestyle = 'dotted')
+plt.axvline (rs,     color = 'black', linewidth = 2.0, linestyle = 'dashed')
 
 plt.xlabel (r'$r$',    fontsize = "15")
 plt.ylabel (r'$\psi$', fontsize = "15")

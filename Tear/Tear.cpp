@@ -142,7 +142,7 @@ Tear::Tear ()
   nu   = qa /q0;
   qs   = mpol /ntor;
 
-  printf ("\nProgram TEAR:\n\n");
+  printf ("\nClass TEAR::\n\n");
   printf ("mpol = %-2d   ntor = %-2d         q0  = %10.3e qa  = %10.3e Fixed = %1d\n",
 	  MPOL, NTOR, q0, qa, Fixed);
   printf ("Nr   = %4d eps  = %10.3e del = %10.3e acc = %10.3e h0    = %10.3e hmax = %10.3e\n",
@@ -465,7 +465,7 @@ double Tear::GetDelta ()
   double Csm    = (- a21 * y[0] + a11 * y[1]) /jac;
 
   for (int i = 0; i <= isave; i++)
-    Psi[i] /= Clm;
+    Psi[i] /= Clm /mpol;
   
   printf ("Stopping solution at rational surface:   r = %11.4e y[0] = %11.4e y[1] = %11.4e Cl = %11.4e Cs = %11.4e\n",
 	  r, y[0], y[1], Clm, Csm);
@@ -525,7 +525,7 @@ double Tear::GetDelta ()
   double Csp = (- a21 * y[0] + a11 * y[1]) /jac;
 
   for (int i = isave; i < Nr; i++)
-    Psi[i] /= Clp;
+    Psi[i] /= Clp /mpol;
 
   printf ("Stopping solution at rational surface:   r = %11.4e y[0] = %11.4e y[1] = %11.4e Cl = %11.4e Cs = %11.4e\n",
 	  r, y[0], y[1], Clp, Csp);

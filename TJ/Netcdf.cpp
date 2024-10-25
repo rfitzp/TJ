@@ -804,20 +804,22 @@ void TJ::WriteNetcdf ()
       NcVar zzui_x = dataFile.addVar ("Z_unrc_i",   ncDouble, full_d);
       zzui_x.putVar (ZZU_i);
 
-      NcVar mres_x = dataFile.addVar   ("m_res",  ncInt,    x_d);
+      NcVar mres_x   = dataFile.addVar ("m_res",    ncInt,    x_d);
       mres_x.putVar (mres);
-      NcVar rres_x = dataFile.addVar   ("r_res",  ncDouble, x_d);
+      NcVar rres_x   = dataFile.addVar ("r_res",    ncDouble, x_d);
       rres_x.putVar (rres);
-      NcVar sres_x = dataFile.addVar   ("s_res",  ncDouble, x_d);
+      NcVar sres_x   = dataFile.addVar ("s_res",    ncDouble, x_d);
       sres_x.putVar (sres);
-      NcVar dires_x = dataFile.addVar  ("DI_res", ncDouble, x_d);
+      NcVar dires_x  = dataFile.addVar ("DI_res",   ncDouble, x_d);
       dires_x.putVar (DIres);
-      NcVar drres_x = dataFile.addVar  ("DR_res", ncDouble, x_d);
+      NcVar drres_x  = dataFile.addVar ("DR_res",   ncDouble, x_d);
       drres_x.putVar (DRres);
-      NcVar flarge_x = dataFile.addVar ("Flarge", ncDouble, x_d);
+      NcVar flarge_x = dataFile.addVar ("Flarge",   ncDouble, x_d);
       flarge_x.putVar (Flarge);
-      NcVar fsmall_x = dataFile.addVar ("Fsmall", ncDouble, x_d);
+      NcVar fsmall_x = dataFile.addVar ("Fsmall",   ncDouble, x_d);
       fsmall_x.putVar (Fsmall);
+      NcVar Pn_x     = dataFile.addVar ("PsiN_res", ncDouble, x_d);
+      Pn_x.putVar (Pres);
 
       NcVar tf_x = dataFile.addVar ("Torque_full", ncDouble, t_d);
       tf_x.putVar (Tf.data());

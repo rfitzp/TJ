@@ -263,11 +263,11 @@ if (file_unit /= 0) then
    stop
 end if
 
-write (10, '(a48, 3i4)') string,  i3,      NRBOX,   NZBOX
-write (10, '(5e16.9)'  ) RBOXLEN, ZBOXLEN, R0EXP,   RBOXLFT,  ZOFF
-write (10, '(5e16.9)'  ) RAXIS,   ZAXIS,   PSIAXIS, PSIBOUND, B0EXP
-write (10, '(5e16.9)'  ) CURRENT, PSIAXIS, zero,    RAXIS,    zero
-write (10, '(5e16.9)'  ) ZAXIS,   zero,    zero,    zero,     zero
+write (10, '(a48, 3i4)') string,  i3,      NRBOX,    NZBOX
+write (10, '(5e16.9)'  ) RBOXLEN, ZBOXLEN, R0EXP,    RBOXLFT,  ZOFF
+write (10, '(5e16.9)'  ) RAXIS,   ZAXIS,   PSIAXIS,  PSIBOUND, B0EXP
+write (10, '(5e16.9)'  ) CURRENT, PSIAXIS, zero,     RAXIS,    zero
+write (10, '(5e16.9)'  ) ZAXIS,   zero,    PSIBOUND, zero,     zero
 
 write (10, '(5e16.9)') (T   (i),    i = 1, NRBOX)
 write (10, '(5e16.9)') (P   (i),    i = 1, NRBOX)

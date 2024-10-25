@@ -40,6 +40,7 @@ void TJ::FindRational ()
   mres   = new int   [nres];
   qres   = new double[nres];
   rres   = new double[nres];
+  Pres   = new double[nres];
   qerr   = new double[nres];
   sres   = new double[nres];
   DIres  = new double[nres];
@@ -62,6 +63,7 @@ void TJ::FindRational ()
       sres [i]  = Gets (rres[i]);
       DIres[i]  = GetDI (rres[i]);
       DRres[i]  = GetDR (rres[i]);
+      Pres [i]  = GetPsiN (rres[i]);
 
       if (DIres[i] > 0.)
 	{
@@ -83,8 +85,8 @@ void TJ::FindRational ()
 
   printf ("Rational surface data:\n");
   for (int i = 0; i < nres; i++)
-    printf ("m = %3d r = %10.3e s = %10.3e DI = %10.3e DR = %10.3e nuL = %10.3e nuS = %10.3e res(q-qres) = %10.3e\n",
-	    mres[i], rres[i], sres[i], DIres[i], DRres[i], nuLres[i], nuSres[i], qerr[i]);
+    printf ("m = %3d PsiN = %10.3e, r = %10.3e s = %10.3e DI = %10.3e DR = %10.3e nuL = %10.3e nuS = %10.3e |q-qs| = %10.3e\n",
+	    mres[i], Pres[i], rres[i], sres[i], DIres[i], DRres[i], nuLres[i], nuSres[i], qerr[i]);
 
   // Abort calculation if resonant mode numbers outside range of included poloidal harmonics
   if (mres[0] < MMIN || mres[nres-1] > MMAX)
