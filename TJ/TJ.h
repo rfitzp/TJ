@@ -30,11 +30,11 @@
 //  Armadillo library      (https://arma.sourceforge.net)
 
 // Author:
-// Richard Fitzpatrick,
-// Institute of Fusion Studies,
-// Department of Physics,
-// University of Texas at Austin,
-// rfitzp@utexas.edu
+//  Richard Fitzpatrick,
+//  Institute of Fusion Studies,
+//  Department of Physics,
+//  University of Texas at Austin,
+//  rfitzp@utexas.edu
 
 // Source: https://github.com/rfitzp/TJ/
 
@@ -660,7 +660,7 @@ class TJ
  
   // ................
   // In Armadillo.cpp
-  // ...............
+  // ................
 
   // Solve linear system of equations A . X = B, for X, where all quantities are complex rectangular matrices
   void SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B);

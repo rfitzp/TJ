@@ -10,19 +10,21 @@
 // Radial coordinate, r, normalized to epsa * R_0, where epsa is inverse-aspect ratio.
 // So r = 0 is magnetic axis and r = 1 is plasma/vacuum interface.
 
-// Equilibrum magnetic flux-surfaces:
+// Equilibrium magnetic flux-surfaces:
 
 // R(r,w) = 1 - epsa r cosw + epsa^2 H1(r) + epsa^2 sum_{n=2,Ns} [Hn(r) cos(n-1)w + Vn(r) sin(n-1)w]
 // Z(r,w) =     epsa r sinw                + epsa^2 sum_{n=2,Ns} [Hn(r) sin(n-1)w - Vn(r) cos(n-1)w]
 //
-// Here, R, phi, Z are cylindrical polar coordinates while r, w, phi are flux coordinates
+// Here, R, phi, Z are cylindrical polar coordinates while r is a flux-surface label, w is a poloidal
+// angle, and phi is the geometric toroidal angle.
+// The class also uses the r, theta, phi (PEST) straight field-line coordinate system whose Jacobian is r R^2. 
 
 // Edge shaping: Hna = Hn(1), Vna = Vn(1)
 
 // Equilibrium profiles:
 
-//  Lowest order (i.e., cylindrical) safety factor profile is q0(r) = r^2 /f1(r)
-//  Pressure profile is P(r) = epsa^2 p2(r)
+// Lowest order (i.e., cylindrical) safety factor profile is q0(r) = r^2 /f1(r)
+// Pressure profile is P(r) = epsa^2 p2(r)
 // 
 //  f1(r) = (1 /nu/qc) [1 - (1 - r^2)^nu] 
 //
@@ -40,11 +42,11 @@
 //  nclohmann JSON library (https://github.com/nlohmann/json)
 
 // Author:
-// Richard Fitzpatrick,
-// Institute of Fusion Studies,
-// Department of Physics
-// University of Texas at Austin
-// rfitzp@utexas.edu
+//  Richard Fitzpatrick,
+//  Institute of Fusion Studies,
+//  Department of Physics
+//  University of Texas at Austin
+//  rfitzp@utexas.edu
 
 // Source: https://github.com/rfitzp/TJ
 
