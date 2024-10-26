@@ -20,3 +20,5 @@
 *.sh
 *.bib
 *.bat
+bin
+lib

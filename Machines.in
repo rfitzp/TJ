@@ -17,6 +17,7 @@ ifeq ($(UNAME), Darwin)
      F_INCLUDE  = -I/opt/local/include
      F_LIBS     = -L/opt/local/lib -lnetcdff
 
+     C_ARCHIVER = ar -r -cs
      C_COMPILER = clang++ 
      C_FLAGS    = -w -O3 -std=c++11
      C_INCLUDE  = -I/opt/local/include

@@ -319,15 +319,23 @@ class Equilibrium
 
 private:
 
-  // ..................
-  // in Equilibrium.cpp
-  // ..................
- 
+  // .............
+  // in Netcdf.cpp
+  // .............
+
   // Write equilibrium data to netcdf file
   void WriteNetcdf (double sa);
 
+  // ...........
+  // in EFIT.cpp
+  // ...........
+  
   // Calculate EFIT data
   void CalculateEFIT ();
+
+  // ..................
+  // in Equilibrium.cpp
+  // ..................
   
   // Return f1(r)
   double Getf1 (double r);

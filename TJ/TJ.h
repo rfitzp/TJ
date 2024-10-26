@@ -54,6 +54,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
@@ -84,7 +85,7 @@ class TJ
 
   double EPS;     // Solutions launched from magnetic axis at r = EPS (read from JSON file)
   double DEL;     // Distance of closest approach to rational surface is DEL (read from JSON file)
-  int    NFIX;    // Number of fixups performed (read from JSON file)
+  int    NFIX;    // Number of fixups (read from JSON file)
   int    NDIAG;   // Number of radial grid-points for diagnostics (read from JSON file)
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from JSON file)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from JSON file)
@@ -97,11 +98,11 @@ class TJ
   // Layer calculation parameters
   // ----------------------------
   double B0;      // On-axis toroidal magnetic field-strength (T) (read from JSON file)
-  double R0;      // Plasma minor radius (m) (read from JSON file)
+  double R0;      // On-axis plasma major radius (m) (read from JSON file)
   double n0;      // On-axis electron number density (m^-3) (read from JSON file)
   double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from JSON file)
   double Zeff;    // Effective ion charge number (read from JSON file)
-  double Mion;    // Ion charge number (read from JSON file)
+  double Mion;    // Ion mass number (read from JSON file)
   double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from JSON file)
   double Teped;   // Electron temperature at edge of plasma (eV) (read from JSON file)
   double apol;    // Plasma minor radius (m)
@@ -444,6 +445,9 @@ class TJ
   void SetModeNumbers ();
   // Deallocate memory
   void CleanUp ();
+
+  // Strip comments from a string
+  string stripComments (const string& input);
   // Read JSON file
   json ReadJSONFile (const string& filename);
   // Open new file for writing

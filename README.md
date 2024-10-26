@@ -51,7 +51,9 @@ plasma.
 
   - *Bibliography*:	Papers containing background material
   - *Documentation*: 	Documentation for codes
-  - *Flux*:		Source for code Flux 
+  - *Equilibrium*:	Source for class Equilibrium
+  - *Flux*:		Source for class Flux
+  - *Layer*:		Source for class Layer
   - *Inputs*:		JSON files controlling behaviors of codes
   - *Outputs*:		Outputs from codes
   - *Plots*:		Python plotting scripts for codes
@@ -60,3 +62,5 @@ plasma.
   - *TJ*:		Source for code TJ
   - *WriteEFIT*:	Source for code WriteEFIT
   - *bin*:		Binaries for codes
+  - *lib*:		Libraries
+  - *include*:		Library header files

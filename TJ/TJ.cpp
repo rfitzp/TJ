@@ -398,7 +398,52 @@ void TJ::CleanUp ()
   delete[] U1val;   delete[] Wval;   delete[] Vval;
 
   delete[] rf; 
-}  
+}
+
+// ########################################
+// Function to strip comments from a string
+// ########################################
+string TJ::stripComments (const string& input)
+{
+  stringstream result;
+  bool         inSingleLineComment = false;
+  bool         inMultiLineComment  = false;
+
+  for (size_t i = 0; i < input.size(); ++i)
+    {
+      // Start of single-line comment (//)
+      if (!inMultiLineComment && input[i] == '/' && i + 1 < input.size() && input[i + 1] == '/')
+	{
+	  inSingleLineComment = true;
+	  i++; 
+	}
+      // Start of multi-line comment (/* ... */)
+      else if (!inSingleLineComment && input[i] == '/' && i + 1 < input.size() && input[i + 1] == '*')
+	{
+	  inMultiLineComment = true;
+	  i++; 
+	}
+      // End of single-line comment
+      else if (inSingleLineComment && input[i] == '\n')
+	{
+	  inSingleLineComment = false;
+	  result << input[i];
+	}
+      // End of multi-line comment
+      else if (inMultiLineComment && input[i] == '*' && i + 1 < input.size() && input[i + 1] == '/')
+	{
+	  inMultiLineComment = false;
+	  i++; 
+	}
+      // Regular characters outside comments
+      else if (!inSingleLineComment && !inMultiLineComment)
+	{
+	  result << input[i];
+	}
+    }
+  
+  return result.str();
+}
 
 // ##########################
 // Function to read JSON file
@@ -412,7 +457,10 @@ json TJ::ReadJSONFile (const string& filename)
     {
       try
 	{
-	  JSONFile >> JSONData;
+	  // Strip any comments from JSON file
+	  stringstream buffer;
+	  buffer << JSONFile.rdbuf ();
+	  JSONData = json::parse (stripComments (buffer.str ()));
         }
       catch (json::parse_error& e)
 	{

@@ -40,6 +40,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 #include <blitz/array.h>
 #include <nlohmann/json.hpp>
@@ -132,19 +133,19 @@ private:
   // Adaptive integration parameters
   // ...............................
   double acc;     // Integration accuracy (read from JSON file)
-  double h0;      // Initial step size (read from JSON file)
-  double hmin;    // Minimum step length (read from JSON file)
-  double hmax;    // Maximum step length (read from JSON file)
-  int    maxrept; // Maximum step of recursion
+  double h0;      // Initial integration step-length (read from JSON file)
+  double hmin;    // Minimum integration step-length (read from JSON file)
+  double hmax;    // Maximum integration step-length (read from JSON file)
+  int    maxrept; // Maximum number of step recalculations
   int    flag;    // Error calculation flag
 
   // ...........................
   // Newton iteration parameters
   // ...........................
-  double eps;     // Step size for calculation of Jacobian (read from JSON file)
+  double eps;     // Step-size for calculation of Jacobian (read from JSON file)
   double smax;    // Maximum step-size (read from JSON file)
   double smin;    // Minimum step-size (read from JSON file)
-  double Eta;     // Min. magnitude of f at root f(x) = 0 (read from JSON file)
+  double Eta;     // Minimum magnitude of f at root f(x) = 0 (read from JSON file)
   int    Maxiter; // Maximum number of iterations (read from JSON file)
 
   // .........................
@@ -206,6 +207,8 @@ private:
   // Ridder's method for finding root of F(x) = 0
   void Ridder (double x1, double x2, double F1, double F2, double& x);
 
+  // Strip comments from a string
+  string stripComments (const string& input);
   // Read JSON file
   json ReadJSONFile (const string& filename);
   // Open new file for writing

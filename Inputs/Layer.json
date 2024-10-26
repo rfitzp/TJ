@@ -1,22 +1,21 @@
 {
-    "LAYER":  0,
-	
-    "pstart": 6.0,
-    "pend":   1.0e-8,
-    "P3max":  20.0,
-    "Nscan":  1000,
+    "LAYER":  1,          // Flag for layer calculation
+	  
+    "pstart": 6.0,        // Layer equations integrated from p = pstart to p = pend 
+    "pend":   1.0e-8,     // Layer equations integrated from p = pstart to p = pend 
+    "P3max":  20.0,       // Value of Pmax[3] above which switch to low-D layer equations made 
+    "Nscan":  1000,       // Number of points in marginal stability and frequency scans 
     
-    "acc":  1.0e-12,
-    "h0":   1.0e-2,
-    "hmin": 1.0e-10,
-    "hmax": 1.0e-1,
+    "acc":  1.0e-12,      // Integration accuracy
+    "h0":   1.0e-2,       // Initial integration step-length
+    "hmin": 1.0e-10,      // Minimum integration step-length 
+    "hmax": 1.0e-1,       // Maximum integration step-length
     
-    "Eta":     1.0e-12,
-    "Maxiter": 60,
-    
-    "eps":  1.0e-6,
-    "smax": 0.1,
-    "smin": 1.0e-9
+    "Eta":     1.0e-12,   // Minimum magnitude of f at root f(x) = 0 
+    "Maxiter": 60,        // Maximum number of Newton iterations
+    "eps":     1.0e-6,    // Step-size for calculation of Jacobian
+    "smax":    0.1,       // Maximum Newton step-size 
+    "smin":    1.0e-9     // Minimum Newton step-size
 }
 
 
