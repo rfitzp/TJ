@@ -37,6 +37,9 @@
 
 #pragma once
 
+#define _CRT_SECURE_NO_DEPRECATE
+#define _USE_MATH_DEFINES
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -45,6 +48,14 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+
+#ifdef _WIN32
+ #include <direct.h>
+ #define mkdir _mkdir
+#else
+ #include <sys/stat.h>
+ #include <sys/types.h>
+#endif
 
 #include <blitz/array.h>
 #include <gsl/gsl_matrix.h>
@@ -276,7 +287,9 @@ private:
   // ...........
   // In Flux.cpp
   // ...........
-  
+
+  // Strip comments from a string
+  string stripComments (const string& input);
   // Read JSON file
   json ReadJSONFile (const string& filename);
   // Open new file for writing
@@ -285,6 +298,8 @@ private:
   FILE* OpenFiler (char* filename);
   // Open existing file for appending
   FILE* OpenFilea (char* filename);
+  // Check that directory exists, and create it otherwise
+  bool CreateDirectory (const char* path);
   // Call operating system 
   void CallSystem (char* command);
 };

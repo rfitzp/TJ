@@ -2,7 +2,8 @@
 
 // #########################################################################################
 
-// Class to solve cylindrical tearing mode problem
+// Class to solve cylindrical tearing mode problem. Class calculates Delta' for all rational
+// surfaces in plasma.
 
 // All lengths normalized to a (minor radius of plasma).
 // So r = 0 is magnetic axis and r = 1 is plasma/vacuum interface.
@@ -27,6 +28,9 @@
 
 #pragma once
 
+#define _CRT_SECURE_NO_DEPRECATE
+#define _USE_MATH_DEFINES
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -36,10 +40,20 @@
 #include <fstream>
 #include <cstdlib>  
 
+#ifdef _WIN32
+ #include <direct.h>
+ #define mkdir _mkdir
+#else
+ #include <sys/stat.h>
+ #include <sys/types.h>
+#endif
+
+#include <blitz/array.h>
 #include <nlohmann/json.hpp>
 #include <netcdf>
 
 using namespace std;
+using namespace blitz;
 using           json = nlohmann::json;
 using namespace netCDF;
 using namespace netCDF::exceptions;
@@ -54,10 +68,7 @@ class Tear
   // ------------------
   // Physics parameters
   // ------------------
-  int    MPOL;   // Poloidal mode number (read from JSON file)
   int    NTOR;   // Toroidal mode number (read from JSON file)
-  double mpol;   // Poloidal mode number
-  double ntor;   // Toroidal mode number
   double q0;     // Central safety-factor (read from JSON file)
   double qa;     // Edge safety-factor (read from JSON file)
   double nu;     // Current peaking factor
@@ -66,9 +77,9 @@ class Tear
   // ----------------------
   // Calculation parameters
   // ----------------------
-  double eps;    // Distance of closest approach to magnetic axis (read from JSON file)
-  double del;    // Distance of closest approach to rational surface (read from JSON file)
-  int    Nr;     // Number of grid-points (read from JSON file)
+  double  eps;    // Distance of closest approach to magnetic axis (read from JSON file)
+  double  del;    // Distance of closest approach to rational surface (read from JSON file)
+  int     Nr;     // Number of grid-points (read from JSON file)
  
   // -------------------------------
   // Adaptive integration parameters
@@ -83,17 +94,24 @@ class Tear
   // ----------------
   // Calculation data
   // ----------------
-  double qs;     // Resonant safety-factor value
-  double rs;     // Radius of rational surface
-  double Delta;  // Tearing stability index
+  double          qs;    // Resonant safety-factor value
+  double          rs;    // Radius of rational surface
+  double          Delta; // Tearing stability index
 
-  double* rr;     // Radial grid
-  double* qq;     // Safety factor
-  double* ss;     // Magnetic shear
-  double* JJ;     // Toroidal plasma current
-  double* JJp;    // Toroidal plasma current gradient
-  double* lvals;  // Tearing mode drive term
-  double* Psi;    // Tearing mode eigenfunction
+  double          mpol;  // Poloidal mode number
+  double          ntor;  // Toroidal mode number
+  int             nres;  // Number of rational surfaces
+  int*            mres;  // Resonant poloidal mode numbers
+  double*         rres;  // Rational surface radii
+  double*         Dres;  // Tearing stability indicies
+  
+  double*         rr;    // Radial grid
+  double*         qq;    // Safety factor
+  double*         ss;    // Magnetic shear
+  double*         JJ;    // Toroidal plasma current
+  double*         JJp;   // Toroidal plasma current gradient
+  double*         lvals; // Tearing mode drive term
+  Array<double,2> Psi;   // Tearing mode eigenfunctions
 
   // ----------------------------
   // Cash-Karp RK4/RK5 parameters
@@ -136,7 +154,7 @@ private:
   double FindRationalSurface ();
 
   // Calculate tearing stability index
-  double GetDelta ();
+  double GetDelta (int isurf);
   
   // Evaluate right-hand sides of differential equations
   void Rhs (double x, double* y, double* dydx);
@@ -149,10 +167,14 @@ private:
   // Fixed step-length Cash-Karp RK4/RK5 integration routine
   void CashKarp45Fixed (int neqns, double& x, double* y, double* err, double h);
 
+  // Strip comments from a string
+  string stripComments (const string& input);
   // Read JSON file
   json ReadJSONFile (const string& filename);
   // Open new file for writing
   FILE* OpenFilew (char* filename);
   // Open file for reading
   FILE* OpenFiler (char* filename);
+  // Check that directory exists, and create it otherwise
+  bool CreateDirectory (const char* path);
 };

@@ -285,6 +285,10 @@ void Equilibrium::CalculateEFIT ()
     {
       NcFile dataFile ("../Outputs/Equilibrium/EFIT.nc", NcFile::replace);
 
+      dataFile.putAtt ("Git_Hash",     GIT_HASH);
+      dataFile.putAtt ("Compile_Time", COMPILE_TIME);
+      dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
+
       NcDim i_d = dataFile.addDim ("Ni", 4);
       NcDim r_d = dataFile.addDim ("Nr", 15);
       NcDim p_d = dataFile.addDim ("Np", NRBOX);

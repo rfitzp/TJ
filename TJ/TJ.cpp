@@ -7,6 +7,26 @@
 // ###########
 TJ::TJ ()
 {
+  // -----------------------------------------
+  // Ensure that directory ../Outputs/TJ exits
+  // -----------------------------------------
+  if (!CreateDirectory ("../Outputs"))
+    {
+      exit (1);
+    }
+  if (!CreateDirectory ("../Outputs/TJ"))
+    {
+      exit (1);
+    }
+
+  // ------------------------------------------------
+  // Ensure that directory ../Outputs/WriteEFIT exits
+  // ------------------------------------------------
+  if (!CreateDirectory ("../Outputs/WriteEFIT"))
+    {
+      exit (1);
+    }
+
   // ---------------------------
   // Set root finding parameters
   // ---------------------------
@@ -205,6 +225,9 @@ TJ::TJ ()
   // Output calculation parameters
   // -----------------------------
   printf ("\nClass TJ::\n");
+  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
+  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
+  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Calculation parameters:\n");
   printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
 	  NTOR, MMIN, MMAX, EPS, DEL);
@@ -505,4 +528,33 @@ FILE* TJ::OpenFiler (char* filename)
     }
   return file;
 }
+
+// ################################################################
+// Function to check that directory exists, and create it otherwise
+// ################################################################
+bool TJ::CreateDirectory (const char* path)
+{
+  struct stat st = {0};
+  
+  if (stat (path, &st) == -1)
+    {
+#ifdef _WIN32
+      if (mkdir (path) != 0)
+	{
+	  printf ("Error creating directory: %s\n", path);
+	  return false;
+	}
+#else
+      if (mkdir (path, 0700) != 0)
+	{
+	  printf ("Error creating directory: %s\n", path);
+	  return false;
+	}
+#endif
+    }
+  
+  return true;
+}
+
+
 

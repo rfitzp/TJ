@@ -1,16 +1,15 @@
 {
-    "MPOL":  2,
-    "NTOR":  1,
-    "q0":    1.1,
-    "qa":    2.987,
-    "Fixed": 0,
+    "NTOR":  1,        // Toroidal mode number
+    "q0":    1.1,      // Central safety-factor
+    "qa":    3.3  ,    // Edge safety-factor
+    "Fixed": 0,        // Flag fro fixed boundary calculation  
 
-    "eps":   1.0e-4,
-    "del":   1.0e-8,
-    "Nr":    1000,
+    "eps":   1.0e-4,   // Distance of closest approach to magnetic axis
+    "del":   1.0e-8,   // Distance of closest approach to rational surface
+    "Nr":    1000,     // Number of radial gridpoints in output
 
-    "acc":   1.0e-12,
-    "h0":    1.0e-4,
-    "hmin":  1.0e-10,
-    "hmax":  1.0e-3
+    "acc":   1.0e-12,  // Integration accuracy
+    "h0":    1.0e-4,   // Initial integration step-length
+    "hmin":  1.0e-10,  // Minimum integration step-length
+    "hmax":  1.0e-3    // Maximum integration step-length
 }

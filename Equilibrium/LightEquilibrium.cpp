@@ -182,6 +182,9 @@ void LightEquilibrium::GetNu (double _qa, double& _nu)
   res = fabs (qedge - qa);
   
   printf ("\nClass LIGHTEQUILIBRIUM::\n");
+  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
+  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
+  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("nu     = %10.3e q_central     = %10.3e q_edge = %10.3e res = %10.3e\n",
 	  _nu, qcentral, qedge, res);
   printf ("s_edge = %10.3e s_edge_target = %10.3e                     res = %10.3e\n",

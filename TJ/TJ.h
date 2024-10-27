@@ -17,7 +17,7 @@
 //  Inputs/TJ.json - JSON file
 
 // Outputs:
-//  Outputs/TJ/TJ,nc
+//  Outputs/TJ/TJ.nc
 
 // Plotting scripts:
 //  Plots/TJ/*.py
@@ -44,6 +44,8 @@
 
 #pragma once
 
+#define _CRT_SECURE_NO_DEPRECATE
+#define _USE_MATH_DEFINES
 #define ARMA_WARN_LEVEL 0
 
 #include <stdio.h>
@@ -55,6 +57,14 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
+#ifdef _WIN32
+ #include <direct.h>
+ #define mkdir _mkdir
+#else
+ #include <sys/stat.h>
+ #include <sys/types.h>
+#endif
 
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
@@ -454,6 +464,8 @@ class TJ
   FILE* OpenFilew (char* filename);
   // Open file for reading
   FILE* OpenFiler (char* filename);
+  // Check that directory exists, and create it otherwise
+  bool CreateDirectory (const char* path);
 
   // ......................
   // In ReadEquilibrium.cpp

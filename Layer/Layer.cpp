@@ -5,6 +5,18 @@
 // ###########
 Layer::Layer ()
 {
+  // --------------------------------------------
+  // Ensure that directory ../Outputs/Layer exits
+  // --------------------------------------------
+  if (!CreateDirectory ("../Outputs"))
+    {
+      exit (1);
+    }
+  if (!CreateDirectory ("../Outputs/Layer"))
+    {
+      exit (1);
+    }
+  
   // ...................................
   // Set adaptive integration parameters
   // ...................................
@@ -84,6 +96,9 @@ Layer::Layer ()
     {
       printf ("\n");
       printf ("Class LAYER::\n");
+      printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
+      printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
+      printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
       printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan = %4d\n",
 	      pstart, pend, P3max, Nscan);
       printf ("acc    = %10.3e h0   = %10.3e hmin  = %10.3e hmax  = %10.3e\n",
@@ -445,6 +460,10 @@ void Layer::WriteNetcdf ()
    try
      {
        NcFile dataFile ("../Outputs/Layer/Layer.nc", NcFile::replace);
+
+       dataFile.putAtt ("Git_Hash",     GIT_HASH);
+       dataFile.putAtt ("Compile_Time", COMPILE_TIME);
+       dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
 
        NcDim x_d = dataFile.addDim ("nres",  nres);
        NcDim y_d = dataFile.addDim ("nmarg", 10);
@@ -1145,3 +1164,31 @@ FILE* Layer::OpenFilew (const char* filename)
     }
   return file;
 }
+
+// ################################################################
+// Function to check that directory exists, and create it otherwise
+// ################################################################
+bool Layer::CreateDirectory (const char* path)
+{
+  struct stat st = {0};
+  
+  if (stat (path, &st) == -1)
+    {
+#ifdef _WIN32
+      if (mkdir (path) != 0)
+	{
+	  printf ("Error creating directory: %s\n", path);
+	  return false;
+	}
+#else
+      if (mkdir (path, 0700) != 0)
+	{
+	  printf ("Error creating directory: %s\n", path);
+	  return false;
+	}
+#endif
+    }
+  
+  return true;
+}
+

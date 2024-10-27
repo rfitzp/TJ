@@ -15,11 +15,11 @@
 // R(r,w) = 1 - epsa r cosw + epsa^2 H1(r) + epsa^2 sum_{n=2,Ns} [Hn(r) cos(n-1)w + Vn(r) sin(n-1)w]
 // Z(r,w) =     epsa r sinw                + epsa^2 sum_{n=2,Ns} [Hn(r) sin(n-1)w - Vn(r) cos(n-1)w]
 //
-// Here, R, phi, Z are cylindrical polar coordinates while r is a flux-surface label, w is a poloidal
-// angle, and phi is the geometric toroidal angle.
-// The class also uses the r, theta, phi (PEST) straight field-line coordinate system whose Jacobian is r R^2. 
+// Here, R, phi, Z are cylindrical polar coordinates, epsa is the inverse aspect-ratio, r is a flux-surface label,
+// and w is a poloidal angle. The class also uses the r, theta, phi (PEST) straight field-line coordinate system
+// whose Jacobian is r R^2. 
 
-// Edge shaping: Hna = Hn(1), Vna = Vn(1)
+// Edge shaping: Hna = Hn(1), Vna = Vn(1), etc.
 
 // Equilibrium profiles:
 
@@ -56,6 +56,9 @@
 
 #pragma once
 
+#define _CRT_SECURE_NO_DEPRECATE
+#define _USE_MATH_DEFINES
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -64,6 +67,14 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
+#ifdef _WIN32
+ #include <direct.h>
+ #define mkdir _mkdir
+#else
+ #include <sys/stat.h>
+ #include <sys/types.h>
+#endif
 
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>

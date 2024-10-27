@@ -19,7 +19,7 @@ ifeq ($(UNAME), Darwin)
 
      C_ARCHIVER = ar -r -cs
      C_COMPILER = clang++ 
-     C_FLAGS    = -w -O3 -std=c++11
+     C_FLAGS    = -w -O3 -std=c++11 $(VERSION_FLAGS)
      C_INCLUDE  = -I/opt/local/include
      C_LIBS     = -L/opt/local/lib -L/opt/local/lib/libgcc -lgsl -lgslcblas -lnetcdf -lnetcdf_c++4 -larmadillo -llapack -lgfortran
 

@@ -33,6 +33,9 @@
 
 #pragma once
 
+#define _CRT_SECURE_NO_DEPRECATE
+#define _USE_MATH_DEFINES
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -41,6 +44,14 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
+#ifdef _WIN32
+ #include <direct.h>
+ #define mkdir _mkdir
+#else
+ #include <sys/stat.h>
+ #include <sys/types.h>
+#endif
 
 #include <blitz/array.h>
 #include <nlohmann/json.hpp>
@@ -213,4 +224,6 @@ private:
   json ReadJSONFile (const string& filename);
   // Open new file for writing
   FILE* OpenFilew (const char* filename);
+  // Check that directory exists, and create it otherwise
+  bool CreateDirectory (const char* path);
 };

@@ -8,6 +8,18 @@
 // ###########
 Equilibrium::Equilibrium ()
 {
+  // --------------------------------------------------
+  // Ensure that directory ../Outputs/Equilibrium exits
+  // --------------------------------------------------
+  if (!CreateDirectory ("../Outputs"))
+    {
+      exit (1);
+    }
+  if (!CreateDirectory ("../Outputs/Equilibrium"))
+    {
+      exit (1);
+    }
+  
   // -----------------------------------
   // Set adaptive integration parameters
   // -----------------------------------
@@ -435,6 +447,9 @@ void Equilibrium::Solve ()
   
   printf ("\n");
   printf ("Class EQUILIBRIUM::\n");
+  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
+  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
+  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Calculation parameters:\n");
   printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
 	  qc, nu, pc, mu, epsa, Ns, Nr, Nf, Nw);
@@ -2286,3 +2301,29 @@ FILE* Equilibrium::OpenFiler (char* filename)
   return file;
 }
 
+// ################################################################
+// Function to check that directory exists, and create it otherwise
+// ################################################################
+bool Equilibrium::CreateDirectory (const char* path)
+{
+  struct stat st = {0};
+  
+  if (stat (path, &st) == -1)
+    {
+#ifdef _WIN32
+      if (mkdir (path) != 0)
+	{
+	  printf ("Error creating directory: %s\n", path);
+	  return false;
+	}
+#else
+      if (mkdir (path, 0700) != 0)
+	{
+	  printf ("Error creating directory: %s\n", path);
+	  return false;
+	}
+#endif
+    }
+  
+  return true;
+}

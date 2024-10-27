@@ -576,6 +576,10 @@ void TJ::WriteNetcdf ()
   try
     {
       NcFile dataFile ("../Outputs/TJ/TJ.nc", NcFile::replace);
+      
+      dataFile.putAtt ("Git_Hash",     GIT_HASH);
+      dataFile.putAtt ("Compile_Time", COMPILE_TIME);
+      dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
 
       NcDim i_d = dataFile.addDim ("Ni",    23);
       NcDim r_d = dataFile.addDim ("Nr",    Nr+1);

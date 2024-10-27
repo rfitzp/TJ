@@ -1,7 +1,8 @@
 {
-    "NPSI":    512,
-    "PACK":    3.0,
-    "NTHETA":  513,
-    "H0":      1.0e-06,
-    "ACC":     1.0e-11
+    "NPSI":    512,       // Number of points in PsiN grid
+    "PACK":    3.0,       // Packing index for PsiN grid
+    "NTHETA":  513,       // Number of points in theta grid
+
+    "H0":      1.0e-06,   // Initial integration step-length for equilibrium flux-surface integrals 
+    "ACC":     1.0e-11    // Integration accuracy for equilibrium flux-surface integrals
 }

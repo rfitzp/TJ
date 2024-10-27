@@ -9,7 +9,7 @@ void Equilibrium::WriteNetcdf (double sa)
 {
   printf ("Writing equilibrium data to netcdf file Outputs/Equilibrium/Equilibrium.nc:\n");
 
-  double  para[2], Input[15], Beta[4];
+  double para[2], Input[15], Beta[4];
 
   double* Hna   = new double[Ns+1];
   double* Vna   = new double[Ns+1];
@@ -56,6 +56,10 @@ void Equilibrium::WriteNetcdf (double sa)
     {
       NcFile dataFile ("../Outputs/Equilibrium/Equilibrium.nc", NcFile::replace);
 
+      dataFile.putAtt ("Git_Hash",     GIT_HASH);
+      dataFile.putAtt ("Compile_Time", COMPILE_TIME);
+      dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
+  
       NcDim i_d = dataFile.addDim ("Ni", 15);
       NcDim p_d = dataFile.addDim ("Np", 2);
       NcDim b_d = dataFile.addDim ("Nb", 4);
@@ -204,7 +208,7 @@ void Equilibrium::WriteNetcdf (double sa)
     }
   catch (NcException& e)
     {
-      printf ("Error writing data to netcdf file Outputs/Equilibrium/Equilbrium.nc\n");
+      printf ("Error writing data to netcdf file Outputs/Equilibrium/Equilibrium.nc\n");
       printf ("%s\n", e.what ());
       exit (1);
     }

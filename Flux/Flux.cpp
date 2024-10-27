@@ -19,6 +19,17 @@
 // ###########
 Flux::Flux ()
 {
+   // -------------------------------------------
+  // Ensure that directory ../Outputs/Flux exits
+  // -------------------------------------------
+  if (!CreateDirectory ("../Outputs"))
+    {
+      exit (1);
+    }
+  if (!CreateDirectory ("../Outputs/Flux"))
+    {
+      exit (1);
+    }
 }
 
 // ##########
@@ -103,6 +114,11 @@ void Flux::SetParameters ()
   // -----------------------------
   // Output calculation parameters
   // -----------------------------
+  printf ("\n");
+  printf ("Class FLUX::\n");
+  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
+  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
+  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Input Parameters (from Inputs/Flux.json):\n");
   printf ("NPSI = %4d        NTHETA = %4d       PACK = %10.3e\n",
 	  NPSI, NTHETA, PACK);
@@ -117,6 +133,51 @@ void Flux::Stage1 ()
 {
   // Read gFile
   gFileRead ();
+}
+
+// ########################################
+// Function to strip comments from a string
+// ########################################
+string Flux::stripComments (const string& input)
+{
+  stringstream result;
+  bool         inSingleLineComment = false;
+  bool         inMultiLineComment  = false;
+
+  for (size_t i = 0; i < input.size(); ++i)
+    {
+      // Start of single-line comment (//)
+      if (!inMultiLineComment && input[i] == '/' && i + 1 < input.size() && input[i + 1] == '/')
+	{
+	  inSingleLineComment = true;
+	  i++; 
+	}
+      // Start of multi-line comment (/* ... */)
+      else if (!inSingleLineComment && input[i] == '/' && i + 1 < input.size() && input[i + 1] == '*')
+	{
+	  inMultiLineComment = true;
+	  i++; 
+	}
+      // End of single-line comment
+      else if (inSingleLineComment && input[i] == '\n')
+	{
+	  inSingleLineComment = false;
+	  result << input[i];
+	}
+      // End of multi-line comment
+      else if (inMultiLineComment && input[i] == '*' && i + 1 < input.size() && input[i + 1] == '/')
+	{
+	  inMultiLineComment = false;
+	  i++; 
+	}
+      // Regular characters outside comments
+      else if (!inSingleLineComment && !inMultiLineComment)
+	{
+	  result << input[i];
+	}
+    }
+  
+  return result.str();
 }
 
 // #####################################
@@ -145,7 +206,10 @@ json Flux::ReadJSONFile (const string& filename)
     {
       try
 	{
-	  JSONFile >> JSONData;
+	  // Strip any comments from JSON file
+	  stringstream buffer;
+	  buffer << JSONFile.rdbuf ();
+	  JSONData = json::parse (stripComments (buffer.str ()));
         }
       catch (json::parse_error& e)
 	{
@@ -191,6 +255,33 @@ FILE* Flux::OpenFilea (char* filename)
   return file;
 }
 
+// ################################################################
+// Function to check that directory exists, and create it otherwise
+// ################################################################
+bool Flux::CreateDirectory (const char* path)
+{
+  struct stat st = {0};
+  
+  if (stat (path, &st) == -1)
+    {
+#ifdef _WIN32
+      if (mkdir (path) != 0)
+	{
+	  printf ("Error creating directory: %s\n", path);
+	  return false;
+	}
+#else
+      if (mkdir (path, 0700) != 0)
+	{
+	  printf ("Error creating directory: %s\n", path);
+	  return false;
+	}
+#endif
+    }
+  
+  return true;
+}
+
 // #################################
 // Function to call operating system
 // #################################
@@ -202,3 +293,4 @@ void Flux::CallSystem (char* command)
       exit (1);
     }
 }
+
