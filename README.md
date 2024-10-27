@@ -55,6 +55,7 @@ Program to calculate stability indices of tearing modes in cylindrical tokamak p
 
 # Directories
 
+  - *Benchmark*:        Benchmark tests
   - *Bibliography*:	Papers containing background material
   - *Documentation*: 	Documentation for codes
   - *Equilibrium*:	Source for class Equilibrium

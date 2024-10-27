@@ -830,7 +830,7 @@ void Equilibrium::Solve ()
 	  wvals (i-1, j) = w;
 	}
     }
-
+  
   for (int i = 1; i <= Nf; i++)
     {
       double rf = double (i) /double (Nf);

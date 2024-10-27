@@ -1,4 +1,4 @@
 # Plotting Scripts for Class TEAR
 
-- *Equilibium.py*:               Plots equulibrium profiles versus r
+- *Equilibrium.py*:              Plots equilibrium profiles versus r
 - *Psi.py*:			 Plots tearing eigenfunction versus r

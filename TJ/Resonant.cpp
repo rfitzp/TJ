@@ -653,10 +653,10 @@ void TJ::JumpRational (int jres, double& r, Array<complex<double>,2> YY)
 	  Tplus = GetTorque (rm + DEL, PPsi, ZZ, j);
 
 	  if (j < J)
-	    printf ("Surface %2d nuL = %10.3e m %3d AL = (%10.3e, %10.3e) AS = (%10.3e, %10.3e) Tminus = %10.3e Tplus = %10.3e\n",
+	    printf ("Surface %2d nuL = %10.3e m = %3d AL = (%10.3e, %10.3e) AS = (%10.3e, %10.3e) Tminus = %10.3e Tplus = %10.3e\n",
 		    jres+1, nuL, MPOL[j], real(AL), imag(AL), real(AS), imag(AS), Tminus, Tplus);
 	  else
-	     printf ("Surface %2d nuL = %10.3e m %3d AL = (%10.3e, %10.3e) AS = (%10.3e, %10.3e) Tminus = %10.3e Tplus = %10.3e\n",
+	     printf ("Surface %2d nuL = %10.3e m = %3d AL = (%10.3e, %10.3e) AS = (%10.3e, %10.3e) Tminus = %10.3e Tplus = %10.3e\n",
 		     jres+1, nuL, mres[j-J], real(AL), imag(AL), real(AS), imag(AS), Tminus, Tplus);
 	}
 

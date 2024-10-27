@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-infile = open("Test1.txt", "r")
+infile = open("Test1.out", "r")
 
 qa = []
 pn = []
@@ -31,19 +31,20 @@ for line in infile:
     d3.append(c6)
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Zero pressure: q_0=1.1: epsilon_a=0.05')
+fig.canvas.manager.set_window_title (r'Zero pressure: q_0=1.1: q_a=2.6')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (2.2, 3.)
+plt.xlim (0.0, 0.31)
+plt.ylim (8.0, 11.0)
 
 plt.plot (qa, d1, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'TJ')
 plt.plot (qa, d2, color = 'red',   linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'TEAR')
 plt.plot (qa, d3, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'STRIDE')
 
-plt.xlabel (r'$q_a$',          fontsize = "15")
+plt.xlabel (r'$\epsilon_a$',   fontsize = "15")
 plt.ylabel (r"$r_s\,\Delta'$", fontsize = "15")
 plt.legend (fontsize = "15")
 

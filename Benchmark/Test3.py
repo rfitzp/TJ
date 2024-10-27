@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-infile = open("Test3.txt", "r")
+infile = open("Test3.out", "r")
 
 qa = []
 pn = []
@@ -49,5 +49,5 @@ plt.legend (fontsize = "15")
 
 plt.tight_layout ()
 
-#plt.show ()    
-plt.savefig("Test3.pdf")
+plt.show ()    
+#plt.savefig("Test3.pdf")
