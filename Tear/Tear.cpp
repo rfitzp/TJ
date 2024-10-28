@@ -175,7 +175,7 @@ void Tear::Solve ()
   // -------------------------------------
   // Determine number of rational surfaces
   // -------------------------------------
-  nres = int ((qa - q0) /ntor);
+  nres = int (qa /ntor) - int (q0 /ntor);
   if (nres <= 0)
     {
       printf ("No rational surfaces in plasma\n");
