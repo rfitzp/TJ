@@ -14,13 +14,11 @@ r1  = ds1['r']
 S1  = ds1['S1']
 S2  = ds1['S2']
 S3  = ds1['S3']
-S4  = ds1['S4']
 P1  = ds1['P1']
 P2  = ds1['P2']
 P1a = ds1['P1a']
 P2a = ds1['P2a']
 P3  = ds1['P3']
-P4  = ds1['P4']
 
 fn   = '../../Outputs/TJ/TJ.nc'
 ds   = nc.Dataset(fn)
@@ -38,7 +36,6 @@ plt.xlim (0., 1.)
 plt.plot    (r1, S1, color = 'blue',   linewidth = 2,   linestyle = 'solid',  label = '$S_1$')
 plt.plot    (r1, S2, color = 'green',  linewidth = 2,   linestyle = 'solid',  label = '$S_2$')
 plt.plot    (r1, S3, color = 'yellow', linewidth = 2,   linestyle = 'solid',  label = '$S_3$')
-plt.plot    (r1, S4, color = 'cyan',   linewidth = 2,   linestyle = 'solid',  label = '$S_4$')
 plt.axhline (0.,     color = 'black',  linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:
@@ -80,8 +77,7 @@ plt.subplot (2, 2, 4)
 
 plt.xlim (0., 1.)
 
-plt.plot    (r1, P4, color = 'blue',  linewidth = 2,   linestyle = 'solid')
-plt.plot    (r1, P3, color = 'blue',  linewidth = 2,   linestyle = 'dashed')
+plt.plot    (r1, P3, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 for rx in rres:

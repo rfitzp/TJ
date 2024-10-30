@@ -242,15 +242,12 @@ void Equilibrium::Solve ()
   S1    = new double[Nr+1];
   S2    = new double[Nr+1];
   S3    = new double[Nr+1];
-  S4    = new double[Nr+1];
   P1    = new double[Nr+1];
-  P2    = new double[Nr+1];
   P1a   = new double[Nr+1];
+  P2    = new double[Nr+1];
   P2a   = new double[Nr+1];
   P3    = new double[Nr+1];
   P3a   = new double[Nr+1];
-  P4    = new double[Nr+1];
-  P4a   = new double[Nr+1];
   ff    = new double[Nr+1];
   ggr2  = new double[Nr+1];
   RR2   = new double[Nr+1];
@@ -718,20 +715,18 @@ void Equilibrium::Solve ()
   while (r < 1. - h);
   CashKarp45Fixed (4, r, y2, err2, 1. - r);
 
-  amean  = (GetR (1., M_PI, 1) - GetR (1., 0., 1)) /2.;
-  li     = 2. * y2[0] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
-  betat  = 2. * epsa*epsa * y2[1] /y2[2];
-  betap  = 2. * y2[1] /y2[0];
-  betat1 = 2. * epsa*epsa * y2[1] /y2[3];
-  betap1 = 2. * y2[1] /y2[3] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
-  betaN  = 20. * betat * (amean /epsa) /epsa /ff[Nr] /ggr2[Nr];
+  amean = (GetR (1., M_PI, 1) - GetR (1., 0., 1)) /2.;
+  li    = 2. * y2[0] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
+  betat = 2. * epsa*epsa * y2[1] /y2[3];
+  betap = 2. * y2[1] /y2[3] /ff[Nr]/ff[Nr] /ggr2[Nr] /ggr2[Nr];
+  betaN = 20. * betat * (amean /epsa) /epsa /ff[Nr] /ggr2[Nr];
 
   delete[] y2; delete[] err2;
 
   printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It     = %10.3e\n",
 	  q2[0], q0[Nr], q2[Nr], Ip[Nr], It[Nr]);
-  printf ("li = %10.3e betat = %10.3e betap = %10.3e betaN = %10.3e betat1 = %10.3e betap1 = %10.3e\n",
-  	  li, betat, betap, betaN, betat1, betap1);
+  printf ("li = %10.3e betat = %10.3e betap = %10.3e betaN = %10.3e\n",
+  	  li, betat, betap, betaN);
 
   // ...........................
   // Calculate shaping functions
@@ -739,66 +734,49 @@ void Equilibrium::Solve ()
   for (int i = 1; i <= Nr; i++)
     {
       double sum1 = 1.5 * HPfunc(1, i) * HPfunc(1, i);
-      double sum2 = 0.;
-      double sum3 = 1.5 * rr[i]*rr[i] - 2. * rr[i] * HPfunc(1, i) + HPfunc(1, i)*HPfunc(1, i);
-      double sum4 = - 0.75 * rr[i]*rr[i] + rr[i]*rr[i] /q2[i]/q2[i] + HHfunc(1, i) + 1.5 * HPfunc(1, i)*HPfunc(1, i);
+      double sum2 = 1.5 * rr[i]*rr[i] - 2. * rr[i] * HPfunc(1, i) + HPfunc(1, i)*HPfunc(1, i);
+      double sum3 = - 0.75 * rr[i]*rr[i] + rr[i]*rr[i] /q2[i]/q2[i] + HHfunc(1, i) + 1.5 * HPfunc(1, i)*HPfunc(1, i);
  
       for (int n = 2; n <= Ns; n++)
 	{
 	  sum1 += (                  3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
 		     - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i])/2.;
-	  sum2 += 2. * double (n*n - 1) * ((+ HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)
-					    - (11./3.) * (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
-					    + double (n*n) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i)*VVfunc(n, i)) /rr[i]/rr[i])
-	                    - (1. - s[i])* (             (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
-					     + (1./3.) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i]));
-	  sum3 +=                            HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)
+	  sum2 +=                            HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)
 	          + 2. * double (n*n - 1) * (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
 	          -      double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i];
-	  sum4 += (                    3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
+	  sum3 += (                    3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
 		       - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i])/2.;
 	}
 
       S1[i] = sum1;
       S2[i] = sum2;
       S3[i] = sum3;
-      S4[i] = sum4;
     }
   S1[0] = 0.;
   S2[0] = S2[1];
-  S3[0] = S3[1];
-  S4[0] = 0.;
+  S3[0] = 0.;
 
   // ...........................
   // Calculate profile functions
   // ...........................
-    
   for (int i = 0; i <= Nr; i++)
     {
       P1[i]  = (2. - s[i]) /q2[i];
-      P2[i]  = (- 3. * s[i] + 2. * s[i]*s[i] - s2[i]) /q2[i];
-      P3a[i] =
-        + rr[i]*rr[i]   * (2. - s[i]) /q2[i]/q2[i]/q2[i]
-	+ (s[i] /q2[i]) * (3. * rr[i]*rr[i] /4. - HHfunc(1, i) - S1[i])
-	- (2.   /q2[i]) * (3. * rr[i]*rr[i] /2. - HHfunc(1, i) - rr[i] * HPfunc(1, i) - 2. * S1[i] /3.);
       P1a[i] = (2. - s0[i]) /q0[i];
-      P4a[i] = - (2. - s[i]) * S4[i] /q2[i] + S3[i] /q2[i];
-    }
+      P2[i]  = (- 3. * s[i] + 2. * s[i]*s[i] - s2[i]) /q2[i];
+      P3a[i] = - (2. - s[i]) * S3[i] /q2[i] + S2[i] /q2[i];
+  }
 
   for (int i = 1; i < Nr; i++)
     {
-      P3[i]  = 2. * rr[i] * pp[i] * (2. - s[i]) + q2[i] * rr[i] * (P3a[i+1] - P3a[i-1]) /2./hh - S2[i];
       P2a[i] = rr[i] * (P1a[i+1] - P1a[i-1]) /2./hh;
-      P4[i]  = 2. * rr[i] * pp[i] * (2. - s[i]) - q2[i] * rr[i] * (P4a[i+1] - P4a[i-1]) /2./hh;
+      P3[i]  = 2. * rr[i] * pp[i] * (2. - s[i]) - q2[i] * rr[i] * (P3a[i+1] - P3a[i-1]) /2./hh;
     }
-  P3[0]  = P3[1]    - (P3[2]    - P3[1]);
-  P3[Nr] = P3[Nr-1] + (P3[Nr-1] - P3[Nr-2]);
-
   P2a[0]  = P2a[1]    - (P2a[2]    - P2a[1]);
   P2a[Nr] = P2a[Nr-1] + (P2a[Nr-1] - P2a[Nr-2]);
 
-  P4[0]  = P4[1]    - (P4[2]    - P4[1]);
-  P4[Nr] = P4[Nr-1] + (P4[Nr-1] - P4[Nr-2]);
+  P3[0]  = P3[1]    - (P3[2]    - P3[1]);
+  P3[Nr] = P3[Nr-1] + (P3[Nr-1] - P3[Nr-2]);
 
   // ...........................................................
   // Calculate magnetic flux-surfaces for visualization purposes
@@ -947,8 +925,8 @@ void Equilibrium::Solve ()
   delete[] Jp;  delete[] pp;  delete[] ppp; delete[] qq;  delete[] qqq;
   delete[] s;   delete[] s2;  delete[] S1;  delete[] S2;  delete[] P1;
   delete[] P2;  delete[] P3;  delete[] P3a; delete[] ff;  delete[] ggr2;
-  delete[] RR2; delete[] IR2; delete[] S3;  delete[] S4;  delete[] P1a;
-  delete[] P2a; delete[] s0;  delete[] P4;  delete[] P4a;
+  delete[] RR2; delete[] IR2; delete[] S3;  delete[] P1a; delete[] P2a;
+  delete[] s0;  
  
   gsl_spline_free (Itspline);
   gsl_spline_free (Ipspline);

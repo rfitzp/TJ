@@ -152,21 +152,18 @@ class Equilibrium
   double* ppp;   // Second radial derivative of plasma pressure 
   double* qq;    // First radial derivative of safety-factor times r
   double* qqq;   // Radial derivative of qq times r
-  double* s;     // Magnetic shear:              s  = r q2'/q2
-  double* s2;    // Second-order magnetic shear: s2 = r^2 q2''/q2
-  double* s0;    // Lower order magnetic shear (s0=2 at boundary)
+  double* s;     // Higher-order magnetic shear:  s  = r q2'/q2
+  double* s2;    // Derivative of magnetic shear: s2 = r^2 q2''/q2
+  double* s0;    // Lowest-order magnetic shear (s0=2 at boundary)
   double* S1;    // First shaping function
   double* S2;    // Second shaping function
   double* S3;    // Third shaping function
-  double* S4;    // Fourth shaping function
-  double* P1;    // First profile function:  (2-s) /q2
+  double* P1;    // First profile function: (2-s) /q2
+  double* P1a;   // Lowest-order first profile function:  (2-s0) /q0 
   double* P2;    // Second profile function: r dP1/dr
-  double* P1a;   // Modified first profile function:  (2-s) /q2 (s=2 at boundary)
-  double* P2a;   // Modified second profile function: r dP1a/dr
+  double* P2a;   // Lowest-order second profile function: r dP1a/dr
   double* P3;    // Third profile function
   double* P3a;   // Auxillary third profile function
-  double* P4;    // Fourth profile function
-  double* P4a;   // Auxillary fourth profile function
   double* ff;    // f profile
   double* ggr2;  // <|nabla r|^2> profile
   double* RR2;   // <R^2> profile
@@ -189,8 +186,6 @@ class Equilibrium
   double             betat;     // Plasma toroidal beta
   double             betap;     // Plasma poloidal beta
   double             betaN;     // Plasma normal beta
-  double             betat1;    // Alternative plasma toroidal beta
-  double             betap1;    // Alternative plasma poloidal beta
   
   gsl_spline*        Itspline;  // Interpolated It function
   gsl_spline*        Ipspline;  // Interpolated Ip function

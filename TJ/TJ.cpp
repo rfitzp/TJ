@@ -97,7 +97,7 @@ TJ::TJ ()
   ITERMAX = JSONData["ITERMAX"].get<int>    ();
   FREE    = JSONData["FREE"]   .get<int>    ();
   XiFlag  = JSONData["XiFlag"] .get<int>    ();
-  EQLB    = JSONData["EQLB"]    .get<int>    ();
+  EQLB    = JSONData["EQLB"]   .get<int>    ();
   acc     = JSONData["acc"]    .get<double> ();
   h0      = JSONData["h0"]     .get<double> ();
   hmin    = JSONData["hmin"]   .get<double> ();
@@ -112,9 +112,9 @@ TJ::TJ ()
   Chip    = JSONData["Chip"]   .get<double> ();
   Teped   = JSONData["Teped"]  .get<double> ();
 
-  // ............
+  // ------------
   // Sanity check
-  // ............
+  // ------------
   if (NTOR < 1)
     {
       printf ("TJ: Error - NTOR must be positive\n");
@@ -323,9 +323,8 @@ void TJ::CleanUp ()
   delete[] rr;   delete[] pp;  delete[] ppp; delete[] q; 
   delete[] s;    delete[] s2;  delete[] S1;  delete[] P1;
   delete[] P2;   delete[] P3;  delete[] g2;  delete[] p2;
-  delete[] PsiN; delete[] S3;  delete[] S4;  delete[] s0;
-  delete[] P4;   delete[] P1a; delete[] P2a; delete[] f;
-  delete[] Psi;
+  delete[] PsiN; delete[] S2;  delete[] S3;  delete[] s0;
+  delete[] f;    delete[] Psi;
 
   gsl_spline_free (Pspline);
   gsl_spline_free (fspline);
@@ -338,14 +337,11 @@ void TJ::CleanUp ()
   gsl_spline_free (s2spline);
   gsl_spline_free (s0spline);
   gsl_spline_free (S1spline);
+  gsl_spline_free (S2spline);
   gsl_spline_free (S3spline);
-  gsl_spline_free (S4spline);
   gsl_spline_free (P1spline);
   gsl_spline_free (P2spline);
-  gsl_spline_free (P1aspline);
-  gsl_spline_free (P2aspline);
   gsl_spline_free (P3spline);
-  gsl_spline_free (P4spline);
 
   gsl_interp_accel_free (Pacc);
   gsl_interp_accel_free (facc);
@@ -358,14 +354,11 @@ void TJ::CleanUp ()
   gsl_interp_accel_free (s2acc);
   gsl_interp_accel_free (s0acc);
   gsl_interp_accel_free (S1acc);
+  gsl_interp_accel_free (S2acc);
   gsl_interp_accel_free (S3acc);
-  gsl_interp_accel_free (S4acc);
   gsl_interp_accel_free (P1acc);
   gsl_interp_accel_free (P2acc);
-  gsl_interp_accel_free (P1aacc);
-  gsl_interp_accel_free (P2aacc);
   gsl_interp_accel_free (P3acc);
-  gsl_interp_accel_free (P4acc);
 
   for (int i = 0; i <= Ns; i++)
     {

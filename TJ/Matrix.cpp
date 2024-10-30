@@ -41,14 +41,10 @@ void TJ::GetMatrices (double r, int m, int mp,
   double q   = Getq   (r);
   double s   = Gets   (r);
   double s2  = Gets2  (r);
-  double s0  = Gets0  (r);
   double S1  = GetS1  (r);
   double P1  = GetP1  (r);
   double P2  = GetP2  (r);
-  double P1a = GetP1a (r);
-  double P2a = GetP2a (r);
   double P3  = GetP3  (r);
-  double P4  = GetP4  (r);
 
   double* Hn  = new double[Ns+1];
   double* Hnp = new double[Ns+1];
@@ -89,7 +85,7 @@ void TJ::GetMatrices (double r, int m, int mp,
       double pmm0 = mnq*mnq + mnq * (q /mm) * P2;
       double pmm2 = mnq*mnq * (1.75*r2 - Hn[1] - 3.*r*Hnp[1] + S1
                     + (1./mm2) * ((ntor /mm) * r2 * (2.*P1 + P2) - r2*P1*P1 - r*pp - r2*ppp))
-	            - (mnq /mm) * P4 + 2*r*pp*(1. - q2);
+	            - (mnq /mm) * P3 + 2*r*pp*(1. - q2);
       
       Lmmp = complex<double> (mm2 + eps2 * mm2 * (- 0.75*r2 + Hn[1] + S1) + eps2*nt2*r2, 0.);
       Mmmp = complex<double> (0.,                                                        0.);
@@ -222,20 +218,20 @@ double TJ::Getkm (double r, int m)
   double g2  = Getg2  (r);
   double s   = Gets   (r);
   double S1  = GetS1  (r);
+  double S2  = GetS2  (r);
   double S3  = GetS3  (r);
-  double S4  = GetS4  (r);
   double H1  = GetHn  (1, r);
   double H1p = GetHnp (1, r);
 
   double mm   = double (m);
   double mnq  = mm  - ntor*q;
-  double tms2 = 2. - s + epsa*epsa * S3;
+  double tms2 = 2. - s + epsa*epsa * S2;
 
   if (m == 0)
     {
       return
 	- q*pp /ntor/r - tms2 /ntor/q
-	+ epsa*epsa * tms2 * S4 /ntor/q
+	+ epsa*epsa * tms2 * S3 /ntor/q
 	+ epsa*epsa * q*pp * (2.*g2 + 0.5*r*r + r*r /q/q - 2.*H1 - 3.*r*H1p) /ntor/r;
     }
   else
@@ -243,7 +239,7 @@ double TJ::Getkm (double r, int m)
       return
 	- tms2 /mm
 	- epsa*epsa * (- r*pp) /mm
-	+ epsa*epsa * tms2 * S4 /mm
+	+ epsa*epsa * tms2 * S3 /mm
 	+ epsa*epsa * ntor * r * (- q*pp + r * tms2 * mnq /mm/q) /mm/mm;
     }
 }		     

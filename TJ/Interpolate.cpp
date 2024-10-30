@@ -86,20 +86,20 @@ double TJ::GetS1 (double r)
     return gsl_spline_eval (S1spline, r, S1acc);
 }
 
+double TJ::GetS2 (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (S2spline, 1., S2acc);
+  else
+    return gsl_spline_eval (S2spline, r, S2acc);
+}
+
 double TJ::GetS3 (double r)
 {
   if (r >= 1.)
     return gsl_spline_eval (S3spline, 1., S3acc);
   else
     return gsl_spline_eval (S3spline, r, S3acc);
-}
-
-double TJ::GetS4 (double r)
-{
-  if (r >= 1.)
-    return gsl_spline_eval (S4spline, 1., S4acc);
-  else
-    return gsl_spline_eval (S4spline, r, S4acc);
 }
 
 double TJ::GetP1 (double r)
@@ -118,22 +118,6 @@ double TJ::GetP2 (double r)
     return gsl_spline_eval (P2spline, r, P2acc);
 }
 
-double TJ::GetP1a (double r)
-{
-  if (r >= 1.)
-    return gsl_spline_eval (P1aspline, 1., P1aacc);
-  else
-    return gsl_spline_eval (P1aspline, r, P1aacc);
-}
-
-double TJ::GetP2a (double r)
-{
-  if (r >= 1.)
-    return gsl_spline_eval (P2aspline, 1., P2aacc);
-  else
-    return gsl_spline_eval (P2aspline, r, P2aacc);
-}
-
 double TJ::GetP3 (double r)
 {
   if (r >= 1.)
@@ -141,15 +125,7 @@ double TJ::GetP3 (double r)
   else
     return gsl_spline_eval (P3spline, r, P3acc);
 }
-
-double TJ::GetP4 (double r)
-{
-  if (r >= 1.)
-    return gsl_spline_eval (P4spline, 1., P4acc);
-  else
-    return gsl_spline_eval (P4spline, r, P4acc);
-}
-
+ 
 double TJ::GetHn (int n, double r)
 {
   if (r >= 1.)
@@ -216,9 +192,6 @@ double TJ::GetFlarge (double r, int m)
   double rho   = f /F;
   double dPNdP = 1.;
 
-  // double rho   = 2.*r*r;
-  //double dPNdP = f /2. /r /F;
-
   double mm   = double (m);
   double eps2 = epsa*epsa;
   double r2   = r*r;
@@ -243,9 +216,6 @@ double TJ::GetFsmall (double r, int m)
   // Assume that DCON psi is PsiN
   double rho   = f /F;
   double dPNdP = 1.;
-
-  //double rho   = 2.*r*r;
-  //double dPNdP = f /2. /r /F;
 
   double mm   = double (m);
   double eps2 = epsa*epsa;

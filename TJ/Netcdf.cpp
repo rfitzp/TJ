@@ -36,14 +36,11 @@ void TJ::ReadNetcdf ()
       NcVar s2_x  = dataFile.getVar ("s2");
       NcVar s0_x  = dataFile.getVar ("s0");
       NcVar S1_x  = dataFile.getVar ("S1");
+      NcVar S2_x  = dataFile.getVar ("S2");
       NcVar S3_x  = dataFile.getVar ("S3");
-      NcVar S4_x  = dataFile.getVar ("S4");
       NcVar P1_x  = dataFile.getVar ("P1");
       NcVar P2_x  = dataFile.getVar ("P2");
-      NcVar P1a_x = dataFile.getVar ("P1a");
-      NcVar P2a_x = dataFile.getVar ("P2a");
       NcVar P3_x  = dataFile.getVar ("P3");
-      NcVar P4_x  = dataFile.getVar ("P4");
       NcDim r_d   = r_x.getDim (0);
 
       Nr   = r_d.getSize () - 1;
@@ -60,14 +57,11 @@ void TJ::ReadNetcdf ()
       s2   = new double[Nr+1];
       s0   = new double[Nr+1];
       S1   = new double[Nr+1];
+      S2   = new double[Nr+1];
       S3   = new double[Nr+1];
-      S4   = new double[Nr+1];
       P1   = new double[Nr+1];
       P2   = new double[Nr+1];
-      P1a  = new double[Nr+1];
-      P2a  = new double[Nr+1];
       P3   = new double[Nr+1];
-      P4   = new double[Nr+1];
 
       r_x.  getVar (rr);
       P_x.  getVar (PsiN);
@@ -82,14 +76,11 @@ void TJ::ReadNetcdf ()
       s2_x .getVar (s2);
       s0_x .getVar (s0);
       S1_x .getVar (S1);
+      S2_x .getVar (S2);
       S3_x .getVar (S3);
-      S4_x .getVar (S4);
       P1_x .getVar (P1);
       P2_x .getVar (P2);
-      P1a_x.getVar (P1a);
-      P2a_x.getVar (P2a);
       P3_x .getVar (P3);
-      P4_x .getVar (P4);
 
       NcVar Hn_x  = dataFile.getVar ("Hn");
       NcVar Hnp_x = dataFile.getVar ("Hnp");
