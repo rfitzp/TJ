@@ -92,7 +92,7 @@ void TJ::JumpRational (int jres, double& r, Array<complex<double>,2> YY)
   // ...............................
   // Set rational surface quantities
   // ...............................
-  double mm = double(mres[jres]);
+  double mm = double (mres[jres]);
   double rm = rres[jres];
   double qm = qres[jres];
   int    km = Jres[jres];
@@ -630,8 +630,8 @@ void TJ::JumpRational (int jres, double& r, Array<complex<double>,2> YY)
 	      AL =   (PPsi(km, j) + DEL*(AS + AC + AD*(logd - 1.)))
 		/(1. + nuL * logd - DEL*(lamL*(logd - 1.) + muL*(logd*logd - 2.*logd + 2.) + xiL));
 	    }
-	  
-	  Pi(jres, j) = sqrt (1. /real(Lmat(km, km))) * AL;
+
+	  Pi(jres, j) = pow (rm, nuL) * sqrt ((nuS - nuL) /real(Lmat(km, km))) * AL;
 	  
 	  // ............
 	  // Perform jump
