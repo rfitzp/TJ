@@ -31,7 +31,7 @@ for line in infile:
     d3.append(c6)
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Zero pressure: q_0=1.1: epsilon_a=0.05')
+fig.canvas.manager.set_window_title (r'Circular: Zero pressure: q_0=1.1: epsilon_a=0.05')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 

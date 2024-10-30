@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-infile = open("Test4.out", "r")
+infile = open("Test5.out", "r")
 
 qa = []
 qc = []
@@ -117,7 +117,7 @@ for line in infile:
     E22i.append(c33)
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Circular: Zero pressure: q_0=1.1: epsilon_a=0.2')
+fig.canvas.manager.set_window_title (r'Circular: Zero pressure: q_0=1.1: epsilon_a=0.3')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 
