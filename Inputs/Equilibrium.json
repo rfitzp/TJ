@@ -1,12 +1,20 @@
 {
     "qc":   1.1,   // Safety-factor on magnetic axis
+<<<<<<< Updated upstream
     "qa":   3.65,  // Safety-factor at plasma boundary
+=======
+    "qa":   3.40,   // Safety-factor at plasma boundary
+>>>>>>> Stashed changes
     "pc":   0.1,   // Normalized plasma pressure on magnetic axis 
     "mu":   3.0,   // Pressure peaking parameter
-    "epsa": 0.3,   // Inverse aspect-ratio of plasma
+    "epsa": 0.2,   // Inverse aspect-ratio of plasma
 
     "Hna": [0.3,  0.0, 0.0],   // Horizontal shaping harmonic values at plasma boundary
+<<<<<<< Updated upstream
     "Vna": [0.05, 0.0, 0.0],   // Vertical shaping harmonic values at plasma boundary
+=======
+    "Vna": [0.1,  0.0, 0.0],   // Vertical shaping harmonic values at plasma boundary
+>>>>>>> Stashed changes
 
     "eps": 1.0e-4,  // Distance of closest approach to magnetic axis
     "Ns":  20,      // Number of shaping harmonics included in calculation
