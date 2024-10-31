@@ -2,27 +2,26 @@
 
 // ########################################################################################
 
-// Class to solve inverse aspect-ratio expanded tokamak equilibrium problem.
+// Class to calculate inverse aspect-ratio expanded tokamak equilibrium.
 
 // All lengths (except r) normalized to R_0 (major radius of magnetic axis).
 // All magnetic field-strengths normalized to B_0 (on-axis toroidal magnetic field-strength).
-// Radial coordinate, r, normalized to epsa * R_0, where epsa is inverse-aspect ratio.
-// So r = 0 is magnetic axis and r = 1 is plasma/vacuum interface.
+// Radial coordinate, r, normalized to epsa * R_0, where epsa is inverse-aspect ratio of plasma.
+// So r = 0 on magnetic axis and r = 1 at plasma/vacuum interface.
 
 // Equilibrium magnetic flux-surfaces are defined parametrically as:
 
 // R(r,w) = 1 - epsa r cosw + epsa^2 H1(r) + epsa^2 sum_{n=2,Ns} [Hn(r) cos(n-1)w + Vn(r) sin(n-1)w]
 // Z(r,w) =     epsa r sinw                + epsa^2 sum_{n=2,Ns} [Hn(r) sin(n-1)w - Vn(r) cos(n-1)w]
 //
-// Here, R, phi, Z are cylindrical polar coordinates, epsa is the inverse aspect-ratio, r is a flux-surface label,
-// and w is a poloidal angle. The class also uses the r, theta, phi (PEST) straight field-line coordinate system
-// whose Jacobian is r R^2. 
+// Here, R, phi, Z are cylindrical polar coordinates, r is a flux-surface label, and w is a poloidal angle.
+// The class also uses the r, theta, phi (PEST) straight field-line coordinate system whose Jacobian is r R^2. 
 
-// Edge shaping: Hna = Hn(1), Vna = Vn(1), etc.
+// Edge shaping is specified as: Hna = Hn(1), Vna = Vn(1), etc.
 
 // Equilibrium profiles:
 
-// Lowest order (i.e., cylindrical) safety factor profile is q0(r) = r^2 /f1(r)
+// Lowest-order (i.e., cylindrical) safety-factor profile is q0(r) = r^2 /f1(r)
 // Pressure profile is P(r) = epsa^2 p2(r)
 // 
 //  f1(r) = (1 /nu/qc) [1 - (1 - r^2)^nu] 
@@ -105,7 +104,7 @@ class Equilibrium
   // ------------------
   double         epsa;   // Inverse aspect-ratio of plasma (read from JSON file)
   double         qc;     // Lowest-order safety-factor on magnetic axis (read from JSON file)
-  double         qa;     // Edge safety-factor value (read from JSON file)
+  double         qa;     // Safety-factor at plasma/vacuum interface (read from JSON file)
   double         pc;     // Normalized plasma pressure on magnetic axis (read from JSON file)
   double         mu;     // Pressure peaking parameter (read from JSON file)
   vector<double> Hna;    // H2(1), H3(1), etc (read from JSON file)
@@ -141,7 +140,7 @@ class Equilibrium
   double* p2;    // Plasma pressure profile
   double* f1;    // Lowest-order poloidal flux function
   double* f3;    // Higher-order poloidal flux function
-  double* g2;    // Lowest order toroidal flux function
+  double* g2;    // Lowest-order toroidal flux function
   double* q0;    // Lowest-order safety-factor
   double* q2;    // Higher-order safety-factor
   double* It;    // Toroidal plasma current
@@ -159,7 +158,7 @@ class Equilibrium
   double* S2;    // Second shaping function
   double* S3;    // Third shaping function
   double* P1;    // First profile function: (2-s) /q2
-  double* P1a;   // Lowest-order first profile function:  (2-s0) /q0 
+  double* P1a;   // Lowest-order first profile function: (2-s0) /q0 
   double* P2;    // Second profile function: r dP1/dr
   double* P2a;   // Lowest-order second profile function: r dP1a/dr
   double* P3;    // Third profile function
@@ -248,8 +247,8 @@ class Equilibrium
   // EFIT parameters
   // ---------------
   int     EFIT;     // Flag for calculating EFIT data (read from JSON file)
-  int     NRBOX;    // Number of R gridpoints (read from JSON file)
-  int     NZBOX;    // Number of Z gridpoints (read from JSON file)
+  int     NRBOX;    // Number of R grid-points (read from JSON file)
+  int     NZBOX;    // Number of Z grid-points (read from JSON file)
   double  rc;       // Flux-surfaces calculated accurately up to r = rc (read from JSON file)
   int     NPBOUND;  // Number of boundary points (= NW+1)
   int     NLIMITER; // Number of limiter points (= 5)
@@ -277,8 +276,8 @@ class Equilibrium
   double* ZBOUND;   // Z values on plasma boundary
   double* RLIMITER; // R values on limiter
   double* ZLIMITER; // Z values on limiter
-  double* RGRID;    // R gridpoints
-  double* ZGRID;    // Z gridpoints
+  double* RGRID;    // R grid-points
+  double* ZGRID;    // Z grid-points
   double* PSIRZ;    // PSI evaluated on R, Z grid
   double* rRZ;      // r evaluated on R, Z grid
   double* wRZ;      // w evaluated on R, Z grid

@@ -186,6 +186,19 @@ Equilibrium::Equilibrium ()
       printf ("Equilibrium:: Error - Hna and Van arrays must be the same size\n");
       exit (1);
     }
+
+  // -----------------------------
+  // Output calculation parameters
+  // -----------------------------
+  printf ("\n");
+  printf ("Class EQUILIBRIUM::\n");
+  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
+  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
+  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
+  printf ("Calculation parameters:\n");
+  printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
+	  qc, nu, pc, mu, epsa, Ns, Nr, Nf, Nw);
+
 }
 
 // ##########
@@ -441,15 +454,6 @@ void Equilibrium::Solve ()
   
   double f1a = f1[Nr];
   double H1a = HPfunc(1, Nr);
-  
-  printf ("\n");
-  printf ("Class EQUILIBRIUM::\n");
-  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
-  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
-  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("Calculation parameters:\n");
-  printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
-	  qc, nu, pc, mu, epsa, Ns, Nr, Nf, Nw);
   
   // .........................
   // Rescale shaping functions
@@ -739,13 +743,13 @@ void Equilibrium::Solve ()
  
       for (int n = 2; n <= Ns; n++)
 	{
-	  sum1 += (                  3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
-		     - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i])/2.;
+	  sum1 += (                    3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
+		       - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i]) /2.;
 	  sum2 +=                            HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)
 	          + 2. * double (n*n - 1) * (HPfunc(n, i) * HHfunc(n, i) + VPfunc(n, i) * VVfunc(n, i)) /rr[i]
 	          -      double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i];
 	  sum3 += (                    3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
-		       - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i])/2.;
+		       - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i]) /2.;
 	}
 
       S1[i] = sum1;
