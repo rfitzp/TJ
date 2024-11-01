@@ -131,7 +131,7 @@ void TJ::ReadEquilibrium ()
 	  epsa, Getq (0.), Getq (1.), sa, apol);
   printf ("n = %3d Hna = %10.3e Vna = %10.3e\n", 1, GetHn (1, 1.), 0.);
   for (int n = 2; n <= Ns; n++)
-    if (GetHn (n, 1.) > 1.e-15 || GetVn (n, 1.) > 1.e-15)
+    if (fabs(GetHn (n, 1.)) > 1.e-15 || fabs(GetVn (n, 1.)) > 1.e-15)
       printf ("n = %3d Hna = %10.3e Vna = %10.3e\n", n, GetHn (n, 1.), GetVn (n, 1.));
 }
 

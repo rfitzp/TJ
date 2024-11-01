@@ -186,19 +186,6 @@ Equilibrium::Equilibrium ()
       printf ("Equilibrium:: Error - Hna and Van arrays must be the same size\n");
       exit (1);
     }
-
-  // -----------------------------
-  // Output calculation parameters
-  // -----------------------------
-  printf ("\n");
-  printf ("Class EQUILIBRIUM::\n");
-  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
-  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
-  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("Calculation parameters:\n");
-  printf ("qc  = %10.3e nu = %10.3e pc = %10.3e mu = %10.3e epsa = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
-	  qc, nu, pc, mu, epsa, Ns, Nr, Nf, Nw);
-
 }
 
 // ##########
@@ -213,9 +200,32 @@ Equilibrium::~Equilibrium ()
 // ##################################################################################
 void Equilibrium::Setnu ()
 {
-  LightEquilibrium lightequilibrium;
+  LightEquilibrium lightequilibrium (qc, epsa, pc, Hna, Vna);
       
   lightequilibrium.GetNu (qa, nu);
+}
+
+// #################################################
+// Function to override qc value read from JSON file
+// #################################################
+void Equilibrium::Setqc (double _qc)
+{
+  qc = _qc;
+}
+// #################################################
+// Function to override qa value read from JSON file
+// #################################################
+void Equilibrium::Setqa (double _qa)
+{
+  qa = _qa;
+}
+
+// ###################################################
+// Function to override epsa value read from JSON file
+// ###################################################
+void Equilibrium::Setepsa (double _epsa)
+{
+  epsa = _epsa;
 }
 
 // #################################################
@@ -226,11 +236,69 @@ void Equilibrium::Setpc (double _pc)
   pc = _pc;
 }
 
+// #####################################################
+// Function to override Hna[0] value read from JSON file
+// #####################################################
+void Equilibrium::SetH2 (double _H2)
+{
+  Hna[0] = _H2;
+}
+
+// #####################################################
+// Function to override Vna[0] value read from JSON file
+// #####################################################
+void Equilibrium::SetV2 (double _V2)
+{
+  Vna[0] = _V2;
+}
+// #####################################################
+// Function to override Hna[1] value read from JSON file
+// #####################################################
+void Equilibrium::SetH3 (double _H3)
+{
+  Hna[1] = _H3;
+}
+
+// #####################################################
+// Function to override Vna[1] value read from JSON file
+// #####################################################
+void Equilibrium::SetV3 (double _V3)
+{
+  Vna[1] = _V3;
+}
+// #####################################################
+// Function to override Hna[2] value read from JSON file
+// #####################################################
+void Equilibrium::SetH4 (double _H4)
+{
+  Hna[2] = _H4;
+}
+
+// #####################################################
+// Function to override Vna[2] value read from JSON file
+// #####################################################
+void Equilibrium::SetV4 (double _V4)
+{
+  Vna[2] = _V4;
+}
+
 // #####################################
 // Function to solve equilibrium problem
 // #####################################
 void Equilibrium::Solve ()
 {
+  // .............................
+  // Output calculation parameters
+  // .............................
+  printf ("\n");
+  printf ("Class EQUILIBRIUM::\n");
+  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
+  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
+  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
+  printf ("Calculation parameters:\n");
+  printf ("qc = %10.3e qa = %10.3e epsa = %10.3e pc = %10.3e mu = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
+	  qc, qa, epsa, pc, mu, Ns, Nr, Nf, Nw);
+
   // ...............
   // Allocate memory
   // ...............
@@ -727,7 +795,7 @@ void Equilibrium::Solve ()
 
   delete[] y2; delete[] err2;
 
-  printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It     = %10.3e\n",
+  printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It = %10.3e\n",
 	  q2[0], q0[Nr], q2[Nr], Ip[Nr], It[Nr]);
   printf ("li = %10.3e betat = %10.3e betap = %10.3e betaN = %10.3e\n",
   	  li, betat, betap, betaN);

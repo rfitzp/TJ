@@ -3,7 +3,7 @@
     "qa":   3.5,   // Safety-factor at plasma boundary
     "pc":   0.0,   // Normalized plasma pressure on magnetic axis 
     "mu":   3.0,   // Pressure peaking parameter
-    "epsa": 0.1,   // Inverse aspect-ratio of plasma
+    "epsa": 0.03,  // Inverse aspect-ratio of plasma
 
     "Hna": [0.0, 0.0, 0.0],   // Horizontal shaping harmonic values at plasma boundary
     "Vna": [0.0, 0.0, 0.0],   // Vertical shaping harmonic values at plasma boundary

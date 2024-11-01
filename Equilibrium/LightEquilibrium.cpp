@@ -5,7 +5,7 @@
 // ###########
 // Constructor
 // ###########
-LightEquilibrium::LightEquilibrium ()
+LightEquilibrium::LightEquilibrium (double _qc, double _epsa, double _pc, vector<double>& _Hna, vector<double>& _Vna)
 {
   // -----------------------------------
   // Set adaptive integration parameters
@@ -61,16 +61,25 @@ LightEquilibrium::LightEquilibrium ()
   bb64 = 44275./110592.;
   bb65 =   253./4096.;
 
+  // ----------------------
+  // Set control parameters
+  // ----------------------
+  qc   = _qc;
+  epsa = _epsa;
+  pc   = _pc;
+  for (int i = 0; i < _Hna.size(); i++)
+    {
+      Hna.push_back (_Hna[i]);
+      Vna.push_back (_Vna[i]);
+    }
+  
   // --------------------------------------
   // Read control parameters from JSON file
   // --------------------------------------
   string JSONFilename = "../Inputs/Equilibrium.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  qc      = JSONData["qc"]  .get<double> ();
-  pc      = JSONData["pc"]  .get<double> ();
   mu      = JSONData["mu"]  .get<double> ();
-  epsa    = JSONData["epsa"].get<double> ();
   eps     = JSONData["eps"] .get<double> ();
   Ns      = JSONData["Ns"]  .get<int>    ();
   Nr      = JSONData["Nr"]  .get<int>    ();
@@ -78,15 +87,6 @@ LightEquilibrium::LightEquilibrium ()
   h0      = JSONData["h0"]  .get<double> ();
   hmin    = JSONData["hmin"].get<double> ();
   hmax    = JSONData["hmax"].get<double> ();
-
-  for (const auto& number : JSONData["Hna"])
-    {
-      Hna.push_back (number.get<double> ());
-    }
-  for (const auto& number : JSONData["Vna"])
-    {
-      Vna.push_back (number.get<double> ());
-    }
 
   // ------------
   // Sanity check
@@ -251,8 +251,8 @@ void LightEquilibrium::GetSafety (double _nu, double& qcentral, double& qedge, d
   // ..................
   for (int i = 0; i <= Nr; i++)
     {
-      rr [i] = double (i) /double (Nr);
-      f1 [i] = Getf1  (rr[i]);
+      rr[i] = double (i) /double (Nr);
+      f1[i] = Getf1  (rr[i]);
     }
 
   // ....................................

@@ -316,8 +316,26 @@ class Equilibrium
   // Find nu value that corresponds to edge safety-factor value read from JSON file
   void Setnu ();
 
+  // Override value of qc from JSON file
+  void Setqc (double _qc);
+  // Override value of qa from JSON file
+  void Setqa (double _qa);
+  // Override value of epsa from JSON file
+  void Setepsa (double _epsa);
   // Override value of pc from JSON file
   void Setpc (double _pc);
+  // Override value of Hna[0] from JSON file
+  void SetH2 (double _H2);
+  // Override value of Vna[0] from JSON file
+  void SetV2 (double _V2);
+  // Override value of Hna[1] from JSON file
+  void SetH3 (double _H3);
+  // Override value of Vna[1] from JSON file
+  void SetV3 (double _V3);
+  // Override value of Hna[2] from JSON file
+  void SetH4 (double _H4);
+  // Override value of Vna[2] from JSON file
+  void SetV4 (double _V4);
   
   // Solve problem
   void Solve ();

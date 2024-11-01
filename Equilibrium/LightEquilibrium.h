@@ -93,14 +93,14 @@ class LightEquilibrium
   // ------------------
   // Physics parameters
   // ------------------
-  double epsa;        // Inverse aspect-ratio of plasma (read from JSON file)
-  double qc;          // Lowest-order safety-factor on magnetic axis (read from JSON file)
-  double pc;          // Normalized plasma pressure on magnetic axis (read from JSON file)
+  double epsa;        // Inverse aspect-ratio of plasma (passed from class Equilibrium)
+  double qc;          // Lowest-order safety-factor on magnetic axis (passed from class Equilibrium)
+  double pc;          // Normalized plasma pressure on magnetic axis (passed from class Equilibrium)
   double mu;          // Pressure peaking parameter (read from JSON file)
-  vector<double> Hna; // H2(1), H3(1), etc (read from JSON file)
-  vector<double> Vna; // V2(1), V3(1), etc (read from JSON file)
+  vector<double> Hna; // H2(1), H3(1), etc (passed from class Equilibrium)
+  vector<double> Vna; // V2(1), V3(1), etc (passed from class Equilibrium)
 
-  double qa;          // Target edge safety-factor value
+  double qa;          // Target edge safety-factor value (passed from class Equilibrium)
   double nu;          // Toroidal current peaking parameter
 
   // ----------------------
@@ -173,7 +173,7 @@ class LightEquilibrium
   // .......................
   
   // Constructor
-  LightEquilibrium ();
+  LightEquilibrium (double qc, double epsa, double pc, vector<double>& Hna, vector<double>& Vn);
   // Destructor
   ~LightEquilibrium ();
 
