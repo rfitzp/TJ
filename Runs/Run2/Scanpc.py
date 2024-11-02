@@ -90,7 +90,7 @@ print (f"E22_i = %+10.3e %+10.3e*pc %+10.3e*pc*pc: err = %8.1e" % (c, b, a, calc
 file.close()
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Pressure Gradient Scan')
+fig.canvas.manager.set_window_title (r'Aspect-Ratio Scan')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 

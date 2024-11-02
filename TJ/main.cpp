@@ -54,8 +54,8 @@ int main (int argc, char* argv[])
 	      RunProgram (3, epsa);
 
 	      char command1[100], command2[100], command3[100];
-	      sprintf (command1, "mv ../Outputs/Equilibrium/Equilibrium.nc ../Runs/Equilibrium.%04d.nc\n", i);
-	      sprintf (command2, "mv ../Outputs/TJ/TJ.nc ../Runs/TJ.%04d.nc\n", i);
+	      sprintf (command1, "cp ../Outputs/Equilibrium/Equilibrium.nc ../Runs/Equilibrium.%04d.nc\n", i);
+	      sprintf (command2, "cp ../Outputs/TJ/TJ.nc ../Runs/TJ.%04d.nc\n", i);
 	      //	      sprintf (command3, "mv Plots/Layer.nc Runs/Layer.%04d.nc\n", i);
 
 	      system (command1);
@@ -85,8 +85,8 @@ int main (int argc, char* argv[])
 	      RunProgram (4, pc);
 
 	      char command1[100], command2[100], command3[100];
-	      sprintf (command1, "mv ../Outputs/Equilibrium/Equilibrium.nc ../Runs/Equilibrium.%04d.nc\n", i);
-	      sprintf (command2, "mv ../Outputs/TJ/TJ.nc ../Runs/TJ.%04d.nc\n", i);
+	      sprintf (command1, "cp ../Outputs/Equilibrium/Equilibrium.nc ../Runs/Equilibrium.%04d.nc\n", i);
+	      sprintf (command2, "cp ../Outputs/TJ/TJ.nc ../Runs/TJ.%04d.nc\n", i);
 	      //	      sprintf (command3, "mv Plots/Layer.nc Runs/Layer.%04d.nc\n", i);
 
 	      system (command1);
@@ -97,6 +97,37 @@ int main (int argc, char* argv[])
 	      i++;
 	    }
 	   while (pc < pc_end);
+	}
+      else if ((in_string[0] == 'h') && (in_string[1] == '2'))
+	{
+	  double h2_start, h2_end, d_h2;
+	  printf ("h2_start h2_end d_h2 ?? ");
+	  scanf ("%lf %lf %lf", &h2_start, &h2_end, &d_h2);
+	  if (h2_start < 0. || h2_end < 0.)
+	    {
+	      printf ("Error: Invalid range\n");
+	      exit (1);
+	    }
+
+	  double h2 = h2_start;
+	  int    i  = 0;
+	  do
+	    {
+	      RunProgram (5, h2);
+
+	      char command1[100], command2[100], command3[100];
+	      sprintf (command1, "cp ../Outputs/Equilibrium/Equilibrium.nc ../Runs/Equilibrium.%04d.nc\n", i);
+	      sprintf (command2, "cp ../Outputs/TJ/TJ.nc ../Runs/TJ.%04d.nc\n", i);
+	      //	      sprintf (command3, "mv Plots/Layer.nc Runs/Layer.%04d.nc\n", i);
+
+	      system (command1);
+	      system (command2);
+	      //	      system (command3);
+
+	      h2 += d_h2;
+	      i++;
+	    }
+	  while (h2 < h2_end);
 	}
       else if ((in_string[0] == 'h') && (in_string[1] == 'e'))
 	{

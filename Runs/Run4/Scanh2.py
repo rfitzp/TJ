@@ -26,8 +26,8 @@ eps = []
 
 for eq_file in eq_files:
     ds   = nc.Dataset(eq_file)
-    para = ds['InputParameters']
-    epsa = float(para[3])
+    Hna = ds['Hna']
+    epsa = float(Hna[2])
     eps.append(epsa)
 
 E11r = []
@@ -90,7 +90,7 @@ print (f"E22_i = %+10.3e %+10.3e*pc %+10.3e*pc*pc: err = %8.1e" % (c, b, a, calc
 file.close()
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Pressure Gradient Scan')
+fig.canvas.manager.set_window_title (r'Ellipticity Scan')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 
@@ -100,7 +100,7 @@ plt.xlim (0., 0.3)
 
 plt.plot (eps, E11r, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
 
-plt.xlabel (r'$p_c$',        fontsize = "15")
+plt.xlabel (r'$H_2$',        fontsize = "15")
 plt.ylabel (r"$Re(E_{11})$", fontsize = "15")
 
 plt.subplot (3, 2, 2)
@@ -111,7 +111,7 @@ plt.plot (eps, E11i, color = 'green', linewidth = 1, linestyle = 'dotted', marke
 
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$p_c$',        fontsize = "15")
+plt.xlabel (r'$H_2$',        fontsize = "15")
 plt.ylabel (r"$Im(E_{11})$", fontsize = "15")
 
 plt.subplot (3, 2, 3)
@@ -121,7 +121,7 @@ plt.xlim (0., 0.3)
 plt.plot (eps, E12r, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
 plt.plot (eps, E21r, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 'x', fillstyle = 'none', markersize = 5)
 
-plt.xlabel (r'$p_c$',                    fontsize = "15")
+plt.xlabel (r'$H_2$',                    fontsize = "15")
 plt.ylabel (r"$Re(E_{12}), Re(E_{21})$", fontsize = "15")
 
 plt.subplot (3, 2, 4)
@@ -133,7 +133,7 @@ plt.plot (eps, E21i, color = 'green', linewidth = 1, linestyle = 'dotted', marke
 
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$p_c$',                     fontsize = "15")
+plt.xlabel (r'$H_2$',                     fontsize = "15")
 plt.ylabel (r"$Im(E_{12}), -Im(E_{21})$", fontsize = "15")
 
 plt.subplot (3, 2, 5)
@@ -142,7 +142,7 @@ plt.xlim (0., 0.3)
 
 plt.plot (eps, E22r, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
 
-plt.xlabel (r'$p_c$',        fontsize = "15")
+plt.xlabel (r'$H_2$',        fontsize = "15")
 plt.ylabel (r"$Re(E_{22})$", fontsize = "15")
 
 plt.subplot (3, 2, 6)
@@ -153,7 +153,7 @@ plt.plot (eps, E22i, color = 'green', linewidth = 1, linestyle = 'dotted', marke
 
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$p_c$',        fontsize = "15")
+plt.xlabel (r'$H_2$',        fontsize = "15")
 plt.ylabel (r"$Im(E_{22})$", fontsize = "15")
 
 plt.tight_layout ()

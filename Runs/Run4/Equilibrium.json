@@ -1,6 +1,6 @@
 {
     "qc":   1.1,   // Safety-factor on magnetic axis
-    "qa":   4.5,   // Safety-factor at plasma boundary
+    "qa":   3.5,   // Safety-factor at plasma boundary
     "pc":   0.0,   // Normalized plasma pressure on magnetic axis 
     "mu":   3.0,   // Pressure peaking parameter
     "epsa": 0.1,   // Inverse aspect-ratio of plasma
