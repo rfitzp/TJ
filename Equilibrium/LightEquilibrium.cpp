@@ -61,9 +61,9 @@ LightEquilibrium::LightEquilibrium (double _qc, double _epsa, double _pc, vector
   bb64 = 44275./110592.;
   bb65 =   253./4096.;
 
-  // ----------------------
-  // Set control parameters
-  // ----------------------
+  // ----------------------------------------------------
+  // Set control parameters passed from class Equilibrium
+  // ----------------------------------------------------
   qc   = _qc;
   epsa = _epsa;
   pc   = _pc;
@@ -509,7 +509,6 @@ void LightEquilibrium::GetSafety (double _nu, double& qcentral, double& qedge, d
   qcentral = q2[0];
   qedge    = q2[Nr];
 }
-
 
 // ########################
 // Function to return f1(r)

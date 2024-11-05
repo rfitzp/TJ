@@ -1,0 +1,224 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage {amsmath}
+\usepackage{amssymb}
+\pdfoutput = 1 
+\usepackage {graphicx}
+\newcommand{\bomega}{\mbox{\boldmath$\omega$}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\title{Resistive Wall Mode}
+\author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies,  Department of Physics,  University of Texas at Austin,  Austin TX 78712, USA}\begin{abstract}
+\end{abstract}
+\maketitle
+
+
+\section{Vacuum Solution}
+
+\subsection{Normalization}
+Let all lengths be normalized to the major radius of the magnetic axis, $R_0$. Let all
+magnetic field-strengths be normalized to the toroidal magnetic field-strength at the magnetic axis, $B_0$.
+
+\subsection{Toroidal Coordinates}
+Let $\mu$, $\eta$, $\phi$ be toroidal coordinates such that
+\begin{align}
+R &= \frac{\sinh\mu}{\cosh\mu-\cos\eta},\\[0.5ex]
+Z&=\frac{\sin\eta}{\cosh\mu-\cos\eta},
+\end{align}
+where $R$, $\phi$, $Z$ are cylindrical coordinates. 
+The scale-factors of the toroidal coordinate system are
+\begin{align}
+h_\mu&=h_\eta= \frac{1}{\cosh\mu-\cos\eta}=h,\\[0.5ex]
+h_\phi &= \frac{\sinh\mu}{\cosh\mu-\cos\eta} = h\,\sinh\mu.
+\end{align}
+
+\subsection{Perturbed Magnetic Field}
+The perturbed magnetic field in the vacuum region is written
+\begin{equation}
+{\bf b} = {\rm i}\,\nabla \left[V(\mu,\eta)\,{\rm e}^{-{\rm i}\,n\,\phi}\right],
+\end{equation}
+where
+\begin{align}
+\nabla^2 V &= (z-\cos\eta)^3\left\{\frac{\partial}{\partial z}\!\left[\frac{z^2-1}{z-\cos\eta}\,\frac{\partial V}{\partial z}\right]\right.\nonumber\\[0.5ex]
+&\left.\phantom{=}+\frac{\partial}{\partial \eta}\!\left[\frac{1}{z-\cos\eta}\,\frac{\partial V}{\partial\eta}\right]
+-\frac{n^2\,V}{(z^2-1)\,(z-\cos\eta)}\right\}=0.
+\end{align}
+Here, $z=\cosh\mu$. 
+
+Let
+\begin{align}
+f_z &= z^2-1,\\[0.5ex]
+f_\eta &= (z-\cos\eta)^{1/2}.
+\end{align}
+It follows that
+\begin{align}
+\frac{df_z}{dz} &= 2\,z,\\[0.5ex]
+\frac{\partial f_\eta}{\partial z}&= \frac{1}{2\,f_\eta},\\[0.5ex]
+\frac{\partial f_\eta}{\partial\eta} &= \frac{\sin\eta}{2\,f_\eta}.
+\end{align}
+
+Let
+\begin{equation}
+V(z,\eta)= \sum_m f_\eta\,F_m(z)\,{\rm e}^{-{\rm i}\,m\,\eta}.
+\end{equation}
+Then, taking the sum and eikonal as read, and letting $'=d/dz$, we get 
+\begin{align}
+\frac{\partial V}{\partial z} &=\frac{F_m}{2\,f_\eta} + f_\eta\,F_m',\\[0.5ex]
+\frac{\partial}{\partial z}\!\left(\frac{f_z}{f_\eta^{\,2}}\,\frac{\partial V}{\partial z}\right)&=
+\frac{\partial}{\partial z}\!\left(\frac{f_z\,F_m}{2\,f_\eta^{\,3}}+ \frac{f_z\,F_m'}{f_\eta}\right)
+= \frac{z\,F_m}{f_\eta^{\,3}} -\frac{3\,f_z\,F_m}{4\,f_\eta^{\,5}}+\frac{f_z\,F_m'}{2\,f_\eta^{\,3}}
++\frac{2\,z\,F_m'}{f_\eta}- \frac{f_z\,F_m'}{2\,f_\eta^{\,3}}
++\frac{f_z\,F_m''}{f_\eta}\nonumber\\[0.5ex]
+&=\frac{z\,F_m}{f_\eta^{\,3}} -\frac{3\,(z^2-1)\,F_m}{4\,f_\eta^{\,5}}
++\frac{2\,z\,F_m'}{f_\eta}
++\frac{(z^2-1)\,F_m''}{f_\eta},\\[0.5ex]
+\frac{\partial V}{\partial \eta} &=\frac{\sin\eta\,F_m}{2\,f_\eta} -{\rm i}\,m f_\eta\,F_m,\\[0.5ex]
+\frac{\partial}{\partial \eta}\!\left(\frac{1}{f_\eta^{\,2}}\,\frac{\partial V}{\partial \eta}\right)&=
+\frac{\partial}{\partial \eta}\!\left(\frac{\sin\eta\,F_m}{2\,f_\eta^{\,3}}-\frac{{\rm i}\,m\,F_m}{f_\eta}\right)=
+\frac{\cos\eta\,F_m}{2\,f_\eta^{\,3}}- \frac{3\,\sin^2\eta\,F_m}{4\,f_\eta^{\,5}}-\frac{{\rm i}\,m\,\sin\eta\,F_m}{2\,f_\eta^{\,3}}\nonumber\\[0.5ex]
+&\phantom{=} + \frac{{\rm i}\,m\,\sin\eta\,F_m}{2\,f_\eta^{\,3}} - \frac{m^2\,F_m}{f_\eta}\nonumber\\[0.5ex]
+&=\frac{\cos\eta\,F_m}{2\,f_\eta^{\,3}}- \frac{3\,\sin^2\eta\,F_m}{4\,f_\eta^{\,5}} - \frac{m^2\,F_m}{f_\eta},\\[0.5ex]
+-\frac{n^2\,V}{f_z\,f_\eta^{\,2}}&= -\frac{n^2\,F_m}{(z^2-1)\,f_\eta}.
+\end{align}
+Thus,
+\begin{align}
+0&=\frac{\partial}{\partial z}\!\left(\frac{f_z}{f_\eta^{\,2}}\,\frac{\partial V}{\partial z}\right)+ \frac{\partial}{\partial \eta}\!\left(\frac{1}{f_\eta^{\,2}}\,\frac{\partial V}{\partial \eta}\right)
+-\frac{n^2\,V}{f_z\,f_\eta^{\,2}}\nonumber\\[0.5ex]&
+= \frac{z\,F_m}{f_\eta^{\,3}} -\frac{3\,(z^2-1)\,F_m}{4\,f_\eta^{\,5}}
++\frac{2\,z\,F_m'}{f_\eta}
++\frac{(z^2-1)\,F_m''}{f_\eta}\nonumber\\[0.5ex]
+&\phantom{=}+\frac{\cos\eta\,F_m}{2\,f_\eta^{\,3}}- \frac{3\,\sin^2\eta\,F_m}{4\,f_\eta^{\,5}} - \frac{m^2\,F_m}{f_\eta} -\frac{n^2\,F_m}{(z^2-1)\,f_\eta}\nonumber\\[0.5ex]
+&=\frac{1}{f_\eta}\left[(z^2-1)\,F_m'' + 2\,z\,F_m' + \left(\frac{1}{4}-m^2\right)\!F_m - \frac{n^2\,F_m}{z^2-1}\right].
+\end{align}
+The most general solution of the previous equation is
+\begin{equation}
+F_m(z) = p_m\,P_{m-1/2}^{\,n}(z)+q_m\,Q_{m-1/2}^{\,n}(z),
+\end{equation}
+where $p_m$ and $q_m$ are arbitrary complex coefficients. 
+Note that
+\begin{align}
+P_{-m-1/2}^{\,n}(z) &= P_{m-1/2}^{\,n}(z),\\[0.5ex]
+Q_{-m-1/2}^{\,n}(z) &= Q_{m-1/2}^{\,n}(z),
+\end{align}
+so 
+\begin{equation}
+F_m(z) = p_m\,P_{|m|-1/2}^{\,n}(z)+q_m\,Q_{|m|-1/2}^{\,n}(z),
+\end{equation}
+
+
+\subsection{Toroidal Electromagnetic Angular Momentum Flux}
+The outward flux of toroidal angular momentum across a constant-$z$ surface is
+\begin{align}
+T_\phi(z) = -\oint\oint {\cal J} \,b_\phi\,b^{\,\mu}\,d\eta\,d\phi,
+\end{align}
+where
+\begin{equation}
+{\cal J} = (\nabla\mu\times\nabla\eta\cdot\nabla\phi)^{-1} = h^3\,\sinh\mu.
+\end{equation}
+Now,
+\begin{align}
+b^{\,\mu} &= {\bf b}\cdot\nabla\mu = {\rm i}\,\frac{\partial V}{\partial \mu}\,|\nabla\mu|^2 = {\rm i}\,\frac{\sinh\mu}{h^2}\,\frac{\partial V}{\partial z},\\[0.5ex]
+b^{\,\phi}&= {\cal J}\,\nabla\mu\times\nabla \eta\cdot\nabla V = n\,V,
+\end{align}
+so
+\begin{align}
+T_\phi(z) &= -\frac{{\rm i}\,n\,\pi}{2}\oint \frac{z^2-1}{z-\cos\eta}\left(\frac{\partial V}{\partial z}\,V^\ast -\frac{\partial V^{\ast}}{\partial z}\,V\right)d\eta\nonumber\\[0.5ex]
+&= - {\rm i}\,n\,\pi^2\sum_{m}\, (z^2-1)\left(\frac{dF_m}{dz}\,F_{m}^\ast -\frac{dF_m^\ast}{dz}\,F_{m}\right)\nonumber\\[0.5ex]
+&= -{\rm i}\,n\,\pi^2\sum_{m}(p_m\,q_m^\ast-q_m\,p_m^{\ast})\,(z^2-1)\left(\frac{dP_{|m|-1/2}^{\,n}}{dz}\,Q_{|m|-1/2}^{\,n}- \frac{dQ_{|m|-1/2}^{\,n}}{dz}\,P_{|m|-1/2}^{\,n}\right)\nonumber\\[0.5ex]
+& ={\rm i}\,n\,\pi^2\sum_{m}(p_m\,q_m^\ast-q_m\,p_m^{\ast})\,(z^2-1)\,{\cal W}[P_{|m|-1/2}^{\,n},Q_{|m|-1/2}^{\,n}].
+\end{align}
+But,
+\begin{equation}
+{\cal W}[P_{|m|-1/2}^{\,n},Q_{|m|-1/2}^{\,n}]= \frac{(-1)^n}{1-z^2}\,\frac{\Gamma(1/2+n+|m|)}{\Gamma(1/2-n+m)},
+\end{equation}
+so
+\begin{equation}
+T_\phi(z) = 2\pi^2\,n\,(-1)^n\,\frac{\Gamma(1/2+n+|m|)}{\Gamma(1/2-n+m)}\,{\rm Im}(p_m\,q_m^\ast).
+\end{equation}
+
+\section{Wall Physics}
+\subsection{Resistive Wall}
+Let the resistive wall extend from $z=z_w$ to $z=z_w-d_w$, where $d_w$ is a constant. The physical wall thickness is
+\begin{equation}
+d(\eta)= \frac{d_w}{|\nabla z|} = \frac{h_w(\eta)\,d_w}{(z_w^2-1)^{1/2}},
+\end{equation}
+where
+\begin{equation}
+h_w(\eta) = \frac{1}{z_w-\cos\eta}.
+\end{equation}
+Let the conductivity of the wall material vary as
+\begin{equation}
+\sigma(\eta) = \frac{\sigma_w\,(z_w^{\,2}-1)}{h_w^2(\eta)},
+\end{equation}
+where $\sigma_w$ is a constant. It follows that $\sigma\,d^{\,2}=\sigma_w\,d_w^{\,2}$. 
+
+\subsection{Wall Matching Conditions}
+If we write
+\begin{equation}
+{\bf b} = \nabla\times{\bf A}
+\end{equation}
+in the vacuum region then the boundary conditions at the wall are 
+\begin{align}
+\left.{\bf n}_w\times {\bf A}\right|_{z_{w-}} &= \frac{1}{\cosh\lambda}\left.{\bf n}_w\times {\bf A}\right|_{z_{w+}} \\[0.5ex]
+\left.{\bf n}_w\times (\nabla\times{\bf A})\right|_{z_{w+}}&= -\frac{\lambda\,\tanh\lambda\,(z_w^2-1)^{1/2}}{h_w\,d_w}\,\left.{\bf n}_w\times({\bf n}_w\times{\bf A})\right|_{z_{w+}}+
+\frac{\left.{\bf n}_w\times (\nabla\times{\bf A})\right|_{z_{w-}}}{\cosh\lambda},\\[0.5ex]
+\lambda &=\sqrt{\mu_0\,R_0^{\,2}\,\sigma_w\,d_w^{\,2}\,\gamma},
+\end{align}
+where $\gamma$ is the growth-rate. Here, ${\bf n}_w= -{\bf e}_\mu$ is an outward unit normal vector to the wall. Now,
+\begin{align}
+\nabla\times{\bf A} &= \frac{1}{h^2\,\sinh\mu}\left(\frac{\partial \hat{A}_\phi}{\partial \eta}-\frac{\partial\hat{A}_\eta}{\partial\phi}\right){\bf e}_\mu
++  \frac{1}{h^2\,\sinh\mu}\left(\frac{\partial \hat{A}_\mu}{\partial \phi}-\frac{\partial\hat{A}_\phi}{\partial\mu}\right){\bf e}_\eta\nonumber\\[0.5ex]
+&\phantom{=}
++\frac{1}{h^2}\left(\frac{\partial \hat{A}_\eta}{\partial \mu}-\frac{\partial\hat{A}_\mu}{\partial\eta}\right){\bf e}_\phi,
+\end{align}
+where
+\begin{align}
+\hat{A}_\mu &= h\,A_\mu,\\[0.5ex]
+\hat{A}_\eta&= h\,A_\eta,\\[0.5ex]
+\hat{A}_\phi &= h\,\sinh\mu\,A_\phi.
+\end{align}
+Furthermore,
+\begin{align}
+{\bf n}_w\times {\bf A} &= -{\bf e}_\mu\times {\bf A} = A_\phi\,{\bf e}_\eta - A_\eta\,{\bf e}_\phi,\\[0.5ex]
+{\bf n}_w\times ({\bf n}_w\times {\bf A})&= -{\bf e}_\mu\times ({\bf n}_w\times {\bf A} )= -A_\eta\,{\bf e}_\eta-A_\phi\,{\bf e}_\phi,\\[0.5ex]
+{\bf n}_w\times (\nabla\times {\bf A}) &= -{\bf e}_\mu\times(\nabla\times {\bf A}) = \frac{1}{h^2}\left(\frac{\partial \hat{A}_\eta}{\partial \mu}-\frac{\partial\hat{A}_\mu}{\partial\eta}\right)\,{\bf e}_\eta- \frac{1}{h^2\,\sinh\mu}\left(\frac{\partial \hat{A}_\mu}{\partial \phi}-\frac{\partial\hat{A}_\phi}{\partial\mu}\right){\bf e}_\phi.
+\end{align}
+Thus, the wall matching conditions become
+\begin{align}
+\left.\hat{A}_\eta\right|_{z_{w-}}&= \frac{1}{\cosh\lambda}\left.\hat{A}_\eta\right|_{z_{w+}},\\[0.5ex]
+\left.\hat{A}_\phi\right|_{z_{w+}}&= \frac{1}{\cosh\lambda}\,\left.\hat{A}_\phi\right|_{z_{w-}},\\[0.5ex]
+\left(\frac{\partial \hat{A}_\eta}{\partial \mu}-\frac{\partial\hat{A}_\mu}{\partial\eta}\right)_{z_{w+}}
+&=\frac{\lambda\,\tanh\lambda\,(z_w^{\,2}-1)^{1/2}}{d_w}\left.\hat{A}_\eta\right|_{z_{w+}} + \frac{1}{\cosh\lambda}\left(\frac{\partial \hat{A}_\eta}{\partial \mu}-\frac{\partial\hat{A}_\mu}{\partial\eta}\right)_{z_{w-}},\\[0.5ex]
+\left(\frac{\partial \hat{A}_\mu}{\partial \phi}-\frac{\partial\hat{A}_\phi}{\partial\mu}\right)_{z_{w+}}&= -\frac{\lambda\,\tanh\lambda\,(z_w^{\,2}-1)^{1/2}}{d_w}\left.\hat{A}_\phi\right|_{\mu_{w+}}+\frac{1}{\cosh\lambda} \left(\frac{\partial \hat{A}_\mu}{\partial \phi}-\frac{\partial\hat{A}_\phi}{\partial\mu}\right)_{z_{w-}}.
+\end{align}
+
+Let
+\begin{equation}
+C(z,\eta,\phi) = \frac{\partial \hat{A}_\eta}{\partial \phi}- \frac{\partial \hat{A}_\phi}{\partial \eta}.
+\end{equation}
+The wall matching conditions reduce to 
+\begin{align}
+C(z_{w-},\eta,\phi) &= \frac{1}{\cosh\lambda}\,C(z_{w+},\eta,\phi),\\[0.5ex]
+\frac{\partial C(z_{w+},\eta,\phi) }{\partial z}& = \frac{\lambda\,\tanh\lambda}{d_w}\,C(z_{w+},\eta,\phi) +\frac{1}{\cosh\lambda}\,\frac{\partial C(z_{w-},\eta,\phi) }{\partial z}.
+\end{align}
+However, if
+\begin{equation}
+{\bf b} = {\rm i}\,\nabla V =\nabla\times {\bf A}
+\end{equation}
+then
+\begin{equation}
+C = -{\rm i}\,h\,\sinh\mu\,\frac{\partial V}{\partial \mu} = -{\rm i}\,h\,(z^2-1)\,\frac{\partial V}{\partial z}.
+\end{equation}
+Thus,
+\begin{align}
+C &= -{\rm i}\,\frac{z^2-1}{z-\cos\eta}\sum_m\left[\frac{F_m}{2\,(z-\cos\eta)^{1/2}} + (z-\cos\eta)^{1/2}\,\frac{dF_m}{dz}\right]{\rm e}^{-{\rm i}\,(m\,\eta+n\,\phi)},\\[0.5ex]
+\frac{\partial C}{\partial z} &= -{\rm i}\sum_m\left[\frac{(3/4)\,\sin^2\eta}{(z-\cos\eta)^{5/4}}-\frac{(1/2)\,\cos\eta}{(z-\cos\eta)^{3/2}}+ \frac{m^2+n^2/(z^2-1)}{(z-\cos\eta)^{1/2}}\right]
+F_m\,{\rm e}^{-{\rm i}\,(m\,\eta+n\,\phi)}.
+\end{align}
+It follows that
+\begin{align}
+\sum_m\left[\frac{F_m}{2}+(z-\cos\eta)\,\frac{dF_m}{dz}\right]{\rm e}^{-{\rm i}\,m\,\eta}
+\end{align}
+\end{document}
