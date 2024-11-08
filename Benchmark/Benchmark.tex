@@ -73,7 +73,7 @@ Finally, let
 \hat{\mit\Gamma}_{ij}&= f_{S\,j}^{\,-1}\,{\mit\Gamma}_{ij}\,f_{L\,j'},\\[0.5ex]
 \hat{\mit\Delta}_{ij}&= f_{S\,j}^{\,-1}\,{\mit\Delta}_{ij}\,f_{L\,j'},
 \end{align}
-where $A_{ij}$, $B_{ij}$, $\Gamma_{ij}$, and $\Delta_{ij}$ are the elements of the outer matching matrices
+where $A_{ij}$, $B_{ij}$, ${\mit\Gamma}_{ij}$, and ${\mit\Delta}_{ij}$ are the elements of the outer matching matrices
 calculated by STRIDE, whereas the hatted quantities are the  corresponding matching matrices calculated by TJ. 
 Equations~(77) and (100) of Ref.~\onlinecite{pletzer} imply that
 \begin{align}
@@ -86,6 +86,17 @@ in Ref.~\onlinecite{rf}, the symmetries can also be related to the conservation 
 symmetries have to be respected by a toroidal tearing mode code, otherwise the code would predict that an isolated 
 plasma could exert a net toroidal electromagnetic torque on itself. Note that, in the cylindrical limit, $\hat{\mit\Delta}_{jj}$ is equivalent to $r_s\,{\mit\Delta}'$: i.e.,
 the tearing stability index normalized to the minor radius of the rational surface. 
+
+\section{TJ Circular Equilibrium}
+The TJ circular equilibrium is characterized by a pressure profile
+\begin{equation}
+p(r)= \beta_0\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p},
+\end{equation}
+and a parallel current profile, $\sigma={\bf J}\cdot{\bf B}/B^2$, 
+\begin{equation}
+\sigma(r) = \sigma_0\left[1-\left(\frac{r}{a}\right)^2\right]^{p_\sigma}.
+\end{equation}
+These profiles differ from the existing {\tt lar} module in STRIDE because of the $(r/a)^2$, rather than $(r/a)$, factors in the profiles.
 
 \section{Benchmark Tests}
 \subsection{Single Rational Surface}
