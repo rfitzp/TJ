@@ -8,7 +8,7 @@
 
 \begin{document}
 
-\title{Resistive Wall Mode}
+\title{Resistive Wall}
 \author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
 \affiliation{Institute for Fusion Studies,  Department of Physics,  University of Texas at Austin,  Austin TX 78712, USA}\begin{abstract}
 \end{abstract}
@@ -17,30 +17,35 @@
 \section{Vacuum Solution}
 
 \subsection{Normalization}
-Let all lengths be normalized to the major radius of the magnetic axis, $R_0$. Let all
+Let all lengths be normalized to the major radius of the  axisymmetric plasma equilibrium's magnetic axis, $R_0$. Let all
 magnetic field-strengths be normalized to the toroidal magnetic field-strength at the magnetic axis, $B_0$.
 
 \subsection{Toroidal Coordinates}
-Let $\mu$, $\eta$, $\phi$ be toroidal coordinates such that
+Let $\mu$, $\eta$, $\phi$ be right-handed toroidal coordinates defined such that
 \begin{align}
 R &= \frac{\sinh\mu}{\cosh\mu-\cos\eta},\\[0.5ex]
 Z&=\frac{\sin\eta}{\cosh\mu-\cos\eta},
 \end{align}
-where $R$, $\phi$, $Z$ are cylindrical coordinates. 
+where $R$, $\phi$, $Z$ are right-handed cylindrical coordinates whose symmetry axis corresponds to that of the plasma equilibrium. 
+Note that $(\nabla R\times \nabla\phi\cdot\nabla Z)^{-1}=R$. 
 The scale-factors of the toroidal coordinate system are
 \begin{align}
-h_\mu&=h_\eta= \frac{1}{\cosh\mu-\cos\eta}=h,\\[0.5ex]
+h_\mu&=h_\eta= \frac{1}{\cosh\mu-\cos\eta}\equiv h,\\[0.5ex]
 h_\phi &= \frac{\sinh\mu}{\cosh\mu-\cos\eta} = h\,\sinh\mu.
 \end{align}
+Moreover, 
+\begin{equation}
+{\cal J}' \equiv (\nabla\mu\times\nabla\eta\cdot\nabla\phi)= h^3\,\sinh\mu.
+\end{equation}
 
 \subsection{Perturbed Magnetic Field}
-The perturbed magnetic field in the vacuum region is written
+The curl-free perturbed magnetic field in the vacuum region is written
 \begin{equation}
 {\bf b} = {\rm i}\,\nabla \left[V(\mu,\eta)\,{\rm e}^{-{\rm i}\,n\,\phi}\right],
 \end{equation}
-where
-\begin{align}
-\nabla^2 V &= (z-\cos\eta)^3\left\{\frac{\partial}{\partial z}\!\left[\frac{z^2-1}{z-\cos\eta}\,\frac{\partial V}{\partial z}\right]\right.\nonumber\\[0.5ex]
+where where the toroidal mode number, $n$, is a positive integer. Given that $\nabla\cdot{\bf b}=0$, we deduce that 
+\begin{align}\label{e6}
+\nabla^2 V &\equiv (z-\cos\eta)^3\left\{\frac{\partial}{\partial z}\!\left[\frac{z^2-1}{z-\cos\eta}\,\frac{\partial V}{\partial z}\right]\right.\nonumber\\[0.5ex]
 &\left.\phantom{=}+\frac{\partial}{\partial \eta}\!\left[\frac{1}{z-\cos\eta}\,\frac{\partial V}{\partial\eta}\right]
 -\frac{n^2\,V}{(z^2-1)\,(z-\cos\eta)}\right\}=0.
 \end{align}
@@ -49,20 +54,19 @@ Here, $z=\cosh\mu$.
 Let
 \begin{align}
 f_z &= z^2-1,\\[0.5ex]
-f_\eta &= (z-\cos\eta)^{1/2}.
+f_\eta &= (z-\cos\eta)^{1/2},
 \end{align}
-It follows that
+which implies that
 \begin{align}
 \frac{df_z}{dz} &= 2\,z,\\[0.5ex]
 \frac{\partial f_\eta}{\partial z}&= \frac{1}{2\,f_\eta},\\[0.5ex]
-\frac{\partial f_\eta}{\partial\eta} &= \frac{\sin\eta}{2\,f_\eta}.
+\frac{\partial f_\eta}{\partial\eta} &= \frac{\sin\eta}{2\,f_\eta}
 \end{align}
-
-Let
+Suppose that
 \begin{equation}
-V(z,\eta)= \sum_m f_\eta\,U_m(z)\,{\rm e}^{-{\rm i}\,m\,\eta}.
+V(z,\eta)= \sum_m (z-\cos\eta)^{1/2}\,U_m(z)\,{\rm e}^{-{\rm i}\,m\,\eta}.
 \end{equation}
-Then, taking the sum and eikonal as read, and letting $'=d/dz$, we get 
+Taking the sum and eikonal as read, and letting $'=d/dz$, we get 
 \begin{align}
 \frac{\partial V}{\partial z} &=\frac{U_m}{2\,f_\eta} + f_\eta\,U_m',\\[0.5ex]
 \frac{\partial}{\partial z}\!\left(\frac{f_z}{f_\eta^{\,2}}\,\frac{\partial V}{\partial z}\right)&=
@@ -81,7 +85,7 @@ Then, taking the sum and eikonal as read, and letting $'=d/dz$, we get
 &=\frac{\cos\eta\,U_m}{2\,f_\eta^{\,3}}- \frac{3\,\sin^2\eta\,U_m}{4\,f_\eta^{\,5}} - \frac{m^2\,U_m}{f_\eta},\\[0.5ex]
 -\frac{n^2\,V}{f_z\,f_\eta^{\,2}}&= -\frac{n^2\,U_m}{(z^2-1)\,f_\eta}.
 \end{align}
-Thus,
+Thus, Eq.~(\ref{e6}) becomes 
 \begin{align}
 0&=\frac{\partial}{\partial z}\!\left(\frac{f_z}{f_\eta^{\,2}}\,\frac{\partial V}{\partial z}\right)+ \frac{\partial}{\partial \eta}\!\left(\frac{1}{f_\eta^{\,2}}\,\frac{\partial V}{\partial \eta}\right)
 -\frac{n^2\,V}{f_z\,f_\eta^{\,2}}\nonumber\\[0.5ex]&
@@ -93,86 +97,65 @@ Thus,
 \end{align}
 The most general solution of the previous equation is
 \begin{equation}
-U_m(z) = p_m\,P_{m-1/2}^{\,n}(z)+q_m\,Q_{m-1/2}^{\,n}(z),
+U_m(z) = p_m\,\hat{P}_{|m|-1/2}^{\,n}(z)+q_m\,\hat{Q}_{m-1/2}^{\,n}(z),
 \end{equation}
-where $p_m$ and $q_m$ are arbitrary complex coefficients. 
-Note that
-\begin{align}
-P_{-m-1/2}^{\,n}(z) &= P_{m-1/2}^{\,n}(z),\\[0.5ex]
-Q_{-m-1/2}^{\,n}(z) &= Q_{m-1/2}^{\,n}(z),
-\end{align}
-so 
-\begin{equation}
-U_m(z) = p_m\,P_{|m|-1/2}^{\,n}(z)+q_m\,Q_{|m|-1/2}^{\,n}(z),
-\end{equation}
-
-Let
-\begin{align}
-p_m&= \bar{p}_m\,\hat{p}_m,\\[0.5ex]
-q_m &= \bar{q}_m\,\hat{q}_m,
-\end{align}
 where
 \begin{align}
-\bar{p}_{m\neq 0}&= \cos(|m|\,\pi)\,\frac{\sqrt{\pi}\,\Gamma(|m|+1/2-n)\,\epsilon^{\,|m|}}{2^{|m|-1/2}\,|m|!},\\[0.5ex]
-\bar{q}_{m\neq 0} &= \cos(n\,\pi)\,\cos(|m|\,\pi)\,\frac{2^{|m|+1/2}\,(|m|-1)!\,\epsilon^{-|m|}}{\sqrt{\pi}\,\Gamma(|m|+1/2+n)},\\[0.5ex]
-\bar{p}_0&= \frac{\sqrt{\pi}\,\Gamma(1/2-n)}{\sqrt{2}},\\[0.5ex]
-\bar{q}_0&= \cos(n\,\pi)\,\frac{\sqrt{2}}{\sqrt{\pi}\,\Gamma(n+1/2)}.
+\hat{P}_{|m|-1/2}^{\,n}(z) &= \cos(|m|\,\pi)\,\frac{\sqrt{\pi}\,\Gamma(|m|+1/2-n)\,\epsilon^{\,|m|}}{2^{\,|m|-1/2}\,|m|!}\,P_{|m|-1/2}^{\,n}(z),\\[0.5ex]
+\hat{Q}_{|m|-1/2}^{\,n}(z)&= \cos(n\,\pi)\,\cos(|m|\,\pi)\,\frac{2^{\,|m|-1/2}\,|m|!\,\epsilon^{-|m|}}{\sqrt{\pi}\,\Gamma(|m|+1/2+n)}\,Q_{|m|-1/2}^{\,n}.
+\end{align}
+Here,  $\epsilon$ is the inverse-aspect ratio of the plasma equilibrium, and  $p_m$ and $q_m$ are arbitrary complex coefficients. 
+Moreover, we have made use of the fact that 
+\begin{align}
+P_{-m-1/2}^{\,n}(z) &= P_{m-1/2}^{\,n}(z),\\[0.5ex]
+Q_{-m-1/2}^{\,n}(z) &= Q_{m-1/2}^{\,n}(z).
 \end{align}
 
 \subsection{Toroidal Electromagnetic Angular Momentum Flux}
 The outward flux of toroidal angular momentum across a constant-$z$ surface is
 \begin{align}
-T_\phi(z) = -\oint\oint {\cal J} \,b_\phi\,b^{\,\mu}\,d\eta\,d\phi,
+T_\phi(z) = -\oint\oint {\cal J}' \,b_\phi\,b^{\,\mu}\,d\eta\,d\phi.
 \end{align}
-where
-\begin{equation}
-{\cal J} = (\nabla\mu\times\nabla\eta\cdot\nabla\phi)^{-1} = h^3\,\sinh\mu.
-\end{equation}
 Now,
 \begin{align}
-b^{\,\mu} &= {\bf b}\cdot\nabla\mu = {\rm i}\,\frac{\partial V}{\partial \mu}\,|\nabla\mu|^2 = {\rm i}\,\frac{\sinh\mu}{h^2}\,\frac{\partial V}{\partial z},\\[0.5ex]
-b^{\,\phi}&= {\cal J}\,\nabla\mu\times\nabla \eta\cdot\nabla V = n\,V,
+b^{\,\mu} &\equiv {\bf b}\cdot\nabla\mu = {\rm i}\,\frac{\partial V}{\partial \mu}\,|\nabla\mu|^2 = {\rm i}\,\frac{\sinh\mu}{h^2}\,\frac{\partial V}{\partial z},\\[0.5ex]
+b^{\,\phi}&\equiv {\cal J}'\,\nabla\mu\times\nabla \eta\cdot\nabla V = n\,V,
 \end{align}
 so
 \begin{align}
 T_\phi(z) &= -\frac{{\rm i}\,n\,\pi}{2}\oint \frac{z^2-1}{z-\cos\eta}\left(\frac{\partial V}{\partial z}\,V^\ast -\frac{\partial V^{\ast}}{\partial z}\,V\right)d\eta\nonumber\\[0.5ex]
-&= - {\rm i}\,n\,\pi^2\sum_{m}\, (z^2-1)\left(\frac{dU_m}{dz}\,F_{m}^\ast -\frac{dU_m^\ast}{dz}\,F_{m}\right)\nonumber\\[0.5ex]
-&= -{\rm i}\,n\,\pi^2\sum_{m}(p_m\,q_m^\ast-q_m\,p_m^{\ast})\,(z^2-1)\left(\frac{dP_{|m|-1/2}^{\,n}}{dz}\,Q_{|m|-1/2}^{\,n}- \frac{dQ_{|m|-1/2}^{\,n}}{dz}\,P_{|m|-1/2}^{\,n}\right)\nonumber\\[0.5ex]
-& ={\rm i}\,n\,\pi^2\sum_{m}(p_m\,q_m^\ast-q_m\,p_m^{\ast})\,(z^2-1)\,{\cal W}[P_{|m|-1/2}^{\,n},Q_{|m|-1/2}^{\,n}].
+&= - {\rm i}\,n\,\pi^2\sum_{m}\, (z^2-1)\left(\frac{dU_m}{dz}\,U_{m}^\ast -\frac{dU_m^\ast}{dz}\,U_{m}\right)\nonumber\\[0.5ex]
+&= -{\rm i}\,n\,\pi^2\sum_{m}(p_m\,q_m^\ast-q_m\,p_m^{\ast})\,(z^2-1)\left(\frac{d\hat{P}|_{|m|-1/2}^{\,n}}{dz}\,\hat{Q}_{|m|-1/2}^{\,n}- \frac{d\hat{Q}_{|m|-1/2}^{\,n}}{dz}\,\hat{P}_{|m|-1/2}^{\,n}\right)\nonumber\\[0.5ex]
+& ={\rm i}\,n\,\pi^2\sum_{m}(p_m\,q_m^\ast-q_m\,p_m^{\ast})\,(z^2-1)\,{\cal W}(\hat{P}_{|m|-1/2}^{\,n},\hat{Q}_{|m|-1/2}^{\,n}).
 \end{align}
 But,
-\begin{equation}
-{\cal W}[P_{|m|-1/2}^{\,n},Q_{|m|-1/2}^{\,n}]= \frac{\cos(n\,\pi)}{1-z^2}\,\frac{\Gamma(|m|+1/2+n)}{\Gamma(|m|+1/2-n)},
-\end{equation}
+\begin{align}
+{\cal W}(\hat{P}_{|m|-1/2}^{\,n},\hat{Q}_{|m|-1/2}^{\,n})&= 
+\cos(n\,\pi) \,\frac{\Gamma(|m|+1/2-n)}{\Gamma(|m|+1/2+n)}\,{\cal W}(P_{|m|-1/2}^{\,n},Q_{|m|-1/2}^{\,n})\nonumber\\[0.5ex]
+&= \cos(n\,\pi) \,\frac{\Gamma(|m|+1/2-n)}{\Gamma(|m|+1/2+n)}
+\,\frac{\cos(n\,\pi)}{1-z^2}\,\frac{\Gamma(|m|+1/2+n)}{\Gamma(|m|+1/2-n)}\nonumber\\[0.5ex]
+&= \frac{1}{1-z^2}, 
+\end{align}
 so
 \begin{equation}
-T_\phi(z) = 2\pi^2\,n\,\cos(n\,\pi)\sum_m\frac{\Gamma(|m|+1/2+n)}{\Gamma(|m|+1/2-n)}\,{\rm Im}(p_m\,q_m^\ast),
+T_\phi(z) = 2\pi^2\,n\sum_m {\rm Im}(q_m^\ast\,p_m).
 \end{equation}
-or
-\begin{equation}
-T_\phi(z) = 2\pi^2\,n\,\sum_m{\rm Im}(\hat{p}_m\,\hat{q}_m^\ast)\,h_m,
-\end{equation}
-where
-\begin{align}
-h_{m\neq 0} &= \frac{2}{|m|},\\[0.5ex]
-h_0 & = 1.
-\end{align}
 
-\section{Resistive  Wall Physics}
+\section{Resistive Wall Physics}
 \subsection{Resistive Wall}
-Let the resistive wall extend from $\mu=\mu_w$ to $\mu=\mu_w-\bar{d}_w\,\sinh\mu_w$, where $\bar{d}_w\ll 1$ is a positive constant. In other words, $\mu=\mu_w$ is the inner surface of the wall,
-and $\mu=\mu_w-\bar{d}_w\,\sinh\mu_w$ is the outer surface. The physical wall thickness is
+Let the inner surface of the resistive wall surrounding the plasma lie at $\mu=\mu_w$,
+and let the outer surface lie at $\mu=\mu_w-\bar{d}_w\,\sinh\mu_w$,  where $\bar{d}_w\ll 1$ is a positive constant. The physical wall thickness is
 \begin{equation}
-d(\eta)= \frac{\bar{d}_w\,\sinh\mu_w}{|\nabla \mu|} = g_w(\eta)\,\bar{d}_w,
+d(\eta)= \frac{\bar{d}_w\,\sinh\mu_w}{|\nabla \mu|} = h_w(\eta)\,\sinh \mu_w\,\bar{d}_w,
 \end{equation}
 where
 \begin{equation}
-g_w(\eta) = \frac{(z_w^2-1)^{1/2}}{z_w-\cos\eta},
+h_w(\eta) = \frac{1}{z_w-\cos\eta},
 \end{equation}
 and $z_w=\cosh\mu_w$. 
 Let the electrical conductivity of the wall material vary as
 \begin{equation}
-\sigma(\eta) = \frac{\bar{\sigma}_w}{g_w^{\,2}(\eta)},
+\sigma(\eta) = \frac{\bar{\sigma}_w}{h_w^{\,2}(\eta)\,\sinh^2 \mu_w},
 \end{equation}
 where $\bar{\sigma}_w$ is a positive constant. It follows that $\sigma\,d^{\,2}=\bar{\sigma}_w\,\bar{d}_w^{\,2}$. 
 
@@ -184,11 +167,13 @@ If we write
 in the vacuum region then the boundary conditions at the wall are 
 \begin{align}
 \left.{\bf n}_w\times {\bf A}\right|_{z_{w-}} &= \frac{1}{\cosh\lambda}\left.{\bf n}_w\times {\bf A}\right|_{z_{w+}} \\[0.5ex]
-\left.{\bf n}_w\times (\nabla\times{\bf A})\right|_{z_{w+}}&= -\frac{\lambda\,\tanh\lambda}{\bar{d}_w\,g_w}\,\left.{\bf n}_w\times({\bf n}_w\times{\bf A})\right|_{z_{w+}}+
+\left.{\bf n}_w\times (\nabla\times{\bf A})\right|_{z_{w+}}&= -\frac{\lambda\,\tanh\lambda}{\bar{d}_w\,h_w\,\sinh\mu_w}\,\left.{\bf n}_w\times({\bf n}_w\times{\bf A})\right|_{z_{w+}}+
 \frac{\left.{\bf n}_w\times (\nabla\times{\bf A})\right|_{z_{w-}}}{\cosh\lambda},\\[0.5ex]
-\lambda &=\sqrt{\mu_0\,R_0^{\,2}\,\bar{\sigma}_w\,\bar{d}_w^{\,2}\,\gamma},
+\lambda&= \sqrt{\hat{\gamma}\,\bar{d}_w},\\[0.5ex]
+\hat\gamma&= \gamma\,\bar{\tau}_w,\\[0.5ex]
+\bar{\tau}_w &=\mu_0\,R_0^{\,2}\,\bar{\sigma}_w\,\bar{d}_w,
 \end{align}
-where $\gamma$ is the growth-rate of the magnetic perturbation. Here, ${\bf n}_w= -{\bf e}_\mu$ is an outward unit normal vector to the wall. Now,
+where $\gamma$ is the growth-rate of the magnetic perturbation, and $\bar{\tau}_w$ is the effective L/R time of the wall. Here, ${\bf n}_w= -{\bf e}_\mu$ is an outward unit normal vector to the wall. Now,
 \begin{align}
 \nabla\times{\bf A} &= \frac{1}{h^2\,\sinh\mu}\left(\frac{\partial \hat{A}_\phi}{\partial \eta}-\frac{\partial\hat{A}_\eta}{\partial\phi}\right){\bf e}_\mu
 +  \frac{1}{h^2\,\sinh\mu}\left(\frac{\partial \hat{A}_\mu}{\partial \phi}-\frac{\partial\hat{A}_\phi}{\partial\mu}\right){\bf e}_\eta\nonumber\\[0.5ex]
@@ -244,18 +229,18 @@ It follows that
 \sum_m\left[\frac{U_m}{2}+(z-\cos\eta)\,\frac{dU_m}{dz}\right]_{z_{w-}}{\rm e}^{-{\rm i}\,m\,\eta}= \frac{1}{\cosh\lambda}\sum_m\left[\frac{U_m}{2}+(z-\cos\eta)\,\frac{dU_m}{dz}\right]_{z_{w+}}{\rm e}^{-{\rm i}\,m\,\eta},\\[0.5ex]
 \left.\sum_m\left[\frac{3}{4}\,\sin^2\eta-\frac{1}{2}\,(z-\cos\eta)\,\cos\eta+ (z-\cos\eta)^2\left(m^2+\frac{n^2}{z^2-1}\right)\right]
 U_m\,{\rm e}^{-{\rm i}\,m\,\eta}\right|_{z_{w+}}=\nonumber\\[0.5ex]
-F(\lambda) \sum_m(z-\cos\eta)\left[\frac{U_m}{2}+(z-\cos\eta)\,\frac{dU_m}{dz}\right]_{z_{w+}}{\rm e}^{-{\rm i}\,m\,\eta}\nonumber\\[0.5ex]
+f_w \sum_m(z-\cos\eta)\left[\frac{U_m}{2}+(z-\cos\eta)\,\frac{dU_m}{dz}\right]_{z_{w+}}{\rm e}^{-{\rm i}\,m\,\eta}\nonumber\\[0.5ex]
 +\frac{1}{\cosh\lambda}\left.\sum_m\left[\frac{3}{4}\,\sin^2\eta-\frac{1}{2}\,(z-\cos\eta)\,\cos\eta+ (z-\cos\eta)^2\left(m^2+\frac{n^2}{z^2-1}\right)\right]
 U_m\,{\rm e}^{-{\rm i}\,m\,\eta}\right|_{z_{w-}},
 \end{align}
 where
 \begin{equation}
-F(\lambda)= \frac{\lambda\,\tanh\lambda}{\bar{d}_w}.
+f_w= \frac{\lambda\,\tanh\lambda}{\bar{d}_w}.
 \end{equation}
 Thus, we can write
 \begin{align}
 \sum_{m'}I_{mm'}\,U_{m'}(z_{w-}) &= \frac{1}{\cosh\lambda}\sum_{m'}I_{mm'}\,U_{m'}(z_{w+}),\\[0.5ex]
-\sum_{m'}J_{mm'}\,U_{m'}(z_{w+})&= F(\lambda)\sum_{m',m''}K_{mm''}\,I_{m''m'}\,U_{m'}(z_{w+}) + \frac{1}{\cosh\lambda}\sum_{m'}J_{mm'}\,U_{m'}(z_{w-}),
+\sum_{m'}J_{mm'}\,U_{m'}(z_{w+})&= f_w\sum_{m',m''}k_{mm''}\,I_{m''m'}\,U_{m'}(z_{w+}) + \frac{1}{\cosh\lambda}\sum_{m'}J_{mm'}\,U_{m'}(z_{w-}),
 \end{align}
 where
 \begin{align}
@@ -263,72 +248,70 @@ I_{mm'}&= \left(\frac{1}{2}+z\,\frac{d}{dz}\right)\delta_{mm'}-\frac{1}{2}\,\fra
 J_{mm'}&= \left[\frac{5}{8} + \left(\frac{1}{2}+z^2\right)\left(m^2+\frac{n^2}{z^2-1}\right)\right]\delta_{mm'}
 -z\left[\frac{1}{4}+ \left(m^2+\frac{n^2}{z^2-1}\right)\right](\delta_{m\,m'+1}+\delta_{m\,m'-1})\nonumber\\[0.5ex]
 &\phantom{=}+\left[-\frac{1}{16}+\frac{1}{4} \left(m^2+\frac{n^2}{z^2-1}\right)\right](\delta_{m\,m'+2}+\delta_{m\,m'-2}),\\[0.5ex]
-K_{mm'} &= z\,\delta_{mm'} - \frac{1}{2}\,(\delta_{m\,m'+1}+\delta_{m\,m'-1}).
+k_{mm'} &= z\,\delta_{mm'} - \frac{1}{2}\,(\delta_{m\,m'+1}+\delta_{m\,m'-1}).
 \end{align}
 
 \subsection{Vacuum Solution}
 Now, 
 \begin{equation}
-U_m(z) = \bar{p}_m\,\hat{p}_{m-}\,P_{|m|-1/2}^{\,n}(z)
+U_m(z) = p_{m-}\,\hat{P}_{|m|-1/2}^{\,n}(z)
 \end{equation}
 in the region $z<z_w$, whereas 
 \begin{equation}
-U_m(z) = \bar{p}_m\,\hat{p}_{m+}\,P_{|m|-1/2}^{\,n}(z) + \bar{q}_m\,\hat{q}_{m+}\,Q_{|m|-1/2}^{\,n}(z) 
+U_m(z) =p_{m+}\,\hat{P}_{|m|-1/2}^{\,n}(z) + q_{m+}\,\hat{Q}_{|m|-1/2}^{\,n}(z) 
 \end{equation}
 in the region $z>z_w$. 
 Let $\underline{\underline{I}}_{\,p}$ be the matrix of the
 \begin{equation}
-\left\{\left[\left(\frac{1}{2}+z\,\frac{d}{dz}\right)\delta_{mm'}-\frac{1}{2}\,\frac{d}{dz}\,(\delta_{m\,m'+1}+\delta_{m\,m'-1})\right]P_{|m'|-1/2}^{\,n}(z)\right\}_{z_w}\bar{p}_{m'}
+\left\{\left[\left(\frac{1}{2}+z\,\frac{d}{dz}\right)\delta_{mm'}-\frac{1}{2}\,\frac{d}{dz}\,(\delta_{m\,m'+1}+\delta_{m\,m'-1})\right]\hat{P}_{|m'|-1/2}^{\,n}(z)\right\}_{z_w}
 \end{equation}
 values.
 Let $\underline{\underline{I}}_{\,q}$ be the matrix of the
 \begin{equation}
-\left\{\left[\left(\frac{1}{2}+z\,\frac{d}{dz}\right)\delta_{mm'}-\frac{1}{2}\,\frac{d}{dz}\,(\delta_{m\,m'+1}+\delta_{m\,m'-1})\right]Q_{|m'|-1/2}^{\,n}(z)\right\}_{z_w}\bar{q}_{m'}
+\left\{\left[\left(\frac{1}{2}+z\,\frac{d}{dz}\right)\delta_{mm'}-\frac{1}{2}\,\frac{d}{dz}\,(\delta_{m\,m'+1}+\delta_{m\,m'-1})\right]\hat{Q}_{|m'|-1/2}^{\,n}(z)\right\}_{z_w}
 \end{equation}
 values. 
 Let $\underline{\underline{J}}_{\,p}$ be the matrix of the 
 \begin{align}
  &\left\{\left[\frac{5}{8} + \left(\frac{1}{2}+z^2\right)\left(m^2+\frac{n^2}{z^2-1}\right)\right]\delta_{mm'}
 -z\left[\frac{1}{4}+ \left(m^2+\frac{n^2}{z^2-1}\right)\right](\delta_{m\,m'+1}+\delta_{m\,m'-1})\right.\nonumber\\[0.5ex]
-&\phantom{=}\left.+\left[-\frac{1}{16}+\frac{1}{4} \left(m^2+\frac{n^2}{z^2-1}\right)\right](\delta_{m\,m'+2}+\delta_{m\,m'-2})\right\}P_{|m'|-1/2}^{\,n}(z_w)\,\bar{p}_{m'}
+&\phantom{=}\left.+\left[-\frac{1}{16}+\frac{1}{4} \left(m^2+\frac{n^2}{z^2-1}\right)\right](\delta_{m\,m'+2}+\delta_{m\,m'-2})\right\}\hat{P}_{|m'|-1/2}^{\,n}(z_w)
 \end{align}
 values. Let $\underline{\underline{J}}_{\,q}$ be the matrix of the 
 \begin{align}
  &\left\{\left[\frac{5}{8} + \left(\frac{1}{2}+z^2\right)\left(m^2+\frac{n^2}{z^2-1}\right)\right]\delta_{mm'}
 -z\left[\frac{1}{4}+ \left(m^2+\frac{n^2}{z^2-1}\right)\right](\delta_{m\,m'+1}+\delta_{m\,m'-1})\right.\nonumber\\[0.5ex]
-&\phantom{=}\left.+\left[-\frac{1}{16}+\frac{1}{4} \left(m^2+\frac{n^2}{z^2-1}\right)\right](\delta_{m\,m'+2}+\delta_{m\,m'-2})\right\}Q_{|m'|-1/2}^{\,n}(z_w)\,\bar{q}_{m'}
+&\phantom{=}\left.+\left[-\frac{1}{16}+\frac{1}{4} \left(m^2+\frac{n^2}{z^2-1}\right)\right](\delta_{m\,m'+2}+\delta_{m\,m'-2})\right\}\hat{Q}_{|m'|-1/2}^{\,n}(z_w)
 \end{align}
 values. 
-Finally, let $\underline{\underline{K}}$ be the matrix of the 
-\begin{equation}
-z_w\,\delta_{mm'} -\frac{1}{2}\,(\delta_{m\,m'+1}+\delta_{m\,m'-1})
-\end{equation}
-values. Likewise, let $\underline{\hat{p}}_{\,+}$ be the vector of the $\hat{p}_{m+}$ values, et cetera. Thus, we
+Let $\underline{\underline{k}}$ be the matrix of the $k_{mm'}$ values. 
+ Finally, let $\underline{p}_{\,+}$ be the vector of the $p_{m+}$ values, et cetera. Thus, we
 obtain
 \begin{align}
-\underline{\underline{I}}_{\,p}\,\underline{\hat{p}}_{\,-} &= \frac{1}{\cosh\lambda}\left(\underline{\underline{I}}_{\,p}\,\underline{\hat{p}}_{\,+} + \underline{\underline{I}}_{\,q}\,\underline{\hat{q}}_{\,+}\right),\\[0.5ex]
-\underline{\underline{J}}_{\,p}\,\underline{\hat{p}}_{\,+}+ \underline{\underline{J}}_{\,q}\,\underline{\hat{q}}_{\,+} &=
-F(\lambda)\,\underline{\underline{K}}\left(\underline{\underline{I}}_{\,p}\,\underline{\hat{p}}_{\,+}+ \underline{\underline{I}}_{\,q}\,\underline{\hat{q}}_{\,+} \right)
-+\frac{1}{\cosh\lambda} \,\underline{\underline{J}}_{\,p}\,\underline{\hat{p}}_{\,-},
+\underline{\underline{I}}_{\,p}\,\underline{p}_{\,-} &= \frac{1}{\cosh\lambda}\left(\underline{\underline{I}}_{\,p}\,\underline{p}_{\,+} + \underline{\underline{I}}_{\,q}\,\underline{q}_{\,+}\right),\\[0.5ex]
+\underline{\underline{J}}_{\,p}\,\underline{p}_{\,+}+ \underline{\underline{J}}_{\,q}\,\underline{q}_{\,+} &=
+f_w\,\underline{\underline{k}}\left(\underline{\underline{I}}_{\,p}\,\underline{p}_{\,+}+ \underline{\underline{I}}_{\,q}\,\underline{q}_{\,+} \right)
++\frac{1}{\cosh\lambda} \,\underline{\underline{J}}_{\,p}\,\underline{p}_{\,-},
 \end{align}
 which can be rearranged to give 
 \begin{equation}\label{e73}
-\left[\tanh^2\lambda\,\underline{\underline{J}}_{\,p}-F(\lambda)\,\underline{\underline{\hat{I}}}_{\,p}\right]\underline{\hat{p}}_{\,+}+
-\left[\underline{\underline{J}}_{\,pq}+\tanh^2\lambda\,\underline{\underline{J}}_{\,qp} - F(\lambda)\,\underline{\underline{\hat{I}}}_{\,q}\right]\underline{\hat{q}}_{\,+},
+\left(\tanh^2\lambda\,\underline{\underline{J}}_{\,p}-f_w\,\underline{\underline{\hat{I}}}_{\,p}\right)\underline{p}_{\,+}+
+\left(\underline{\underline{J}}_{\,pq}+\tanh^2\lambda\,\underline{\underline{J}}_{\,qp} - f_w\,\underline{\underline{\hat{I}}}_{\,q}\right)\underline{q}_{\,+},
 \end{equation}
 where
 \begin{align}
-\underline{\underline{\hat I}}_p &= \underline{\underline{K}}\,\underline{\underline{I}}_p,\\[0.5ex]
-\underline{\underline{\hat I}}_q &= \underline{\underline{K}}\,\underline{\underline{I}}_q,\\[0.5ex]
-\underline{\underline{J}}_{\,pq} &=\underline{\underline{J}}_{\,q}- \underline{\underline{J}}_{\,p}\,\underline{\underline{I}}_{\,p}^{-1}\,\underline{\underline{I}}_{\,q},\\[0.5ex]
-\underline{\underline{J}}_{\,qp} &= \underline{\underline{J}}_{\,p}\,\underline{\underline{I}}_{\,p}^{-1}\,\underline{\underline{I}}_{\,q}.
+\underline{\underline{\hat I}}_p &= \underline{\underline{k}}\,\underline{\underline{I}}_p,\\[0.5ex]
+\underline{\underline{\hat I}}_q &= \underline{\underline{k}}\,\underline{\underline{I}}_q,\\[0.5ex]
+\underline{\underline{J}}_{\,pq} &=\underline{\underline{J}}_{\,q}- \underline{\underline{J}}_{\,p}\,\underline{\underline{\hat{I}}}_{\,p}^{-1}\,\underline{\underline{\hat{I}}}_{\,q},\\[0.5ex]
+\underline{\underline{J}}_{\,qp} &= \underline{\underline{J}}_{\,p}\,\underline{\underline{\hat{I}}}_{\,p}^{-1}\,\underline{\underline{\hat{I}}}_{\,q}.
 \end{align}
 
 Now, $z_w\sim 1/\bar{b}_w$, where $\bar{b}_w$ is the mean wall minor radius. 
-In the large aspect-ratio limit $b_w\ll 1$, we have $\underline{\underline{I}}_{\,p}\sim{\cal O}(1)$, $\underline{\underline{I}}_{\,q}\sim{\cal O}(1)$, 
+In the large aspect-ratio limit, $b_w\ll 1$, we have $\underline{\underline{I}}_{\,p}\sim{\cal O}(1)$, $\underline{\underline{I}}_{\,q}\sim{\cal O}(1)$, 
 $\underline{\underline{J}}_{\,p}\sim{\cal O}(1/\bar{b}_w^{\,2})$, $\underline{\underline{J}}_{\,q}\sim{\cal O}(1/\bar{b}_w^{\,2})$, 
-$\underline{\underline{K}}_{\,p}\sim{\cal O}(1/\bar{b}_w)$, and $\underline{\underline{K}}_{\,q}\sim{\cal O}(1/\bar{b}_w)$. It follows that
-$\underline{\underline{J}}_{\,pq} \sim{\cal O}(1/\bar{b}_w^{\,2})$ and $\underline{\underline{J}}_{\,qp} \sim{\cal O}(1/\bar{b}_w^{\,2})$. 
+$\underline{\underline{K}}_{\,p}\sim{\cal O}(1/\bar{b}_w)$, $\underline{\underline{K}}_{\,q}\sim{\cal O}(1/\bar{b}_w)$,
+and $\underline{\underline{k}}\sim{ \cal O}(1/\bar{b}_w)$  It follows that
+$\underline{\underline{\hat I}}_p\sim{\cal O}(1/\bar{b}_w)$, $\underline{\underline{\hat I}}_q\sim{\cal O}(1/\bar{b}_w)$, $\underline{\underline{J}}_{\,pq} \sim{\cal O}(1/\bar{b}_w^{\,2})$ and $\underline{\underline{J}}_{\,qp} \sim{\cal O}(1/\bar{b}_w^{\,2})$. 
 Thus, the ratio of the first to the second term multiplying $\underline{p}_{\,+}$ in Eq.~(\ref{e73}) is 
 \begin{equation}
 \tanh\lambda \,\frac{\bar{d}_w}{\lambda\,\bar{b}_w}.
@@ -342,71 +325,363 @@ ratios of the three terms multiplying $\underline{q}_{\,+}$ in Eq.~(\ref{e73}) a
 \begin{equation}
 \frac{\bar{d}_w}{\lambda\,\bar{b}_w},~ \tanh^2\lambda\,\frac{\bar{d}_w}{\lambda\,\bar{b}_w},~ \tanh\lambda.
 \end{equation}
-Thus, in the thin-shell limit $\lambda\ll 1$, the second term is negligible with respect to the first. In the thick-shell limit, $\lambda\gg 1$, the third term is
+Thus, in the thin-shell limit, $\lambda\ll 1$, the second term is negligible with respect to the first. In the thick-shell limit, $\lambda\gg 1$, the third term is
 dominant. Thus, we can neglect the second term. Hence, we deduce that
 \begin{equation}\label{e88}
-\underline{\hat{q}}_{\,+} = \underline{\underline{\cal F}}\,\underline{\hat{p}}_{\,+},
+\underline{q}_{\,+} = \underline{\underline{\cal F}}\,\,\underline{p}_{\,+},
 \end{equation}
 where
-\begin{equation}
-\underline{\underline{\cal F}}= 
-\left[\underline{\underline{J}}_{\,pq}- F(\lambda)\,\underline{\underline{\hat{I}}}_{\,q}\right]^{-1}F(\lambda)\,\underline{\underline{\hat{I}}}_{\,p}.
-\end{equation}
+\begin{align}
+\underline{\underline{\cal F}}&= 
+f_w\,\underline{\underline{I}}\,(\underline{\underline{J}}+ f_w\,\underline{\underline{1}})^{-1},\\[0.5ex]
+\underline{\underline{I}}&=  -\underline{\underline{\hat{I}}}_{\,q}^{\,-1}\,\underline{\underline{\hat{I}}}_{\,p},\\[0.5ex]
+\underline{\underline{J}}&= \underline{\underline{\hat{I}}}_{\,p}^{\,-1}\,(\underline{\underline{J}}_{\,q}\,\underline{\underline{I}} + \underline{\underline{J}}_{\,p}).
+\end{align}
+Note that $\underline{\underline{I}}\sim {\cal O}(1)$  and $\underline{\underline{J}}\sim {\cal O}(1/\bar{b}_w)$. 
 
-\section{Plasma/Vacuum Interface}
-\subsection{Matching at Plasma/Vacuum Interface}
+\subsection{Toroidal Electromagnetic Torque}
+The net toroidal electromagnetic torque acting on the plasma is
+\begin{equation}\label{e85}
+T_\phi=-2\pi^2\,n\, {\rm Im}(\underline{p}_{\,+}^\dag\,\underline{q}_{\,+})= -2\pi^2\,n\, {\rm Im}(\underline{p}_{\,+}^\dag\,\underline{\underline{\cal F}}\,\,\underline{p}_{\,+})
+=-\pi^2\,n\,{\rm Im}[\underline{p}_{\,+}^\dag\,(\underline{\underline{\cal F}}-\underline{\underline{\cal F}}^\dag)\,\underline{p}_{\,+}].
+\end{equation}
+However, we expect this torque to be zero if $f_w$ is real, which implies that $\underline{\underline{\cal F}}=\underline{\underline{\cal F}}^\dag$
+when $f_w$ is real. In other words,
+\begin{align}
+f_w\,\underline{\underline{I}}\,(\underline{\underline{J}}+ f_w\,\underline{\underline{1}})^{-1} =f_w\,(\underline{\underline{J}}^\dag+ f_w\,\underline{\underline{1}})^{-1}\,
+\underline{\underline{I}}^\dag,
+\end{align}
+which implies that
+\begin{equation}
+f_w\,(\underline{\underline{J}}^\dag+ f_w\,\underline{\underline{1}})\,\underline{\underline{I}}=
+f_w\, \underline{\underline{I}}^{\dag}\,(\underline{\underline{J}}+ f_w\,\underline{\underline{1}}).
+\end{equation}
+However, the previous equation holds for arbitrary real $f_w$, so we can separately equate the coefficients of $f_w$ and $f_w^{\,2}$
+to give
+\begin{align}\label{e90a}
+\underline{\underline{J}}^\dag\,\underline{\underline{I}}&= \underline{\underline{I}}^{\dag}\underline{\underline{J}}\\[0.5ex]
+\underline{\underline{I}}&=\,\underline{\underline{I}}^{\dag}.\label{e91a}
+\end{align}
+It follows that $\underline{\underline{I}}$ and 
+\begin{equation}
+\underline{\underline{K}} =  \underline{\underline{I}}\,\underline{\underline{J}}
+\end{equation}
+ are both real symmetric matrices. In general,
+\begin{align}
+\underline{\underline{\cal F}}-\underline{\underline{\cal F}}^{\,\dag}&= (f_w-f_w^\ast)\,[(\underline{\underline{J}}+ f_w\,\underline{\underline{1}})^{-1}]^\dag\,\underline{\underline{K}}\,
+(\underline{\underline{J}}+ f_w\,\underline{\underline{1}})^{-1},\\[0.5ex]
+T_\phi &= -2\pi^2\,n\,{\rm Im}(f_w)\,[(\underline{\underline{J}}+ f_w\,\underline{\underline{1}})^{-1}\,\underline{p}_{\,+}]^\dag\,\underline{\underline{K}}\,
+[(\underline{\underline{J}}+ f_w\,\underline{\underline{1}})^{-1}\,\underline{p}_{\,+}].
+\end{align}
+Thus, $\underline{\underline{\cal F}}$ is clearly Hermitian if $f_w$ is real. 
+
+\section{Matching at Plasma/Vacuum Interface}
+\subsection{Matching Condition}
+Let $r$, $\theta$, $\phi$ be right-handed flux coordinates, where $r$ is a flux-surface label,  $\theta$ is a poloidal angle that is zero on the inboard mid-plane, and
+\begin{equation}
+{\cal J} \equiv (\nabla r\times\nabla\theta\cdot\nabla\phi)^{-1}= r\,R^{\,2}.
+\end{equation}
 The plasma/vacuum interface lies at $r=\epsilon$. In the vacuum region between the interface and the wall, 
 \begin{equation}
-V(z,\eta) =\sum_m (z-\cos\eta)^{1/2}\left[\bar{p}_{m}\,\hat{p}_{m+}\,P_{|m|-1/2}^{\,n}(z)+\bar{q}_m\,\hat{q}_{m+}\,Q_{|m|-1/2}^{\,n}(z)\right]{\rm e}^{-{\rm i}\,m\,\eta}. 
+V(z,\eta) =\sum_m (z-\cos\eta)^{1/2}\left[p_{m+}\,\hat{P}_{|m|-1/2}^{\,n}(z)+q_{m+}\,\hat{Q}_{|m|-1/2}^{\,n}(z)\right]{\rm e}^{-{\rm i}\,m\,\eta}. 
 \end{equation}
-Thus, if we write
+Thus, if we write 
 \begin{align}\label{e90}
-V_(r,\theta) &= \sum_m V_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta},\\[0.5ex]
-\psi(r,\theta) & = \sum_m \psi_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta},\label{e91}
+V(r,\theta) &= \sum_m V_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta},\\[0.5ex]
+\psi(r,\theta) & = \sum_m \psi_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta}\label{e91}
 \end{align}
+in the same region,
+where
+\begin{equation}
+\psi(r,\theta)  = {\cal J}\,\nabla V\cdot\nabla r,
+\end{equation}
 then
 \begin{align}
-\underline{V}&= \underline{\underline{{\cal P}}}\,\underline{\hat{p}}_{\,+}+ \underline{\underline{{\cal Q}}}\,\underline{\hat{q}}_{\,+},\\[0.5ex]
-\underline{\psi}&= \underline{\underline{{\cal R}}}\,\underline{\hat{p}}_{\,+}+ \underline{\underline{{\cal S}}}\,\underline{\hat{q}}_{\,+},
+\underline{V}&= \underline{\underline{{\cal P}}}\,\,\underline{p}_{\,+}+ \underline{\underline{{\cal Q}}}\,\,\underline{q}_{\,+},\\[0.5ex]
+\underline{\psi}&= \underline{\underline{{\cal R}}}\,\,\underline{p}_{\,+}+ \underline{\underline{{\cal S}}}\,\,\underline{q}_{\,+},
 \end{align}
-where $\underline{V}$ is the vector of the $V_m(\epsilon)$ values, $\underline{\psi}$ is the vector of the $\psi_m$ values, $\underline{\underline{{\cal P}}}$ is the
+where $\underline{V}$ is the vector of the $V_m(\epsilon)$ values, $\underline{\psi}$ is the vector of the $\psi_m(\epsilon)$ values, $\underline{\underline{{\cal P}}}$ is the
 matrix of the
 \begin{equation}
-{\cal P}_{mm'}=\bar{p}_{m'}\,\oint_{r=\epsilon}(z-\cos\eta)^{1/2}\,P_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+{\cal P}_{mm'}=\oint_{r=\epsilon}(z-\cos\eta)^{1/2}\,\hat{P}_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
 \end{equation}
 values, 
 $\underline{\underline{{\cal Q}}}$ is the
 matrix of the
 \begin{equation}
-{\cal Q}_{mm'}=\bar{q}_{m'}\oint_{r=\epsilon}(z-\cos\eta)^{1/2}\,Q_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+{\cal Q}_{mm'}=\oint_{r=\epsilon}(z-\cos\eta)^{1/2}\,\hat{Q}_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
 \end{equation}
 values, $\underline{\underline{{\cal R}}}$ is the matrix of the 
 \begin{align}\label{e354}
-{\cal R}_{mm'} &=\bar{p}_{m'}\oint_{r=\epsilon}
-\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,P_{|m'|-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{dP_{|m'|-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
+{\cal R}_{mm'} &=\oint_{r=\epsilon}
+\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\hat{P}_{|m'|-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{d\hat{P}_{|m'|-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
 \right.\nonumber\\[0.5ex]&
-\left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]P_{|m'|-1/2}^{\,n}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
+\left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]\hat{P}_{|m'|-1/2}^{\,n}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
 \right\}\nonumber\\[0.5ex] &
 \phantom{=}\times\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
 \end{align}
 values, and 
 $\underline{\underline{{\cal S}}}$ is the matrix of the 
 \begin{align}
-{\cal S}_{mm'} &=\bar{q}_{m'}\oint_{r=\epsilon}
-\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,Q_{|m'|-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{dQ_{|m'|-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
+{\cal S}_{mm'} &=\oint_{r=\epsilon}
+\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\hat{Q}_{|m'|-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{d\hat{Q}_{|m'|-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
 \right.\nonumber\\[0.5ex]&
-\left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]Q_{|m'|-1/2}^{\,n}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
+\left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]\hat{Q}_{|m'|-1/2}^{\,n}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
 \right\}\nonumber\\[0.5ex] &
 \phantom{=}\times\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
 \end{align}
 
 Equations~(\ref{e88}), (\ref{e90}), and (\ref{e91}) imply that
+\begin{align}
+\underline{V} &= ( \underline{\underline{\cal P}}+\underline{\underline{\cal Q}}\,\underline{\underline{\cal F}})\,\underline{p}_{\,+},\\[0.5ex]
+\underline{\psi} &= ( \underline{\underline{\cal R}}+\underline{\underline{\cal S}}\,\underline{\underline{\cal F}})\,\underline{p}_{\,+},
+\end{align}
+which yields 
+\begin{equation}\label{e105}
+\underline{V}= \underline{\underline{H}}\,\,\underline{\psi},
+\end{equation}
+where
+\begin{equation}\label{e106}
+\underline{\underline{H}}= (\underline{\underline{\cal P}}+\underline{\underline{\cal Q}}\,\underline{\underline{\cal F}})\,(\underline{\underline{\cal R}}+\underline{\underline{\cal S}}\,\underline{\underline{\cal F}})^{-1}.
+\end{equation}
+
+\subsection{Toroidal Electromagnetic Torque}
+The net toroidal electromagnetic torque acting on the plasma is
+\begin{align}
+T_\phi &= -2\pi^2\,n\,{\rm Im}(\underline{V}^\dag\,\underline{\psi})\nonumber\\[0.5ex]
+&
+= -2\pi^2\,n\,{\rm Im}[\underline{p}_{\,+}^\dag\,( \underline{\underline{\cal P}}^\dag+\underline{\underline{\cal F}}^\dag\,\underline{\underline{\cal Q}}^\dag)\,
+( \underline{\underline{\cal R}}+\underline{\underline{\cal S}}\,\underline{\underline{\cal F}})\,\underline{p}_{\,+}]\nonumber\\[0.5ex]
+&= -2\pi^2\,n\,{\rm Im}[\underline{p}_{\,+}^\dag\,(\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal R}}
++ \underline{\underline{\cal F}}^\dag\,\underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal R}} +\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal S}}\,
+\underline{\underline{\cal F}}+
+ \underline{\underline{\cal F}}^\dag\,\underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal S}}\,\underline{\underline{\cal F}})\,
+\underline{p}_{\,+}]\nonumber\\[0.5ex]
+&= - \pi^2\,n\,{\rm Im}[\underline{p}_{\,+}^\dag\,(\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal R}}- \underline{\underline{\cal R}}^\dag\,\underline{\underline{\cal P}})\,
+\underline{p}_{\,+}]  
+- \pi^2\,n\,{\rm Im}[\underline{p}_{\,+}^\dag\,(\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal S}}- \underline{\underline{\cal R}}^\dag\,\underline{\underline{\cal Q}})\,\underline{\underline{\cal F}}\,\,\underline{p}_{\,+}]\nonumber\\[0.5ex]
+&\phantom{=}
++ \pi^2\,n\,{\rm Im}[\underline{p}_{\,+}^\dag\,\underline{\underline{\cal F}}^\dag\,(\underline{\underline{\cal S}}^\dag\,\underline{\underline{\cal P}}- \underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal R}})\,\underline{p}_{\,+}]
+- \pi^2\,n\,{\rm Im}[\underline{p}_{\,+}^\dag\,\underline{\underline{\cal F}}^\dag\,(\underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal S}}- \underline{\underline{\cal S}}^\dag\,\underline{\underline{\cal Q}})\,\underline{\underline{\cal F}}\,\underline{p}_{\,+}].
+\end{align}
+The previous equation is consistent with Eq.~(\ref{e85}) provided that
+\begin{align}
+\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal R}}&= \underline{\underline{\cal R}}^\dag\,\underline{\underline{\cal P}},\label{e100}\\[0.5ex]
+\underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal S}}&= \underline{\underline{\cal S}}^\dag\,\underline{\underline{\cal Q}},\\[0.5ex]
+\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal S}}- \underline{\underline{\cal R}}^\dag\,\underline{\underline{\cal Q}}&=\underline{\underline{1}}.\label{e103}
+\end{align}
+Making use of the previous three equations, we can show that
+\begin{equation}\label{herm}
+\underline{\underline{H}} -\underline{\underline{H}}^{\,\dag} = 
+-[(\underline{\underline{\cal R}}+\underline{\underline{\cal S}}\,\underline{\underline{\cal F}})^{-1}]^{\dag}\,(\underline{\underline{\cal F}}-
+\underline{\underline{\cal F}}^{\,\dag})\,(\underline{\underline{\cal R}}+\underline{\underline{\cal S}}\,\underline{\underline{\cal F}})^{-1}.
+\end{equation}
+Thus, $\underline{\underline{H}}$ is Hermitian if $\underline{\underline{\cal F}}$ is Hermitian, which implies that
+$\underline{\underline{H}}$ is Hermitian if $f_w$ is real. 
+
+\section{Vacuum Matrix}
+\subsection{No-Wall and Perfect-Wall Boundary Conditions}
+In the no-wall limit, $f_w=0$, and $\underline{\underline{\cal F}}=\underline{\underline{0}}$. Hence, the boundary condition at the
+plasma/vacuum interface becomes
 \begin{equation}
-\underline{V}= \underline{\underline{H}}\,\underline{\psi},
+\underline{V}= \underline{\underline{H}}_{\,nw}\,\,\underline{\psi},
 \end{equation}
 where
 \begin{equation}
-\underline{\underline{H}}\,(\underline{\underline{\cal R}}+\underline{\underline{\cal S}}\,\underline{\underline{\cal F}}) = \underline{\underline{\cal P}}+\underline{\underline{\cal Q}}\,\underline{\underline{\cal F}}.
+\underline{\underline{H}}_{\,nw}= \underline{\underline{\cal P}}\,\underline{\underline{\cal R}}^{-1}.
 \end{equation}
+Equation~(\ref{e100}) implies that $\underline{\underline{H}}_{\,nw}$ is Hermitian. 
+
+In the perfect-wall limit, $f(\lambda)\rightarrow\infty$, and $\underline{\underline{\cal F}}= \underline{\underline{I}}$. 
+Hence, the boundary condition at the interface becomes 
+\begin{equation}
+\underline{V}= \underline{\underline{H}}_{\,pw}\,\,\underline{\psi},
+\end{equation}
+where
+\begin{equation}
+\underline{\underline{H}}_{\,pw} = (\underline{\underline{\cal P}}+\underline{\underline{\cal Q}}\,\underline{\underline{I}})\,(\underline{\underline{\cal R}}+\underline{\underline{\cal S}}\,\underline{\underline{I}})^{-1}.
+\end{equation}
+Comparison to Eqs.~(\ref{e106}) and (\ref{herm}) reveals that $\underline{\underline{H}}_{\,pw}$ is Hermitian, given that that $\underline{\underline{I}}$ is Hermitian.
+
+\subsection{Symmetric form of Vacuum Matrix}
+It is possible to demonstrate that
+\begin{equation}\label{e130}
+\underline{\underline{H}} = \underline{\underline{H}}_{\,nw} + f_w\,( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )\,(\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1},
+\end{equation}
+where
+\begin{equation}
+\underline{\underline{B}}= \underline{\underline{\cal R}}\,\underline{\underline{J}}\,(\underline{\underline{\cal R}} + \underline{\underline{\cal S}}\,\underline{\underline{I}})^{-1}.
+\end{equation}
+Note that $\underline{\underline{B}}\sim{\cal O}(1/\bar{b}_w)$. 
+Suppose that $f_w$ is real. It follows that
+\begin{equation}
+\underline{\underline{H}} -\underline{\underline{H}}^{\,\dag} = 
+f_w\left[( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )\,(\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1}- (\underline{\underline{B}}^{\,\dag}+f_w\,
+\underline{\underline{1}})^{-1}\,( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )
+\right].
+\end{equation}
+However, we know that $\underline{\underline{H}}$ is Hermitian when $f_w$ is real. Hence, we deduce that
+\begin{equation}\label{e133}
+ (\underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )\,(\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1}= (\underline{\underline{B}}^{\,\dag}+f_w\,
+\underline{\underline{1}})^{-1}\,( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} ),
+\end{equation}
+which implies that
+\begin{equation}\label{e122}
+\underline{\underline{B}}^{\,\dag}\,( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )= ( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )\,\underline{\underline{B}}.
+\end{equation}
+The previous equation yields
+\begin{align}
+&(\underline{\underline{\cal R}}^{\,\dag}+\underline{\underline{I}}\,\underline{\underline{\cal S}}^{\,\dag})\,\underline{\underline{J}}^{\,\dag}\,\underline{\underline{\cal R}}^{\,\dag}
+\left[(\underline{\underline{\cal P}}+\underline{\underline{\cal Q}}\,\underline{\underline{I}})\,(\underline{\underline{\cal R}}+\underline{\underline{\cal S}}\,\underline{\underline{I}})^{-1}
+ -\underline{\underline{\cal R}}^{\,-1\,\dag}\,\underline{\underline{P}}^{\,\dag}\right]\nonumber\\[0.5ex]
+ &=
+  \left[(\underline{\underline{\cal R}}^{\,\dag}+
+ \underline{\underline{I}}\,\underline{\underline{\cal S}}^{\,\dag})^{-1}\,(\underline{\underline{\cal P}}^{\,\dag}
+ +\underline{\underline{I}}\,\underline{\underline{\cal Q}}^{\,\dag})
+ -\underline{\underline{\cal P}}\,\underline{\underline{\cal R}}^{-1}\right]\underline{\underline{\cal R}}\,\underline{\underline{J}}\,(\underline{\underline{\cal R}} + \underline{\underline{\cal S}}\,\underline{\underline{I}})^{-1}.
+\end{align}
+where use has been made of the fact that $\underline{\underline{H}}_{\,pw}$ and $\underline{\underline{H}}_{\,nw}$ are Hermitian. 
+Making use of Eqs.~(\ref{e100})--(\ref{e103}), the previous equation reduces to 
+\begin{equation}
+-\underline{\underline{J}}^\dag\,\underline{\underline{I}}= -\underline{\underline{I}}\,\underline{\underline{J}},
+\end{equation}
+which  Eqs.~(\ref{e90a}) and (\ref{e91a}) ensure is satisfied. Equations~(\ref{e130}) and (\ref{e133}) can
+be combined to give
+\begin{align}\label{e128x}
+\underline{\underline{H}} &= \underline{\underline{H}}_{\,nw} 
++\frac{ f_w}{2}\left[ 
+(\underline{\underline{B}}^{\,\dag}+f_w\,\underline{\underline{1}})^{-1}\,( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )
++(\underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )\,(\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1} \right]\nonumber\\[0.5ex]
+&= \underline{\underline{H}}_{\,nw} +f_w\,(\underline{\underline{B}}^{\,\dag}+f_w\,\underline{\underline{1}})^{-1}\,( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} ),\nonumber\\[0.5ex]
+&= \underline{\underline{H}}_{\,nw} +f_w\,(\underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )\,(\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1}.
+\end{align}
+Note that $\underline{\underline{H}}$ is clearly Hermitian if $f_w$ is real. 
+
+\section{Wall Torque}
+Consider an unreconnected tearing mode, resonant at the $k$th rational surface, and rotating at the angular phase velocity $\omega_k$. It follows that
+$\gamma=-{\rm i}\,\omega_k$. Thus, 
+\begin{equation}
+f_w = \frac{\zeta}{2\,\bar{d}_w}\left[\left(\frac{\sinh\zeta - \sin\zeta}{\cosh\zeta+\cos\zeta}\right)-{\rm i}\left(\frac{\sinh\zeta+ \sin\zeta}{\cosh\zeta+\cos\zeta}\right)\right],
+\end{equation}
+where
+\begin{equation}
+\zeta = (2\,\hat{\omega}_k\,\bar{d}_w)^{1/2},
+\end{equation}
+and $\hat{\omega}_k=\omega_k\,\bar{\tau}_w$. 
+The matching condition at the plasma vacuum interface becomes 
+\begin{equation}
+\underline{V}= \underline{\underline{H}}(\zeta)\,\,\underline{\psi}.
+\end{equation}
+Note that $\underline{\underline{H}}(\zeta)$ is not generally Hermitian, because $f_w$ is complex,  which implies that
+the $E$-matrix is not Hermitian. The toroidal electromagnetic torque acting at the $k$th rational surface is
+\begin{equation}
+\delta T_k = 2\pi^2\,n\,{\rm Im}(E_{kk})\,|{\mit\Psi}_k|^2.
+\end{equation}
+
+\section{Resistive Wall Mode}
+We can write
+\begin{align}
+\underline{V}&= \underline{\underline{V}}_{\,i}\,\underline{\alpha},\\[0.5ex]
+\underline{\psi}&= \underline{\underline{\psi}}_{\,i}\,\underline{\alpha},
+\end{align}
+where the $\underline{\underline{V}}_{\,i}$ and $\underline{\underline{\psi}}_{\,i}$ are ideal solutions.
+The net toroidal electromagnetic torque acting on the plasma is
+\begin{equation}
+T_\phi= -2\pi^2\,n\,{\rm Im}(\underline{V}^\dag\,\underline{\psi})=-2\pi^2\,n\,{\rm Im}(\underline{\alpha}^\dag\,\underline{\underline{V}}_{\,i}^\dag
+\,\underline{\underline{\psi}}_{\,i}\,\underline{\alpha}).
+\end{equation}
+However, the net torque acting on an ideal plasma is zero, so
+\begin{equation}\label{e121}
+\underline{\underline{V}}_{\,i}^\dag \,\underline{\underline{\psi}}_{\,i}=\underline{\underline{\psi}}_{\,i}^\dag \,\underline{\underline{V}}_{\,i}.
+\end{equation}
+
+Equation~(\ref{e105}) implies that 
+\begin{equation}
+\underline{\underline{V}}_{\,i}\,\underline{\alpha}=\underline{\underline{H}}\,\underline{\underline{\psi}}_{\,i}\,\underline{\alpha}.
+\end{equation}
+Writing
+\begin{equation}
+\underline{\underline{\psi}}_{\,i}\,\underline{\alpha} = \underline{x},
+\end{equation}
+we obtain
+\begin{equation}
+\underline{\underline{W}}_{\,p}\,\underline{x}
+= \underline{\underline{H}}\,\underline{x},
+\end{equation}
+where
+\begin{equation}\label{e128}
+\underline{\underline{W}}_{\,p} = \underline{\underline{V}}_{\,i}\,\underline{\underline{\psi}}_{\,i}^{\,-1}.
+\end{equation}
+Equation~(\ref{e121}) ensures that $\underline{\underline{W}}_{\,p}$ is Hermitian. 
+
+Equation~(\ref{e128x}) can be combined with the previous equation to give
+\begin{equation}
+\underline{\underline{W}}_{\,nw}\,\underline{\beta} = -\frac{f_w}{2}
+\left[ (\underline{\underline{W}}_{\,pw} - \underline{\underline{W}}_{\,nw} )\,(\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1} + (\underline{\underline{B}}^{\,\dag}+f_w\,
+\underline{\underline{1}})^{-1}\,( \underline{\underline{W}}_{\,pw} - \underline{\underline{W}}_{\,nw} )\right]\underline{\beta},
+\end{equation}
+where
+\begin{align}
+\underline{\underline{W}}_{\,nw}  &= \underline{\underline{W}}_{\,p}-\underline{\underline{H}}_{\,nw},\\[0.5ex]
+\underline{\underline{W}}_{\,pw}  &= \underline{\underline{W}}_{\,p}-\underline{\underline{H}}_{\,pw}.
+\end{align}
+Note that $\underline{\underline{W}}_{\,nw}$ and $\underline{\underline{W}}_{\,pw}$ are Hermitian.
+Writing
+\begin{equation}
+(\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1} \,\underline{x}= \underline{y},
+\end{equation}
+we obtain
+\begin{align}\label{e141}
+\left(f_w\,\underline{\underline{W}}_{\,pw}
++\underline{\underline{B}}^{\,\dag}\,\underline{\underline{W}}_{\,nw}\right)\underline{x}&=\underline{0},\\[0.5ex]
+\left(f_w\,\underline{\underline{W}}_{\,pw}
++\underline{\underline{W}}_{\,nw}\,\underline{\underline{B}}\right)\underline{y} &=\underline{0}.\label{e142}
+\end{align}
+Note that the $\underline{x}$ are the left-eigenvectors of Eq.~(\ref{e142}), whereas the $\underline{y}$ are the left-eigenvectors of Eq.~(\ref{e141}). 
+The previous two equations can be combined to give
+\begin{equation}
+(f_w-f_w^{\,\ast})\,\underline{y}^{\,\dag}\,\underline{\underline{W}}_{\,pw}\,\underline{x} = 0.
+\end{equation}
+Hence, we deduce that the eigenvalues, $f_w$,  are real, and that the eigenvectors, $\underline{x}$ and $\underline{y}$,  are orthonormal, in the sense that
+\begin{equation}
+\underline{y}_i^{\,\dag}\,
+\underline{\underline{W}}_{\,pw}\,\underline{x}_j= \delta_{ij}.
+\end{equation} 
+Once we have determined the eigenvectors then
+\begin{align}
+\underline{\psi} &=\underline{x},\\[0.5ex]
+\underline{V} &= \underline{\underline{W}}_{\,p} \,\underline{x}.
+\end{align}
+
+We can write
+\begin{align}
+\underline{\psi} &= \underline{\underline{Q}}\,\underline{\mit\Xi},\\[0.5ex]
+\underline{Z} &= \underline{\underline{Q}}\,\underline{V},
+\end{align}
+where $\underline{\underline{Q}}$ is the diagonal matrix of the $m-n\,q(\epsilon)$ values. 
+Let
+\begin{align}
+\underline{\underline{\widetilde{W}}}_{\,nw} &= \underline{\underline{Q}}\,\underline{\underline{W}}_{\,nw}\,\underline{\underline{Q}},\\[0.5ex]
+\underline{\underline{\widetilde{W}}}_{\,pw} &= \underline{\underline{Q}}\,\underline{\underline{W}}_{\,pw}\,\underline{\underline{Q}},\\[0.5ex]
+\underline{\underline{\widetilde{B}}} &= \underline{\underline{Q}}^{-1}\,\underline{\underline{B}}\,\underline{\underline{Q}},\\[0.5ex]
+\underline{\widetilde{x}}&=  \underline{\underline{Q}}^{-1}\,\underline{x},\\[0.5ex]
+\underline{\widetilde{y}}&=  \underline{\underline{Q}}^{-1}\,\underline{x}.
+\end{align}
+It follows that 
+\begin{align}
+\left(f_w\,\underline{\underline{\widetilde{W}}}_{\,pw}
++\underline{\underline{\widetilde{B}}}^{\,\dag}\,\underline{\underline{\widetilde{W}}}_{\,nw}\right)\underline{\widetilde{x}}&=\underline{0},\\[0.5ex]
+\left(f_w\,\underline{\underline{\widetilde{W}}}_{\,pw}
++\underline{\underline{\widetilde{W}}}_{\,nw}\,\underline{\underline{\widetilde{B}}}\right)\underline{\widetilde{y}} &=\underline{0}.\label{e142}
+\end{align}
+Hence, we again deduce that 
+\begin{equation}
+(f_w-f_w^{\,\ast})\,\underline{\widetilde{y}}^{\,\dag}\,\underline{\underline{\widetilde{W}}}_{\,pw}\,\underline{\widetilde{x}} = 0.
+\end{equation}
+Furthermore,
+\begin{align}
+\underline{\mit\Xi} &=\underline{\widetilde{x}},\\[0.5ex]
+\underline{Z} &= \underline{\underline{\widetilde{W}}}_{\,p} \,\underline{\widetilde{x}}.
+\end{align}
 
 \end{document}
