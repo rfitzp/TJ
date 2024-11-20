@@ -207,12 +207,24 @@ void TJ::WriteNetcdf ()
   double* Pvac_i  = new double[J*J];
   double* Rvac_r  = new double[J*J];
   double* Rvac_i  = new double[J*J];
+  double* Qvac_r  = new double[J*J];
+  double* Qvac_i  = new double[J*J];
+  double* Svac_r  = new double[J*J];
+  double* Svac_i  = new double[J*J];
   double* Amat_r  = new double[J*J];
   double* Amat_i  = new double[J*J];
   double* Aant_r  = new double[J*J];
   double* Aant_i  = new double[J*J];
+  double* Bmat_r  = new double[J*J];
+  double* Bmat_i  = new double[J*J];
+  double* Bant_r  = new double[J*J];
+  double* Bant_i  = new double[J*J];
+  double* Imat_r  = new double[J*J];
+  double* Imat_i  = new double[J*J];
   double* Hmat_r  = new double[J*J];
   double* Hmat_i  = new double[J*J];
+  double* Gmat_r  = new double[J*J];
+  double* Gmat_i  = new double[J*J];
 
   double* PPPsi_r = new double[J*K*NDIAG];
   double* PPPsi_i = new double[J*K*NDIAG];
@@ -301,6 +313,10 @@ void TJ::WriteNetcdf ()
   double* gamma_r  = new double[J];
   double* gamma_i  = new double[J];
 
+  double* Iwr      = new double[J*J];
+  double* Jwr      = new double[J*J];
+  double* Kwr      = new double[J*J];
+
   Input[0]  = double (NTOR);
   Input[1]  = double (MMIN);
   Input[2]  = double (MMAX);
@@ -366,12 +382,24 @@ void TJ::WriteNetcdf ()
 	Pvac_i[cnt] = Pvac(j, jp).imag();
 	Rvac_r[cnt] = Rvac(j, jp).real();
 	Rvac_i[cnt] = Rvac(j, jp).imag();
+	Qvac_r[cnt] = Qvac(j, jp).real();
+	Qvac_i[cnt] = Qvac(j, jp).imag();
+	Svac_r[cnt] = Svac(j, jp).real();
+	Svac_i[cnt] = Svac(j, jp).imag();
 	Amat_r[cnt] = Amat(j, jp).real();
 	Amat_i[cnt] = Amat(j, jp).imag();
 	Aant_r[cnt] = Aant(j, jp).real();
 	Aant_i[cnt] = Aant(j, jp).imag();
+	Bmat_r[cnt] = Bmat(j, jp).real();
+	Bmat_i[cnt] = Bmat(j, jp).imag();
+	Bant_r[cnt] = Bant(j, jp).real();
+	Bant_i[cnt] = Bant(j, jp).imag();
+	Imat_r[cnt] = Imat(j, jp).real();
+	Imat_i[cnt] = Imat(j, jp).imag();
 	Hmat_r[cnt] = Hmat(j, jp).real();
 	Hmat_i[cnt] = Hmat(j, jp).imag();
+	Gmat_r[cnt] = Gmat(j, jp).real();
+	Gmat_i[cnt] = Gmat(j, jp).imag();
 	cnt++;
       }
 
@@ -563,6 +591,16 @@ void TJ::WriteNetcdf ()
       gamma_r [j] = real (gamma [j]);
       gamma_i [j] = imag (gamma [j]);
     }
+
+  cnt = 0;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	Iwr[cnt] = Iw(j, jp);
+	Jwr[cnt] = Jw(j, jp);
+	Kwr[cnt] = Kw(j, jp);
+	cnt++;
+      }
     
   try
     {
@@ -726,6 +764,14 @@ void TJ::WriteNetcdf ()
       rvacr_x.putVar (Rvac_r);
       NcVar rvaci_x = dataFile.addVar ("Rvac_i", ncDouble, vacuum_d);
       rvaci_x.putVar (Rvac_i);
+      NcVar qvacr_x = dataFile.addVar ("Qvac_r", ncDouble, vacuum_d);
+      qvacr_x.putVar (Qvac_r);
+      NcVar qvaci_x = dataFile.addVar ("Qvac_i", ncDouble, vacuum_d);
+      qvaci_x.putVar (Qvac_i);
+      NcVar svacr_x = dataFile.addVar ("Svac_r", ncDouble, vacuum_d);
+      svacr_x.putVar (Svac_r);
+      NcVar svaci_x = dataFile.addVar ("Svac_i", ncDouble, vacuum_d);
+      svaci_x.putVar (Svac_i);
       
       NcVar avacr_x = dataFile.addVar ("Amat_r", ncDouble, vacuum_d);
       avacr_x.putVar (Amat_r);
@@ -735,11 +781,27 @@ void TJ::WriteNetcdf ()
       aantr_x.putVar (Aant_r);
       NcVar aanti_x = dataFile.addVar ("Aant_i", ncDouble, vacuum_d);
       aanti_x.putVar (Aant_i);
- 
+      NcVar bvacr_x = dataFile.addVar ("Bmat_r", ncDouble, vacuum_d);
+      bvacr_x.putVar (Bmat_r);
+      NcVar bvaci_x = dataFile.addVar ("Bmat_i", ncDouble, vacuum_d);
+      bvaci_x.putVar (Bmat_i);
+      NcVar bantr_x = dataFile.addVar ("Bant_r", ncDouble, vacuum_d);
+      bantr_x.putVar (Bant_r);
+      NcVar banti_x = dataFile.addVar ("Bant_i", ncDouble, vacuum_d);
+      banti_x.putVar (Bant_i);
+       NcVar imatr_x = dataFile.addVar ("Imat_r", ncDouble, vacuum_d);
+      imatr_x.putVar (Imat_r);
+      NcVar imati_x = dataFile.addVar ("Imat_i", ncDouble, vacuum_d);
+      imati_x.putVar (Imat_i);
+
       NcVar hmatr_x = dataFile.addVar ("Hmat_r", ncDouble, vacuum_d);
       hmatr_x.putVar (Hmat_r);
       NcVar hmati_x = dataFile.addVar ("Hmat_i", ncDouble, vacuum_d);
       hmati_x.putVar (Hmat_i);
+      NcVar gmatr_x = dataFile.addVar ("Gmat_r", ncDouble, vacuum_d);
+      gmatr_x.putVar (Gmat_r);
+      NcVar gmati_x = dataFile.addVar ("Gmat_i", ncDouble, vacuum_d);
+      gmati_x.putVar (Gmat_i);
    
       NcVar rgrid_x = dataFile.addVar ("r_grid",    ncDouble, d_d);
       rgrid_x.putVar (Rgrid);
@@ -1018,6 +1080,22 @@ void TJ::WriteNetcdf ()
       gammar_x.putVar (gamma_r);
       NcVar gammai_x = dataFile.addVar  ("gamma_i",  ncDouble, j_d);
       gammai_x.putVar (gamma_i);
+
+      NcVar rwm_x = dataFile.addVar ("Rwm", ncDouble, w_d);
+      rwm_x.putVar (Rwm);
+      NcVar zwm_x = dataFile.addVar ("Zwm", ncDouble, w_d);
+      zwm_x.putVar (Zwm);
+      NcVar rwp_x = dataFile.addVar ("Rwp", ncDouble, w_d);
+      rwp_x.putVar (Rwp);
+      NcVar zwp_x = dataFile.addVar ("Zwp", ncDouble, w_d);
+      zwp_x.putVar (Zwp);
+
+      NcVar iw_x = dataFile.addVar ("Iw", ncDouble, vacuum_d);
+      iw_x.putVar (Iwr);
+      NcVar jw_x = dataFile.addVar ("Jw", ncDouble, vacuum_d);
+      jw_x.putVar (Jwr);
+      NcVar kw_x = dataFile.addVar ("Kw", ncDouble, vacuum_d);
+      kw_x.putVar (Kwr);
     }
   catch (NcException& e)
     {
@@ -1032,7 +1110,10 @@ void TJ::WriteNetcdf ()
 
   delete[] Pvac_r; delete[] Pvac_i; delete[] Rvac_r; delete[] Rvac_i;
   delete[] Amat_r; delete[] Amat_i; delete[] Aant_r; delete[] Aant_i;
-  delete[] Hmat_r; delete[] Hmat_i; 
+  delete[] Hmat_r; delete[] Hmat_i; delete[] Qvac_r; delete[] Qvac_i;
+  delete[] Svac_r; delete[] Svac_i; delete[] Bmat_r; delete[] Bmat_i;
+  delete[] Bant_r; delete[] Bant_i; delete[] Imat_r; delete[] Imat_i;
+  delete[] Gmat_r; delete[] Gmat_i;
 
   delete[] PPPsi_r; delete[] PPPsi_i; delete[] ZZZ_r;   delete[] ZZZ_i;
   delete[] PPF_r;   delete[] PPF_i;   delete[] ZZF_r;   delete[] ZZF_i;
@@ -1059,4 +1140,6 @@ void TJ::WriteNetcdf ()
   delete[] Uvec1_r;  delete[] Uvec1_i;  delete[] U1mat_r; delete[] U1mat_i;
   delete[] Chii_r;   delete[] Chii_i;   
   delete[] xvals;
+
+  delete[] Iwr; delete[] Jwr; delete[] Kwr;      
 }

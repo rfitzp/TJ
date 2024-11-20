@@ -2,6 +2,72 @@
 
 #include "TJ.h"
 
+// #################################################################################################################
+// Function to solve linear system of equations A . X = B, for X, where all quantities are real rectangular matrices
+// #################################################################################################################
+void TJ::SolveLinearSystem (Array<double,2> A, Array<double,2> X, Array<double,2> B)
+{
+  int size1 = A.extent(0);
+  int size2 = A.extent(1);
+  int size3 = B.extent(1);
+
+  if (size1 != size2)
+    {
+      printf ("TJ::SolveLinearSystem: Error - over/underdetermined linear system\n");
+      exit (1);
+    }
+ 
+  // Solve problem using Armadillo
+  mat Amat (size1, size2), Xmat (size2, size3), Bmat (size1, size3);
+
+  for (int i = 0; i < size1; i++)
+    for (int j = 0; j < size2; j++)
+      Amat(i, j) = A(i, j);
+
+  for (int i = 0; i < size1; i++)
+    for (int j = 0; j < size3; j++)
+      Bmat(i, j) = B(i, j);
+  
+  solve (Xmat, Amat, Bmat);
+
+  for (int i = 0; i < size2; i++)
+    for (int j = 0; j < size3; j++)
+      X(i, j) = Xmat(i, j);
+ }
+
+// #################################################################################################################
+// Function to solve linear system of equations X . A = B, for X, where all quantities are real rectangular matrices
+// #################################################################################################################
+void TJ::SolveLinearSystemTranspose (Array<double,2> A, Array<double,2> X, Array<double,2> B)
+{
+  int size1 = A.extent(1);
+  int size2 = A.extent(0);
+  int size3 = B.extent(0);
+
+  if (size1 != size2)
+    {
+      printf ("TJ::SolveLinearSystemTranspose: Error - over/underdetermined linear system\n");
+      exit (1);
+    }
+ 
+  // Solve problem using Armadillo
+  mat Amat (size1, size2), Xmat (size2, size3), Bmat (size1, size3);
+
+  for (int i = 0; i < size1; i++)
+    for (int j = 0; j < size2; j++)
+      Amat(i, j) = A(j, i);
+
+  for (int i = 0; i < size1; i++)
+    for (int j = 0; j < size3; j++)
+      Bmat(i, j) = B(j, i);
+  
+  solve (Xmat, Amat, Bmat);
+
+  for (int i = 0; i < size2; i++)
+    for (int j = 0; j < size3; j++)
+      X(i, j) = Xmat(j, i);
+ }
+
 // ####################################################################################################################
 // Function to solve linear system of equations A . X = B, for X, where all quantities are complex rectangular matrices
 // ####################################################################################################################

@@ -80,9 +80,9 @@ TJ::TJ ()
   bb64 = 44275./110592.;
   bb65 =   253./4096.;
 
-  // --------------------------------------
-  // Read control parameters from JSON file
-  // --------------------------------------
+  // ---------------------------------------
+  // Read control parameters from JSON files
+  // ---------------------------------------
   string JSONFilename = "../Inputs/TJ.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
@@ -103,14 +103,20 @@ TJ::TJ ()
   hmin    = JSONData["hmin"]   .get<double> ();
   hmax    = JSONData["hmax"]   .get<double> ();
   EPSF    = JSONData["EPSF"]   .get<double> ();
-  B0      = JSONData["B0"]     .get<double> ();
-  R0      = JSONData["R0"]     .get<double> ();
-  n0      = JSONData["n0"]     .get<double> ();
-  alpha   = JSONData["alpha"]  .get<double> ();
-  Zeff    = JSONData["Zeff"]   .get<double> ();
-  Mion    = JSONData["Mion"]   .get<double> ();
-  Chip    = JSONData["Chip"]   .get<double> ();
-  Teped   = JSONData["Teped"]  .get<double> ();
+  bw      = JSONData["bw"]     .get<double> ();
+  dw      = JSONData["dw"]     .get<double> ();
+
+  JSONFilename = "../Inputs/Layer.json";
+  JSONData     = ReadJSONFile (JSONFilename);
+  
+  B0    = JSONData["B0"]   .get<double> ();
+  R0    = JSONData["R0"]   .get<double> ();
+  n0    = JSONData["n0"]   .get<double> ();
+  alpha = JSONData["alpha"].get<double> ();
+  Zeff  = JSONData["Zeff"] .get<double> ();
+  Mion  = JSONData["Mion"] .get<double> ();
+  Chip  = JSONData["Chip"] .get<double> ();
+  Teped = JSONData["Teped"].get<double> ();
 
   // ------------
   // Sanity check
@@ -220,6 +226,16 @@ TJ::TJ ()
       printf ("TJ: Error - Teped must be positive\n");
       exit (1);
     }
+   if (bw < 1.)
+    {
+      printf ("TJ: Error - bw must be greater than unity\n");
+      exit (1);
+    }
+   if (dw < 0.)
+    {
+      printf ("TJ: Error - dw cannot be negative\n");
+      exit (1);
+    }
   
   // -----------------------------
   // Output calculation parameters
@@ -237,6 +253,8 @@ TJ::TJ ()
 	  acc, h0, hmin, hmax, EPSF);
   printf ("B0   = %10.3e R0    = %10.3e n0   = %10.3e alpha   = %10.3e Zeff = %10.3e Mion = %10.3e Chip = %10.3e Teped = %10.3e\n",
 	  B0, R0, n0, alpha, Zeff, Mion, Chip, Teped);
+  printf ("bw   = %10.3e dw    = %10.3e\n",
+	  bw, dw);
 }
 
 // ##########
@@ -258,6 +276,9 @@ void TJ::Solve ()
   ReadEquilibrium ();
   if (EQLB)
     return;
+
+  // Calculate wall data
+  CalcWall ();
   
   // Read RMP coil data
   ReadCoils ();
@@ -413,7 +434,7 @@ void TJ::CleanUp ()
   delete[] deltaWp; delete[] gammax; delete[] gamma;
   delete[] U1val;   delete[] Wval;   delete[] Vval;
 
-  delete[] rf; 
+  delete[] rf; delete[] Rwm; delete[] Zwm; delete[] Rwp; delete[] Zwp;
 }
 
 // ########################################

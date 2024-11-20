@@ -33,6 +33,7 @@
 
 // Inputs:
 //  Inputs/Equilibrium.json - JSON file
+//  Inputs/Layer.json       - JSON file
 
 // Outputs:
 //  Outputs/Equilibrium/Equilibrium.nc
@@ -111,8 +112,16 @@ class Equilibrium
   vector<double> Vna;    // V2(1), V3(1), etc (read from JSON file)
   double         nu;     // Toroidal current peaking parameter (determined from qa)
 
-  double         R0;     // Major radius of magnetic axis (read from TJ.json file)
-  double         B0;     // Toroidal magnetic field-strength on magnetic axis (read from TJ.json file)
+  double         R0;     // Major radius of magnetic axis (read from Layer JSON file)
+  double         B0;     // Toroidal magnetic field-strength on magnetic axis (read from Layer JSON file)
+
+  double         bw;     // Relative wall radius (read from JSON file)
+
+  int            ncoil;  // Number of toroidal strands that make up RMP coils (assumed to be at wall radius)
+  double*        wcoil;  // omega coordinates of RMP strands (read from JSON file)
+  double*        Icoil;  // Toroidal currents flowing in RMP strands (read from JSON file)
+  double*        Rcoil;  // R coodinates of RMP strands 
+  double*        Zcoil;  // Z coodinates of RMP strands 
 
   // ----------------------
   // Calculation parameters
@@ -242,6 +251,17 @@ class Equilibrium
   double*            dZdtheta;  // dZ/dtheta values on plasma boundary
   double*            R2b;       // R^2 values on plasma boundary
   double*            grr2b;     // |nabla r|^2 values on plasma boundary
+
+  double*            Rwall;     // R values on wall
+  double*            Zwall;     // Z values on wall
+  double*            twall;     // theta values on wall
+  double*            wwall;     // omega values on wall
+  double*            twall0;    // Preliminary theta values on wall
+  double*            wwall0;    // Preliminary omega values on wall
+  double*            dRdthetw;  // dR/dtheta values on wall
+  double*            dZdthetw;  // dZ/dtheta values on wall
+  double*            R2w;       // R^2 values on wall
+  double*            grr2w;     // |nabla r|^2 values on wall
 
   // ---------------
   // EFIT parameters

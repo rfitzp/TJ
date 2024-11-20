@@ -1,10 +1,17 @@
 # Python Scripts for Class TJ
 
+## Wall matrices:
+
+- *Wall.py*:	     Visualizes wall matrices I_m^m', J_m^m', and K_m^m'
+
 ## Vacuum matrices:
 
 - *Metric.py*:       Plots metric data at plasma boundary
 - *Vacuum.py*:       Visualizes vacuum matrices P_m^m' and R_m^m
-- *Amat.py*:         Visualizes vacuum matrix A^mm'
+- *Vacuum1.py*:      Visualizes vacuum matrices Q_m^m' and S_m^m
+- *Amat.py*:         Visualizes vacuum matrix A^mm' (should be Hermitian)
+- *Bmat.py*:         Visualizes vacuum matrix B^mm' (should be Hermitian)
+- *Imat.py*:         Visualizes vacuum matrix I^mm' (should be unit matrix)
 - *Hmat.py*:         Visualizes vacuum response matrix, H_mm'
 
 ## ODE Solution:

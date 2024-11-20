@@ -1,6 +1,6 @@
 # Xi.py
 
-# Plots Fourier harmonics of Xu on plasma boundary associated with ideal eigenfunction.
+# Plots Fourier harmonics of Xi on plasma boundary associated with ideal eigenfunction.
 # User prompted for eigenfunction number.
 
 import math
@@ -14,18 +14,21 @@ ds   = nc.Dataset(fn)
 wr   = ds['Xi_e_r']
 wi   = ds['Xi_e_i']
 mpol = ds['mpol']
-
-fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Fourier Harmonics of Xi on Plasma Boundary')
-plt.rc('xtick', labelsize = 15) 
-plt.rc('ytick', labelsize = 15)
+w    = np.asarray(ds['delta_W'])
+p    = np.asarray(ds['delta_W_p'])
+v    = np.asarray(ds['delta_W_v'])
 
 J = mpol.shape[0]
-print ("solution number = (%d .. %d)" % (0, J))
-j   = input ("solution number ? ")
+print ("solution number = (%d .. %d)" % (0, J-1))
+j   = int(input ("solution number ? "))
 
 xir = wr[:,j,-1]
 xii = wi[:,j,-1]
+
+fig = plt.figure (figsize = (12.0, 8.0))
+fig.canvas.manager.set_window_title (r'TJ Code: Fourier Harmonics of Xi on Plasma Boundary: deltaW = %10.3e %10.3e %10.3e' % (w[j], p[j], v[j]))
+plt.rc('xtick', labelsize = 15) 
+plt.rc('ytick', labelsize = 15)
 
 plt.subplot (2, 1, 1)
 

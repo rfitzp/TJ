@@ -14,7 +14,8 @@
 // Program assumes monotonic safety-factor profile.
 
 // Inputs:
-//  Inputs/TJ.json - JSON file
+//  Inputs/TJ.json    - JSON file
+//  Inputs/Layer.json - JSON file
 
 // Outputs:
 //  Outputs/TJ/TJ.nc
@@ -89,41 +90,44 @@ class TJ
   // ----------------------
   // Calculation parameters
   // ----------------------
-  int    NTOR;    // Toroidal mode number (read from JSON file)
-  int    MMIN;    // Minimum poloidal mode number included in calculation (read from JSON file)
-  int    MMAX;    // Maximum poloidal mode number included in calculation (read from JSON file)
+  int    NTOR;    // Toroidal mode number (read from TJ JSON file)
+  int    MMIN;    // Minimum poloidal mode number included in calculation (read from TJ JSON file)
+  int    MMAX;    // Maximum poloidal mode number included in calculation (read from TJ JSON file)
 
-  double EPS;     // Solutions launched from magnetic axis at r = EPS (read from JSON file)
-  double DEL;     // Distance of closest approach to rational surface is DEL (read from JSON file)
-  int    NFIX;    // Number of fixups (read from JSON file)
-  int    NDIAG;   // Number of radial grid-points for diagnostics (read from JSON file)
-  double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from JSON file)
-  int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from JSON file)
-  int    FREE;    // Flag for free/fixed boundary calculation (read from JSON file)
-  int    EQLB;    // Flag for equilibrium calculation only (read from JSON file)
+  double EPS;     // Solutions launched from magnetic axis at r = EPS (read from TJ JSON file)
+  double DEL;     // Distance of closest approach to rational surface is DEL (read from TJ JSON file)
+  int    NFIX;    // Number of fixups (read from TJ JSON file)
+  int    NDIAG;   // Number of radial grid-points for diagnostics (read from TJ JSON file)
+  double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from TJ JSON file)
+  int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from TJ JSON file)
+  int    FREE;    // Flag for free/fixed boundary calculation (read from TJ JSON file)
+                  //  FREE > 0 - perform no-wall calculation
+                  //  FREE = 0 - perform perfect-wall calculation
+                  //  FREE < 0 - perform fixed-boundary calculation
+  int    EQLB;    // Flag for equilibrium calculation only (read from TJ JSON file)
 
   double EPSF;    // Step-length for finite difference determination of derivatives
 
   // ----------------------------
   // Layer calculation parameters
   // ----------------------------
-  double B0;      // On-axis toroidal magnetic field-strength (T) (read from JSON file)
-  double R0;      // On-axis plasma major radius (m) (read from JSON file)
-  double n0;      // On-axis electron number density (m^-3) (read from JSON file)
-  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from JSON file)
-  double Zeff;    // Effective ion charge number (read from JSON file)
-  double Mion;    // Ion mass number (read from JSON file)
-  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from JSON file)
-  double Teped;   // Electron temperature at edge of plasma (eV) (read from JSON file)
+  double B0;      // On-axis toroidal magnetic field-strength (T) (read from Layer JSON file)
+  double R0;      // On-axis plasma major radius (m) (read from  Layer JSON file)
+  double n0;      // On-axis electron number density (m^-3) (read from  Layer JSON file)
+  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from Layer JSON file)
+  double Zeff;    // Effective ion charge number (read from Layer JSON file)
+  double Mion;    // Ion mass number (read from Layer JSON file)
+  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from Layer JSON file)
+  double Teped;   // Electron temperature at edge of plasma (eV) (read from Layer JSON file)
   double apol;    // Plasma minor radius (m)
 
   // -------------------------------
   // Adaptive integration parameters
   // -------------------------------
-  double acc;     // Integration accuracy (read from JSON file)
-  double h0;      // Initial step-length (read from JSON file)
-  double hmin;    // Minimum step-length (read from JSON file)
-  double hmax;    // Maximum step-length (read from JSON file)
+  double acc;     // Integration accuracy (read from TJ JSON file)
+  double h0;      // Initial step-length (read from TJ JSON file)
+  double hmin;    // Minimum step-length (read from TJ JSON file)
+  double hmax;    // Maximum step-length (read from TJ JSON file)
   int    maxrept; // Maximum number of step recalculations
   int    flag;    // Integration error calculation flag
   
@@ -232,16 +236,32 @@ class TJ
   // Vacuum solution data
   // --------------------
   double                   sa;   // Edge magnetic shear
-  Array<complex<double>,2> Pvac; // Vacuum solution matrix
-  Array<complex<double>,2> Pdag; // Hermitian conjugate of Pvac
-  Array<complex<double>,2> Rvac; // Vacuum solution matrix
-  Array<complex<double>,2> Amat; // Pdag * Rvac
-  Array<complex<double>,2> Aher; // Hermitian component of Amat
-  Array<complex<double>,2> Aant; // Anti-Hermitian component of Amat
-  Array<complex<double>,2> Rmat; // Pdag * Rmat = Aher
-  Array<complex<double>,2> Rdag; // Hermitian conjugate of Rmat
-  Array<complex<double>,2> Hmat; // Vacuum response matrix: Rdag * Hmat = Pdag
 
+  Array<complex<double>,2> Pvac;  // Vacuum solution matrix
+  Array<complex<double>,2> Qvac;  // Vacuum solution matrix
+  Array<complex<double>,2> Rvac;  // Vacuum solution matrix
+  Array<complex<double>,2> Svac;  // Vacuum solution matrix
+  Array<complex<double>,2> Pdag;  // Hermitian conjugate of Pvac
+  Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rvac
+  Array<complex<double>,2> Qdag;  // Hermitian conjugate of Qvac
+  Array<complex<double>,2> Amat;  // Pdag * Rvac
+  Array<complex<double>,2> Aher;  // Hermitian component of Amat
+  Array<complex<double>,2> Aant;  // Anti-Hermitian component of Amat
+  Array<complex<double>,2> Bmat;  // Qdag * Svac
+  Array<complex<double>,2> Bher;  // Hermitian component of Bmat
+  Array<complex<double>,2> Bant;  // Anti-Hermitian component of Bmat
+  Array<complex<double>,2> Imat;  // Pdag * Svac - Rdag * Qvac
+
+  Array<complex<double>,2> Cmat;  // Cmat * Rvac = Pvac
+  Array<complex<double>,2> Cdag;  // Hermitian conjugate of Cmat
+  Array<complex<double>,2> Hmat;  // No-wall vacuum response matrix: Hmat = (1/2) (Cmat + Cdag)
+
+  Array<complex<double>,2> PQmat; // Pvac + Qvac * Iw
+  Array<complex<double>,2> RSmat; // Rvac + Svac * Iw
+  Array<complex<double>,2> Dmat;  // Dmat * RSvac = PQvac
+  Array<complex<double>,2> Ddag;  // Hermitian conjugate of Dmat
+  Array<complex<double>,2> Gmat;  // Perfect-wall vacuum response matrix: Gmat = (1/2) (Dmat + Ddag)
+  
   // ---------------------
   // Rational surface data
   // ---------------------
@@ -326,13 +346,43 @@ class TJ
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
 
+  // ---------
+  // Wall data
+  // ---------
+  double          bw;    // Relative wall radius
+  double          dw;    // Relative wall thickness
+  double          Dw;    // Wall thickness
+  double          zwm;   // Cosh(mu) on inner surface of wall
+  double          zwp;   // Cosh(mu) on outer surface of wall
+  double          swm;   // Sinh(mu) on inner surface of wall
+  double          swp;   // Sinh(mu) on outer surface of wall
+  double*         Rwm;   // R coordinates of inner surface of wall
+  double*         Zwm;   // Z coordinates of inner surface of wall
+  double*         Rwp;   // R coordinates of outer surface of wall
+  double*         Zwp;   // Z coordinates of outer surface of wall
+  Array<double,2> Ipw;   // Wall matrix
+  Array<double,2> Iqw;   // Wall matrix
+  Array<double,2> Jpw;   // Wall matrix
+  Array<double,2> Jqw;   // Wall matrix
+  Array<double,2> kw;    // Wall matrix
+  Array<double,2> Ihpw;  // Wall matrix
+  Array<double,2> Ihqw;  // Wall matrix
+  Array<double,2> Iw;    // Wall response matrix
+  Array<double,2> Iwher; // Hermitian component of Iw
+  Array<double,2> Iwant; // Anti-Hermitian component of Iw
+  Array<double,2> Jqpw;  // Jqw * Iw + Jpw
+  Array<double,2> Jw;    // Wall response matrix
+  Array<double,2> Kw;    // Iw * Jw
+  Array<double,2> Kwher; // Hermitian component of Kw
+  Array<double,2> Kwant; // Anti-Hermitian component of Kw
+  
   // -----------------------------------
   // Resonant magnetic perturbation data
   // -----------------------------------
   int                      ncoil;   // Number of toroidal strands that make up RMP coils 
-  double*                  Rcoil;   // R coodinates of strands (read from JSON file)
-  double*                  Zcoil;   // Z coodinates of strands (read from JSON file)
-  double*                  Icoil;   // Toroidal currents flowing in strands (read from JSON file)
+  double*                  Icoil;   // Toroidal currents flowing in strands (read from TJ JSON file)
+  double*                  Rcoil;   // R coodinates of strands 
+  double*                  Zcoil;   // Z coodinates of strands 
   complex<double>*         Psix;    // RMP perturbation at plasma boundary
   complex<double>*         Xi;      // RMP response vector
   complex<double>*         Upsilon; // RMP response vector
@@ -346,7 +396,7 @@ class TJ
   // --------------------
   // Ideal stability data
   // --------------------
-  int                      XiFlag;  // Flag for using Xi, rather than Psi, as ideal eigenfunction basis (read from JSON file)
+  int                      XiFlag;  // Flag for using Xi, rather than Psi, as ideal eigenfunction basis (read from TJ JSON file)
   Array<complex<double>,3> Psii;    // Psi components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Zi;      // Z components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Xii;     // Xi components of ideal solutions launched from magnetic axis
@@ -464,6 +514,8 @@ class TJ
 
   // Read equilibrium data from Inputs/Equilibrium.nc
   void ReadEquilibrium ();
+  // Calculate wall data
+  void CalcWall ();
   // Read RMP coil data
   void ReadCoils ();
   // Calculate metric data at plasma boundary
@@ -573,6 +625,11 @@ class TJ
   void CalculateResonantMagneticPerturbation ();
   // Calculate unreconnected eigenfunction and RMP response visualization data
   void VisualizeEigenfunctions ();
+
+  // ............
+  // In Ideal.cpp
+  // ............
+
   // Calculate ideal stability
   void CalculateIdealStability ();
    
@@ -663,6 +720,10 @@ class TJ
   // In Armadillo.cpp
   // ................
 
+  // Solve linear system of equations A . X = B, for X, where all quantities are real rectangular matrices
+  void SolveLinearSystem (Array<double,2> A, Array<double,2> X, Array<double,2> B);
+  // Solve linear system of equations X . A = B, for X, where all quantities are real rectangular matrices
+  void SolveLinearSystemTranspose (Array<double,2> A, Array<double,2> X, Array<double,2> B);
   // Solve linear system of equations A . X = B, for X, where all quantities are complex rectangular matrices
   void SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B);
   // Solve linear system of equations X . A = B, for X, where all quantities are complex rectangular matrices
@@ -689,6 +750,14 @@ class TJ
   double ToroidaldPdz (int m, int n, double z);
   // Return derivative of associated Legendre function Q^m_(n-1/2) (z)
   double ToroidaldQdz (int m, int n, double z);
+  // Return normalized associated Legendre function P^m_(n-1/2) (z)
+  double NormToroidalP (int m, int n, double z);
+  // Return normalized associated Legendre function Q^m_(n-1/2) (z)
+  double NormToroidalQ (int m, int n, double z);
+  // Return normalzied derivative of associated Legendre function P^m_(n-1/2) (z)
+  double NormToroidaldPdz (int m, int n, double z);
+  // Return normalized derivative of associated Legendre function Q^m_(n-1/2) (z)
+  double NormToroidaldQdz (int m, int n, double z);
   // Return hyperbolic cosine of toroidal coordinate mu
   double GetCoshMu (double R, double Z);
   // Return toroidal coordinate eta

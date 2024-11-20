@@ -13,14 +13,29 @@ void TJ::GetVacuum ()
   // Allocate memory
   // ...............
   Pvac.resize (J, J);
-  Pdag.resize (J, J);
+  Qvac.resize (J, J);
   Rvac.resize (J, J);
+  Svac.resize (J, J);
+  Pdag.resize (J, J);
+  Rdag.resize (J, J);
+  Qdag.resize (J, J);
   Amat.resize (J, J);
   Aher.resize (J, J);
   Aant.resize (J, J);
-  Rmat.resize (J, J);
-  Rdag.resize (J, J);
+  Bmat.resize (J, J);
+  Bher.resize (J, J);
+  Bant.resize (J, J);
+  Imat.resize (J, J);
+
+  Cmat.resize (J, J);
+  Cdag.resize (J, J);
   Hmat.resize (J, J);
+
+  PQmat.resize (J, J);
+  RSmat.resize (J, J);
+  Dmat .resize (J, J);
+  Ddag .resize (J, J);
+  Gmat .resize (J, J);
 
   Psix = new complex<double>[J];
   Xi   = new complex<double>[J];
@@ -28,7 +43,7 @@ void TJ::GetVacuum ()
   // .........................
   // Calculate vacuum matrices
   // .........................
-  int              neqns = 2*J*J;
+  int              neqns = 4*J*J;
   double           h, t_err, t;
   int              rept;
   complex<double>* Y   = new complex<double>[neqns];
@@ -55,11 +70,17 @@ void TJ::GetVacuum ()
       {
 	Pvac(j, jp) = Y[index]; index++;
 	Rvac(j, jp) = Y[index]; index++;
+	Qvac(j, jp) = Y[index]; index++;
+	Svac(j, jp) = Y[index]; index++;
       }
 
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
-      Pdag (j, jp) = conj (Pvac (jp, j));
+      {
+	Pdag (j, jp) = conj (Pvac (jp, j));
+	Rdag (j, jp) = conj (Rvac (jp, j));
+	Qdag (j, jp) = conj (Qvac (jp, j));
+      }
 
   // ..................
   // Calculate A-matrix
@@ -98,19 +119,114 @@ void TJ::GetVacuum ()
 	  Aamax = aaval;	
       }
 
-  printf ("Vacuum Hermitian test residual: %10.4e\n", Aamax/Ahmax);
+  // ..................
+  // Calculate B-matrix
+  // ..................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += Qdag (j, jpp) * Svac (jpp, jp);
+
+	Bmat (j, jp) = sum;
+      }
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	Bher (j, jp) = 0.5 * (Bmat (j, jp) + conj (Bmat (jp, j)));
+	Bant (j, jp) = 0.5 * (Bmat (j, jp) - conj (Bmat (jp, j)));
+      }
+  
+  // ............................
+  // Calculate B-matrix residuals
+  // ............................
+  double Bhmax = 0., Bamax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double bhval = abs (Bher (j, jp));
+	double baval = abs (Bant (j, jp));
+
+	if (bhval > Bhmax)
+	  Bhmax = bhval;
+	if (baval > Bamax)
+	  Bamax = baval;	
+      }
+
+  // ..................
+  // Calculate I-matrix
+  // ..................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += Pdag (j, jpp) * Svac (jpp, jp) - Rdag (j, jpp) * Qvac (jpp, jp);
+
+	Imat (j, jp) = sum;
+      }
+  
+  // ............................
+  // Calculate I-matrix residuals
+  // ............................
+  double Imax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double ival;
+	if (j == jp)
+	  ival = abs (Imat (j, jp) - 1.);
+	else
+	  ival = abs (Imat (j, jp));
+
+	if (ival > Imax)
+	  Imax = ival;
+      }
+  
+  printf ("Vacuum Hermitian test residual: %10.4e %10.4e %10.4e\n", Aamax/Ahmax, Bamax/Bhmax, Imax);
 
   // ..................
   // Calculate H-matrix
   // ..................
-  SolveLinearSystem (Pdag, Rmat, Aher);
+  SolveLinearSystemTranspose (Rvac, Cmat, Pvac);
 
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
-      Rdag (j, jp) = conj (Rmat (jp, j));
-  
-  SolveLinearSystem (Rdag, Hmat, Pdag);
+      Cdag (j, jp) = conj (Cmat (jp, j));
 
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      Hmat (j, jp) = 0.5 * Cmat (j, jp) + 0.5 * Cdag (j, jp);
+
+  // ..................
+  // Calculate G-matrix
+  // ..................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	PQmat (j, jp) = Pvac (j, jp);
+	RSmat (j, jp) = Rvac (j, jp);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  {
+	    PQmat (j, jp) += Qvac (j, jpp) * Iw (jpp, jp);
+	    RSmat (j, jp) += Svac (j, jpp) * Iw (jpp, jp);
+	  }
+      }
+  SolveLinearSystemTranspose (RSmat, Dmat, PQmat);
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      Ddag (j, jp) = conj (Dmat (jp, j));
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      Gmat (j, jp) = 0.5 * Dmat (j, jp) + 0.5 * Ddag (j, jp);
+    
   // ......................................................
   // Calculate poloidal harmonics of RMP at plasma boundary
   // ......................................................
@@ -166,15 +282,11 @@ void TJ::Rhs1 (double t, complex<double>* Y, complex<double>* dYdt)
       for (int j = 0; j < J; j++)
 	for (int jp = 0; jp < J; jp++)
 	  {
-	    int    M   = MPOL[j];
 	    int    MP  = MPOL[jp];
-	    int    MM  = abs (M);
 	    int    MMP = abs (MP);
 	    
 	    double m   = mpol[j];
 	    double mp  = mpol[jp];
-	    double mm  = fabs (m);
-	    double mmp = fabs (mp);
 	    
 	    double R    = gsl_spline_eval (Rbspline,  t, Rbacc);
 	    double Z    = gsl_spline_eval (Zbspline,  t, Zbacc);
@@ -188,29 +300,24 @@ void TJ::Rhs1 (double t, complex<double>* Y, complex<double>* dYdt)
 	    
 	    double fac = sqrt (z - cet);
 	    
-	    double Ptor  = ToroidalP    (NTOR, MMP, z);
-	    double Ptorz = ToroidaldPdz (NTOR, MMP, z);
-	    
-	    double Pfac;
-	    if (MP == 0)
-	      {
-		Pfac = sqrt (M_PI) * gsl_sf_gamma (0.5 - ntor) /sqrt (2.);
-	      }
-	    else
-	      {
-		Pfac =
-		  cos (mmp*M_PI) * sqrt (M_PI) * gsl_sf_gamma (mmp + 0.5 - ntor) * pow (epsa, mmp)
-		  /pow (2., mmp - 0.5) /gsl_sf_fact (MMP);
-	      }
+	    double Ptor  = NormToroidalP    (NTOR, MMP, z);
+	    double Ptorz = NormToroidaldPdz (NTOR, MMP, z);
+	    double Qtor  = NormToroidalQ    (NTOR, MMP, z);
+	    double Qtorz = NormToroidaldQdz (NTOR, MMP, z);
 	    
 	    complex<double> eik = complex<double> (cos (m * t + mp * eta), - sin (m * t + mp * eta));
-	    
-	    complex<double> Prhs = Pfac * fac * Ptor * eik /2./M_PI;
-	    complex<double> Rrhs = Pfac * ( (Ptor /2./fac + fac * Ptorz) * R2rz
-					    + (set /2./fac - complex<double> (0., 1.) * mp * fac) * Ptor * R2re) * eik /2./M_PI;
+
+	    complex<double> Prhs = fac * Ptor * eik /2./M_PI;
+	    complex<double> Rrhs = (  (Ptor /2./fac + fac * Ptorz) * R2rz
+                                    + (set /2./fac - complex<double> (0., 1.) * mp * fac) * Ptor * R2re) * eik /2./M_PI;
+	    complex<double> Qrhs = fac * Qtor * eik /2./M_PI;
+	    complex<double> Srhs = (  (Qtor /2./fac + fac * Qtorz) * R2rz
+                                    + (set /2./fac - complex<double> (0., 1.) * mp * fac) * Qtor * R2re) * eik /2./M_PI;
 	    
 	    dYdt[index] = Prhs; index++;
 	    dYdt[index] = Rrhs; index++;
+	    dYdt[index] = Qrhs; index++;
+	    dYdt[index] = Srhs; index++;
 	  }
     }
   else if (rhs_chooser == 1)

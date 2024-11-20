@@ -60,7 +60,7 @@ derive the so-called ``outer-region  partial differential equations (p.d.e.s)", 
 Sect.~\ref{sode}, we derive the so-called ``outer region ordinary differential equations  (o.d.e.s)'', which are a large set of coupled first-order 
 o.d.e.s that control the ideal-MHD solution in the outer region. We also demonstrate that these o.d.e.s conserve toroidal electromagnetic
 angular momentum. In Sect.~\ref{snus}, we discuss the general behavior of the outer-region o.d.e.s in the vicinity of a rational surface. 
-In Sect.~\ref{vacxx}, we obtain the general boundary condition satisfied by the outer-region o.d.e.s at the plasma/vacuum interface, on the assumption that
+In Sect.~\ref{vacxx}, we obtain the general boundary condition satisfied by the outer-region o.d.e.s at the plasma-vacuum interface, on the assumption that
 the region surrounding the plasma does not contain any non-axisymmetric currents. We also demonstrate that these boundary conditions conserve
 toroidal electromagnetic angular momentum. In Sect.~\ref{large}, we introduce the aspect-ratio expanded tokamak equilibrium, and determine the
 specific forms of the outer-region o.d.e.s. In Sect.~\ref{etm}, we calculate the matrix equation that constitutes the tearing mode dispersion relation, and
@@ -147,7 +147,7 @@ It follows from Eqs.~(\ref{q}), (\ref{jup3}), and (\ref{gs}) that
 {\cal J}\,J^{\,\phi} = -q\,g' - \frac{r\,R^{\,2}\,P'}{f}.
 \end{equation}
 It is clear from Eqs.~(\ref{jup2}) and (\ref{jup3a}) that $g'=P'=0$ in the  current-free ``vacuum'' region surrounding the plasma.
-We shall also assume that $g'=P'=0$ at the plasma/vacuum interface, so as to ensure that the equilibrium plasma
+We shall also assume that $g'=P'=0$ at the plasma-vacuum interface, so as to ensure that the equilibrium plasma
 current density is zero at the interface. 
 
 \section{Derivation of Outer-Region P.D.E.s}\label{opde}
@@ -769,8 +769,8 @@ surface.
 
 \section{Vacuum Solution}\label{vacxx}
 
-\subsection{Plasma/Vacuum Interface}
-Let the plasma/vacuum interface  correspond to $r=\epsilon$, where  $\epsilon$ is the inverse aspect-ratio of the
+\subsection{Plasma-Vacuum Interface}
+Let the plasma-vacuum interface  correspond to $r=\epsilon$, where  $\epsilon$ is the inverse aspect-ratio of the
 plasma. In other words, let $\epsilon=a/R_0$, where $a$ is the effective minor radius of the plasma. 
 The region external to the plasma, $r>\epsilon$, is assumed to be  free of non-axisymmetric currents.
 
@@ -800,17 +800,22 @@ plane.
  potential, $V$,    is well-behaved a long way from the plasma, can be written\,\cite{morse1}
 \begin{align}\label{e233}
 V(z,\eta) &=
- a_0\,\frac{\sqrt{\pi}\,\Gamma(1/2-n)}{\sqrt{2}}\,(z-\cos\eta)^{1/2}\,P_{-1/2}^{\,n}(z) \\[0.5ex]
-&\phantom{=}+\sum_{m\neq 0} a_m\,\cos(|m|\,\pi)\,
-\frac{\sqrt{\pi}\,\Gamma(|m|+1/2-n)\,\epsilon^{\,|m|}}{2^{\,|m|-1/2}\,|m|!}
-\,(z-\cos\eta)^{1/2}\,P_{m-1/2}^{\,n}(z) \,\exp(-{\rm i}\,m\,\eta),\nonumber
+(z-\cos\eta)^{1/2}\sum_{m} \hat{P}_{m-1/2}^{\,n}(z) \,\exp(-{\rm i}\,m\,\eta)\,a_m,
 \end{align}
-where $z=\cosh\mu$, the $P_{m-1/2}^{\,n}(z)$ are {\em toroidal functions},\cite{abrama}  $\Gamma(z)$ is a
+where
+\begin{align}
+\hat{P}_{|m|-1/2}^{\,n}(z) &= \cos(|m|\,\pi)\,\frac{\sqrt{\pi}\,\Gamma(|m|+1/2-n)\,\epsilon^{\,|m|}}{2^{\,|m|-1/2}\,|m|!}\,P_{|m|-1/2}^{\,n}(z).
+\end{align}
+Here,  $z=\cosh\mu$, the $P_{m-1/2}^{\,n}(z)$ are {\em toroidal functions},\cite{abrama}  $\Gamma(z)$ is a
 gamma function,\cite{abramb} and the $a_m$ are arbitrary complex coefficients.
-Here, the normalization of the $a_m$ is the same as that adopted in Ref.~\onlinecite{am1}.
+Moreover, we have made use of the fact that\,\cite{abrama}
+\begin{align}
+P_{-m-1/2}^{\,n}(z) &= P_{m-1/2}^{\,n}(z).
+\end{align}
+Here, the normalization of the $a_m$ is similar to that adopted in Ref.~\onlinecite{am1}.
 
-\subsection{Vacuum Solution at Plasma/Vacuum Interface}\label{prdef}
-In the vicinity of the plasma/vacuum interface, we can write
+\subsection{Vacuum Solution at Plasma-Vacuum Interface}\label{prdef}
+In the vicinity of the plasma-vacuum interface, we can write
 \begin{equation}\label{e193tt}
 V(r,\theta) = \sum_m V_m(r)\,\exp(\,{\rm i}\,m\,\theta),
 \end{equation}
@@ -821,23 +826,14 @@ V_m (\epsilon)&= \oint_{r=\epsilon}V\,\exp(-{\rm i}\,m\,\theta)\,\frac{d\theta}{
 and, according to Eq.~(\ref{e233}), 
 \begin{align}
 {\cal P}_m^{\,m'} &=
-\cos(|m'|\,\pi)\,\frac{\sqrt{\pi}\,\Gamma(|m'|+1/2-n)\,\epsilon^{\,|m'|}}{2^{\,|m'|-1/2}\,|m'|!}\nonumber\\[0.5ex]
-&\phantom{=}\times
-\oint_{r=\epsilon}(z-\cos\eta)^{1/2}\,P_{m'-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi},\label{e346}
+\oint_{r=\epsilon}(z-\cos\eta)^{1/2}\,\hat{P}_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}.\label{e346}
 \end{align}
-for general $m'$, and 
-\begin{align}
-{\cal P}_m^{\,0} &=
-\frac{\sqrt{\pi}\,\Gamma(1/2-n)}{\sqrt{2}}\oint_{r=\epsilon}
-(z-\cos\eta)^{1/2}\,P_{-1/2}^{\,n}(z)\,\exp(-{\rm i}\,m\,\theta)\,\frac{d\theta}{2\pi},\label{e348}
-\end{align}
-for the special case $m'=0$. 
 
 Let
 \begin{equation}\label{ebnm}
 {\cal J}\,{\bf b}\cdot\nabla r = {\rm i}\,\psi(r,\theta)\,\exp(-{\rm i}\,n\,\phi).
 \end{equation}
-In the vicinity of the plasma/vacuum interface, we can write
+In the vicinity of the plasma-vacuum interface, we can write
 \begin{equation}\label{ebnm1}
 \psi(r,\theta) = \sum_m \psi_m(r)\,\exp(\,{\rm i}\,m\,\theta),
 \end{equation}
@@ -847,34 +843,21 @@ where
 \end{align}
 and,  according to Eq.~(\ref{e233}), 
 \begin{align}\label{e354}
-{\cal R}_m^{\,m'} &=\cos(|m'|\,\pi)\,
-\frac{\sqrt{\pi}\,\Gamma(|m'|+1/2-n)\,\epsilon^{\,|m'|}}{2^{\,|m'|-1/2}\,|m'|!}
-\nonumber\\[0.5ex]&\phantom{=}\times \oint_{r=\epsilon}
-\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,P_{m'-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{dP_{m'-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
+{\cal R}_m^{\,m'} &=\oint_{r=\epsilon}
+\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\hat{P}_{|m'|-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{d\hat{P}_{|m'|-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
 \right.\nonumber\\[0.5ex]&
-\left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]P_{m'-1/2}^{\,n}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
+\left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]\hat{P}_{|m'|-1/2}^{\,n}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
 \right\}\nonumber\\[0.5ex] &
-\phantom{=}\times\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi},
+\phantom{=}\times\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}.
 \end{align}
-for general $m'$, and 
-\begin{align}\label{e356}
-{\cal R}_m^{\,0} &=
-\frac{\sqrt{\pi}\,\Gamma(1/2-n)}{\sqrt{2}}
-\nonumber\\[0.5ex]&\phantom{=}\times \oint_{r=\epsilon}
-\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,P_{-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{dP_{-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r \cdot\nabla z
-\right.\nonumber\\[0.5ex]&
-\phantom{=}\left.+\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta\,P_{-1/2}^{\,n}(z)\,\nabla r \cdot \nabla \eta
-\right\}\exp(-{\rm i}\,m\,\theta)\,\frac{d\theta}{2\pi},
-\end{align}
-for the special case $m'=0$.
 
-\subsection{Homogeneous Boundary Condition at Plasma/Vacuum Interface}
+\subsection{Homogeneous Boundary Condition at Plasma-Vacuum Interface}
 According to Eqs.~(\ref{e66}), (\ref{e79o}), (\ref{e97}), (\ref{Zdef})--(\ref{psidef}),  (\ref{vdef}), and (\ref{e193tt}), 
 \begin{equation}\label{evdef}
 V_m(r)= \frac{Z_m(r)}{m-n\,q(r)},
 \end{equation}
 and the $\psi_m(r)$ defined in Eq.~(\ref{e115}) can be identified with the $\psi_m(r)$ defined in Eqs.~(\ref{ebnm}) and (\ref{ebnm1}). 
-Thus, given that $\psi$ and $Z$ must be continuous across the plasma/vacuum interface (in the absence of finite
+Thus, given that $\psi$ and $Z$ must be continuous across the plasma-vacuum interface (in the absence of finite
 edge equilibrium plasma currents), Eqs.~(\ref{e344}) and (\ref{e352}) yield the following homogenous boundary condition at the  interface,
 \begin{equation}\label{bc}
 \frac{Z_m(\epsilon)}{m-n\,q(\epsilon)} = \sum_{m'} H_{mm'}\,\psi_{m'}(\epsilon),
@@ -885,7 +868,7 @@ where
 \end{equation}
 
 \subsection{Toroidal Electromagnetic Angular Momentum Flux}
-By analogy with Eq.~(\ref{torque}), the outward flux of toroidal electromagnetic angular momentum across the plasma/vacuum interface,
+By analogy with Eq.~(\ref{torque}), the outward flux of toroidal electromagnetic angular momentum across the plasma-vacuum interface,
 which is equal to the flux of  toroidal electromagnetic angular momentum across a surface of constant $\mu$ (in the direction of
 decreasing $\mu$) in the vacuum region, is given by 
 \begin{align}
@@ -899,7 +882,7 @@ T_\phi(\epsilon)=0.
 In other words, the flux of toroidal  electromagnetic angular momentum across the vacuum/plasma interface is zero, as must be the
 case because an isolated tokamak plasma cannot exert a net toroidal electromagnetic torque on itself.\cite{am1}
 
-According to Eq.~(\ref{etorque}), the outward flux of toroidal electromagnetic angular momentum across the plasma/vacuum interface can also be written
+According to Eq.~(\ref{etorque}), the outward flux of toroidal electromagnetic angular momentum across the plasma-vacuum interface can also be written
 \begin{equation}
 T_\phi(\epsilon) = {\rm i}\,\pi^2\,n\sum_m\left[\frac{Z_m^{\,\ast}\,\psi_m-\psi_m^{\,\ast}\,Z_m}{m-n\,q}\right]_{r=\epsilon}.
 \end{equation}
@@ -1171,8 +1154,8 @@ harmonics
 \psi_{-1+j}(\hat{r})\simeq 2\,\epsilon\,(H_j'+{\rm i}\,V_j')\,\psi_{-1}(\hat{r})\mbox{~~~~for $j>1$}.
 \end{equation}
 
-\subsection{Plasma/Vacuum Interface}
-We require the equilibrium plasma current to be zero at the plasma/vacuum interface, $\hat{r}=1$, which
+\subsection{Plasma-Vacuum Interface}
+We require the equilibrium plasma current to be zero at the plasma-vacuum interface, $\hat{r}=1$, which
 implies that $g'(1)=P'(1)= 0$. (See Sect.~\ref{s3}.) It follows from Eqs.~(\ref{e27v})--(\ref{e26}) and (\ref{e31}) that we need\,\cite{am1}
 \begin{align}
 p_2'(1) &= 0,\label{e222}\\[0.5ex]
@@ -1188,7 +1171,7 @@ it is assumed that $\hat{r}_{k+1}>\hat{r}_k$ for $k=1,K-1$.
 
 \subsection{Well-Behaved Solutions Launched from Magnetic Axis}\label{axisl}
 Let us launch $J+1$ linearly independent, well-behaved solutions of the outer-region o.d.e.s, (\ref{e61x}) and (\ref{e62x}), from the
-magnetic axis, as described in Sect.~\ref{axis}. Let us then numerically integrate these solutions to the plasma/vacuum interface. The poloidal harmonics of
+magnetic axis, as described in Sect.~\ref{axis}. Let us then numerically integrate these solutions to the plasma-vacuum interface. The poloidal harmonics of
 the solutions are denoted $\psi^a_{m_{j'}\,m_j}(\hat{r})$ and $Z^a_{m_{j'}\,m_j}(\hat{r})$, for $j,j'=0,J$. Here,
 $m_{j'}$ is the poloidal mode number of the harmonic, whereas $m_j$ is the dominant poloidal mode number of the solution close to the
 magnetic axis. The asymptotic matching conditions imposed at the rational surfaces are
@@ -1200,7 +1183,7 @@ for $k=1,K$. [Equations~(\ref{c1})--(\ref{c2}) specify how these matching condit
 Let ${\mit\Pi}_{kj}^a$, for   $k=1,K$ and $j=0,J$,  be the value of ${\mit\Psi}_k$ at the $k$th rational surface associated with a solution launched
 from the magnetic axis with dominant poloidal mode number $m_j$. 
 
-A scheme similar to A.H.~Glasser's ``fixups'' \cite{ham} is employed to periodically re-orthogonalize the set of solutions. These  re-orthogonalizations are implemented at user-defined locations between the magnetic axis and the plasma/vacuum interface.  At each re-orthogonalization location, the matrix of solutions is forced to become upper triangular, via a process similar to Gaussian elimination, such that only one solution has a non-zero amount of the highest poloidal  harmonic, two solutions have non-zero amounts of the next highest harmonic, and so on. The solutions are then renormalized to their largest component. 
+A scheme similar to A.H.~Glasser's ``fixups'' \cite{ham} is employed to periodically re-orthogonalize the set of solutions. These  re-orthogonalizations are implemented at user-defined locations between the magnetic axis and the plasma-vacuum interface.  At each re-orthogonalization location, the matrix of solutions is forced to become upper triangular, via a process similar to Gaussian elimination, such that only one solution has a non-zero amount of the highest poloidal  harmonic, two solutions have non-zero amounts of the next highest harmonic, and so on. The solutions are then renormalized to their largest component. 
  The re-orthogonalizations are
  necessary to prevent the solutions from becoming colinear as a result of rounding errors, given the significantly
  different rates at which poloidal harmonics with different poloidal mode numbers grow with increasing $\hat{r}$  close to the magnetic axis. (In fact, a
@@ -1209,7 +1192,7 @@ A scheme similar to A.H.~Glasser's ``fixups'' \cite{ham} is employed to periodic
 
 \subsection{Small Solutions Launched from Rational Surfaces}\label{smalll}
 Let us launch a ``small'' solution of the outer-region o.d.e.s  from each rational surface in the plasma, as described in Sects.~\ref{sgen} and \ref{sspec}, 
- and numerically integrate it to the plasma/vacuum interface. The poloidal harmonics of
+ and numerically integrate it to the plasma-vacuum interface. The poloidal harmonics of
 the solutions are denoted $\psi^s_{m_{j}\,k}(\hat{r})$ and $Z^s_{m_{j}\,k}(\hat{r})$, for $j=0,J$ and $k=1,K$. Here,
 $m_{j}$ is the poloidal mode number of the harmonic, whereas $k$ is the index of the rational surface from which the solution is launched.
 The launch conditions are
@@ -1229,7 +1212,7 @@ ${\mit\Pi}_{k'k}^s$, for $k'=1,K$ and $k=1,K$,  be the value of ${\mit\Psi}_{k'}
 launched from the $k$th rational surface. Note that ${\mit\Pi}_{k'k}^s=0$ for $k' \leq k$.  
 
 \subsection{Homogeneous Toroidal Tearing Mode Dispersion Relation}\label{disp}
-The most general expression for the solution of the outer-region o.d.e.s at the plasma/vacuum interface is
+The most general expression for the solution of the outer-region o.d.e.s at the plasma-vacuum interface is
 \begin{align}\label{e385}
 \psi_{m_j}(1) &= \sum_{j'=0,J}\psi_{m_j\,m_{j'}}^a(1)\,\alpha_{j'} + \sum_{k=1,K}\psi_{m_j\,k}^s(1)\,{\mit\Delta\Psi}_k,\\[0.5ex]
 Z_{m_j}(1) &= \sum_{j'=0,J}Z_{m_j\,m_{j'}}^a(1)\,\alpha_{j'} + \sum_{k=1,K}Z_{m_j\,k}^s(1)\,{\mit\Delta\Psi}_k,\label{e386}
@@ -1360,8 +1343,8 @@ G(R,Z;R',Z') &= \frac{(-1)^{n+1}\,\sqrt{\pi}\, R\,R'}{4\,\Gamma(n+1/2)}\left[\fr
 \end{align}
 Here, the $P_{-1/2}^n(z)$ are toroidal functions.\cite{abrama}
 
-\subsection{Inhomogeneous Boundary Condition at Plasma/Vacuum Interface}
-According to Eqs.~(\ref{jac}), (\ref{e63}), (\ref{e79o}), (\ref{e97}), and (\ref{Zdef})--(\ref{psidef}), the magnetic perturbation at the plasma/vacuum
+\subsection{Inhomogeneous Boundary Condition at Plasma-Vacuum Interface}
+According to Eqs.~(\ref{jac}), (\ref{e63}), (\ref{e79o}), (\ref{e97}), and (\ref{Zdef})--(\ref{psidef}), the magnetic perturbation at the plasma-vacuum
 interface generated by the currents flowing in the RMP coils is characterized by
 \begin{align}
 \psi_m^x(1) &=-{\rm i}\oint_{\hat{r}=1}{\cal J}\,{\bf b}^x\cdot\nabla r\,\exp(-{\rm i}\,m\,\theta)\,\frac{d\theta}{2\pi},\\[0.5ex]
@@ -1374,7 +1357,7 @@ It follows from Eqs.~(\ref{jac}) and (\ref{e313}) that
 \end{align}
 where we have integrated by parts. 
 
-In the presence of the perturbed magnetic field generated by the RMP coils, the homogenous boundary condition at the plasma/vacuum
+In the presence of the perturbed magnetic field generated by the RMP coils, the homogenous boundary condition at the plasma-vacuum
 interface, (\ref{bc}), is modified to give the following inhomogeneous boundary condition:
 \begin{equation}\label{bc1}
 \frac{Z_m(1)}{m-n\,q(1)} = \sum_{m'} H_{mm'}\,[\psi_{m'}(1)-\psi_{m'}^x(1)].

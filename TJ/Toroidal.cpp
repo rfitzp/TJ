@@ -78,8 +78,6 @@ double TJ::ToroidalP (int m, int n, double z)
 // accuracy of about 1 in 10^12.
 //
 // Reference: Bateman Manuscript Project, Vol. I, p. 134, Eq. (41)
-//
-// Added cos(m PI) factor to get agreement with TJ definition.
 // ################################################################
 double TJ::ToroidalQ (int m, int n, double z)
 {
@@ -130,7 +128,7 @@ double TJ::ToroidalQ (int m, int n, double z)
     }
   while (e > 1.e-15 || r > z*z);
   
-  return cos(ma*M_PI) * f * d;
+  return f * d;
 } 
   
 // #############################################################
@@ -161,6 +159,94 @@ double TJ::ToroidaldPdz (int m, int n, double z)
 double TJ::ToroidaldQdz (int m, int n, double z)
 {
   return ((double (n) - 0.5) * z * ToroidalQ (m, n, z) - (double (n) - 0.5 + double (m)) * ToroidalQ (m, n-1, z)) /(z*z - 1.);
+}
+
+// #############################################################
+// Function to return normalized associated Legendre function
+//  
+//   P^m_(n-1/2) (z)
+//
+//  m ... integer
+//  n ... integer
+//  z ... double greater than 1.0
+//
+// #############################################################
+double TJ::NormToroidalP (int m, int n, double z)
+{
+  double mm = double (m);
+  int    N  = abs (n);
+  double nn = fabs (double (n));
+  
+  double Pfac = cos (nn*M_PI) * sqrt (M_PI) * gsl_sf_gamma (nn + 0.5 - mm) * pow (epsa, nn)
+                /pow (2., nn - 0.5) /gsl_sf_fact (N);
+
+  return Pfac * ToroidalP (m, n, z);
+}
+
+// ########################################################################
+// Function to return normalized derivative of associated Legendre function
+//  
+//   P^m_(n-1/2) (z)
+//
+//  m ... integer
+//  n ... integer
+//  z ... double greater than 1.0
+//
+// ########################################################################
+double TJ::NormToroidaldPdz (int m, int n, double z)
+{
+  double mm = double (m);
+  int    N  = abs (n);
+  double nn = fabs (double (n));
+  
+  double Pfac = cos (nn*M_PI) * sqrt (M_PI) * gsl_sf_gamma (nn + 0.5 - mm) * pow (epsa, nn)
+                /pow (2., nn - 0.5) /gsl_sf_fact (N);
+
+  return Pfac * ToroidaldPdz (m, n, z);
+}
+
+// #############################################################
+// Function to return normalized associated Legendre function
+//  
+//   Q^m_(n-1/2) (z)
+//
+//  m ... integer
+//  n ... integer
+//  z ... double greater than 1.0
+//
+// #############################################################
+double TJ::NormToroidalQ (int m, int n, double z)
+{
+  double mm = double (m);
+  int    N  = abs (n);
+  double nn = fabs (double (n));
+  
+  double Qfac = cos (mm*M_PI) * cos (nn*M_PI) * pow (2., nn - 0.5) * gsl_sf_fact (N)
+                /sqrt (M_PI) /gsl_sf_gamma (nn + 0.5 + mm) /pow (epsa, nn);
+
+  return Qfac * ToroidalQ (m, n, z);
+}
+
+// ########################################################################
+// Function to return normalized derivative of associated Legendre function
+//  
+//   Q^m_(n-1/2) (z)
+//
+//  m ... integer
+//  n ... integer
+//  z ... double greater than 1.0
+//
+// ########################################################################
+double TJ::NormToroidaldQdz (int m, int n, double z)
+{
+  double mm = double (m);
+  int    N  = abs (n);
+  double nn = fabs (double (n));
+  
+  double Qfac = cos (mm*M_PI) * cos (nn*M_PI) * pow (2., nn - 0.5) * gsl_sf_fact (N)
+                /sqrt (M_PI) /gsl_sf_gamma (nn + 0.5 + mm) /pow (epsa, nn);
+
+  return Qfac * ToroidaldQdz (m, n, z);
 }
 
 // ##############################################################

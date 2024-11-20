@@ -8,27 +8,30 @@ import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4 as nc
 
-fn     = '../../Outputs/TJ/TJ.nc'
-ds     = nc.Dataset(fn)
-theta  = ds['theta']
-Psi_r  = ds['Psi_surface_r']
-Psi_i  = ds['Psi_surface_i']
-J_r    = ds['J_surface_r']
-J_i    = ds['J_surface_i']
-Xi_r   = ds['Xi_surface_r']
-Xi_i   = ds['Xi_surface_i']
+fn    = '../../Outputs/TJ/TJ.nc'
+ds    = nc.Dataset(fn)
+theta = ds['theta']
+Psi_r = ds['Psi_surface_r']
+Psi_i = ds['Psi_surface_i']
+J_r   = ds['J_surface_r']
+J_i   = ds['J_surface_i']
+Xi_r  = ds['Xi_surface_r']
+Xi_i  = ds['Xi_surface_i']
+w     = np.asarray(ds['delta_W'])
+p     = np.asarray(ds['delta_W_p'])
+v     = np.asarray(ds['delta_W_v'])
 
 t  = np.asarray(theta);
 tt = t/math.pi
 
-fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Ideal Eigenfunction Boundary Data')
-plt.rc('xtick', labelsize = 15) 
-plt.rc('ytick', labelsize = 15)
-
 J = Psi_r.shape[0]
 print ("solution number = (%d .. %d)" % (0, J-1))
-j   = input ("solution number ? ")
+j   = int(input ("solution number ? "))
+
+fig = plt.figure (figsize = (12.0, 8.0))
+fig.canvas.manager.set_window_title (r'TJ Code: Ideal Eigenfunction Boundary Data: deltaW = %10.3e %10.3e %10.3e' % (w[j], p[j], v[j]))
+plt.rc('xtick', labelsize = 15) 
+plt.rc('ytick', labelsize = 15)
 
 plt.subplot (3, 1, 1)
 

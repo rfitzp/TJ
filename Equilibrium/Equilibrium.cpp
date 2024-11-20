@@ -97,7 +97,7 @@ Equilibrium::Equilibrium ()
       Vna.push_back (number.get<double> ());
     }
 
-  JSONFilename = "../Inputs/TJ.json";
+  JSONFilename = "../Inputs/Layer.json";
   JSONData     = ReadJSONFile (JSONFilename);
 
   B0 = JSONData["B0"].get<double> ();
@@ -418,6 +418,17 @@ void Equilibrium::Solve ()
   dRdtheta = new double[Nw+1];
   dZdtheta = new double[Nw+1];
 
+  Rwall    = new double[Nw+1];
+  Zwall    = new double[Nw+1];
+  twall    = new double[Nw+1];
+  wwall0   = new double[Nw+1];
+  twall0   = new double[Nw+1];
+  wwall    = new double[Nw+1];
+  R2w      = new double[Nw+1];
+  grr2w    = new double[Nw+1];
+  dRdthetw = new double[Nw+1];
+  dZdthetw = new double[Nw+1];
+
   // ..................
   // Set up radial grid
   // ..................
@@ -523,13 +534,13 @@ void Equilibrium::Solve ()
   double f1a = f1[Nr];
   double H1a = HPfunc(1, Nr);
   
-  // .........................
-  // Rescale shaping functions
-  // .........................
   int    nn   = 1;
   double zero = 0.;
   printf ("n = %3d:  Hna = %10.3e  Vna = %10.3e\n", nn, HHfunc(1, Nr), zero);
 
+  // .........................
+  // Rescale shaping functions
+  // .........................
   for (int n = 2; n <= Ns; n++)
     {
       double Hnfc, Vnfc, Hnfca, Vnfca;
@@ -564,7 +575,7 @@ void Equilibrium::Solve ()
     }
   
   delete[] hna; delete[] vna;
-  
+
   // .............................
   // Interpolate shaping functions
   // .............................
@@ -900,7 +911,7 @@ void Equilibrium::Solve ()
   // .......................
   // Calculate boundary data
   // .......................
-   printf ("Calculating boundary data:\n");
+  printf ("Calculating boundary data:\n");
 
   // Set up preliminary omega grid
   for (int j = 0; j <= Nw; j++)
@@ -1045,10 +1056,14 @@ void Equilibrium::Solve ()
   delete[] HHspline; delete[] VVspline; delete[] HPspline; delete[] VPspline;
   delete[] HHacc;    delete[] VVacc;    delete[] HPacc;    delete[] VPacc;
 
-  delete[] Rbound;   delete[] Zbound; delete[] tbound; delete[] wbound0; delete[] tbound0;
-  delete[] wbound;   delete[] R2b;    delete[] grr2b;  delete[] Lfunc;   delete[] dRdtheta; 
-  delete[] dZdtheta; delete[] Psi;    delete[] PsiN;   delete[] Tf;      delete[] mu0P;
-  delete[] DI;       delete[] DR;
+  delete[] Rbound; delete[] Zbound; delete[] tbound; delete[] wbound0;  delete[] tbound0;
+  delete[] wbound; delete[] R2b;    delete[] grr2b;  delete[] dRdtheta; delete[] dZdtheta;
+
+  delete[] Rwall; delete[] Zwall; delete[] twall; delete[] wwall0;   delete[] twall0;
+  delete[] wwall; delete[] R2w;   delete[] grr2w; delete[] dRdthetw; delete[] dZdthetw;
+
+  delete[] Psi; delete[] PsiN; delete[] Tf;    delete[] mu0P;
+  delete[] DI;   delete[] DR;  delete[] Lfunc;  
  } 
 
 

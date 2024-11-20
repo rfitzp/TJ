@@ -29,6 +29,10 @@ rres  = ds1['r_res']
 Rcoil = np.asarray(ds1['Rcoil'])
 Zcoil = np.asarray(ds1['Zcoil'])
 Icoil = np.asarray(ds1['Icoil'])
+Rwm   = ds1['Rwm']
+Zwm   = ds1['Zwm']
+Rwp   = ds1['Rwp']
+Zwp   = ds1['Zwp']
 
 fig = plt.figure (figsize = (8.0, 7.5))
 fig.canvas.manager.set_window_title (r'TJ Code: r, theta Coordinate System')
@@ -69,7 +73,10 @@ rr1 = RR[:, int(3*(nt+1)/4)]
 zz1 = ZZ[:, int(3*(nt+1)/4)]
 plt.plot (rr1, zz1, color = 'red', linewidth  = 1)   
 
-plt.plot ([1.], [0.], marker = 'o', markersize = 2, color = "red")
+plt.plot ([1.], [0.], marker = 'o', markersize = 2, color = "black")
+
+plt.plot (Rwm, Zwm, color = 'black', linewidth = 1, linestyle = 'solid')
+plt.plot (Rwp, Zwp, color = 'black', linewidth = 1, linestyle = 'solid')
 
 for R, Z, I in zip (Rcoil, Zcoil, Icoil):
     if I > 0.:
@@ -77,8 +84,8 @@ for R, Z, I in zip (Rcoil, Zcoil, Icoil):
     if I < 0.:
         plt.plot ([R], [Z], marker = 'o', markersize = 5, color = "red")
 
-plt.xlabel (r'$R/R_0$', fontsize="20")
-plt.ylabel (r'$Z/R_0$', fontsize="20")
+plt.xlabel (r'$R/R_0$', fontsize = "20")
+plt.ylabel (r'$Z/R_0$', fontsize = "20")
 
 plt.tight_layout ()
 
