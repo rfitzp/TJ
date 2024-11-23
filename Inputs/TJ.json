@@ -2,16 +2,10 @@
     "NTOR":   1,       // Toroidal mode number
     "MMIN":  -10,      // Minimum poloidal mode number included in calculation
     "MMAX":   20,      // Maximum poloidal mode number included in calculation
-    "FREE":   0,       // Flag for no-wall/perfect-wall/fixed-boundary calculation
-    "EQLB":   1,       // Flag for equilibrium calculation only
+    "FREE":   0,       // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary calculations
+    "EQLB":   0,       // Flag for equilibrium calculation only
     "XiFlag": 1,       // Flag for using Xi, rather than Psi, as ideal eigenfunction basis
-
-    "bw":     1.01,    // Relative wall radius
-    "dw":     0.1,     // Relative wall thickness
-    
-    "etacoil": [ 0.15, 0.3, -0.15, -0.3],  // eta/M_PI coodinates of RMP coil strands
-    "Icoil":   [-1.0,  1.0, -1.0,   1.0],  // Toroidal currents flowing in RMP coil strands
-
+ 
     "EPS":   1.0e-4,       // Solutions launched from magnetic axis at r = EPS 
     "DEL":   1.0e-9,       // Distance of closest approach to rational surface
     "NFIX":  160,          // Number of fixups 

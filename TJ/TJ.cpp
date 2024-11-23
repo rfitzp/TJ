@@ -89,22 +89,24 @@ TJ::TJ ()
   NTOR    = JSONData["NTOR"]   .get<int>    ();
   MMIN    = JSONData["MMIN"]   .get<int>    ();
   MMAX    = JSONData["MMAX"]   .get<int>    ();
+  FREE    = JSONData["FREE"]   .get<int>    ();
+  EQLB    = JSONData["EQLB"]   .get<int>    ();
+  XiFlag  = JSONData["XiFlag"] .get<int>    ();
+
   EPS     = JSONData["EPS"]    .get<double> ();
   DEL     = JSONData["DEL"]    .get<double> ();
   NFIX    = JSONData["NFIX"]   .get<int>    ();
   NDIAG   = JSONData["NDIAG"]  .get<int>    ();
+
   NULC    = JSONData["NULC"]   .get<double> ();
   ITERMAX = JSONData["ITERMAX"].get<int>    ();
-  FREE    = JSONData["FREE"]   .get<int>    ();
-  XiFlag  = JSONData["XiFlag"] .get<int>    ();
-  EQLB    = JSONData["EQLB"]   .get<int>    ();
+
   acc     = JSONData["acc"]    .get<double> ();
   h0      = JSONData["h0"]     .get<double> ();
   hmin    = JSONData["hmin"]   .get<double> ();
   hmax    = JSONData["hmax"]   .get<double> ();
+
   EPSF    = JSONData["EPSF"]   .get<double> ();
-  bw      = JSONData["bw"]     .get<double> ();
-  dw      = JSONData["dw"]     .get<double> ();
 
   JSONFilename = "../Inputs/Layer.json";
   JSONData     = ReadJSONFile (JSONFilename);
@@ -226,16 +228,6 @@ TJ::TJ ()
       printf ("TJ: Error - Teped must be positive\n");
       exit (1);
     }
-   if (bw < 1.)
-    {
-      printf ("TJ: Error - bw must be greater than unity\n");
-      exit (1);
-    }
-   if (dw < 0.)
-    {
-      printf ("TJ: Error - dw cannot be negative\n");
-      exit (1);
-    }
   
   // -----------------------------
   // Output calculation parameters
@@ -253,8 +245,6 @@ TJ::TJ ()
 	  acc, h0, hmin, hmax, EPSF);
   printf ("B0   = %10.3e R0    = %10.3e n0   = %10.3e alpha   = %10.3e Zeff = %10.3e Mion = %10.3e Chip = %10.3e Teped = %10.3e\n",
 	  B0, R0, n0, alpha, Zeff, Mion, Chip, Teped);
-  printf ("bw   = %10.3e dw    = %10.3e\n",
-	  bw, dw);
 }
 
 // ##########
@@ -276,18 +266,15 @@ void TJ::Solve ()
   ReadEquilibrium ();
   if (EQLB)
     return;
-
-  // Calculate wall data
-  CalcWall ();
-  
-  // Read RMP coil data
-  ReadCoils ();
-
+ 
   // Calculate metric data at plasma boundary
-  CalculateMetric ();
+  CalculateMetricBoundary ();
 
   // Calculate vacuum matrices
-  GetVacuum ();
+  GetVacuumBoundary ();
+
+  // Calculate wall matrices
+  GetVacuumWall ();
 
   // Find rational surfaces
   FindRational ();
@@ -396,7 +383,7 @@ void TJ::CleanUp ()
   delete[] HHspline; delete[] VVspline; delete[] HPspline; delete[] VPspline;
   delete[] HHacc;    delete[] VVacc;    delete[] HPacc;    delete[] VPacc;
 
-  delete[] cmu; delete[] ceta; delete[] seta; delete[] eeta; delete[] R2grgz; delete[] R2grge;  
+  delete[] cmu;  delete[] ceta;  delete[] seta;  delete[] eeta;  delete[] R2grgz;  delete[] R2grge;  
 
   gsl_spline_free (Rrzspline);
   gsl_spline_free (Rrespline);
@@ -411,10 +398,12 @@ void TJ::CleanUp ()
   delete[] Rcoil;   delete[] Zcoil;   delete[] Icoil;  delete[] Psix;
   delete[] Xi;      delete[] Upsilon; delete[] Lambda; delete[] Chi;
   delete[] Psirmps; delete[] Psixs;
-
+  
   delete[] tbound; delete[] Rbound; delete[] Zbound;
   delete[] dRdthe; delete[] dZdthe;
 
+  delete[] wwall;  delete[] Rwall;  delete[] Zwall;
+  
   delete[] mres; delete[] qres;  delete[] rres;   delete[] qerr;
   delete[] sres; delete[] DIres; delete[] nuLres; delete[] nuSres;
   delete[] Jres; delete[] DRres; delete[] Flarge; delete[] Fsmall;
@@ -434,7 +423,7 @@ void TJ::CleanUp ()
   delete[] deltaWp; delete[] gammax; delete[] gamma;
   delete[] U1val;   delete[] Wval;   delete[] Vval;
 
-  delete[] rf; delete[] Rwm; delete[] Zwm; delete[] Rwp; delete[] Zwp;
+  delete[] rf; delete[] rho;
 }
 
 // ########################################

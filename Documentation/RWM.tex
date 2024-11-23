@@ -111,6 +111,7 @@ P_{-m-1/2}^{\,n}(z) &= P_{m-1/2}^{\,n}(z),\\[0.5ex]
 Q_{-m-1/2}^{\,n}(z) &= Q_{m-1/2}^{\,n}(z).
 \end{align}
 
+
 \subsection{Toroidal Electromagnetic Angular Momentum Flux}
 The outward flux of toroidal angular momentum across a constant-$z$ surface is
 \begin{align}
@@ -150,8 +151,20 @@ Let $r$, $\theta$, $\phi$ be right-handed flux coordinates, where $r$ is a flux-
 \begin{equation}
 {\cal J} \equiv (\nabla r\times\nabla\theta\cdot\nabla\phi)^{-1}= r\,R^{\,2}.
 \end{equation}
-The plasma-vacuum interface lies at $r=\epsilon$. The wall lies at $r=b_w$, where $b_w>\epsilon$,  In the
-vacuum region, $\epsilon\leq r\leq b_w$,  lying between the plasma and the wall, we can write
+
+In the large-aspect ratio limit $r\ll 1$, it can be demonstrated that 
+\begin{align}\label{e25t}
+z&\simeq \frac{1}{r},\\[0.5ex]
+z^{\,1/2}\,\hat{P}^{\,n}_{-1/2}(z) &\simeq \frac{1}{2}\ln\left(\frac{8\,z}{\zeta_n}\right),\\[0.5ex]
+z^{1/2}\,\hat{P}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(\epsilon\,z)^{|m|}}{|m|},\label{ety}\\[0.5ex]
+z^{1/2}\,\hat{Q}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(\epsilon\,z)^{-|m|}}{2},\\[0.5ex]
+\zeta_n &= \exp\left(\sum_{j=1,n}\frac{2}{2\,j-1}\right).\label{e29t}
+\end{align}
+Note that Eq.~(\ref{ety}) only applies to $|m|>0$. 
+
+
+The plasma-vacuum interface lies at $r=\epsilon$. The wall lies at $r=b_w\,\epsilon$, where $b_w>1$,  In the
+vacuum region, $\epsilon\leq r\leq b_w\,\epsilon$,  lying between the plasma and the wall, we can write
 \begin{align}\label{e32a}
 \underline{V}(r)&= \underline{\underline{{\cal P}}}(r)\,\underline{p}+ \underline{\underline{{\cal Q}}}(r)\,\underline{q},\\[0.5ex]
 \underline{\psi}(r)&= \underline{\underline{{\cal R}}}(r)\,\underline{p}+ \underline{\underline{{\cal S}}}(r)\,\underline{q},\label{e33a}
@@ -178,7 +191,7 @@ values, $\underline{\underline{{\cal R}}}(r)$ is the matrix of the
 \end{align}
 values, 
 $\underline{\underline{{\cal S}}}(r)$ is the matrix of the 
-\begin{align}
+\begin{align}\label{e355}
 {\cal S}_{mm'} &=\oint_{r}
 \left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\hat{Q}_{|m'|-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{d\hat{Q}_{|m'|-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
 \right.\nonumber\\[0.5ex]&
@@ -227,21 +240,22 @@ However, the previous two equations are only consistent with Eqs.~(\ref{e32a}) a
 \begin{align}\label{e46}
 \underline{\underline{\cal Q}}\,\underline{\underline{\cal P}}^\dag&= \underline{\underline{\cal P}}\,\underline{\underline{\cal Q}}^\dag,\\[0.5ex]
 \underline{\underline{\cal R}}\,\underline{\underline{\cal S}}^\dag&= \underline{\underline{\cal S}}\,\underline{\underline{\cal R}}^\dag,\label{e47}\\[0.5ex]
-\underline{\underline{\cal P}}\,\underline{\underline{\cal S}}^{\dag}- \underline{\underline{\cal R}}\,\underline{\underline{\cal Q}}^{\dag}&=\underline{\underline{1}}.\label{e48}
+\underline{\underline{\cal P}}\,\underline{\underline{\cal S}}^{\dag}- \underline{\underline{\cal Q}}\,\underline{\underline{\cal R}}^{\dag}&=\underline{\underline{1}}.\label{e48}
 \end{align}
 Note that Eqs.~(\ref{e41})--(\ref{e43}) and (\ref{e46})--(\ref{e48}) hold throughout the vacuum region. 
 
 \subsection{Ideal-Wall Matching Condition}
-If the wall is perfectly-conducting then  $\underline{\psi}(b_w)=0$. 
+If the wall is perfectly-conducting then  $\underline{\psi}(b_w\,\epsilon)=0$. 
 It follows from Eq.~(\ref{e33a}) that
 \begin{equation}
 \underline{q} = \underline{\underline{I}}\,\underline{p},
 \end{equation}
 where
 \begin{equation}
- \underline{\underline{I}}=- \underline{\underline{\cal S}}_{\,b}^{-1}\,\underline{\underline{\cal R}}_{\,b}.
+ \underline{\underline{I}}=- \underline{\underline{\cal S}}_{\,b}^{-1}\,\underline{\underline{\cal R}}_{\,b}
  \end{equation}
- Here, $\underline{\underline{\cal S}}_{\,b}= \underline{\underline{\cal S}}(b_w)$, et cetera. Equation~(\ref{e47}) ensures that $ \underline{\underline{I}}$
+ is termed the wall matrix.
+ Here, $\underline{\underline{\cal S}}_{\,b}= \underline{\underline{\cal S}}(b_w\,\epsilon)$, et cetera. Equation~(\ref{e47}) ensures that $ \underline{\underline{I}}$
  is Hermitian. 
   Making use of Eqs.~(\ref{e32a}) and (\ref{e33a}),  the matching condition at the plasma-vacuum interface  for an ideal wall becomes 
  \begin{equation}
@@ -258,6 +272,25 @@ Making use of Eqs.~(\ref{e41})--(\ref{e43}), it is easily demonstrated that
  \underline{\underline{H}}-\underline{\underline{H}}^\dag =- [(\underline{\underline{\cal R}}_{\,\epsilon}+\underline{\underline{\cal S}}_{\,\epsilon}\,\underline{\underline{I}})^{-1}]^{\dag}\,(\underline{\underline{I}} -\underline{\underline{I}}^\dag)\,  (\underline{\underline{\cal R}}_{\,\epsilon}+\underline{\underline{\cal S}}_{\,\epsilon}\,\underline{\underline{I}})^{-1}
 \end{equation}
 Thus,  $\underline{\underline{H}}$ is Hermitian because  $\underline{\underline{I}}$ is Hermitian. 
+ 
+\subsection{Model Wall Matrix}
+ Equations~(\ref{e25t})--(\ref{e29t}), (\ref{e354}), and (\ref{e355}) suggest that
+ \begin{align}
+ \underline{\underline{{\cal R}}}_{\,b}& = \underline{\underline{{\cal R}}}_{\,\epsilon} \,\underline{\underline{\rho}}^{\,-1},\\[0.5ex]
+ \underline{\underline{{\cal S}}}_{\,b} &= \underline{\underline{{\cal S}}}_{\,\epsilon} \,\underline{\underline{\rho}},
+ \end{align}
+ where
+ \begin{align}
+ \rho_{mm'} &= \delta_{mm'}\,\rho_m,\\[0.5ex]
+ \rho_0 &= 1+\ln b_w,\\[0.5ex]
+ \rho_{m\neq 0} &= b_w^{\,|m|}.
+ \end{align}
+ Hence,
+ \begin{equation}
+ \underline{\underline{I}} = - \underline{\underline{\rho}}^{\,-1}\,\underline{\underline{\cal S}}_{\,\epsilon}^{-1}\,\underline{\underline{\cal R}}_{\,\epsilon}\,\underline{\underline{\rho}}^{\,-1}.
+ \end{equation}
+ Note that $\underline{\underline{I}}$ is Hermitian, given that $\underline{\underline{\cal S}}_{\,\epsilon}^{-1}\,\underline{\underline{\cal R}}_{\,\epsilon}$
+ is Hermitian. 
  
 \subsection{Resistive-Wall Matching Condition}
  If the wall is resistive then  

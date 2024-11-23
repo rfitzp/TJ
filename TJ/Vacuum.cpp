@@ -2,12 +2,12 @@
 
 #include "TJ.h"
 
-// #####################################
-// Function to calculate vacuum matrices
-// #####################################
-void TJ::GetVacuum ()
+// ##############################################
+// Function to calculate vacuum boundary matrices
+// ##############################################
+void TJ::GetVacuumBoundary ()
 {
-  printf ("Calculating vacuum data:\n");
+  printf ("Calculating vacuum boundary data:\n");
   
   // ...............
   // Allocate memory
@@ -16,26 +16,39 @@ void TJ::GetVacuum ()
   Qvac.resize (J, J);
   Rvac.resize (J, J);
   Svac.resize (J, J);
+
   Pdag.resize (J, J);
-  Rdag.resize (J, J);
   Qdag.resize (J, J);
-  Amat.resize (J, J);
-  Aher.resize (J, J);
-  Aant.resize (J, J);
-  Bmat.resize (J, J);
-  Bher.resize (J, J);
-  Bant.resize (J, J);
-  Imat.resize (J, J);
+  Rdag.resize (J, J);
+  Sdag.resize (J, J);
 
-  Cmat.resize (J, J);
-  Cdag.resize (J, J);
-  Hmat.resize (J, J);
+  PRmat.resize (J, J);
+  PRher.resize (J, J);
+  PRant.resize (J, J);
 
-  PQmat.resize (J, J);
+  QSmat.resize (J, J);
+  QSher.resize (J, J);
+  QSant.resize (J, J);
+
+  PSmat.resize (J, J);
+
+  QPmat.resize (J, J);
+  QPher.resize (J, J);
+  QPant.resize (J, J);
+
   RSmat.resize (J, J);
-  Dmat .resize (J, J);
-  Ddag .resize (J, J);
-  Gmat .resize (J, J);
+  RSher.resize (J, J);
+  RSant.resize (J, J);
+
+  SPmat.resize (J, J);
+
+  RPmat.resize (J, J);
+  RPdag.resize (J, J);
+  Hmat.resize  (J, J);
+
+  iRPmat.resize (J, J);
+  iRPdag.resize (J, J);
+  iHmat.resize  (J, J);
 
   Psix = new complex<double>[J];
   Xi   = new complex<double>[J];
@@ -78,13 +91,14 @@ void TJ::GetVacuum ()
     for (int jp = 0; jp < J; jp++)
       {
 	Pdag (j, jp) = conj (Pvac (jp, j));
-	Rdag (j, jp) = conj (Rvac (jp, j));
 	Qdag (j, jp) = conj (Qvac (jp, j));
+	Rdag (j, jp) = conj (Rvac (jp, j));
+	Sdag (j, jp) = conj (Svac (jp, j));
       }
-
-  // ..................
-  // Calculate A-matrix
-  // ..................
+  
+  // ...................
+  // Calculate PR-matrix
+  // ...................
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
@@ -93,25 +107,25 @@ void TJ::GetVacuum ()
 	for (int jpp = 0; jpp < J; jpp++)
 	  sum += Pdag (j, jpp) * Rvac (jpp, jp);
 
-	Amat (j, jp) = sum;
+	PRmat (j, jp) = sum;
       }
 
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	Aher (j, jp) = 0.5 * (Amat (j, jp) + conj (Amat (jp, j)));
-	Aant (j, jp) = 0.5 * (Amat (j, jp) - conj (Amat (jp, j)));
+	PRher (j, jp) = 0.5 * (PRmat (j, jp) + conj (PRmat (jp, j)));
+	PRant (j, jp) = 0.5 * (PRmat (j, jp) - conj (PRmat (jp, j)));
       }
   
   // ............................
-  // Calculate A-matrix residuals
+  // Calculate PR-matrix residual
   // ............................
   double Ahmax = 0., Aamax = 0.;
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	double ahval = abs (Aher (j, jp));
-	double aaval = abs (Aant (j, jp));
+	double ahval = abs (PRher (j, jp));
+	double aaval = abs (PRant (j, jp));
 
 	if (ahval > Ahmax)
 	  Ahmax = ahval;
@@ -119,9 +133,9 @@ void TJ::GetVacuum ()
 	  Aamax = aaval;	
       }
 
-  // ..................
-  // Calculate B-matrix
-  // ..................
+  // ...................
+  // Calculate QS-matrix
+  // ...................
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
@@ -130,25 +144,25 @@ void TJ::GetVacuum ()
 	for (int jpp = 0; jpp < J; jpp++)
 	  sum += Qdag (j, jpp) * Svac (jpp, jp);
 
-	Bmat (j, jp) = sum;
+	QSmat (j, jp) = sum;
       }
 
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	Bher (j, jp) = 0.5 * (Bmat (j, jp) + conj (Bmat (jp, j)));
-	Bant (j, jp) = 0.5 * (Bmat (j, jp) - conj (Bmat (jp, j)));
+	QSher (j, jp) = 0.5 * (QSmat (j, jp) + conj (QSmat (jp, j)));
+	QSant (j, jp) = 0.5 * (QSmat (j, jp) - conj (QSmat (jp, j)));
       }
   
   // ............................
-  // Calculate B-matrix residuals
+  // Calculate QS-matrix residual
   // ............................
   double Bhmax = 0., Bamax = 0.;
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	double bhval = abs (Bher (j, jp));
-	double baval = abs (Bant (j, jp));
+	double bhval = abs (QSher (j, jp));
+	double baval = abs (QSant (j, jp));
 
 	if (bhval > Bhmax)
 	  Bhmax = bhval;
@@ -156,9 +170,9 @@ void TJ::GetVacuum ()
 	  Bamax = baval;	
       }
 
-  // ..................
-  // Calculate I-matrix
-  // ..................
+  // ...................
+  // Calculate PS-matrix
+  // ...................
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
@@ -167,11 +181,11 @@ void TJ::GetVacuum ()
 	for (int jpp = 0; jpp < J; jpp++)
 	  sum += Pdag (j, jpp) * Svac (jpp, jp) - Rdag (j, jpp) * Qvac (jpp, jp);
 
-	Imat (j, jp) = sum;
+	PSmat (j, jp) = sum;
       }
   
   // ............................
-  // Calculate I-matrix residuals
+  // Calculate PS-matrix residual
   // ............................
   double Imax = 0.;
   for (int j = 0; j < J; j++)
@@ -179,54 +193,149 @@ void TJ::GetVacuum ()
       {
 	double ival;
 	if (j == jp)
-	  ival = abs (Imat (j, jp) - 1.);
+	  ival = abs (PSmat (j, jp) - complex<double> (1., 0.));
 	else
-	  ival = abs (Imat (j, jp));
+	  ival = abs (PSmat (j, jp));
 
 	if (ival > Imax)
 	  Imax = ival;
       }
   
-  printf ("Vacuum Hermitian test residual: %10.4e %10.4e %10.4e\n", Aamax/Ahmax, Bamax/Bhmax, Imax);
+  printf ("Vacuum Hermitian test residuals: %10.4e %10.4e %10.4e\n", Aamax/Ahmax, Bamax/Bhmax, Imax);
+
+  // ...................
+  // Calculate QP-matrix
+  // ...................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += Qvac (j, jpp) * Pdag (jpp, jp);
+
+	QPmat (j, jp) = sum;
+      }
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	QPher (j, jp) = 0.5 * (QPmat (j, jp) + conj (QPmat (jp, j)));
+	QPant (j, jp) = 0.5 * (QPmat (j, jp) - conj (QPmat (jp, j)));
+      }
+  
+  // ............................
+  // Calculate QP-matrix residual
+  // ............................
+  Ahmax = 0.; Aamax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double ahval = abs (QPher (j, jp));
+	double aaval = abs (QPant (j, jp));
+
+	if (ahval > Ahmax)
+	  Ahmax = ahval;
+	if (aaval > Aamax)
+	  Aamax = aaval;	
+      }
+
+  // ...................
+  // Calculate RS-matrix
+  // ...................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += Rvac (j, jpp) * Sdag (jpp, jp);
+
+	RSmat (j, jp) = sum;
+      }
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	RSher (j, jp) = 0.5 * (RSmat (j, jp) + conj (RSmat (jp, j)));
+	RSant (j, jp) = 0.5 * (RSmat (j, jp) - conj (RSmat (jp, j)));
+      }
+  
+  // ............................
+  // Calculate RS-matrix residual
+  // ............................
+  Bhmax = 0.; Bamax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double bhval = abs (RSher (j, jp));
+	double baval = abs (RSant (j, jp));
+
+	if (bhval > Bhmax)
+	  Bhmax = bhval;
+	if (baval > Bamax)
+	  Bamax = baval;	
+      }
+
+  // ...................
+  // Calculate SP-matrix
+  // ...................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += Pvac (j, jpp) * Sdag (jpp, jp) - Qvac (j, jpp) * Rdag (jpp, jp);
+
+	SPmat (j, jp) = sum;
+      }
+  
+  // ............................
+  // Calculate SP-matrix residual
+  // ............................
+  Imax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double ival;
+	if (j == jp)
+	  ival = abs (SPmat (j, jp) - complex<double> (1., 0.));
+	else
+	  ival = abs (SPmat (j, jp));
+
+	if (ival > Imax)
+	  Imax = ival;
+      }
+  
+  printf ("Vacuum Hermitian test residuals: %10.4e %10.4e %10.4e\n", Aamax/Ahmax, Bamax/Bhmax, Imax);
 
   // ..................
   // Calculate H-matrix
   // ..................
-  SolveLinearSystemTranspose (Rvac, Cmat, Pvac);
+  SolveLinearSystemTranspose (Rvac, RPmat, Pvac);
 
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
-      Cdag (j, jp) = conj (Cmat (jp, j));
+      RPdag (j, jp) = conj (RPmat (jp, j));
 
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
-      Hmat (j, jp) = 0.5 * Cmat (j, jp) + 0.5 * Cdag (j, jp);
+      Hmat (j, jp) = 0.5 * RPmat (j, jp) + 0.5 * RPdag (j, jp);
 
-  // ..................
-  // Calculate G-matrix
-  // ..................
-  for (int j = 0; j < J; j++)
-    for (int jp = 0; jp < J; jp++)
-      {
-	PQmat (j, jp) = Pvac (j, jp);
-	RSmat (j, jp) = Rvac (j, jp);
-
-	for (int jpp = 0; jpp < J; jpp++)
-	  {
-	    PQmat (j, jp) += Qvac (j, jpp) * Iw (jpp, jp);
-	    RSmat (j, jp) += Svac (j, jpp) * Iw (jpp, jp);
-	  }
-      }
-  SolveLinearSystemTranspose (RSmat, Dmat, PQmat);
+  // ...................
+  // Calculate iH-matrix
+  // ...................
+  SolveLinearSystemTranspose (Pvac, iRPmat, Rvac);
 
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
-      Ddag (j, jp) = conj (Dmat (jp, j));
+      iRPdag (j, jp) = conj (iRPmat (jp, j));
 
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
-      Gmat (j, jp) = 0.5 * Dmat (j, jp) + 0.5 * Ddag (j, jp);
-    
+      iHmat (j, jp) = 0.5 * iRPmat (j, jp) + 0.5 * iRPdag (j, jp);
+  
   // ......................................................
   // Calculate poloidal harmonics of RMP at plasma boundary
   // ......................................................
@@ -265,6 +374,141 @@ void TJ::GetVacuum ()
     }
 
   delete[] Y; delete[] err; delete[] Y1; delete[] err1;
+}
+
+// ############################################
+// Function to calculate wall boundary matrices
+// ############################################
+void TJ::GetVacuumWall ()
+{
+  printf ("Calculating wall boundary data:\n");
+  
+  // ...............
+  // Allocate memory
+  // ...............
+  Rwal.resize (J, J);
+  Swal.resize (J, J);
+
+  iImat.resize (J, J);
+  iIher.resize (J, J);
+  iIant.resize (J, J);
+
+  PImat.resize (J, J);
+  RImat.resize (J, J);
+
+  RPImat.resize (J, J);
+  RPIdag.resize (J, J);
+  Gmat.resize   (J, J);
+
+  iRPImat.resize (J, J);
+  iRPIdag.resize (J, J);
+  iGmat.resize   (J, J);
+
+  rho = new double[J];
+
+  // .............................
+  // Calculate wall scaling vector
+  // .............................
+  double sum = 0.;
+  for (int j = 0; j <= NTOR; j++)
+    sum += 2. /(2. * double(j) - 1.);
+  double zetan = exp (sum);
+  double fac   = epsa * zetan /8.;
+  
+  for (int j = 0; j < J; j++)
+    {
+      int    M = MPOL[j];
+      double m = fabs (mpol[j]);
+
+      if (M == 0)
+      	rho[j] = 1. + log (bw);
+      else
+	rho[j] = pow (bw, m);
+    }
+ 
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+    {
+      Rwal (j, jp) = Rvac (j, jp) / rho[jp];
+      Swal (j, jp) = Svac (j, jp) * rho[jp];
+    }
+
+  // ..........................
+  // Calculate inverse I-matrix
+  // ..........................
+  SolveLinearSystem (Rwal, iImat, Swal);
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	iIher (j, jp) = 0.5 * (iImat (j, jp) + conj (iImat (jp, j)));
+	iIant (j, jp) = 0.5 * (iImat (j, jp) - conj (iImat (jp, j)));
+      }
+
+  // ....................................
+  // Calculate inverse I-matrix residuals
+  // ....................................
+  double Ahmax = 0., Aamax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double ahval = abs (iIher (j, jp));
+	double aaval = abs (iIant (j, jp));
+
+	if (ahval > Ahmax)
+	  Ahmax = ahval;
+	if (aaval > Aamax)
+	  Aamax = aaval;	
+      }
+  
+  printf ("Wall Hermitian test residual: %10.4e\n", Aamax/Ahmax);
+
+  // ............................
+  // Calculate PI and RI-matrices
+  // ............................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum1 = - Qvac (j, jp);
+	complex<double> sum2 = - Svac (j, jp);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  {
+	    sum1 += Pvac (j, jpp) * iImat (jpp, jp);
+	    sum2 += Rvac (j, jpp) * iImat (jpp, jp);
+	  }
+
+	PImat (j, jp) = sum1;
+	RImat (j, jp) = sum2;
+      }
+  
+  // ..................
+  // Calculate G-matrix
+  // ..................
+  SolveLinearSystemTranspose (RImat, RPImat, PImat);
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      RPIdag (j, jp) = conj (RPImat (jp, j));
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      Gmat (j, jp) = 0.5 * RPImat (j, jp) + 0.5 * RPIdag (j, jp);
+
+  // ...................
+  // Calculate iG-matrix
+  // ...................
+  SolveLinearSystemTranspose (PImat, iRPImat, RImat);
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      iRPIdag (j, jp) = conj (iRPImat (jp, j));
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      iGmat (j, jp) = 0.5 * iRPImat (j, jp) + 0.5 * iRPIdag (j, jp);
+  
+  //   delete[] Y; delete[] err; 
 }
  
 // ####################################################

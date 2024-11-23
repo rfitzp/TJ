@@ -1,7 +1,7 @@
-# Amat.py
+# RSmat.py
 
-# Visualizes vacuum matrix A_m^m'
-# Also shows anti-Hermitian component of A_m^m'
+# Visualizes vacuum matrix (R S^dag)_m^m'
+# Also shows anti-Hermitian component of (R S^dag)_m^m'
 
 import math
 import numpy as np
@@ -11,10 +11,10 @@ ReBu = plt.get_cmap ('seismic')
 
 fn    = '../../Outputs/TJ/TJ.nc'
 ds    = nc.Dataset(fn)
-avacr = ds['Amat_r']
-avaci = ds['Amat_i']
-bvacr = ds['Aant_r']
-bvaci = ds['Aant_i']
+avacr = ds['RSmat_r']
+avaci = ds['RSmat_i']
+bvacr = ds['RSant_r']
+bvaci = ds['RSant_i']
 
 ar = np.asarray(avacr)
 ai = np.asarray(avaci)
@@ -48,7 +48,7 @@ else:
     bimax = -bim
 
 fig = plt.figure (figsize = (10.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Vacuum Matrix A = P^dag R')
+fig.canvas.manager.set_window_title (r'TJ Code: Vacuum Matrix RS = R S^dag')
 plt.rc ('xtick', labelsize = 12) 
 plt.rc ('ytick', labelsize = 12)
 
@@ -56,25 +56,25 @@ plt.subplot (2, 2, 1)
 
 arrax = plt.matshow (avacr, fignum = 0, cmap = ReBu, vmin = -armax, vmax = armax)
 plt.colorbar (arrax)
-plt.title (r"$Re(A^{mm'})$")
+plt.title (r"$Re(RS^{mm'})$")
 
 plt.subplot (2, 2, 2)
 
 ariax = plt.matshow (avaci, fignum = 0, cmap = ReBu, vmin = -aimax, vmax = aimax)
 plt.colorbar (ariax)
-plt.title (r"$Im(A^{mm'})$")
+plt.title (r"$Im(RS^{mm'})$")
 
 plt.subplot (2, 2, 3)
 
 arrax = plt.matshow (bvacr, fignum = 0, cmap = ReBu, vmin = -brmax, vmax = brmax)
 plt.colorbar (arrax)
-plt.title (r"$Re(A^{mm'}_{anti})$")
+plt.title (r"$Re(RS^{mm'}_{anti})$")
 
 plt.subplot (2, 2, 4)
 
 ariax = plt.matshow (bvaci, fignum = 0, cmap = ReBu, vmin = -bimax, vmax = bimax)
 plt.colorbar (ariax)
-plt.title (r"$Im(A_{anti}^{mm'})$")
+plt.title (r"$Im(RS_{anti}^{mm'})$")
 
 plt.tight_layout ()
 

@@ -9,7 +9,7 @@ void Equilibrium::WriteNetcdf (double sa)
 {
   printf ("Writing equilibrium data to netcdf file Outputs/Equilibrium/Equilibrium.nc:\n");
 
-  double para[2], Input[15], Beta[4];
+  double para[3], Input[15], Beta[4];
 
   double* Hna   = new double[Ns+1];
   double* Vna   = new double[Ns+1];
@@ -33,6 +33,7 @@ void Equilibrium::WriteNetcdf (double sa)
   
   para[0] = epsa;
   para[1] = sa;
+  para[2] = bw;
 
   Beta[0] = li;
   Beta[1] = betat;
@@ -60,13 +61,14 @@ void Equilibrium::WriteNetcdf (double sa)
       dataFile.putAtt ("Compile_Time", COMPILE_TIME);
       dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
   
-      NcDim i_d = dataFile.addDim ("Ni", 15);
-      NcDim p_d = dataFile.addDim ("Np", 2);
-      NcDim b_d = dataFile.addDim ("Nb", 4);
-      NcDim r_d = dataFile.addDim ("Nr", Nr+1);
-      NcDim s_d = dataFile.addDim ("Ns", Ns+1);
-      NcDim f_d = dataFile.addDim ("Nf", Nf);
-      NcDim w_d = dataFile.addDim ("Nw", Nw+1);
+      NcDim i_d = dataFile.addDim ("Ni",    15);
+      NcDim p_d = dataFile.addDim ("Np",    3);
+      NcDim b_d = dataFile.addDim ("Nb",    4);
+      NcDim r_d = dataFile.addDim ("Nr",    Nr+1);
+      NcDim s_d = dataFile.addDim ("Ns",    Ns+1);
+      NcDim f_d = dataFile.addDim ("Nf",    Nf);
+      NcDim w_d = dataFile.addDim ("Nw",    Nw+1);
+      NcDim c_d = dataFile.addDim ("ncoil", ncoil);
  
       vector<NcDim> shape_d;
       shape_d.push_back (s_d);
@@ -201,6 +203,20 @@ void Equilibrium::WriteNetcdf (double sa)
       dRdtheta_x.putVar (dRdtheta);
       NcVar dZdtheta_x = dataFile.addVar ("dZdtheta",  ncDouble, w_d);
       dZdtheta_x.putVar (dZdtheta);
+
+      NcVar Rwall_x = dataFile.addVar ("Rwall", ncDouble, w_d);
+      Rwall_x.putVar (Rwall);
+      NcVar Zwall_x = dataFile.addVar ("Zwall", ncDouble, w_d);
+      Zwall_x.putVar (Zwall);
+      NcVar wwall_x = dataFile.addVar ("wwall", ncDouble, w_d);
+      wwall_x.putVar (wwall);
+ 
+      NcVar Rcoil_x = dataFile.addVar ("Rcoil", ncDouble, c_d);
+      Rcoil_x.putVar (Rcoil);
+      NcVar Zcoil_x = dataFile.addVar ("Zcoil", ncDouble, c_d);
+      Zcoil_x.putVar (Zcoil);
+      NcVar Icoil_x = dataFile.addVar ("Icoil", ncDouble, c_d);
+      Icoil_x.putVar (Icoil);
     }
   catch (NcException& e)
     {

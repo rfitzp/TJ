@@ -1,7 +1,7 @@
 # Flux.py
 
 # Plots r, omega coordinate system in R, Z plane.
-# Also shows rational surfaces and RMP coils.
+# Also shows rational surfaces, wall, and RMP coils.
 
 import math
 import numpy as np
@@ -23,16 +23,15 @@ rr = np.asarray(r);
 nf = RR.shape[0]
 nt = RR.shape[1]                
 
+Rcoil = np.asarray(ds['Rcoil'])
+Zcoil = np.asarray(ds['Zcoil'])
+Icoil = np.asarray(ds['Icoil'])
+Rw    = ds['Rwall']
+Zw    = ds['Zwall']
+
 fn1   = '../../Outputs/TJ/TJ.nc'
 ds1   = nc.Dataset (fn1)
 rres  = ds1['r_res']
-Rcoil = np.asarray(ds1['Rcoil'])
-Zcoil = np.asarray(ds1['Zcoil'])
-Icoil = np.asarray(ds1['Icoil'])
-Rwm   = ds1['Rwm']
-Zwm   = ds1['Zwm']
-Rwp   = ds1['Rwp']
-Zwp   = ds1['Zwp']
 
 fig = plt.figure (figsize = (8.0, 7.5))
 fig.canvas.manager.set_window_title (r'TJ Code: r, omega Coordinate System')
@@ -75,8 +74,7 @@ plt.plot (rr1, zz1, color = 'red', linewidth  = 1)
 
 plt.plot ([1.], [0.], marker = 'o', markersize = 2, color = "black")
 
-plt.plot (Rwm, Zwm, color = 'black', linewidth = 1, linestyle = 'solid')
-plt.plot (Rwp, Zwp, color = 'black', linewidth = 1, linestyle = 'solid')
+plt.plot (Rw, Zw, color = 'black', linewidth = 1, linestyle = 'solid')
 
 for R, Z, I in zip (Rcoil, Zcoil, Icoil):
     if I > 0.:

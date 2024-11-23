@@ -1,6 +1,6 @@
-# I.py
+# SPmat.py
 
-# Visualizes inverse of wall response matrix I_m^m'
+# Visualizes vacuum matrix (P S^dag - Q R^dag)_m^m'
 
 import math
 import numpy as np
@@ -10,8 +10,8 @@ ReBu = plt.get_cmap ('seismic')
 
 fn    = '../../Outputs/TJ/TJ.nc'
 ds    = nc.Dataset(fn)
-avacr = ds['iImat_r']
-avaci = ds['iImat_i']
+avacr = ds['SPmat_r']
+avaci = ds['SPmat_i']
 
 hr = np.asarray(avacr)
 hi = np.asarray(avaci)
@@ -25,7 +25,7 @@ else:
     hmax = -hrm
 
 fig = plt.figure (figsize = (12.0, 6.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Inverse Wall Response Matrix')
+fig.canvas.manager.set_window_title (r'TJ Code: Vacuum Matrix PS = P S^dag - Q R^dag')
 plt.rc ('xtick', labelsize=12) 
 plt.rc ('ytick', labelsize=12)
 
@@ -33,13 +33,13 @@ plt.subplot (1, 2, 1)
 
 arrax = plt.matshow (hr, fignum = 0, cmap = ReBu, vmin = -hmax, vmax = hmax)
 plt.colorbar (arrax)
-plt.title (r"$Re(I_{mm'}^{-1})$")
+plt.title (r"$Re(PS_{mm'})$")
 
 plt.subplot (1, 2, 2)
 
 ariax = plt.matshow (hi, fignum = 0, cmap = ReBu)
 plt.colorbar (ariax)
-plt.title (r"$Im(I_{mm'}^{-1})$")
+plt.title (r"$Im(PS_{mm'})$")
 
 plt.tight_layout ()
 

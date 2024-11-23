@@ -103,85 +103,75 @@ class Equilibrium
   // ------------------
   // Physics parameters
   // ------------------
-  double         epsa;   // Inverse aspect-ratio of plasma (read from JSON file)
-  double         qc;     // Lowest-order safety-factor on magnetic axis (read from JSON file)
-  double         qa;     // Safety-factor at plasma/vacuum interface (read from JSON file)
-  double         pc;     // Normalized plasma pressure on magnetic axis (read from JSON file)
-  double         mu;     // Pressure peaking parameter (read from JSON file)
-  vector<double> Hna;    // H2(1), H3(1), etc (read from JSON file)
-  vector<double> Vna;    // V2(1), V3(1), etc (read from JSON file)
-  double         nu;     // Toroidal current peaking parameter (determined from qa)
+  double         epsa;  // Inverse aspect-ratio of plasma (read from JSON file)
+  double         qc;    // Lowest-order safety-factor on magnetic axis (read from JSON file)
+  double         qa;    // Safety-factor at plasma/vacuum interface (read from JSON file)
+  double         pc;    // Normalized plasma pressure on magnetic axis (read from JSON file)
+  double         mu;    // Pressure peaking parameter (read from JSON file)
+  vector<double> Hna;   // H2(1), H3(1), etc (read from JSON file)
+  vector<double> Vna;   // V2(1), V3(1), etc (read from JSON file)
+  double         nu;    // Toroidal current peaking parameter (determined from qa)
 
-  double         R0;     // Major radius of magnetic axis (read from Layer JSON file)
-  double         B0;     // Toroidal magnetic field-strength on magnetic axis (read from Layer JSON file)
+  double         bw;    // Relative wall radius (read from JSON file)
 
-  double         bw;     // Relative wall radius (read from JSON file)
+  int            ncoil; // Number of toroidal strands that make up RMP coils (strands assumed to be located at wall radius)
+  double*        wcoil; // omega coordinates of RMP strands/M_PI (read from JSON file)
+  double*        Icoil; // Toroidal currents flowing in RMP strands (read from JSON file)
+  double*        Rcoil; // R coodinates of RMP strands 
+  double*        Zcoil; // Z coodinates of RMP strands 
 
-  int            ncoil;  // Number of toroidal strands that make up RMP coils (assumed to be at wall radius)
-  double*        wcoil;  // omega coordinates of RMP strands (read from JSON file)
-  double*        Icoil;  // Toroidal currents flowing in RMP strands (read from JSON file)
-  double*        Rcoil;  // R coodinates of RMP strands 
-  double*        Zcoil;  // Z coodinates of RMP strands 
+  double         R0;    // Major radius of magnetic axis (read from Layer JSON file)
+  double         B0;    // Toroidal magnetic field-strength on magnetic axis (read from Layer JSON file)
 
   // ----------------------
   // Calculation parameters
   // ----------------------
-  double eps;    // Distance of closest approach to magnetic axis (read from JSON file)
-  int    Ns;     // Number of shaping harmonics (read from JSON file)
-  int    Nr;     // Number of radial grid-points for calculation purposes (read from JSON file)
-  int    Nf;     // Number of radial grid-points for visualization purposes (read from JSON file)
-  int    Nw;     // Number of angular grid-points for visualization purposes (read from JSON file)
-
-  // -------------------------------
-  // Adaptive integration parameters
-  // -------------------------------
-  double acc;     // Integration accuracy (read from JSON file)
-  double h0;      // Initial integration step-length (read from JSON file)
-  double hmin;    // Minimum integration step-length (read from JSON file)
-  double hmax;    // Maximum integration step-length (read from JSON file)
-  int    maxrept; // Maximum number of step recalculations
-  int    flag;    // Integration error calculation flag
+  double eps; // Distance of closest approach to magnetic axis (read from JSON file)
+  int    Ns;  // Number of shaping harmonics (read from JSON file)
+  int    Nr;  // Number of radial grid-points for calculation purposes (read from JSON file)
+  int    Nf;  // Number of radial grid-points for visualization purposes (read from JSON file)
+  int    Nw;  // Number of angular grid-points for visualization purposes (read from JSON file)
 
   // ----------------
   // Calculation data
   // ----------------
-  double* rr;    // Radial grid-points
-  double* p2;    // Plasma pressure profile
-  double* f1;    // Lowest-order poloidal flux function
-  double* f3;    // Higher-order poloidal flux function
-  double* g2;    // Lowest-order toroidal flux function
-  double* q0;    // Lowest-order safety-factor
-  double* q2;    // Higher-order safety-factor
-  double* It;    // Toroidal plasma current
-  double* Ip;    // Poloidal plasma current
-  double* Jt;    // Radial derivative of toroidal plasma current
-  double* Jp;    // Radial derivative of poloidal plasma current
-  double* pp;    // Radial derivative of plasma pressure
-  double* ppp;   // Second radial derivative of plasma pressure 
-  double* qq;    // First radial derivative of safety-factor times r
-  double* qqq;   // Radial derivative of qq times r
-  double* s;     // Higher-order magnetic shear:  s  = r q2'/q2
-  double* s2;    // Derivative of magnetic shear: s2 = r^2 q2''/q2
-  double* s0;    // Lowest-order magnetic shear (s0=2 at boundary)
-  double* S1;    // First shaping function
-  double* S2;    // Second shaping function
-  double* S3;    // Third shaping function
-  double* P1;    // First profile function: (2-s) /q2
-  double* P1a;   // Lowest-order first profile function: (2-s0) /q0 
-  double* P2;    // Second profile function: r dP1/dr
-  double* P2a;   // Lowest-order second profile function: r dP1a/dr
-  double* P3;    // Third profile function
-  double* P3a;   // Auxillary third profile function
-  double* ff;    // f profile
-  double* ggr2;  // <|nabla r|^2> profile
-  double* RR2;   // <R^2> profile
-  double* IR2;   // <|nabla r|^2/R^2> profile
-  double* Psi;   // Psi(r) array
-  double* PsiN;  // PsiN(r) array
-  double* Tf;    // Toroidal flux-function
-  double* mu0P;  // mu_0 times pressure
-  double* DI;    // Ideal Mercier index
-  double* DR;    // Resistive Mercier index
+  double* rr;                   // Radial grid-points
+  double* p2;                   // Plasma pressure profile
+  double* f1;                   // Lowest-order poloidal flux function
+  double* f3;                   // Higher-order poloidal flux function
+  double* g2;                   // Lowest-order toroidal flux function
+  double* q0;                   // Lowest-order safety-factor
+  double* q2;                   // Higher-order safety-factor
+  double* It;                   // Toroidal plasma current
+  double* Ip;                   // Poloidal plasma current
+  double* Jt;                   // Radial derivative of toroidal plasma current
+  double* Jp;                   // Radial derivative of poloidal plasma current
+  double* pp;                   // Radial derivative of plasma pressure
+  double* ppp;                  // Second radial derivative of plasma pressure 
+  double* qq;                   // First radial derivative of safety-factor times r
+  double* qqq;                  // Radial derivative of qq times r
+  double* s;                    // Higher-order magnetic shear:  s  = r q2'/q2
+  double* s2;                   // Derivative of magnetic shear: s2 = r^2 q2''/q2
+  double* s0;                   // Lowest-order magnetic shear (s0=2 at boundary)
+  double* S1;                   // First shaping function
+  double* S2;                   // Second shaping function
+  double* S3;                   // Third shaping function
+  double* P1;                   // First profile function: (2-s) /q2
+  double* P1a;                  // Lowest-order first profile function: (2-s0) /q0 
+  double* P2;                   // Second profile function: r dP1/dr
+  double* P2a;                  // Lowest-order second profile function: r dP1a/dr
+  double* P3;                   // Third profile function
+  double* P3a;                  // Auxillary third profile function
+  double* ff;                   // f profile
+  double* ggr2;                 // <|nabla r|^2> profile
+  double* RR2;                  // <R^2> profile
+  double* IR2;                  // <|nabla r|^2/R^2> profile
+  double* Psi;                  // Psi(r) array
+  double* PsiN;                 // PsiN(r) array
+  double* Tf;                   // Toroidal flux-function
+  double* mu0P;                 // mu_0 times pressure
+  double* DI;                   // Ideal Mercier index
+  double* DR;                   // Resistive Mercier index
    
   Array<double,2>    HHfunc;    // Horizontal shaping functions
   Array<double,2>    VVfunc;    // Vertical shaping functions
@@ -254,61 +244,64 @@ class Equilibrium
 
   double*            Rwall;     // R values on wall
   double*            Zwall;     // Z values on wall
-  double*            twall;     // theta values on wall
   double*            wwall;     // omega values on wall
-  double*            twall0;    // Preliminary theta values on wall
-  double*            wwall0;    // Preliminary omega values on wall
-  double*            dRdthetw;  // dR/dtheta values on wall
-  double*            dZdthetw;  // dZ/dtheta values on wall
-  double*            R2w;       // R^2 values on wall
-  double*            grr2w;     // |nabla r|^2 values on wall
 
   // ---------------
   // EFIT parameters
   // ---------------
-  int     EFIT;     // Flag for calculating EFIT data (read from JSON file)
-  int     NRBOX;    // Number of R grid-points (read from JSON file)
-  int     NZBOX;    // Number of Z grid-points (read from JSON file)
-  double  rc;       // Flux-surfaces calculated accurately up to r = rc (read from JSON file)
-  int     NPBOUND;  // Number of boundary points (= NW+1)
-  int     NLIMITER; // Number of limiter points (= 5)
-  double  RBOXLFT;  // Left-hand coordinate of R box (deduced from boundary values)
-  double  RBOXLEN;  // Length of R box (deduced from boundary values)
-  double  ZOFF;     // Offset of centroid of Z box (deduced from boundary values)
-  double  ZBOXLEN;  // Length of Z box (deduced from boundary values)
-  double  R0EXP;    // Major radius of magnetic axis (read from JSON file)
-  double  B0EXP;    // Toroidal magnetic field-strength on magnetic axis (read from JSON file)
-  double  RAXIS;    // R coordinate of magnetic axis (= R0)
-  double  ZAXIS;    // Z coordinate of magnetic axis (= Z0)
-  double  PSIAXIS;  // PSI value on magnetic axis
-  double  PSIBOUND; // PSI value on plasma boundary (= 0)
-  double  CURRENT;  // Toroidal plasma current
-  double* PSI;      // Equally-spaced PSI array
-  double* PSIN;     // PSI_N array
-  double* rPSI;     // r values that coincide with PSI values
-  double* PSIr;     // PSI values that coincide with r values
-  double* T;        // Toroidal magnetic flux evaluated on PSI grid
-  double* TTp;      // T T' evaluated on PSI grid
-  double* P;        // P evaluated on PSI grid
-  double* Pp;       // P' evaluated on PSI grid
-  double* Q;        // Safety-factor evaluated on PSI grid
-  double* RBOUND;   // R values on plasma boundary
-  double* ZBOUND;   // Z values on plasma boundary
-  double* RLIMITER; // R values on limiter
-  double* ZLIMITER; // Z values on limiter
-  double* RGRID;    // R grid-points
-  double* ZGRID;    // Z grid-points
-  double* PSIRZ;    // PSI evaluated on R, Z grid
-  double* rRZ;      // r evaluated on R, Z grid
-  double* wRZ;      // w evaluated on R, Z grid
-  double* cwRZ;     // cos(w) evaluated on R, Z grid
-  double* swRZ;     // sin(w) evaluated on R, Z grid
+  int                EFIT;       // Flag for calculating EFIT data (read from JSON file)
+  int                NRBOX;      // Number of R grid-points (read from JSON file)
+  int                NZBOX;      // Number of Z grid-points (read from JSON file)
+  double             rc;         // Flux-surfaces calculated accurately up to r = rc (read from JSON file)
+  int                NPBOUND;    // Number of boundary points (= NW+1)
+  int                NLIMITER;   // Number of limiter points (= 5)
+  double             RBOXLFT;    // Left-hand coordinate of R box (deduced from boundary values)
+  double             RBOXLEN;    // Length of R box (deduced from boundary values)
+  double             ZOFF;       // Offset of centroid of Z box (deduced from boundary values)
+  double             ZBOXLEN;    // Length of Z box (deduced from boundary values)
+  double             R0EXP;      // Major radius of magnetic axis (read from JSON file)
+  double             B0EXP;      // Toroidal magnetic field-strength on magnetic axis (read from JSON file)
+  double             RAXIS;      // R coordinate of magnetic axis (= R0)
+  double             ZAXIS;      // Z coordinate of magnetic axis (= Z0)
+  double             PSIAXIS;    // PSI value on magnetic axis
+  double             PSIBOUND;   // PSI value on plasma boundary (= 0)
+  double             CURRENT;    // Toroidal plasma current
+  double*            PSI;        // Equally-spaced PSI array
+  double*            PSIN;       // PSI_N array
+  double*            rPSI;       // r values that coincide with PSI values
+  double*            PSIr;       // PSI values that coincide with r values
+  double*            T;          // Toroidal magnetic flux evaluated on PSI grid
+  double*            TTp;        // T T' evaluated on PSI grid
+  double*            P;          // P evaluated on PSI grid
+  double*            Pp;         // P' evaluated on PSI grid
+  double*            Q;          // Safety-factor evaluated on PSI grid
+  double*            RBOUND;     // R values on plasma boundary
+  double*            ZBOUND;     // Z values on plasma boundary
+  double*            RLIMITER;   // R values on limiter
+  double*            ZLIMITER;   // Z values on limiter
+  double*            RGRID;      // R grid-points
+  double*            ZGRID;      // Z grid-points
+  double*            PSIRZ;      // PSI evaluated on R, Z grid
+  double*            rRZ;        // r evaluated on R, Z grid
+  double*            wRZ;        // w evaluated on R, Z grid
+  double*            cwRZ;       // cos(w) evaluated on R, Z grid
+  double*            swRZ;       // sin(w) evaluated on R, Z grid
 
-  gsl_spline*        rPsispline;  // Interpolated r function versus Psi
-  gsl_spline*        PSIrspline;  // Interpolated PSI function versus r
-  gsl_interp_accel*  rPsiacc;     // Accelerator for interpolated r function versus Psi
-  gsl_interp_accel*  PSIracc;     // Accelerator for interpolated PSI function versus r
+  gsl_spline*        rPsispline; // Interpolated r function versus Psi
+  gsl_spline*        PSIrspline; // Interpolated PSI function versus r
+  gsl_interp_accel*  rPsiacc;    // Accelerator for interpolated r function versus Psi
+  gsl_interp_accel*  PSIracc;    // Accelerator for interpolated PSI function versus r
   
+  // -------------------------------
+  // Adaptive integration parameters
+  // -------------------------------
+  double acc;     // Integration accuracy (read from JSON file)
+  double h0;      // Initial integration step-length (read from JSON file)
+  double hmin;    // Minimum integration step-length (read from JSON file)
+  double hmax;    // Maximum integration step-length (read from JSON file)
+  int    maxrept; // Maximum number of step recalculations
+  int    flag;    // Integration error calculation flag
+
   // ----------------------------
   // Cash-Karp RK4/RK5 parameters
   // ----------------------------

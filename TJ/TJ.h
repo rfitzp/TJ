@@ -108,29 +108,6 @@ class TJ
 
   double EPSF;    // Step-length for finite difference determination of derivatives
 
-  // ----------------------------
-  // Layer calculation parameters
-  // ----------------------------
-  double B0;      // On-axis toroidal magnetic field-strength (T) (read from Layer JSON file)
-  double R0;      // On-axis plasma major radius (m) (read from  Layer JSON file)
-  double n0;      // On-axis electron number density (m^-3) (read from  Layer JSON file)
-  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from Layer JSON file)
-  double Zeff;    // Effective ion charge number (read from Layer JSON file)
-  double Mion;    // Ion mass number (read from Layer JSON file)
-  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from Layer JSON file)
-  double Teped;   // Electron temperature at edge of plasma (eV) (read from Layer JSON file)
-  double apol;    // Plasma minor radius (m)
-
-  // -------------------------------
-  // Adaptive integration parameters
-  // -------------------------------
-  double acc;     // Integration accuracy (read from TJ JSON file)
-  double h0;      // Initial step-length (read from TJ JSON file)
-  double hmin;    // Minimum step-length (read from TJ JSON file)
-  double hmax;    // Maximum step-length (read from TJ JSON file)
-  int    maxrept; // Maximum number of step recalculations
-  int    flag;    // Integration error calculation flag
-  
   // ---------------------------------------------------------------
   // Equilibrium data (read from Outputs/Equilibrium/Equilibrium.nc)
   // ---------------------------------------------------------------
@@ -218,49 +195,101 @@ class TJ
   gsl_spline*        Rbspline;  // Interpolated R function on plasma boundary
   gsl_spline*        Zbspline;  // Interpolated Z function on plasma boundary
 
-  gsl_interp_accel*  Rrzacc;    // Accelerator for interpolated R2grgz function
-  gsl_interp_accel*  Rreacc;    // Accelerator for interpolated R2grge function
-  gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function
-  gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function
+  gsl_interp_accel*  Rrzacc;    // Accelerator for interpolated R2grgz function on plasma boundary
+  gsl_interp_accel*  Rreacc;    // Accelerator for interpolated R2grge function on plasma boundary
+  gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function on plasma boundary
+  gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function on plasma boundary
 
-  // --------------------
-  // Plasma boundary data
-  // --------------------
+  // --------------------------
+  // Plasma boundary parameters
+  // --------------------------
   double* tbound; // theta values on plasma boundary
   double* Rbound; // R values on plasma boundary
   double* Zbound; // Z values on plasma boundary
   double* dRdthe; // dR/dtheta values on plasma boundary
   double* dZdthe; // dZ/dtheta values on plasma boundary
 
+  // ---------------
+  // Wall parameters
+  // ---------------
+  double* wwall;  // omega values on wall
+  double* Rwall;  // R values on wall
+  double* Zwall;  // Z values on wall 
+
+  // -----------------------------------
+  // Resonant magnetic perturbation data
+  // -----------------------------------
+  int     ncoil; // Number of toroidal strands that make up RMP coils 
+  double* Rcoil; // R coodinates of strands 
+  double* Zcoil; // Z coodinates of strands 
+  double* Icoil; // Toroidal currents flowing in strands 
+
   // --------------------
   // Vacuum solution data
   // --------------------
-  double                   sa;   // Edge magnetic shear
+  double                   sa;     // Edge magnetic shear
 
-  Array<complex<double>,2> Pvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Qvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Rvac;  // Vacuum solution matrix
-  Array<complex<double>,2> Svac;  // Vacuum solution matrix
-  Array<complex<double>,2> Pdag;  // Hermitian conjugate of Pvac
-  Array<complex<double>,2> Rdag;  // Hermitian conjugate of Rvac
-  Array<complex<double>,2> Qdag;  // Hermitian conjugate of Qvac
-  Array<complex<double>,2> Amat;  // Pdag * Rvac
-  Array<complex<double>,2> Aher;  // Hermitian component of Amat
-  Array<complex<double>,2> Aant;  // Anti-Hermitian component of Amat
-  Array<complex<double>,2> Bmat;  // Qdag * Svac
-  Array<complex<double>,2> Bher;  // Hermitian component of Bmat
-  Array<complex<double>,2> Bant;  // Anti-Hermitian component of Bmat
-  Array<complex<double>,2> Imat;  // Pdag * Svac - Rdag * Qvac
+  Array<complex<double>,2> Pvac;   // Vacuum solution matrix
+  Array<complex<double>,2> Qvac;   // Vacuum solution matrix
+  Array<complex<double>,2> Rvac;   // Vacuum solution matrix
+  Array<complex<double>,2> Svac;   // Vacuum solution matrix
 
-  Array<complex<double>,2> Cmat;  // Cmat * Rvac = Pvac
-  Array<complex<double>,2> Cdag;  // Hermitian conjugate of Cmat
-  Array<complex<double>,2> Hmat;  // No-wall vacuum response matrix: Hmat = (1/2) (Cmat + Cdag)
+  Array<complex<double>,2> Pdag;   // Hermitian conjugate of Pvac
+  Array<complex<double>,2> Qdag;   // Hermitian conjugate of Qvac
+  Array<complex<double>,2> Rdag;   // Hermitian conjugate of Rvac
+  Array<complex<double>,2> Sdag;   // Hermitian conjugate of Svac
 
-  Array<complex<double>,2> PQmat; // Pvac + Qvac * Iw
-  Array<complex<double>,2> RSmat; // Rvac + Svac * Iw
-  Array<complex<double>,2> Dmat;  // Dmat * RSvac = PQvac
-  Array<complex<double>,2> Ddag;  // Hermitian conjugate of Dmat
-  Array<complex<double>,2> Gmat;  // Perfect-wall vacuum response matrix: Gmat = (1/2) (Dmat + Ddag)
+  Array<complex<double>,2> PRmat;  // Pdag * Rvac
+  Array<complex<double>,2> PRher;  // Hermitian component of PRmat
+  Array<complex<double>,2> PRant;  // Anti-Hermitian component of PRmat
+
+  Array<complex<double>,2> QSmat;  // Qdag * Svac
+  Array<complex<double>,2> QSher;  // Hermitian component of QSmat
+  Array<complex<double>,2> QSant;  // Anti-Hermitian component of QSmat
+
+  Array<complex<double>,2> PSmat;  // Pdag * Svac - Rdag * Qvac
+
+  Array<complex<double>,2> QPmat;  // Qvac * Pdag
+  Array<complex<double>,2> QPher;  // Hermitian component of QPmat
+  Array<complex<double>,2> QPant;  // Anti-Hermitian component of QPmat
+
+  Array<complex<double>,2> RSmat;  // Rvac * Sdag
+  Array<complex<double>,2> RSher;  // Hermitian component of RSmat
+  Array<complex<double>,2> RSant;  // Anti-Hermitian component of RSmat
+
+  Array<complex<double>,2> SPmat;  // Pvac * Sdag - Qvac * Rdag
+
+  Array<complex<double>,2> RPmat;  // RPmat * Rvac = Pvac
+  Array<complex<double>,2> RPdag;  // Hermitian conjugate of RPmat
+  Array<complex<double>,2> Hmat;   // No-wall vacuum response matrix: Hmat = (1/2) (RPmat + RPdag)
+
+  Array<complex<double>,2> iRPmat; // iRPmat * Pvac = Rvac
+  Array<complex<double>,2> iRPdag; // Hermitian conjugate of iRPmat
+  Array<complex<double>,2> iHmat;  // Inverse no-wall vacuum response matrix: iHmat = (1/2) (iRPmat + iRPdag)
+
+  // ------------------
+  // Wall solution data
+  // ------------------
+  double                   bw;     // Relative wall radius
+  double*                  rho;    // Wall scaling vector
+
+  Array<complex<double>,2> Rwal;   // Wall solution matrix
+  Array<complex<double>,2> Swal;   // Wall solution matrix
+
+  Array<complex<double>,2> iImat;  // Rwal * iImat = Swal
+  Array<complex<double>,2> iIher;  // Hermitian component of iImat
+  Array<complex<double>,2> iIant;  // Anti-Hermitian component of iImat
+
+  Array<complex<double>,2> PImat;  // Pvac * iImat - Qvac
+  Array<complex<double>,2> RImat;  // Rvac * iImat - Svac
+
+  Array<complex<double>,2> RPImat; // RPImat * RImat = PImat
+  Array<complex<double>,2> RPIdag; // Hermitian conjugate of RPImat
+  Array<complex<double>,2> Gmat;   // Perfect-wall vacuum response matrix: Gmat = (1/2) (RPImat + RPIdag)
+
+  Array<complex<double>,2> iRPImat; // RPImat * PImat = RImat
+  Array<complex<double>,2> iRPIdag; // Hermitian conjugate of iRPImat
+  Array<complex<double>,2> iGmat;   // Perfect-wall vacuum response matrix: iGmat = (1/2) (iRPImat + iRPIdag)
   
   // ---------------------
   // Rational surface data
@@ -279,21 +308,6 @@ class TJ
   int*    Jres;    // Index of resonant poloidal harmonic at rational surfaces
   double* Flarge;  // TJ/STRIDE scaling factors for large solution
   double* Fsmall;  // TJ/STRIDE scaling factors for small solution
-
-  // -------------------
-  // Resonant layer data
-  // -------------------
-  double* Teres;  // Electron temperature (eV)
-  double* S13res; // Cube root of Lundquist number
-  double* taures; // Magnetic reconnection timescale S^(1/3) tauH (s)
-  double* ieres;  // Minus ratio of electron diamagnetic frequency to ion diamagnetic frequency
-  double* QEres;  // Normalized ExB frequency
-  double* Qeres;  // Normalized electron diamagnetic frequency
-  double* Qires;  // Normalized ion diamagnetic frequency
-  double* Dres;   // Normalized ion sound radius
-  double* Pmres;  // Magnetic Prandtl number for perpendicular momentum diffusion
-  double* Peres;  // Magnetic Prandtl number for perpendicular energy diffusion
-  double* Dcres;  // Critical Delta' for instability
 
   // ----------------
   // Mode number data
@@ -346,43 +360,9 @@ class TJ
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
 
-  // ---------
-  // Wall data
-  // ---------
-  double          bw;    // Relative wall radius
-  double          dw;    // Relative wall thickness
-  double          Dw;    // Wall thickness
-  double          zwm;   // Cosh(mu) on inner surface of wall
-  double          zwp;   // Cosh(mu) on outer surface of wall
-  double          swm;   // Sinh(mu) on inner surface of wall
-  double          swp;   // Sinh(mu) on outer surface of wall
-  double*         Rwm;   // R coordinates of inner surface of wall
-  double*         Zwm;   // Z coordinates of inner surface of wall
-  double*         Rwp;   // R coordinates of outer surface of wall
-  double*         Zwp;   // Z coordinates of outer surface of wall
-  Array<double,2> Ipw;   // Wall matrix
-  Array<double,2> Iqw;   // Wall matrix
-  Array<double,2> Jpw;   // Wall matrix
-  Array<double,2> Jqw;   // Wall matrix
-  Array<double,2> kw;    // Wall matrix
-  Array<double,2> Ihpw;  // Wall matrix
-  Array<double,2> Ihqw;  // Wall matrix
-  Array<double,2> Iw;    // Wall response matrix
-  Array<double,2> Iwher; // Hermitian component of Iw
-  Array<double,2> Iwant; // Anti-Hermitian component of Iw
-  Array<double,2> Jqpw;  // Jqw * Iw + Jpw
-  Array<double,2> Jw;    // Wall response matrix
-  Array<double,2> Kw;    // Iw * Jw
-  Array<double,2> Kwher; // Hermitian component of Kw
-  Array<double,2> Kwant; // Anti-Hermitian component of Kw
-  
   // -----------------------------------
   // Resonant magnetic perturbation data
   // -----------------------------------
-  int                      ncoil;   // Number of toroidal strands that make up RMP coils 
-  double*                  Icoil;   // Toroidal currents flowing in strands (read from TJ JSON file)
-  double*                  Rcoil;   // R coodinates of strands 
-  double*                  Zcoil;   // Z coodinates of strands 
   complex<double>*         Psix;    // RMP perturbation at plasma boundary
   complex<double>*         Xi;      // RMP response vector
   complex<double>*         Upsilon; // RMP response vector
@@ -453,12 +433,50 @@ class TJ
   Array<complex<double>,2> Psirv;  // Psi components of ideal RMP response eigenfunction
   Array<complex<double>,2> Zrv;    // Z components of ideal RMP response eigenfunction
 
+  // ----------------------------
+  // Layer calculation parameters
+  // ----------------------------
+  double B0;      // On-axis toroidal magnetic field-strength (T) (read from Layer JSON file)
+  double R0;      // On-axis plasma major radius (m) (read from  Layer JSON file)
+  double n0;      // On-axis electron number density (m^-3) (read from  Layer JSON file)
+  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from Layer JSON file)
+  double Zeff;    // Effective ion charge number (read from Layer JSON file)
+  double Mion;    // Ion mass number (read from Layer JSON file)
+  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from Layer JSON file)
+  double Teped;   // Electron temperature at edge of plasma (eV) (read from Layer JSON file)
+  double apol;    // Plasma minor radius (m)
+
+  // -------------------
+  // Resonant layer data
+  // -------------------
+  double* Teres;  // Electron temperature (eV)
+  double* S13res; // Cube root of Lundquist number
+  double* taures; // Magnetic reconnection timescale S^(1/3) tauH (s)
+  double* ieres;  // Minus ratio of electron diamagnetic frequency to ion diamagnetic frequency
+  double* QEres;  // Normalized ExB frequency
+  double* Qeres;  // Normalized electron diamagnetic frequency
+  double* Qires;  // Normalized ion diamagnetic frequency
+  double* Dres;   // Normalized ion sound radius
+  double* Pmres;  // Magnetic Prandtl number for perpendicular momentum diffusion
+  double* Peres;  // Magnetic Prandtl number for perpendicular energy diffusion
+  double* Dcres;  // Critical Delta' for instability
+
   // -----------------------
   // Root finding parameters
   // -----------------------
   double Eta;     // Minimum magnitude of f at root f(x) = 0
   int    Maxiter; // Maximum number of iterations
 
+  // -------------------------------
+  // Adaptive integration parameters
+  // -------------------------------
+  double acc;     // Integration accuracy (read from TJ JSON file)
+  double h0;      // Initial step-length (read from TJ JSON file)
+  double hmin;    // Minimum step-length (read from TJ JSON file)
+  double hmax;    // Maximum step-length (read from TJ JSON file)
+  int    maxrept; // Maximum number of step recalculations
+  int    flag;    // Integration error calculation flag
+  
   // ----------------------------
   // Cash-Karp RK4/RK5 parameters
   // ----------------------------
@@ -514,19 +532,19 @@ class TJ
 
   // Read equilibrium data from Inputs/Equilibrium.nc
   void ReadEquilibrium ();
-  // Calculate wall data
-  void CalcWall ();
-  // Read RMP coil data
-  void ReadCoils ();
   // Calculate metric data at plasma boundary
-  void CalculateMetric ();
+  void CalculateMetricBoundary ();
+  // Calculate metric data at wall
+  void CalculateMetricWall ();
     
   // .............
   // In Vacuum.cpp
   // .............
 
-  // Calculate vacuum matrices
-  void GetVacuum ();
+  // Calculate vacuum boundary matrices
+  void GetVacuumBoundary ();
+  // Calculate vacuum wall matrices
+  void GetVacuumWall ();
   // Evaluate right-hand sides of vacuum odes
   void Rhs1 (double r, complex<double>* Y, complex<double>* dYdr);
   // Evaluate eta for RMP coil calculation

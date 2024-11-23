@@ -1,7 +1,7 @@
-# Bmat.py
+# QSmat.py
 
-# Visualizes vacuum matrix B_m^m'
-# Also shows anti-Hermitian component of B_m^m'
+# Visualizes vacuum matrix (Q^dag S)_m^m'
+# Also shows anti-Hermitian component of (Q^dag S)_m^m'
 
 import math
 import numpy as np
@@ -11,10 +11,10 @@ ReBu = plt.get_cmap ('seismic')
 
 fn    = '../../Outputs/TJ/TJ.nc'
 ds    = nc.Dataset(fn)
-avacr = ds['Bmat_r']
-avaci = ds['Bmat_i']
-bvacr = ds['Bant_r']
-bvaci = ds['Bant_i']
+avacr = ds['QSmat_r']
+avaci = ds['QSmat_i']
+bvacr = ds['QSant_r']
+bvaci = ds['QSant_i']
 
 ar = np.asarray(avacr)
 ai = np.asarray(avaci)
@@ -48,7 +48,7 @@ else:
     bimax = -bim
 
 fig = plt.figure (figsize = (10.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Vacuum Matrix B = Q^dag S')
+fig.canvas.manager.set_window_title (r'TJ Code: Vacuum Matrix QS = Q^dag S')
 plt.rc ('xtick', labelsize = 12) 
 plt.rc ('ytick', labelsize = 12)
 
@@ -56,25 +56,25 @@ plt.subplot (2, 2, 1)
 
 arrax = plt.matshow (avacr, fignum = 0, cmap = ReBu, vmin = -armax, vmax = armax)
 plt.colorbar (arrax)
-plt.title (r"$Re(B^{mm'})$")
+plt.title (r"$Re(QS^{mm'})$")
 
 plt.subplot (2, 2, 2)
 
 ariax = plt.matshow (avaci, fignum = 0, cmap = ReBu, vmin = -aimax, vmax = aimax)
 plt.colorbar (ariax)
-plt.title (r"$Im(B^{mm'})$")
+plt.title (r"$Im(QS^{mm'})$")
 
 plt.subplot (2, 2, 3)
 
 arrax = plt.matshow (bvacr, fignum = 0, cmap = ReBu, vmin = -brmax, vmax = brmax)
 plt.colorbar (arrax)
-plt.title (r"$Re(B^{mm'}_{anti})$")
+plt.title (r"$Re(QS^{mm'}_{anti})$")
 
 plt.subplot (2, 2, 4)
 
 ariax = plt.matshow (bvaci, fignum = 0, cmap = ReBu, vmin = -bimax, vmax = bimax)
 plt.colorbar (ariax)
-plt.title (r"$Im(B_{anti}^{mm'})$")
+plt.title (r"$Im(QS_{anti}^{mm'})$")
 
 plt.tight_layout ()
 

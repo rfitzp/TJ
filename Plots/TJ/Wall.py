@@ -1,6 +1,6 @@
 # Wall.py
 
-# Visualizes wall matrices, I_m^m, J_m^m', and K_m^m'
+# Visualizes wall matrices, R_m^m' and S_m^m'
 
 import math
 import numpy as np
@@ -10,35 +10,15 @@ ReBu = plt.get_cmap ('seismic')
 
 fn    = '../../Outputs/TJ/TJ.nc'
 ds    = nc.Dataset(fn)
-pvacr = ds['Iw']
-pvaci = ds['Jw']
-rvacr = ds['Kw']
-
-#ar = np.power(np.abs(np.asarray(pvacr)), 0.25)
-#ai = np.power(np.abs(np.asarray(pvaci)), 0.25)
-#br = np.power(np.abs(np.asarray(rvacr)), 0.25)
+pvacr = ds['Rwal_r']
+pvaci = ds['Rwal_i']
+rvacr = ds['Swal_r']
+rvaci = ds['Swal_i']
 
 ar = np.asarray(pvacr)
 ai = np.asarray(pvaci)
 br = np.asarray(rvacr)
-
-"""
-J = ar.shape[0]
-for j in range(J):
-    for jp in range(J):
-        if ar[j,jp] > 0.:
-            ar[j,jp] =   pow( ar[j,jp], 0.25)
-        else:
-            ar[j,jp] = - pow(-ar[j,jp], 0.25)
-        if ai[j,jp] > 0.:
-            ai[j,jp] =   pow( ai[j,jp], 0.25)
-        else:
-            ai[j,jp] = - pow(-ai[j,jp], 0.25)
-        if br[j,jp] > 0.:
-            br[j,jp] =   pow( br[j,jp], 0.25)
-        else:
-            br[j,jp] = - pow(-br[j,jp], 0.25)
-"""
+bi = np.asarray(rvaci)
 
 arp = np.amax(ar)
 arm = np.amin(ar)
@@ -46,6 +26,8 @@ aip = np.amax(ai)
 aim = np.amin(ai)
 brp = np.amax(br)
 brm = np.amin(br)
+bip = np.amax(bi)
+bim = np.amin(bi)
 
 if (arp > -arm):
     armax = arp
@@ -59,29 +41,39 @@ if (brp > -brm):
     brmax = brp
 else:
     brmax = -brm
+if (bip > -bim):
+    bimax = bip
+else:
+    bimax = -bim
 
 fig = plt.figure (figsize = (8.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Wall Matrices I, J, and K')
+fig.canvas.manager.set_window_title (r'TJ Code: Wall Matrices R and S')
 plt.rc ('xtick', labelsize=10) 
 plt.rc ('ytick', labelsize=10)
 
 plt.subplot (2, 2, 1)
 
-prrax = plt.matshow (ar, fignum = 0, cmap = ReBu, vmin = -armax, vmax = armax)
+prrax = plt.matshow (pvacr, fignum = 0, cmap = ReBu, vmin = -armax, vmax = armax)
 plt.colorbar (prrax)
-plt.title (r"$I_m^{m'}$")
+plt.title (r"$Re(R_m^{m'})$")
 
 plt.subplot (2, 2, 2)
 
-priax = plt.matshow (ai, fignum = 0, cmap = ReBu, vmin = -aimax, vmax = aimax)
+priax = plt.matshow (pvaci, fignum = 0, cmap = ReBu, vmin = -aimax, vmax = aimax)
 plt.colorbar (priax)
-plt.title (r"$J_m^{m'}$")
+plt.title (r"$Im(R_m^{m'})$")
 
 plt.subplot (2, 2, 3)
 
-rrrax = plt.matshow (br, fignum = 0, cmap = ReBu, vmin = -brmax, vmax = brmax)
+rrrax = plt.matshow (rvacr, fignum = 0, cmap = ReBu, vmin = -brmax, vmax = brmax)
 plt.colorbar (rrrax)
-plt.title (r"$K_m^{m'}$")
+plt.title (r"$Re(S_m^{m'})$")
+
+plt.subplot (2, 2, 4)
+
+rriax = plt.matshow (rvaci, fignum = 0, cmap = ReBu, vmin = -bimax, vmax = bimax)
+plt.colorbar (rriax)
+plt.title (r"$Im(S_m^{m'})$")
 
 plt.tight_layout ()
 

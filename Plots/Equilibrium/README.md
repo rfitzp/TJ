@@ -9,3 +9,4 @@
 - *Shaping.py*:       Plots shaping functions versus r
 - *Profile.py*:       Plots profile functions versus radius, r
 - *Boundary.py*:      Plots data relating to plasma boundary
+- *Wall.py*:          Plots data relating to wall

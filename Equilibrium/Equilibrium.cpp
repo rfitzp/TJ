@@ -420,14 +420,7 @@ void Equilibrium::Solve ()
 
   Rwall    = new double[Nw+1];
   Zwall    = new double[Nw+1];
-  twall    = new double[Nw+1];
-  wwall0   = new double[Nw+1];
-  twall0   = new double[Nw+1];
   wwall    = new double[Nw+1];
-  R2w      = new double[Nw+1];
-  grr2w    = new double[Nw+1];
-  dRdthetw = new double[Nw+1];
-  dZdthetw = new double[Nw+1];
 
   // ..................
   // Set up radial grid
@@ -942,13 +935,11 @@ void Equilibrium::Solve ()
       tbound0[j] = y3[0];
     }
 
-  delete[] y3; delete[] err3;
-  
-  double rbb = tbound0[Nw] /(2.*M_PI);
-  printf ("rb = %10.3e\n", rbb);
+  double raa = tbound0[Nw] /(2.*M_PI);
+  printf ("ra = %10.3e\n", raa);
   
   for (int j = 0; j < Nw; j++)
-    tbound0[j] /= rbb;
+    tbound0[j] /= raa;
 
   tbound0[Nw] = 2.*M_PI;
   
@@ -959,17 +950,17 @@ void Equilibrium::Solve ()
   for (int j = 0; j <= Nw; j++)
     tbound[j] = double (j) * 2.*M_PI /double (Nw);
   
-  double rb = 1.;
+  double ra = 1.;
   for (int j = 0; j <= Nw; j++)
     {
       double t = tbound[j];
       double w = gsl_spline_eval (wspline, t, wacc);
       
       wbound[j] = w;
-      Rbound[j] = GetR    (rb, w, 1);
-      Zbound[j] = GetZ    (rb, w, 1);
-      R2b   [j] = GetR2   (rb, t);
-      grr2b [j] = Getgrr2 (rb, t);
+      Rbound[j] = GetR    (ra, w, 1);
+      Zbound[j] = GetZ    (ra, w, 1);
+      R2b   [j] = GetR2   (ra, t);
+      grr2b [j] = Getgrr2 (ra, t);
     }
   
   gsl_spline_init (Rspline, tbound, Rbound, Nw+1);
@@ -980,7 +971,66 @@ void Equilibrium::Solve ()
       dRdtheta[j] = gsl_spline_eval_deriv (Rspline, tbound[j], Racc);
       dZdtheta[j] = gsl_spline_eval_deriv (Zspline, tbound[j], Zacc);
     }
-   
+
+  // ....................
+  // Read wall parameters
+  // ....................
+  string JSONFilename = "../Inputs/Equilibrium.json";
+  json   JSONData     = ReadJSONFile (JSONFilename);
+
+  bw = JSONData["bw"].get<double> ();
+
+  // ...................
+  // Calculate wall data
+  // ...................
+  printf ("Calculating wall data: bw = %10.3e\n", bw);
+
+  // Set up omega grid
+  for (int j = 0; j <= Nw; j++)
+    wwall[j] = double (j) * 2.*M_PI /double (Nw);
+  
+  for (int j = 0; j <= Nw; j++)
+    {
+      Rwall[j]  = 1. + bw * (GetR (ra, wwall[j], 1) - 1.);
+      Zwall[j]  = bw * GetZ (ra, wwall[j], 1);
+    }
+  
+  // .......................
+  // Calculate RMP coil data
+  // .......................
+  vector<double> wcoil, icoil;
+  for (const auto& number : JSONData["wcoil"])
+    {
+      wcoil.push_back (number.get<double> ());
+    }
+  for (const auto& number : JSONData["Icoil"])
+    {
+      icoil.push_back (number.get<double> ());
+    }
+
+  if (wcoil.size() != icoil.size())
+    {
+      printf ("Equilibrium:: Error reading etacoil and Icoil arrays must be same size\n");
+      exit (1);
+    }
+  ncoil = wcoil.size();
+
+  Rcoil = new double[ncoil];
+  Zcoil = new double[ncoil];
+  Icoil = new double[ncoil];
+  
+  for (int i = 0; i < ncoil; i++)
+    {
+      Rcoil[i] = 1. + bw * (GetR (ra, wcoil[i]*M_PI, 1) - 1.);
+      Zcoil[i] = bw * GetZ (ra, wcoil[i]*M_PI, 1);
+      Icoil[i] = icoil[i];
+     }
+  
+  printf ("RMP coil data:\n");
+  for (int i = 0; i < ncoil; i++)
+    printf ("w_coil/M_PI = %10.3e Rcoil = %10.3e Zcoil = %10.3e Icoil = %10.3e\n",
+	    wcoil[i], Rcoil[i], Zcoil[i], Icoil[i]);
+
   // ......................................
   // Output equilibrium data to netcdf file
   // ......................................
@@ -1059,11 +1109,12 @@ void Equilibrium::Solve ()
   delete[] Rbound; delete[] Zbound; delete[] tbound; delete[] wbound0;  delete[] tbound0;
   delete[] wbound; delete[] R2b;    delete[] grr2b;  delete[] dRdtheta; delete[] dZdtheta;
 
-  delete[] Rwall; delete[] Zwall; delete[] twall; delete[] wwall0;   delete[] twall0;
-  delete[] wwall; delete[] R2w;   delete[] grr2w; delete[] dRdthetw; delete[] dZdthetw;
+  delete[] Rwall; delete[] Zwall; delete[] wwall; 
 
   delete[] Psi; delete[] PsiN; delete[] Tf;    delete[] mu0P;
-  delete[] DI;   delete[] DR;  delete[] Lfunc;  
+  delete[] DI;   delete[] DR;  delete[] Lfunc;
+
+  delete[] Rcoil; delete[] Zcoil; delete[] Icoil;
  } 
 
 
@@ -1780,19 +1831,31 @@ double Equilibrium::Getgrr2 (double r, double t)
 {
   double* hn = new double[Ns+1];
   for (int n = 1; n <= Ns; n++)
-    hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+    if (r >= 1.)
+      hn[n] = GetHHvac (n, r);
+    else
+      hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
   
   double* vn = new double[Ns+1];
   for (int n = 2; n <= Ns; n++)
-    vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+    if (r >= 1.)
+      vn[n] = GetVVvac (n, r);
+    else
+      vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
   
   double* hnp = new double[Ns+1];
   for (int n = 1; n <= Ns; n++)
-    hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+    if (r >= 1.)
+      hnp[n] = GetHPvac (n, r);
+    else
+      hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
   
   double* vnp = new double[Ns+1];
   for (int n = 2; n <= Ns; n++)
-    vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+    if (r >= 1.)
+      vnp[n] = GetVPvac (n, r);
+    else
+      vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
   
   double grr2 = 1. + 2. * epsa * hnp[1] * cos (t) + epsa*epsa * (0.75*r*r - hn[1] + hnp[1]*hnp[1] /2.);
 

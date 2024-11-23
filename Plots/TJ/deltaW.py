@@ -42,8 +42,8 @@ plt.subplot (1, 1, 1)
 plt.xlim (-1, J-1)
 
 plt.plot    (jj, www, color = 'blue',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 't')
-plt.plot    (jj, ppp, color = 'red',  linewidth = 1,    linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'p')
-plt.plot    (jj, vvv, color = 'green',  linewidth = 1,  linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'v')
+plt.plot    (jj, ppp, color = 'red',   linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'p')
+plt.plot    (jj, vvv, color = 'green', linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'v')
 plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 ax = fig.gca()
