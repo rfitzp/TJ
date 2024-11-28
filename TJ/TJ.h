@@ -94,17 +94,24 @@ class TJ
   int    MMIN;    // Minimum poloidal mode number included in calculation (read from TJ JSON file)
   int    MMAX;    // Maximum poloidal mode number included in calculation (read from TJ JSON file)
 
+  int    EQLB;    // Flag for equilibrium calculation only (read from TJ JSON file)
+  int    FREE;    // Flag for free/fixed boundary calculation (read from TJ JSON file)
+                  //  FREE > 0 - perform no-wall calculation
+                  //  FREE = 0 - perform perfect-wall calculation
+                  //  FREE < 0 - perform fixed-boundary calculation
+  int    FVAL;    // Flag for calculating eigenvalues and eigenvectors of F-matrix (read from TJ JSON file)
+  int    RMP;     // Flag for resonant magnetic perturbation calculation (read from TJ JSON file)
+  int    IDEAL;   // Flag for ideal calculation (read from TJ JSON file)
+  int    XI;      // Flag for using Xi, rather than Psi, as ideal eigenfunction basis (read from TJ JSON file)
+  int    INTR;    // Flag for internal ideal stability calculation (read from TJ JSON file)
+  int    RWM;     // Flag for resistive wall mode calculation (read from TJ JSON file)
+
   double EPS;     // Solutions launched from magnetic axis at r = EPS (read from TJ JSON file)
   double DEL;     // Distance of closest approach to rational surface is DEL (read from TJ JSON file)
   int    NFIX;    // Number of fixups (read from TJ JSON file)
   int    NDIAG;   // Number of radial grid-points for diagnostics (read from TJ JSON file)
   double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from TJ JSON file)
   int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from TJ JSON file)
-  int    FREE;    // Flag for free/fixed boundary calculation (read from TJ JSON file)
-                  //  FREE > 0 - perform no-wall calculation
-                  //  FREE = 0 - perform perfect-wall calculation
-                  //  FREE < 0 - perform fixed-boundary calculation
-  int    EQLB;    // Flag for equilibrium calculation only (read from TJ JSON file)
 
   double EPSF;    // Step-length for finite difference determination of derivatives
 
@@ -280,17 +287,23 @@ class TJ
   Array<complex<double>,2> iIher;  // Hermitian component of iImat
   Array<complex<double>,2> iIant;  // Anti-Hermitian component of iImat
 
-  Array<complex<double>,2> PImat;  // Pvac * iImat - Qvac
-  Array<complex<double>,2> RImat;  // Rvac * iImat - Svac
+  Array<complex<double>,2> PImat;  // PImat = Pvac * iImat - Qvac
+  Array<complex<double>,2> RImat;  // RImat = Rvac * iImat - Svac
+  Array<complex<double>,2> IRmat;  // IRmat = Rvac * iImat 
 
   Array<complex<double>,2> RPImat; // RPImat * RImat = PImat
   Array<complex<double>,2> RPIdag; // Hermitian conjugate of RPImat
   Array<complex<double>,2> Gmat;   // Perfect-wall vacuum response matrix: Gmat = (1/2) (RPImat + RPIdag)
 
-  Array<complex<double>,2> iRPImat; // RPImat * PImat = RImat
+  Array<complex<double>,2> iRPImat; // iRPImat * PImat = RImat
   Array<complex<double>,2> iRPIdag; // Hermitian conjugate of iRPImat
   Array<complex<double>,2> iGmat;   // Perfect-wall vacuum response matrix: iGmat = (1/2) (iRPImat + iRPIdag)
-  
+
+  Array<complex<double>,2> Bmat;    // Bmat * RImat = IRmat
+  Array<complex<double>,2> Cmat;    // Cmat = (Gmat - Hmat) * Bmat
+  Array<complex<double>,2> Cher;    // Hermitian component of Cmat
+  Array<complex<double>,2> Cant;    // Anti-Hermitian component of Cmat
+   
   // ---------------------
   // Rational surface data
   // ---------------------
@@ -360,6 +373,21 @@ class TJ
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
 
+  // ---------------------------------------
+  // Visualization of tearing eigenfunctions
+  // ---------------------------------------
+  int                      Nf;     // Number of radial grid-points on visualization grid
+  int                      Nw;     // Number of angular grid-points on visualization grid
+  double*                  rf;     // Radial grid-points on visualization grif
+  Array<double,2>          RR;     // R coordinates of visualization grid-points
+  Array<double,2>          ZZ;     // Z coordinates of visualization grid-points
+  Array<double,2>          rvals;  // r values of visulalization grid-points
+  Array<double,2>          thvals; // theta values of visualization grid-points
+  Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 
+  Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
+  Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visualization grid
+  Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
+
   // -----------------------------------
   // Resonant magnetic perturbation data
   // -----------------------------------
@@ -372,11 +400,18 @@ class TJ
   Array<complex<double>,2> Zrmp;    // Z component of ideal RMP response eigenfunction
   complex<double>*         Psixs;   // Psix on plasma boundary
   complex<double>*         Psirmps; // Psirmp on plasma boundary
+  
+  // --------------------------------------------------------
+  // Visualization of resonant magnetic perturbation response
+  // --------------------------------------------------------
+  Array<complex<double>,2> Psirf;  // Psi components of Fourier-transformed ideal RMP response eigenfunction
+  Array<complex<double>,2> Zrf;    // Z components of Fourier-transformed ideal RMP response eigenfunction
+  Array<complex<double>,2> Psirv;  // Psi components of ideal RMP response eigenfunction
+  Array<complex<double>,2> Zrv;    // Z components of ideal RMP response eigenfunction
 
   // --------------------
   // Ideal stability data
   // --------------------
-  int                      XiFlag;  // Flag for using Xi, rather than Psi, as ideal eigenfunction basis (read from TJ JSON file)
   Array<complex<double>,3> Psii;    // Psi components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Zi;      // Z components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Xii;     // Xi components of ideal solutions launched from magnetic axis
@@ -396,10 +431,7 @@ class TJ
   Array<complex<double>,2> Uant;    // Anti-Hermitian component of Umat
   double*                  Uval;    // Eigenvalues of symmeterized U-matrix
   Array<complex<double>,2> Uvec;    // Eigenvectors of symmeterized U-matrix
-  Array<complex<double>,2> Ures;    // Residuals of Uvec orthonormaility matrix
-  Array<complex<double>,2> U1mat;   // Total ideal energy matrix (theta=0 on outboard midplane)
-  double*                  U1val;   // Eigenvalues of U1-matrix
-  Array<complex<double>,2> U1vec;   // Eigenvectors of U1-matrix
+  Array<complex<double>,2> Ures;    // Residuals of Uvec orthonormality matrix
   Array<complex<double>,3> Psie;    // Psi components of ideal eigenfunctions
   Array<complex<double>,3> Ze;      // Z components of ideal eigenfunctions
   Array<complex<double>,3> Xie;     // Xi components of ideal eigenfunctions
@@ -412,27 +444,28 @@ class TJ
   Array<complex<double>,2> Xiy;     // Xi values on plasma boundary associated with ideal eigenfunctions
   complex<double>*         gammax;  // Expansion of Psi_x at boundary in ideal eigenfunctions
   complex<double>*         gamma;   // Expansion of Psi_rmp at boundary in ideal eigenfunctions
-  Array<double,2>          lvals;   // Eigenvalues of plasma energy matrix versus r
- 
-  // ------------------------------------------------
-  // Visualization of tearing eigenfunctions and RMPs
-  // ------------------------------------------------
-  int                      Nf;     // Number of radial grid-points on visualization grid
-  int                      Nw;     // Number of angular grid-points on visualization grid
-  double*                  rf;     // Radial grid-points on visualization grif
-  Array<double,2>          RR;     // R coordinates of visualization grid-points
-  Array<double,2>          ZZ;     // Z coordinates of visualization grid-points
-  Array<double,2>          rvals;  // r values of visulalization grid-points
-  Array<double,2>          thvals; // theta values of visualization grid-points
-  Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 
-  Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
-  Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visualization grid
-  Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
-  Array<complex<double>,2> Psirf;  // Psi components of Fourier-transformed ideal RMP response eigenfunction
-  Array<complex<double>,2> Zrf;    // Z components of Fourier-transformed ideal RMP response eigenfunction
-  Array<complex<double>,2> Psirv;  // Psi components of ideal RMP response eigenfunction
-  Array<complex<double>,2> Zrv;    // Z components of ideal RMP response eigenfunction
 
+  Array<double,2>          lvals;   // Eigenvalues of plasma energy matrix versus r
+
+  // -------------------
+  // Resistive wall data
+  // -------------------
+  Array<complex<double>,2> Wnw;     // No-wall plasma energy matrix
+  Array<complex<double>,2> Wpw;     // Perfect-wall plasma energy matrix
+  Array<complex<double>,2> Wpwh;    // Hermitian component of perfect-wall plasma energy matrix
+  Array<complex<double>,2> Wpw2;    // Inverse square root of Wpwh
+  Array<complex<double>,2> Dmat;    // Wpw2 * Cmat * Wpw2
+  Array<complex<double>,2> Dher;    // Hermitian component of Dmat
+  Array<complex<double>,2> Dsqt;    // Square root of Dher
+  Array<complex<double>,2> Dinv;    // Invese square root of Dher
+  Array<complex<double>,2> Ehmt;    // Wpw2 * Wnw * Bmat * Wpw2
+  Array<complex<double>,2> FFmt;    // Dsqt * Ehmt * Dinv
+  Array<complex<double>,2> FFhr;    // Hermitian component of FFmt
+  Array<complex<double>,2> FFan;    // Anti-Hermitian component of FFmt
+  double*                  FFvl;    // Eigenvalues of FFmt
+  Array<complex<double>,2> FFvc;    // Eigenvectors of FFmt
+  Array<complex<double>,2> FFrs;    // Residuals of FFmt othonormality matrix
+  
   // ----------------------------
   // Layer calculation parameters
   // ----------------------------
@@ -639,10 +672,17 @@ class TJ
   void GetTorqueFull ();
   // Calculate angular momentum flux associated with pairs of unreconnected solution vectors
   void GetTorqueUnrc ();
+  // Calculate unreconnected eigenfunction visualization data
+  void VisualizeEigenfunctions ();
+
+  // ..........
+  // In RMP.cpp
+  // ..........
+
   // Calculate resonant magnetic perturbation data
   void CalculateResonantMagneticPerturbation ();
-  // Calculate unreconnected eigenfunction and RMP response visualization data
-  void VisualizeEigenfunctions ();
+  // Calculate resonant magnetic response visualization data
+  void VisualizeRMP ();
 
   // ............
   // In Ideal.cpp
@@ -650,6 +690,13 @@ class TJ
 
   // Calculate ideal stability
   void CalculateIdealStability ();
+
+  // ..........
+  // In RWM.cpp
+  // ..........
+
+  // Calculate resistive wall mode stability
+  void CalculateRWMStability ();
    
   // ..................
   // In Interpolate.cpp
@@ -755,6 +802,12 @@ class TJ
   void GetEigenvalues (Array<complex<double>,2> H, double* evals, Array<complex<double>,2> evecs);
   // Return eigenvalues of Hermitian matix H
   void GetEigenvalues (Array<complex<double>,2> H, double* evals);
+  // Return eigenvalues and eigenvectors of pair of complex matrices
+  void GetEigenvalues (Array<complex<double>,2> A, Array<complex<double>,2> B, complex<double>* evals, Array<complex<double>,2> evecs);
+  // Find square root of Hermitian positive definite matrix
+  void SquareRootMatrix (Array<complex<double>,2> A, Array<complex<double>,2> sqrtA);
+  // Find inverse square root of Hermitian positive definite matrix
+  void InvSquareRootMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invsqrtA);
 
   // ...............
   // In Toroidal.cpp

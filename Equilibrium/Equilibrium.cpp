@@ -868,7 +868,7 @@ void Equilibrium::Solve ()
 	  double t = double (j) * 2.*M_PI /double (Nw);
 	  
 	  double w, wold = t;
-	  for (int i = 0; i < 10; i++)
+	  for (int ii = 0; ii < 5; ii++)
 	    {
 	      w    = t - Gettheta (rf, wold, 1);
 	      wold = w;
@@ -896,8 +896,8 @@ void Equilibrium::Solve ()
 	  double R = GetR (rf, w, 1);
 	  double Z = GetZ (rf, w, 1);
 	  
-	  RRw (i-1, j) = R;
-	  ZZw (i-1, j) = Z;
+	  RRw(i-1, j) = R;
+	  ZZw(i-1, j) = Z;
 	}
     }
   
@@ -1117,14 +1117,13 @@ void Equilibrium::Solve ()
   delete[] Rcoil; delete[] Zcoil; delete[] Icoil;
  } 
 
-
 // ########################
 // Function to return f1(r)
 // ########################
 double Equilibrium::Getf1 (double r)
 {
   if (r < 0.1)
-    return r*r * (1. - (nu-1.)*r*r/2. + (nu-1.)*(nu-2.)*r*r*r*r/6. - (nu-1.)*(nu-2.)*(nu-3.)*r*r*r*r*r*r/24.)/qc;
+    return r*r * (1. - (nu - 1.)*r*r/2. + (nu - 1.)*(nu - 2.)*r*r*r*r/6. - (nu - 1.)*(nu - 2.)*(nu - 3.)*r*r*r*r*r*r/24.)/qc;
   else
     return (1. - pow (1. - r*r, nu)) /nu/qc;
 }
@@ -1135,7 +1134,7 @@ double Equilibrium::Getf1 (double r)
 double Equilibrium::Getf1p (double r)
 {
   if (r < 0.1)
-    return 2.*r * (1. - (nu-1.)*r*r + (nu-1.)*(nu-2.)*r*r*r*r/2. - (nu-1.)*(nu-2.)*(nu-3.)*r*r*r*r*r*r/6.)/qc;
+    return 2.*r * (1. - (nu - 1.)*r*r + (nu - 1.)*(nu - 2.)*r*r*r*r/2. - (nu - 1.)*(nu - 2.)*(nu - 3.)*r*r*r*r*r*r/6.)/qc;
   else
     return 2. * r * pow (1. - r*r, nu-1.) /qc;
 }
@@ -1153,7 +1152,7 @@ double Equilibrium::Getp2 (double r)
 // #########################
 double Equilibrium::Getp2p (double r)
 {
-  return - 2. * pc * mu * r * pow (1. - r*r, mu-1.);
+  return - 2. * pc * mu * r * pow (1. - r*r, mu - 1.);
 }
 
 // ##########################
@@ -1161,8 +1160,8 @@ double Equilibrium::Getp2p (double r)
 // ##########################
 double Equilibrium::Getp2pp (double r)
 {
-  return - 2. * pc * mu * pow (1. - r*r, mu-1.)
-    + 4. * pc * mu * (mu-1.) * r*r * pow (1. - r*r, mu-2.);
+  return - 2. * pc * mu * pow (1. - r*r, mu - 1.)
+    + 4. * pc * mu * (mu-1.) * r*r * pow (1. - r*r, mu - 2.);
 }
 
 // ####################

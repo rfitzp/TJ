@@ -134,10 +134,10 @@ void TJ::SolveLinearSystemTranspose (Array<complex<double>,2> A, Array<complex<d
       X(i, j) = Xmat(j, i);
  }
 
-// ####################################################################################################################
+// ###################################################################################################################
 // Function to solve linear system of equations A . X = B, for X, where A is a complex rectangular matrix, and X and B
 // are complex vectors
-// ####################################################################################################################
+// ###################################################################################################################
 void TJ::SolveLinearSystem (Array<complex<double>,2> A, complex<double>* X, complex<double>* B)
 {
   int size1 = A.extent(0);
@@ -233,3 +233,46 @@ void TJ::GetEigenvalues (Array<complex<double>,2> H, double* evals)
   for (int i = 0; i < size; i++)
     evals[i] = eigval(i);
 }
+
+// ##################################################################
+// Function to find square root of Hermitian positive definite matrix
+// ##################################################################
+void TJ::SquareRootMatrix (Array<complex<double>,2> A, Array<complex<double>,2> sqrtA)
+{
+  int size = A.extent(0);
+ 
+  // Solve problem using Armadillo
+  cx_mat Amat (size, size);
+
+  for (int i = 0; i < size; i++)
+    for (int j = 0; j < size; j++)
+      Amat(i, j) = A(i, j);
+
+  cx_mat Bmat = sqrtmat_sympd (Amat);
+
+  for (int i = 0; i < size; i++)
+    for (int j = 0; j < size; j++)
+      sqrtA(i, j) = Bmat(i, j);
+ }
+
+// ##########################################################################
+// Function to find inverse square root of Hermitian positive definite matrix
+// ##########################################################################
+void TJ::InvSquareRootMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invsqrtA)
+{
+  int size = A.extent(0);
+ 
+  // Solve problem using Armadillo
+  cx_mat Amat (size, size);
+
+  for (int i = 0; i < size; i++)
+    for (int j = 0; j < size; j++)
+      Amat(i, j) = A(i, j);
+
+  cx_mat Bmat = inv_sympd (Amat);
+  cx_mat Cmat = sqrtmat_sympd (Bmat);
+
+  for (int i = 0; i < size; i++)
+    for (int j = 0; j < size; j++)
+      invsqrtA(i, j) = Cmat(i, j);
+ }

@@ -86,39 +86,45 @@ TJ::TJ ()
   string JSONFilename = "../Inputs/TJ.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  NTOR    = JSONData["NTOR"]   .get<int>    ();
-  MMIN    = JSONData["MMIN"]   .get<int>    ();
-  MMAX    = JSONData["MMAX"]   .get<int>    ();
-  FREE    = JSONData["FREE"]   .get<int>    ();
-  EQLB    = JSONData["EQLB"]   .get<int>    ();
-  XiFlag  = JSONData["XiFlag"] .get<int>    ();
+  NTOR    = JSONData["NTOR"].get<int>();
+  MMIN    = JSONData["MMIN"].get<int>();
+  MMAX    = JSONData["MMAX"].get<int>();
 
-  EPS     = JSONData["EPS"]    .get<double> ();
-  DEL     = JSONData["DEL"]    .get<double> ();
-  NFIX    = JSONData["NFIX"]   .get<int>    ();
-  NDIAG   = JSONData["NDIAG"]  .get<int>    ();
+  EQLB    = JSONData["EQLB"] .get<int>();
+  FREE    = JSONData["FREE"] .get<int>();
+  FVAL    = JSONData["FVAL"] .get<int>();
+  RMP     = JSONData["RMP"]  .get<int>();
+  IDEAL   = JSONData["IDEAL"].get<int>();
+  XI      = JSONData["XI"]   .get<int>();
+  INTR    = JSONData["INTR"] .get<int>();
+  RWM     = JSONData["RWM"]  .get<int>();
 
-  NULC    = JSONData["NULC"]   .get<double> ();
-  ITERMAX = JSONData["ITERMAX"].get<int>    ();
+  EPS     = JSONData["EPS"]  .get<double>();
+  DEL     = JSONData["DEL"]  .get<double>();
+  NFIX    = JSONData["NFIX"] .get<int>   ();
+  NDIAG   = JSONData["NDIAG"].get<int>   ();
 
-  acc     = JSONData["acc"]    .get<double> ();
-  h0      = JSONData["h0"]     .get<double> ();
-  hmin    = JSONData["hmin"]   .get<double> ();
-  hmax    = JSONData["hmax"]   .get<double> ();
+  NULC    = JSONData["NULC"]   .get<double>();
+  ITERMAX = JSONData["ITERMAX"].get<int>   ();
 
-  EPSF    = JSONData["EPSF"]   .get<double> ();
+  acc     = JSONData["acc"] .get<double>();
+  h0      = JSONData["h0"]  .get<double>();
+  hmin    = JSONData["hmin"].get<double>();
+  hmax    = JSONData["hmax"].get<double>();
+
+  EPSF    = JSONData["EPSF"].get<double>();
 
   JSONFilename = "../Inputs/Layer.json";
   JSONData     = ReadJSONFile (JSONFilename);
   
-  B0    = JSONData["B0"]   .get<double> ();
-  R0    = JSONData["R0"]   .get<double> ();
-  n0    = JSONData["n0"]   .get<double> ();
-  alpha = JSONData["alpha"].get<double> ();
-  Zeff  = JSONData["Zeff"] .get<double> ();
-  Mion  = JSONData["Mion"] .get<double> ();
-  Chip  = JSONData["Chip"] .get<double> ();
-  Teped = JSONData["Teped"].get<double> ();
+  B0    = JSONData["B0"]   .get<double>();
+  R0    = JSONData["R0"]   .get<double>();
+  n0    = JSONData["n0"]   .get<double>();
+  alpha = JSONData["alpha"].get<double>();
+  Zeff  = JSONData["Zeff"] .get<double>();
+  Mion  = JSONData["Mion"] .get<double>();
+  Chip  = JSONData["Chip"] .get<double>();
+  Teped = JSONData["Teped"].get<double>();
 
   // ------------
   // Sanity check
@@ -228,7 +234,11 @@ TJ::TJ ()
       printf ("TJ: Error - Teped must be positive\n");
       exit (1);
     }
-  
+
+  // No resonant magnetic perturbation calculation for fixed boundary
+  if (FREE < 0)
+    RMP = 0;
+
   // -----------------------------
   // Output calculation parameters
   // -----------------------------
@@ -239,8 +249,8 @@ TJ::TJ ()
   printf ("Calculation parameters:\n");
   printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
 	  NTOR, MMIN, MMAX, EPS, DEL);
-  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        free =  %1d         xflg = %1d          eqlb = %1d\n",
-	  NFIX, NDIAG, NULC, ITERMAX, FREE, XiFlag, EQLB);
+  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d\n",
+	  NFIX, NDIAG, NULC, ITERMAX, EQLB, FREE, FVAL, RMP, IDEAL, XI, INTR, RWM);
   printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
 	  acc, h0, hmin, hmax, EPSF);
   printf ("B0   = %10.3e R0    = %10.3e n0   = %10.3e alpha   = %10.3e Zeff = %10.3e Mion = %10.3e Chip = %10.3e Teped = %10.3e\n",
@@ -288,14 +298,27 @@ void TJ::Solve ()
   // Determine tearing mode dispersion relation and tearing eigenfunctions
   FindDispersion ();
 
-  // Calculate resonant magnetic perturbation data
-  CalculateResonantMagneticPerturbation ();
-
-  // Calculate unreconnected eigenfunction and RMP response visualization data
+  // Calculate unreconnected eigenfunction visualization data
   VisualizeEigenfunctions ();
 
+  if (RMP)
+    {
+      // Calculate resonant magnetic perturbation data
+      CalculateResonantMagneticPerturbation ();
+
+      // Calculate resonant magnetic perturbation respose visualization data
+      VisualizeRMP ();
+    }
+
   // Calculate ideal stability
-  CalculateIdealStability ();
+  if (IDEAL)
+    {
+      CalculateIdealStability ();
+
+      // Calculate resistive wall mode stability
+      if (RWM)
+	CalculateRWMStability ();
+    }
   
   // Write program data to Netcdf file
   WriteNetcdf ();
@@ -396,8 +419,12 @@ void TJ::CleanUp ()
   gsl_interp_accel_free (Zbacc);
 
   delete[] Rcoil;   delete[] Zcoil;   delete[] Icoil;  delete[] Psix;
-  delete[] Xi;      delete[] Upsilon; delete[] Lambda; delete[] Chi;
-  delete[] Psirmps; delete[] Psixs;
+  delete[] Xi;
+
+  if (RMP)
+    {
+      delete[] Upsilon; delete[] Lambda; delete[] Chi; delete[] Psirmps; delete[] Psixs;
+    }
   
   delete[] tbound; delete[] Rbound; delete[] Zbound;
   delete[] dRdthe; delete[] dZdthe;
@@ -419,9 +446,17 @@ void TJ::CleanUp ()
 
   delete[] Fval;
 
-  delete[] Uval;    delete[] deltaW; delete[] deltaWv;
-  delete[] deltaWp; delete[] gammax; delete[] gamma;
-  delete[] U1val;   delete[] Wval;   delete[] Vval;
+  if (IDEAL)
+    {
+      delete[] Uval;    delete[] deltaW; delete[] deltaWv;
+      delete[] deltaWp; delete[] gammax; delete[] gamma;
+      delete[] Wval;    delete[] Vval;
+    }
+
+  if (RWM)
+    {
+      delete[] FFvl;
+    }
 
   delete[] rf; delete[] rho;
 }

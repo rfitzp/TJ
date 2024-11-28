@@ -165,6 +165,13 @@ void Equilibrium::WriteNetcdf (double sa)
       NcVar Vnp_x = dataFile.addVar ("Vnp", ncDouble, shape_d);
       Vnp_x.putVar (VPfunc.data());
 
+      NcVar n_x   = dataFile.addVar ("n",   ncDouble, s_d);
+      n_x.putVar (npol);
+      NcVar Hna_x = dataFile.addVar ("Hna", ncDouble, s_d);
+      Hna_x.putVar (Hna);
+      NcVar Vna_x = dataFile.addVar ("Vna", ncDouble, s_d);
+      Vna_x.putVar (Vna);
+
       NcVar R_x  = dataFile.addVar ("R",     ncDouble, flux_d);
       R_x.putVar (RR.data());
       NcVar Z_x  = dataFile.addVar ("Z",     ncDouble, flux_d);
@@ -179,13 +186,6 @@ void Equilibrium::WriteNetcdf (double sa)
       t_x.putVar (thvals.data());
       NcVar w_x  = dataFile.addVar ("omega", ncDouble, flux_d);
       w_x.putVar (wvals.data());
-
-      NcVar n_x   = dataFile.addVar ("n",   ncDouble, s_d);
-      n_x.putVar (npol);
-      NcVar Hna_x = dataFile.addVar ("Hna", ncDouble, s_d);
-      Hna_x.putVar (Hna);
-      NcVar Vna_x = dataFile.addVar ("Vna", ncDouble, s_d);
-      Vna_x.putVar (Vna);
 
       NcVar Rbound_x   = dataFile.addVar ("Rbound",    ncDouble, w_d);
       Rbound_x.putVar (Rbound);

@@ -1,7 +1,7 @@
 # Internal.py
 
 # Plots poloidal harmonics of psi and Chi components of m-dominant internal ideal solution launched from magnetic axis versus r.
-# User prompted for m
+# User prompted for m.
 # Locations of rational surfaces are shown.
 
 import math
@@ -31,9 +31,9 @@ j   = int(m)  - mpol[0]
 
 J = Psi_r.shape[0]
 
-plt.subplot(2, 2, 1)
+plt.subplot (2, 2, 1)
 
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
 for jp in range (J):
     if (mpol[jp]-j) % 7 == 0:
@@ -56,12 +56,12 @@ plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
 for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel (r'$\hat{r}$',            fontsize = "15")
+plt.xlabel (r'$\hat{r}$',   fontsize = "15")
 plt.ylabel (r"Re($\Xi_m$)", fontsize = "15")
 
-plt.subplot(2, 2, 2)
+plt.subplot (2, 2, 2)
 
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
 for jp in range (J):
     if (mpol[jp]-j) % 7 == 0:
@@ -117,7 +117,7 @@ plt.ylabel (r"Re($\chi_m$)", fontsize = "15")
 
 plt.subplot (2, 2, 4)
 
-plt.xlim(0., 1.)
+plt.xlim (0., 1.)
 
 for jp in range (J):
     if (mpol[jp]-j) % 7 == 0:

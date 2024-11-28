@@ -8,7 +8,7 @@
 
 \begin{document}
 
-\title{Resistive Wall}
+\title{Resistive Wall Calculations}
 \author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
 \affiliation{Institute for Fusion Studies,  Department of Physics,  University of Texas at Austin,  Austin TX 78712, USA}\begin{abstract}
 \end{abstract}
@@ -162,8 +162,7 @@ z^{1/2}\,\hat{Q}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(\epsilon\,z)^
 \end{align}
 Note that Eq.~(\ref{ety}) only applies to $|m|>0$. 
 
-
-The plasma-vacuum interface lies at $r=\epsilon$. The wall lies at $r=b_w\,\epsilon$, where $b_w>1$,  In the
+The plasma-vacuum interface lies at $r=\epsilon$. The wall lies at $r=b_w\,\epsilon$, where $b_w>1$.  In the
 vacuum region, $\epsilon\leq r\leq b_w\,\epsilon$,  lying between the plasma and the wall, we can write
 \begin{align}\label{e32a}
 \underline{V}(r)&= \underline{\underline{{\cal P}}}(r)\,\underline{p}+ \underline{\underline{{\cal Q}}}(r)\,\underline{q},\\[0.5ex]
@@ -172,17 +171,17 @@ vacuum region, $\epsilon\leq r\leq b_w\,\epsilon$,  lying between the plasma and
 where $\underline{V}(r)$ is the vector of the $V_m(r)$ values, $\underline{\psi}(r)$ is the vector of the $\psi_m(r)$ values, $\underline{\underline{{\cal P}}}(r)$ is the
 matrix of the
 \begin{equation}
-{\cal P}_{mm'}=\oint_{r}(z-\cos\eta)^{1/2}\,\hat{P}_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+{\cal P}_{mm'}(r)=\oint_{r}(z-\cos\eta)^{1/2}\,\hat{P}_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
 \end{equation}
 values, 
 $\underline{\underline{{\cal Q}}}(r)$ is the
 matrix of the
 \begin{equation}
-{\cal Q}_{mm'}=\oint_{r}(z-\cos\eta)^{1/2}\,\hat{Q}_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+{\cal Q}_{mm'}(r)=\oint_{r}(z-\cos\eta)^{1/2}\,\hat{Q}_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
 \end{equation}
 values, $\underline{\underline{{\cal R}}}(r)$ is the matrix of the 
 \begin{align}\label{e354}
-{\cal R}_{mm'} &=\oint_{r}
+{\cal R}_{mm'}(r) &=\oint_{r}
 \left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\hat{P}_{|m'|-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{d\hat{P}_{|m'|-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
 \right.\nonumber\\[0.5ex]&
 \left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]\hat{P}_{|m'|-1/2}^{\,n}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
@@ -192,7 +191,7 @@ values, $\underline{\underline{{\cal R}}}(r)$ is the matrix of the
 values, 
 $\underline{\underline{{\cal S}}}(r)$ is the matrix of the 
 \begin{align}\label{e355}
-{\cal S}_{mm'} &=\oint_{r}
+{\cal S}_{mm'}(r) &=\oint_{r}
 \left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\hat{Q}_{|m'|-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{d\hat{Q}_{|m'|-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
 \right.\nonumber\\[0.5ex]&
 \left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]\hat{Q}_{|m'|-1/2}^{\,n}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
@@ -343,7 +342,7 @@ The expression, (\ref{e62}), for the general vacuum matrix can be rewritten in t
 \underline{\underline{H}} = \underline{\underline{H}}_{\,nw} + f_w\,( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )\,(\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1},
 \end{equation}
 where
-\begin{equation}
+\begin{equation}\label{e77y}
 \underline{\underline{B}}= \underline{\underline{\cal R}}_{\,\epsilon}\,(\underline{\underline{\cal R}}_{\,\epsilon} + \underline{\underline{\cal S}}_{\,\epsilon}\,\underline{\underline{I}})^{-1}.
 \end{equation}
 
@@ -363,23 +362,32 @@ which implies that
 \begin{equation}\label{e122}
 \underline{\underline{B}}^{\,\dag}\,( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )= ( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )\,\underline{\underline{B}}.
 \end{equation}
-The previous equation yields
+In other words, the matrix
+\begin{equation}\label{cdef}
+\underline{\underline{C}} = ( \underline{\underline{H}}_{\,nw} - \underline{\underline{H}}_{\,pw} )\,\underline{\underline{B}}
+\end{equation}
+is Hermitian.
+It is easily demonstrated from Eq.~(\ref{e122}) that Eq.~(\ref{e133}) holds even when $f_w$ is complex. 
+
+To check that $\underline{\underline{C}} $ is Hermitian, Eq.~(\ref{e122}) yields
 \begin{align}
 &(\underline{\underline{\cal R}}_{\,\epsilon}^{\,\dag}+\underline{\underline{I}}\,\underline{\underline{\cal S}}_{\,\epsilon}^{\,\dag})^{-1}\,\underline{\underline{\cal R}}_{\,\epsilon}^{\,\dag}
-\left[(\underline{\underline{\cal P}}_{\,\epsilon}+\underline{\underline{\cal Q}}_{\,\epsilon}\,\underline{\underline{I}})\,(\underline{\underline{\cal R}}_{\,\epsilon}+\underline{\underline{\cal S}}_{\,\epsilon}\,\underline{\underline{I}})^{-1}
- -\underline{\underline{\cal R}}_{\,\epsilon}^{\,-1\,\dag}\,\underline{\underline{P}}_{\,\epsilon}^{\,\dag}\right]\nonumber\\[0.5ex]
+\left[\underline{\underline{\cal R}}_{\,\epsilon}^{\,-1\,\dag}\,\underline{\underline{P}}_{\,\epsilon}^{\,\dag}-(\underline{\underline{\cal P}}_{\,\epsilon}+\underline{\underline{\cal Q}}_{\,\epsilon}\,\underline{\underline{I}})\,(\underline{\underline{\cal R}}_{\,\epsilon}+\underline{\underline{\cal S}}_{\,\epsilon}\,\underline{\underline{I}})^{-1}
+ \right]\nonumber\\[0.5ex]
  &=
-  \left[(\underline{\underline{\cal R}}_{\,\epsilon}^{\,\dag}+
+  \left[\underline{\underline{\cal P}}_{\,\epsilon}\,\underline{\underline{\cal R}}_{\,\epsilon}^{-1}-(\underline{\underline{\cal R}}_{\,\epsilon}^{\,\dag}+
  \underline{\underline{I}}\,\underline{\underline{\cal S}}_{\,\epsilon}^{\,\dag})^{-1}\,(\underline{\underline{\cal P}}_{\,\epsilon}^{\,\dag}
  +\underline{\underline{I}}\,\underline{\underline{\cal Q}}_{\,\epsilon}^{\,\dag})
- -\underline{\underline{\cal P}}_{\,\epsilon}\,\underline{\underline{\cal R}}_{\,\epsilon}^{-1}\right]\underline{\underline{\cal R}}_{\,\epsilon}\,(\underline{\underline{\cal R}}_{\,\epsilon} + \underline{\underline{\cal S}}_{\,\epsilon}\,\underline{\underline{I}})^{-1}.
+ \right]\underline{\underline{\cal R}}_{\,\epsilon}\,(\underline{\underline{\cal R}}_{\,\epsilon} + \underline{\underline{\cal S}}_{\,\epsilon}\,\underline{\underline{I}})^{-1}.
 \end{align}
-where use has been made of Eqs.~(\ref{e64x}) and (\ref{e65x}), as well as the fact that $\underline{\underline{H}}_{\,pw}$ and $\underline{\underline{H}}_{\,nw}$ are both Hermitian. 
+where use has been made of Eqs.~(\ref{e64x}), (\ref{e65x}), and (\ref{e77y}), as well as the fact that $\underline{\underline{H}}_{\,pw}$ and $\underline{\underline{H}}_{\,nw}$ are both Hermitian. 
 Making use of Eqs.~(\ref{e41}) and (\ref{e43}), the previous equation reduces to 
 \begin{equation}
--\underline{\underline{I}}= -\underline{\underline{I}},
+\underline{\underline{I}}= \underline{\underline{I}},
 \end{equation}
-which is obviously satisfied. Equations~(\ref{e130}) and (\ref{e133}) can
+which is obviously satisfied. 
+
+Finally, Eqs.~(\ref{e130}) and (\ref{e133}) can
 be combined to give
 \begin{align}\label{e128x}
 \underline{\underline{H}} &= \underline{\underline{H}}_{\,nw} 
@@ -389,7 +397,7 @@ be combined to give
 &= \underline{\underline{H}}_{\,nw} +f_w\,(\underline{\underline{B}}^{\,\dag}+f_w\,\underline{\underline{1}})^{-1}\,( \underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} ),\nonumber\\[0.5ex]
 &= \underline{\underline{H}}_{\,nw} +f_w\,(\underline{\underline{H}}_{\,pw} - \underline{\underline{H}}_{\,nw} )\,(\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1}.
 \end{align}
-Note that $\underline{\underline{H}}$ is clearly Hermitian if $f_w$ is real. 
+Note, from the first line of the previous equation,  that $\underline{\underline{H}}$ is clearly Hermitian if $f_w$ is real. 
 
 \section{Applications}
 \subsection{Wall Torque on Rotating Tearing Mode}
@@ -439,7 +447,7 @@ Writing
 \underline{\underline{\psi}}_{\,i}\,\underline{\alpha} = \underline{x},
 \end{equation}
 we obtain
-\begin{equation}
+\begin{equation}\label{e95h}
 \underline{\underline{W}}_{\,p}\,\underline{x}
 = \underline{\underline{H}}\,\underline{x},
 \end{equation}
@@ -449,72 +457,119 @@ where
 \end{equation}
 Equation~(\ref{e121}) ensures that $\underline{\underline{W}}_{\,p}$ is Hermitian. 
 
-Equation~(\ref{e128x}) can be combined with the previous equation to give
+Equation~(\ref{e128x}) can be combined with Eq.~(\ref{e95h}) to give
 \begin{align}
 \underline{\underline{W}}_{\,nw}\,\underline{x} &= f_w\,(\underline{\underline{B}}^{\,\dag}+f_w\,\underline{\underline{1}})^{-1}\,( \underline{\underline{W}}_{\,nw} - \underline{\underline{W}}_{\,pw} )\,\underline{x}\nonumber\\[0.5ex]
 &=f_w\,(\underline{\underline{W}}_{\,nw} - \underline{\underline{W}}_{\,pw} )\,(\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1}\,\underline{x}
 \end{align}
 where
-\begin{align}
+\begin{align}\label{wnw}
 \underline{\underline{W}}_{\,nw}  &= \underline{\underline{W}}_{\,p}-\underline{\underline{H}}_{\,nw},\\[0.5ex]
-\underline{\underline{W}}_{\,pw}  &= \underline{\underline{W}}_{\,p}-\underline{\underline{H}}_{\,pw}.
+\underline{\underline{W}}_{\,pw}  &= \underline{\underline{W}}_{\,p}-\underline{\underline{H}}_{\,pw}.\label{wpw}
 \end{align}
 Note that $\underline{\underline{W}}_{\,nw}$ and $\underline{\underline{W}}_{\,pw}$ are Hermitian.
 Writing
-\begin{equation}
+\begin{equation}\label{e100t}
 (\underline{\underline{B}}+f_w\,\underline{\underline{1}})^{-1} \,\underline{x}= \underline{y},
 \end{equation}
 we obtain
 \begin{align}\label{e141}
-\left(f_w\,\underline{\underline{W}}_{\,pw}
-+\underline{\underline{B}}^{\,\dag}\,\underline{\underline{W}}_{\,nw}\right)\underline{x}&=\underline{0},\\[0.5ex]
-\left(f_w\,\underline{\underline{W}}_{\,pw}
-+\underline{\underline{W}}_{\,nw}\,\underline{\underline{B}}\right)\underline{y} &=\underline{0}.\label{e142}
+\underline{\underline{B}}^{\,\dag}\,\underline{\underline{W}}_{\,nw}\,\underline{x}&=\lambda\,\underline{\underline{W}}_{\,pw}\,\underline{x},\\[0.5ex]
+\underline{\underline{W}}_{\,nw}\,\underline{\underline{B}}\,\underline{y} &=\lambda\,\underline{\underline{W}}_{\,pw}\,\underline{y},\label{e142}
 \end{align}
-The previous two equations can be combined to give
+where $\lambda= -f_w$. Finally, making use of Eqs.~(\ref{cdef}), (\ref{wnw}),  (\ref{wpw}), (\ref{e100t}), and (\ref{e142}), we get
 \begin{equation}
-(f_w-f_w^{\,\ast})\,\underline{y}^{\,\dag}\,\underline{\underline{W}}_{\,pw}\,\underline{x} = 0.
+\underline{\underline{W}}_{\,pw}\,\underline{x}= (\underline{\underline{W}}_{\,pw}-\underline{\underline{W}}_{\,nw})\,\underline{\underline{B}}\,\underline{y} = 
+\underline{\underline{C}}\,\underline{y}.\label{e143}
 \end{equation}
-Hence, we deduce that the eigenvalues, $f_w$,  are real, and that the eigenvectors, $\underline{x}$ and $\underline{y}$,  are orthonormal, in the sense that
-\begin{equation}
-\underline{y}_i^{\,\dag}\,
-\underline{\underline{W}}_{\,pw}\,\underline{x}_j= \delta_{ij}.
-\end{equation} 
-Once we have determined the eigenvectors then
-\begin{align}
-\underline{\psi}(\epsilon) &=\underline{x},\\[0.5ex]
-\underline{V}(\epsilon) &= \underline{\underline{W}}_{\,p} \,\underline{x}.
-\end{align}
 
-We can write
-\begin{align}
-\underline{\psi} &= \underline{\underline{Q}}\,\underline{\mit\Xi},\\[0.5ex]
-\underline{Z} &= \underline{\underline{Q}}\,\underline{V},
-\end{align}
-where $\underline{\underline{Q}}$ is the diagonal matrix of the $m-n\,q(\epsilon)$ values. 
+Let $\underline{\underline{W}}_{\,pw}^{\,1/2}$ be the unique positive definite Hermitian square root of the positive definite Hermitian
+matrix $\underline{\underline{W}}_{\,pw}$, and let $\underline{\underline{W}}_{\,pw}^{-1/2}$ be its inverse. 
 Let
 \begin{align}
-\underline{\underline{\widetilde{W}}}_{\,nw} &= \underline{\underline{Q}}\,\underline{\underline{W}}_{\,nw}\,\underline{\underline{Q}},\\[0.5ex]
-\underline{\underline{\widetilde{W}}}_{\,pw} &= \underline{\underline{Q}}\,\underline{\underline{W}}_{\,pw}\,\underline{\underline{Q}},\\[0.5ex]
-\underline{\underline{\widetilde{B}}} &= \underline{\underline{Q}}^{-1}\,\underline{\underline{B}}\,\underline{\underline{Q}},\\[0.5ex]
-\underline{\widetilde{x}}&=  \underline{\underline{Q}}^{-1}\,\underline{x},\\[0.5ex]
-\underline{\widetilde{y}}&=  \underline{\underline{Q}}^{-1}\,\underline{x}.
+\underline{\hat{x}}&= \underline{\underline{W}}_{\,pw}^{\,1/2}\,\underline{x},\\[0.5ex]
+\underline{\hat{y}}&= \underline{\underline{W}}_{\,pw}^{\,1/2}\,\underline{y}.
 \end{align}
-It follows that 
+Equations~(\ref{e141})--(\ref{e143}) transform to give
+\begin{align}\label{e106t}
+\underline{\underline{E}}\,\underline{\hat{x}} &= \lambda\,\underline{\hat{x}},\\[0.5ex]
+\underline{\underline{E}}^\dag\,\underline{\hat{y}} &= \lambda\,\underline{\hat{y}},\\[0.5ex]
+\underline{\hat{x}} &= \underline{\underline{D}}\,\underline{\hat{y}},\label{e108t}
+\end{align}
+where
 \begin{align}
-\left(f_w\,\underline{\underline{\widetilde{W}}}_{\,pw}
-+\underline{\underline{\widetilde{B}}}^{\,\dag}\,\underline{\underline{\widetilde{W}}}_{\,nw}\right)\underline{\widetilde{x}}&=\underline{0},\\[0.5ex]
-\left(f_w\,\underline{\underline{\widetilde{W}}}_{\,pw}
-+\underline{\underline{\widetilde{W}}}_{\,nw}\,\underline{\underline{\widetilde{B}}}\right)\underline{\widetilde{y}} &=\underline{0}.\label{e142a}
+\underline{\underline{E}} &= \underline{\underline{W}}_{\,pw}^{-1/2}\,\underline{\underline{B}}^\dag\,\underline{\underline{W}}_{\,nw}\, \underline{\underline{W}}_{\,pw}^{-1/2},\\[0.5ex]
+\underline{\underline{D}} &=  \underline{\underline{W}}_{\,pw}^{-1/2} \,\underline{\underline{C}} \,\underline{\underline{W}}_{\,pw}^{-1/2}.
 \end{align}
-Hence, we again deduce that 
+
+Let $\underline{\underline{D}}^{\,1/2}$ be the unique positive definite Hermitian square root of the positive definite Hermitian
+matrix $\underline{\underline{D}}$, and let $\underline{\underline{D}}^{-1/2}$ be its inverse. It is easily demonstated
+that
 \begin{equation}
-(f_w-f_w^{\,\ast})\,\underline{\widetilde{y}}^{\,\dag}\,\underline{\underline{\widetilde{W}}}_{\,pw}\,\underline{\widetilde{x}} = 0.
+\underline{\underline{E}}\,\underline{\underline{D}}= \underline{\underline{D}}\,\underline{\underline{E}}^\dag,
 \end{equation}
-Finally, 
+which implies that
+\begin{equation}
+\underline{\underline{D}}^{-1/2}\,\underline{\underline{E}}\,\underline{\underline{D}}^{1/2}= \underline{\underline{D}}^{1/2}\,\underline{\underline{E}}^\dag\underline{\underline{D}}^{-1/2}.
+\end{equation}
+In other words,
+\begin{equation}
+\underline{\underline{F}}=\underline{\underline{D}}^{-1/2}\,\underline{\underline{E}}\,\underline{\underline{D}}^{1/2}
+\end{equation}
+is Hermitian. 
+
+Let
 \begin{align}
-\underline{\mit\Xi} &=\underline{\widetilde{x}},\\[0.5ex]
-\underline{Z} &= \underline{\underline{\widetilde{W}}}_{\,p} \,\underline{\widetilde{x}}.
+\underline{\tilde{x}}&= \underline{\underline{D}}^{-1/2}\,\underline{\hat{x}},\\[0.5ex]
+\underline{\tilde{y}}&= \underline{\underline{D}}^{\,1/2}\,\underline{\hat{y}}.
+\end{align}
+Equations~(\ref{e106t})--(\ref{e108t}) transform to give
+\begin{align}
+\underline{\underline{F}}\,\underline{\tilde{x}} &=\lambda\,\underline{\tilde{x}},\\[0.5ex]
+\underline{\tilde{x}} &= \underline{\tilde{y}}.
+\end{align}
+
+Let the $\lambda_m$ and the $\underline{\beta}_m$ be the eigenvalues and eigenvectors of the Hermitian matrix $\underline{\underline{F}}$. 
+Thus, the $\lambda_m$ are real, and the $\underline{\beta}_m$ are orthonormal. To be more exact, 
+\begin{align}
+\underline{\underline{F}}\,\underline{\underline{\beta}}&= \underline{\underline{\beta}}\, \underline{\underline{\mit\Lambda}},\\[0.5ex]
+\underline{\underline{\beta}}^\dag \,\underline{\underline{\beta}}&= \underline{\underline{1}},
+\end{align}
+where $\underline{\underline{\beta}}$ is the matrix of the $\underline{\beta}_m$, and $\underline{\underline{\mit\Lambda}}$ is the diagonal
+matrix of the $\lambda_m$. 
+
+The $m$th resistive wall mode has the dispersion relation
+\begin{equation}
+f_w =- \lambda_m
+\end{equation}
+and the eigenfunction
+\begin{align}
+\underline{\psi}_m(\epsilon) &=  \underline{\underline{W}}_{\,pw}^{-1/2}\, \underline{\underline{D}}^{\,1/2}\,\underline{\beta}_m,\\[0.5ex]
+\underline{V}_m(\epsilon) &= \underline{\underline{W}}_{\,p}\,\underline{\psi}_m(\epsilon),\\[0.5ex]
+\underline{\mit\Xi}_m(\epsilon)&=  \underline{\underline{Q}}^{-1}\,\underline{\psi}_m(\epsilon),\\[0.5ex]
+\underline{Z}_m(\epsilon)&= \underline{\underline{Q}}\,\underline{V}_m(\epsilon),
+\end{align}
+where  $\underline{\underline{Q}}$ is the diagonal matrix of the $m-n\,q(\epsilon)$ values. 
+
+Alternatively, we can write
+\begin{align}
+\underline{\underline{\widetilde{W}}}_{\,nw}&= \underline{\underline{Q}}\,\underline{\underline{W}}_{\,nw}\,\underline{\underline{Q}},\\[0.5ex]
+\underline{\underline{\widetilde{W}}}_{\,pw}&= \underline{\underline{Q}}\,\underline{\underline{W}}_{\,pw}\,\underline{\underline{Q}},\\[0.5ex]
+\underline{\underline{\widetilde{B}}}&= \underline{\underline{Q}}^{-1}\,\underline{\underline{B}}\,\underline{\underline{Q}},\\[0.5ex]
+\underline{\underline{\widetilde{C}}}&= \underline{\underline{Q}}\,\underline{\underline{C}}\,\underline{\underline{Q}},\\[0.5ex]
+\underline{\underline{\widetilde{D}}} &=  \underline{\underline{\widetilde{W}}}_{\,pw}^{-1/2} \,\underline{\underline{\widetilde{C}}} \,\underline{\underline{\widetilde{W}}}_{\,pw}^{-1/2},\\[0.5ex]
+\underline{\underline{\widetilde{E}}} &= \underline{\underline{\widetilde{W}}}_{\,pw}^{-1/2}\,\underline{\underline{\widetilde{B}}}^\dag\,\underline{\underline{\widetilde{W}}}_{\,nw}\, \underline{\underline{\widetilde{W}}}_{\,pw}^{-1/2},\\[0.5ex]
+\underline{\underline{\widetilde{F}}}&=\underline{\underline{\widetilde{D}}}^{-1/2}\,\underline{\underline{\widetilde{E}}}\,\underline{\underline{\widetilde{D}}}^{1/2}.
+\end{align}
+Let the $\lambda_m$ and the $\underline{\beta}_m$ be the eigenvalues and eigenvectors of the Hermitian matrix $\underline{\underline{\widetilde{F}}}$. 
+The $m$th resistive wall mode has the dispersion relation
+$f_w =- \lambda_m$
+and the eigenfunction
+\begin{align}
+\underline{\mit\Xi}_m(\epsilon) &=  \underline{\underline{\widetilde{W}}}_{\,pw}^{-1/2}\, \underline{\underline{\widetilde{D}}}^{\,1/2}\,\underline{\beta}_m,\\[0.5ex]
+\underline{\psi}_m(\epsilon)&=  \underline{\underline{Q}}\,\underline{\mit\Xi}_m(\epsilon),\\[0.5ex]
+\underline{V}_m(\epsilon) &= \underline{\underline{W}}_{\,p}\,\underline{\psi}_m(\epsilon),\\[0.5ex]
+\underline{Z}_m(\epsilon)&= \underline{\underline{Q}}\,\underline{V}_m(\epsilon).
 \end{align}
 
 \subsection{Resistive-Plasma Resistive-Wall Mode}
@@ -554,14 +609,30 @@ However, the energy matrix is not necessarily  Hermitian. The net toroidal elect
 T_\phi = -2\pi^2\,n\,{\rm Im}(\underline{x}^\dag\,\underline{\underline{W}}_p\,\underline{x}).
 \end{equation}
 Given that $\underline{\underline{W}}_p$ is not necessarily Hermitian, the torque is not necessarily zero. 
-As before, the resistive wall mode dispersion relation is 
+
+As before, the resistive wall mode eigenmode equation is 
 \begin{align}
-\left(f_w\,\underline{\underline{W}}_{\,pw}
-+\underline{\underline{B}}^{\,\dag}\,\underline{\underline{W}}_{\,nw}\right)\underline{x}&=\underline{0},\\[0.5ex]
-\left(f_w\,\underline{\underline{W}}_{\,pw}
-+\underline{\underline{W}}_{\,nw}\,\underline{\underline{B}}\right)\underline{y} &=\underline{0}.
+\underline{\underline{B}}^{\,\dag}\,\underline{\underline{W}}_{\,nw}\,\underline{x}&=\lambda\,\underline{\underline{W}}_{\,pw}\,\underline{x},\\[0.5ex]
+\underline{\underline{W}}_{\,nw}\,\underline{\underline{B}}\,\underline{y} &=\lambda\,\underline{\underline{W}}_{\,pw}\,\underline{y},\\[0.5ex]
+\underline{\underline{W}}_{\,pw}\,\underline{x}&= 
+\underline{\underline{C}}\,\underline{y},
 \end{align}
-However, $\underline{\underline{W}}_{\,nw}$ and $\underline{\underline{W}}_{\,pw}$ are not necessarily  Hermitian. Hence, $f_w$ is not necessarily real. 
-
-
+where $\lambda=-f_w$. 
+These equations can be transformed to give
+\begin{equation}
+\underline{\underline{F}}\,\underline{\tilde{x}}= \lambda\,\underline{\tilde{x}},
+\end{equation}
+where
+\begin{align}
+\underline{\underline{F}} &= \underline{\underline{D}}^{-1/2}\,\underline{\underline{E}}\,\underline{\underline{D}}^{1/2},\\[0.5ex]
+\underline{\underline{E}} &= \underline{\underline{W}}_{\,pw}^{-1/2}\,\underline{\underline{B}}^\dag\,\underline{\underline{W}}_{\,nw}\, \underline{\underline{W}}_{\,pw}^{-1/2},\\[0.5ex]
+\underline{\underline{D}} &=  \underline{\underline{W}}_{\,pw}^{-1/2} \,\underline{\underline{C}} \,\underline{\underline{W}}_{\,pw}^{-1/2},
+\end{align}
+and
+\begin{align}
+\underline{x} &= \underline{\underline{W}}_{\,pw}^{-1/2}\, \underline{\underline{D}}^{\,1/2}\,\underline{\tilde{x}},\\[0.5ex]
+\underline{y} &= \underline{\underline{W}}_{\,pw}^{-1/2}\, \underline{\underline{D}}^{-1/2}\,\underline{\tilde{x}}.
+\end{align}
+Note, however, that $\underline{\underline{W}}_{\,nw}$, $\underline{\underline{W}}_{\,nw}$, $ \underline{\underline{D}}$, and $\underline{\underline{F}}$
+are not necessarily Hermitian. Hence, $\lambda$ is  not necessarily real.
 \end{document}
