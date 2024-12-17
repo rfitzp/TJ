@@ -3,14 +3,15 @@
     "MMIN":  -10,      // Minimum poloidal mode number included in calculation
     "MMAX":   20,      // Maximum poloidal mode number included in calculation
 
-    "EQLB":   0,       // Flag for equilibrium calculation only
+    "EQLB":   1,       // Flag for equilibrium calculation only
     "FREE":   0,       // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary calculations
     "FVAL":   0,       // Flag for calculating eigenvalues and eigenvectors of F-matrix
     "RMP":    0,       // Flag for resonant magnetic perturbation calculation
-    "IDEAL":  1,       // Flag for ideal calculation
+    "VIZ":    1,       // Flag for generating unreconnected eigenfunction visualization data
+    "IDEAL":  0,       // Flag for ideal calculation
     "XI":     1,       // Flag for using Xi, rather than Psi, as ideal eigenfunction basis
     "INTR":   0,       // Flag for internal ideal stability calculation
-    "RWM":    1,       // Flag for resistive wall mode calculation
+    "RWM":    0,       // Flag for resistive wall mode calculation
  
     "EPS":   1.0e-4,   // Solutions launched from magnetic axis at r = EPS 
     "DEL":   1.0e-9,   // Distance of closest approach to rational surface

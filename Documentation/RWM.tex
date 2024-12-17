@@ -585,9 +585,9 @@ On the other hand, the $\psi^u_{mk'}(r)$ and  the $V^u_{mk'}(r)$ are such that $
 \end{equation}
 Thus, the reconnected flux driven at the $k$th rational surface is
 \begin{equation}
-{\mit\Psi}_{km'}= -\sum_{k'}\frac{E_{kk'}\,{\mit\Pi}_{k'm}^a}{{\mit\Delta}_k(0)},
+{\mit\Psi}_{km'}= -\sum_{k',k''}\left[\underline{\underline{\mit\Delta}}(0)-\underline{\underline{E}}\right]^{-1}_{kk'}\,E_{k'k''}\,{\mit\Pi}_{k''m}^a,
 \end{equation}
-where the layer response parameter is evaluated at zero frequency, on the assumption that the resistive wall mode evolves in time very slowly. 
+where the layer response matrix is evaluated at zero frequency, on the assumption that the resistive wall mode evolves in time very slowly. 
 To take into account the reconnected flux in the plasma, we write
 \begin{align}
 \psi_{mm'}(r) &=\psi^i_{mm'}(r) + \sum_k \psi^u_{mk}(r)\,{\mit\Psi}_{km'},\\[0.5ex]
@@ -595,8 +595,8 @@ V_{mm'}(r) &=  V^i_{mm'}(r) + \sum_k V^u_{mk}(r)\,{\mit\Psi}_{km'},
 \end{align}
 which implies that
 \begin{align}
-\psi_{mm'}(r) &= \psi^a_{mm'}(r) - \sum_{k,k'}\psi^u_{mk}(r)\left[\delta_{kk'}+ \frac{E_{kk'}}{{\mit\Delta}_k(0)}\right]{\mit\Pi}_{k'm'}^a,\\[0.5ex]
-V_{mm'}(r) &=  V^a_{mm'}(r) - \sum_{k,k'} V^u_{mk}(r)\left[\delta_{kk'}+ \frac{E_{kk'}}{{\mit\Delta}_k(0)}\right]{\mit\Pi}_{k'm'}^a.
+\psi_{mm'}(r) &= \psi^a_{mm'}(r) - \sum_{k,k'}\psi^u_{mk}(r)\left(\delta_{kk'}+ \sum_{k''}\left[\underline{\underline{\mit\Delta}}(0)-\underline{\underline{E}}\right]^{-1}_{kk''}\,E_{k''k'}\right){\mit\Pi}_{k'm'}^a,\\[0.5ex]
+V_{mm'}(r) &=  V^a_{mm'}(r) - \sum_{k,k'} V^u_{mk}(r)\left(\delta_{kk'}+ \sum_{k''}\left[\underline{\underline{\mit\Delta}}(0)-\underline{\underline{E}}\right]^{-1}_{kk''}\,E_{k''k'}\right){\mit\Pi}_{k'm'}^a.
 \end{align}
 
 Let $\underline{\underline{\psi}}$ be the matrix of the $\psi_{mm'}(\epsilon)$ values and let $\underline{\underline{V}}$ be the matrix of the

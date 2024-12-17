@@ -172,20 +172,23 @@ void Equilibrium::WriteNetcdf (double sa)
       NcVar Vna_x = dataFile.addVar ("Vna", ncDouble, s_d);
       Vna_x.putVar (Vna);
 
-      NcVar R_x  = dataFile.addVar ("R",     ncDouble, flux_d);
-      R_x.putVar (RR.data());
-      NcVar Z_x  = dataFile.addVar ("Z",     ncDouble, flux_d);
-      Z_x.putVar (ZZ.data());
-      NcVar Rw_x = dataFile.addVar ("Rw",    ncDouble, flux_d);
-      Rw_x.putVar (RRw.data());
-      NcVar Zw_x = dataFile.addVar ("Zw",    ncDouble, flux_d);
-      Zw_x.putVar (ZZw.data());
-      NcVar rr_x = dataFile.addVar ("rr",    ncDouble, flux_d);
-      rr_x.putVar (rvals.data());
-      NcVar t_x  = dataFile.addVar ("theta", ncDouble, flux_d);
-      t_x.putVar (thvals.data());
-      NcVar w_x  = dataFile.addVar ("omega", ncDouble, flux_d);
-      w_x.putVar (wvals.data());
+      if (VIZ)
+	{
+	  NcVar R_x  = dataFile.addVar ("R",     ncDouble, flux_d);
+	  R_x.putVar (RR.data());
+	  NcVar Z_x  = dataFile.addVar ("Z",     ncDouble, flux_d);
+	  Z_x.putVar (ZZ.data());
+	  NcVar Rw_x = dataFile.addVar ("Rw",    ncDouble, flux_d);
+	  Rw_x.putVar (RRw.data());
+	  NcVar Zw_x = dataFile.addVar ("Zw",    ncDouble, flux_d);
+	  Zw_x.putVar (ZZw.data());
+	  NcVar rr_x = dataFile.addVar ("rr",    ncDouble, flux_d);
+	  rr_x.putVar (rvals.data());
+	  NcVar t_x  = dataFile.addVar ("theta", ncDouble, flux_d);
+	  t_x.putVar (thvals.data());
+	  NcVar w_x  = dataFile.addVar ("omega", ncDouble, flux_d);
+	  w_x.putVar (wvals.data());
+	}
 
       NcVar Rbound_x   = dataFile.addVar ("Rbound",    ncDouble, w_d);
       Rbound_x.putVar (Rbound);

@@ -87,24 +87,28 @@ class TJ
 {
  private:
 
+  // -----------------
+  // Calculation flags
+  // -----------------
+  int  EQLB;   // Flag for equilibrium calculation only (read from TJ JSON file)
+  int  FREE;   // Flag for free/fixed boundary calculation (read from TJ JSON file)
+               //  FREE > 0 - perform no-wall calculation
+               //  FREE = 0 - perform perfect-wall calculation
+               //  FREE < 0 - perform fixed-boundary calculation
+  int FVAL;    // Flag for calculating eigenvalues and eigenvectors of F-matrix (read from TJ JSON file)
+  int RMP;     // Flag for resonant magnetic perturbation calculation (read from TJ JSON file)
+  int VIZ;     // Flag for generating unreconnected eigenfunction visualization data (read from TJ JSON file)
+  int IDEAL;   // Flag for ideal calculation (read from TJ JSON file)
+  int XI;      // Flag for using Xi, rather than Psi, as ideal eigenfunction basis (read from TJ JSON file)
+  int INTR;    // Flag for internal ideal stability calculation (read from TJ JSON file)
+  int RWM;     // Flag for resistive wall mode calculation (read from TJ JSON file)
+
   // ----------------------
   // Calculation parameters
   // ----------------------
   int    NTOR;    // Toroidal mode number (read from TJ JSON file)
   int    MMIN;    // Minimum poloidal mode number included in calculation (read from TJ JSON file)
   int    MMAX;    // Maximum poloidal mode number included in calculation (read from TJ JSON file)
-
-  int    EQLB;    // Flag for equilibrium calculation only (read from TJ JSON file)
-  int    FREE;    // Flag for free/fixed boundary calculation (read from TJ JSON file)
-                  //  FREE > 0 - perform no-wall calculation
-                  //  FREE = 0 - perform perfect-wall calculation
-                  //  FREE < 0 - perform fixed-boundary calculation
-  int    FVAL;    // Flag for calculating eigenvalues and eigenvectors of F-matrix (read from TJ JSON file)
-  int    RMP;     // Flag for resonant magnetic perturbation calculation (read from TJ JSON file)
-  int    IDEAL;   // Flag for ideal calculation (read from TJ JSON file)
-  int    XI;      // Flag for using Xi, rather than Psi, as ideal eigenfunction basis (read from TJ JSON file)
-  int    INTR;    // Flag for internal ideal stability calculation (read from TJ JSON file)
-  int    RWM;     // Flag for resistive wall mode calculation (read from TJ JSON file)
 
   double EPS;     // Solutions launched from magnetic axis at r = EPS (read from TJ JSON file)
   double DEL;     // Distance of closest approach to rational surface is DEL (read from TJ JSON file)
@@ -373,21 +377,6 @@ class TJ
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
 
-  // ---------------------------------------
-  // Visualization of tearing eigenfunctions
-  // ---------------------------------------
-  int                      Nf;     // Number of radial grid-points on visualization grid
-  int                      Nw;     // Number of angular grid-points on visualization grid
-  double*                  rf;     // Radial grid-points on visualization grif
-  Array<double,2>          RR;     // R coordinates of visualization grid-points
-  Array<double,2>          ZZ;     // Z coordinates of visualization grid-points
-  Array<double,2>          rvals;  // r values of visulalization grid-points
-  Array<double,2>          thvals; // theta values of visualization grid-points
-  Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 
-  Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
-  Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visualization grid
-  Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
-
   // -----------------------------------
   // Resonant magnetic perturbation data
   // -----------------------------------
@@ -400,7 +389,22 @@ class TJ
   Array<complex<double>,2> Zrmp;    // Z component of ideal RMP response eigenfunction
   complex<double>*         Psixs;   // Psix on plasma boundary
   complex<double>*         Psirmps; // Psirmp on plasma boundary
-  
+
+  // ---------------------------------------
+  // Visualization of tearing eigenfunctions
+  // ---------------------------------------
+  int                      Nf;     // Number of radial grid-points on visualization grid (from Equilibrium.nc)
+  int                      Nw;     // Number of angular grid-points on visualization grid (from Equilibrium.nc)
+  double*                  rf;     // Radial grid-points on visualization grid (from Equilibrium.nc)
+  Array<double,2>          RR;     // R coordinates of visualization grid-points (from Equilibrium.nc)
+  Array<double,2>          ZZ;     // Z coordinates of visualization grid-points (from Equilibrium.nc)
+  Array<double,2>          rvals;  // r values of visulalization grid-points (from Equilibrium.nc)
+  Array<double,2>          thvals; // theta values of visualization grid-points (from Equilibrium.nc)
+  Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 
+  Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
+  Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visualization grid
+  Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
+
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response
   // --------------------------------------------------------
@@ -463,8 +467,11 @@ class TJ
   Array<complex<double>,2> FFhr;    // Hermitian component of FFmt
   Array<complex<double>,2> FFan;    // Anti-Hermitian component of FFmt
   double*                  FFvl;    // Eigenvalues of FFmt
+  double*                  fw;      // Resistive wall mode growth-rate factors
   Array<complex<double>,2> FFvc;    // Eigenvectors of FFmt
   Array<complex<double>,2> FFrs;    // Residuals of FFmt othonormality matrix
+  Array<complex<double>,2> Psir;    // Psi components of resistive wall mode eigenfunctions on boundary
+  Array<complex<double>,2> Xir;     // Xi components of resistive wall mode  eigenfunctions on boundary
   
   // ----------------------------
   // Layer calculation parameters
@@ -672,8 +679,6 @@ class TJ
   void GetTorqueFull ();
   // Calculate angular momentum flux associated with pairs of unreconnected solution vectors
   void GetTorqueUnrc ();
-  // Calculate unreconnected eigenfunction visualization data
-  void VisualizeEigenfunctions ();
 
   // ..........
   // In RMP.cpp
@@ -681,6 +686,13 @@ class TJ
 
   // Calculate resonant magnetic perturbation data
   void CalculateResonantMagneticPerturbation ();
+
+  // ................
+  // In Visualize.cpp
+  // ................
+  
+  // Calculate unreconnected eigenfunction visualization data
+  void VisualizeEigenfunctions ();
   // Calculate resonant magnetic response visualization data
   void VisualizeRMP ();
 

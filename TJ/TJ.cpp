@@ -94,6 +94,7 @@ TJ::TJ ()
   FREE    = JSONData["FREE"] .get<int>();
   FVAL    = JSONData["FVAL"] .get<int>();
   RMP     = JSONData["RMP"]  .get<int>();
+  VIZ     = JSONData["VIZ"]  .get<int>();
   IDEAL   = JSONData["IDEAL"].get<int>();
   XI      = JSONData["XI"]   .get<int>();
   INTR    = JSONData["INTR"] .get<int>();
@@ -246,11 +247,14 @@ TJ::TJ ()
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
+  printf ("Calculation flags:\n");
+  printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d\n",
+	  EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM);
   printf ("Calculation parameters:\n");
   printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
 	  NTOR, MMIN, MMAX, EPS, DEL);
-  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d        EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d\n",
-	  NFIX, NDIAG, NULC, ITERMAX, EQLB, FREE, FVAL, RMP, IDEAL, XI, INTR, RWM);
+  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d\n",
+	  NFIX, NDIAG, NULC, ITERMAX);
   printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
 	  acc, h0, hmin, hmax, EPSF);
   printf ("B0   = %10.3e R0    = %10.3e n0   = %10.3e alpha   = %10.3e Zeff = %10.3e Mion = %10.3e Chip = %10.3e Teped = %10.3e\n",
@@ -298,16 +302,22 @@ void TJ::Solve ()
   // Determine tearing mode dispersion relation and tearing eigenfunctions
   FindDispersion ();
 
-  // Calculate unreconnected eigenfunction visualization data
-  VisualizeEigenfunctions ();
+  if (VIZ)
+    {
+      // Calculate unreconnected eigenfunction visualization data
+      VisualizeEigenfunctions ();
+    }
 
   if (RMP)
     {
       // Calculate resonant magnetic perturbation data
       CalculateResonantMagneticPerturbation ();
 
-      // Calculate resonant magnetic perturbation respose visualization data
-      VisualizeRMP ();
+      if (VIZ)
+	{
+	  // Calculate resonant magnetic perturbation respose visualization data
+	  VisualizeRMP ();
+	}
     }
 
   // Calculate ideal stability
@@ -455,10 +465,12 @@ void TJ::CleanUp ()
 
   if (RWM)
     {
-      delete[] FFvl;
+      delete[] FFvl; delete[] fw;
     }
 
-  delete[] rf; delete[] rho;
+  if (VIZ)
+    delete[] rf;
+  delete[] rho;
 }
 
 // ########################################

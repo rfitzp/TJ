@@ -29,7 +29,11 @@ void TJ::CalculateRWMStability ()
   FFvc.resize(J, J);
   FFrs.resize(J, J);
 
+  Psir.resize(J, J);
+  Xir .resize(J, J);
+
   FFvl = new double[J];
+  fw   = new double[J];
 		   
   // --------------------------------
   // Calculate W_nw and W_pw matrices
@@ -67,7 +71,7 @@ void TJ::CalculateRWMStability ()
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	Dher(j, jp) = 0.5 * (Dmat (j, jp) + conj (Dmat (jp, j)));
+	Dher(j, jp) = 0.5 * (Dmat(j, jp) + conj (Dmat(jp, j)));
       }
 
   // ------------------
@@ -107,8 +111,8 @@ void TJ::CalculateRWMStability ()
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	FFhr(j, jp) = 0.5 * (FFmt (j, jp) + conj (FFmt (jp, j)));
-	FFan(j, jp) = 0.5 * (FFmt (j, jp) - conj (FFmt (jp, j)));
+	FFhr(j, jp) = 0.5 * (FFmt(j, jp) + conj (FFmt(jp, j)));
+	FFan(j, jp) = 0.5 * (FFmt(j, jp) - conj (FFmt(jp, j)));
       }
 
   // ...........................
@@ -118,8 +122,8 @@ void TJ::CalculateRWMStability ()
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	double fhval = abs (FFhr (j, jp));
-	double faval = abs (FFan (j, jp));
+	double fhval = abs (FFhr(j, jp));
+	double faval = abs (FFan(j, jp));
 
 	if (fhval > Fhmax)
 	  Fhmax = fhval;
@@ -157,6 +161,8 @@ void TJ::CalculateRWMStability ()
 	{
 	  FFvc(jp, j) *= Ffac;
 	}
+
+      fw[j] = -FFvl[j];
     }
 
   // ------------------------------------
@@ -196,6 +202,26 @@ void TJ::CalculateRWMStability ()
   // ---------------------------------------
   printf ("Resistive wall mode eigenvalues:\n");
   for (int j = 0; j < J; j++)
-    printf ("j = %3d  fw = %10.3e\n", j, -FFvl[j]);
+    printf ("j = %3d  fw = %10.3e\n", j, fw[j]);
+
+  // --------------------------------------------
+  // Calculate resistive wall mode eigenfunctions
+  // --------------------------------------------
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  for (int jppp = 0; jppp < J; jppp++)
+	    sum += Wpw2(j, jpp) * Dsqt(jpp, jppp) * FFvc(jppp, jp);
+
+	Psir(j, jp) = sum;
+      }
+
+   double qa = Getq (1.);
+   for (int j = 0; j < J; j++)
+     for (int jp = 0; jp < J; jp++)
+       Xir(j, jp) = Psir(j, jp) /(mpol[j] - ntor*qa);
 }
 

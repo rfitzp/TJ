@@ -100,6 +100,11 @@ class Equilibrium
 {
  private:
 
+  // -----------------
+  // Calculation flags
+  // -----------------
+  int VIZ;  // Flag for calculating magnetic flux-surfaces (read from TJ JSON file)
+  
   // ------------------
   // Physics parameters
   // ------------------

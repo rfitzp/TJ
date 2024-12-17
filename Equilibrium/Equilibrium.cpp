@@ -102,6 +102,11 @@ Equilibrium::Equilibrium ()
 
   B0 = JSONData["B0"].get<double> ();
   R0 = JSONData["R0"].get<double> ();
+  
+  JSONFilename = "../Inputs/TJ.json";
+  JSONData     = ReadJSONFile (JSONFilename);
+
+  VIZ = JSONData["VIZ"].get<int>();
 
   // ------------
   // Sanity check
@@ -854,50 +859,53 @@ void Equilibrium::Solve ()
   P3[0]  = P3[1]    - (P3[2]    - P3[1]);
   P3[Nr] = P3[Nr-1] + (P3[Nr-1] - P3[Nr-2]);
 
-  // ...........................................................
-  // Calculate magnetic flux-surfaces for visualization purposes
-  // ...........................................................
-  printf ("Calculating magnetic flux-surfaces:\n");
-
-  for (int i = 1; i <= Nf; i++)
+  if (VIZ)
     {
-      double rf = double (i) /double (Nf);
+      // ...........................................................
+      // Calculate magnetic flux-surfaces for visualization purposes
+      // ...........................................................
+      printf ("Calculating magnetic flux-surfaces:\n");
       
-      for (int j = 0; j <= Nw; j++)
+      for (int i = 1; i <= Nf; i++)
 	{
-	  double t = double (j) * 2.*M_PI /double (Nw);
+	  double rf = double (i) /double (Nf);
 	  
-	  double w, wold = t;
-	  for (int ii = 0; ii < 5; ii++)
+	  for (int j = 0; j <= Nw; j++)
 	    {
-	      w    = t - Gettheta (rf, wold, 1);
-	      wold = w;
+	      double t = double (j) * 2.*M_PI /double (Nw);
+	      
+	      double w, wold = t;
+	      for (int ii = 0; ii < 5; ii++)
+		{
+		  w    = t - Gettheta (rf, wold, 1);
+		  wold = w;
+		}
+	      
+	      double R = GetR (rf, w, 1);
+	      double Z = GetZ (rf, w, 1);
+	      
+	      RR    (i-1, j) = R;
+	      ZZ    (i-1, j) = Z;
+	      rvals (i-1, j) = rf;
+	      thvals(i-1, j) = t;
+	      wvals (i-1, j) = w;
 	    }
-	  
-	  double R = GetR (rf, w, 1);
-	  double Z = GetZ (rf, w, 1);
-	  
-	  RR    (i-1, j) = R;
-	  ZZ    (i-1, j) = Z;
-	  rvals (i-1, j) = rf;
-	  thvals(i-1, j) = t;
-	  wvals (i-1, j) = w;
 	}
-    }
-  
-  for (int i = 1; i <= Nf; i++)
-    {
-      double rf = double (i) /double (Nf);
       
-      for (int j = 0; j <= Nw; j++)
+      for (int i = 1; i <= Nf; i++)
 	{
-	  double w = double (j) * 2.*M_PI /double (Nw);
+	  double rf = double (i) /double (Nf);
 	  
-	  double R = GetR (rf, w, 1);
-	  double Z = GetZ (rf, w, 1);
-	  
-	  RRw(i-1, j) = R;
-	  ZZw(i-1, j) = Z;
+	  for (int j = 0; j <= Nw; j++)
+	    {
+	      double w = double (j) * 2.*M_PI /double (Nw);
+	      
+	      double R = GetR (rf, w, 1);
+	      double Z = GetZ (rf, w, 1);
+	      
+	      RRw(i-1, j) = R;
+	      ZZw(i-1, j) = Z;
+	    }
 	}
     }
   
