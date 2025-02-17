@@ -31,7 +31,7 @@ void Equilibrium::CalculateEFIT ()
   printf ("NRBOX = %4d        NZBOX = %4d       rc = %10.3e\n", NRBOX, NZBOX, rc);
 
   {
-    string JSONFilename = "../Inputs/TJ.json";
+    string JSONFilename = "../Inputs/Layer.json";
     json   JSONData     = ReadJSONFile (JSONFilename);
     
     B0EXP = JSONData["B0"].get<double> ();

@@ -1,0 +1,269 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage {amsmath}
+\usepackage{amssymb}
+\pdfoutput = 1 
+\usepackage {graphicx}
+\newcommand{\bomega}{\mbox{\boldmath$\omega$}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\title{Pressure Flattening at Rational Surface}
+\author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies,  Department of Physics,  University of Texas at Austin,  Austin TX 78712, USA}\begin{abstract}
+\end{abstract}
+\maketitle
+
+\section{Fundamental Equation}
+Consider a rational surface whose  resonant poloidal mode number is $m$, and that is located at the magnetic flux-surface $r=r_s$. Let
+$x=r-r_s$. The
+resonant harmonics of the perturbed magnetic field satisfy
+\begin{align}
+x\,\frac{d\psi_{m}}{dx} &= L_0\,Z_{m},\\[0.5ex]
+x\,\frac{dZ_{m}}{dx} &=P_0\,\psi_{m}+Z_{m}.
+\end{align}
+The previous equations can be combined to give
+\begin{equation}\label{e3}
+\frac{d^2\psi_{m}}{dx^2} =\frac{\nu\,(\nu+1)}{x^2}\,\psi_{m},
+\end{equation}
+where
+\begin{equation}
+\nu\,(\nu+1)= -D_I -\frac{1}{4}=L_0\,P_0= \left[\frac{2\,r\,\mu_0\,p'\,(1-q^2)}{B_0^{\,2}\,s^2}\right]_{r_s}.
+\end{equation}
+Let
+\begin{equation}
+\nu = -\frac{1}{2} + \sqrt{\frac{1}{4} + L_0\,P_0}= -\frac{1}{2}+\sqrt{-D_I}\geq -\frac{1}{2}.
+\end{equation}
+It follows that $\nu_L=-\nu$ and $\nu_S= 1+\nu$. In the limit that $|L_0\,P_0|\ll 1$, 
+\begin{equation}
+\nu\simeq L_0\,P_0.
+\end{equation}
+
+The most general tearing parity solution of Eq.~(\ref{e3}) is
+\begin{equation}
+\psi(x) = A_L\,|x|^{-\nu} + A_S\,{\rm sgn}(x)\,|x|^{1+\nu}.
+\end{equation}
+Making the definitions 
+\begin{align}
+{\mit\Psi} &= r_s^{-\nu}\left(\frac{1+2\,\nu}{L_m^m}\right)^{1/2}\,A_L,\\[0.5ex]
+{\mit\Delta\Psi} &= r_s^{1+\nu}\left(\frac{1+2\,\nu}{L_m^m}\right)^{1/2}\,2\,A_S,\\[0.5ex]
+{\mit\Delta}_{\rm out} &= \frac{\mit\Delta\Psi}{\mit\Psi},
+\end{align}
+it is clear that
+\begin{equation}\label{e9}
+{\mit\Delta}_{\rm out} = r_s^{1+2\,\nu}\,\frac{2\,A_S}{A_L}.
+\end{equation}
+
+\section{Pressure Flattening}
+Suppose that the pressure gradient is locally flattened in the vicinity of the rational surface in such a manner that
+\begin{equation}
+p'(x) = p'_{\rm out}\,\frac{x^2}{x^2+\delta^2}.
+\end{equation}
+Here, it is assumed that $\delta\ll r_s$. 
+Equation~(\ref{e3}) becomes 
+\begin{equation}\label{e11}
+\frac{d^2\psi_{m}}{dx^2} =\frac{\nu\,(\nu+1)}{x^2+\delta^2}\,\psi_{m},
+\end{equation}
+where 
+\begin{equation}
+\nu\,(\nu+1)=   \left[\frac{2\,r\,\mu_0\,p'_{\rm out}\,(1-q^2)}{B_0^{\,2}\,s^2}\right]_{r_s}.
+\end{equation}
+Let $X=x/\delta$. Equation~(\ref{e11}) becomes
+\begin{equation}\label{e13}
+(1+X^2)\,\frac{d^2\psi_m}{dX^2}= \nu\,(\nu+1)\,\psi_m
+\end{equation}
+
+Consider the small-$|X|$ behavior of the solution to Eq.~(\ref{e13}). If we write
+\begin{equation}
+\psi_m(X) = \sum_{m=0,2,4}a_m\,X^{\mu+m}
+\end{equation}
+then we obtain
+\begin{align}
+a_0\,\mu\,(\mu-1) &= 0,\\[0,5ex]
+a_2 &= \frac{\nu\,(\nu+1)-\mu\,(\mu-1)}{(\mu+2)\,(\mu+1)}\,a_0.
+\end{align}
+The solutions are
+$\mu=0$ with
+\begin{equation}
+a_2 =\frac{\nu\,(1+\nu)}{2}\,a_0
+\end{equation}
+and
+$\mu=1$ with
+\begin{equation}
+a_2 = \frac{\nu\,(1+\nu)}{6}\,a_0.
+\end{equation}
+It follows that the most general tearing parity small-$|X|$ solution takes the form 
+\begin{equation}\label{in}
+\psi_m(X) \simeq \hat{A}_{L\,{\rm in}}\left[1+\frac{\nu\,(1+\nu)}{2}\,X^2\right] + \hat{A}_{S\,{\rm in}}\,|X|\left[1+\frac{\nu\,(1+\nu)}{6}\,X^2\right].
+\end{equation}
+We can define
+\begin{equation}\label{din}
+{\mit\Delta}_{\rm in} = \left(\frac{r_s}{\delta}\right)
+\frac{2\,\hat{A}_{S \,{\rm in}}}{\hat{A}_{L\,{\rm in}}}.
+\end{equation}
+
+Consider the large-$|X|$ behavior of the solution to Eq.~(\ref{e13}). Let $Y=1/X$. Equation~(\ref{e13}) transforms into
+\begin{equation}
+(1+Y^2)\,\frac{d}{dY}\!\left(Y^2\,\frac{d\psi_m}{dY}\right) = \nu\,(\nu+1)\,\psi_m.
+\end{equation}
+If we write
+\begin{equation}
+\psi_m(Y) = \sum_{m=0,2,4}a_m\,Y^{\mu+m}
+\end{equation}
+then we obtain
+\begin{align}
+a_0\,[\mu\,(\mu+1) -\nu\,(\nu+1)]&= 0,\\[0,5ex]
+a_2 &= -\frac{\mu\,(\mu+1)}{(\mu+2)\,(\mu+3)-\nu\,(1+\nu)}\,a_0.
+\end{align}
+The solutions are $\mu=\nu$ with 
+\begin{equation}
+a_2= -\frac{\nu\,(1+\nu)}{2\,(3+2\,\nu)}\,a_0
+\end{equation}
+and $\mu=-1-\nu$ with 
+\begin{equation}
+a_2 =-\frac{\nu\,(1+\nu)}{2\,(1-2\,\nu)}\,a_0.
+\end{equation}
+It follows that the most general tearing parity large-$|X|$ solution takes the form
+\begin{align}\label{out}
+\psi_m(X)&= \hat{A}_{L\,{\rm out}}\,|X|^{-\nu}\left[1-\frac{\nu\,(1+\nu)}{2\,(3+2\,\nu)}\,\frac{1}{X^2}\right]\nonumber\\[0.5ex]&\phantom{=}
++\hat{A}_{S\,{\rm out}}\,{\rm sgn}(X)\,|X|^{1+\nu}\left[1-\frac{\nu\,(1+\nu)}{2\,(1-2\,\nu)}\,\frac{1}{X^2}\right]
+\end{align}
+By analogy with Eq.~(\ref{e9}), we can write
+\begin{equation}
+{\mit\Delta}_{\rm out}= \left(\frac{r_s}{\delta}\right)^{1+2\,\nu}\,\frac{2\,\hat{A}_{S\,{\rm out}}}{\hat{A}_{L\,{\rm out}}}.
+\end{equation}
+
+\section{Connection Formulae}
+Suppose that we launch the `large'  solution 
+\begin{equation}
+\psi_L(X) = X^{-\nu}\left[1-\frac{\nu\,(1+\nu)}{2\,(3+2\,\nu)}\,\frac{1}{X^2}\right]\
+\end{equation}
+from large $X$ and integrate to $X=0$. Suppose that 
+\begin{align}
+\psi_L(0) &= a_{LL},\\[0.5ex]
+\frac{d\psi_L(0)}{dx} &= a_{LS}.
+\end{align}
+
+Suppose that we launch the  `small' solution 
+\begin{equation}
+\psi_S(X) = X^{1+\nu}\left[1-\frac{\nu\,(1+\nu)}{2\,(1-2\,\nu)}\,\frac{1}{X^2}\right]
+\end{equation}
+from large $X$ and integrate to  $X=0$. Suppose that 
+\begin{align}
+\psi_L(0) &= a_{SL},\\[0.5ex]
+\frac{d\psi_L(0)}{dx} &= a_{SS}.
+\end{align}
+
+The most general solution is
+\begin{equation}
+\psi_m(X) = \hat{A}_{L\,{\rm out}}\,\psi_L(X)+ \hat{A}_{S\,{\rm out}}\,\psi_S(X).
+\end{equation}
+It follows that
+\begin{align}\label{bin}
+\hat{A}_{L\,{\rm in}} &= a_{LL}\,\hat{A}_{L\,{\rm out}} + a_{LS}\,\hat{A}_{S\,{\rm out}},\\[0.5ex]
+\hat{A}_{S\,{\rm in}}&= a_{SL}\,\hat{A}_{L\,{\rm out}} + a_{SS}\,\hat{A}_{S\,{\rm out}}.\label{bout}
+\end{align}
+It follows from Eqs.~(\ref{e9}) and (\ref{din}) that
+\begin{equation}
+\left(\frac{\delta}{r_s}\right)\frac{{\mit\Delta}_{\rm in}}{2}= \frac{a_{SL} +a_{SS}\,(\delta/r_s)^{1+2\,\nu}\,({\mit\Delta}_{\rm out}/2)}
+{a_{LL}  +a_{LS}\,(\delta/r_s)^{1+2\,\nu}\,({\mit\Delta}_{\rm out}/2)}.
+\end{equation}
+
+\section{Analytic Solution}
+Let $\psi_m = (1+X^2)\,\phi$. Equation~(\ref{e13}) transforms to give
+\begin{equation}
+(1+X^2)\,\frac{d^2\phi}{dX^2} + 4\,X\,\frac{d\phi}{dX} + [2-\nu\,(\nu+1)]\,\phi=0.
+\end{equation}
+Let $z= {\rm i}\,X$. The previous equation becomes 
+\begin{equation}\label{e38}
+(1-z^2)\,\frac{d^2\phi}{dz^2} - 4\,z\,\frac{d\phi}{dz} - [2-\nu\,(\nu+1)]\,\phi=0.
+\end{equation}
+Now, $Q_\nu(z)$ and $Q_{-1-\nu}(z)$ satisfy
+\begin{equation}
+(1-z^2)\,\frac{d^2 w}{dz^2} - 2\,z\,\frac{dw}{dz} + \nu\,(\nu+1)\,w = 0.
+\end{equation}
+Let $w'=dw/dz$. Differentiation of the previous equation yields
+\begin{equation}\label{e40}
+(1-z^2)\,\frac{d^2w'}{dz^2} - 2\,z\,\frac{dw'}{dz} - [2-\nu\,(\nu+1)]\,w'=0.
+\end{equation}
+It is clear from a comparison of Eqs.~(\ref{e38}) and (\ref{e40}) that the two independent solutions of Eq.~(\ref{e13}) can be written 
+$(1+X^2)\,Q_\nu'({\rm i}\,X)$ and $(1+X^2)\,Q_{-1-\nu}'({\rm i}\,X)$, where $'$ denotes differentiation with respect to argument. 
+
+Now [Erdelyi, p.~134, (40)],
+\begin{align}
+Q_\nu(z)&= \frac{\pi^{1/2}\,\Gamma(1/2+\nu/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,(1+\nu)}}{2\,\Gamma(1+\nu/2)}F\left(-\frac{\nu}{2},\frac{1}{2}+\frac{\nu}{2};\frac{1}{2};z^2\right)\nonumber\\[0.5ex]
+&\phantom{=}+\frac{\pi^{1/2}\,\Gamma(1+\nu/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,\nu}}{\Gamma(1/2+\nu/2)}\,z\,F\left(\frac{1}{2}-\frac{\nu}{2},1+\frac{\nu}{2};\frac{3}{2};z^2\right),
+\end{align}
+which yields
+\begin{align}
+Q_\nu(z)&\simeq \frac{\pi^{1/2}\,\Gamma(1/2+\nu/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,(1+\nu)}}{2\,\Gamma(1+\nu/2)}\left[1-\frac{\nu\,(1+\nu)\,z^2}{2}\right]\nonumber\\[0.5ex]
+&\phantom{=}+\frac{\pi^{1/2}\,\Gamma(1+\nu/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,\nu}}{\Gamma(1/2+\nu/2)}\,z,
+\end{align}
+and
+\begin{align}
+Q_\nu'(z)&\simeq- \frac{\pi^{1/2}\,\nu\,(1+\nu)\,\Gamma(1/2+\nu/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,(1+\nu)}}{2\,\Gamma(1+\nu/2)}\,z\nonumber\\[0.5ex]
+&\phantom{=}+\frac{\pi^{1/2}\,\Gamma(1+\nu/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,\nu}}{\Gamma(1/2+\nu/2)}.
+\end{align}
+So at small-$X$, 
+\begin{align}\label{e52}
+(1+X^2)\,Q_\nu'({\rm i}\,X)&= {\rm e}^{-{\rm i}\,\nu\,\pi/2}\left[\frac{\pi^{1/2}\,\Gamma(1+\nu/2)}{\Gamma(1/2+\nu/2)}\right.\nonumber\\[0.5ex]
+&\phantom{=}\left.-
+\frac{\pi^{1/2}\,\nu\,(1+\nu)\,\Gamma(1/2+\nu/2)}{2\,\Gamma(1+\nu/2)}\,X\right]
+\end{align}
+
+Furthermore, [Erdelyi, p.~134, (41)],
+\begin{align}
+Q_{\nu}(z) &= \frac{\pi^{1/2}\,{\Gamma}(1+\nu)}{2^{1+\nu}\,\Gamma(3/2+\nu)}\,z^{-1-\nu}\,F\left(1+\frac{\nu}{2},\frac{1}{2}+\frac{\nu}{2};\frac{3}{2}+\nu;\frac{1}{z^2}\right),
+\end{align}
+which yields
+\begin{align}
+Q_{\nu}'(z)\simeq -\frac{\pi^{1/2}\,(1+\nu)\,{\Gamma}(1+\nu)}{2^{1+\nu}\,\Gamma(3/2+\nu)}\,z^{-2-\nu}
+\end{align}
+So, at large-$X$, 
+\begin{align}\label{e55}
+(1+X^2)\,Q_\nu'({\rm i}\,X) \simeq {\rm e}^{-{\rm i}\,\nu\,\pi/2}\,\frac{\pi^{1/2}\,(1+\nu)\,\Gamma(1+\nu)}{2^{1+\nu}\,\Gamma(3/2+\nu)}\,X^{-\nu}.
+\end{align}
+
+It is clear from a comparison of Eqs.~(\ref{in}), (\ref{out}), (\ref{bin}), (\ref{bout}), (\ref{e52}), and (\ref{e55}) that
+\begin{align}
+\hat{A}_{L\,{\rm in}} &= a_{LL}\,\hat{A}_{L\,{\rm out}},\\[0.5ex]
+\hat{A}_{S\,{\rm in}}&= a_{SL}\,\hat{A}_{L\,{\rm out}},
+\end{align}
+where
+\begin{align}
+a_{LL} &= \frac{2^{1+\nu}\,\Gamma(1+\nu/2)\,\Gamma(3/2+\nu)}{(1+\nu)\,\Gamma(1/2+\nu/2)\,\Gamma(1+\nu)},\\[0.5ex]
+a_{SL}&=- \frac{2^\nu\,\nu\,\Gamma(1/2+\nu/2)\,\Gamma(3/2+\nu)}{\Gamma(1+\nu/2)\,\Gamma(1+\nu)}.
+\end{align}
+In the limit $\nu\rightarrow 0$,
+\begin{align}
+a_{LL}\rightarrow 1,\\[0.5ex]
+a_{SL} \rightarrow - \frac{\nu\,\pi}{2}.
+\end{align}
+
+Now, according to Eq.~(\ref{e52}), 
+\begin{align}\label{e52a}
+(1+X^2)\,Q_{-1-\nu}'({\rm i}\,X)&= {\rm e}^{\,{\rm i}\,(1+\nu)\,\pi/2}\left[\frac{\pi^{1/2}\,\Gamma(1/2-\nu/2)}{\Gamma(-\nu/2)}\right.\nonumber\\[0.5ex]
+&\phantom{=}\left.-
+\frac{\pi^{1/2}\,\nu\,(1+\nu)\,\Gamma(-\nu/2)}{2\,\Gamma(1/2-\nu/2)}\,X\right].
+\end{align}
+Furthermore, according to Eq.~(\ref{e55}), 
+\begin{align}\label{e55a}
+(1+X^2)\,Q_{-1-\nu}'({\rm i}\,X) \simeq- {\rm e}^{\,{\rm i}\,(1+\nu)\,\pi/2}\,\frac{\pi^{1/2}\,\nu\,{\Gamma}(-\nu)}{2^{-\nu}\,\Gamma(1/2-\nu)}\,X^{1+\nu}.
+\end{align}
+A comparison of Eqs.~(\ref{in}), (\ref{out}), (\ref{bin}), (\ref{bout}), (\ref{e52a}), and (\ref{e55a}) yields
+\begin{align}
+\hat{A}_{L\,{\rm in}} &= a_{LS}\,\hat{A}_{S\,{\rm out}},\\[0.5ex]
+\hat{A}_{S\,{\rm in}}&= a_{SS}\,\hat{A}_{S\,{\rm out}},
+\end{align}
+where
+\begin{align}
+a_{LS} &=- \frac{\Gamma(1/2-\nu/2)\,\Gamma(1/2-\nu)}{2^{\nu}\,\nu\,\Gamma(-\nu)\,\Gamma(-\nu/2)}= -\frac{\nu\,\Gamma(1/2-\nu/2)\,\Gamma(1/2-\nu)}{2^{1+\nu}\,\Gamma(1-\nu)\,\Gamma(1-\nu/2)},\\[0.5ex]
+a_{SS}&= \frac{(1+\nu)\,\Gamma(-\nu/2)\,\Gamma(1/2-\nu)}{2^{1+\nu}\,\Gamma(1/2-\nu/2)\,\Gamma(-\nu)} = \frac{(1+\nu)\,\Gamma(1-\nu/2)\,\Gamma(1/2-\nu)}{2^\nu\,\Gamma(1/2-\nu/2)\,\Gamma(1-\nu)}.
+\end{align}
+In the limit $\nu\rightarrow 0$,
+\begin{align}
+a_{LS}&\rightarrow -\frac{\nu\,\pi}{2},\\[0.5ex]
+a_{SS} &\rightarrow 1.
+\end{align}
+
+\end{document}

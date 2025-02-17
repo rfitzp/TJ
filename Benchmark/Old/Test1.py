@@ -20,9 +20,9 @@ for line in infile:
     c1      = float(numbers[0])
     c2      = float(numbers[1])
     c3      = float(numbers[2])
-    c4      = float(numbers[4])
-    c5      = float(numbers[5])
-    c6      = float(numbers[6])
+    c4      = float(numbers[3])
+    c5      = float(numbers[4])
+    c6      = float(numbers[5])
     qa.append(c1)
     pn.append(c2)
     rs.append(c3)
@@ -31,18 +31,18 @@ for line in infile:
     d3.append(c6)
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Circular: Zero pressure: q_0=1.1: p_sig=1.36')
+fig.canvas.manager.set_window_title (r'Circular: Zero pressure: q_0=1.1: q_a=2.6')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 
 plt.subplot (1, 1, 1)
 
 plt.xlim (0.0, 0.31)
-plt.ylim (7.5, 11.0)
+plt.ylim (8.0, 11.0)
 
 plt.plot (qa, d1, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'TJ')
-plt.plot (qa, d2, color = 'red',   linewidth = 1, linestyle = 'dotted', marker = '^', fillstyle = 'none', markersize = 10, label = 'TEAR')
-plt.plot (qa, d3, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 'o', fillstyle = 'none', markersize = 10, label = 'STRIDE')
+plt.plot (qa, d2, color = 'red',   linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'TEAR')
+plt.plot (qa, d3, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'STRIDE')
 
 plt.xlabel (r'$\epsilon_a$',   fontsize = "15")
 plt.ylabel (r"$r_s\,\Delta'$", fontsize = "15")

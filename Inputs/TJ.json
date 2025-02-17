@@ -3,8 +3,8 @@
     "MMIN":  -10,      // Minimum poloidal mode number included in calculation
     "MMAX":   20,      // Maximum poloidal mode number included in calculation
 
-    "EQLB":   1,       // Flag for equilibrium calculation only
-    "FREE":   0,       // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary calculations
+    "EQLB":   0,       // Flag for equilibrium calculation only
+    "FREE":   1,       // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary calculations
     "FVAL":   0,       // Flag for calculating eigenvalues and eigenvectors of F-matrix
     "RMP":    0,       // Flag for resonant magnetic perturbation calculation
     "VIZ":    1,       // Flag for generating unreconnected eigenfunction visualization data

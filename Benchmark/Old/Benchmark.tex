@@ -113,6 +113,23 @@ in the cylindrical limit, $\epsilon_a\rightarrow 0$. On the other hand, the stab
 the cylindrical limit, and only becomes believable when $\epsilon_a>0.2$. In the latter case, the STRIDE and TJ codes exhibit good agreement. 
 Note that TJ has a dud data point at $\epsilon_a=0.12$, which is under further investigation. 
 
+\subsubsection{Test 2}
+The second test has $q_0=1.1$ and $\epsilon_a=0.05$, and varies $q_a$. Figure~2 compares the $\hat{\mit\Delta}_{11}$ values calculated by the TJ code, the TEAR code and
+the STRIDE code. It can be seen that the tearing stability indices calculated by the TJ and TEAR codes agree with one another, as should be the case in a large aspect-ratio plasma. 
+On the other hand, the tearing stability index calculated by the STRIDE code exhibits significant oscillations about the (presumably) correct answer. 
+
+\subsubsection{Test 3}
+The third test  is the same as the second, except that we have increased $\epsilon_a$ to $0.2$, because
+Fig.~1 suggests that STRIDE is more likely to give reliable results at this aspect-ratio. Figure~3 compares the $\hat{\mit\Delta}_{11}$ values calculated by the TJ code, the TEAR code and
+the STRIDE code. It can be seen that the tearing stability indices calculated by TJ and STRIDE are in reasonably good agreement with one another. Note that the plasma approaches
+an ideal stability limit as $q_a\rightarrow 3$. Nevertheless, the STRIDE results still exhibit oscillations about the TJ results. 
+
+\subsubsection{Test 4}
+The fourth test  shows the elements of the $2\times 2$ tearing stability index when $q_a$ lies between 2 and 3.   
+It can be seen that TJ and STRIDE are in reasonably good agreement. However, STRIDE is not respecting the symmetry constraints as well
+as TJ. 
+
+
 \section*{References}
 \begin{thebibliography}{99}\baselineskip 5ex
 
@@ -126,11 +143,29 @@ Note that TJ has a dud data point at $\epsilon_a=0.12$, which is under further i
 
 \end{thebibliography}
 
-%\newpage
-%\begin{figure}
-%\centerline{\includegraphics[width=\textwidth]{Test1.pdf}}
-%\caption{Test 1: $q_0=1.1$, $q_a=2.6$. Variation of 2/1 tearing stability index with inverse-aspect ratio.}
-%\end{figure}
+\newpage
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Test1.pdf}}
+\caption{Test 1: $q_0=1.1$, $q_a=2.6$. Variation of 2/1 tearing stability index with inverse-aspect ratio.}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Test2.pdf}}
+\caption{Test 2: $q_0=1.1$, $\epsilon_a=0.05$. Variation of 2/1 tearing stability index with edge safety-factor.}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Test3.pdf}}
+\caption{Test 3:  $q_0=1.1$, $\epsilon_a=0.2$. Variation of 2/1 tearing stability index with edge safety-factor.}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Test4.pdf}}
+\caption{Test 4:  $q_0=1.1$, $\epsilon_a=0.3$. Variation of elements of tearing stability matrix with edge safety-factor.}
+\end{figure}
+
+
+
 
 \end{document}
 
