@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-infile = open("Test6.out", "r")
+infile = open("Test3.out", "r")
 
 qa = []
 qc = []
@@ -13,12 +13,10 @@ ep = []
 m1 = []
 p1 = []
 r1 = []
-d1 = []
 
 m2 = []
 p2 = []
 r2 = []
-d2 = []
 
 e11r = []
 e11i = []
@@ -40,6 +38,8 @@ e22i = []
 E22r = []
 E22i = []
 
+next(infile)
+
 for line in infile: 
 
     numbers = line.split()
@@ -59,57 +59,53 @@ for line in infile:
     c6 = int  (numbers[5])
     c7 = float(numbers[6])
     c8 = float(numbers[7])
-    c9 = float(numbers[8])
 
     m1.append(c6)
     p1.append(c7)
     r1.append(c8)
-    d1.append(c9)
 
-    c10 = int  (numbers[9])
-    c11 = float(numbers[10])
-    c12 = float(numbers[11])
-    c13 = float(numbers[12])
+    c10 = int  (numbers[8])
+    c11 = float(numbers[9])
+    c12 = float(numbers[10])
 
     m2.append(c10)
     p2.append(c11)
     r2.append(c12)
-    d2.append(c13)
 
-    c15 = float(numbers[14])
-    c16 = float(numbers[15])
-    c17 = float(numbers[16])
-    c18 = float(numbers[17])
+    c15 = float(numbers[12])
+    c16 = float(numbers[13])
+    c17 = float(numbers[14])
+    c18 = float(numbers[15])
 
     e11r.append(c15)
     e11i.append(c16)
     E11r.append(c17)
     E11i.append(c18)
 
-    c20 = float(numbers[19])
-    c21 = float(numbers[20])
-    c22 = float(numbers[21])
-    c23 = float(numbers[22])
+    c20 = float(numbers[17])
+    c21 = float(numbers[18])
+    c22 = float(numbers[19])
+    c23 = float(numbers[20])
 
     e12r.append(c20)
     e12i.append(c21)
     E12r.append(c22)
     E12i.append(c23)
 
-    c25 = float(numbers[24])
-    c26 = float(numbers[25])
-    c27 = float(numbers[26])
-    c28 = float(numbers[27])
+    c25 = float(numbers[22])
+    c26 = float(numbers[23])
+    c27 = float(numbers[24])
+    c28 = float(numbers[25])
 
     e21r.append(c25)
     e21i.append(-c26)
     E21r.append(c27)
     E21i.append(-c28)
 
-    c30 = float(numbers[29])
-    c31 = float(numbers[30])
-    c32 = float(numbers[31])
-    c33 = float(numbers[32])
+    c30 = float(numbers[27])
+    c31 = float(numbers[28])
+    c32 = float(numbers[29])
+    c33 = float(numbers[30])
 
     e22r.append(c30)
     e22i.append(c31)
@@ -117,7 +113,7 @@ for line in infile:
     E22i.append(c33)
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Circular: q_0=1.1: epsilon_a=0.3: p_0=0.1')
+fig.canvas.manager.set_window_title (r'Circular: Zero pressure: q_0=1.1: epsilon_a=0.2')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 
@@ -126,7 +122,6 @@ plt.subplot (3, 2, 1)
 plt.xlim (3., 4.)
 
 plt.plot (qa, e11r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'TJ')
-plt.plot (qa, d1,   color = 'red',   linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'TEAR')
 plt.plot (qa, E11r, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'STRIDE')
 
 plt.xlabel (r'$q_a$',        fontsize = "15")
@@ -136,6 +131,7 @@ plt.legend (fontsize = "12")
 plt.subplot (3, 2, 2)
 
 plt.xlim (3., 4.)
+plt.ylim (-1.e-8,1.e-8)
 
 plt.plot (qa, e11i, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'TJ')
 plt.plot (qa, E11i, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'STRIDE')
@@ -162,6 +158,8 @@ plt.legend (fontsize = "12")
 plt.subplot (3, 2, 4)
 
 plt.xlim (3., 4.)
+plt.ylim (-1.e-8,1.e-8)
+
 plt.plot (qa, e12i, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'TJ')
 plt.plot (qa, e21i, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 'x', fillstyle = 'none', markersize = 5)
 plt.plot (qa, E12i, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'STRIDE')
@@ -178,7 +176,6 @@ plt.subplot (3, 2, 5)
 plt.xlim (3., 4.)
 
 plt.plot (qa, e22r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'TJ')
-plt.plot (qa, d2,   color = 'red',   linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'TEAR')
 plt.plot (qa, E22r, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'STRIDE')
 
 plt.xlabel (r'$q_a$',        fontsize = "15")
@@ -188,6 +185,7 @@ plt.legend (fontsize = "12")
 plt.subplot (3, 2, 6)
 
 plt.xlim (3., 4.)
+plt.ylim (-1.e-8,1.e-8)
 
 plt.plot (qa, e22i, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'TJ')
 plt.plot (qa, E22i, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'STRIDE')
@@ -200,5 +198,5 @@ plt.legend (fontsize = "12")
 
 plt.tight_layout ()
 
-plt.show ()    
-#plt.savefig("Test4.pdf")
+#plt.show ()    
+plt.savefig("Test3.pdf")

@@ -87,31 +87,52 @@ symmetries have to be respected by a toroidal tearing mode code, otherwise the c
 plasma could exert a net toroidal electromagnetic torque on itself. Note that, in the cylindrical limit, $\hat{\mit\Delta}_{jj}$ is equivalent to $r_s\,{\mit\Delta}'$: i.e.,
 the tearing stability index normalized to the minor radius of the rational surface. 
 
-\section{TJ Circular Equilibrium}
-The TJ circular equilibrium is characterized by a pressure profile
+\section{TJ/STRIDE/TEAR  Equilibrium}
+The TJ/STRIDE/TEAR large-aspect ratio, circular,  plasma equilibrium  has a Wesson-like current profile\,\cite{wesson} characterized by the
+safety-factor on the magnetic axis, $q_0$, and the safety-factor at the plasma boundary, $q_a$. 
+The
+ parallel current profile, $\sigma={\bf J}\cdot{\bf B}/B^2$,  is written
 \begin{equation}
-p(r)= \beta_0\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p},
+\sigma(r) = \frac{2}{q_0}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_\sigma}.
 \end{equation}
-and a parallel current profile, $\sigma={\bf J}\cdot{\bf B}/B^2$, 
+whereas the a  pressure profile takes the form
 \begin{equation}
-\sigma(r) = \sigma_0\left[1-\left(\frac{r}{a}\right)^2\right]^{p_\sigma}.
+p(r)= \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p}.
 \end{equation}
-These profiles are the same as the  modified {\tt lar} module in STRIDE.
+Here, $r$ is the flux surface label defined in Ref.~\onlinecite{rf}. Moreover, the magnetic axis corresponds to $r=0$, and the plasma
+boundary to $r=a$. A STRIDE equilibrium is defined by the parameters $q_0$, $p_\sigma$, $\beta_0$, and $p_p$. In TJ equilibria,
+$q_0$, $\beta_0$, and $p_p$ are the same as in STRIDE, but $p_\sigma$ is adjusted to obtain the same $q_a$ value as in STRIDE. 
+TEAR equilibria are specified by $q_0$ and $q_a$. 
+The TJ and STRIDE equilibria are also characterized by the inverse aspect-ratio of the plasma, $\epsilon_a$. The TEAR equilibria are such that
+$\epsilon_a=0$. 
 
 \section{Benchmark Tests}
 \subsection{Single Rational Surface}
-We use a zero-pressure, circular cross-section,  plasma equilibrium that, in the cylindrical limit, has a Wesson-like current profile\,\cite{wesson} characterized by the
-safety-factor on the magnetic axis, $q_0$, and the safety-factor at the plasma boundary, $q_a$. In fact, in the cylindrical limit, $j_\phi(r)= (2/q_0)\, (1-r^2)^{q_a/q_0}$. 
-We consider the stability of $n=1$ tearing modes, and
-consider equilibria that only contain a single $n=1$ rational surface: namely, the 2/1 surface. 
+We consider the stability of $n=1$ tearing modes 
+in a zero pressure equilibrium that only contain a single $n=1$ rational surface: namely, the 2/1 surface. 
 
 \subsubsection{Test 1}
-The first test has $q_0=1.1$, $q_a=2.6$, and varies the inverse aspect-ratio of the plasma, $\epsilon_a$. Figure~1 compares the $\hat{\mit\Delta}_{11}$ (i.e.,
+The first test has equilibria characterized by $q_0=1.1$ and $p_\sigma=1.36$ (in STRIDE), with a range of different inverse aspect-ratios, $\epsilon_a$. 
+Figure~1 compares the $\hat{\mit\Delta}_{11}$ (i.e.,
 the tearing stability index of the 2/1 tearing mode) values calculated by the TJ code,\cite{tj} the TEAR code (which is a cylindrical tearing mode code), and
-the STRIDE code. It can be seen that the tearing stability index calculated by the TJ code asymptotes to that calculated by the TEAR code
-in the cylindrical limit, $\epsilon_a\rightarrow 0$. On the other hand, the stability index calculated by STRIDE exhibits wild oscillations in
-the cylindrical limit, and only becomes believable when $\epsilon_a>0.2$. In the latter case, the STRIDE and TJ codes exhibit good agreement. 
-Note that TJ has a dud data point at $\epsilon_a=0.12$, which is under further investigation. 
+the STRIDE code. It can be seen that the tearing stability indices calculated by the TJ and STRIDE are in good agreement, and asymptote to that calculated by the TEAR code
+in the cylindrical limit, $\epsilon_a\rightarrow 0$. 
+
+\subsubsection{Test 2}
+The second test has equilibria characterized by $q_0=1.1$ and $\epsilon_a=0.2$, with a range of edge safety-factor values, $q_a$. 
+Figure~2 compares the $\hat{\mit\Delta}_{11}$ (i.e.,
+the tearing stability index of the 2/1 tearing mode) values calculated by the TJ code, the TEAR code, and
+the STRIDE code. It can be seen that the tearing stability indices calculated by the TJ and STRIDE are in good agreement, except when the $q=3$ surface closely approaches the
+plasma boundary (i.e., $q_a\rightarrow 3$). 
+ 
+ \subsection{Two Rational Surfaces}
+ We consider the stability of $n=1$ tearing modes 
+in a zero pressure equilibrium  that  contains two $n=1$ rational surface: namely, the 2/1 surface and the 3/1 surface. 
+
+\subsubsection{Test 3}
+The third test has equilibria characterized by $q_0=1.1$ and $\epsilon_a=0.2$, with a range of edge safety-factor values, $q_a$. 
+Figure~3 compares the elements of the tearing stability matrix calculated by the TJ and the STRIDE codes. It can be seen that the elements calculated by
+TJ and STRIDE are in good agreement. 
 
 \section*{References}
 \begin{thebibliography}{99}\baselineskip 5ex
@@ -126,11 +147,28 @@ Note that TJ has a dud data point at $\epsilon_a=0.12$, which is under further i
 
 \end{thebibliography}
 
-%\newpage
-%\begin{figure}
-%\centerline{\includegraphics[width=\textwidth]{Test1.pdf}}
-%\caption{Test 1: $q_0=1.1$, $q_a=2.6$. Variation of 2/1 tearing stability index with inverse-aspect ratio.}
-%\end{figure}
+\newpage
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Test1.pdf}}
+\caption{Test 1: $q_0=1.1$, $p_\sigma=1.36$ (STRIDE), $\beta_0=0.0$. Variation of 2/1 tearing stability index with inverse-aspect ratio, $\epsilon_a$. }
+\end{figure}
+
+\newpage
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Test2.pdf}}
+\caption{Test 2: $q_0=1.1$, $\epsilon_a=0.2$, $\beta_0=0.0$. Variation of 2/1 tearing stability index with $q_a$. }
+\end{figure}
+
+\newpage
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Test3.pdf}}
+\caption{Test 3: $q_0=1.1$, $\epsilon_a=0.2$, $\beta_0=0.0$. Variation of elements of tearing stability matrix with $q_a$. In the middle panels the squares
+indicate  $E_{12}$ and the crosses indicate $E_{21}$. }
+\end{figure}
+
+
+
+
 
 \end{document}
 
