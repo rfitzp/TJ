@@ -26,7 +26,6 @@
 // Class uses following external libraries:
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
 //  GNU scientific library (https://www.gnu.org/software/gsl)
-//  nclohmann JSON library (https://github.com/nlohmann/json)
 //  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
 //  Armadillo library      (https://arma.sourceforge.net)
 
@@ -45,37 +44,18 @@
 
 #pragma once
 
-#define _CRT_SECURE_NO_DEPRECATE
-#define _USE_MATH_DEFINES
 #define ARMA_WARN_LEVEL 0
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
 #include <time.h>
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-
-#ifdef _WIN32
- #include <direct.h>
- #define mkdir _mkdir
-#else
- #include <sys/stat.h>
- #include <sys/types.h>
-#endif
 
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
 #include <gsl/gsl_sf_gamma.h>
-#include <nlohmann/json.hpp>
 #include <netcdf>
 #include <armadillo>
+#include "Utility.h"
 
 using namespace blitz;
-using           json = nlohmann::json;
 using namespace netCDF;
 using namespace netCDF::exceptions;
 using namespace arma;
@@ -83,7 +63,7 @@ using namespace arma;
 // ############
 // Class header
 // ############
-class TJ
+class TJ : private Utility
 {
  private:
 
@@ -102,6 +82,7 @@ class TJ
   int XI;      // Flag for using Xi, rather than Psi, as ideal eigenfunction basis (read from TJ JSON file)
   int INTR;    // Flag for internal ideal stability calculation (read from TJ JSON file)
   int RWM;     // Flag for resistive wall mode calculation (read from TJ JSON file)
+  int LAYER;   // Flag for layer calculation (read from TJ JSON file)
 
   // ----------------------
   // Calculation parameters
@@ -350,7 +331,7 @@ class TJ
   Array<complex<double>,1> dPi;   // Current sheets at rational surfaces associated with solution vectors
 
   // -------------------------------------
-  // Tearing-mode dispersion relation data
+  // Tearing mode dispersion relation data
   // -------------------------------------
   Array<complex<double>,2> Psia;  // Values of Psi at plasma boundary due to continuous solutions launched from magnetic axis
   Array<complex<double>,2> Za;    // Values of Z at plasma boundary due to continuous solutions launched from magnetic axis
@@ -501,33 +482,10 @@ class TJ
   double* Peres;  // Magnetic Prandtl number for perpendicular energy diffusion
   double* Dcres;  // Critical Delta' for instability
 
-  // -----------------------
-  // Root finding parameters
-  // -----------------------
-  double Eta;     // Minimum magnitude of f at root f(x) = 0
-  int    Maxiter; // Maximum number of iterations
-
-  // -------------------------------
-  // Adaptive integration parameters
-  // -------------------------------
-  double acc;     // Integration accuracy (read from TJ JSON file)
-  double h0;      // Initial step-length (read from TJ JSON file)
-  double hmin;    // Minimum step-length (read from TJ JSON file)
-  double hmax;    // Maximum step-length (read from TJ JSON file)
-  int    maxrept; // Maximum number of step recalculations
-  int    flag;    // Integration error calculation flag
-  
-  // ----------------------------
-  // Cash-Karp RK4/RK5 parameters
-  // ----------------------------
-  double aa1, aa2, aa3, aa4, aa5, aa6, cc1, cc3, cc4, cc6, ca1, ca3, ca4, ca5, ca6;
-  double bb21, bb31, bb32, bb41, bb42, bb43, bb51, bb52, bb53, bb54;
-  double bb61, bb62, bb63, bb64, bb65;
-
   // ----
   // Misc
   // ----
-  int    count, rhs_chooser;
+  int    rhs_chooser;
   double qval;
   
  public:
@@ -555,17 +513,6 @@ class TJ
   // Deallocate memory
   void CleanUp ();
 
-  // Strip comments from a string
-  string stripComments (const string& input);
-  // Read JSON file
-  json ReadJSONFile (const string& filename);
-  // Open new file for writing
-  FILE* OpenFilew (char* filename);
-  // Open file for reading
-  FILE* OpenFiler (char* filename);
-  // Check that directory exists, and create it otherwise
-  bool CreateDirectory (const char* path);
-
   // ......................
   // In ReadEquilibrium.cpp
   // ......................
@@ -586,7 +533,7 @@ class TJ
   // Calculate vacuum wall matrices
   void GetVacuumWall ();
   // Evaluate right-hand sides of vacuum odes
-  void Rhs1 (double r, complex<double>* Y, complex<double>* dYdr);
+  void CashKarp45Rhs1 (double r, complex<double>* Y, complex<double>* dYdr) override;
   // Evaluate eta for RMP coil calculation
   double Geteta (double R, double Z, double Rp, double Zp);
   // Evaluate G for RMP coil calculation
@@ -595,9 +542,8 @@ class TJ
   // ...............
   // In Rational.cpp
   // ...............
-
   // Target function for finding rational surfaces
-  double Feval (double r);
+  double RootFindF (double r) override;
   // Find rational surfaces
   void FindRational ();
   // Get resonant layer data
@@ -649,7 +595,7 @@ class TJ
   // Perform fixup of multiple solution vectors lauched from magnetic axis
   void Fixup (double r, Array<complex<double>,2> YY);
   // Evaluate right-hand sides of outer region odes
-  void Rhs (double r, complex<double>* Y, complex<double>* dYdr);
+  void CashKarp45Rhs (double r, complex<double>* Y, complex<double>* dYdr) override;
   // Pack YY solution vector
   void PackYY (Array<complex<double>,2> PPsi, Array<complex<double>,2> ZZ, Array<complex<double>,2> YY);
   // Unpack YY solution vector
@@ -761,38 +707,6 @@ class TJ
   // Return value of Fsmall
   double GetFsmall (double r, int m);
 
-  // ...............
-  // In ZeroFind.cpp
-  // ...............
-
-  // Routine to find approximate root of F(x) = 0 using Ridder's method
-  double RootFind ();
-  // Ridder's method for finding root of F(x) = 0
-  void Ridder (double x1, double x2, double F1, double F2, double& x);
-  
-  // ................
-  // In Integrate.cpp
-  // ................
-
-  // Advance set of coupled first-order o.d.e.s by single step using adaptive
-  //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
-  void CashKarp45Adaptive (int neqns, double& x, complex<double>* y, double& h, 
-			   double& t_err, double acc, double S, double T, int& rept,
-			   int maxrept, double h_min, double h_max, int flag, 
-			   int diag, FILE* file);
-  // Advance set of coupled first-order o.d.e.s by single step using fixed
-  //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
-  void CashKarp45Fixed (int neqns, double& x, complex<double>* y, complex<double>* err, double h);
-  // Advance set of coupled first-order o.d.e.s by single step using adaptive
-  //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
-  void CashKarp45Adaptive1 (int neqns, double& x, complex<double>* y, double& h, 
-			    double& t_err, double acc, double S, double T, int& rept,
-			    int maxrept, double h_min, double h_max, int flag, 
-			    int diag, FILE* file);
-  // Advance set of coupled first-order o.d.e.s by single step using fixed
-  //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
-  void CashKarp45Fixed1 (int neqns, double& x, complex<double>* y, complex<double>* err, double h);
- 
   // ................
   // In Armadillo.cpp
   // ................

@@ -125,7 +125,7 @@ plt.plot (qa, e11r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker
 plt.plot (qa, E11r, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'STRIDE')
 
 plt.xlabel (r'$q_a$',        fontsize = "15")
-plt.ylabel (r"$Re(E_{11})$", fontsize = "15")
+plt.ylabel (r"$Re(\hat{\Delta}_{11})$", fontsize = "15")
 plt.legend (fontsize = "12")
 
 plt.subplot (3, 2, 2)
@@ -139,7 +139,7 @@ plt.plot (qa, E11i, color = 'green', linewidth = 1, linestyle = 'dotted', marker
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$q_a$',        fontsize = "15")
-plt.ylabel (r"$Im(E_{11})$", fontsize = "15")
+plt.ylabel (r"$Im(\hat{\Delta}_{11})$", fontsize = "15")
 plt.legend (fontsize = "12")
 
 plt.subplot (3, 2, 3)
@@ -152,7 +152,7 @@ plt.plot (qa, E12r, color = 'green', linewidth = 1, linestyle = 'dotted', marker
 plt.plot (qa, E21r, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 'x', fillstyle = 'none', markersize = 5)
 
 plt.xlabel (r'$q_a$',                    fontsize = "15")
-plt.ylabel (r"$Re(E_{12}), Re(E_{21})$", fontsize = "15")
+plt.ylabel (r"$Re(\hat{\Delta}_{12}), Re(\hat{\Delta}_{21})$", fontsize = "15")
 plt.legend (fontsize = "12")
 
 plt.subplot (3, 2, 4)
@@ -168,7 +168,7 @@ plt.plot (qa, E21i, color = 'green', linewidth = 1, linestyle = 'dotted', marker
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$q_a$',                    fontsize = "15")
-plt.ylabel (r"$Im(E_{12}), -Im(E_{21})$", fontsize = "15")
+plt.ylabel (r"$Im(\hat{\Delta}_{12}), -Im(\hat{\Delta}_{21})$", fontsize = "15")
 plt.legend (fontsize = "12")
 
 plt.subplot (3, 2, 5)
@@ -179,7 +179,7 @@ plt.plot (qa, e22r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker
 plt.plot (qa, E22r, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = 'STRIDE')
 
 plt.xlabel (r'$q_a$',        fontsize = "15")
-plt.ylabel (r"$Re(E_{22})$", fontsize = "15")
+plt.ylabel (r"$Re(\hat{\Delta}_{22})$", fontsize = "15")
 plt.legend (fontsize = "12")
 
 plt.subplot (3, 2, 6)
@@ -193,7 +193,7 @@ plt.plot (qa, E22i, color = 'green', linewidth = 1, linestyle = 'dotted', marker
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$q_a$',        fontsize = "15")
-plt.ylabel (r"$Im(E_{22})$", fontsize = "15")
+plt.ylabel (r"$Im(\hat{\Delta}_{22})$", fontsize = "15")
 plt.legend (fontsize = "12")
 
 plt.tight_layout ()

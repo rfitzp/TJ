@@ -565,7 +565,7 @@ void TJ::GetVacuumWall ()
 // ####################################################
 // Function to evaluate right-hand sides of vacuum odes
 // ####################################################
-void TJ::Rhs1 (double t, complex<double>* Y, complex<double>* dYdt)
+void TJ::CashKarp45Rhs1 (double t, complex<double>* Y, complex<double>* dYdt)
 {
   if (rhs_chooser == 0)
     {

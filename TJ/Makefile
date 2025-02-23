@@ -9,6 +9,7 @@ export VERSION_FLAGS=-DGIT_HASH="\"$(GIT_HASH)\"" -DCOMPILE_TIME="\"$(COMPILE_TI
  
 BUILD_DIR       = ../bin
 LIB_DIR         = ../lib
+UTILITY_DIR     = ../Utility
 EQUILIBRIUM_DIR = ../Equilibrium
 LAYER_DIR       = ../Layer
 
@@ -16,27 +17,30 @@ EQUILIBRIUM_LIB = $(LIB_DIR)/libEquilibrium.a
 LAYER_LIB       = $(LIB_DIR)/libLayer.a
 
 C_HEADER = TJ.h 
-C_SOURCE = main.cpp TJ.cpp ReadEquilibrium.cpp Interpolate.cpp ZeroFind.cpp Rational.cpp\
-	Matrix.cpp Vacuum.cpp Armadillo.cpp Integrate.cpp ODESolve.cpp Resonant.cpp Dispersion.cpp Toroidal.cpp\
-	Ideal.cpp Netcdf.cpp RMP.cpp RWM.cpp Visualize.cpp
+C_SOURCE = main.cpp TJ.cpp ReadEquilibrium.cpp Interpolate.cpp Rational.cpp Matrix.cpp Vacuum.cpp Armadillo.cpp\
+	ODESolve.cpp Resonant.cpp Dispersion.cpp Toroidal.cpp Ideal.cpp Netcdf.cpp RMP.cpp RWM.cpp Visualize.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
+U_OBJECT = ../Utility/Utility.o
 
 EXECUTABLE = ../bin/tj
 
 $(EXECUTABLE):	 	$(C_OBJECT) $(BUILD_DIR) $(EQUILIBRIUM_LIB) $(LAYER_LIB)
-			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(C_LIBS) -L../lib -lEquilibrium -lLayer
+			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(U_OBJECT) $(C_LIBS) -L../lib -lEquilibrium -lLayer 
 
 $(BUILD_DIR):
 			@mkdir -p $(BUILD_DIR)
+
+$(C_OBJECT):		$(C_SOURCE) $(C_HEADER)
+			$(C_COMPILER) $(C_FLAGS) -o $*.o -c $(C_INCLUDE) -I../include $*.cpp
+
+$(U_OBJECT):
+			$(MAKE) -C $(UTILITY_DIR)
 
 $(EQUILIBRIUM_LIB):
 			$(MAKE) -C $(EQUILIBRIUM_DIR)
 
 $(LAYER_LIB):
 			$(MAKE) -C $(LAYER_DIR)
-
-$(C_OBJECT):		$(C_SOURCE) $(C_HEADER)
-			$(C_COMPILER) $(C_FLAGS) -o $*.o -c $(C_INCLUDE) -I../include $*.cpp
 
 clean: 
 			rm -f $(C_OBJECT) $(EXECUTABLE)

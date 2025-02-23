@@ -1,6 +1,7 @@
 # Makefile for Program TJ
 
 all:
+	(cd Utility;     make)
 	(cd Equilibrium; make)
 	(cd Layer;	 make)
 	(cd TJ;        	 make)
@@ -10,6 +11,7 @@ all:
 
 clean:
 
+	(cd Utility;     make clean)
 	(cd Equilibrium; make clean)
 	(cd Layer;	 make clean)
 	(cd TJ;          make clean)

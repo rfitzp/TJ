@@ -5,7 +5,7 @@
 // #############################################
 // Target function for finding rational surfaces
 // #############################################
-double TJ::Feval (double r)
+double TJ::RootFindF (double r)
 {
   double q = Getq (r);
   
@@ -57,7 +57,7 @@ void TJ::FindRational ()
       qres[i]  = double (mres[i]) /ntor;
 
       qval     = qres[i];
-      rres[i]  = RootFind ();
+      rres[i]  = RootFind (EPS, 1.);
       
       qerr [i]  = fabs (Getq (rres[i]) - qres[i]);
       sres [i]  = Gets (rres[i]);

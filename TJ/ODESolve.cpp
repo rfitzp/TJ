@@ -637,7 +637,7 @@ void TJ::Fixup (double r, Array<complex<double>,2> YY)
 // ##########################################################
 // Function to evaluate right-hand sides of outer region odes
 // ##########################################################
-void TJ::Rhs (double r, complex<double>* Y, complex<double>* dYdr)
+void TJ::CashKarp45Rhs (double r, complex<double>* Y, complex<double>* dYdr)
 {
   Array<complex<double>,2> PPsi    (J, K);
   Array<complex<double>,2> ZZ      (J, K);

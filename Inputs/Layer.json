@@ -1,7 +1,7 @@
 {
     "LAYER":  0,          // Flag for layer calculation
 
-    "B0":    12.0,          // On-axis toroidal magnetic field-strength (T)
+    "B0":    12.0,        // On-axis toroidal magnetic field-strength (T)
     "R0":    2.0,         // On-axis plasma major radius (m) 
     "n0":    3.0e20,      // On-axis electron number density (m^-3)
     "alpha": 0.5,         // Assumed electron number density profile: n0 (1 - r^2)^alpha

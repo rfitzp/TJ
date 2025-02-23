@@ -5,6 +5,7 @@
 // Class to solve three-field resonant layer equations in tokamak plasma
 
 // Inputs:
+//  Inputs/TJ.json    - TJ JSON file
 //  Inputs/Layer.json - JSON file
 
 // Outputs:
@@ -15,7 +16,6 @@
 
 // Class uses following external libraries:
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
-//  nclohmann JSON library (https://github.com/nlohmann/json)
 //  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
 
 // Author:
@@ -33,32 +33,11 @@
 
 #pragma once
 
-#define _CRT_SECURE_NO_DEPRECATE
-#define _USE_MATH_DEFINES
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <complex>
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-
-#ifdef _WIN32
- #include <direct.h>
- #define mkdir _mkdir
-#else
- #include <sys/stat.h>
- #include <sys/types.h>
-#endif
-
 #include <blitz/array.h>
-#include <nlohmann/json.hpp>
 #include <netcdf>
+#include "Utility.h"
 
 using namespace blitz;
-using           json = nlohmann::json;
 using namespace netCDF;
 using namespace netCDF::exceptions;
 using namespace std;
@@ -66,7 +45,7 @@ using namespace std;
 // ############
 // Class header
 // ############
-class Layer
+class Layer : private Utility
 {
 private:
 
@@ -77,9 +56,6 @@ private:
   int     nres;       // Number of rational surfaces
   double* r_res;      // Radii of rational surfaces (read from Outputs/TJ/TJ.nc)
   int*    m_res;      // Poloidal mode numbers of rational surfaces (read from Outputs/TJ/TJ.nc)
-  double* Delta_res;  // Delta_primes at rational surfaces (read from Outputs/TJ/TJ.nc)
-  double* Deltac_res; // Critical Delta_primes at rational surfaces (read from Outputs/TJ/TJ.nc)
-  double* Chi_res;    // Absolute values of Chi (read from Outputs/TJ/TJ.nc)
   double* S13_res;    // Cube roots of Lundquist numbers at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* tau_res;    // Normalized resistive kink timescales at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* QE_res;     // Normalized ExB frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
@@ -89,6 +65,9 @@ private:
   double* D_res;      // Normalized ion sound radii at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* Pphi_res;   // Normalized momentum diffusivities at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* Pperp_res;  // Normalized energy diffusivities at rational surfaces (read from Outputs/TJ/TJ.nc
+  double* Delta_res;  // Delta_primes at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* Deltac_res; // Critical Delta_primes at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* Chi_res;    // Absolute values of Chi (read from Outputs/TJ/TJ.nc)
 
   // .........................
   // Layer equation parameters
@@ -108,7 +87,8 @@ private:
   // ....................................
   // Layer calculation control parameters
   // ....................................
-  int    LAYER;  // Switch to enable layer calculation (read from JSON file)
+  int    LAYER;  // Flag to enable layer calculation (read from TJ JSON file)
+  int    RMP;    // Flag to enable resonant magnetic perturbation calculation (read from TJ JSON file)
   double pstart; // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double pend;   // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double P3max;  // Value of Pmax[3] above which switch to low-D layer equations made (read from JSON file)
@@ -140,16 +120,6 @@ private:
   Array<double,2> Xi_res;  // Shielding factor curves
   Array<double,2> T_res;   // Locking torque curves
 
-  // ...............................
-  // Adaptive integration parameters
-  // ...............................
-  double acc;     // Integration accuracy (read from JSON file)
-  double h0;      // Initial integration step-length (read from JSON file)
-  double hmin;    // Minimum integration step-length (read from JSON file)
-  double hmax;    // Maximum integration step-length (read from JSON file)
-  int    maxrept; // Maximum number of step recalculations
-  int    flag;    // Error calculation flag
-
   // ...........................
   // Newton iteration parameters
   // ...........................
@@ -169,7 +139,7 @@ private:
   // ....
   // Misc
   // ....
-  int count, lowD;
+  int lowD;
   complex<double> Im; // Square-root of -1: Im = complex<double> (0., 1.)
   
 public:
@@ -199,31 +169,15 @@ private:
   void SolveLayerEquations ();
   
   // Evaluate right-hand sides of differential equations
-  void Rhs (double x, complex<double>*  y, complex<double>*  dydx);
-  // Advance set of coupled first-order o.d.e.s by single step using adaptive step-length
-  //  Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
-  void CashKarp45Adaptive (int neqns, double& x, complex<double>* y, double& h, 
-			   double& t_err, double acc, double S, double T, int& rept,
-			   int maxrept, double h_min, double h_max, int flag);
-  // Advance set of coupled first-order o.d.e.s by single step using fixed step-length
-  //  Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
-  void CashKarp45Fixed (int neqns, double& x, complex<double>* y, complex<double>* err, double h);
+  void CashKarp45Rhs (double x, complex<double>*  y, complex<double>*  dydx) override;
 
   // Get Jacobian matrix
   void GetJacobian (double& J11, double& J12, double& J21, double& J22);
   // Find root of Deltas = Delta via Newton iteration
   void GetRoot (double& gr, double& gi, double& F);
-  // Target function for zero finding
-  double Feval (double x);
+
+  // Target function for one-dimensional root finding
+  double RootFindF (double x) override;
   // Ridder's method for finding root of F(x) = 0
   void Ridder (double x1, double x2, double F1, double F2, double& x);
-
-  // Strip comments from a string
-  string stripComments (const string& input);
-  // Read JSON file
-  json ReadJSONFile (const string& filename);
-  // Open new file for writing
-  FILE* OpenFilew (const char* filename);
-  // Check that directory exists, and create it otherwise
-  bool CreateDirectory (const char* path);
 };

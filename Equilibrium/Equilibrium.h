@@ -1,6 +1,6 @@
 // Equilibrium.h
 
-// ########################################################################################
+// ###########################################################################################################
 
 // Class to calculate inverse aspect-ratio expanded tokamak equilibrium.
 
@@ -44,7 +44,6 @@
 // Class uses following external libraries:
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
 //  GNU scientific library (https://www.gnu.org/software/gsl)
-//  nclohmann JSON library (https://github.com/nlohmann/json)
 //  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
 
 // Author:
@@ -58,45 +57,23 @@
 
 // Documentation: ../Documentation/TJPaper/TJ.pdf
 
-// ########################################################################################
+// ###########################################################################################################
 
 #pragma once
 
-#define _CRT_SECURE_NO_DEPRECATE
-#define _USE_MATH_DEFINES
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <cstdlib>  
-#include <math.h>
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-
-#ifdef _WIN32
- #include <direct.h>
- #define mkdir _mkdir
-#else
- #include <sys/stat.h>
- #include <sys/types.h>
-#endif
-
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
-#include <nlohmann/json.hpp>
 #include <netcdf>
+#include "Utility.h"
 
 using namespace blitz;
-using           json = nlohmann::json;
 using namespace netCDF;
 using namespace netCDF::exceptions;
     
 // ############
 // Class header
 // ############
-class Equilibrium
+class Equilibrium : private Utility
 {
  private:
 
@@ -296,28 +273,11 @@ class Equilibrium
   gsl_spline*        PSIrspline; // Interpolated PSI function versus r
   gsl_interp_accel*  rPsiacc;    // Accelerator for interpolated r function versus Psi
   gsl_interp_accel*  PSIracc;    // Accelerator for interpolated PSI function versus r
-  
-  // -------------------------------
-  // Adaptive integration parameters
-  // -------------------------------
-  double acc;     // Integration accuracy (read from JSON file)
-  double h0;      // Initial integration step-length (read from JSON file)
-  double hmin;    // Minimum integration step-length (read from JSON file)
-  double hmax;    // Maximum integration step-length (read from JSON file)
-  int    maxrept; // Maximum number of step recalculations
-  int    flag;    // Integration error calculation flag
-
-  // ----------------------------
-  // Cash-Karp RK4/RK5 parameters
-  // ----------------------------
-  double aa1, aa2, aa3, aa4, aa5, aa6, cc1, cc3, cc4, cc6, ca1, ca3, ca4, ca5, ca6;
-  double bb21, bb31, bb32, bb41, bb42, bb43, bb51, bb52, bb53, bb54;
-  double bb61, bb62, bb63, bb64, bb65;
 
   // ----
   // Misc
   // ----
-  int count, rhs_chooser;
+  int rhs_chooser;
 
  public:
 
@@ -435,24 +395,5 @@ private:
   double Getgrr2 (double r, double t);
   
   // Evaluate right-hand sides of differential equations
-  void Rhs (double x, double* y, double* dydx);
-
-  // Adaptive step-length Cash-Karp RK4/RK5 integration routine
-  void CashKarp45Adaptive (int neqns, double& x, double* y, double& h, 
-			   double& t_err, double acc, double S, double T, int& rept,
-			   int maxrept, double h_min, double h_max, int flag, 
-			   int diag, FILE* file);
-  // Fixed step-length Cash-Karp RK4/RK5 integration routine
-  void CashKarp45Fixed (int neqns, double& x, double* y, double* err, double h);
-
-  // Strip comments from a string
-  string stripComments (const string& input);
-  // Read JSON file
-  json ReadJSONFile (const string& filename);
-  // Open new file for writing
-  FILE* OpenFilew (char* filename);
-  // Open file for reading
-  FILE* OpenFiler (char* filename);
-  // Check that directory exists, and create it otherwise
-  bool CreateDirectory (const char* path);
+  void CashKarp45Rhs (double x, double* y, double* dydx) override;
 };

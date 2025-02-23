@@ -37,35 +37,13 @@
 
 #pragma once
 
-#define _CRT_SECURE_NO_DEPRECATE
-#define _USE_MATH_DEFINES
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
-#include <time.h>
-#include <vector>
-#include <iostream>
-#include <fstream>
-
-#ifdef _WIN32
- #include <direct.h>
- #define mkdir _mkdir
-#else
- #include <sys/stat.h>
- #include <sys/types.h>
-#endif
-
 #include <blitz/array.h>
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_odeiv2.h>
-#include <nlohmann/json.hpp>
 #include <netcdf>
+#include "Utility.h"
 
 using namespace blitz;
-using           json = nlohmann::json;
-using namespace std;
 using namespace netCDF;
 using namespace netCDF::exceptions;
 
@@ -80,7 +58,7 @@ extern "C" void gFileRead ();
 // ############
 // Class header
 // ############
-class Flux
+class Flux : private Utility
 {
  private:
 
@@ -267,7 +245,8 @@ private:
   double InterpolateQuartic1 (       double* X, gsl_matrix* Y, int i, double x, int i0, int i1, int i2, int i3, int order);
 
   // Interpolate on uniform 2D grid
-  double Interpolate               (double RR, double ZZ, int NRpts, int NZpts, double* Rpts, double* Zpts, Array<double,2> XX,                                                                 int order, int cubic);
+  double Interpolate               (double RR, double ZZ, int NRpts, int NZpts, double* Rpts, double* Zpts, Array<double,2> XX,
+				    int order, int cubic);
   double InterpolateCubicCubic     (double RR, double ZZ, int NRpts, int NZpts, double* Rpts, double* Zpts, Array<double,2> XX,
 				    int i0, int i1, int i2, int j0, int j1, int j2,                 int order);
   double InterpolateQuarticCubic   (double RR, double ZZ, int NRpts, int NZpts, double* Rpts, double* Zpts, Array<double,2> XX,
@@ -283,24 +262,5 @@ private:
   double GetPsiR (double r, double z);
   // Evaluate dPsi/dZ (R, Z)
   double GetPsiZ (double r, double z);
-
-  // ...........
-  // In Flux.cpp
-  // ...........
-
-  // Strip comments from a string
-  string stripComments (const string& input);
-  // Read JSON file
-  json ReadJSONFile (const string& filename);
-  // Open new file for writing
-  FILE* OpenFilew (char* filename);
-  // Open existing file for reading
-  FILE* OpenFiler (char* filename);
-  // Open existing file for appending
-  FILE* OpenFilea (char* filename);
-  // Check that directory exists, and create it otherwise
-  bool CreateDirectory (const char* path);
-  // Call operating system 
-  void CallSystem (char* command);
 };
 

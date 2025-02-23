@@ -45,7 +45,7 @@ plt.plot (qa, d2, color = 'red',   linewidth = 1, linestyle = 'dotted', marker =
 plt.plot (qa, d3, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 'o', fillstyle = 'none', markersize = 10, label = 'STRIDE')
 
 plt.xlabel (r'$\epsilon_a$',   fontsize = "15")
-plt.ylabel (r"$r_s\,\Delta'$", fontsize = "15")
+plt.ylabel (r"$\hat{\Delta}_{11}$", fontsize = "15")
 plt.legend (fontsize = "15")
 
 plt.tight_layout ()

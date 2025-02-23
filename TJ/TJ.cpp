@@ -32,53 +32,6 @@ TJ::TJ ()
   // ---------------------------
   Eta     = 1.e-16;
   Maxiter = 30;
-  
-  // -----------------------------------
-  // Set adaptive integration parameters
-  // -----------------------------------
-  maxrept = 50;
-  flag    = 2;
-  
-  // --------------------------------
-  // Set Cash-Karp RK4/RK5 parameters
-  // --------------------------------
-  aa1  = 0.;
-  aa2  = 1./5.;
-  aa3  = 3./10.;
-  aa4  = 3./5.;
-  aa5  = 1.;
-  aa6  = 7./8.;
-
-  cc1  =  37./378.;
-  cc3  = 250./621.;
-  cc4  = 125./594.;
-  cc6  = 512./1771.;
-
-  ca1  = cc1 -  2825./27648.;
-  ca3  = cc3 - 18575./48384.;
-  ca4  = cc4 - 13525./55296.;
-  ca5  =     -   277./14336.;
-  ca6  = cc6 -     1./4.;
-
-  bb21 = 1./5.;
-
-  bb31 = 3./40.;
-  bb32 = 9./40.;
-
-  bb41 =   3./10.;
-  bb42 = - 9./10.;
-  bb43 =   6./5.;
-
-  bb51 = - 11./54.;
-  bb52 =    5./2.;
-  bb53 = - 70./27.;
-  bb54 =   35./27.;
-
-  bb61 =  1631./55296.;
-  bb62 =   175./512.;
-  bb63 =   575./13824.;
-  bb64 = 44275./110592.;
-  bb65 =   253./4096.;
 
   // ---------------------------------------
   // Read control parameters from JSON files
@@ -99,6 +52,7 @@ TJ::TJ ()
   XI      = JSONData["XI"]   .get<int>();
   INTR    = JSONData["INTR"] .get<int>();
   RWM     = JSONData["RWM"]  .get<int>();
+  LAYER   = JSONData["LAYER"].get<int>();
 
   EPS     = JSONData["EPS"]  .get<double>();
   DEL     = JSONData["DEL"]  .get<double>();
@@ -248,8 +202,8 @@ TJ::TJ ()
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Calculation flags:\n");
-  printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d\n",
-	  EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM);
+  printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d\n",
+	  EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER);
   printf ("Calculation parameters:\n");
   printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
 	  NTOR, MMIN, MMAX, EPS, DEL);
@@ -472,139 +426,4 @@ void TJ::CleanUp ()
     delete[] rf;
   delete[] rho;
 }
-
-// ########################################
-// Function to strip comments from a string
-// ########################################
-string TJ::stripComments (const string& input)
-{
-  stringstream result;
-  bool         inSingleLineComment = false;
-  bool         inMultiLineComment  = false;
-
-  for (size_t i = 0; i < input.size(); ++i)
-    {
-      // Start of single-line comment (//)
-      if (!inMultiLineComment && input[i] == '/' && i + 1 < input.size() && input[i + 1] == '/')
-	{
-	  inSingleLineComment = true;
-	  i++; 
-	}
-      // Start of multi-line comment (/* ... */)
-      else if (!inSingleLineComment && input[i] == '/' && i + 1 < input.size() && input[i + 1] == '*')
-	{
-	  inMultiLineComment = true;
-	  i++; 
-	}
-      // End of single-line comment
-      else if (inSingleLineComment && input[i] == '\n')
-	{
-	  inSingleLineComment = false;
-	  result << input[i];
-	}
-      // End of multi-line comment
-      else if (inMultiLineComment && input[i] == '*' && i + 1 < input.size() && input[i + 1] == '/')
-	{
-	  inMultiLineComment = false;
-	  i++; 
-	}
-      // Regular characters outside comments
-      else if (!inSingleLineComment && !inMultiLineComment)
-	{
-	  result << input[i];
-	}
-    }
-  
-  return result.str();
-}
-
-// ##########################
-// Function to read JSON file
-// ##########################
-json TJ::ReadJSONFile (const string& filename)
-{
-  ifstream JSONFile (filename);
-  json     JSONData;
-
-  if (JSONFile.is_open ())
-    {
-      try
-	{
-	  // Strip any comments from JSON file
-	  stringstream buffer;
-	  buffer << JSONFile.rdbuf ();
-	  JSONData = json::parse (stripComments (buffer.str ()));
-        }
-      catch (json::parse_error& e)
-	{
-	  cerr << "Unable to parse JSON file: " << e.what() << endl;
-	  exit (1);
-        }
-      JSONFile.close ();
-    }
-  else
-    {
-      cerr << "Unable to open JSON file: " << filename << endl;
-      exit (1);
-    }
-
-  return JSONData;
-}
-
-// #####################################
-// Function to open new file for writing
-// #####################################
-FILE* TJ::OpenFilew (char* filename)
-{
-  FILE* file = fopen (filename, "w");
-  if (file == NULL) 
-    {
-      printf ("TJ::OpenFilew: Error opening data-file: %s\n", filename);
-      exit (1);
-    }
-  return file;
-}
-
-// #################################
-// Function to open file for reading
-// #################################
-FILE* TJ::OpenFiler (char* filename)
-{
-  FILE* file = fopen (filename, "r");
-  if (file == NULL) 
-    {
-      printf ("TJ::OpenFiler: Error opening data-file: %s\n", filename);
-      exit (1);
-    }
-  return file;
-}
-
-// ################################################################
-// Function to check that directory exists, and create it otherwise
-// ################################################################
-bool TJ::CreateDirectory (const char* path)
-{
-  struct stat st = {0};
-  
-  if (stat (path, &st) == -1)
-    {
-#ifdef _WIN32
-      if (mkdir (path) != 0)
-	{
-	  printf ("Error creating directory: %s\n", path);
-	  return false;
-	}
-#else
-      if (mkdir (path, 0700) != 0)
-	{
-	  printf ("Error creating directory: %s\n", path);
-	  return false;
-	}
-#endif
-    }
-  
-  return true;
-}
-
-
 

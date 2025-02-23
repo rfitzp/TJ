@@ -17,80 +17,41 @@ Layer::Layer ()
       exit (1);
     }
   
-  // ...................................
-  // Set adaptive integration parameters
-  // ...................................
-  maxrept = 50;
-  flag    = 2;
-  
-  // ........................
-  // Set Cash-Karp parameters
-  // ........................
-  aa1 = 0.;
-  aa2 = 1. /5.;
-  aa3 = 3. /10.;
-  aa4 = 3. /5.;
-  aa5 = 1.;
-  aa6 = 7. /8.;
-  
-  cc1 = 37.  /378.;
-  cc3 = 250. /621.;
-  cc4 = 125. /594.;
-  cc6 = 512. /1771.;
-  
-  ca1 = cc1 - 2825.  /27648.;
-  ca3 = cc3 - 18575. /48384.;
-  ca4 = cc4 - 13525. /55296.;
-  ca5 =     - 277.   /14336.;
-  ca6 = cc6 - 1.     /4.;
-  
-  bb21 = 1. /5.;
-  
-  bb31 = 3. /40.;
-  bb32 = 9. /40.;
-  
-  bb41 =   3. /10.;
-  bb42 = - 9. /10.;
-  bb43 =   6. /5.;
-  
-  bb51 = - 11. /54.;
-  bb52 =    5. /2.;
-  bb53 = - 70. /27.;
-  bb54 =   35. /27.;
-  
-  bb61 = 1631.  /55296.;
-  bb62 = 175.   /512.;
-  bb63 = 575.   /13824.;
-  bb64 = 44275. /110592.;
-  bb65 = 253.   /4096.;
-
   // ............................
   // Set miscellaneous parameters
   // ............................
   Im = complex<double> (0., 1.);
 
+  // .........................................
+  // Read control parameters from TJ JSON file
+  // .........................................
+  string JSONFilename = "../Inputs/TJ.json";
+  json   JSONData     = ReadJSONFile (JSONFilename);
+
+  LAYER = JSONData["LAYER"].get<int> ();
+  RMP   = JSONData["RMP"]  .get<int> ();
+
   // ......................................
   // Read control parameters from JSON file
   // ......................................
-  string JSONFilename = "../Inputs/Layer.json";
-  json   JSONData     = ReadJSONFile (JSONFilename);
+  string JSONFilename1 = "../Inputs/Layer.json";
+  json   JSONData1     = ReadJSONFile (JSONFilename1);
 
-  LAYER   = JSONData["LAYER"] .get<int>    ();
-  pstart  = JSONData["pstart"].get<double> ();
-  pend    = JSONData["pend"]  .get<double> ();
-  P3max   = JSONData["P3max"] .get<double> ();
-  Nscan   = JSONData["Nscan"] .get<int>    ();
+  pstart  = JSONData1["pstart"].get<double> ();
+  pend    = JSONData1["pend"]  .get<double> ();
+  P3max   = JSONData1["P3max"] .get<double> ();
+  Nscan   = JSONData1["Nscan"] .get<int>    ();
 
-  acc  = JSONData["acc"] .get<double> ();
-  h0   = JSONData["h0"]  .get<double> ();
-  hmin = JSONData["hmin"].get<double> ();
-  hmax = JSONData["hmax"].get<double> ();
+  acc  = JSONData1["acc"] .get<double> ();
+  h0   = JSONData1["h0"]  .get<double> ();
+  hmin = JSONData1["hmin"].get<double> ();
+  hmax = JSONData1["hmax"].get<double> ();
 
-  eps     = JSONData["eps"]    .get<double> ();
-  smax    = JSONData["smax"]   .get<double> ();
-  smin    = JSONData["smin"]   .get<double> ();
-  Eta     = JSONData["Eta"]    .get<double> ();
-  Maxiter = JSONData["Maxiter"].get<int>    ();
+  eps     = JSONData1["eps"]    .get<double> ();
+  smax    = JSONData1["smax"]   .get<double> ();
+  smin    = JSONData1["smin"]   .get<double> ();
+  Eta     = JSONData1["Eta"]    .get<double> ();
+  Maxiter = JSONData1["Maxiter"].get<int>    ();
 
   if (LAYER)
     {
@@ -170,9 +131,12 @@ void Layer::Solve ()
   // ............................................
   // Calculate shielding factor and torque curves
   // ............................................
-  printf ("Calculating shielding factor and torque curves:\n");
-  for (int i = 0; i < nres; i++)
-    GetTorque (i);
+  if (RMP)
+    {
+      printf ("Calculating shielding factor and torque curves:\n");
+      for (int i = 0; i < nres; i++)
+	GetTorque (i);
+    }
      
   // .....................................
   // Write calculation date to netcdf file
@@ -199,9 +163,6 @@ void Layer::ReadNetcdf ()
       NcVar input_x  = dataFile.getVar ("InputParameters");
       NcVar rres_x   = dataFile.getVar ("r_res");
       NcVar mpol_x   = dataFile.getVar ("m_res");
-      NcVar Delta_x  = dataFile.getVar ("Delta");
-      NcVar Deltac_x = dataFile.getVar ("Delta_crit");
-      NcVar Chia_x   = dataFile.getVar ("Chi_a");
       NcVar S13_x    = dataFile.getVar ("S13");
       NcVar tau_x    = dataFile.getVar ("tau");
       NcVar QE_x     = dataFile.getVar ("QE");
@@ -211,17 +172,20 @@ void Layer::ReadNetcdf ()
       NcVar D_x      = dataFile.getVar ("D");
       NcVar Pphi_x   = dataFile.getVar ("Pphi");
       NcVar Pperp_x  = dataFile.getVar ("Pperp");
+      NcVar Delta_x  = dataFile.getVar ("Delta");
+      NcVar Deltac_x = dataFile.getVar ("Delta_crit");
       NcDim n_x      = rres_x.getDim (0);
       NcDim p_x      = input_x.getDim (0);
 
+      NcVar Chia_x;
+      if (RMP)
+	  Chia_x = dataFile.getVar ("Chi_a");
+ 
       nres       = n_x.getSize ();
       int npara  = p_x.getSize ();
       input      = new double[npara];
       r_res      = new double[nres];
       m_res      = new int[nres];
-      Delta_res  = new double[nres];
-      Deltac_res = new double[nres];
-      Chi_res    = new double[nres];
       S13_res    = new double[nres];
       tau_res    = new double[nres];
       QE_res     = new double[nres];
@@ -231,13 +195,13 @@ void Layer::ReadNetcdf ()
       D_res      = new double[nres];
       Pphi_res   = new double[nres];
       Pperp_res  = new double[nres];
+      Delta_res  = new double[nres];
+      Deltac_res = new double[nres];
+      Chi_res    = new double[nres];
 
       input_x.getVar  (input);
       rres_x.getVar   (r_res);
       mpol_x.getVar   (m_res);
-      Delta_x.getVar  (Delta_res);
-      Deltac_x.getVar (Deltac_res);
-      Chia_x.getVar   (Chi_res);
       S13_x.getVar    (S13_res);
       tau_x.getVar    (tau_res);
       QE_x.getVar     (QE_res);
@@ -247,6 +211,11 @@ void Layer::ReadNetcdf ()
       D_x.getVar      (D_res);
       Pphi_x.getVar   (Pphi_res);
       Pperp_x.getVar  (Pperp_res);
+      Delta_x.getVar  (Delta_res);
+      Deltac_x.getVar (Deltac_res);
+
+      if (RMP)
+	Chia_x.getVar (Chi_res);
     }
   catch (NcException& e)
      {
@@ -524,16 +493,19 @@ void Layer::WriteNetcdf ()
        NcVar Di_x = dataFile.addVar ("Di_marg", ncDouble, marg_d);
        Di_x.putVar (di_y);
 
-       NcVar om_x = dataFile.addVar  ("omega_r", ncDouble, torq_d);
-       om_x.putVar (om_y);
-       NcVar DDr_x = dataFile.addVar ("Deltar",  ncDouble, torq_d);
-       DDr_x.putVar (Dr_y);
-       NcVar DDi_x = dataFile.addVar ("Deltai",  ncDouble, torq_d);
-       DDi_x.putVar (Di_y);
-       NcVar xi_x = dataFile.addVar  ("Xi_res",  ncDouble, torq_d);
-       xi_x.putVar (xi_y);
-       NcVar t_x  = dataFile.addVar  ("T_res",   ncDouble, torq_d);
-       t_x.putVar (t_y);
+       if (RMP)
+	 {
+	   NcVar om_x = dataFile.addVar  ("omega_r", ncDouble, torq_d);
+	   om_x.putVar (om_y);
+	   NcVar DDr_x = dataFile.addVar ("Deltar",  ncDouble, torq_d);
+	   DDr_x.putVar (Dr_y);
+	   NcVar DDi_x = dataFile.addVar ("Deltai",  ncDouble, torq_d);
+	   DDi_x.putVar (Di_y);
+	   NcVar xi_x = dataFile.addVar  ("Xi_res",  ncDouble, torq_d);
+	   xi_x.putVar (xi_y);
+	   NcVar t_x  = dataFile.addVar  ("T_res",   ncDouble, torq_d);
+	   t_x.putVar (t_y);
+	 }
      }
    catch (NcException& e)
      {
@@ -631,11 +603,11 @@ void Layer::SolveLayerEquations ()
   
   do
     {
-      CashKarp45Adaptive (1, p, y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag);
+      CashKarp45Adaptive (1, p, y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
     }
   while (p > pend);
   
-  Rhs (p, y, dydp);
+  CashKarp45Rhs (p, y, dydp);
   Deltas = M_PI /dydp[0];
 
   // ........
@@ -647,7 +619,7 @@ void Layer::SolveLayerEquations ()
 // ###################################
 // Right hand sides of layer equations
 // ###################################
-void Layer::Rhs (double x, complex<double>* y, complex<double>* dydx)
+void Layer::CashKarp45Rhs (double x, complex<double>* y, complex<double>* dydx)
 {
   // ...............................
   // Define layer equation variables
@@ -687,216 +659,6 @@ void Layer::Rhs (double x, complex<double>* y, complex<double>* dydx)
   complex<double> AA = (gEe - p2) /(gEe + p2);
   
   dydx[0] = - AA * W /p - W*W /p + B * p3 /A /C;
-}
-
-// #######################################################################
-//  Function to advance set of coupled first-order o.d.e.s by single step
-//  using adaptive step-length Cash-Karp fourth-order/fifth-order
-//  Runge-Kutta scheme
-//
-//     neqns   ... number of coupled equations
-//     x       ... independent variable
-//     y       ... array of dependent variables
-//     h       ... step-length
-//     t_err   ... actual truncation error per step 
-//     acc     ... desired truncation error per step
-//     S       ... safety factor
-//     T       ... step-length cannot change by more than this factor from step to step
-//     rept    ... number of step recalculations		  
-//     maxrept ... maximum allowable number of step recalculations		  
-//     h_min   ... minimum allowable step-length
-//     h_max   ... maximum allowable step-length
-//     flag    ... controls manner in which truncation error is calculated	
-//
-//  Function advances equations by single step while attempting to maintain 
-//  constant truncation error per step of acc:
-//
-//     flag = 0 ... error is absolute
-//     flag = 1 ... error is relative
-//     flag = 2 ... error is mixed
-//
-// #######################################################################
-void Layer::CashKarp45Adaptive (int neqns, double& x, complex<double>* y, double& h, 
-				double& t_err, double acc, double S, double T, int& rept,
-				int maxrept, double h_min, double h_max, int flag)
-{
-  complex<double>* y0  = new complex<double>[neqns];
-  complex<double>* Err = new complex<double>[neqns];
-  double           hin = h;
-
-  // Save initial data
-  double x0 = x;
-  for (int i = 0; i < neqns; i++)
-    y0[i] = y[i];
-
-  // Take Cash-Karp RK4/RK5 step 
-  CashKarp45Fixed (neqns, x, y, Err, h);
-
-  // Calculate truncation error
-  t_err = 0.;
-  double err, err1, err2;
-  if (flag == 0)
-    {
-      // Use absolute truncation error 
-      for (int i = 0; i < neqns; i++)
-        {
-          err   = abs (Err[i]);
-          t_err = (err > t_err) ? err : t_err;
-        }
-    }
-  else if (flag == 1)
-    {
-      // Use relative truncation error
-      for (int i = 0; i < neqns; i++)
-        {
-          err   = abs (Err[i] /y[i]);
-          t_err = (err > t_err) ? err : t_err;
-        }
-    }
-  else 
-    {
-      // Use mixed truncation error 
-      for (int i = 0; i < neqns; i++)
-        {
-          err1  = abs (Err[i] /y[i]);
-	  err2  = abs (Err[i]);
-          err   = (err1 < err2) ? err1 : err2;
-          t_err = (err > t_err) ? err  : t_err;
-        }
-    }
-
-  // Prevent small truncation error from rounding to zero
-  if (t_err < 1.e-15)
-    t_err = 1.e-15;
-
-  // Calculate new step-length
-  double h_est;
-  if (acc > t_err)
-    h_est = S * h * pow (fabs (acc /t_err), 0.20);
-  else
-    h_est = S * h * pow (fabs (acc /t_err), 0.25);
-
-  // Prevent step-length from changing by more than factor T
-  if (h_est /h > T)
-    h *= T;
-  else if (h_est /h < 1./T)
-    h /= T;
-  else
-    h = h_est;
-
-  // Prevent step-length from exceeding h_max
-  h = (fabs(h) > h_max) ? h_max * h /fabs(h) : h;
-
-  // Prevent step-length from falling below h_min
-  if (fabs(h) < h_min)
-    { 
-      if (h >= 0.)
-	h = + h_min;
-      else
-	h = - h_min;
-    }
-
-  // Check if truncation error acceptable
-  if ((t_err <= acc) || (count >= maxrept))
-    {
-      // If truncation error acceptable take step 
-      rept  = count;
-      count = 0;
-    }
-  else 
-    {
-      // If truncation error unacceptable repeat step 
-      count++;
-      x = x0;
-      for (int i = 0; i < neqns; i++)
-	y[i] = y0[i];
-      CashKarp45Adaptive (neqns, x, y, h, t_err, acc, S, T, rept, 
-			  maxrept, h_min, h_max, flag);
-    }
-
-  delete[] y0; delete[] Err;
-}
-
-// #####################################################################
-// Function to advance set of coupled first-order o.d.e.s by single step
-// using fixed step-length Cash-Karp fourth-order/fifth-order
-// Runge-Kutta scheme
-//
-//     neqns ... number of coupled equations
-//     x     ... independent variable
-//     y     ... array of dependent variables 
-//     err   ... array of errors
-//     h     ... step-length
-//     
-// #####################################################################
-void Layer::CashKarp45Fixed (int neqns, double& x, complex<double>* y, complex<double>* err, double h)
-{
-  complex<double>* dydx = new complex<double>[neqns];
-  complex<double>* k1   = new complex<double>[neqns];
-  complex<double>* k2   = new complex<double>[neqns];
-  complex<double>* k3   = new complex<double>[neqns];
-  complex<double>* k4   = new complex<double>[neqns];
-  complex<double>* k5   = new complex<double>[neqns];
-  complex<double>* k6   = new complex<double>[neqns];
-  complex<double>* f    = new complex<double>[neqns];
-
-  // First stage
-  Rhs (x, y, dydx);
-  for (int i = 0; i < neqns; i++)
-    {
-      k1[i] = h * dydx[i];
-      f [i] = y[i] + bb21 * k1[i];
-    }
-
-  // Second stage
-  Rhs (x + aa2 * h, f, dydx);  
-  for (int i = 0; i < neqns; i++)
-    {
-      k2[i] = h * dydx[i];
-      f [i] = y[i] + bb31 * k1[i] + bb32 * k2[i];
-    }
-
-  // Third stage
-  Rhs (x + aa3 * h, f, dydx);
-  for (int i = 0; i < neqns; i++)
-    {
-      k3[i] = h * dydx[i];
-      f [i] = y[i] + bb41 * k1[i] + bb42 * k2[i] + bb43 * k3[i];
-    }
-
-  // Fourth stage
-  Rhs (x + aa4 * h, f, dydx);
-  for (int i = 0; i < neqns; i++)
-    {
-      k4[i] = h * dydx[i];
-      f [i] = y[i] + bb51 * k1[i] + bb52 * k2[i] + bb53 * k3[i] + bb54 * k4[i];
-    }
-
-  // Fifth stage
-  Rhs (x + aa5 * h, f, dydx);
-  for (int i = 0; i < neqns; i++)
-    {
-      k5[i] = h * dydx[i];
-      f [i] = y[i] + bb61 * k1[i] + bb62 * k2[i] + bb63 * k3[i] + bb64 * k4[i] + bb65 * k5[i];
-    }
-
-  // Sixth stage
-  Rhs (x + aa6 * h, f, dydx);
-  for (int i = 0; i < neqns; i++)
-    {
-      k6[i] = h * dydx[i];
-    }
-
-  // Actual step 
-  for (int i = 0; i < neqns; i++)
-    {
-      y  [i] = y[i] + cc1 * k1[i] + cc3 * k3[i] + cc4 * k4[i]               + cc6 * k6[i];
-      err[i] =        ca1 * k1[i] + ca3 * k3[i] + ca4 * k4[i] + ca5 * k5[i] + ca6 * k6[i];
-    }
-  x += h;
-
-  delete[] dydx; delete[] k1; delete[] k2; delete[] k3; delete[] k4; delete[] k5; delete[] k6;
-  delete[] f;
 }
 
 // #####################################
@@ -1028,167 +790,12 @@ void Layer::GetJacobian (double& J11, double& J12, double& J21, double& J22)
 // ################################
 // Target function for zero finding
 // ################################
-double Layer::Feval (double x)
+double Layer::RootFindF (double x)
 {
   g_i = x;
 
   SolveLayerEquations ();
 
   return imag (Deltas);
-}
-
-// ############################################
-// Ridder's method for finding root of F(x) = 0
-// ############################################
-void Layer::Ridder (double x1, double x2, double F1, double F2, double& x)
-{
-  // Iteration loop  
-  x = x2; double xold, Fx; int iter = 0;
-  do 
-    {              
-      // Calculate F(x3), where x3 is midpoint of current interval 
-      double x3 = (x1 + x2) /2.;    
-      double F3 = Feval (x3);
-      
-      // Iterate x using Ridder's method 
-      xold = x;           
-      x = x3 - (x3 - x1) * (F2 - F1) * F3 /
-	(sqrt (F3 * F3 - F1 * F2) * fabs (F2 - F1));
-      Fx = Feval (x);
-       
-      // Make new value of x upper/lower bound of refined search interval, as appropriate 
-      if (Fx * F1 < 0.) 
-	{  
-	  x2 = x;           
-	  F2 = Fx; 
-	}
-      else 
-	{
-	  x1 = x;
-	  F1 = Fx; 
-	}
-      iter++;
-    } 
-  // Iterate until absolute change in x falls below Eta
-  while (fabs (x - xold) > Eta && fabs(Fx) > Eta && iter < Maxiter);
-}
-
-// ########################################
-// Function to strip comments from a string
-// ########################################
-string Layer::stripComments (const string& input)
-{
-  stringstream result;
-  bool         inSingleLineComment = false;
-  bool         inMultiLineComment  = false;
-
-  for (size_t i = 0; i < input.size(); ++i)
-    {
-      // Start of single-line comment (//)
-      if (!inMultiLineComment && input[i] == '/' && i + 1 < input.size() && input[i + 1] == '/')
-	{
-	  inSingleLineComment = true;
-	  i++; 
-	}
-      // Start of multi-line comment (/* ... */)
-      else if (!inSingleLineComment && input[i] == '/' && i + 1 < input.size() && input[i + 1] == '*')
-	{
-	  inMultiLineComment = true;
-	  i++; 
-	}
-      // End of single-line comment
-      else if (inSingleLineComment && input[i] == '\n')
-	{
-	  inSingleLineComment = false;
-	  result << input[i];
-	}
-      // End of multi-line comment
-      else if (inMultiLineComment && input[i] == '*' && i + 1 < input.size() && input[i + 1] == '/')
-	{
-	  inMultiLineComment = false;
-	  i++; 
-	}
-      // Regular characters outside comments
-      else if (!inSingleLineComment && !inMultiLineComment)
-	{
-	  result << input[i];
-	}
-    }
-  
-  return result.str();
-}
-
-// ##########################
-// Function to read JSON file
-// ##########################
-json Layer::ReadJSONFile (const string& filename)
-{
-  ifstream JSONFile (filename);
-  json     JSONData;
-
-  if (JSONFile.is_open ())
-    {
-      try
-	{
-	  // Strip any comments from JSON file
-	  stringstream buffer;
-	  buffer << JSONFile.rdbuf ();
-	  JSONData = json::parse (stripComments (buffer.str ()));
-        }
-      catch (json::parse_error& e)
-	{
-	  cerr << "Unable to parse JSON file: " << e.what() << endl;
-	  exit (1);
-        }
-      JSONFile.close ();
-    }
-  else
-    {
-      cerr << "Unable to open JSON file: " << filename << endl;
-      exit (1);
-    }
-
-  return JSONData;
-}
-
-// #####################################
-// Function to open new file for writing
-// #####################################
-FILE* Layer::OpenFilew (const char* filename)
-{
-  FILE* file = fopen (filename, "w");
-  if (file == NULL)
-    {
-      printf ("OpenFilew: Error opening data-file: %s\n", filename);
-      exit (1);
-    }
-  return file;
-}
-
-// ################################################################
-// Function to check that directory exists, and create it otherwise
-// ################################################################
-bool Layer::CreateDirectory (const char* path)
-{
-  struct stat st = {0};
-  
-  if (stat (path, &st) == -1)
-    {
-#ifdef _WIN32
-      if (mkdir (path) != 0)
-	{
-	  printf ("Error creating directory: %s\n", path);
-	  return false;
-	}
-#else
-      if (mkdir (path, 0700) != 0)
-	{
-	  printf ("Error creating directory: %s\n", path);
-	  return false;
-	}
-#endif
-    }
-  
-  return true;
 }
 

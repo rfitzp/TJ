@@ -45,6 +45,7 @@ void TJ::ReadNetcdf ()
       NcDim r_d   = r_x.getDim (0);
 
       Nr   = r_d.getSize () - 1;
+      Nint = Nr;
       rr   = new double[Nr+1];
       PsiN = new double[Nr+1];
       Psi  = new double[Nr+1];
@@ -1315,31 +1316,34 @@ void TJ::WriteNetcdf ()
 	      xiri_x.putVar (Xir_i);
 	    }
 	}
-          
-      NcVar Te_r  = dataFile.addVar ("Te",         ncDouble, x_d);
-      Te_r.putVar (Teres);
-      NcVar S13_r = dataFile.addVar ("S13",        ncDouble, x_d);
-      S13_r.putVar (S13res);
-      NcVar tau_r = dataFile.addVar ("tau",        ncDouble, x_d);
-      tau_r.putVar (taures);
-      NcVar ie_r  = dataFile.addVar ("iota_e",     ncDouble, x_d);
-      ie_r.putVar (ieres);
-      NcVar Qe_r  = dataFile.addVar ("Qe",         ncDouble, x_d);
-      Qe_r.putVar (Qeres);
-      NcVar Qi_r  = dataFile.addVar ("Qi",         ncDouble, x_d);
-      Qi_r.putVar (Qires);
-      NcVar QE_r  = dataFile.addVar ("QE",         ncDouble, x_d);
-      QE_r.putVar (QEres);
-      NcVar D_r   = dataFile.addVar ("D",          ncDouble, x_d);
-      D_r.putVar (Dres);
-      NcVar Pm_r  = dataFile.addVar ("Pphi",       ncDouble, x_d);
-      Pm_r.putVar (Pmres);
-      NcVar Pe_r  = dataFile.addVar ("Pperp",      ncDouble, x_d);
-      Pe_r.putVar (Peres);
-      NcVar Dc_r  = dataFile.addVar ("Delta_crit", ncDouble, x_d);
-      Dc_r.putVar (Dcres);
-      NcVar De_r  = dataFile.addVar ("Delta",      ncDouble, x_d);
-      De_r.putVar (Delta_r);
+
+      if (LAYER)
+	{
+	  NcVar Te_r  = dataFile.addVar ("Te",         ncDouble, x_d);
+	  Te_r.putVar (Teres);
+	  NcVar S13_r = dataFile.addVar ("S13",        ncDouble, x_d);
+	  S13_r.putVar (S13res);
+	  NcVar tau_r = dataFile.addVar ("tau",        ncDouble, x_d);
+	  tau_r.putVar (taures);
+	  NcVar ie_r  = dataFile.addVar ("iota_e",     ncDouble, x_d);
+	  ie_r.putVar (ieres);
+	  NcVar Qe_r  = dataFile.addVar ("Qe",         ncDouble, x_d);
+	  Qe_r.putVar (Qeres);
+	  NcVar Qi_r  = dataFile.addVar ("Qi",         ncDouble, x_d);
+	  Qi_r.putVar (Qires);
+	  NcVar QE_r  = dataFile.addVar ("QE",         ncDouble, x_d);
+	  QE_r.putVar (QEres);
+	  NcVar D_r   = dataFile.addVar ("D",          ncDouble, x_d);
+	  D_r.putVar (Dres);
+	  NcVar Pm_r  = dataFile.addVar ("Pphi",       ncDouble, x_d);
+	  Pm_r.putVar (Pmres);
+	  NcVar Pe_r  = dataFile.addVar ("Pperp",      ncDouble, x_d);
+	  Pe_r.putVar (Peres);
+	  NcVar Dc_r  = dataFile.addVar ("Delta_crit", ncDouble, x_d);
+	  Dc_r.putVar (Dcres);
+	  NcVar De_r  = dataFile.addVar ("Delta",      ncDouble, x_d);
+	  De_r.putVar (Delta_r);
+	}  
     }
   catch (NcException& e)
     {
