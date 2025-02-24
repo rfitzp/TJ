@@ -30,7 +30,7 @@ $(F_OBJECT):		$(F_SOURCE)
 			$(F_COMPILER) $(F_FLAGS) -o $*.o -c $(F_INCLUDE) $*.f90
 
 $(C_OBJECT):		$(C_SOURCE) $(C_HEADER)
-			$(C_COMPILER) $(C_FLAGS) -o $*.o -c $(C_INCLUDE) -I../include $*.cpp
+			$(C_COMPILER) $(C_FLAGS) -o $*.o -c $(C_INCLUDE)  -I../include $*.cpp
 
 $(U_OBJECT):
 			$(MAKE) -C $(UTILITY_DIR)

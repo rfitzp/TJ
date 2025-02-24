@@ -198,7 +198,7 @@ void RunProgram (int control, double value)
   // ...............................................................
   {
     Layer layer;
-    layer.Solve ();
+    layer.Solve (0);
   }
 
   clock_t end       = clock ();

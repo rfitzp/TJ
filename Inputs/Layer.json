@@ -1,5 +1,5 @@
 {
-    "LAYER":  0,          // Flag for layer calculation
+    "MARG":  0,           // Flag for calculation of ion branch marginal stability points
 
     "B0":    12.0,        // On-axis toroidal magnetic field-strength (T)
     "R0":    2.0,         // On-axis plasma major radius (m) 
@@ -20,11 +20,11 @@
     "hmin": 1.0e-10,      // Minimum integration step-length 
     "hmax": 1.0e-1,       // Maximum integration step-length
     
-    "Eta":     1.0e-12,   // Minimum magnitude of f at root f(x) = 0 
-    "Maxiter": 60,        // Maximum number of Newton iterations
-    "eps":     1.0e-6,    // Step-size for calculation of Jacobian
-    "smax":    0.1,       // Maximum Newton step-size 
-    "smin":    1.0e-9     // Minimum Newton step-size
+    "Eps":     1.0e-12,   // Minimum magnitude of (F1^2+F2^2)^1/2 at root F1(x1,x2) = F2(x1,x2) = 0 
+    "MaxIter": 100,       // Maximum number of Newton iterations
+    "dS":      1.0e-6,    // Step-size for calculation of Jacobian
+    "Smax":    0.1,       // Maximum Newton step-size
+    "Smin":    1.0e-8     // Minimum Newton step-size
 }
 
 

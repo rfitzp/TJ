@@ -11,14 +11,22 @@ BUILD_DIR = ../lib
 UTILITY_DIR = ../Utility
 
 C_HEADER = Layer.h 
-C_SOURCE = Layer.cpp 
+C_SOURCE = Layer.cpp
+M_SOURCE = main.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
+M_OBJECT = $(M_SOURCE:%.cpp=%.o)
 U_OBJECT = ../Utility/Utility.o
 
-EXECUTABLE = ../lib/libLayer.a
+LIBRARY    = ../lib/libLayer.a
+EXECUTABLE = ../bin/layer
 
-$(EXECUTABLE):	 	$(C_OBJECT)  $(BUILD_DIR)
-			$(C_ARCHIVER) $(EXECUTABLE) $(C_OBJECT) $(U_OBJECT)
+all: 			$(LIBRARY) $(EXECUTABLE)
+
+$(LIBRARY):	 	$(C_OBJECT)  $(U_OBJECT) $(BUILD_DIR)
+			$(C_ARCHIVER) $(LIBRARY) $(C_OBJECT) $(U_OBJECT)
+
+$(EXECUTABLE):	 	$(M_OBJECT) $(C_OBJECT) $(U_OBJECT) $(BUILD_DIR)
+			$(C_COMPILER) -o $(EXECUTABLE) $(M_OBJECT) $(C_OBJECT) $(U_OBJECT) $(C_LIBS) 
 
 $(BUILD_DIR):
 			@mkdir -p $(BUILD_DIR)
@@ -26,9 +34,13 @@ $(BUILD_DIR):
 $(C_OBJECT):		$(C_SOURCE) $(C_HEADER)
 			$(C_COMPILER) $(C_FLAGS) -o $*.o -c $(C_INCLUDE) -I../include $*.cpp
 
+$(M_OBJECT):		$(M_SOURCE) $(C_HEADER)
+			$(C_COMPILER) $(C_FLAGS) -o $*.o -c $(C_INCLUDE) -I../include $(M_SOURCE)
+
+
 $(U_OBJECT):
 			$(MAKE) -C $(UTILITY_DIR)
 
 clean: 
-			rm -f $(C_OBJECT) $(EXECUTABLE)
+			rm -f $(C_OBJECT) $(LIBRARY) $(EXECUTABLE)
 

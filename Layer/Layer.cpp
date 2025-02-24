@@ -37,6 +37,8 @@ Layer::Layer ()
   string JSONFilename1 = "../Inputs/Layer.json";
   json   JSONData1     = ReadJSONFile (JSONFilename1);
 
+  MARG    = JSONData1["MARG"]  .get<int>    ();
+
   pstart  = JSONData1["pstart"].get<double> ();
   pend    = JSONData1["pend"]  .get<double> ();
   P3max   = JSONData1["P3max"] .get<double> ();
@@ -47,11 +49,11 @@ Layer::Layer ()
   hmin = JSONData1["hmin"].get<double> ();
   hmax = JSONData1["hmax"].get<double> ();
 
-  eps     = JSONData1["eps"]    .get<double> ();
-  smax    = JSONData1["smax"]   .get<double> ();
-  smin    = JSONData1["smin"]   .get<double> ();
-  Eta     = JSONData1["Eta"]    .get<double> ();
-  Maxiter = JSONData1["Maxiter"].get<int>    ();
+  dS      = JSONData1["dS"]     .get<double> ();
+  Smax    = JSONData1["Smax"]   .get<double> ();
+  Smin    = JSONData1["Smin"]   .get<double> ();
+  Eps     = JSONData1["Eps"]    .get<double> ();
+  MaxIter = JSONData1["MaxIter"].get<int>    ();
 
   if (LAYER)
     {
@@ -60,19 +62,19 @@ Layer::Layer ()
       printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
       printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
       printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-      printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan = %4d\n",
-	      pstart, pend, P3max, Nscan);
+      printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan =  %-4d      MARG    = %-1d\n",
+	      pstart, pend, P3max, Nscan, MARG);
       printf ("acc    = %10.3e h0   = %10.3e hmin  = %10.3e hmax  = %10.3e\n",
 	      acc, h0, hmin, hmax);
-      printf ("eps    = %10.3e smax = %10.3e smin  = %10.3e Eta   = %10.3e Maxiter = %4d\n",
-	      eps, smax, smin, Eta, Maxiter);
+      printf ("dS     = %10.3e Smax = %10.3e Smin  = %10.3e Eps   = %10.3e MaxIter = %-4d\n",
+	      dS, Smax, Smin, Eps, MaxIter);
     }
 }
 
 // #########################
 // Function to solve problem
 // #########################
-void Layer::Solve ()
+void Layer::Solve (int verbose)
 {
   // ....................................
   // Skip calculation unless LAYER is set
@@ -119,15 +121,15 @@ void Layer::Solve ()
   // ..............................
   printf ("Marginal stability points:\n");
   for (int i = 0; i < nres; i++)
-    FindMarginal (i);
+    FindMarginal (i, verbose);
   
   // ...........................................................
   // Calculate electron-branch growth-rates and real frequencies
   // ...........................................................
   printf ("Electron-branch growth-rates and real frequencies:\n");
   for (int i = 0; i < nres; i++)
-    GetElectronBranchGrowth (i);
-
+    GetElectronBranchGrowth (i, verbose);
+  
   // ............................................
   // Calculate shielding factor and torque curves
   // ............................................
@@ -236,7 +238,7 @@ void Layer::ReadNetcdf ()
 // ###############################################################################
 // Function to find marginal stability points associated with ith rational surface
 // ###############################################################################
-void Layer::FindMarginal (int i)
+void Layer::FindMarginal (int i, int verbose)
 {
   // ....................
   // Set layer parameters
@@ -248,52 +250,61 @@ void Layer::FindMarginal (int i)
   Pperp = Pperp_res[i];
   iotae = iotae_res[i];
 
-  // ..........................................
-  // Perform frequency scan at zero growth-rate
-  // ..........................................
-  double* gg_i = new double[Nscan + 1];
-  double* DD_i = new double[Nscan + 1];
-  
-  g_r = 0.;
-  for (int j = 1; j <= Nscan; j++)
-    {
-      g_i = - Qe - (Qi - Qe) * double (j) /double (Nscan);
-
-      SolveLayerEquations ();
-      gg_i[j] = g_i;
-      DD_i[j] = imag (Deltas);
-    }
-
-  // ..............................
-  // Find marginal stability points
-  // ..............................
-  int cnt = 0;
+  // ---------------------------------------------
+  // Set electron branch marginal stability points
+  // ---------------------------------------------
+  g_r           = 0.;
   np_marg(i)    = 1;
   gr_marg(i, 0) = g_r;
   gi_marg(i, 0) = - Qe;
   Dr_marg(i, 0) = g_r;
   Di_marg(i, 0) = g_r;
 
-  for (int j = 1; j < Nscan; j++)
+  // .........................................
+  // Find ion branch marginal stability points
+  // .........................................
+  if (MARG)
     {
-      double x;
-      if (DD_i[j] * DD_i[j+1] < 0.)
+      // ..........................................
+      // Perform frequency scan at zero growth-rate
+      // ..........................................
+      double* gg_i = new double[Nscan + 1];
+      double* DD_i = new double[Nscan + 1];
+      
+      for (int j = 1; j <= Nscan; j++)
 	{
-	  Ridder (gg_i[j], gg_i[j+1], DD_i[j], DD_i[j+1], x);
-
-	  g_i = x;
+	  g_i = - QE - Qe - (Qi - Qe) * double (j) /double (Nscan);
+	  
 	  SolveLayerEquations ();
-
-	  cnt++;
-	  np_marg(i)     += 1;
-	  gr_marg(i, cnt) = g_r;
-	  gi_marg(i, cnt) = g_i;
-	  Dr_marg(i, cnt) = real (Deltas);
-	  Di_marg(i, cnt) = imag (Deltas);
+	  gg_i[j] = g_i;
+	  DD_i[j] = imag (Deltas);
+	  
+	  if (verbose & (j-1)%100 == 0)
+	    printf ("Surface %1d: g_r = %11.4e g_i = %11.4e Deltas_i = %11.4e\n",
+		    i+1, g_r, g_i, DD_i[j]);
 	}
+       
+      int cnt = 0;
+      for (int j = 1; j < Nscan; j++)
+	{
+	  double x;
+	  if (DD_i[j] * DD_i[j+1] < 0.)
+	    {
+	      Ridder (gg_i[j], gg_i[j+1], DD_i[j], DD_i[j+1], x);
+	      
+	      g_i = x;
+	      SolveLayerEquations ();
+	      
+	      cnt++;
+	      np_marg(i)     += 1;
+	      gr_marg(i, cnt) = g_r;
+	      gi_marg(i, cnt) = g_i;
+	      Dr_marg(i, cnt) = real (Deltas);
+	      Di_marg(i, cnt) = imag (Deltas);
+	    }
+	}
+      delete[] gg_i; delete[] DD_i;
     }
-
-  delete[] gg_i; delete[] DD_i;
 
   for (int j = 0; j < np_marg(i); j++)
     printf ("Rational surface %3d: g = (%10.3e, %10.3e) Delta_s = (%10.3e, %10.3e)\n",
@@ -303,13 +314,14 @@ void Layer::FindMarginal (int i)
 // #################################################################################################
 // Function to find complex growth-rate of electron branch-mode associated with ith rational surface
 // #################################################################################################
-void Layer::GetElectronBranchGrowth (int i)
+void Layer::GetElectronBranchGrowth (int i, int verbose)
 {
   // ....................
   // Set layer parameters
   // ....................
   Qe    = Qe_res[i];
   Qi    = Qi_res[i];
+  QE    = QE_res[i];
   D     = D_res[i];
   Pphi  = Pphi_res[i];
   Pperp = Pperp_res[i];
@@ -320,21 +332,23 @@ void Layer::GetElectronBranchGrowth (int i)
   // ..........................................
   Delta = (Delta_res[i] - Deltac_res[i]) /S13_res[i];
 
-  double gr, gi, F;
+  double gr, gi, Residual;
   gr = 0.;
   gi = gi_marg (i, 0);
-  GetRoot (gr, gi, F);
-  
+  NewtonRoot (gr, gi, Residual, verbose);
+
+  double f     =    (gi) * (gi + Qi) /(- Qe) /(- Qe + Qi);
+  f            += - (gi) * (gi + Qe) /(- Qi) /(- Qi + Qe);
   double gamma = gr /tau_res[i];
-  double omega = (QE_res[i] - g_i) /tau_res[i];
+  double omega = (QE - g_i) /tau_res[i];
 
   gamma_e[i] = gamma/1.e3;
   omega_e[i] = omega/1.e3;
-  res_e  [i] = F;
+  res_e  [i] = Residual;
   lowD_e [i] = lowD;
   
-  printf ("Rational surface %3d: gamma = %10.3e (kHz) omega = %10.3e (kHz) res = %10.3e lowD = %1d\n",
-	  i+1, gamma/1.e3, omega/1.e3, F, lowD);
+  printf ("Rational surface %3d: gamma = %10.3e (kHz) omega = %10.3e (kHz) f = %10.3e res = %10.3e lowD = %1d\n",
+	  i+1, gamma/1.e3, omega/1.e3, f, Residual, lowD);
 }
 
 // #############################################################################################
@@ -482,16 +496,19 @@ void Layer::WriteNetcdf ()
        NcVar lowDe_x  = dataFile.addVar ("lowD_e",  ncInt,    x_d);
        lowDe_x.putVar (lowD_e);
 
-       NcVar np_x = dataFile.addVar ("n_marg",  ncInt,    x_d);
-       np_x.putVar (np_y);
-       NcVar gr_x = dataFile.addVar ("gr_marg", ncDouble, marg_d);
-       gr_x.putVar (gr_y);
-       NcVar gi_x = dataFile.addVar ("gi_marg", ncDouble, marg_d);
-       gi_x.putVar (gi_y);
-       NcVar Dr_x = dataFile.addVar ("Dr_marg", ncDouble, marg_d);
-       Dr_x.putVar (dr_y);
-       NcVar Di_x = dataFile.addVar ("Di_marg", ncDouble, marg_d);
-       Di_x.putVar (di_y);
+       if (MARG)
+	 {
+	   NcVar np_x = dataFile.addVar ("n_marg",  ncInt,    x_d);
+	   np_x.putVar (np_y);
+	   NcVar gr_x = dataFile.addVar ("gr_marg", ncDouble, marg_d);
+	   gr_x.putVar (gr_y);
+	   NcVar gi_x = dataFile.addVar ("gi_marg", ncDouble, marg_d);
+	   gi_x.putVar (gi_y);
+	   NcVar Dr_x = dataFile.addVar ("Dr_marg", ncDouble, marg_d);
+	   Dr_x.putVar (dr_y);
+	   NcVar Di_x = dataFile.addVar ("Di_marg", ncDouble, marg_d);
+	   Di_x.putVar (di_y);
+	 }
 
        if (RMP)
 	 {
@@ -661,134 +678,22 @@ void Layer::CashKarp45Rhs (double x, complex<double>* y, complex<double>* dydx)
   dydx[0] = - AA * W /p - W*W /p + B * p3 /A /C;
 }
 
-// #####################################
-// Function to calculate Jacobian matrix
-// #####################################
-void Layer::GetJacobian (double& J11, double& J12, double& J21, double& J22)
+// ######################################################################
+// Function to calculate target functions for Newton-Raphson root finding
+// ######################################################################
+void Layer::NewtonFunction (double x1, double x2, double& F1, double& F2)
 {
-  double g_r_save = g_r;
-  double g_i_save = g_i;
-
-  g_r = g_r_save - eps;
-  g_i = g_i_save;
+  g_r = x1;
+  g_i = x2;
 
   SolveLayerEquations ();
 
-  double Deltar1 = real (Deltas);
-  double Deltai1 = imag (Deltas);
-
-  g_r = g_r_save + eps;
-  g_i = g_i_save;
-
-  SolveLayerEquations ();
-
-  double Deltar2 = real (Deltas);
-  double Deltai2 = imag (Deltas);
-
-  J11 = (Deltar2 - Deltar1) /2./eps;
-  J21 = (Deltai2 - Deltai1) /2./eps;
-
-  g_r = g_r_save;
-  g_i = g_i_save - eps;
-
-  SolveLayerEquations ();
-
-  Deltar1 = real (Deltas);
-  Deltai1 = imag (Deltas);
-
-  g_r = g_r_save;
-  g_i = g_i_save + eps;
-
-  SolveLayerEquations ();
-
-  Deltar2 = real (Deltas);
-  Deltai2 = imag (Deltas);
-
-  J12 = (Deltar2 - Deltar1) /2./eps;
-  J22 = (Deltai2 - Deltai1) /2./eps;
-
-  g_r = g_r_save;
-  g_i = g_i_save;
-}
-
-// ############################################################
-// Function to find root of Deltas = Delta via Newton iteration
-// ############################################################
- void Layer::GetRoot (double& gr, double& gi, double& F)
-{
-  double F1, F2, J11, J12, J21, J22, det, iJ11, iJ12, iJ21, iJ22, dgr, dgi, dg, Fold, lambda;
-  int    iter, iter1;
-  
-  g_r = gr;
-  g_i = gi;
-
-  SolveLayerEquations ();
-  
   F1 = real (Deltas) - Delta;
   F2 = imag (Deltas);
-
-  Fold   = sqrt (F1*F1 + F2*F2);
-  lambda = 2.;
-
-  iter = 0;
-  do
-    {
-      iter1 = 0;
-      do
-	{
-	  lambda /= 2.;
-	  
-	  GetJacobian (J11, J12, J21, J22);
-      
-	  det = J11 * J22 - J12 * J21;
-      
-	  iJ11 =   J22 /det;
-	  iJ12 = - J12 /det;
-	  iJ21 = - J21 /det;
-	  iJ22 =   J11 /det;
-	  
-	  dgr = - (iJ11 * F1 + iJ12 * F2);
-	  dgi = - (iJ21 * F1 + iJ22 * F2);
-	  
-	  dg = sqrt (dgr*dgr + dgi*dgi);
-	  
-	  if (dg > smax)
-	    {
-	      dgr = dgr * smax /dg;
-	      dgi = dgi * smax /dg;
-	      dg  = smax;
-	    }
-	  
-	  g_r = g_r + lambda * dgr;
-	  g_i = g_i + lambda * dgi;
-	  
-	  SolveLayerEquations ();
-	  
-	  F1 = real (Deltas) - Delta;
-	  F2 = imag (Deltas);
-	  
-	  F = sqrt (F1*F1 + F2*F2);
-
-	  iter1++;
-	}
-      while (F > Fold && iter1 < Maxiter);
-
-      lambda = 1.;
-      Fold   = F;
-
-      //printf ("g = (%10.3e, %10.3e)  F = (%10.3e, %10.3e) |F| = %10.3e dg = %10.3e\n",
-      //      g_r, g_i, F1, F2, F, dg);
-    
-      iter++;
-    }
-  while (F > Eta && dg > eps && iter < Maxiter);
-
-  gr = g_r;
-  gi = g_i;
 }
 
 // ################################
-// Target function for zero finding
+// Target function for root finding
 // ################################
 double Layer::RootFindF (double x)
 {

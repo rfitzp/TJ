@@ -74,12 +74,21 @@ public:
   int    flag;    // Integration error calculation flag
   int    count;   // Counter for step recalculations 
 
-  // -----------------------
-  // Root finding parameters
-  // -----------------------
+  // ---------------------------------------
+  // One-dimensional root finding parameters
+  // ---------------------------------------
   int    Nint;    // Number of search intervals
-  double Eta;     // Min. magnitude of f at root f(x) = 0
+  double Eta;     // Min. magnitude of F at root F(x) = 0
   int    Maxiter; // Maximum number of iterations
+
+  // ---------------------------------------
+  // Two-dimensional root finding parameters
+  // ---------------------------------------
+  double dS;      // Step-size for calculation of Jacobian 
+  double Smax;    // Maximum step-size
+  double Smin;    // Minimum step-size
+  double Eps;     // Minimum magnitude of (F1^2+F2^2)^1/2 at root F1(x1,x2) = F2(x1,x2) = 0 
+  int    MaxIter; // Maximum number of iterations 
   
   // Constructor
   Utility ();
@@ -120,12 +129,19 @@ public:
   //  step-length Cash-Karp fourth-order/fifth-order Runge-Kutta scheme
   void CashKarp45Fixed1 (int neqns, double& x, complex<double>* y, complex<double>* err, double h);
 
-  // Target function for one-dimensional root finding
+  // Evaluate target function for one-dimensional root finding
   virtual double RootFindF (double x);
   // One-dimensional root finding routine
   double RootFind (double x1, double x2);
   // Ridder's method for finding root of F(x) = 0
   void Ridder (double x1, double x2, double F1, double F2, double& x);
+
+  // Evaluate target functions for two-dimensional root finding
+  virtual void NewtonFunction (double x1, double x2, double& F1, double& F2);
+  // Find root of F1(x1,x2) = F2(x1,x2) = 0 via Newton-Raphson method
+  void NewtonRoot (double& x1, double& x2, double& Residual, int verbose);
+  // Calculate Jacobian matrix for Newton-Raphson root finding
+  void NewtonJacobian (double x1, double x2, double& J11, double& J12, double& J21, double& J22);
 
   // Strip comments from a string
   string StripComments (const string& input);
