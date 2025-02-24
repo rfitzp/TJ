@@ -81,10 +81,6 @@ public:
   double Eta;     // Min. magnitude of f at root f(x) = 0
   int    Maxiter; // Maximum number of iterations
   
-  // ..............
-  // in Utility.cpp
-  // ..............
-  
   // Constructor
   Utility ();
   // Destructor

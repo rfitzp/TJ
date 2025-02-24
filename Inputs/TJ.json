@@ -22,10 +22,10 @@
     "NULC":    2.0e-9, // Use zero pressure jump conditions when |nu_L| < NULC 
     "ITERMAX": 10,     // Maximum number of iterations used to determine quantities at rational surface 
     
-    "acc":  1.0e-12,   // Integration accuracy
-    "h0":   1.0e-4,    // Initial step-length 
-    "hmin": 1.0e-10,   // Minimum step-length 
-    "hmax": 1.0e-2,    // Maximum step-length
+    "acc":  1.0e-12,   // Adaptive integration accuracy
+    "h0":   1.0e-4,    // Initial integration step-length 
+    "hmin": 1.0e-10,   // Minimum integration step-length 
+    "hmax": 1.0e-2,    // Maximum integration step-length
     
     "EPSF": 1.0e-4     // Step-length for finite difference determination of derivatives
 }

@@ -178,6 +178,4 @@ private:
 
   // Target function for one-dimensional root finding
   double RootFindF (double x) override;
-  // Ridder's method for finding root of F(x) = 0
-  void Ridder (double x1, double x2, double F1, double F2, double& x);
 };

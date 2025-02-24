@@ -1,7 +1,7 @@
 {
     "qc":   0.8,              // Safety-factor on magnetic axis
     "qa":   2.75,             // Safety-factor at plasma boundary
-    "pc":   3.0e-2,           // Normalized plasma pressure on magnetic axis 
+    "pc":   8.865e-2,         // Normalized plasma pressure on magnetic axis 
     "mu":   2.0,              // Pressure peaking parameter
     "epsa": 0.2,              // Inverse aspect-ratio of plasma
 
@@ -19,13 +19,13 @@
     "Nf":  500,       // Number of radial grid-points for visualization purposes
     "Nw":  1000,      // Number of angular grid-points for visualization purposes
     
-    "acc":  1.0e-12,  // Integration accuracy
+    "acc":  1.0e-12,  // Adaptive integration accuracy
     "h0":   1.0e-4,   // Initial integration step-length
     "hmin": 1.0e-10,  // Minimum integration step-length
     "hmax": 1.0e-3,   // Maximum integration step-length 
 
     "EFIT":  0,       // Flag for calculating EFIT data
-    "NRBOX": 1025,    // Number of R gridpoints in EFIT file
-    "NZBOX": 1025,    // Number of Z gridpoints in EFIT file
+    "NRBOX": 1025,    // Number of R grid-points in EFIT file
+    "NZBOX": 1025,    // Number of Z grid-points in EFIT file
     "rc":    1.1      // EFIT flux-surfaces calculated accurately up to r = rc (r = 1 is boundary)
 }
