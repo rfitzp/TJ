@@ -346,6 +346,8 @@ void TJ::WriteNetcdf ()
   double* Zi_i    = new double[J*J*NDIAG];
   double* Xii_r   = new double[J*J*NDIAG];
   double* Xii_i   = new double[J*J*NDIAG];
+  double* xii_r   = new double[J*J*NDIAG];
+  double* xii_i   = new double[J*J*NDIAG];
   double* Chii_r  = new double[J*J*NDIAG];
   double* Chii_i  = new double[J*J*NDIAG];
   double* Umat_r  = new double[J*J];
@@ -360,6 +362,8 @@ void TJ::WriteNetcdf ()
   double* Ze_i    = new double[J*J*NDIAG];
   double* Xie_r   = new double[J*J*NDIAG];
   double* Xie_i   = new double[J*J*NDIAG];
+  double* xie_r   = new double[J*J*NDIAG];
+  double* xie_i   = new double[J*J*NDIAG];
   double* xvals   = new double[J*NDIAG];
 
   double* Psiy_r  = new double[J*(Nw+1)];
@@ -657,6 +661,8 @@ void TJ::WriteNetcdf ()
 	      Zi_i  [cnt] = imag (Zi  (j, jp, i));
 	      Xii_r [cnt] = real (Xii (j, jp, i));
 	      Xii_i [cnt] = imag (Xii (j, jp, i));
+	      xii_r [cnt] = real (xii (j, jp, i));
+	      xii_i [cnt] = imag (xii (j, jp, i));
 	      Chii_r[cnt] = real (Chii(j, jp, i));
 	      Chii_i[cnt] = imag (Chii(j, jp, i));
 	      cnt++;
@@ -686,6 +692,8 @@ void TJ::WriteNetcdf ()
 	      Ze_i  [cnt] = imag (Ze  (j, jp, i));
 	      Xie_r [cnt] = real (Xie (j, jp, i));
 	      Xie_i [cnt] = imag (Xie (j, jp, i));
+	      xie_r [cnt] = real (xie (j, jp, i));
+	      xie_i [cnt] = imag (xie (j, jp, i));
 	      cnt++;
 	    }
       
@@ -1198,10 +1206,14 @@ void TJ::WriteNetcdf ()
 	  zir_x.putVar (Zi_r);
 	  NcVar zii_x   = dataFile.addVar ("Z_i_i",   ncDouble, ideal_d);
 	  zii_x.putVar (Zi_i);
-	  NcVar xir_x   = dataFile.addVar ("Xi_i_r",  ncDouble, ideal_d);
-	  xir_x.putVar (Xii_r);
-	  NcVar xii_x   = dataFile.addVar ("Xi_i_i",  ncDouble, ideal_d);
-	  xii_x.putVar (Xii_i);
+	  NcVar Xir_x   = dataFile.addVar ("Xi_i_r",  ncDouble, ideal_d);
+	  Xir_x.putVar (Xii_r);
+	  NcVar Xii_x   = dataFile.addVar ("Xi_i_i",  ncDouble, ideal_d);
+	  Xii_x.putVar (Xii_i);
+	  NcVar xir_x   = dataFile.addVar ("xi_i_r",  ncDouble, ideal_d);
+	  xir_x.putVar (xii_r);
+	  NcVar xii_x   = dataFile.addVar ("xi_i_i",  ncDouble, ideal_d);
+	  xii_x.putVar (xii_i);
 	  NcVar chiir_x = dataFile.addVar ("Chi_i_r", ncDouble, ideal_d);
 	  chiir_x.putVar (Chii_r);
 	  NcVar chiii_x = dataFile.addVar ("Chi_i_i", ncDouble, ideal_d);
@@ -1237,10 +1249,15 @@ void TJ::WriteNetcdf ()
 	  zer_x.putVar (Ze_r);
 	  NcVar zei_x   = dataFile.addVar ("Z_e_i",   ncDouble, ideal_d);
 	  zei_x.putVar (Ze_i);
-	  NcVar xer_x   = dataFile.addVar ("Xi_e_r",  ncDouble, ideal_d);
-	  xer_x.putVar (Xie_r);
-	  NcVar xei_x   = dataFile.addVar ("Xi_e_i",  ncDouble, ideal_d);
-	  xei_x.putVar (Xie_i);
+	  NcVar Xer_x   = dataFile.addVar ("Xi_e_r",  ncDouble, ideal_d);
+	  Xer_x.putVar (Xie_r);
+	  NcVar Xei_x   = dataFile.addVar ("Xi_e_i",  ncDouble, ideal_d);
+	  Xei_x.putVar (Xie_i);
+	  NcVar xer_x   = dataFile.addVar ("xi_e_r",  ncDouble, ideal_d);
+	  xer_x.putVar (xie_r);
+	  NcVar xei_x   = dataFile.addVar ("xi_e_i",  ncDouble, ideal_d);
+	  xei_x.putVar (xie_i);
+	  
 	  
 	  NcVar dW_x  = dataFile.addVar ("delta_W",   ncDouble, j_d);
 	  dW_x.putVar (deltaW);
@@ -1392,7 +1409,8 @@ void TJ::WriteNetcdf ()
   delete[] Jy_r;     delete[] Jy_i;     delete[] Xiy_r;   delete[] Xiy_i;
   delete[] Psis_r;   delete[] Psis_i;   delete[] Psiz_r;  delete[] Psiz_i;
   delete[] gammax_r; delete[] gammax_i; delete[] gamma_r; delete[] gamma_i;
-  delete[] Chii_r;   delete[] Chii_i;   delete[] xvals;
+  delete[] Chii_r;   delete[] Chii_i;   delete[] xvals;   delete[] xii_r;
+  delete[] xii_i;    delete[] xie_r;    delete[] xie_i; 
  
   delete[] Wpw_r;  delete[] Wpw_i;  delete[] Wnw_r;  delete[] Wnw_i;
   delete[] Wpw2_r; delete[] Wpw2_i; delete[] Dmat_r; delete[] Dmat_i;

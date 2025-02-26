@@ -70,8 +70,8 @@ class TJ : private Utility
   // -----------------
   // Calculation flags
   // -----------------
-  int  EQLB;   // Flag for equilibrium calculation only (read from TJ JSON file)
-  int  FREE;   // Flag for free/fixed boundary calculation (read from TJ JSON file)
+  int EQLB;    // Flag for equilibrium calculation only (read from TJ JSON file)
+  int FREE;    // Flag for free/fixed boundary calculation (read from TJ JSON file)
                //  FREE > 0 - perform no-wall calculation
                //  FREE = 0 - perform perfect-wall calculation
                //  FREE < 0 - perform fixed-boundary calculation
@@ -400,6 +400,7 @@ class TJ : private Utility
   Array<complex<double>,3> Psii;    // Psi components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Zi;      // Z components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Xii;     // Xi components of ideal solutions launched from magnetic axis
+  Array<complex<double>,3> xii;     // xi components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Chii;    // Chi components of ideal solutions launched from magnetic axis
   Array<complex<double>,2> Ji;      // Poloidal harmonics of current on plasma boundary associated with
                                     //  ideal solutions launched from magnetic axis
@@ -420,6 +421,7 @@ class TJ : private Utility
   Array<complex<double>,3> Psie;    // Psi components of ideal eigenfunctions
   Array<complex<double>,3> Ze;      // Z components of ideal eigenfunctions
   Array<complex<double>,3> Xie;     // Xi components of ideal eigenfunctions
+  Array<complex<double>,3> xie;     // xi components of ideal eigenfunctions
   Array<complex<double>,2> Je;      // Poloidal harmomics of current on plasma boundary associated with ideal eigenfunctions
   double*                  deltaW;  // Total perturbed ideal potential energy 
   double*                  deltaWp; // Plasma contribution to perturbed ideal potential energy

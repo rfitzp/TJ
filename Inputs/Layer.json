@@ -24,7 +24,7 @@
     "MaxIter": 100,       // Maximum number of Newton iterations
     "dS":      1.0e-6,    // Step-size for calculation of Jacobian
     "Smax":    0.1,       // Maximum Newton step-size
-    "Smin":    1.0e-8     // Minimum Newton step-size
+    "Smin":    1.0e-7     // Minimum Newton step-size
 }
 
 

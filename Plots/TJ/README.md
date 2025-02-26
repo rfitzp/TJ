@@ -67,6 +67,8 @@
 - *Umat.py*:		Visualizes total ideal energy matrix
 - *Ideale.py*:      	Plots poloidal harmonics of ideal eigenfunctions versus r
 - *Ideale1.py*:     	Plots kth poloidal harmonic of ideal eigenfunctions versus r
+- *xIdeale.py*:      	Plots poloidal harmonics of ideal eigenfunctions versus r (plots xi instead of Xi)
+- *xideale1.py*:     	Plots kth poloidal harmonic of ideal eigenfunctions versus r (plots xi instead of Xi)
 - *Evals.py*:	 	Plots eigenvalues of W, V, U matrices 
 - *deltaW.py*:	 	Plots delta W values versus eigenfunction number
 - *deltaW1.py*:	 	Plots select number of delta W values versus eigenfunction number

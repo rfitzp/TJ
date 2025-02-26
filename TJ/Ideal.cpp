@@ -13,6 +13,7 @@ void TJ::CalculateIdealStability ()
   Psii .resize(J, J, NDIAG);
   Zi   .resize(J, J, NDIAG);
   Xii  .resize(J, J, NDIAG);
+  xii  .resize(J, J, NDIAG);
   Chii .resize(J, J, NDIAG);
   Ji   .resize(J, J);
   Wmat .resize(J, J);
@@ -29,6 +30,7 @@ void TJ::CalculateIdealStability ()
   Psie .resize(J, J, NDIAG);
   Ze   .resize(J, J, NDIAG);
   Xie  .resize(J, J, NDIAG);
+  xie  .resize(J, J, NDIAG);
   Je   .resize(J, J);
   lvals.resize(J, NDIAG);
 
@@ -66,6 +68,7 @@ void TJ::CalculateIdealStability ()
 	  Psii(j, jp, i) = sump;
 	  Zi  (j, jp, i) = sumz;
 	  Xii (j, jp, i) = sump /(mpol[j] - ntor * Getq (Rgrid[i]));
+	  xii (j, jp, i) = Xii(j, jp, i) * Rgrid[i] /Getf (Rgrid[i]);
 	  Chii(j, jp, i) = km * sump + sumz;
 	}
   
@@ -85,6 +88,7 @@ void TJ::CalculateIdealStability ()
 	    Psii(j, jp, i) /= sqrt(norm);
 	    Zi  (j, jp, i) /= sqrt(norm);
 	    Xii (j, jp, i) /= sqrt(norm);
+	    xii (j, jp, i) /= sqrt(norm);
 	    Chii(j, jp, i) /= sqrt(norm);
 	  }
     }
@@ -291,6 +295,7 @@ void TJ::CalculateIdealStability ()
 	  Psie(j, jp, i) = sump;
 	  Ze  (j, jp, i) = sumz;
 	  Xie (j, jp, i) = sumx;
+	  xie (j, jp, i) = Xie(j, jp, i) * Rgrid[i] /Getf (Rgrid[i]);
 	}
 
   // ----------------------------------------------------------------
