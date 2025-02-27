@@ -19,18 +19,6 @@
 
 // Edge shaping is specified as: Hna = Hn(1), Vna = Vn(1), etc.
 
-// Equilibrium profiles:
-
-// Lowest-order (i.e., cylindrical) safety-factor profile is q0(r) = r^2 /f1(r)
-// Pressure profile is P(r) = epsa^2 p2(r)
-// 
-//  f1(r) = (1 /nu/qc) [1 - (1 - r^2)^nu] 
-//
-//  p2(r) = pc (1 - r^2)^mu
-//
-// qc is lowest-order safety-factor on magnetic axis.
-// nu * qc is lowest-order safety-factor at plasma/vacuum interface.
-
 // Inputs:
 //  Inputs/Equilibrium.json - JSON file
 //  Inputs/Layer.json       - JSON file
@@ -81,6 +69,32 @@ class Equilibrium : private Utility
   // Calculation flags
   // -----------------
   int VIZ;  // Flag for calculating magnetic flux-surfaces (read from TJ JSON file)
+  int SRC;  // Flag for reading lowest-order safety factor and pressure profiles from file:
+            //  SRC = 0 - profiles are evaluated analytically:
+            //
+            //             q  = r^2 /f1
+            //             f1 = [1 - (1 - r^2)^nu] /qc/nu
+            //             p2 = pc (1 - r^2)^mu
+            //
+            //             qc is lowest-order safety-factor on magnetic axis.
+            //             nu * qc is lowest-order safety-factor at plasma/vacuum interface.
+            //
+            //  SRC = 1 - profiles are read from Inputs/Profile.txt:
+            //
+            //              Format:
+            //              
+            //               NPTS
+            //               r(0)      q(0)      p2(0)
+            //               r(1)      q(1)      p2(1)
+            //               ...       ...
+            //               r(NPTS-1) q(NPTS-1) p2(NPTS-1)
+            //
+            //              Here, r is a cylindrical radial coordinate.
+            //              Note that p2 is renormalized such that p2(0) = pc.
+            //              qc is set to q(0), qa to q(NPTS-1), and nu to qa/qc.
+            //
+            //              LightEquilibrium is not called, so the true edge safety-factor
+            //              will differ from qa
   
   // ------------------
   // Physics parameters
@@ -104,6 +118,20 @@ class Equilibrium : private Utility
 
   double         R0;    // Major radius of magnetic axis (read from Layer JSON file)
   double         B0;    // Toroidal magnetic field-strength on magnetic axis (read from Layer JSON file)
+
+  // ------------------
+  // Profile parameters
+  // ------------------
+  int      NPTS;        // Number of data points in profile file (Inputs/Profile
+  double*  rin;         // Radial grid-points in profile file
+  double*  qin;         // Lowest order safety-factor profile read from profile file
+  double*  f1in;        // f1 profile derived from qin; f1in = r^2/qin
+  double*  p2in;        // p2 profile read from profile file
+
+  gsl_spline*        f1inspline;   // Interpolated f1in function
+  gsl_spline*        p2inspline;   // Interpolated p2in function
+  gsl_interp_accel*  f1inacc;      // Accelerator for interpolated f1in function
+  gsl_interp_accel*  p2inacc;      // Accelerator for interpolated p2in function
 
   // ----------------------
   // Calculation parameters
@@ -294,27 +322,6 @@ class Equilibrium : private Utility
   // Find nu value that corresponds to edge safety-factor value read from JSON file
   void Setnu ();
 
-  // Override value of qc from JSON file
-  void Setqc (double _qc);
-  // Override value of qa from JSON file
-  void Setqa (double _qa);
-  // Override value of epsa from JSON file
-  void Setepsa (double _epsa);
-  // Override value of pc from JSON file
-  void Setpc (double _pc);
-  // Override value of Hna[0] from JSON file
-  void SetH2 (double _H2);
-  // Override value of Vna[0] from JSON file
-  void SetV2 (double _V2);
-  // Override value of Hna[1] from JSON file
-  void SetH3 (double _H3);
-  // Override value of Vna[1] from JSON file
-  void SetV3 (double _V3);
-  // Override value of Hna[2] from JSON file
-  void SetH4 (double _H4);
-  // Override value of Vna[2] from JSON file
-  void SetV4 (double _V4);
-  
   // Solve problem
   void Solve ();
 

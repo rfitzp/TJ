@@ -1,4 +1,6 @@
 {
+    "SRC":  1,                // Flag for reading safety-factor and pressure profiles from file
+    
     "qc":   1.1,              // Safety-factor on magnetic axis
     "qa":   3.6,              // Safety-factor at plasma boundary
     "pc":   1.8e-1,           // Normalized plasma pressure on magnetic axis 

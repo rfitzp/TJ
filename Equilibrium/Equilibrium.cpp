@@ -25,7 +25,8 @@ Equilibrium::Equilibrium ()
   // --------------------------------------
   string JSONFilename = "../Inputs/Equilibrium.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
-
+  
+  SRC  = JSONData["SRC"] .get<int>    ();
   qc   = JSONData["qc"]  .get<double> ();
   qa   = JSONData["qa"]  .get<double> ();
   pc   = JSONData["pc"]  .get<double> ();
@@ -58,8 +59,7 @@ Equilibrium::Equilibrium ()
   
   JSONFilename = "../Inputs/TJ.json";
   JSONData     = ReadJSONFile (JSONFilename);
-
-  VIZ = JSONData["VIZ"].get<int>();
+  VIZ = JSONData["VIZ"].get<int> ();
 
   // ------------
   // Sanity check
@@ -163,83 +163,6 @@ void Equilibrium::Setnu ()
   lightequilibrium.GetNu (qa, nu);
 }
 
-// #################################################
-// Function to override qc value read from JSON file
-// #################################################
-void Equilibrium::Setqc (double _qc)
-{
-  qc = _qc;
-}
-// #################################################
-// Function to override qa value read from JSON file
-// #################################################
-void Equilibrium::Setqa (double _qa)
-{
-  qa = _qa;
-}
-
-// ###################################################
-// Function to override epsa value read from JSON file
-// ###################################################
-void Equilibrium::Setepsa (double _epsa)
-{
-  epsa = _epsa;
-}
-
-// #################################################
-// Function to override pc value read from JSON file
-// #################################################
-void Equilibrium::Setpc (double _pc)
-{
-  pc = _pc;
-}
-
-// #####################################################
-// Function to override Hna[0] value read from JSON file
-// #####################################################
-void Equilibrium::SetH2 (double _H2)
-{
-  Hna[0] = _H2;
-}
-
-// #####################################################
-// Function to override Vna[0] value read from JSON file
-// #####################################################
-void Equilibrium::SetV2 (double _V2)
-{
-  Vna[0] = _V2;
-}
-// #####################################################
-// Function to override Hna[1] value read from JSON file
-// #####################################################
-void Equilibrium::SetH3 (double _H3)
-{
-  Hna[1] = _H3;
-}
-
-// #####################################################
-// Function to override Vna[1] value read from JSON file
-// #####################################################
-void Equilibrium::SetV3 (double _V3)
-{
-  Vna[1] = _V3;
-}
-// #####################################################
-// Function to override Hna[2] value read from JSON file
-// #####################################################
-void Equilibrium::SetH4 (double _H4)
-{
-  Hna[2] = _H4;
-}
-
-// #####################################################
-// Function to override Vna[2] value read from JSON file
-// #####################################################
-void Equilibrium::SetV4 (double _V4)
-{
-  Vna[2] = _V4;
-}
-
 // #####################################
 // Function to solve equilibrium problem
 // #####################################
@@ -254,8 +177,59 @@ void Equilibrium::Solve ()
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Calculation parameters:\n");
-  printf ("qc = %10.3e qa = %10.3e epsa = %10.3e pc = %10.3e mu = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
-	  qc, qa, epsa, pc, mu, Ns, Nr, Nf, Nw);
+  printf ("qc = %10.3e qa = %10.3e epsa = %10.3e pc = %10.3e mu = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d SRC = %1d\n",
+	  qc, qa, epsa, pc, mu, Ns, Nr, Nf, Nw, SRC);
+
+  // ....................
+  // Read in profile data
+  // ....................
+  if (SRC)
+    {
+      FILE* file = OpenFiler ("../Inputs/Profile.txt");
+      if (fscanf (file, "%d", &NPTS) != 1)
+	{
+	  printf ("Equilibrium::Solve: Error reading NPTS from Profile.txt\n");
+	  exit (1);
+	}
+      if (NPTS < 1)
+	{
+	  printf ("Equilibrium::Solve: NPTS must be greater than unity\n");
+	}
+
+      rin  = new double[NPTS];
+      qin  = new double[NPTS];
+      f1in = new double[NPTS];
+      p2in = new double[NPTS];
+
+      for (int i = 0; i < NPTS; i++)
+	if (fscanf (file, "%lf %lf %lf", &rin[i], &qin[i], &p2in[i]) != 3)
+	  {
+	    printf ("Equilibrium::Solve: Error reading data from Profile.txt\n");
+	    exit (1);
+	  }
+      
+      fclose (file);
+
+      qc = qin[0];
+      qa = qin[NPTS-1];
+      nu = qa /qc;
+      
+      double p0 = p2in[0];
+      for (int i = 0; i < NPTS; i++)
+	{
+	  f1in[i] = rin[i]*rin[i] /qin[i];
+	  p2in[i] = pc * p2in[i] /p0;
+	}
+
+      f1inspline = gsl_spline_alloc (gsl_interp_cspline, NPTS);
+      p2inspline = gsl_spline_alloc (gsl_interp_cspline, NPTS);
+
+      f1inacc = gsl_interp_accel_alloc ();
+      p2inacc = gsl_interp_accel_alloc ();
+
+      gsl_spline_init (f1inspline, rin, f1in, NPTS);
+      gsl_spline_init (p2inspline, rin, p2in, NPTS);
+    }
 
   // ...............
   // Allocate memory
@@ -719,7 +693,7 @@ void Equilibrium::Solve ()
 
   for (int i = 0; i <= Nr; i++)
     {
-      Jt[i] = gsl_spline_eval_deriv (Itspline, rr[i], Itacc);
+      Jt[i] = 
       Jp[i] = gsl_spline_eval_deriv (Ipspline, rr[i], Ipacc);
       DI[i] = GetDI (rr[i]);
       DR[i] = GetDR (rr[i]);
@@ -1076,6 +1050,17 @@ void Equilibrium::Solve ()
   delete[] DI;   delete[] DR;  delete[] Lfunc;
 
   delete[] Rcoil; delete[] Zcoil; delete[] Icoil;
+
+  if (SRC)
+    {
+      delete[] rin; delete[] qin; delete[] f1in; delete[] p2in;
+
+      gsl_spline_free (f1inspline);
+      gsl_spline_free (p2inspline);
+
+      gsl_interp_accel_free (f1inacc);
+      gsl_interp_accel_free (p2inacc);
+    }
  } 
 
 // ########################
@@ -1083,10 +1068,17 @@ void Equilibrium::Solve ()
 // ########################
 double Equilibrium::Getf1 (double r)
 {
-  if (r < 0.1)
-    return r*r * (1. - (nu - 1.)*r*r/2. + (nu - 1.)*(nu - 2.)*r*r*r*r/6. - (nu - 1.)*(nu - 2.)*(nu - 3.)*r*r*r*r*r*r/24.)/qc;
+  if (SRC)
+    {
+      return gsl_spline_eval (f1inspline, r, f1inacc);
+    }
   else
-    return (1. - pow (1. - r*r, nu)) /nu/qc;
+    {
+      if (r < 0.1)
+	return r*r * (1. - (nu - 1.)*r*r/2. + (nu - 1.)*(nu - 2.)*r*r*r*r/6. - (nu - 1.)*(nu - 2.)*(nu - 3.)*r*r*r*r*r*r/24.)/qc;
+      else
+	return (1. - pow (1. - r*r, nu)) /nu/qc;
+    }
 }
 
 // #########################
@@ -1094,10 +1086,17 @@ double Equilibrium::Getf1 (double r)
 // #########################
 double Equilibrium::Getf1p (double r)
 {
-  if (r < 0.1)
-    return 2.*r * (1. - (nu - 1.)*r*r + (nu - 1.)*(nu - 2.)*r*r*r*r/2. - (nu - 1.)*(nu - 2.)*(nu - 3.)*r*r*r*r*r*r/6.)/qc;
+  if (SRC)
+    {
+      return gsl_spline_eval_deriv (f1inspline, r, f1inacc);
+    }
   else
-    return 2. * r * pow (1. - r*r, nu-1.) /qc;
+    {
+      if (r < 0.1)
+	return 2.*r * (1. - (nu - 1.)*r*r + (nu - 1.)*(nu - 2.)*r*r*r*r/2. - (nu - 1.)*(nu - 2.)*(nu - 3.)*r*r*r*r*r*r/6.)/qc;
+      else
+	return 2. * r * pow (1. - r*r, nu-1.) /qc;
+    }
 }
 
 // ########################
@@ -1105,7 +1104,14 @@ double Equilibrium::Getf1p (double r)
 // ########################
 double Equilibrium::Getp2 (double r)
 {
-  return pc * pow (1. - r*r, mu);
+  if (SRC)
+    {
+      return gsl_spline_eval (p2inspline, r, p2inacc);
+    }
+  else
+    {
+      return pc * pow (1. - r*r, mu);
+    }
 }
 
 // #########################
@@ -1113,7 +1119,14 @@ double Equilibrium::Getp2 (double r)
 // #########################
 double Equilibrium::Getp2p (double r)
 {
-  return - 2. * pc * mu * r * pow (1. - r*r, mu - 1.);
+  if (SRC)
+    {
+      return gsl_spline_eval_deriv (p2inspline, r, p2inacc);
+    }
+  else
+    {
+      return - 2. * pc * mu * r * pow (1. - r*r, mu - 1.);
+    }
 }
 
 // ##########################
@@ -1121,8 +1134,15 @@ double Equilibrium::Getp2p (double r)
 // ##########################
 double Equilibrium::Getp2pp (double r)
 {
-  return - 2. * pc * mu * pow (1. - r*r, mu - 1.)
-    + 4. * pc * mu * (mu-1.) * r*r * pow (1. - r*r, mu - 2.);
+  if (SRC)
+    {
+      return gsl_spline_eval_deriv2 (p2inspline, r, p2inacc);
+    }
+  else
+    {
+      return - 2. * pc * mu * pow (1. - r*r, mu - 1.)
+	+ 4. * pc * mu * (mu-1.) * r*r * pow (1. - r*r, mu - 2.);
+    }
 }
 
 // ####################

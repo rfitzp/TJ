@@ -14,8 +14,9 @@
 // Program assumes monotonic safety-factor profile.
 
 // Inputs:
-//  Inputs/TJ.json    - JSON file
-//  Inputs/Layer.json - JSON file
+//  Inputs/Equilibrium.json  - JSON file
+//  Inputs/TJ.json           - JSON file
+//  Inputs/Layer.json        - JSON file
 
 // Outputs:
 //  Outputs/TJ/TJ.nc
@@ -53,7 +54,10 @@
 #include <gsl/gsl_sf_gamma.h>
 #include <netcdf>
 #include <armadillo>
+
 #include "Utility.h"
+#include "Equilibrium.h"
+#include "Layer.h"
 
 using namespace blitz;
 using namespace netCDF;
@@ -70,6 +74,7 @@ class TJ : private Utility
   // -----------------
   // Calculation flags
   // -----------------
+  int SRC;     // Flag for reading profile data from file (read from Equilibrium JSON file)
   int EQLB;    // Flag for equilibrium calculation only (read from TJ JSON file)
   int FREE;    // Flag for free/fixed boundary calculation (read from TJ JSON file)
                //  FREE > 0 - perform no-wall calculation

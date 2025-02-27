@@ -69,6 +69,11 @@ TJ::TJ ()
 
   EPSF    = JSONData["EPSF"].get<double>();
 
+  JSONFilename = "../Inputs/Equilibrium.json";
+  JSONData     = ReadJSONFile (JSONFilename);
+
+  SRC  = JSONData["SRC"].get<int>();
+
   JSONFilename = "../Inputs/Layer.json";
   JSONData     = ReadJSONFile (JSONFilename);
   
@@ -193,26 +198,6 @@ TJ::TJ ()
   // No resonant magnetic perturbation calculation for fixed boundary
   if (FREE < 0)
     RMP = 0;
-
-  // -----------------------------
-  // Output calculation parameters
-  // -----------------------------
-  printf ("\nClass TJ::\n");
-  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
-  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
-  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("Calculation flags:\n");
-  printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d\n",
-	  EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER);
-  printf ("Calculation parameters:\n");
-  printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
-	  NTOR, MMIN, MMAX, EPS, DEL);
-  printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d\n",
-	  NFIX, NDIAG, NULC, ITERMAX);
-  printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
-	  acc, h0, hmin, hmax, EPSF);
-  printf ("B0   = %10.3e R0    = %10.3e n0   = %10.3e alpha   = %10.3e Zeff = %10.3e Mion = %10.3e Chip = %10.3e Teped = %10.3e\n",
-	  B0, R0, n0, alpha, Zeff, Mion, Chip, Teped);
 }
 
 // ##########
@@ -226,69 +211,113 @@ TJ::~TJ ()
 // Function to solve problem
 // #########################
 void TJ::Solve ()
-{ 
-  // Set toroidal and poloidal mode numbers
-  SetModeNumbers ();
+{
+  // .............................................................................
+  // Call class Equilibrium to construct aspect-ratio expanded tokamak equilibrium
+  // .............................................................................
+  {
+    Equilibrium equilibrium;
 
-  // Read equilibrium data
-  ReadEquilibrium ();
-  if (EQLB)
-    return;
- 
-  // Calculate metric data at plasma boundary
-  CalculateMetricBoundary ();
+    if (!SRC)
+      equilibrium.Setnu ();
+    
+    equilibrium.Solve ();
+  }
 
-  // Calculate vacuum matrices
-  GetVacuumBoundary ();
-
-  // Calculate wall matrices
-  GetVacuumWall ();
-
-  // Find rational surfaces
-  FindRational ();
-
-  // Calculate resonant layer data
-  GetLayerData ();
-
-  // Solve outer region odes
-  ODESolve ();
-
-  // Determine tearing mode dispersion relation and tearing eigenfunctions
-  FindDispersion ();
-
-  if (VIZ)
+  if (!EQLB)
     {
-      // Calculate unreconnected eigenfunction visualization data
-      VisualizeEigenfunctions ();
-    }
-
-  if (RMP)
-    {
-      // Calculate resonant magnetic perturbation data
-      CalculateResonantMagneticPerturbation ();
-
+      // -----------------------------
+      // Output calculation parameters
+      // -----------------------------
+      printf ("\nClass TJ::\n");
+      printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
+      printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
+      printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
+      printf ("Calculation flags:\n");
+      printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d\n",
+	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER);
+      printf ("Calculation parameters:\n");
+      printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
+	      NTOR, MMIN, MMAX, EPS, DEL);
+      printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d\n",
+	      NFIX, NDIAG, NULC, ITERMAX);
+      printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
+	      acc, h0, hmin, hmax, EPSF);
+      printf ("B0   = %10.3e R0    = %10.3e n0   = %10.3e alpha   = %10.3e Zeff = %10.3e Mion = %10.3e Chip = %10.3e Teped = %10.3e\n",
+	      B0, R0, n0, alpha, Zeff, Mion, Chip, Teped);
+      
+      // Set toroidal and poloidal mode numbers
+      SetModeNumbers ();
+      
+      // Read equilibrium data
+      ReadEquilibrium ();
+      
+      // Calculate metric data at plasma boundary
+      CalculateMetricBoundary ();
+      
+      // Calculate vacuum matrices
+      GetVacuumBoundary ();
+      
+      // Calculate wall matrices
+      GetVacuumWall ();
+      
+      // Find rational surfaces
+      FindRational ();
+      
+      // Calculate resonant layer data
+      GetLayerData ();
+      
+      // Solve outer region odes
+      ODESolve ();
+      
+      // Determine tearing mode dispersion relation and tearing eigenfunctions
+      FindDispersion ();
+      
       if (VIZ)
 	{
-	  // Calculate resonant magnetic perturbation respose visualization data
-	  VisualizeRMP ();
+	  // Calculate unreconnected eigenfunction visualization data
+	  VisualizeEigenfunctions ();
+	}
+      
+      if (RMP)
+	{
+	  // Calculate resonant magnetic perturbation data
+	  CalculateResonantMagneticPerturbation ();
+	  
+	  if (VIZ)
+	    {
+	      // Calculate resonant magnetic perturbation respose visualization data
+	      VisualizeRMP ();
+	    }
+	}
+      
+      // Calculate ideal stability
+      if (IDEAL)
+	{
+	  CalculateIdealStability ();
+	  
+	  // Calculate resistive wall mode stability
+	  if (RWM)
+	    CalculateRWMStability ();
+	}
+      
+      // Write program data to Netcdf file
+      WriteNetcdf ();
+      
+      // Clean up
+      CleanUp ();
+
+      if (LAYER)
+	{
+	  // ...............................................................
+	  // Call class Layer to calculate growth-rates and real frequencies
+	  // ...............................................................
+	  {
+	    Layer layer;
+	    layer.Solve (0);
+	  }
 	}
     }
-
-  // Calculate ideal stability
-  if (IDEAL)
-    {
-      CalculateIdealStability ();
-
-      // Calculate resistive wall mode stability
-      if (RWM)
-	CalculateRWMStability ();
-    }
-  
-  // Write program data to Netcdf file
-  WriteNetcdf ();
-
-  // Clean up
-  CleanUp ();
 }
 
 // ##################################################

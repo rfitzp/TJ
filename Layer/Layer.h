@@ -88,7 +88,6 @@ private:
   // ....................................
   // Layer calculation control parameters
   // ....................................
-  int    LAYER;  // Flag to enable layer calculation (read from TJ JSON file)
   int    RMP;    // Flag to enable resonant magnetic perturbation calculation (read from TJ JSON file)
   int    MARG;   // Flag to enable calculation of ion branch marginal stability points (read from JSON file)
   double pstart; // Layer equations integrated from p = pstart to p = pend (read from JSON file)

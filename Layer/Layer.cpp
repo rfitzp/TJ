@@ -28,7 +28,6 @@ Layer::Layer ()
   string JSONFilename = "../Inputs/TJ.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  LAYER = JSONData["LAYER"].get<int> ();
   RMP   = JSONData["RMP"]  .get<int> ();
 
   // ......................................
@@ -55,20 +54,17 @@ Layer::Layer ()
   Eps     = JSONData1["Eps"]    .get<double> ();
   MaxIter = JSONData1["MaxIter"].get<int>    ();
 
-  if (LAYER)
-    {
-      printf ("\n");
-      printf ("Class LAYER::\n");
-      printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
-      printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
-      printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-      printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan =  %-4d      MARG    = %-1d\n",
-	      pstart, pend, P3max, Nscan, MARG);
-      printf ("acc    = %10.3e h0   = %10.3e hmin  = %10.3e hmax  = %10.3e\n",
-	      acc, h0, hmin, hmax);
-      printf ("dS     = %10.3e Smax = %10.3e Smin  = %10.3e Eps   = %10.3e MaxIter = %-4d\n",
-	      dS, Smax, Smin, Eps, MaxIter);
-    }
+  printf ("\n");
+  printf ("Class LAYER::\n");
+  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
+  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
+  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
+  printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan =  %-4d      MARG    = %-1d\n",
+	  pstart, pend, P3max, Nscan, MARG);
+  printf ("acc    = %10.3e h0   = %10.3e hmin  = %10.3e hmax  = %10.3e\n",
+	  acc, h0, hmin, hmax);
+  printf ("dS     = %10.3e Smax = %10.3e Smin  = %10.3e Eps   = %10.3e MaxIter = %-4d\n",
+	  dS, Smax, Smin, Eps, MaxIter);
 }
 
 // #########################
@@ -76,12 +72,6 @@ Layer::Layer ()
 // #########################
 void Layer::Solve (int verbose)
 {
-  // ....................................
-  // Skip calculation unless LAYER is set
-  // ....................................
-  if (!LAYER)
-    return;
-  
   // .....................................
   // Read in rational surface data from TJ
   // .....................................

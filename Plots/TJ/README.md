@@ -72,6 +72,7 @@
 - *Evals.py*:	 	Plots eigenvalues of W, V, U matrices 
 - *deltaW.py*:	 	Plots delta W values versus eigenfunction number
 - *deltaW1.py*:	 	Plots select number of delta W values versus eigenfunction number
+- *deltaW2.py*:	 	Plots delta W values versus eigenfunction number in range of y
 - *Xi.py*:              Plots Xi Fourier harmonics of ideal eigenfunctions on plasma boundary
 - *PsiJSurface.py*: 	Plots psi and J on plasma boundary associated with ideal eigenfunctions
 - *lambda.py*:          Plots eigenvalues of plasma energy matrix versus r
