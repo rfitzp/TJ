@@ -97,6 +97,7 @@ void Layer::Solve (int verbose)
 
   gamma_e = new double[nres];
   omega_e = new double[nres];
+  f_e     = new double[nres];
   res_e   = new double[nres];
   lowD_e  = new int   [nres];
 
@@ -334,6 +335,7 @@ void Layer::GetElectronBranchGrowth (int i, int verbose)
 
   gamma_e[i] = gamma/1.e3;
   omega_e[i] = omega/1.e3;
+  f_e    [i] = f;
   res_e  [i] = Residual;
   lowD_e [i] = lowD;
   
@@ -481,6 +483,8 @@ void Layer::WriteNetcdf ()
        gammae_x.putVar (gamma_e);
        NcVar omegae_x = dataFile.addVar ("omega_e", ncDouble, x_d);
        omegae_x.putVar (omega_e);
+       NcVar fe_x     = dataFile.addVar ("f_e",     ncDouble, x_d);
+       fe_x.putVar (f_e);
        NcVar rese_x   = dataFile.addVar ("res_e",   ncDouble, x_d);
        rese_x.putVar (res_e);
        NcVar lowDe_x  = dataFile.addVar ("lowD_e",  ncInt,    x_d);
@@ -533,7 +537,7 @@ void Layer::CleanUp ()
   delete[] r_res,    delete[] m_res;     delete[] Delta_res; delete[] Deltac_res; delete[] tau_res;
   delete[] QE_res;   delete[] Qe_res;    delete[] Qi_res;    delete[] iotae_res;  delete[] D_res;
   delete[] Pphi_res; delete[] Pperp_res; delete[] S13_res;   delete[] Chi_res;    delete[] input;
-  delete[] gamma_e;  delete[] omega_e;   delete[] res_e;     delete[] lowD_e;
+  delete[] gamma_e;  delete[] omega_e;   delete[] res_e;     delete[] lowD_e;     delete[] f_e;
 }
 
 // #################################

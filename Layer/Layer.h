@@ -109,6 +109,7 @@ private:
   // .................................
   double* gamma_e; // Electron-branch growth-rates at rational surfaces (kHz)
   double* omega_e; // Electron-branch real frequencies at rational surfaces  (kHz)
+  double* f_e;     // Electron-branch relative frequency (+1/0/-1 if mode corotates with electron/ExB/ion fluid)
   double* res_e;   // Electron-branch residuas of zero search at rational surfaces 
   int*    lowD_e;  // Electron-branch low D flags at rational surfaces
 

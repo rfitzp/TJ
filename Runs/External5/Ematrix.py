@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-infile = open("Sawtooth1.out", "r")
+infile = open("Ematrix.out", "r")
 
 qa = []
 qc = []
@@ -93,7 +93,7 @@ for p in pc:
     b0.append(0.08*p)
 
 pmin = 0.
-pmax = 7.5e-3
+pmax = 2.5e-2
 ymax = 1.e-6
     
 fig = plt.figure (figsize = (8.0, 8.0))
@@ -104,10 +104,10 @@ plt.rc ('ytick', labelsize = 15)
 plt.subplot (3, 1, 1)
 
 plt.xlim (pmin, pmax)
-plt.ylim (-10., 20000.)
+#plt.ylim (0., 25.)
 
 plt.plot    (b0, e11r, color = 'blue',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
-plt.axvline (0.0886*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
+#plt.axvline (0.0886*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\beta_0$',        fontsize = "15")
 plt.ylabel (r"$Re(E_{11})$", fontsize = "15")
@@ -115,11 +115,11 @@ plt.ylabel (r"$Re(E_{11})$", fontsize = "15")
 plt.subplot (3, 1, 2)
 
 plt.xlim (pmin, pmax)
-plt.ylim (10., -3000.)
+#plt.ylim (10., -3000.)
 
 plt.plot (b0, e12r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$E_{12}$')
 plt.plot (b0, e21r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 'x', fillstyle = 'none', markersize = 5, label = '$E_{21}$')
-plt.axvline (0.0886*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
+#plt.axvline (0.0886*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\beta_0$',                fontsize = "15")
 plt.ylabel (r"$Re(E_{12}), Re(E_{21})$", fontsize = "15")
@@ -128,10 +128,10 @@ plt.legend (fontsize = "15");
 plt.subplot (3, 1, 3)
 
 plt.xlim (pmin, pmax)
-plt.ylim (-10., 500.)
+#plt.ylim (-10., 500.)
 
 plt.plot (b0, e22r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
-plt.axvline (0.0886*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0.,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\beta_0$',        fontsize = "15")
 plt.ylabel (r"$Re(E_{22})$", fontsize = "15")
