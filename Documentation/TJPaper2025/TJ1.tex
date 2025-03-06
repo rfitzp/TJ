@@ -23,11 +23,11 @@
 The calculation of the stability of a tokamak plasma equilibrium to tearing perturbations is most efficiently formulated as  an asymptotic
 matching problem in which the  plasma is  divided into two distinct regions.\cite{fkr}  In the ``outer region'', which comprises most
 of the plasma, the tearing perturbation is described by the equations of linearized, marginally-stable, ideal magnetohydrodynamics (a.k.a.\ the ``ideal-MHD'' equations). 
-However, these equations become singular on so-called ``rational'' magnetic flux-surfaces at which the perturbed magnetic field resonates with the equilibrium field. In the so-called ``inner region'', which
+However, these equations become singular on   ``rational'' magnetic flux-surfaces at which the perturbed magnetic field resonates with the equilibrium field. In the ``inner region'', which
 consists of a set of narrow layers centered on the various rational surfaces, non-ideal-MHD effects such as plasma inertia, resistivity, 
-viscosity,  diamagnetic flows, and the ion sound radius,  become important.  The resistive layer
+viscosity,  diamagnetic flows, and the ion sound radius,  become important.\cite{hkm,fw,cole,diff}  The resistive layer
 solutions in the various segments of the inner region must be simultaneously asymptotically matched to the ideal-MHD solution in the outer region to produce a matrix 
-dispersion relation that determines the growth-rates and angular rotation frequencies of the various tearing modes to which the plasma is subject.\cite{con0,cht}
+dispersion relation that determines the growth-rates and angular rotation frequencies of the various tearing modes to which the plasma is subject.\cite{con0,cht} (See Sect.~\ref{disp}.)
 
 In general, the  determination of the ideal-MHD contributions to the elements of the  tearing mode dispersion relation is an exceptionally challenging computational task.\cite{connor,nish,gal,pletz,pletz1,
 tokuda,brennan,ham,ham1,ham2,am1,am2,am3,aglas,aglas1,aglas2}
@@ -45,7 +45,7 @@ All lengths are normalized to  the major radius of the plasma magnetic axis, $R_
 are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All currents are normalized to $B_0\,R_0/\mu_0$. All current densities are normalized to $B_0/(\mu_0\,R_0)$.  All plasma pressures are normalized to $B_0^{\,2}/\mu_0$.
 All toroidal electromagnetic torques are normalized to $B_0^{\,2}\,R_0^{\,3}/\mu_0$. All energies are normalized to $B_0^{\,2}\,R_0^{\,3}/\mu_0$. 
 
-\subsection{Axisymmetric Tokamak Plasma Equilibrium}\label{s3}
+\subsection{Coordinates}
 Let $R$, $\phi$, $Z$ be right-handed cylindrical coordinates whose Jacobian 
 is $ (\nabla R\times \nabla\phi\cdot\nabla Z)^{-1} = R$, 
 and whose symmetry axis corresponds to the symmetry axis of the axisymmetric toroidal plasma equilibrium. 
@@ -57,8 +57,9 @@ Jacobian is
 {\cal J}(r,\theta)\equiv (\nabla r\times \nabla\theta\cdot\nabla\phi)^{-1}= r\,R^{\,2}.
 \end{equation}
 Note that $r=r(R,Z)$ and $\theta=\theta(R,Z)$. 
-The magnetic axis corresponds to $r=0$, and the plasma-vacuum interface to $r=a$. 
+The magnetic axis corresponds to $r=0$, and the plasma-vacuum interface to $r=a$. Here, $a\ll 1$ is the effective inverse aspect-ratio of the plasma. 
 
+\subsection{Plasma Equilibrium}
 Consider an axisymmetric tokamak plasma equilibrium whose magnetic field takes the form
 \begin{equation}
 {\bf B}(r,\theta) = f(r)\,\nabla\phi\times \nabla r + g(r)\,\nabla\phi = f\,\nabla(\phi-q\,\theta)\times \nabla r,
@@ -72,6 +73,68 @@ Equilibrium force balance requires that
 $ \nabla P={\bf J}\times {\bf B}$, 
 where $P(r)$ is the equilibrium scalar plasma pressure, and ${\bf J}=\nabla\times {\bf B}$ the equilibrium plasma current density. 
 
+\subsection{Perturbed Magnetic Field}
+All perturbed quantities are assumed to vary toroidally as $\exp(-{\rm i}\,n\,\phi)$,
+where the positive integer  $n$ is the toroidal mode number of the perturbation. 
+According to Eqs.~(47), (78), (99), and (101), of Ref.~\onlinecite{tj}, the radial and toroidal components of the perturbed magnetic field are written 
+\begin{align}\label{a3}
+{\cal J}\,b^r &={\rm i}\,\psi(r,\theta)= \sum_m \psi_m(r)\,\exp(\,{\rm i}\,m\,\theta),\\[0.5ex]
+b_\phi &= x(r,\theta)= n\,z(r,\theta) = n\sum_m z_m(r) \,\exp(\,{\rm i}\,m\,\theta),
+\end{align}
+where
+\begin{equation}
+z_m(r) = \frac{Z_m(r) + k_m\,\psi_m(r)}{m-n\,q}.
+\end{equation}
+Here, the (not necessarily positive) integer $m$ is a poloidal mode number, and the sum is over all mode numbers included in the calculation. 
+Moreover, 
+$k_m(r)$ is real, and is specified in Eq.~(100) Ref.~\onlinecite{tj}. 
+
+\subsection{Behavior in Vicinity of Rational Surface}\label{rational}
+Suppose that there are $K$ rational surfaces in the plasma. Let the $k$th surface be located at $r=r_k$, and possess the resonant poloidal
+mode number $m_k$. By definition, $m_k-n\,q(r_k)=0$. 
+According to Sect.~V.B of Ref.~\onlinecite{tj},  the non-resonant poloidal harmonics of the solutions to the
+ideal-MHD equations in the outer region  are continuous across the surface. On the other hand, the tearing parity components of the resonant poloidal
+harmonics of the solutions behave locally as
+\begin{align}
+\psi_{m\,k}(r_k+x) &= A_{L\,k}\,|x|^{\nu_{L\,k}} + A_{S\,k}\,|x|^{\nu_{S\,k}},\\[0.5ex]
+Z_{m\,k}(r_k+x)&= \frac{\nu_{L\,k}}{L_0}\,A_{L\,k}\,|x|^{\nu_{L\,k}}+ \frac{\nu_{S\,k}}{L_0}\,A_S\,|x|^{\,\nu_{S\,k}},
+\end{align}
+where
+\begin{align}
+\nu_{L\,k} &= \frac{1}{2}-\sqrt{-D_{I\,k}},\\[0.5ex]
+\nu_{S\,k} &= \frac{1}{2}+\sqrt{-D_{I\,k}},\\[0.5ex]
+D_{I\,k}&= - \left[\frac{2\,(1-q^2)}{s^2}\,r\,\frac{dP}{dr}\right]_{r_k} -\frac{1}{4},\\[0.5ex]
+L_0 &= -\left(\frac{L_{m_k}^{\,m_k}}{m_k\,s}\right)_{r_k},\\[0.5ex]
+L_{m_k}^{\,m_k}(r) &= m_k^2\,c_{m_k}^{\,m_k}(r) + n^2\,r^2,\\[0.5ex]
+c_{m_k}^{\,m_k}(r) &=\oint|\nabla r|^{-2}\,\frac{d\theta}{2\pi},
+\end{align}
+and $s(r)= d\ln q/d\ln r$. Here, the tearing parity component is such that $\psi_{m_k}(r_k-x)=\psi_{m_k}(r_k+x)$ and $Z_{m_k}(r_k-x)=Z_{m_k}(r_k+x)$. 
+Moreover, $A_{L\,k}$ is termed the coefficient of the ``large'' solution, whereas $A_{S\,k}$ is the coefficient of the ``small'' solution. Furthermore, $D_{I\,k}$ is the ideal
+Mercier interchange parameter (which needs to be negative to ensure stability to localized interchange modes),\cite{mercier,ggj,ggj1} and $\nu_{L\,k}$ and $\nu_{S\,k}$
+are termed the Mercier indices. 
+
+It is helpful to define the quantities
+\begin{align}\label{Psidef}
+{\mit\Psi}_k&= r_k^{\,\nu_{L\,k}}\left(\frac{\nu_{S\,k}-\nu_{L\,k}}{L_{m_k}^{\,{m_k}}}\right)^{1/2}_{r_k} A_{L\,k},\\[0.5ex]
+{\mit\Delta\Psi}_k &= r_k^{\,\nu_{S\,k}}\left(\frac{\nu_{S\,k}-\nu_{L\,k}}{L_{m_k}^{\,m_k}}\right)^{1/2}_{r_k} 2\,A_{S\,k},\label{edpp}
+\end{align}
+at each rational surface in the plasma. Here, the complex parameter ${\mit\Psi}_k$ is a measure of the reconnected helical magnetic flux at the $k$th rational surface, whereas
+the complex parameter ${\mit\Delta\Psi}_k$ is a measure of the strength of a localized current sheet that flows parallel to the equilibrium magnetic field at the surface. 
+The net toroidal electromagnetic torque acting on the plasma is\,\cite{tj}
+\begin{equation}\label{torque}
+T_\phi = 2\pi^2\,n\,\sum_{k=1,K}{\rm Im}({\mit\Psi}_k^\ast\,{\mit\Delta\Psi}_k).
+\end{equation}
+
+\subsection{Tearing Mode Dispersion Relation}\label{disp}
+According to Sect.~VIII.D of Ref.~\onlinecite{tj}, the tearing mode dispersion relation takes the form
+\begin{equation}
+\sum_{k'=1,K}\left(E_{kk'}-{\mit\Delta}_k\,\delta_{kk'}\right){\mit\Psi}_{k'} = 0
+\end{equation}
+for $k=1,K$, 
+where $E_{kk'}$ is an Hermitian matrix determined from the solution of the ideal-MHD equations in the outer region, and ${\mit\Delta}_k\equiv {\mit\Delta\Psi}_k/{\mit\Psi}_k$ is
+a complex quantity that characterizes the tearing parity response of the resistive layer at the $k$th rational surface to the outer solution. 
+In general, ${\mit\Delta}_k$ is a function of the growth-rate and phase-velocity of the reconnected helical magnetic flux at the surface. 
+
 \section{Calculation of Ideal Stability}
 
 \subsection{Plasma Perturbation}
@@ -79,8 +142,7 @@ The perturbed magnetic field associated with an ideal perturbation is written\,\
 \begin{equation}
 {\bf b} = \nabla\times (\bxi\times{\bf B}),
 \end{equation}
-where $\bxi$ is the plasma displacement. All perturbed quantities are assumed to vary toroidally as $\exp(-{\rm i}\,n\,\phi)$,
-where the integer  $n>0$ is the toroidal mode number of the perturbation.  According to Eqs.~(2), (25), (26), and
+where $\bxi$ is the plasma displacement.  According to Eqs.~(2), (25), (26), and
 (101) of Ref.~\onlinecite{tj}, 
 \begin{align}\label{e9}
 {\cal J}\,b^r&=\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y = {\rm i}\,\psi(r,\theta),
@@ -89,23 +151,18 @@ where
 \begin{align}\label{e10}
 y(r,\theta)&= f\,\xi^r.
 \end{align}
-Furthermore, if
-\begin{align}
-b_\phi = x(r,\theta)= n\,z(r,\theta)
-\end{align}
-then Eqs.~(38), (39), (47), (48), and (78) of Ref.~\onlinecite{tj} yield
+Furthermore,  Eqs.~(38), (39),  (48), and (78) of Ref.~\onlinecite{tj} yield
 \begin{align}
 b_\theta = -\frac{\alpha_g}{{\rm i}\,n}\left(\frac{\partial}{\partial\theta} - {\rm i}\,n\,q\right)y +\alpha_p\,R^{\,2}\,y +{\rm i}\,\frac{\partial z}{\partial\theta},
 \end{align}
 where
 \begin{align}
-\alpha_p(r) &= \frac{r\,P'}{f^2},\label{ap}\\[0.5ex]
-\alpha_g (r)&= \frac{g'}{f}.\label{ag}
+\alpha_p(r) &= \frac{r\,dP/dr}{f^2},\label{ap}\\[0.5ex]
+\alpha_g (r)&= \frac{dg/dr}{f}.\label{ag}
 \end{align}
-Here, $'$ denotes $d/dr$. 
 Thus,
 \begin{equation}\label{e15}
-{\bf B}\cdot{\bf b} -\xi^r\,P' = B^\theta\,b_\theta+B^\phi\,b_\phi - \xi^r\,P'=
+{\bf B}\cdot{\bf b} -\xi^r\,\frac{dP}{dr} = B^\theta\,b_\theta+B^\phi\,b_\phi - \xi^r\,\frac{dP}{dr}=
 \frac{{\rm i}\,f}{\cal J}\left(\frac{\partial}{\partial\theta}- {\rm i}\,n\,q\right)\left(\frac{\alpha_g}{n}\,y+z\right).
 \end{equation}
 
@@ -140,7 +197,7 @@ which yields
 \end{align}
 or
 \begin{align}
-\delta W_{12} &= \frac{1}{2}\left[\oint\oint{\cal J}\,\xi^{r\,\ast}\,({\mit\Gamma}\,P\,\nabla\cdot\bxi -{\bf B}\cdot{\bf b} + \xi^r\,P')\,d\theta\,d\phi\right]_{r_1}^{r_2}\nonumber\\[0.5ex]&\phantom{=}-\frac{1}{2}\int_{r_1}^{r_2}\oint\oint\bxi^\ast\cdot{\bf F}(\bxi)\,{\cal J}\,dr\,d\theta\,d\phi,
+\delta W_{12} &= \frac{1}{2}\left[\oint\oint{\cal J}\,\xi^{r\,\ast}\left({\mit\Gamma}\,P\,\nabla\cdot\bxi -{\bf B}\cdot{\bf b} + \xi^r\,\frac{dP}{dr}\right)d\theta\,d\phi\right]_{r_1}^{r_2}\nonumber\\[0.5ex]&\phantom{=}-\frac{1}{2}\int_{r_1}^{r_2}\oint\oint\bxi^\ast\cdot{\bf F}(\bxi)\,{\cal J}\,dr\,d\theta\,d\phi,
 \end{align}
 where use has been made of the fact that ${\bf B}\cdot\nabla r = 0$.  However, in the TJ code, the marginally-stable ideal-MHD  plasma perturbation in the outer region is calculated assuming that ${\bf F}(\bxi)={\bf 0}$ and
 $\nabla\cdot\bxi=0$.\cite{tj}   Thus, making use of Eqs.~(\ref{e10}) and (\ref{e15}), we obtain 
@@ -151,21 +208,12 @@ which reduces to
 \begin{equation}
 \delta W_{12}= \pi^2\left[\sum_m\,y_m^\ast\,(m-n\,q)\left(\frac{\alpha_g}{n}\,y_m+z_m\right)\right]_{r_1}^{r_2},
 \end{equation}
-where
-\begin{align}\label{e26}
-y(r,\theta)&=\sum_m y_m(r)\,\exp(\,{\rm i}\,m\,\theta),\\[0.5ex]
-z(r,\theta)&=\sum_m z_m(r)\,\exp(\,{\rm i}\,m\,\theta),\\[0.5ex]
-\psi(r,\theta)&=\sum_m \psi_m(r)\,\exp(\,{\rm i}\,m\,\theta).\label{e28}
-\end{align}
-Here, $m$ is a poloidal mode number, and the sum is over all mode numbers included in the calculation. 
+where $y(r,\theta)=\sum_m y_m(r)\,\exp(\,{\rm i}\,m\,\theta)$. 
 
-Now, according to Eqs.~(98) and (99) of Ref.~\onlinecite{tj}, 
+Now, according to Eq.~(98) of Ref.~\onlinecite{tj}, 
 \begin{align}\label{epsi}
-y_m(r) &= \left(\frac{\psi_m}{m-n\,q}\right)_r,\\[0.5ex]
-z_m(r)&= \left(\frac{k_m\,\psi_m+Z_m}{m-n\,q}\right)_r,
+y_m(r) &= \left(\frac{\psi_m}{m-n\,q}\right)_r.
 \end{align}
-where
-$k_m(r)$ is real, and is specified in Eq.~(100) Ref.~\onlinecite{tj}. 
 Thus, we get 
 \begin{equation}
 \delta W_{12}=\pi^2\left(\sum_m\psi_m^\ast\,\chi_m\right)_{r_1}^{r_2}
@@ -178,12 +226,12 @@ where
 \end{align}
 and use has been made of Eq.~(100) Ref.~\onlinecite{tj}. Here, $\tilde{k}_m(r)$ is real, and
 \begin{align}
-c_m^{\,m}(r) &=\oint|\nabla r|^{-2}\,\frac{d\theta}{2\pi},\\[0.5ex]
 d_m^{\,m}(r) &=\oint|\nabla r|^{-2}\,R^{\,2}\,\frac{d\theta}{2\pi}.
 \end{align}
 
 \subsection{Magnetic Axis}
-Let the $\psi_m(r)$ and the $Z_m(r)$ be solutions of the ideal-MHD equations in the outer region that are well behaved at $r=0$. It follows that\,\cite{tj}
+Let the $\psi_m(r)$ and the $\chi_m(r)$ be solutions of the ideal-MHD equations in the outer region that are well behaved at $r=0$. 
+Such solutions vary as $r^{|m|}$. (For the special case $m=0$, $\chi_0\sim1$ and $\psi_0=0$.) It follows that\,\cite{tj}
 \begin{equation}
 \left(\sum_m\psi_m^\ast\,\chi_m\right)_{0}=0.
 \end{equation}
@@ -194,10 +242,11 @@ Hence,
 is the perturbed plasma potential energy in the region lying between the magnetic axis and the magnetic flux-surface whose label is $r$. 
 
 \subsection{Rational Surfaces}
-At a rational surface, $r=r_m$, at which $m-n\,q(r_m)=0$ for some $m$, the non-resonant components of $\psi_m$ and $\chi_m$ are continuous, the 
-``large'' solution is absent (i.e., there is zero reconnected magnetic flux), and the ``small'' solution is discontinuous (i.e., there is a current sheet). It is easily shown that\,\cite{tj}
+At the $k$th rational surface, $r=r_k$, the non-resonant components of $\psi_m$ and $\chi_m$ are continuous,  the 
+large solution is absent (i.e., ${\mit\Psi}_k=0$), but the small solution is present  (i.e., ${\mit\Delta\Psi}_k=0$). (See Sect.~\ref{rational}.)
+It is easily shown that $\sum_m \psi_m^\ast\,\chi_m$ remains finite at $r=r_k$ (which would not be the case if ${\mit\Psi}_k\neq 0$), and\,\cite{tj}
 \begin{equation}
-\left(\sum_m\psi_m^\ast\,\chi_m\right)_{r_{m-}}^{r_{m+}}=0.
+\left(\sum_m\psi_m^\ast\,\chi_m\right)_{r_{k-}}^{r_{k+}}=0.
 \end{equation}
 In other words, there is no contribution to the perturbed potential energy from the surface. Thus, Eq.~(\ref{e1}) holds even when the region between the
 magnetic axis and the flux-surface whose label is $r$ contains rational surfaces. 
@@ -209,38 +258,39 @@ where $r=a_-$ corresponds to an equilibrium magnetic flux that lies just inside 
 
 \subsection{Toroidal Electromagnetic Torque}
 The flux-surface averaged toroidal electromagnetic torque acting on the plasma   is\,\cite{tj,ideal}
-\begin{align}
+\begin{align}\label{b27}
 T_\phi& = {\rm i}\,n\,\pi^2\left(\sum_m\frac{Z_m^\ast\,\psi_m-\psi_m^\ast\,Z_m}{m-n\,q}\right)_{a_-}= {\rm i}\,n\,\pi^2\left(\sum_m
 \chi_m^{\,\ast}\,\psi_m - \psi_m^{\,\ast}\,\chi_m\right)_{a_-}\nonumber\\[0.5ex]
 &= 2\,n\,{\rm Im}(\delta W_p),
 \end{align}
 where use has been made of Eqs.~(\ref{e29}) and (\ref{e1}). 
-However, this torque must be zero for ideal solutions, which are characterized by zero reconnected magnetic flux at the various rational surfaces in the plasma.\cite{tj}
+However, according to Eq.~(\ref{torque}), this torque must be zero for ideal solutions, which are characterized by ${\mit\Psi}_k=0$ (i.e., zero reconnected magnetic
+flux at the various rational surfaces in the plasma).\cite{tj}
 It follows that
  the total plasma potential energy, $\delta W_p$, is necessarily a real quantity. 
  
  \subsection{Marginally-Stable Ideal Eigenfunctions}\label{sideal}
 We can construct a complete set of  marginally-stable ideal eigenfuctions in the outer region from the tearing eigenfunctions calculated by the TJ code as follows:
 \begin{align}
-\psi_{m\,m'}^i(r)&= \psi_{m\,m'}^a(r)-\sum_{k}\psi_{m\,k}^u(r)\,{\mit\Pi}_{k\,m'}^a,\\[0.5ex]
-Z_{m\,m'}^i(r)&= Z_{m\,m'}^a(r)-\sum_{k}Z_{m\,k}^u(r)\,{\mit\Pi}_{k\,m'}^a.
+\psi_{m\,m'}^i(r)&= \psi_{m\,m'}^a(r)-\sum_{k=1,K}\psi_{m\,k}^u(r)\,{\mit\Pi}_{k\,m'}^a,\\[0.5ex]
+Z_{m\,m'}^i(r)&= Z_{m\,m'}^a(r)-\sum_{k=1\,K}Z_{m\,k}^u(r)\,{\mit\Pi}_{k\,m'}^a.
 \end{align}
- Here, $m$ labels the poloidal harmonic of the solution,  $m'$ labels the solution itself, and $k$ labels the various rational surfaces in the plasma. There are as many solutions as there are poloidal harmonics included in the calculation. All other quantities are defined in Sects.~VIII.B and VIII.D of Ref.~\onlinecite{tj}. 
+ Here, $m$ labels the poloidal harmonic of the solution,  $m'$ labels the solution itself, and $k$ labels the various rational surfaces in the plasma. There are as many solutions as there are poloidal harmonics included in the calculation. All other quantities are defined in Sects.~VIII.B--VIII.D of Ref.~\onlinecite{tj}. 
  It follows
-from the definitions of the various quantities that the reconnected magnetic  fluxes at the rational surfaces in the plasma
-associated with the ideal eigenfunctions are all zero. We can also write
+from the definitions of the various quantities in the previous two equations  that the reconnected magnetic  fluxes at the rational surfaces in the plasma
+associated with the ideal eigenfunctions are all zero (i.e., ${\mit\Psi}_k=0$ for all $k$). We can also write
 \begin{equation}\label{e39}
 \chi^i_{m\,m'}(r) = \left(\frac{\tilde{k}_{m}\,\psi^i_{m\,m'}+Z_{m\,m'}^i}{m-n\,q}\right)_r,
 \end{equation}
 where use has been made of Eq.~(\ref{e29}).
 
 \subsection{Plasma Energy Matrix}
-We can write a general ideal solution at the plasma boundary as
+We can write a general ideal solution just inside the plasma-vacuum interface as
 \begin{align}
 \psi_m(a) &= \sum_{m'}\psi_{m\,m'}^i(a)\,\alpha_{m'},\\[0.5ex]
 \chi_m(a_-) &= \sum_{m'}\chi_{m\,m'}^i(a_-)\,\alpha_{m'},
 \end{align}
-where the $\alpha_m$ are arbitrary complex coefficients. 
+where the $\alpha_m$ are arbitrary complex coefficients.  Note that the $\psi_m(r)$ are continuous across the plasma-vacuum interface, whereas the $\chi_m(r)$ are generally discontinuous. 
 The previous two equations can be written more succinctly as
 \begin{align}\label{e41}
 \underline{\psi}&= \underline{\underline{\psi}}_{\,i}\,\underline{\alpha},\\[0.5ex]
@@ -294,9 +344,9 @@ where
 \begin{equation}
 \delta W_v = \frac{1}{2}\int_{a+}^\infty\oint\oint {\bf b}^\ast\cdot{\bf b} \,{\cal J}\,dr\,d\theta\,d\phi
 \end{equation}
-is the perturbed potential energy of the surrounding vacuum. Here, $r=a_+$ corresponds to an equilibrium magnetic flux-surface that lies just outside the plasma-vacuum interface. 
+is the perturbed potential energy of the surrounding vacuum.\cite{freidberg,ideal} Here, $r=a_+$ corresponds to an equilibrium magnetic flux-surface that lies just outside the plasma-vacuum interface. 
 
-\subsection{Vacuum Potential Energy}
+\subsection{Vacuum Potential Energy}\label{vac}
 In the vacuum region, we can write the curl- and divergence-free perturbed magnetic field in the form 
 ${\bf b} = {\rm i}\,\nabla V$,
 where
@@ -336,7 +386,6 @@ where
 \begin{equation}\label{e90}
 J_m= -\left[\chi_m\right]_{a_-}^{a_+}.
 \end{equation}
-Note that the $\psi_m(r)$ are continuous across the plasma-vacuum interface, whereas the $\chi_m(r)$ are generally discontinuous. 
 
 \subsection{Boundary Current Sheet}
 Now, $\alpha_p=\alpha_g=0$ at the plasma-vacuum interface, assuming that the  equilibrium current is zero there,
@@ -348,9 +397,9 @@ x_m= n\,\chi_m
 at the plasma-vacuum interface, where $x(r,\theta)=\sum_m x_m(r)\,\exp(\,{\rm i}\,m\,\theta)$. 
 Suppose that there is a perturbed current sheet on the interface. 
 Thus, if ${\bf K}$ is the current sheet density then Eqs.~(66) and (67) of Ref.~\onlinecite{tj} suggest that
-\begin{align}
+\begin{align}\label{eb59}
 {\cal J}\,K_m^{\,\theta} &=  n\,J_m,\\[0.5ex]
-{\cal J}\,K_m^{\,\phi} &=m\,J_m,
+{\cal J}\,K_m^{\,\phi} &=m\,J_m,\label{eb60}
 \end{align}
 where use has been made of Eqs.~(\ref{e90}) and (\ref{e91}). 
 Let us write
@@ -362,24 +411,21 @@ where $J(\theta,\phi)=J(\theta)\,\exp(-{\rm i}\,n\,\phi)$, which ensures that $\
 {\cal J}\,K^\theta&= {\rm i}\,\frac{\partial J}{\partial \phi},\\[0.5ex]
 {\cal J}\,K^\phi &=-{\rm i}\,\frac{\partial J}{\partial\theta}.
 \end{align}
-Hence, we deduce that 
-\begin{align}
-{\cal J}\,K^\theta_m&= n\,J_m,\\[0.5ex]
-{\cal J}\,K^\phi_m &=m\,J_m.
-\end{align}
-Thus, it is clear that the $J_m$ are the Fourier components of the $J(\theta)$ function introduced in Eq.~(\ref{e94}). 
+Hence, we reproduce Eqs.~(\ref{eb59}) and (\ref{eb60}). 
+We conclude that the $J_m$ are the Fourier components of the $J(\theta)$ function introduced in Eq.~(\ref{e94}). 
 
 As described in Ref.~\onlinecite{ideal}, the marginally-stable ideal eigenfunctions   feature a perturbed current sheet on the vacuum-plasma interface because they do not satisfy the
 perturbed  pressure-balance boundary condition.
 However, these current sheets are entirely fictitious. The true ideal eigenfunctions (which, unlike the marginally-stable ideal eigenfunctions, take plasma inertia into account)
-satisfy the pressure-balance boundary condition (and, therefore, have no associated current sheets). 
+satisfy the pressure-balance boundary condition (and, therefore, have no associated current sheets). Current sheets are permitted because the marginally-stable ideal eigenfunctions
+are ``trial solutions'' used to determine ideal stability, rather than actual physical solutions. 
 
-\subsection{Determination of Ideal Stability}
+\subsection{Determination of Ideal Stability}\label{stab}
 According to Eq.~(215) of Ref.~\onlinecite{tj}, combined with Eq.~(\ref{e89}), 
 \begin{equation}
 \chi_m(a_+)=\sum_{m'}\,H_{m\,m'}\,\psi_{m'}(a),
 \end{equation}
-where the vacuum matrix $H_{mm'}$ is Hermitian. 
+where the ``vacuum matrix'', $H_{mm'}$, is Hermitian. (See Sect.~VI.G of Ref.~\onlinecite{tj}.)
 Hence, it follows from Eq.~(\ref{e90}) that
 \begin{equation}
 J_m = \chi_m(a_-)-\sum_{m'} H_{m\,m'}\,\psi_m(a).
@@ -390,9 +436,9 @@ Making use of Eq.~(\ref{e89a}), we can write
 \end{equation}
 where 
 \begin{equation}
-\underline{J} = \underline{\chi}+ \underline{\underline{W}}_{\,v}\,\underline{\psi},
+\underline{J} = \underline{\chi}+ \underline{\underline{W}}_{\,v}\,\underline{\psi}.
 \end{equation}
-and  $\underline{J}$ the column vector of the $J_m$ values, 
+Here,  $\underline{J}$ is the column vector of the $J_m$ values, 
 and $\underline{\underline{W}}_{\,v}$  the Hermitian matrix of the $-H_{m\,m'}$ values. 
 Making use of Eqs.~(\ref{e41}), (\ref{e42}), and (\ref{e48}), we get 
 \begin{equation}
@@ -408,7 +454,8 @@ where
 \end{equation}
 
 Note that $\underline{\underline{W}}_{\,p}$ and $\underline{\underline{W}}_{\,v}$ are both Hermitian, so $\underline{\underline{W}}$ is also
-Hermitian. Thus the energy matrix, $\underline{\underline{W}}$, possesses real eigenvalues and orthonormal eigenvectors, $\underline{\beta}_m$. 
+Hermitian. Thus the total energy matrix, $\underline{\underline{W}}$, possesses real eigenvalues and orthonormal eigenvectors, $\underline{\beta}_m$. Let $(\underline{\beta}_{m'})_{m} = \beta_{m\,m'}$, and let $\underline{\underline{\beta}}$ be the matrix of the $\beta_{mm'}$ values. It follows that  
+$\underline{\underline{\beta}}^\dag\,\underline{\underline{\beta}}= \underline{\underline{1}}$. 
 We conclude that there are as many linearly independent ideal eigenmodes of the plasma as there are poloidal harmonics included in the calculation. The $m$th
 eigenmode has the associated energy
 \begin{equation}
@@ -421,12 +468,225 @@ where
 \delta W_{v\,m} &= \underline{\beta}_m^{\,\dag}\,\underline{\underline{W}}_{\,v}\, \underline{\beta}_m.
 \end{align}
 Note that $\delta W_m$, $\delta W_{p\,m}$ and $\delta W_{v\,m}$ are all real quantities. Moreover, $\delta W_{p\,m}$ and $\delta W_{v\,m}$ can be interpreted as the
-plasma and vacuum contributions to $\delta W_m$, respectively. Finally, if any of the $\delta W_m$ are negative then the plasma is ideally unstable.\cite{freidberg,ideal}
+plasma and vacuum contributions to $\delta W_m$, respectively. Finally, 
+\begin{equation}
+\delta W = \sum_m |\hat{\alpha}_m|^2\,\delta W_m,
+\end{equation}
+where $\underline{\hat{\alpha}}= \underline{\underline{\beta}}^\dag\,\underline{\underline{\psi}}_{\,i}\,\underline{\alpha}$. 
+As is well known, the plasma is ideally unstable if $\delta W<0$ for any possible ideal peturbation.\cite{freidberg,ideal}
+Thus, given that the $\hat{\alpha}_m$ are arbitrary, we deduce that if any of the $\delta W_m$ are negative then the plasma is ideally unstable.
 
+\section{Vacuum Solution}
+\subsection{Toroidal Coordinates}
+Let $\mu$, $\eta$, $\phi$ be right-handed toroidal coordinates defined such that
+\begin{align}
+R &= \frac{\sinh\mu}{\cosh\mu-\cos\eta},\\[0.5ex]
+Z&=\frac{\sin\eta}{\cosh\mu-\cos\eta}.
+\end{align}
+The scale-factors of the toroidal coordinate system are
+\begin{align}
+h_\mu&=h_\eta= \frac{1}{\cosh\mu-\cos\eta}\equiv h,\\[0.5ex]
+h_\phi &= \frac{\sinh\mu}{\cosh\mu-\cos\eta} = h\,\sinh\mu.
+\end{align}
+Moreover, 
+\begin{equation}
+{\cal J}' \equiv (\nabla\mu\times\nabla\eta\cdot\nabla\phi)= h^3\,\sinh\mu.
+\end{equation}
+
+\subsection{Perturbed Magnetic Field}
+The curl-free perturbed magnetic field in the vacuum region is written ${\bf b} = {\rm i}\,\nabla V$,
+where
+$\nabla^2 V =0$.
+The most general solution to Laplace's equation is
+\begin{align}
+V(z,\eta)&= \sum_m (z-\cos\eta)^{1/2}\,U_m(z)\,{\rm e}^{-{\rm i}\,m\,\eta}, \\[0.5ex]
+U_m(z) &= p_m\,\hat{P}_{|m|-1/2}^{\,n}(z)+q_m\,\hat{Q}_{m-1/2}^{\,n}(z),
+\end{align}
+where  $z=\cosh\mu$, the $p_m$ and $q_m$ are arbitrary complex coefficients, and 
+\begin{align}\label{e21}
+\hat{P}_{|m|-1/2}^{\,n}(z) &= \cos(|m|\,\pi)\,\frac{\sqrt{\pi}\,\Gamma(|m|+1/2-n)\,a^{\,|m|}}{2^{\,|m|-1/2}\,|m|!}\,P_{|m|-1/2}^{\,n}(z),\\[0.5ex]
+\hat{Q}_{|m|-1/2}^{\,n}(z)&= \cos(n\,\pi)\,\cos(|m|\,\pi)\,\frac{2^{\,|m|-1/2}\,|m|!}{\sqrt{\pi}\,\Gamma(|m|+1/2+n)\,a^{\,|m|}}\,Q_{|m|-1/2}^{\,n}(z).\label{e22}
+\end{align}
+Here,  the $P_{m-1/2}^{\,n}(z)$  and $Q_{|m|-1/2}^{\,n}(z)$ are toroidal functions,\cite{abrama}  and $\Gamma(z)$ is a
+gamma function.\cite{abramb}
+
+\subsection{Toroidal Electromagnetic Angular Momentum Flux}
+The outward flux of toroidal angular momentum across a constant-$z$ surface is
+\begin{align}
+T_\phi(z) &= -\oint\oint {\cal J}' \,b_\phi\,b^{\,\mu}\,d\eta\,d\phi\\[0.5ex]
+&={\rm i}\,n\,\pi^2\sum_{m}(p_m\,q_m^\ast-q_m\,p_m^{\ast})\,(z^2-1)\,{\cal W}(\hat{P}_{|m|-1/2}^{\,n},\hat{Q}_{|m|-1/2}^{\,n}),
+\end{align}
+where ${\cal W}(f,g)\equiv f\,dg/dz-g\,df/dz$. 
+But,\cite{morse}
+\begin{align}
+{\cal W}(\hat{P}_{|m|-1/2}^{\,n},\hat{Q}_{|m|-1/2}^{\,n})&= 
+\cos(n\,\pi) \,\frac{\Gamma(|m|+1/2-n)}{\Gamma(|m|+1/2+n)}\,{\cal W}(P_{|m|-1/2}^{\,n},Q_{|m|-1/2}^{\,n})\nonumber\\[0.5ex]
+&= \frac{1}{1-z^2}, 
+\end{align}
+where use has been made of Eqs.~(\ref{e21}) and (\ref{e22}), 
+so
+\begin{equation}\label{e30x}
+T_\phi(z) = 2\pi^2\,n\sum_m {\rm Im}(q_m^\ast\,p_m).
+\end{equation}
+Note that $T_\phi$ is independent of $z$, as must be the case because there are no angular momentum sources in the vacuum region.
+
+\subsection{Solution in Vacuum Region}
+In the large-aspect ratio limit, $r\ll 1$, it can be demonstrated that\,\cite{morse}
+\begin{align}\label{e25t}
+z&\simeq \frac{1}{r},\\[0.5ex]
+z^{\,1/2}\,\hat{P}^{\,n}_{-1/2}(z) &\simeq \frac{1}{2}\ln\left(\frac{8\,z}{\zeta_n}\right),\\[0.5ex]
+z^{1/2}\,\hat{P}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(\epsilon\,z)^{|m|}}{|m|},\label{ety}\\[0.5ex]
+z^{1/2}\,\hat{Q}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(\epsilon\,z)^{-|m|}}{2},\\[0.5ex]
+\zeta_n &= \exp\left(\sum_{j=1,n}\frac{2}{2\,j-1}\right).\label{e29t}
+\end{align}
+Note that Eq.~(\ref{ety}) only applies to $|m|>0$. 
+
+The plasma-vacuum interface lies at $r=a$. Suppose that the plasma is surrounded by a perfectly conducting wall at $r=b_w\,a$, where $b_w\geq 1$.  In the
+vacuum region, $a\leq r\leq b_w\,a$,  lying between the plasma and the wall, we can write
+\begin{align}\label{e32a}
+\underline{V}(r)&= \underline{\underline{{\cal P}}}(r)\,\underline{p}+ \underline{\underline{{\cal Q}}}(r)\,\underline{q},\\[0.5ex]
+\underline{\psi}(r)&= \underline{\underline{{\cal R}}}(r)\,\underline{p}+ \underline{\underline{{\cal S}}}(r)\,\underline{q},\label{e33a}
+\end{align}
+where $\underline{V}(r)$ is the vector of the $V_m(r)$ values (see Sect.~\ref{vac}), $\underline{\psi}(r)$ is the vector of the $\psi_m(r)$ values [see Eq.~(\ref{a3})], $\underline{\underline{{\cal P}}}(r)$ is the
+matrix of the
+\begin{equation}
+{\cal P}_{mm'}(r)=\oint_{r}(z-\cos\eta)^{1/2}\,\hat{P}_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+\end{equation}
+values, 
+$\underline{\underline{{\cal Q}}}(r)$ is the
+matrix of the
+\begin{equation}
+{\cal Q}_{mm'}(r)=\oint_{r}(z-\cos\eta)^{1/2}\,\hat{Q}_{|m'|-1/2}^{\,n}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+\end{equation}
+values, $\underline{\underline{{\cal R}}}(r)$ is the matrix of the 
+\begin{align}\label{e354}
+{\cal R}_{mm'}(r) &=\oint_{r}
+\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\hat{P}_{|m'|-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{d\hat{P}_{|m'|-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
+\right.\nonumber\\[0.5ex]&
+\left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]\hat{P}_{|m'|-1/2}^{\,n}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
+\right\}\nonumber\\[0.5ex] &
+\phantom{=}\times\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+\end{align}
+values, 
+$\underline{\underline{{\cal S}}}(r)$ is the matrix of the 
+\begin{align}\label{e355}
+{\cal S}_{mm'}(r) &=\oint_{r}
+\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\hat{Q}_{|m'|-1/2}^{\,n}(z)+(z-\cos\eta)^{1/2}\,\frac{d\hat{Q}_{|m'|-1/2}^{\,n}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
+\right.\nonumber\\[0.5ex]&
+\left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]\hat{Q}_{|m'|-1/2}^{\,n}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
+\right\}\nonumber\\[0.5ex] &
+\phantom{=}\times\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+\end{align}
+values, $\underline{p}$ is the vector of the $p_m$ coefficients, and  $\underline{q}$ is the vector of the $q_m$ coefficients. Here, the
+subscript $r$ on the integrals indicates that they are taken at constant $r$. 
+
+\subsection{Toroidal Electromagnetic Torque}
+According to Eq.~(\ref{b27}), (\ref{e89}), and Eq.~(214) of Ref.~\onlinecite{tj}, 
+the net toroidal electromagnetic torque acting on the plasma  is
+\begin{align}\label{e38}
+T_\phi&= -2\pi^2\,n\,{\rm Im}(\underline{V}^\dag\,\underline{\psi})= -\pi^2\,n\,(\underline{V}^\dag\,\underline{\psi}-\underline{\psi}^\dag\,\underline{V}).
+\end{align}
+However, this torque must equal the flux of toroidal angular momentum into the vacuum region, so Eq.~(\ref{e30x}) implies that
+\begin{equation}\label{e39x}
+T_\phi= 2\pi^2\,n\,{\rm Im}(\underline{q}^\dag\,\underline{p})= \pi^2\,n\,(\underline{q}^\dag\,\underline{p}- \underline{p}^\dag\,\underline{q}).
+\end{equation}
+Now, Eqs.~(\ref{e32a}), (\ref{e33a}), and (\ref{e38}) give 
+\begin{align}
+T_\phi&= -\pi^2\,n\,\left[
+\underline{p}^\dag\,(\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal R}}
+- \underline{\underline{\cal R}}^\dag\,\underline{\underline{\cal P}})\,\underline{p}
++\underline{p}^\dag\,(\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal S}}
+-\underline{\underline{\cal R}}^\dag\,\underline{\underline{\cal Q}})\,\underline{q}\right.\nonumber\\[0.5ex]
+&\phantom{=}\left.- \underline{q}^\dag\,(\underline{\underline{\cal S}}^\dag\,\underline{\underline{\cal P}}
+- \underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal R}})\,\underline{p}
++\underline{q}^\dag\,(\underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal S}}
+- \underline{\underline{\cal S}}^\dag\,\underline{\underline{\cal R}})\,\underline{q}
+\right]
+\end{align}
+The previous equation is consistent with Eq.~(\ref{e39x}) provided that
+\begin{align}\label{e41x}
+\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal R}}&= \underline{\underline{\cal R}}^\dag\,\underline{\underline{\cal P}},\\[0.5ex]
+\underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal S}}&= \underline{\underline{\cal S}}^\dag\,\underline{\underline{\cal Q}},\label{e42x}\\[0.5ex]
+\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal S}}- \underline{\underline{\cal R}}^\dag\,\underline{\underline{\cal Q}}&=\underline{\underline{1}}.\label{e43}
+\end{align}
+
+The previous three equations can be combined with Eqs.~(\ref{e32a}) and (\ref{e33a}) to give 
+\begin{align}
+\underline{p} &= \underline{\underline{\cal S}}^{\,\dag} \,\underline{V} - \underline{\underline{\cal Q}}^{\,\dag}\,\underline{\psi},\\[0.5ex]
+\underline{q} &= -\underline{\underline{\cal R}}^{\,\dag} \,\underline{V} + \underline{\underline{\cal P}}^{\,\dag}\,\underline{\psi}.
+\end{align}
+However, the previous two equations are only consistent with Eqs.~(\ref{e32a}) and (\ref{e33a}) provided 
+\begin{align}\label{e46}
+\underline{\underline{\cal Q}}\,\underline{\underline{\cal P}}^\dag&= \underline{\underline{\cal P}}\,\underline{\underline{\cal Q}}^\dag,\\[0.5ex]
+\underline{\underline{\cal R}}\,\underline{\underline{\cal S}}^\dag&= \underline{\underline{\cal S}}\,\underline{\underline{\cal R}}^\dag,\label{e47x}\\[0.5ex]
+\underline{\underline{\cal P}}\,\underline{\underline{\cal S}}^{\dag}- \underline{\underline{\cal Q}}\,\underline{\underline{\cal R}}^{\dag}&=\underline{\underline{1}}.\label{e48x}
+\end{align}
+Note that Eqs.~(\ref{e41x})--(\ref{e43}) and (\ref{e46})--(\ref{e48x}) hold throughout the vacuum region. 
+
+\subsection{Ideal-Wall Matching Condition}
+If the wall is perfectly conducting then  $\underline{\psi}(b_w\,\epsilon)=0$. 
+It follows from Eq.~(\ref{e33a}) that
+\begin{equation}
+\underline{q} = \underline{\underline{I}}_b\,\underline{p},
+\end{equation}
+where
+\begin{equation}
+ \underline{\underline{I}}_b=- \underline{\underline{\cal S}}_{\,b}^{-1}\,\underline{\underline{\cal R}}_{\,b}
+ \end{equation}
+ is termed the wall matrix.
+ Here, $\underline{\underline{\cal S}}_{\,b}= \underline{\underline{\cal S}}(b_w\,\epsilon)$, et cetera. Equation~(\ref{e47}) ensures that $ \underline{\underline{I}}_b$
+ is Hermitian. It immediately follows from Eq.~(\ref{e39x}) that $T_\phi=0$. In other words, zero net toroidal electromagnetic torque is exerted on a plasma
+ surrounded by a perfectly conducting wall. As described in Ref.~\onlinecite{tj}, the fact that $T_\phi=0$ ensures that the tearing stability matrix, $E_{kk'}$, introduced in
+ Sect.~\ref{disp} is Hermitian. 
+ 
+  Making use of Eqs.~(\ref{e32a}) and (\ref{e33a}),  the matching condition at the plasma-vacuum interface  for an ideal wall becomes 
+ \begin{equation}
+ \underline{V}(a_+)= \underline{\underline{H}}\,\underline{\psi}(a),
+ \end{equation}
+ where 
+ \begin{equation}
+ \underline{\underline{H}}= (\underline{\underline{\cal P}}_{\,a}+\underline{\underline{\cal Q}}_{\,a}\,\underline{\underline{I}}_{\,b})\,(\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}
+ \end{equation}
+ is  the vacuum matrix introduced in Sect.~\ref{stab}. 
+  Here, $\underline{\underline{\cal P}}_{\,a}= \underline{\underline{\cal P}}(a_+)$, et cetera. 
+Making use of Eqs.~(\ref{e41})--(\ref{e43}), it is easily demonstrated that
+ \begin{equation}\label{e53}
+ \underline{\underline{H}}-\underline{\underline{H}}^\dag =- [(\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}]^{\dag}\,(\underline{\underline{I}}_{\,b} -\underline{\underline{I}}^\dag_{\,b})\,  (\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}
+\end{equation}
+Thus,  the vacuum matrix, $\underline{\underline{H}}$, is Hermitian because  the wall matrix, $\underline{\underline{I}}_{\,b}$, is Hermitian. 
+ 
+\subsection{Model Wall Matrix}
+ Equations~(\ref{e25t})--(\ref{e29t}), (\ref{e354}), and (\ref{e355}) suggest that
+ \begin{align}
+ \underline{\underline{{\cal R}}}_{\,b}& = \underline{\underline{{\cal R}}}_{\,\epsilon} \,\underline{\underline{\rho}}^{\,-1},\\[0.5ex]
+ \underline{\underline{{\cal S}}}_{\,b} &= \underline{\underline{{\cal S}}}_{\,\epsilon} \,\underline{\underline{\rho}},
+ \end{align}
+ where
+ \begin{align}
+ \rho_{mm'} &= \delta_{mm'}\,\rho_m,\\[0.5ex]
+ \rho_0 &= 1+\ln b_w,\\[0.5ex]
+ \rho_{m\neq 0} &= b_w^{\,|m|}.
+ \end{align}
+ Hence,
+ \begin{equation}
+ \underline{\underline{I}}_{\,b}= - \underline{\underline{\rho}}^{\,-1\,\dag}\,\underline{\underline{\cal S}}_{\,a}^{-1}\,\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{\rho}}^{\,-1}.
+ \end{equation}
+ Note that $\underline{\underline{I}}_b$ is Hermitian, given that $\underline{\underline{\cal S}}_{\,a}^{-1}\,\underline{\underline{\cal R}}_{\,a}$
+ is Hermitian. [See Eq.~(\ref{e47x}).] Our model wall matrix allows us to smoothly interpolate between a plasma with no wall
+ (which corresponds to $b_w\rightarrow\infty$ and $\underline{\underline{H}}= \underline{\underline{\cal P}}_{\,a}\,\underline{\underline{\cal R}}_{\,a}^{-1}$\,\cite{tj}), 
+ and a fixed boundary plasma (which corresponds to $b_w=1$ and $\underline{\underline{H}}^{-1}= \underline{\underline{0}}$). 
 
 \begin{thebibliography}{99}\baselineskip 5ex
 
 \bibitem{fkr} H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).
+
+\bibitem{hkm} R.D.~Hazeltine, M.~Kotschenreuther, and P.G.~Morrison, Phys.\ Fluids {\bf 2}, 2466  (1985). 
+
+\bibitem{fw} R.~Fitzpatrick, and F.L.~Waelbroeck, Phys.\ Plasmas {\bf 12}, 022307 (2005).
+
+\bibitem{cole} A.~Cole, and R.~Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
+
+\bibitem{diff} R.~Fitzpatrick, Phys.\ Plasmas {\bf 29}, 032507 (2022).
 
 \bibitem{con0} J.W.~Connor and R.J.~Hastie, {\em The Effect of Shaped Plasma Cross Sections on the Ideal Kink Mode in a Tokamak}\/ (Rep. CLM-M106, Culham Laboratory, Abingdon UK, 1985).
 
@@ -472,9 +732,21 @@ plasma and vacuum contributions to $\delta W_m$, respectively. Finally, if any o
 
 \bibitem{tj} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31}, 102507 (2024).
 
+\bibitem{mercier} C.~Mercier, Nucl.\ Fusion {\bf 1}, 47 (1960).
+
+\bibitem{ggj} A.H.~Glasser, J.M.~Greene, and J.L.~Johnson, Phys.\ Fluids {\bf 18}, 875 (1975).
+
+\bibitem{ggj1} A.H.~Glasser, J.M.~Greene, and J.L.~Johnson, Phys.\ Fluids {\bf 19}, 567 (1976).
+
 \bibitem{freidberg} J.P.~Freidberg, Rev.\ Mod.\ Phys.\ 54, {\bf 801} (1982).
 
 \bibitem{ideal} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31}, 112502 (2024).
+
+\bibitem{abrama} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}\/ (Dover, New York NY, 1964), sect.~8.11.
+
+\bibitem{abramb} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}\/ (Dover, New York NY, 1964), ch.~6.
+
+\bibitem{morse} P.M.~Morse and H.~Feshbach, Methods of Theoretical Physics (McGraw-Hill, New York, 1953), pp. 1302–1329.
 
 %\bibitem{pletzer} A.~Pletzer, A.~Bondeson, and R.L.~Dewar, J.\ Comp.\ Phys.\ {\bf 115}, 530 (1994).
 
