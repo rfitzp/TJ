@@ -20,12 +20,12 @@
 \maketitle
 
 \section{Introduction} 
-The calculation of the stability of a tokamak plasma equilibrium to tearing perturbations is most efficiently formulated as  an asymptotic
+The calculation of the stability of a tokamak plasma to tearing perturbations is most efficiently formulated as  an asymptotic
 matching problem in which the  plasma is  divided into two distinct regions.\cite{fkr}  In the ``outer region'', which comprises most
 of the plasma, the tearing perturbation is described by the equations of linearized, marginally-stable, ideal magnetohydrodynamics (a.k.a.\ the ``ideal-MHD'' equations). 
 However, these equations become singular on   ``rational'' magnetic flux-surfaces at which the perturbed magnetic field resonates with the equilibrium field. In the ``inner region'', which
 consists of a set of narrow layers centered on the various rational surfaces, non-ideal-MHD effects such as plasma inertia, resistivity, 
-viscosity,  diamagnetic flows, and the ion sound radius,  become important.\cite{hkm,fw,cole,diff}  The resistive layer
+viscosity,  diamagnetic flows, the ion sound radius,  and perpendicular and parallel energy transport, become important.\cite{hkm,fw,cole,diff}  The resistive layer
 solutions in the various segments of the inner region must be simultaneously asymptotically matched to the ideal-MHD solution in the outer region to produce a matrix 
 dispersion relation that determines the growth-rates and angular rotation frequencies of the various tearing modes to which the plasma is subject.\cite{con0,cht} (See Sect.~\ref{disp}.)
 
@@ -34,22 +34,83 @@ tokuda,brennan,ham,ham1,ham2,am1,am2,am3,aglas,aglas1,aglas2}
 One way of greatly reducing the complexity of this task is to employ an inverse aspect-ratio expanded plasma equilibrium.\cite{greene,gim,inverse} In such an equilibrium,
 the metric elements of the flux-coordinate system can be expressed analytically in terms of a relatively small number of  flux-surface functions,
 which represents a major simplification.\cite{con0} Another significant advantage of an inverse aspect-ratio expanded equilibrium is that the magnetic perturbation in the plasma can be efficiently 
-matched to an exterior vacuum solution  that is expressed as an expansion in toroidal functions.\cite{am1} The aspect-ratio expansion approach to the tearing mode stability problem has been realized in the recently developed TJ code,
+matched to an exterior vacuum solution  that is expressed as an expansion in toroidal functions.\cite{am1} (See Sect.~\ref{vacuum}.) The aspect-ratio expansion approach to the tearing mode stability problem has been realized in the recently developed TJ code,
 which is described in Ref.~\onlinecite{tj}.
+
+The first aim of this paper is to document three major improvements to the TJ code. 
+
+As is well known, tearing modes in tokamak plasmas become extremely
+unstable as an ideal stability boundary is approached.\cite{brennan,bren1,bren2} When investigating such phenomena, it is imperative to know the exact location
+of the  stability boundary. Appendix~\ref{ideal} explains how the the ideal-MHD solutions in the outer region, calculated by the TJ code, can be repurposed to
+construct a complete set of marginally-stable ideal eigenfunctions, and how these eigenfunctions can then be used to calculate the total ideal perturbed potential
+energy, $\delta W$, of all possible ideal modes.  Of course, the ideal stability boundary corresponds to the point at which the smallest possible value of $\delta W$ passes through
+zero.\cite{freidberg,ideal}
+
+Previously, the TJ code either allowed for fixed boundary calculations, or calculations in which the plasma is surrounded by a vacuum region. Appendix~\ref{vacuum} describes a
+new capability that allows for the presence of a perfectly conducting wall in the vacuum region. The radius of the wall, relative to the plasma, can be varied. 
+
+Previously, the TJ code only calculated the tearing stability matrix from the ideal-MHD solution in the outer region. However, this is only half of the tearing stability problem. 
+In order to determine the growth-rates and real frequencies of possible tearing modes, it is necessary to combine the data contained in the tearing stability matrix with resistive layer solutions
+in the various segments of the inner region. Appendices~\ref{lmodel} and \ref{asym}   describe a new resistive layer model that has been implemented in the TJ code. The model takes into account 
+plasma resistivity, plasma inertia, electron and ion diamagnetic flows, the decoupling of the electron and ion fluids on lengthscales below the ion sound radius, perpendicular
+momentum transport, parallel and perpendicular energy transport, and the stabilizing effect of average magnetic field-line curvature.
+
+The second aim of the paper is to benchmark the results of the TJ toroidal tearing mode code against results from the STRIDE toroidal tearing mode code. This benchmarking
+exercise is described in Sect.~\ref{benchmark}. 
+
+\section{Benchmark of TJ Code against STRIDE Code}\label{benchmark}
+\subsection{Introduction}
+The STRIDE toroidal tearing mode code\,\cite{aglas1} is a variant of the RDCON toroidal tearing mode code.\cite{aglas2} Both codes are built on top of the
+DCON ideal stability code.\cite{dcon} This section compares the tearing stability matrix, $E_{kk'}$ (see Sect.~\ref{disp}), where $k$ and $k'$ index the various rational surfaces in the
+plasma, calculated by the TJ code, with the equivalent symmetrized tearing stability matrix, $\hat{\mit\Delta}_{kk'}$, calculated by the STRIDE code. (Appendix~\ref{comp} explains how
+$\hat{\mit\Delta}_{kk'}$ is related to the actual tearing stability matrix, ${\mit\Delta}_{kk'}$, calculated by STRIDE.)
+
+\subsection{Plasma Equilibrium}
+In the TJ code, the lowest-order safety-factor profile is written
+\begin{equation}
+q(r) = \frac{q_0\,\nu\,(r/a)^2}{1-[1-(r/a)^2]^\nu},
+\end{equation}
+and the normalized (see Sect.~\ref{norm}) pressure profile takes the form
+\begin{equation}
+p(r) = \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_\mu}.
+\end{equation}
+Here, $r$ is the flux-surface label defined in Sect.~\ref{coord}.  Moreover, the magnetic axis corresponds to $r=0$, and the plasma
+boundary to $r=a$.  Furthermore, $q_0=q(0)$ is the safety-factor on the magnetic axis, and  $\beta_0$ is the central plasma $\beta$. 
+The value of $\nu$ is adjusted to obtain the desired value of $q_a=q(a)$. 
+
+In the  STRIDE code, we make use of a slightly modified form of the \verb|lar| large aspect-ratio analytic equilibrium in which the 
+ normalized parallel current profile, $\sigma={\bf J}\cdot{\bf B}/B^2$,  is written
+\begin{equation}
+\sigma(r) = \frac{2}{q_0}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_\sigma}.
+\end{equation}
+whereas the  normalized pressure profile takes the form
+\begin{equation}
+p(r)= \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p}.
+\end{equation}
+In order to obtain (almost) the same equilibrium in the two code, we choose the values of $q_0$, $\beta_0$, $p_p$, and $p_\sigma$, and then
+adjust the parameter $\nu$ in the TJ code until both codes have the same value of $q_a$. 
+
+\section*{Acknowledgements}
+This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
+The author would like to thank Daniel Burgess, Nikolas Logan, J.-K.~Park and J.-M.~Lee for help with getting the STRIDE code to
+run reliably. 
+
+\section*{Data Availability Statement}
+The digital data used in the figures in this paper can be obtained from the author upon reasonable request. The TJ code is freely 
+available at {\tt https://github.com/rfitzp/TJ}. 
 
 \appendix
 
 \section{General Definitions}
-\subsection{Normalization}\label{coords}
-All lengths are normalized to  the major radius of the plasma magnetic axis, $R_0$. All magnetic field-strengths
+\subsection{Normalization}\label{norm}
+Unless otherwise specified, all lengths in this paper are normalized to  the major radius of the plasma magnetic axis, $R_0$. All magnetic field-strengths
 are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All currents are normalized to $B_0\,R_0/\mu_0$. All current densities are normalized to $B_0/(\mu_0\,R_0)$.  All plasma pressures are normalized to $B_0^{\,2}/\mu_0$.
 All toroidal electromagnetic torques are normalized to $B_0^{\,2}\,R_0^{\,3}/\mu_0$. All energies are normalized to $B_0^{\,2}\,R_0^{\,3}/\mu_0$. 
 
-\subsection{Coordinates}
+\subsection{Coordinates}\label{coord}
 Let $R$, $\phi$, $Z$ be right-handed cylindrical coordinates whose Jacobian 
 is $ (\nabla R\times \nabla\phi\cdot\nabla Z)^{-1} = R$, 
 and whose symmetry axis corresponds to the symmetry axis of the axisymmetric toroidal plasma equilibrium. 
-Note that $|\nabla\phi|=1/R$. 
 
 Let $r$, $\theta$, $\phi$ be right-handed flux-coordinates whose
 Jacobian is
@@ -59,8 +120,8 @@ Jacobian is
 Note that $r=r(R,Z)$ and $\theta=\theta(R,Z)$. 
 The magnetic axis corresponds to $r=0$, and the plasma-vacuum interface to $r=a$. Here, $a\ll 1$ is the effective inverse aspect-ratio of the plasma. 
 
-\subsection{Plasma Equilibrium}
-Consider an axisymmetric tokamak plasma equilibrium whose magnetic field takes the form
+\subsection{Plasma Equilibrium}\label{equilb}
+Consider a tokamak plasma equilibrium whose magnetic field takes the form
 \begin{equation}
 {\bf B}(r,\theta) = f(r)\,\nabla\phi\times \nabla r + g(r)\,\nabla\phi = f\,\nabla(\phi-q\,\theta)\times \nabla r,
 \end{equation}
@@ -76,7 +137,7 @@ where $P(r)$ is the equilibrium scalar plasma pressure, and ${\bf J}=\nabla\time
 \subsection{Perturbed Magnetic Field}
 All perturbed quantities are assumed to vary toroidally as $\exp(-{\rm i}\,n\,\phi)$,
 where the positive integer  $n$ is the toroidal mode number of the perturbation. 
-According to Eqs.~(47), (78), (99), and (101), of Ref.~\onlinecite{tj}, the radial and toroidal components of the perturbed magnetic field are written 
+According to Eqs.~(47), (78), (99), and (101) of Ref.~\onlinecite{tj}, the radial and toroidal components of the perturbed magnetic field are written 
 \begin{align}\label{a3}
 {\cal J}\,b^r &={\rm i}\,\psi(r,\theta)= \sum_m \psi_m(r)\,\exp(\,{\rm i}\,m\,\theta),\\[0.5ex]
 b_\phi &= x(r,\theta)= n\,z(r,\theta) = n\sum_m z_m(r) \,\exp(\,{\rm i}\,m\,\theta),
@@ -85,15 +146,15 @@ where
 \begin{equation}
 z_m(r) = \frac{Z_m(r) + k_m\,\psi_m(r)}{m-n\,q}.
 \end{equation}
-Here, the (not necessarily positive) integer $m$ is a poloidal mode number, and the sum is over all mode numbers included in the calculation. 
-Moreover, 
+Here, the (not necessarily positive) integers $m$ are poloidal mode numbers, and the sum is over all mode numbers included in the calculation. 
+Furthermore, 
 $k_m(r)$ is real, and is specified in Eq.~(100) Ref.~\onlinecite{tj}. 
 
 \subsection{Behavior in Vicinity of Rational Surface}\label{rational}
 Suppose that there are $K$ rational surfaces in the plasma. Let the $k$th surface be located at $r=r_k$, and possess the resonant poloidal
 mode number $m_k$. By definition, $m_k-n\,q(r_k)=0$. 
 According to Sect.~V.B of Ref.~\onlinecite{tj},  the non-resonant poloidal harmonics of the solutions to the
-ideal-MHD equations in the outer region  are continuous across the surface. On the other hand, the tearing parity components of the resonant poloidal
+ideal-MHD equations in the outer region  are continuous across the surface. On the other hand, the tearing-parity components of the resonant poloidal
 harmonics of the solutions behave locally as
 \begin{align}
 \psi_{m\,k}(r_k+x) &= A_{L\,k}\,|x|^{\nu_{L\,k}} + A_{S\,k}\,|x|^{\nu_{S\,k}},\\[0.5ex]
@@ -103,17 +164,17 @@ where
 \begin{align}
 \nu_{L\,k} &= \frac{1}{2}-\sqrt{-D_{I\,k}},\\[0.5ex]
 \nu_{S\,k} &= \frac{1}{2}+\sqrt{-D_{I\,k}},\\[0.5ex]
-D_{I\,k}&= - \left[\frac{2\,(1-q^2)}{s^2}\,r\,\frac{dP}{dr}\right]_{r_k} -\frac{1}{4},\\[0.5ex]
+D_{I\,k}&= - \left[\frac{2\,(1-q^2)}{s^2}\,r\,\frac{dP}{dr}\right]_{r_k} -\frac{1}{4},\label{di}\\[0.5ex]
 L_0 &= -\left(\frac{L_{m_k}^{\,m_k}}{m_k\,s}\right)_{r_k},\\[0.5ex]
 L_{m_k}^{\,m_k}(r) &= m_k^2\,c_{m_k}^{\,m_k}(r) + n^2\,r^2,\\[0.5ex]
 c_{m_k}^{\,m_k}(r) &=\oint|\nabla r|^{-2}\,\frac{d\theta}{2\pi},
 \end{align}
-and $s(r)= d\ln q/d\ln r$. Here, the tearing parity component is such that $\psi_{m_k}(r_k-x)=\psi_{m_k}(r_k+x)$ and $Z_{m_k}(r_k-x)=Z_{m_k}(r_k+x)$. 
+and $s(r)= d\ln q/d\ln r$. Here, the tearing-parity component is such that $\psi_{m_k}(r_k-x)=\psi_{m_k}(r_k+x)$ and $Z_{m_k}(r_k-x)=Z_{m_k}(r_k+x)$. 
 Moreover, $A_{L\,k}$ is termed the coefficient of the ``large'' solution, whereas $A_{S\,k}$ is the coefficient of the ``small'' solution. Furthermore, $D_{I\,k}$ is the ideal
 Mercier interchange parameter (which needs to be negative to ensure stability to localized interchange modes),\cite{mercier,ggj,ggj1} and $\nu_{L\,k}$ and $\nu_{S\,k}$
 are termed the Mercier indices. 
 
-It is helpful to define the quantities
+It is helpful to define the quantities\,\cite{tj}
 \begin{align}\label{Psidef}
 {\mit\Psi}_k&= r_k^{\,\nu_{L\,k}}\left(\frac{\nu_{S\,k}-\nu_{L\,k}}{L_{m_k}^{\,{m_k}}}\right)^{1/2}_{r_k} A_{L\,k},\\[0.5ex]
 {\mit\Delta\Psi}_k &= r_k^{\,\nu_{S\,k}}\left(\frac{\nu_{S\,k}-\nu_{L\,k}}{L_{m_k}^{\,m_k}}\right)^{1/2}_{r_k} 2\,A_{S\,k},\label{edpp}
@@ -127,15 +188,15 @@ T_\phi = 2\pi^2\,n\,\sum_{k=1,K}{\rm Im}({\mit\Psi}_k^\ast\,{\mit\Delta\Psi}_k).
 
 \subsection{Tearing Mode Dispersion Relation}\label{disp}
 According to Sect.~VIII.D of Ref.~\onlinecite{tj}, the tearing mode dispersion relation takes the form
-\begin{equation}
+\begin{equation}\label{dispersion}
 \sum_{k'=1,K}\left(E_{kk'}-{\mit\Delta}_k\,\delta_{kk'}\right){\mit\Psi}_{k'} = 0
 \end{equation}
 for $k=1,K$, 
 where $E_{kk'}$ is an Hermitian matrix determined from the solution of the ideal-MHD equations in the outer region, and ${\mit\Delta}_k\equiv {\mit\Delta\Psi}_k/{\mit\Psi}_k$ is
-a complex quantity that characterizes the tearing parity response of the resistive layer at the $k$th rational surface to the outer solution. 
+a complex quantity that characterizes the tearing-parity response of the resistive layer at the $k$th rational surface to the outer solution. 
 In general, ${\mit\Delta}_k$ is a function of the growth-rate and phase-velocity of the reconnected helical magnetic flux at the surface. 
 
-\section{Calculation of Ideal Stability}
+\section{Calculation of Ideal Stability}\label{ideal}
 
 \subsection{Plasma Perturbation}
 The perturbed magnetic field associated with an ideal perturbation is written\,\cite{freidberg,ideal}
@@ -269,11 +330,11 @@ flux at the various rational surfaces in the plasma).\cite{tj}
 It follows that
  the total plasma potential energy, $\delta W_p$, is necessarily a real quantity. 
  
- \subsection{Marginally-Stable Ideal Eigenfunctions}\label{sideal}
-We can construct a complete set of  marginally-stable ideal eigenfuctions in the outer region from the tearing eigenfunctions calculated by the TJ code as follows:
+\subsection{Marginally-Stable Ideal Eigenfunctions}\label{sideal}
+We can construct a complete set of  marginally-stable ideal eigenfuctions in the outer region from the ideal-MHD solutions in the outer region calculated by the TJ code as follows:
 \begin{align}
 \psi_{m\,m'}^i(r)&= \psi_{m\,m'}^a(r)-\sum_{k=1,K}\psi_{m\,k}^u(r)\,{\mit\Pi}_{k\,m'}^a,\\[0.5ex]
-Z_{m\,m'}^i(r)&= Z_{m\,m'}^a(r)-\sum_{k=1\,K}Z_{m\,k}^u(r)\,{\mit\Pi}_{k\,m'}^a.
+Z_{m\,m'}^i(r)&= Z_{m\,m'}^a(r)-\sum_{k=1,K}Z_{m\,k}^u(r)\,{\mit\Pi}_{k\,m'}^a.
 \end{align}
  Here, $m$ labels the poloidal harmonic of the solution,  $m'$ labels the solution itself, and $k$ labels the various rational surfaces in the plasma. There are as many solutions as there are poloidal harmonics included in the calculation. All other quantities are defined in Sects.~VIII.B--VIII.D of Ref.~\onlinecite{tj}. 
  It follows
@@ -312,7 +373,7 @@ The fact that $\delta W_p$ is real implies that
  \underline{\underline{\psi}}^{\dag}_{\,i}\,\underline{\underline{\chi}}_{\,i}= \underline{\underline{\chi}}^{\dag}_{\,i}\,\underline{\underline{\psi}}_{\,i}.
  \end{equation}
 
-Let us define the plasma energy matrix, $\underline{\underline{W}}_{\,p}$, such that 
+Let us define the ``plasma energy matrix'', $\underline{\underline{W}}_{\,p}$, such that 
 \begin{equation}\label{e48}
 \underline{\underline{\chi}}_{\,i} = \underline{\underline{W}}_{\,p}\,\underline{\underline{\psi}}_{\,i}.
 \end{equation}
@@ -330,12 +391,9 @@ Let us define the plasma energy matrix, $\underline{\underline{W}}_{\,p}$, such 
  \underline{\underline{\psi}}^{\dag}_{\,i}\,\underline{\underline{W}}_{\,p}^{\dag}\,
  \underline{\underline{\psi}}_{\,i},
  \end{equation}
- which implies that $\underline{\underline{W}}_{\,p}$ is an Hermitian matrix. Equations~(\ref{e44}) and (\ref{e48}) yield
- \begin{equation}\label{e52}
- \delta W_p = \pi^2\,\underline{\alpha}^\dag\,\underline{\underline{\psi}}^{\dag}_{\,i}\,\underline{\underline{W}}_{\,p}\,\underline{\underline{\psi}}_{\,i}\,\underline{\alpha}.
- \end{equation}
- 
- \subsection{Total Potential Energy}
+ which implies that $\underline{\underline{W}}_{\,p}$ is an Hermitian matrix. 
+  
+\subsection{Total Potential Energy}
 The total perturbed potential energy of the plasma-vacuum system can be written\,\cite{freidberg,ideal}
 \begin{equation}\label{e79}
 \delta W= \delta W_p + \delta W_v,
@@ -411,8 +469,8 @@ where $J(\theta,\phi)=J(\theta)\,\exp(-{\rm i}\,n\,\phi)$, which ensures that $\
 {\cal J}\,K^\theta&= {\rm i}\,\frac{\partial J}{\partial \phi},\\[0.5ex]
 {\cal J}\,K^\phi &=-{\rm i}\,\frac{\partial J}{\partial\theta}.
 \end{align}
-Hence, we reproduce Eqs.~(\ref{eb59}) and (\ref{eb60}). 
-We conclude that the $J_m$ are the Fourier components of the $J(\theta)$ function introduced in Eq.~(\ref{e94}). 
+Hence, if we expand the previous two equations as Fourier series in $\theta$ then we reproduce Eqs.~(\ref{eb59}) and (\ref{eb60}), which implies
+ that the $J_m$ defined in Eq.~(\ref{e90}) are the Fourier components of the $J(\theta)$ function introduced in Eq.~(\ref{e94}). 
 
 As described in Ref.~\onlinecite{ideal}, the marginally-stable ideal eigenfunctions   feature a perturbed current sheet on the vacuum-plasma interface because they do not satisfy the
 perturbed  pressure-balance boundary condition.
@@ -439,7 +497,7 @@ where
 \underline{J} = \underline{\chi}+ \underline{\underline{W}}_{\,v}\,\underline{\psi}.
 \end{equation}
 Here,  $\underline{J}$ is the column vector of the $J_m$ values, 
-and $\underline{\underline{W}}_{\,v}$  the Hermitian matrix of the $-H_{m\,m'}$ values. 
+and the ``vacuum energy matrix'', $\underline{\underline{W}}_{\,v}$,  is the Hermitian matrix of the $-H_{m\,m'}$ values. 
 Making use of Eqs.~(\ref{e41}), (\ref{e42}), and (\ref{e48}), we get 
 \begin{equation}
 \underline{J} = \underline{\underline{W}}\,\underline{\psi},
@@ -454,7 +512,7 @@ where
 \end{equation}
 
 Note that $\underline{\underline{W}}_{\,p}$ and $\underline{\underline{W}}_{\,v}$ are both Hermitian, so $\underline{\underline{W}}$ is also
-Hermitian. Thus the total energy matrix, $\underline{\underline{W}}$, possesses real eigenvalues and orthonormal eigenvectors, $\underline{\beta}_m$. Let $(\underline{\beta}_{m'})_{m} = \beta_{m\,m'}$, and let $\underline{\underline{\beta}}$ be the matrix of the $\beta_{mm'}$ values. It follows that  
+Hermitian. Thus the ``total energy matrix'', $\underline{\underline{W}}$, possesses real eigenvalues and orthonormal eigenvectors, $\underline{\beta}_m$. Let $(\underline{\beta}_{m'})_{m} = \beta_{m\,m'}$, and let $\underline{\underline{\beta}}$ be the matrix of the $\beta_{mm'}$ values. It follows that  
 $\underline{\underline{\beta}}^\dag\,\underline{\underline{\beta}}= \underline{\underline{1}}$. 
 We conclude that there are as many linearly independent ideal eigenmodes of the plasma as there are poloidal harmonics included in the calculation. The $m$th
 eigenmode has the associated energy
@@ -476,7 +534,7 @@ where $\underline{\hat{\alpha}}= \underline{\underline{\beta}}^\dag\,\underline{
 As is well known, the plasma is ideally unstable if $\delta W<0$ for any possible ideal peturbation.\cite{freidberg,ideal}
 Thus, given that the $\hat{\alpha}_m$ are arbitrary, we deduce that if any of the $\delta W_m$ are negative then the plasma is ideally unstable.
 
-\section{Vacuum Solution}
+\section{Vacuum Solution}\label{vacuum}
 \subsection{Toroidal Coordinates}
 Let $\mu$, $\eta$, $\phi$ be right-handed toroidal coordinates defined such that
 \begin{align}
@@ -535,8 +593,8 @@ In the large-aspect ratio limit, $r\ll 1$, it can be demonstrated that\,\cite{mo
 \begin{align}\label{e25t}
 z&\simeq \frac{1}{r},\\[0.5ex]
 z^{\,1/2}\,\hat{P}^{\,n}_{-1/2}(z) &\simeq \frac{1}{2}\ln\left(\frac{8\,z}{\zeta_n}\right),\\[0.5ex]
-z^{1/2}\,\hat{P}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(\epsilon\,z)^{|m|}}{|m|},\label{ety}\\[0.5ex]
-z^{1/2}\,\hat{Q}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(\epsilon\,z)^{-|m|}}{2},\\[0.5ex]
+z^{1/2}\,\hat{P}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(a,z)^{|m|}}{|m|},\label{ety}\\[0.5ex]
+z^{1/2}\,\hat{Q}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(a\,z)^{-|m|}}{2},\\[0.5ex]
 \zeta_n &= \exp\left(\sum_{j=1,n}\frac{2}{2\,j-1}\right).\label{e29t}
 \end{align}
 Note that Eq.~(\ref{ety}) only applies to $|m|>0$. 
@@ -624,7 +682,7 @@ However, the previous two equations are only consistent with Eqs.~(\ref{e32a}) a
 Note that Eqs.~(\ref{e41x})--(\ref{e43}) and (\ref{e46})--(\ref{e48x}) hold throughout the vacuum region. 
 
 \subsection{Ideal-Wall Matching Condition}
-If the wall is perfectly conducting then  $\underline{\psi}(b_w\,\epsilon)=0$. 
+If the wall is perfectly conducting then  $\underline{\psi}(b_w\,a)=0$. 
 It follows from Eq.~(\ref{e33a}) that
 \begin{equation}
 \underline{q} = \underline{\underline{I}}_b\,\underline{p},
@@ -633,13 +691,13 @@ where
 \begin{equation}
  \underline{\underline{I}}_b=- \underline{\underline{\cal S}}_{\,b}^{-1}\,\underline{\underline{\cal R}}_{\,b}
  \end{equation}
- is termed the wall matrix.
- Here, $\underline{\underline{\cal S}}_{\,b}= \underline{\underline{\cal S}}(b_w\,\epsilon)$, et cetera. Equation~(\ref{e47}) ensures that $ \underline{\underline{I}}_b$
+ is termed the ``wall matrix''.
+ Here, $\underline{\underline{\cal S}}_{\,b}= \underline{\underline{\cal S}}(b_w\,a)$, et cetera. Equation~(\ref{e47x}) ensures that $ \underline{\underline{I}}_b$
  is Hermitian. It immediately follows from Eq.~(\ref{e39x}) that $T_\phi=0$. In other words, zero net toroidal electromagnetic torque is exerted on a plasma
  surrounded by a perfectly conducting wall. As described in Ref.~\onlinecite{tj}, the fact that $T_\phi=0$ ensures that the tearing stability matrix, $E_{kk'}$, introduced in
- Sect.~\ref{disp} is Hermitian. 
+ Sect.~\ref{disp}, is Hermitian. 
  
-  Making use of Eqs.~(\ref{e32a}) and (\ref{e33a}),  the matching condition at the plasma-vacuum interface  for an ideal wall becomes 
+  Making use of Eqs.~(\ref{e32a}) and (\ref{e33a}),  the matching condition at the plasma-vacuum interface  for a perfectly-conducting wall becomes 
  \begin{equation}
  \underline{V}(a_+)= \underline{\underline{H}}\,\underline{\psi}(a),
  \end{equation}
@@ -649,7 +707,7 @@ where
  \end{equation}
  is  the vacuum matrix introduced in Sect.~\ref{stab}. 
   Here, $\underline{\underline{\cal P}}_{\,a}= \underline{\underline{\cal P}}(a_+)$, et cetera. 
-Making use of Eqs.~(\ref{e41})--(\ref{e43}), it is easily demonstrated that
+Making use of Eqs.~(\ref{e41x})--(\ref{e43}), it is easily demonstrated that
  \begin{equation}\label{e53}
  \underline{\underline{H}}-\underline{\underline{H}}^\dag =- [(\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}]^{\dag}\,(\underline{\underline{I}}_{\,b} -\underline{\underline{I}}^\dag_{\,b})\,  (\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}
 \end{equation}
@@ -658,8 +716,8 @@ Thus,  the vacuum matrix, $\underline{\underline{H}}$, is Hermitian because  the
 \subsection{Model Wall Matrix}
  Equations~(\ref{e25t})--(\ref{e29t}), (\ref{e354}), and (\ref{e355}) suggest that
  \begin{align}
- \underline{\underline{{\cal R}}}_{\,b}& = \underline{\underline{{\cal R}}}_{\,\epsilon} \,\underline{\underline{\rho}}^{\,-1},\\[0.5ex]
- \underline{\underline{{\cal S}}}_{\,b} &= \underline{\underline{{\cal S}}}_{\,\epsilon} \,\underline{\underline{\rho}},
+ \underline{\underline{{\cal R}}}_{\,b}& = \underline{\underline{{\cal R}}}_{\,a} \,\underline{\underline{\rho}}^{\,-1},\\[0.5ex]
+ \underline{\underline{{\cal S}}}_{\,b} &= \underline{\underline{{\cal S}}}_{\,a} \,\underline{\underline{\rho}},
  \end{align}
  where
  \begin{align}
@@ -671,20 +729,437 @@ Thus,  the vacuum matrix, $\underline{\underline{H}}$, is Hermitian because  the
  \begin{equation}
  \underline{\underline{I}}_{\,b}= - \underline{\underline{\rho}}^{\,-1\,\dag}\,\underline{\underline{\cal S}}_{\,a}^{-1}\,\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{\rho}}^{\,-1}.
  \end{equation}
- Note that $\underline{\underline{I}}_b$ is Hermitian, given that $\underline{\underline{\cal S}}_{\,a}^{-1}\,\underline{\underline{\cal R}}_{\,a}$
+ Note that our model wall matrix, $\underline{\underline{I}}_b$, is Hermitian given that $\underline{\underline{\cal S}}_{\,a}^{-1}\,\underline{\underline{\cal R}}_{\,a}$
  is Hermitian. [See Eq.~(\ref{e47x}).] Our model wall matrix allows us to smoothly interpolate between a plasma with no wall
- (which corresponds to $b_w\rightarrow\infty$ and $\underline{\underline{H}}= \underline{\underline{\cal P}}_{\,a}\,\underline{\underline{\cal R}}_{\,a}^{-1}$\,\cite{tj}), 
+ (which corresponds to $b_w\rightarrow\infty$ and $\underline{\underline{H}}= \underline{\underline{\cal P}}_{\,a}\,\underline{\underline{\cal R}}_{\,a}^{-1}$),\cite{tj}
  and a fixed boundary plasma (which corresponds to $b_w=1$ and $\underline{\underline{H}}^{-1}= \underline{\underline{0}}$). 
+ 
+\section{Resistive Layer Model}\label{lmodel}
+\subsection{Introduction}
+ The resistive layer model implemented in the TJ code is the three-field model described in Ref.~\onlinecite{diff}. This model is a further development of
+ the models derived in Refs.~\onlinecite{fw} and \onlinecite{cole}, and is ultimately based on the four-field model of Ref.~\onlinecite{hkm}. 
+ The model includes plasma resistivity, plasma inertia, electron and ion diamagnetic flows, the decoupling of ion and electron flows on lengthscales below the ion sound
+ radius, and perpendicular momentum and energy transport. The three fields in the model are the (normalized) perturbed helical magnetic flux, $\psi$, the (normalized)
+ perturbed electrostatic potential, $\phi$, and the (normalized) perturbed electron number density, $N$. The model makes use of a low-$\beta$
+ approximation that decouples the (normalized) parallel ion velocity, $V$,  from the system of equations (thereby converting a four-field model into
+ a three-field model). Reference~\onlinecite{lee} explains how the fourth field can be incorporated into the model. We choose not to do this
+ because the fourth field is only important at high-$\beta$, and an aspect-ratio expanded equilibrium is, by definition, a relatively low-$\beta$
+ equilibrium. 
+ 
+\subsection{Plasma Parameters}
+The values of the following plasma parameters must be specified in order to calculate layer quantities:
+\begin{itemize}
+\item $B_0$ - the toroidal magnetic field-strength at the magnetic axis (T).
+\item $R_0$ - the major radius of the magnetic axis  (m).
+\item $n_0$ - the  electron number density at the magnetic axis (${\rm m}^{-3}$).
+\item $\alpha$ - the electron density profile is assumed to be $n_e(r)=n_0\,(1-r^2/a^2)^\alpha$.
+\item $T_{e\,{\rm edge}}$ - the electron temperature at the plasma-vacuum interface (eV).
+\item $Z_{\rm eff}$  - the (assumed spatially uniform) effective ion charge number.
+\item $M$ - the ion mass number.
+\item $\chi_\perp$ - the (assumed spatially uniform) perpendicular momentum/energy diffusivity.
+\end{itemize}
+
+\subsection{Rational Surface Parameters}
+Let the $k$th rational surface  lie at $r=r_k$, and possess the resonant poloidal mode number $m_k$. 
+We can define  $q_k = q(r_k)$,  $s_k= s(r_k)$, 
+$n_{e\,k} = n_0\,(1-r_k^{\,2}/a^2)^\alpha$, $g_k = g(r_k)$, 
+\begin{align}
+p_k &= \frac{B_0^{\,2}\,P(r_k),}{\mu_0}\\[0.5ex]
+T_{e\,k} &= \frac{p_k}{2\,n_{e\,k}\,e} + T_{e\,{\rm edge}},\\[0.5ex]
+\ln{\Lambda}_k &= 24 + 3\,\ln 10-\frac{1}{2}\ln n_{e\,k} + \ln T_{e\,k},\\[0.5ex]
+\tau_{ee\,k}&= \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_{e\,k}^{\,3/2}}{\ln{\Lambda}_k\,e^{5/2}\,n_{e\,k}},\\[0.5ex]
+\sigma_{\parallel\,k} &= \frac{\sqrt{2}+13\,Z_{\rm eff}/4}{Z_{\rm eff}\,(\sqrt{2}+Z_{\rm eff})}\,\frac{n_{e\,k}\,e^2\,\tau_{ee\,k}}{m_e},\\[0.5ex]
+L_{s\,k} &= \frac{R_0\,q_k}{s_k},\\[0.5ex]
+V_{A\,k} &= \frac{B_0\,g_k}{(\mu_0\,n_{e\,k}\,M\,m_p)^{1/2}},\\[0.5ex]
+d_{i\,k} &= \left(\frac{M\,m_p}{n_{e\,k}\,e^2\,\mu_0}\right)^{1/2},\\[0.5ex]
+\beta_k &= \frac{5\,P(r_k)}{3\,g_k^{\,2}},\\[0.5ex]
+\hat{d}_{\beta\,k} &= \left(\frac{\beta_k}{1+\beta_k}\right)^{1/2}\,\frac{d_{i\,k}}{R_0\,r_k},\\[0.5ex]
+\omega_{\ast\,k} &= \frac{m_k\,B_0}{\mu_0\,e\,n_{e\,k}\,R_0^{\,2}\,g_k\,r_k}\,\frac{dP(r_k)}{dr}, \\[0.5ex]
+\tau_{H\,k} &= \frac{L_{s\,k}}{m_k\,V_{A\,k}},\\[0.5ex]
+\tau_{R\,k} &= \mu_0\,R_0^{\,2}\,r_k^{\,2}\,\sigma_\parallel(r_k),\\[0.5ex]
+\tau_{\perp\,k} &= \frac{R_0^{\,2}\,r_k^{\,2}}{\chi_\perp},
+\end{align}
+where $e$ is the magnitude of the electron charge, $m_e$ the electron mass, and $m_p$ the proton mass. 
+Note that we are assuming that the electrons and ions have the same temperature, as we would expect to be the case in a fusion reactor. 
+Here, $d_{i\,k}$ is the collisionless skin-depth, $\hat{d}_{\beta\,k}$ the normalized ion sound radius, $\omega_{\ast\,k}$ the diamagnetic frequency, 
+$\tau_{H\,k}$ the hydromagnetic timescale, $\tau_{R\,k}$ the resistive diffusion timescale, and $\tau_{\perp\,k}$ the perpendicular momentum/energy diffusion timescale,
+at the $k$th rational surface. 
+
+Layer physics at the $k$th rational surface is governed by the following normalized parameters:
+$\hat{\gamma}_k= \tau_k\,\gamma_k$, 
+$Q_{e\,k }= - \tau_k\,\omega_{\ast\,k}/2$, 
+$Q_{i\,k }=  \tau_k\,\omega_{\ast\,k}/2$, 
+$D_k = S_{k}^{\,1/3}\,\hat{d}_{\beta\,k}/\sqrt{2}$, 
+and $P_{k} = \tau_{R\,k}/\tau_{\perp\,k}$, 
+where $S_k = \tau_{R\,k}/\tau_{H\,k}$ and 
+$\tau_k = S_k^{\,1/3} \,\tau_{H\,k}$.   Here, $S_k$ is the Lundquist number at the $k$th rational surface, and $\gamma_k$ is the complex growth-rate of the tearing mode seen in the E-cross-B frame (i.e., a frame that co-rotates with the
+particle guiding centers) at the $k$th rational surface.
+
+\subsection{Resistive Layer Equations}\label{rlayer}
+The following resistive layer equations, which govern the response of the plasma at the $k$th rational surface to the ideal-MHD solution in the outer region,  are obtained by linearizing the three-field model of Ref.~\onlinecite{diff}:
+\begin{align}\label{e80y}
+(\hat{\gamma}_k+{\rm i}\,Q_{e\,k})\,\psi&= - {\rm i}\,X\left(\phi-N\right) + \frac{d^{\,2}\psi}{d X^2},\\[0.5ex]
+(\hat{\gamma}_k+{\rm i}\,Q_{i\,k})\,\frac{d^{\,2}\phi}{d X^2}&= - {\rm i}\,X\,\frac{d^{\,2}\psi}{d X^2}+ P_{k}\,\frac{d^{\,4}}{d X^4}\!\left(\phi + N\right),\\[0.5ex]
+\hat{\gamma}_k\,N&= - {\rm i}\,Q_{e\,k}\,\phi  - {\rm i} \,D_k^{\,2}\,X\,\frac{d^{\,2}\psi}{d X^{2}}
++ P_{k}\,\frac{d^{\,2} N}{d X^{2}},\label{e82y}
+\end{align}
+where $X=S_k^{\,1/3}\,(r-r_k)/r_k$. Here, it is assumed that $S_k\gg 1$.  The asymptotic behavior of the tearing-parity [i.e., $\psi(-X)=\psi(X)$, $\phi(-X)= -\phi(X)$, and $N(-X)=-N(X)$] solution of the layer
+equations is such that
+\begin{align}\label{e47y}
+\psi(X)\rightarrow  \psi_0\left[\frac{\hat{\mit\Delta}_k}{2}\,|X| +1 + {\cal O}\left(\frac{1}{X}\right)\right],\\[0.5ex]
+\phi(X)\rightarrow  {\rm i}\,\hat{\gamma}_k\,\psi_0\left[\frac{\hat{\mit\Delta}_k}{2}\,{\rm sgn}(X) +\frac{1}{X} + {\cal O}\left(\frac{1}{X^2}\right)\right]\label{e85y}
+\end{align}
+as $|X|\rightarrow\infty$, where $\psi_0$ is an arbitrary constant, and 
+$\hat{\mit\Delta}_k = S_k^{-1/3}\,{\mit\Delta}_k$. Here, ${\mit\Delta}_k$ is the layer response parameter introduced in Sect.~\ref{disp}. 
+
+\subsection{Fourier Transformation}\label{ft}
+Equations~(\ref{e80y})--(\ref{e82y}) are most conveniently solved in Fourier transform space.\cite{cole}
+Let
+\begin{equation}\label{e86a}
+\hat{\phi}(p) = \int_{-\infty}^\infty \phi(X)\,{\rm e}^{-{\rm i}\,p\,X}\,dX,
+\end{equation}
+et cetera. The Fourier transformed linear layer equations become
+\begin{align}\label{e314}
+(\hat{\gamma}_k+{\rm i}\,Q_{e\,k})\,\hat{\psi}&=\frac{d}{d p}\!\left(\hat{\phi}-\hat{N}\right)-p^2\,\hat{\psi},\\[0.5ex]
+(\hat{\gamma}_k+{\rm i}\,Q_{i\,k})\,p^2\,\hat{\phi}&=  \frac{d (p^2\,\hat{\psi})}{d p}- P_k\,p^4\,(\hat{\phi} +\hat{N}),\\[0.5ex]
+\hat{\gamma}_k\,\hat{N} &= - {\rm i}\,Q_{e\,k}\,\hat{\phi} -D_k^{\,2}\,\frac{d (p^2\,\hat{\psi})}{d p}
+  - P_k\,p^2\hat{N},\label{e316}
+\end{align}
+where, for a tearing-parity solution, Eq.~(\ref{e85y}) yields\,\cite{ed}
+\begin{equation}\label{e94y}
+\hat{\phi}(p) =\pi\,\hat{\gamma}_k\,\psi_0\left[\frac{\hat{\mit\Delta}_k}{\pi\,p} + 1+ {\cal O}(p)\right]
+\end{equation}
+as $p\rightarrow 0$. 
+
+Let 
+\begin{align}\label{e95}
+Y_e(p)\equiv \hat{\phi}(p)-\hat{N}(p)= \pi\,(\hat{\gamma}_k+{\rm i}\,Q_{e\,k})\,\psi_0\,\hat{Y}_e(p).
+\end{align}
+ Equations~(\ref{e314})--(\ref{e316}) can be combined to give\,\cite{cole,diff}
+\begin{align}\label{e91y}
+\frac{d}{dp}\!\left[A(p)\,\frac{d\hat{Y}_e}{dp}\right] - \frac{B(p)}{C(p)}\,p^2\,\hat{Y}_e=0,
+\end{align}
+where
+\begin{align}
+A(p) &= \frac{p^2}{\hat{\gamma}_k+{\rm i}\,Q_{e\,k}+p^2},\label{e97a}\\[0.5ex]
+B(p)&=\hat{\gamma}_k\,(\hat{\gamma}_k+{\rm i}\,Q_{i\,k})+2\,(\hat{\gamma}_k+{\rm i}\,Q_{i\,k})\,P_k\,p^2 +P_k^{\,2}\,p^4,\\[0.5ex]
+C(p) &=\hat{\gamma}_k+{\rm i}\,Q_{e\,k}+ [P_k+
+(\hat{\gamma}_k+{\rm i}\,Q_{i\,k})\,D_k^{\,2}]\,p^2 + 2\,P_k\,D_k^{\,2}\,p^4.
+\end{align}
+Because
+\begin{equation}
+Y_e(p) =\frac{(\hat{\gamma}_k+{\rm i}\,Q_{e\,k})}{\hat{\gamma}_k}\,\hat{\phi}
+\end{equation}
+as $p\rightarrow 0$, Eqs.~(\ref{e94y}) and (\ref{e95})
+yield the following small-$p$ boundary condition that Eq.~(\ref{e91y}) must satisfy:
+\begin{equation}\label{e101}
+\hat{Y}_e(p)\rightarrow\frac{\hat{\mit\Delta}_k}{\pi\,p} + 1+ {\cal O}(p)
+\end{equation}
+as $p\rightarrow 0$.  Equation~(\ref{e91y}) must also satisfy the  physical boundary condition 
+\begin{equation}\label{e102}
+\hat{Y}_e(p)\rightarrow 0
+\end{equation}
+as $p\rightarrow\infty$. 
+In fact, in the large-$p$/large-$D_k$ limit, $p\gg 1$ and $D_k\gg P_k^{\,1/6}$, the well-behaved solution of Eq.~(\ref{e91y}) takes the form 
+\begin{equation}\label{d33}
+\hat{Y}_e(p) = Y_0\,p^{\,x_k}\,\exp\left(\frac{-\sqrt{b_k}\,p^2}{2}\right)
+\end{equation}
+where $Y_0$ is independent of $p$, and
+\begin{align}
+x_k&= \frac{c_k -\sqrt{b_k}\,(1-\sqrt{b_k}\,a_k)}{2\sqrt{b_k}},\\[0.5ex]
+a_k &= -(\hat{\gamma}_k+ {\rm i}\,Q_{e\,k}),\\[0.5ex]
+b_k&= \frac{P_k}{2\,D_k^{\,2}},\\[0.5ex]
+c_k&= \frac{P_k}{2\,D_k^{\,2}}\left[1+\frac{2\, (\hat{\gamma}_k+{\rm i}\,Q_{i\,k})}{P_k}-\frac{(P_k+[\hat{\gamma}_k+{\rm i}\,Q_{i\,k}]\,D_k^{\,2})}{2\,P_k\,D_k^{\,2}}\right].
+\end{align}
+On the other hand, in the large-$p$/small-$D_k$ limit, $p\gg 1$ and $D_k\ll P_k^{\,1/6}$, the well-behaved solution of Eq.~(\ref{e91y}) is
+\begin{equation}\label{d34}
+\hat{Y}_e(p) = Y_0 \,p^{-1}\,\exp\left(x_k\,p - \frac{\sqrt{b_k}\,p^3}{3}\right),
+\end{equation}
+where
+\begin{align}
+x_k &= \frac{a_k\,b_k-c_k}{2\sqrt{b_k}},\\[0.5ex]
+a_k&=  -(\hat{\gamma}_k+ {\rm i}\,Q_{e\,k}),\\[0.5ex]
+b_k&= P_k,\\[0.5ex]
+c_k&= -{\rm i}\,(Q_{e\,k}-Q_{i\,k}) + (\hat{\gamma}_k+ {\rm i}\,Q_{i\,k}).
+\end{align}
+
+\subsection{Ricatti Transformation}
+Equation~(\ref{e91y}) is most conveniently solved by means of a Ricatti transformation.\cite{ric1,ric2}
+Let 
+\begin{equation}
+W(p)= \frac{p}{\hat{Y}_e}\,\frac{d\hat{Y}_e}{dp}.
+\end{equation}
+Equation~(\ref{e91y}) transforms to give
+\begin{equation}\label{e72a}
+\frac{dW}{dp} =- \frac{A'}{p}\,W -\frac{W^{\,2}}{p} + \frac{B}{A\,C}\,p^3,
+\end{equation}
+where
+\begin{equation}
+A' = \frac{\hat{\gamma}_k+{\rm i}\,Q_{e\,k}-p^2}{\hat{\gamma}_k+{\rm i}\,Q_{e\,k}+p^2}.
+\end{equation}
+According to Eqs.~(\ref{e101}), (\ref{d33}), and (\ref{d34}), this equation must be solved subject to the boundary condition that
+\begin{equation}\label{e63a}
+W(p) = x_k-\sqrt{b_k}\,p^2
+\end{equation}
+at large $p$ and large $D_k$, or
+\begin{equation}\label{e63b}
+W(p) = -1 +x_k\,p-\sqrt{b_k}\,p^3
+\end{equation}
+at large $p$ and small $D_k$, and 
+\begin{equation}\label{e73a}
+W (p)=-1+\frac{\pi\,p}{\hat{\mit\Delta}_k}
+\end{equation}
+at small $p$. 
+The method of solution is to  launch a solution of Eq.~(\ref{e72a})  from large $p$, subject to the  boundary condition (\ref{e63a}) or (\ref{e63b}), as appropriate,  and
+integrate it to small $p$. We can then deduce the value of $\hat{\mit\Delta}_k$ from Eq.~(\ref{e73a}). 
+
+\section{Asymptotic Matching Between Outer and Inner Regions}\label{asym}
+\subsection{Introduction}
+Consider the segment of the inner region that is centered on the $k$th rational surface. Let the surface lie at $r=r_k$, and possess the
+resonant poloidal mode number $m_k$. According to Sect.~\ref{rational},   in the limit $r\rightarrow r_k$,  the asymptotic behavior of the resonant tearing-parity component of the perturbed helical magnetic 
+flux, $\psi$,  [see Eq.~(\ref{a3})] in the outer region is
+\begin{equation}\label{ee1}
+\psi_{m_k}(x) = A_{L\,k}\,|x|^{-\nu_k} + A_{S\,k}\,|x|^{\,1+\nu_k},
+\end{equation}
+where $x=r-r_k$, $\nu_k= -1/2+\sqrt{-D_{I\,k}}$, and
+\begin{equation}
+{\mit\Delta}_k = \frac{2\,r_k^{1+2\,\nu_k}\,A_{S\,k}}{A_{L\,k}}.
+\end{equation}
+Here, $D_{I\,k}$ is the ideal interchange parameter defined in Eq.~(\ref{di}), and ${\mit\Delta}_k$ is the layer response parameter that appears in the
+tearing mode dispersion relation, (\ref{dispersion}). On the other hand, according to Sect.~\ref{rlayer}, the asymptotic behavior of the resistive layer
+solution in the segment of the inner region, as it approaches the outer region,  is
+\begin{equation}\label{ee3}
+\psi_{m_k}(x) = B_{L\,k}+B_{S\,k}\,|x|,
+\end{equation}
+where
+\begin{equation}\label{ee4}
+{\mit\Delta}_k = \frac{2\,r_k\,B_{S\,k}}{B_{L\,k}}.
+\end{equation}
+It can be seen that the  solutions (\ref{ee1}) and (\ref{ee3})  only match if $\nu_k=0$. The reason for the mismatch is because the outer solution takes average magnetic field-line curvature into
+account,\cite{ggj,ggj1} whereas the layer solution does not. The aim of this appendix is to describe a method for resolving the mismatch. 
+
+\subsection{Pressure Flattening}
+In the immediate vicinity of the rational surface, the equation that governs the resonant component of $\psi$ in the outer region reduces to\,\cite{tj}
+\begin{equation}\label{ee5}
+\frac{d^{\,2}\psi_{m_k}}{dx^2} =\frac{\nu_k\,(1+\nu_k)}{x^{2}}\,\psi_{m_k},
+\end{equation}
+where
+\begin{equation}\label{dii}
+\nu_k\,(1+\nu_k)= -D_{I\,k} -\frac{1}{4}= \left[\frac{2\,(1-q^2)}{s^2}\,r\,\frac{dP}{dr}\right]_{r_k}.
+\end{equation}
+Following Ref.~\onlinecite{bishop}, let us suppose that the pressure gradient is locally flattened in the vicinity of the rational surface in such a manner that
+\begin{equation}
+\frac{dP}{dx} = \left(\frac{dP}{dr}\right)_{r_k}\,\frac{x^2}{x^2+\delta_k^{\,2}}.
+\end{equation}
+Here, it is assumed that $\delta_k\ll r_k$. Equation~(\ref{ee5}) transforms to give
+\begin{equation}\label{ee13}
+(1+X^2)\,\frac{d^{\,2}\psi_{m_k}}{dX^2}= \nu_k\,(1+\nu_k)\,\psi_{m_k},
+\end{equation}
+where $X=x/\delta_k$. 
+
+The most general tearing-parity solution of Eq.~(\ref{ee13}) in the limit $|X|\rightarrow 0$  takes the form 
+\begin{equation}\label{in}
+\psi_{m_k}(X) \simeq \hat{B}_{L\,k}+ \hat{B}_{S\,k}\,|X].
+\end{equation}
+We can define
+\begin{equation}\label{din}
+{\mit\Delta}_{k\,{\rm in}} = \left(\frac{r_k}{\delta_k}\right)
+\frac{2\,\hat{B}_{S\,k}}{\hat{B}_{L\,k}}.
+\end{equation}
+On the other hand, the most general tearing-parity solution of Eq.~(\ref{ee13}) in the limit $|X|\rightarrow \infty$  is written 
+\begin{align}\label{out}
+\psi_{m_k}(X)&= \hat{A}_{L\,k}\,|X|^{-\nu_k}+\hat{A}_{S\,k}\,|X|^{1+\nu_k}.
+\end{align}
+We can define
+\begin{equation}\label{out1}
+{\mit\Delta}_{k\,{\rm out}}= \left(\frac{r_k}{\delta_k}\right)^{1+2\,\nu_k}\,\frac{2\,\hat{A}_{S\,k}}{\hat{A}_{L\,k}}.
+\end{equation}
+A comparision between Eqs.~(\ref{ee1})--(\ref{ee4}) and (\ref{in})--(\ref{out1})  reveals that the solution to Eq.~(\ref{ee13}) successfully interpolates
+between the resistive layer solution and the outer solution.  It now remains to determine the relationship between ${\mit\Delta}_{k\,{\rm in}}$ and
+${\mit\Delta}_{k\,{\rm out}}$. 
+
+\subsection{Connection Formula}
+Suppose that we launch a  ``large''  solution  of Eq.~(\ref{ee13}), $\psi_L(X) = X^{-\nu_k}$, 
+from large $X$, and integrate to $X=0$. Let
+\begin{align}
+\psi_L(0) &= a_{LL},\\[0.5ex]
+\frac{d\psi_L(0)}{dx} &= a_{SL}.
+\end{align}
+Next, suppose that we launch a  ``small'' solution, 
+$\psi_S(X) = X^{1+\nu_k}$, 
+from large $X$, and integrate to  $X=0$. Let
+\begin{align}
+\psi_S(0) &= a_{LS},\\[0.5ex]
+\frac{d\psi_S(0)}{dx} &= a_{SS}.
+\end{align}
+The most general solution is
+\begin{equation}
+\psi_{m_k}(X) = \hat{A}_{L\,k}\,\psi_L(X)+ \hat{A}_{S\,k}\,\psi_S(X).
+\end{equation}
+It follows that
+\begin{align}\label{bin}
+\hat{B}_{L\,k} &= a_{LL}\,\hat{A}_{L\,k} + a_{LS}\,\hat{A}_{S\,k},\\[0.5ex]
+\hat{B}_{S\,k}&= a_{SL}\,\hat{A}_{L\,k} + a_{SS}\,\hat{A}_{S\,k}.\label{bout}
+\end{align}
+Thus,  Eqs.~(\ref{din}) and (\ref{out1}) yield the connection formula
+\begin{equation}\label{ee20}
+\left(\frac{\delta_k}{r_k}\right)\frac{{\mit\Delta}_{k \,{\rm in}}}{2}= \frac{a_{SL} +a_{SS}\,(\delta_k/r_k)^{1+2\,\nu_k}\,({\mit\Delta}_{k\,{\rm out}}/2)}
+{a_{LL}  +a_{LS}\,(\delta_k/r_k)^{1+2\,\nu_k}\,({\mit\Delta}_{k\,{\rm out}}/2)}.
+\end{equation}
+It remains to calculate the coefficients $a_{LL}$, $a_{LS}$, $a_{SL}$, and $a_{SS}$. 
+
+\subsection{Analytic Solution}
+Let $\psi_{m\,k} = (1+X^2)\,\phi$ and $z={\rm i}\,X$. Equation~(\ref{ee13}) transforms to give 
+\begin{equation}\label{ee38}
+(1-z^2)\,\frac{d^2\phi}{dz^2} - 4\,z\,\frac{d\phi}{dz} - [2-\nu_k\,(1+\nu_k)]\,\phi=0.
+\end{equation}
+Now, the Legendre functions $Q_{\nu_k}(z)$ and $Q_{-1-\nu_{\,k}}(z)$ satisfy\,\cite{abramc}
+\begin{equation}
+(1-z^2)\,\frac{d^2 w}{dz^2} - 2\,z\,\frac{dw}{dz} + \nu_k\,(1+\nu_k)\,w = 0.
+\end{equation}
+Let $w'=dw/dz$. Differentiation of the previous equation yields
+\begin{equation}\label{ee40}
+(1-z^2)\,\frac{d^2w'}{dz^2} - 4\,z\,\frac{dw'}{dz} - [2-\nu_k\,(1+\nu_k)]\,w'=0.
+\end{equation}
+It is clear from a comparison of Eqs.~(\ref{ee38}) and (\ref{ee40}) that the two independent solutions of Eq.~(\ref{ee13}) can be written 
+$(1+X^2)\,Q_{\nu_k}'({\rm i}\,X)$ and $(1+X^2)\,Q_{-1-\nu_k}'({\rm i}\,X)$, where $'$ denotes differentiation with respect to argument. 
+
+Now,\cite{eda}
+\begin{align}
+Q_{\nu_k}(z)&= \frac{\pi^{1/2}\,\Gamma(1/2+\nu_k/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,(1+\nu_k)}}{2\,\Gamma(1+\nu_k/2)}F\left(-\frac{\nu_k}{2},\frac{1}{2}+\frac{\nu_k}{2};\frac{1}{2};z^2\right)\nonumber\\[0.5ex]
+&\phantom{=}+\frac{\pi^{1/2}\,\Gamma(1+\nu_k/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,\nu_k}}{\Gamma(1/2+\nu_k/2)}\,z\,F\left(\frac{1}{2}-\frac{\nu_k}{2},1+\frac{\nu_k}{2};\frac{3}{2};z^2\right),
+\end{align}
+where $F$ is a hypergeometric function and $\Gamma$ is a gamma function,\cite{abramb,abramd}
+which yields
+\begin{align}
+Q_{\nu_k}'(z)&\simeq\frac{\pi^{1/2}\,\Gamma(1+\nu_k/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,\nu_k}}{\Gamma(1/2+\nu_k/2)}\nonumber\\[0.5ex]
+&\phantom{=}- \frac{\pi^{1/2}\,\nu_k\,(1+\nu_k)\,\Gamma(1/2+\nu_k/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,(1+\nu_k)}}{2\,\Gamma(1+\nu_k/2)}\,z +{\cal O}(z^2).
+\end{align}
+So at small $X$, 
+\begin{align}\label{ee52}
+(1+X^2)\,Q_{\nu_k}'({\rm i}\,X)&\simeq {\rm e}^{-{\rm i}\,\nu_k\,\pi/2}\left[\frac{\pi^{1/2}\,\Gamma(1+\nu_k/2)}{\Gamma(1/2+\nu_k/2)}
+-\frac{\pi^{1/2}\,\nu_k\,(1+\nu_k)\,\Gamma(1/2+\nu_k/2)}{2\,\Gamma(1+\nu_k/2)}\,X\right]. 
+\end{align}
+
+Furthermore,\cite{eda}
+\begin{align}
+Q_{\nu_k}(z) &= \frac{\pi^{1/2}\,{\Gamma}(1+\nu_k)}{2^{1+\nu_k}\,\Gamma(3/2+\nu_k)}\,z^{-1-\nu_k}\,F\left(1+\frac{\nu_k}{2},\frac{1}{2}+\frac{\nu_k}{2};\frac{3}{2}+\nu_k;\frac{1}{z^2}\right),
+\end{align}
+which yields
+\begin{align}
+Q_{\nu_k}'(z)\simeq -\frac{\pi^{1/2}\,(1+\nu_k)\,{\Gamma}(1+\nu_k)}{2^{1+\nu_k}\,\Gamma(3/2+\nu_k)}\,z^{-2-\nu_k} + {\cal O}(z^{-4-\nu_k})
+\end{align}
+So, at large $X$, 
+\begin{align}\label{ee55}
+(1+X^2)\,Q_{\nu_k}'({\rm i}\,X) \simeq {\rm e}^{-{\rm i}\,\nu_k\,\pi/2}\,\frac{\pi^{1/2}\,(1+\nu_k)\,\Gamma(1+\nu_k)}{2^{1+\nu_k}\,\Gamma(3/2+\nu_k)}\,X^{-\nu_k}.
+\end{align}
+
+It is clear from a comparison of Eqs.~(\ref{in}), (\ref{out}), (\ref{bin}), (\ref{bout}), (\ref{ee52}), and (\ref{ee55}) that
+$\hat{B}_{L\,k} = a_{LL}\,\hat{A}_{L\,k}$ and 
+$\hat{B}_{S\,k}= a_{SL}\,\hat{A}_{L\,k}$,
+where
+\begin{align}
+a_{LL} &= \frac{2^{1+\nu_k}\,\Gamma(1+\nu_k/2)\,\Gamma(3/2+\nu_k)}{(1+\nu_k)\,\Gamma(1/2+\nu_k/2)\,\Gamma(1+\nu_k)},\\[0.5ex]
+a_{SL}&=- \frac{2^{\nu_k}\,\nu_k\,\Gamma(1/2+\nu_k/2)\,\Gamma(3/2+\nu_k)}{\Gamma(1+\nu_k/2)\,\Gamma(1+\nu_k)}.
+\end{align}
+In the limit $\nu_k\rightarrow 0$,
+\begin{align}\label{ee32}
+a_{LL}&\rightarrow 1,\\[0.5ex]
+a_{SL} &\rightarrow - \frac{\nu_k\,\pi}{2}.\label{ee33}
+\end{align}
+
+Now, according to Eq.~(\ref{ee52}), 
+\begin{align}\label{ee52a}
+(1+X^2)\,Q_{-1-\nu_k}'({\rm i}\,X)&\simeq {\rm e}^{\,{\rm i}\,(1+\nu_k)\,\pi/2}\left[\frac{\pi^{1/2}\,\Gamma(1/2-\nu_k/2)}{\Gamma(-\nu_k/2)}-
+\frac{\pi^{1/2}\,\nu_k\,(1+\nu_k)\,\Gamma(-\nu_k/2)}{2\,\Gamma(1/2-\nu_k/2)}\,X\right]
+\end{align}
+at small $X$. 
+Furthermore, according to Eq.~(\ref{ee55}), 
+\begin{align}\label{ee55a}
+(1+X^2)\,Q_{-1-\nu_k}'({\rm i}\,X) \simeq- {\rm e}^{\,{\rm i}\,(1+\nu_k)\,\pi/2}\,\frac{\pi^{1/2}\,\nu_k\,{\Gamma}(-\nu_k)}{2^{-\nu_k}\,\Gamma(1/2-\nu_k)}\,X^{1+\nu_k}
+\end{align}
+at large $X$. 
+A comparison of Eqs.~(\ref{in}), (\ref{out}), (\ref{bin}), (\ref{bout}), (\ref{ee52a}), and (\ref{ee55a}) yields
+$\hat{B}_{L\,k} = a_{LS}\,\hat{A}_{S\,k}$ and 
+$\hat{B}_{S\,k}= a_{SS}\,\hat{A}_{S\,k}$, 
+where
+\begin{align}
+a_{LS} &= -\frac{\nu_k\,\Gamma(1/2-\nu_k/2)\,\Gamma(1/2-\nu_k)}{2^{1+\nu_k}\,\Gamma(1-\nu_k)\,\Gamma(1-\nu_k/2)},\\[0.5ex]
+a_{SS}&= \frac{(1+\nu_k)\,\Gamma(1-\nu_k/2)\,\Gamma(1/2-\nu_k)}{2^{\nu_k}\,\Gamma(1/2-\nu_k/2)\,\Gamma(1-\nu_k)}.
+\end{align}
+In the limit $\nu_k\rightarrow 0$,
+\begin{align}\label{ee38x}
+a_{LS}&\rightarrow -\frac{\nu_k\,\pi}{2},\\[0.5ex]
+a_{SS} &\rightarrow 1.\label{ee39}
+\end{align}
+
+\subsection{Matching Formula}
+A large aspect-ratio tokamak equilibrium is characterized by $|\nu_k|\ll 1$. In this limit, Eqs.~(\ref{ee20}) (\ref{ee32}), (\ref{ee33}), (\ref{ee38x}), and (\ref{ee39}) yield
+\begin{equation}
+ {\mit\Delta}_{k\,{\rm out}} = {\mit\Delta}_{k\,{\rm in}}+ \frac{\pi\,\nu_k\,r_k}{\delta_k}.
+ \end{equation}
+It remains to specify the pressure-flattening width, $\delta_k$. Following Refs.~\onlinecite{lut} and \onlinecite{con1}, we identify this width with the critical layer width above
+which parallel thermal transport forces the electron temperature to be a flux-surface function. This critical layer width is given by\,\cite{hel,hel1}
+\begin{align}
+\delta_{d\,k}&= \sqrt{8}\left(\frac{\chi_\perp}{\chi_\parallel}\right)^{1/4}
+\frac{r_k}{(r_k\,s_k\,n)^{1/2}},\\[0.5ex]
+\chi_\parallel &= \frac{\chi_\parallel^{\rm smfp} \,\chi_\parallel^{\rm lmfp}}{\chi_\parallel^{\rm smfp}+\chi_\parallel^{\rm lmfp}},\\[0.5ex]
+\chi_\parallel^{\rm smfp} &= \frac{1.581\,\tau_{ee\,k}\,v_{t\,e\,k}^2}{1+ 0.2535\,Z_{\rm eff}},\\[0.5ex]
+\chi_\parallel^{\rm lmfp}&= \frac{2\,R_0\,v_{t\,e\,k}\,r_k}{\pi^{1/2}\,n\,s_k\,\delta_{d\,k}},\\[0.5ex]
+v_{t\,e\,k} &= \left(\frac{2\,T_{e\,k}}{m_e}\right)^{1/2}.
+\end{align}
+The previous five equations can be solved via iteration. In fact, if we choose $\delta_k= \delta_{d\,k}/(2\sqrt{\pi})$, identify ${\mit\Delta}_{k\,{\rm out}}$ with the
+${\mit\Delta}_k$ appearing in the tearing mode dispersion relation (\ref{dispersion}), identify ${\mit\Delta}_{k\,{\rm in}}$ with the $S_k^{1/3}\,\hat{\mit\Delta}_k$
+obtained from the solution of the layer equations (see Sect.~\ref{lmodel}), and identify $\nu_k$ with minus the resistive interchange stability parameter,\cite{ggj,ggj1}
+\begin{equation}
+D_{R\,k} = \left(\frac{2\,q^2}{s^2}\,r\,\frac{dP}{dr}\right)_{r_k}\left[1-\frac{1}{q_k^{\,2}}+ \frac{q_k^{\,2}\,s_k}{r_k^{\,4}}\int_0^{r_k}
+\left(\frac{r^3}{q^2} -2\,R_0^{\,2}\,r^2\,\frac{dP}{dr}\right)dr\right]
+\end{equation}
+ [rather than $-D_{I\,k}-1/4$---see Eq.~(\ref{dii})],\cite{kot}
+then we obtain
+\begin{equation}
+{\mit\Delta}_k = S_k^{1/3}\,\hat{\mit\Delta}_k - \sqrt{2}\,\pi^{3/2}\,D_{R\,k}\,\frac{r_k}{\delta_{d\,k}}.
+\end{equation}
+This formula reproduces one given (but, unfortunately,  not derived) in Ref.~\onlinecite{lut} that has been successfully benchmarked against the XTOR code. The final term on the right-hand side
+of the previous equation parameterizes the stabilizing effect of average magnetic field-line curvature on tearing modes in tokamak plasmas. 
+
+It should be understood that the local flattening of the pressure profile considered in this section is not real, but rather a proxy for modeling the influence of large parallel thermal conductivity on the so-called 
+Glasser curvature stabilization term.\cite{ggj,ggj1,con1} Furthermore,  the neglect of parallel transport in the resistive layer model
+described in Appendix~\ref{lmodel} is justified on the assumption that the layer width is much less than the flattening width, $\delta_{k}$. 
+
+\section{Comparison between TJ and STRIDE Codes}\label{comp}
+Suppose that there are $K$ rational surfaces in the plasma. 
+The TJ toroidal tearing stability code calculates a $K$-dimensional square tearing stability matrix whose elements are denoted $E_{kk'}$, for $k,k'=1,K$, from the
+ideal-MHD solution in the outer region.\cite{tj} Similarly, the STRIDE toroidal tearing mode stability code calculates a $K$-dimensional square tearing stablility
+matrix whose elements are denoted ${\mit\Delta}_{kk'}$, for $k,k'=1,K$.\cite{aglas1} As described in Ref.~\onlinecite{tj}, the $E_{kk'}$ matrix is necessarily Hermitian,
+otherwise toroidal electromagnetic angular momentum would not be conserved. On the other hand, the ${\mit\Delta}_{kk'}$ matrix is not generally Hermitian. 
+(Note that it was originally appreciated that the ${\mit\Delta}_{kk'}$ matrix must satisfy certain symmetry requirements,\cite{pletz1} but this requirement
+was forgotten over the years.) Fortunately, it is possible to transform the ${\mit\Delta}_{kk'}$ into an Hermitian matrix, whose elements are denoted $\hat{\mit\Delta}_{kk'}$, 
+that is equivalent to the $E_{kk'}$ matrix calculated by the TJ code. 
+
+The normalized  equilibrium poloidal magnetic flux is defined as ${\mit\Psi}(r)= \int_0^r f(r')\,dr'$. Let ${\mit\Psi}_a={\mit\Psi}(a)$ be the total flux enclosed in the plasma. 
+If
+\begin{align}
+\rho(r) &= \frac{r\,f}{{\mit\Psi}_a},\\[0.5ex]
+f_{L\,k}& = \left[\rho^{\,\nu_{L\,k}-1}\left(\frac{\nu_{S\,k}-\nu_{L\,k}}{L_{m_k}^{\,m_k}}\right)^{1/2}\,s\,m_k\,{\mit\Psi}_a\right]_{r_k},\\[0.5ex]
+f_{S\,k}& = \left[\rho^{\,\nu_{S\,k}-1}\left(\frac{\nu_{S\,k}-\nu_{L\,k}}{L_{m_k}^{\,m_k}}\right)^{1/2}\,s\,m_k\,{\mit\Psi}_a\right]_{r_k},
+\end{align}
+where all quantities are defined in Sects.~\ref{coord}, \ref{equilb}, and \ref{rational}, then
+\begin{equation}
+\hat{\mit\Delta}_{kk'} = \cos[(k+k')\,\pi]\,f_{S\,k}\,{\mit\Delta}_{kk'}/f_{L\,k'}.
+\end{equation}
+Note that the STRIDE calculation must be performed with PEST coordinates (because these are the coordinates used by TJ). Finally, the
+STRIDE code needs to be run using the following non-default parameters: \verb|tol_r| = \verb|tol_nr| $=10^{-12}$ and \verb|sas_flag| = \verb|False|. 
 
 \begin{thebibliography}{99}\baselineskip 5ex
 
 \bibitem{fkr} H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).
 
-\bibitem{hkm} R.D.~Hazeltine, M.~Kotschenreuther, and P.G.~Morrison, Phys.\ Fluids {\bf 2}, 2466  (1985). 
+\bibitem{hkm} R.D.~Hazeltine, M.~Kotschenreuther and P.G.~Morrison, Phys.\ Fluids {\bf 2}, 2466  (1985). 
 
-\bibitem{fw} R.~Fitzpatrick, and F.L.~Waelbroeck, Phys.\ Plasmas {\bf 12}, 022307 (2005).
+\bibitem{fw} R.~Fitzpatrick and F.L.~Waelbroeck, Phys.\ Plasmas {\bf 12}, 022307 (2005).
 
-\bibitem{cole} A.~Cole, and R.~Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
+\bibitem{cole} A.~Cole and R.~Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
 
 \bibitem{diff} R.~Fitzpatrick, Phys.\ Plasmas {\bf 29}, 032507 (2022).
 
@@ -706,9 +1181,10 @@ Thus,  the vacuum matrix, $\underline{\underline{H}}$, is Hermitian because  the
 
 \bibitem{tokuda} S.~Tokuda, Nucl.\ Fusion {\bf 41}, 1037 (2001).
 
-\bibitem{brennan} D.P.~Brennan, R.J.~La Haye, A.D.~Turnbull, M.S.~Chu, T.H.~Jensen, L.L.~Lao, T.C.~Luce, P.A.~Politzer and E.J.~Strait, Phys.\ Plasmas {\bf 10}, 1643 (2003).
+\bibitem{brennan} D.P.~Brennan, R.J.~La\,Haye, A.D.~Turnbull, M.S.~Chu, T.H.~Jensen, L.L.~Lao, T.C.~Luce, P.A.~Politzer,
+E.J.~Strait, S.E.~Kruger and D.D.~Schnack, Phys.\ Plasmas {\bf 10}, 1643 (2003).
 
-\bibitem{ham1}  C.J.~Ham, Y.Q.~Liu, J.W.~Connor, S.C.~Cowley, R.J.~Hastie. T.C.~Hender and T.J.~Martin, Plasma Phys.\ Controlled Fusion {\bf 54}, 105014 (2012). 
+\bibitem{ham1}  C.J.~Ham, Y.Q.~Liu, J.W.~Connor, S.C.~Cowley, R.J.~Hastie, T.C.~Hender and T.J.~Martin, Plasma Phys.\ Controlled Fusion {\bf 54}, 105014 (2012). 
 
 \bibitem{ham} C.J.~Ham, J.W.~Connor, S.C.~Cowley, C.G.~Gimblett, R.J.~Hastie, T.C.~Hender and T.J.~Martin, Plasma Phys.\ Controlled Fusion {\bf 54}, 025009 (2012). 
 
@@ -732,31 +1208,54 @@ Thus,  the vacuum matrix, $\underline{\underline{H}}$, is Hermitian because  the
 
 \bibitem{tj} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31}, 102507 (2024).
 
-\bibitem{mercier} C.~Mercier, Nucl.\ Fusion {\bf 1}, 47 (1960).
+\bibitem{bren1} D.P.~Brennan, E.J.~Strait, D.~Turnbull, M.S.~Chu, R.J.~La\,Haye, T.C.~Luce, T.S.~Taylor, S.~Kruger and
+A.~Pletzer, Phys.\ Plasmas {\bf 9}, 2998 (2002).
 
-\bibitem{ggj} A.H.~Glasser, J.M.~Greene, and J.L.~Johnson, Phys.\ Fluids {\bf 18}, 875 (1975).
+\bibitem{bren2} D.P.~Brennan, A.D.~Turnbull, M.S.~Chu, R.J.~La\,Haye, L.L.~Lao, T.H.~Osborne and S.A.~Galkin, Phys.\ Plasmas {\bf 14}, 056108 (2007). 
 
-\bibitem{ggj1} A.H.~Glasser, J.M.~Greene, and J.L.~Johnson, Phys.\ Fluids {\bf 19}, 567 (1976).
-
-\bibitem{freidberg} J.P.~Freidberg, Rev.\ Mod.\ Phys.\ 54, {\bf 801} (1982).
+\bibitem{freidberg} J.P.~Freidberg, Rev.\ Mod.\ Phys.\ {\bf 54},  801 (1982).
 
 \bibitem{ideal} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31}, 112502 (2024).
+
+\bibitem{dcon} A.H.~Glasser, Phys.\ Plasmas {\bf 23}, 072505 (2016).
+
+\bibitem{mercier} C.~Mercier, Nucl.\ Fusion {\bf 1}, 47 (1960).
+
+\bibitem{ggj} A.H.~Glasser, J.M.~Greene and J.L.~Johnson, Phys.\ Fluids {\bf 18}, 875 (1975).
+
+\bibitem{ggj1} A.H.~Glasser, J.M.~Greene  and J.L.~Johnson, Phys.\ Fluids {\bf 19}, 567 (1976).
 
 \bibitem{abrama} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}\/ (Dover, New York NY, 1964), sect.~8.11.
 
 \bibitem{abramb} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}\/ (Dover, New York NY, 1964), ch.~6.
 
-\bibitem{morse} P.M.~Morse and H.~Feshbach, Methods of Theoretical Physics (McGraw-Hill, New York, 1953), pp. 1302–1329.
+\bibitem{morse} P.M.~Morse and H.~Feshbach, {\em Methods of Theoretical Physics}\/ (McGraw-Hill, New York NY, 1953), pp. 1302–1329.
 
-%\bibitem{pletzer} A.~Pletzer, A.~Bondeson, and R.L.~Dewar, J.\ Comp.\ Phys.\ {\bf 115}, 530 (1994).
+\bibitem{lee} Y.~Lee, J.-K.~Park and Y.-S.~Na, Nucl.\ Fusion {\bf 64}, 106058 (2024). 
 
-%\bibitem{rf} R.~Fitzpatrick, Phys.\ Plasmas {\bf 1}, 3308 (1994). 
+\bibitem{ed} A.~Erd\'{e}lyi, W.~Magnus, F.~Oberhettinger and F.G.~Tricomi, {\em Tables of Integral Transforms}, Vol.~1. (McGraw-Hill, New York NY, 1954).
 
-%\bibitem{wesson} J.A.~Wesson, Nucl.\ Fusion {\bf 18},  87 (1978). 
+\bibitem{ric1} D.P.~Brennan, A.J.~Cole, C.~Akcay and J.M.~Finn, Bul.\ Am.\ Phys.\ Soc.\ {\bf 64}, 249 (2019).
 
+\bibitem{ric2} J.-K.~Park, Phys.\ Plasmas {\bf 29}, 072506 (2022).
 
+\bibitem{bishop} C.M.~Bishop, J.W.~Connor, R.J.~Hastie and S.C.~Cowley, Plasma Phys.\ Control.\ Fusion {\bf 33}, 389 (1991). 
 
+\bibitem{abramc} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}\/ (Dover, New York NY, 1964), ch.~8.
 
+\bibitem{eda} A.~Erd\'{e}lyi, W.~Magnus, F.~Oberhettinger and F.G.~Tricomi, {\em Higher Trancendental Functions}, Vol.~1. (McGraw-Hill, New York NY, 1954), p.~134.
+
+\bibitem{abramd} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}\/ (Dover, New York NY, 1964), ch.~15.
+
+\bibitem{lut} H.~L\"{u}tjens, J.-F.~Luciani and X.~Garbet, Phys.\ Plasmas {\bf 8}, 4267 (2001).
+
+\bibitem{con1} J.W.~Connor, C.J.~Ham, R.J.~Hastie and Y.Q.~Liu, Plasma Phys.\ Control.\ Fusion {\bf 57}, 065001 (2015). 
+
+\bibitem{hel} R.~Fitzpatrick, Phys.\ Plasmas {\bf 2}, 825 (1995).
+
+\bibitem{hel1} R.~Fitzpatrick, R.~Maingi, J.-K.~Park and S.~Sabbagh, Phys.\ Plasmas {\bf 30}, 072505 (2023).
+
+\bibitem{kot} M.~Kotschenreuther, R.D.~Hazeltine and P.J.~Morrison, Phys.\ Fluids {\bf 28}, 294 (1985). 
 
 \end{thebibliography}
 \end{document}
