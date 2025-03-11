@@ -32,8 +32,8 @@ for line in infile:
 
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'Circular: Zero pressure: q_0=1.1: p_sig=1.36')
-plt.rc ('xtick', labelsize = 15) 
-plt.rc ('ytick', labelsize = 15) 
+plt.rc ('xtick', labelsize = 20) 
+plt.rc ('ytick', labelsize = 20) 
 
 plt.subplot (1, 1, 1)
 
@@ -44,8 +44,8 @@ plt.plot (qa, d1, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker =
 plt.plot (qa, d2, color = 'red',   linewidth = 1, linestyle = 'dotted', marker = '^', fillstyle = 'none', markersize = 10, label = 'TEAR')
 plt.plot (qa, d3, color = 'green', linewidth = 1, linestyle = 'dotted', marker = 'o', fillstyle = 'none', markersize = 10, label = 'STRIDE')
 
-plt.xlabel (r'$\epsilon_a$',   fontsize = "15")
-plt.ylabel (r"$\hat{\Delta}_{11}$", fontsize = "15")
+plt.xlabel (r'$a$',   fontsize = "20")
+plt.ylabel (r"$E_{11}$", fontsize = "20")
 plt.legend (fontsize = "15")
 
 plt.tight_layout ()

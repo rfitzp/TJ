@@ -10,7 +10,7 @@
 \allowdisplaybreaks
 
 \begin{document}
-\title{Further Calculation of Tearing Mode Stability in an Inverse Aspect-Ratio Expanded Tokamak Plasma Equilibrium}
+\title{Investigation of  Tearing Mode Stability Near Ideal Stability Boundaries in an Inverse Aspect-Ratio Expanded Tokamak Plasma Equilibrium}
 \author{Richard Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
 \affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin, TX 78712}
 
@@ -49,8 +49,8 @@ zero.\cite{freidberg,ideal}
 Previously, the TJ code either allowed for fixed boundary calculations, or calculations in which the plasma is surrounded by a vacuum region. Appendix~\ref{vacuum} describes a
 new capability that allows for the presence of a perfectly conducting wall in the vacuum region. The radius of the wall, relative to the plasma, can be varied. 
 
-Previously, the TJ code only calculated the tearing stability matrix from the ideal-MHD solution in the outer region. However, this is only half of the tearing stability problem. 
-In order to determine the growth-rates and real frequencies of possible tearing modes, it is necessary to combine the data contained in the tearing stability matrix with resistive layer solutions
+Previously, the TJ code only calculated the ``tearing stability matrix'' that emanates from the ideal-MHD solution in the outer region. However, this is only half of the tearing stability problem. 
+In order to determine the growth-rates and real frequencies of possible tearing modes, it is necessary to combine the data contained in the tearing stability matrix with data obtained from resistive layer solutions
 in the various segments of the inner region. Appendices~\ref{lmodel} and \ref{asym}   describe a new resistive layer model that has been implemented in the TJ code. The model takes into account 
 plasma resistivity, plasma inertia, electron and ion diamagnetic flows, the decoupling of the electron and ion fluids on lengthscales below the ion sound radius, perpendicular
 momentum transport, parallel and perpendicular energy transport, and the stabilizing effect of average magnetic field-line curvature.
@@ -58,24 +58,31 @@ momentum transport, parallel and perpendicular energy transport, and the stabili
 The second aim of the paper is to benchmark the results of the TJ toroidal tearing mode code against results from the STRIDE toroidal tearing mode code. This benchmarking
 exercise is described in Sect.~\ref{benchmark}. 
 
+The final aim of the paper is to combine all of the new features of the TJ code in an investigation of the behavior of the growth-rates and real frequencies of tearing modes as
+an ideal stability boundary is approached. We are particularly interested in understanding the similarities and differences when the ideal stability boundary in question is associated with
+an ideal {\em external}\/ kink mode and an ideal {\em internal}\/ kink mode. This investigation is described in Sect.~\ref{invest}.
+
+Finally, the paper is summarized, and conclusions are drawn, in Sect.~\ref{conc}. 
+
 \section{Benchmark of TJ Code against STRIDE Code}\label{benchmark}
 \subsection{Introduction}
 The STRIDE toroidal tearing mode code\,\cite{aglas1} is a variant of the RDCON toroidal tearing mode code.\cite{aglas2} Both codes are built on top of the
-DCON ideal stability code.\cite{dcon} This section compares the tearing stability matrix, $E_{kk'}$ (see Sect.~\ref{disp}), where $k$ and $k'$ index the various rational surfaces in the
-plasma, calculated by the TJ code, with the equivalent symmetrized tearing stability matrix, $\hat{\mit\Delta}_{kk'}$, calculated by the STRIDE code. (Appendix~\ref{comp} explains how
+DCON ideal stability code.\cite{dcon} The three latter codes are all  part of the GPEC package.\cite{gpec} This section compares the tearing stability matrix, $E_{kk'}$ (see Sect.~\ref{disp}), where $k$ and $k'$ index the various rational surfaces in the
+plasma, calculated by the TJ code with the equivalent symmetrized tearing stability matrix, $\hat{\mit\Delta}_{kk'}$, calculated by the STRIDE code. (Appendix~\ref{comp} explains how
 $\hat{\mit\Delta}_{kk'}$ is related to the actual tearing stability matrix, ${\mit\Delta}_{kk'}$, calculated by STRIDE.)
 
 \subsection{Plasma Equilibrium}
-In the TJ code, the lowest-order safety-factor profile is written
+In the TJ code, the lowest-order safety-factor profile is written\,\cite{tj}
 \begin{equation}
 q(r) = \frac{q_0\,\nu\,(r/a)^2}{1-[1-(r/a)^2]^\nu},
 \end{equation}
 and the normalized (see Sect.~\ref{norm}) pressure profile takes the form
 \begin{equation}
-p(r) = \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_\mu}.
+p(r) = \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p}.
 \end{equation}
-Here, $r$ is the flux-surface label defined in Sect.~\ref{coord}.  Moreover, the magnetic axis corresponds to $r=0$, and the plasma
-boundary to $r=a$.  Furthermore, $q_0=q(0)$ is the safety-factor on the magnetic axis, and  $\beta_0$ is the central plasma $\beta$. 
+Here, $r$ is the flux-surface label with the dimensions of length that is defined in Sect.~\ref{coord}.  Moreover, the magnetic axis corresponds to $r=0$, and the plasma
+boundary to $r=a$.  Note that $a$ is the effective inverse aspect-ratio of the plasma (given that all lengths are normalized to the major radius of the magnetic axis, $R_0$---see Sect.~\ref{norm}.)
+Furthermore, $q_0=q(0)$ is the safety-factor on the magnetic axis, and  $\beta_0$ is the central plasma beta. 
 The value of $\nu$ is adjusted to obtain the desired value of $q_a=q(a)$. 
 
 In the  STRIDE code, we make use of a slightly modified form of the \verb|lar| large aspect-ratio analytic equilibrium in which the 
@@ -87,8 +94,58 @@ whereas the  normalized pressure profile takes the form
 \begin{equation}
 p(r)= \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p}.
 \end{equation}
-In order to obtain (almost) the same equilibrium in the two code, we choose the values of $q_0$, $\beta_0$, $p_p$, and $p_\sigma$, and then
-adjust the parameter $\nu$ in the TJ code until both codes have the same value of $q_a$. 
+In order to obtain (almost) the same equilibrium in the two codes (each of which is based on an expansion of the Grad-Shafranov equation in terms of the inverse aspect-ratio of the plasma), we choose the values of $q_0$, $p_\sigma$, $\beta_0$, and $p_p$, and then
+adjust the parameter $\nu$ in the TJ code until both codes have the same value of the safety-factor at the plasma boundary, $q_a$. This procedure ensures that the locations of the various rational surfaces in the plasma are
+almost identical in both codes. 
+
+\subsection{Single Rational Surface}
+We, first,  consider the stability of $n=1$ tearing modes 
+in a zero pressure plasma equilibrium that only contain a single $n=1$ rational surface: namely, the 2/1 surface. 
+
+\subsubsection{Benchmark Test 1}
+The first benchmark  test has plasma equilibria characterized by $q_0=1.1$ and $p_\sigma=1.36$, with a range of different inverse aspect-ratios, $a$. 
+Figure~1 compares the $E_{11}$ (i.e.,
+the tearing stability index of the 2/1 tearing mode) values calculated by the TJ code,\cite{tj} the TEAR code (which is a cylindrical tearing mode code), and
+the STRIDE code. It can be seen that the tearing stability indices calculated by  TJ and STRIDE are in very good agreement, and that both asymptote to the stability index calculated by the TEAR code
+in the cylindrical limit, $a\rightarrow 0$. Given that  $E_{kk'}$ is necessarily Hermitian,\cite{tj} the imaginary part of $E_{11}$ should be zero. This is the case, to a high
+degree of accuracy, in both the TJ and the STRIDE codes. 
+
+\subsubsection{Benchmark Test 2}
+The second benchmark test has plasma equilibria characterized by $q_0=1.1$ and $a=0.2$, with a range of different edge safety-factor values, $q_a$. 
+Figure~2 compares the $E_{11}$ (i.e.,
+the tearing stability index of the 2/1 tearing mode) values calculated by the TJ code, the TEAR code, and
+the STRIDE code. It can be seen that the tearing stability indices calculated by the TJ and STRIDE are in good agreement, except when the $q=3$ surface very closely approaches the
+plasma boundary (i.e., $q_a\rightarrow 3$). 
+Note that, according to TJ and STRIDE,  $E_{11}$ becomes very large as $q_a\rightarrow 3$ because the plasma approaches an ideal stability boundary. On the other hand,
+the $E_{11}$ values calculate by TEAR shows no such increase, because the ideal stability boundary is associated with a 3/1 mode, and this mode does not couple to the 2/1 mode in a cylindrical plasma. 
+
+\subsection{Two Rational Surfaces}
+ Next, we consider the stability of $n=1$ tearing modes 
+in a plasma equilibrium  that  contains two $n=1$ rational surface: namely, the 2/1 surface and the 3/1 surface. 
+
+\subsubsection{Benchmark Test 3}
+The third benchmark test has plasma equilibria characterized by $q_0=1.1$ and $a=0.2$, with a range of different edge safety-factor values, $q_a$. 
+Figure~3 compares the elements of the tearing stability matrix, $E_{kk'}$,  calculated by the TJ and the STRIDE codes. It can be seen that the elements calculated by
+the two codes are in good agreement. In particular, both codes predict that $E_{21}=E_{12}$, as should be the case because $E_{kk'}$ is necessarily Hermitian.\cite{tj} 
+Both codes also predict that the imaginary parts of $E_{11}$ and $E_{22}$ are zero to a high degree of accuracy (again, as should be the case, because $E_{kk'}$ is Hermitian),
+and the imaginary part of $E_{12}$ and $E_{21}$ are also zero (as should be the case, because the plasma equilibrium is up-down symmetric). 
+
+\subsubsection{Benkmark Test 4}
+The fourth, and final,  benchmark test has plasma equilibria characterized by $q_0=1.1$, $a=0.2$, $p_\sigma = 2.1$, and $p_p=2.0$, with a range of different $\beta_0$ values.  
+Figure~4 compares the elements of the tearing stability matrix calculated by the TJ and the STRIDE codes. The TJ $\beta_0$ values have been rescaled
+by a factor $1.08$ to compensate for the slightly different beta-limits in the slightly different TJ and STRIDE equilibria. (The STRIDE beta-limit, at which all of the
+elements of the $E_{kk'}$ matrix become infinite,  lies at
+$\beta_0=0.025$.)
+ Once this correction has been made, it can be seen that the elements calculated by
+TJ and STRIDE are in reasonably good agreement.  
+
+\subsection{Conclusions}
+The elements of the tearing stability matrix calculated by the TJ and STRIDE codes are in excellent agreement with one another. Given that that the RDCON code,
+which is closely related to the STRIDE code, has been previously benchmarked against the MARS-F and PEST3 codes,\cite{am2,aglas2} we can be confident  that the TJ code is operating as designed. 
+
+\section{Tearing Mode Stability Near Ideal Stability Boundaries}\label{invest}
+
+\section{Summary and Conclusion}\label{conc}
 
 \section*{Acknowledgements}
 This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
@@ -96,7 +153,7 @@ The author would like to thank Daniel Burgess, Nikolas Logan, J.-K.~Park and J.-
 run reliably. 
 
 \section*{Data Availability Statement}
-The digital data used in the figures in this paper can be obtained from the author upon reasonable request. The TJ code is freely 
+The digital data used in the figures in this paper can be obtained from the author upon reasonable request. The TJ and TEAR codes are freely 
 available at {\tt https://github.com/rfitzp/TJ}. 
 
 \appendix
@@ -593,7 +650,7 @@ In the large-aspect ratio limit, $r\ll 1$, it can be demonstrated that\,\cite{mo
 \begin{align}\label{e25t}
 z&\simeq \frac{1}{r},\\[0.5ex]
 z^{\,1/2}\,\hat{P}^{\,n}_{-1/2}(z) &\simeq \frac{1}{2}\ln\left(\frac{8\,z}{\zeta_n}\right),\\[0.5ex]
-z^{1/2}\,\hat{P}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(a,z)^{|m|}}{|m|},\label{ety}\\[0.5ex]
+z^{1/2}\,\hat{P}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(a\,z)^{|m|}}{|m|},\label{ety}\\[0.5ex]
 z^{1/2}\,\hat{Q}^{\,n}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(a\,z)^{-|m|}}{2},\\[0.5ex]
 \zeta_n &= \exp\left(\sum_{j=1,n}\frac{2}{2\,j-1}\right).\label{e29t}
 \end{align}
@@ -1011,7 +1068,7 @@ It remains to calculate the coefficients $a_{LL}$, $a_{LS}$, $a_{SL}$, and $a_{S
 \subsection{Analytic Solution}
 Let $\psi_{m\,k} = (1+X^2)\,\phi$ and $z={\rm i}\,X$. Equation~(\ref{ee13}) transforms to give 
 \begin{equation}\label{ee38}
-(1-z^2)\,\frac{d^2\phi}{dz^2} - 4\,z\,\frac{d\phi}{dz} - [2-\nu_k\,(1+\nu_k)]\,\phi=0.
+(1-z^2)\,\frac{d^{\,2}\phi}{dz^2} - 4\,z\,\frac{d\phi}{dz} - [2-\nu_k\,(1+\nu_k)]\,\phi=0.
 \end{equation}
 Now, the Legendre functions $Q_{\nu_k}(z)$ and $Q_{-1-\nu_{\,k}}(z)$ satisfy\,\cite{abramc}
 \begin{equation}
@@ -1035,7 +1092,7 @@ which yields
 Q_{\nu_k}'(z)&\simeq\frac{\pi^{1/2}\,\Gamma(1+\nu_k/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,\nu_k}}{\Gamma(1/2+\nu_k/2)}\nonumber\\[0.5ex]
 &\phantom{=}- \frac{\pi^{1/2}\,\nu_k\,(1+\nu_k)\,\Gamma(1/2+\nu_k/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,(1+\nu_k)}}{2\,\Gamma(1+\nu_k/2)}\,z +{\cal O}(z^2).
 \end{align}
-So at small $X$, 
+So, at small $X$, 
 \begin{align}\label{ee52}
 (1+X^2)\,Q_{\nu_k}'({\rm i}\,X)&\simeq {\rm e}^{-{\rm i}\,\nu_k\,\pi/2}\left[\frac{\pi^{1/2}\,\Gamma(1+\nu_k/2)}{\Gamma(1/2+\nu_k/2)}
 -\frac{\pi^{1/2}\,\nu_k\,(1+\nu_k)\,\Gamma(1/2+\nu_k/2)}{2\,\Gamma(1+\nu_k/2)}\,X\right]. 
@@ -1110,7 +1167,7 @@ v_{t\,e\,k} &= \left(\frac{2\,T_{e\,k}}{m_e}\right)^{1/2}.
 \end{align}
 The previous five equations can be solved via iteration. In fact, if we choose $\delta_k= \delta_{d\,k}/(2\sqrt{\pi})$, identify ${\mit\Delta}_{k\,{\rm out}}$ with the
 ${\mit\Delta}_k$ appearing in the tearing mode dispersion relation (\ref{dispersion}), identify ${\mit\Delta}_{k\,{\rm in}}$ with the $S_k^{1/3}\,\hat{\mit\Delta}_k$
-obtained from the solution of the layer equations (see Sect.~\ref{lmodel}), and identify $\nu_k$ with minus the resistive interchange stability parameter,\cite{ggj,ggj1}
+obtained from the solution of the layer equations (see Appendix.~\ref{lmodel}), and identify $\nu_k$ with minus the resistive interchange stability parameter,\cite{ggj,ggj1}
 \begin{equation}
 D_{R\,k} = \left(\frac{2\,q^2}{s^2}\,r\,\frac{dP}{dr}\right)_{r_k}\left[1-\frac{1}{q_k^{\,2}}+ \frac{q_k^{\,2}\,s_k}{r_k^{\,4}}\int_0^{r_k}
 \left(\frac{r^3}{q^2} -2\,R_0^{\,2}\,r^2\,\frac{dP}{dr}\right)dr\right]
@@ -1121,7 +1178,7 @@ then we obtain
 {\mit\Delta}_k = S_k^{1/3}\,\hat{\mit\Delta}_k - \sqrt{2}\,\pi^{3/2}\,D_{R\,k}\,\frac{r_k}{\delta_{d\,k}}.
 \end{equation}
 This formula reproduces one given (but, unfortunately,  not derived) in Ref.~\onlinecite{lut} that has been successfully benchmarked against the XTOR code. The final term on the right-hand side
-of the previous equation parameterizes the stabilizing effect of average magnetic field-line curvature on tearing modes in tokamak plasmas. 
+of the previous equation represents the stabilizing effect of average magnetic field-line curvature on tearing modes in tokamak plasmas. 
 
 It should be understood that the local flattening of the pressure profile considered in this section is not real, but rather a proxy for modeling the influence of large parallel thermal conductivity on the so-called 
 Glasser curvature stabilization term.\cite{ggj,ggj1,con1} Furthermore,  the neglect of parallel transport in the resistive layer model
@@ -1219,6 +1276,8 @@ A.~Pletzer, Phys.\ Plasmas {\bf 9}, 2998 (2002).
 
 \bibitem{dcon} A.H.~Glasser, Phys.\ Plasmas {\bf 23}, 072505 (2016).
 
+\bibitem{gpec} J.-K.~Park, A.H.~Boozer and A.H. Glasser, Phys.\  Plasmas {\bf 14}, 52110 (2007).
+
 \bibitem{mercier} C.~Mercier, Nucl.\ Fusion {\bf 1}, 47 (1960).
 
 \bibitem{ggj} A.H.~Glasser, J.M.~Greene and J.L.~Johnson, Phys.\ Fluids {\bf 18}, 875 (1975).
@@ -1258,6 +1317,33 @@ A.~Pletzer, Phys.\ Plasmas {\bf 9}, 2998 (2002).
 \bibitem{kot} M.~Kotschenreuther, R.D.~Hazeltine and P.J.~Morrison, Phys.\ Fluids {\bf 28}, 294 (1985). 
 
 \end{thebibliography}
+
+\newpage
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Test1.pdf}}
+\caption{Benchmark Test 1: $q_0=1.1$, $p_\sigma=1.36$, $\beta_0=0.0$. Variation of the  2/1 tearing stability index with the inverse-aspect ratio, $a$. }
+\end{figure}
+
+\newpage
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Test2.pdf}}
+\caption{Benchmark Test 2: $q_0=1.1$, $a=0.2$, $\beta_0=0.0$. Variation of the 2/1 tearing stability index with  the edge safety-factor, $q_a$. }
+\end{figure}
+
+\newpage
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Test3.pdf}}
+\caption{Benchmark Test 3: $q_0=1.1$, $a=0.2$, $\beta_0=0.0$. Variation of the elements of the tearing stability matrix with $q_a$. In the middle panel, the squares
+indicate  $E_{12}$ and the crosses indicate $E_{21}$. }
+\end{figure}
+
+\newpage
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Test4.pdf}}
+\caption{Benchmark Test 4: $q_0=1.1$, $a=0.2$, $p_\sigma=2.1$,  and $p_p=2.0$. Variation of the elements of the tearing stability matrix with the central plasma beta,  $\beta_0$. In the middle panel, the squares
+indicate  $E_{12}$ and the crosses indicate $E_{21}$. The TJ $\beta_0$ has been rescaled by a factor $1.08$.}
+\end{figure}
+
 \end{document}
 
 

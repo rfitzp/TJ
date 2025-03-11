@@ -40,7 +40,7 @@ Let
 L_m^m({\mit\Psi}_N) &= I({\mit\Psi}_N)\left( J({\mit\Psi}_N)\left[\frac{m\,g({\mit\Psi}_N)}{q({\mit\Psi}_N)}\right]^2+ [n\,\psi_a]^2\right),\\[0.5ex]
 I({\mit\Psi}_N) &= \int_0^{{\mit\Psi}_N} \frac{2\,q\,({\mit\Psi}_N')}{g({\mit\Psi}_N')}\,d{\mit\Psi}_N',\\[0.5ex]
 J({\mit\Psi}_N)&= \oint|\nabla{\mit\Psi}_N|^{-2}\,\frac{d\theta}{2\pi},\\[0.5ex]
-\rho({\mit\Psi}_N) &= \frac{J({\mit\Psi}_N)\,g({\mit\Psi}_N)}{q({\mit\Psi}_N)},\\[0.5ex]
+\rho({\mit\Psi}_N) &= \frac{I({\mit\Psi}_N)\,g({\mit\Psi}_N)}{q({\mit\Psi}_N)},\\[0.5ex]
 s({\mit\Psi}_N) &= \frac{d\ln q}{d{\mit\Psi}_N},
 \end{align}
 where $m$ is a poloidal mode number, $n$ is a toroidal mode number, $q({\mit\Psi}_N)$ is the safety-factor, and $\theta$ is
@@ -68,10 +68,10 @@ f_{S\,j} &= \left[\rho^{\,\nu_{S\,j}}
 \end{align}
 Finally, let
 \begin{align}
-\hat{A}_{ij}&= f_{S\,j}^{\,-1}\,A_{ij}\,f_{L\,j'},\\[0.5ex]
-\hat{B}_{ij}&= f_{S\,j}^{\,-1}\,B_{ij}\,f_{L\,j'},\\[0.5ex]
-\hat{\mit\Gamma}_{ij}&= f_{S\,j}^{\,-1}\,{\mit\Gamma}_{ij}\,f_{L\,j'},\\[0.5ex]
-\hat{\mit\Delta}_{ij}&= f_{S\,j}^{\,-1}\,{\mit\Delta}_{ij}\,f_{L\,j'},
+\hat{A}_{ij}&= f_{S\,j}\,A_{ij}\,f_{L\,j'}^{-1},\\[0.5ex]
+\hat{B}_{ij}&= f_{S\,j},B_{ij}\,f_{L\,j'}^{-1},\\[0.5ex]
+\hat{\mit\Gamma}_{ij}&= f_{S\,j}\,{\mit\Gamma}_{ij}\,f_{L\,j'}^{-1},\\[0.5ex]
+\hat{\mit\Delta}_{ij}&= f_{S\,j},{\mit\Delta}_{ij}\,f_{L\,j'}^{-1},
 \end{align}
 where $A_{ij}$, $B_{ij}$, ${\mit\Gamma}_{ij}$, and ${\mit\Delta}_{ij}$ are the elements of the outer matching matrices
 calculated by STRIDE, whereas the hatted quantities are the  corresponding matching matrices calculated by TJ. 
@@ -153,7 +153,8 @@ by a factor $1.08$ to compensate for the slightly different $\beta$-limits in th
 TJ and STRIDE are in reasonably good agreement.  Again, both codes predict that  ${\rm Im}(\hat{\mit\Delta}_{11})={\rm Im}(\hat{\mit\Delta}_{22}) \simeq 0$ and $\hat{\mit\Delta}_{21}\simeq \hat{\mit\Delta}_{12}^\ast$, as should be the case, according to Eq.~(\ref{sym}).
 
 
-\section*{References}
+\section*{Re\input{../../../Desktop/Classes}
+ferences}
 \begin{thebibliography}{99}\baselineskip 5ex
 
 \bibitem{pletzer} A.~Pletzer, A.~Bondeson, and R.L.~Dewar, J.\ Comp.\ Phys.\ {\bf 115}, 530 (1994).

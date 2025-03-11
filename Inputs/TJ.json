@@ -6,13 +6,13 @@
     "EQLB":   0,       // Flag for equilibrium calculation only
     "FREE":   0,       // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary calculations
     "FVAL":   0,       // Flag for calculating eigenvalues and eigenvectors of F-matrix
-    "VIZ":    1,       // Flag for generating unreconnected eigenfunction visualization data
+    "VIZ":    0,       // Flag for generating unreconnected eigenfunction visualization data
     "IDEAL":  1,       // Flag for ideal calculation
     "XI":     1,       // Flag for using Xi, rather than Psi, as ideal eigenfunction basis
     "INTR":   0,       // Flag for internal ideal stability calculation
     "RWM":    0,       // Flag for resistive wall mode calculation
     "RMP":    0,       // Flag for resonant magnetic perturbation calculation
-    "LAYER":  1,       // Flag for layer calculation
+    "LAYER":  0,       // Flag for layer calculation
  
     "EPS":   1.0e-4,   // Solutions launched from magnetic axis at r = EPS 
     "DEL":   1.0e-9,   // Distance of closest approach to rational surface

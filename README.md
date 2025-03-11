@@ -25,6 +25,12 @@ as the torque curves and shielding factors at the various rational
 surfaces are optionally calculated using a three-field reduced-MHD resonant
 layer model.
 
+# Class Utility
+
+Class to perform various standard tasks, such as reading and writing to
+files, solving differential equations, and finding roots of trancendental
+equations.
+
 # Class Equilibrium
 
 Class to generate an aspect-ratio expanded tokamak plasma equilibrium.
@@ -60,13 +66,16 @@ Program to calculate stability indices of tearing modes in cylindrical tokamak p
   - *Documentation*: 	Documentation for codes
   - *Equilibrium*:	Source for class Equilibrium
   - *Flux*:		Source for class Flux
-  - *Layer*:		Source for class Layer
   - *Inputs*:		JSON files controlling behaviors of codes
+  - *Layer*:		Source for class Layer
   - *Outputs*:		Outputs from codes
   - *Plots*:		Python plotting scripts for codes
+  - *Python*:           Useful python scripts
   - *Reduce*:		REDUCE programs that perform analysis for TJ code
-  - *Tear*:		Source for code Tear
+  - *Runs:              Data from running TJ code
   - *TJ*:		Source for code TJ
+  - *Tear*:		Source for code Tear
+  - *Utility:           Source for class Utility
   - *WriteEFIT*:	Source for code WriteEFIT
   - *bin*:		Binaries for codes
   - *lib*:		Libraries
