@@ -72,7 +72,8 @@ plasma, calculated by the TJ code with the equivalent symmetrized tearing stabil
 $\hat{\mit\Delta}_{kk'}$ is related to the actual tearing stability matrix, ${\mit\Delta}_{kk'}$, calculated by STRIDE.)
 
 \subsection{Plasma Equilibrium}
-In the TJ code, the lowest-order safety-factor profile is written\,\cite{tj}
+In the TJ code, the plasma equilibrium is determined by the shape of the plasma boundary, which is taken to be circular in this paper, as well as two profile functions. 
+The lowest-order safety-factor profile is written\,\cite{tj}
 \begin{equation}
 q(r) = \frac{q_0\,\nu\,(r/a)^2}{1-[1-(r/a)^2]^\nu},
 \end{equation}
@@ -85,7 +86,9 @@ boundary to $r=a$.  Note that $a$ is the effective inverse aspect-ratio of the p
 Furthermore, $q_0=q(0)$ is the safety-factor on the magnetic axis, and  $\beta_0$ is the central plasma beta. 
 The value of $\nu$ is adjusted to obtain the desired value of $q_a=q(a)$. 
 
-In the  STRIDE code, we make use of a slightly modified form of the \verb|lar| large aspect-ratio analytic equilibrium in which the 
+In the  STRIDE code, we make use of a slightly modified form of the \verb|lar| 
+large-aspect-ratio, circular cross-section analytic equilibrium. This equilibrium is also characterized by two profile functions. 
+The 
  normalized parallel current profile, $\sigma={\bf J}\cdot{\bf B}/B^2$,  is written
 \begin{equation}
 \sigma(r) = \frac{2}{q_0}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_\sigma}.
@@ -100,7 +103,7 @@ almost identical in both codes. All of the TJ runs described in this paper inclu
 
 \subsection{Single Rational Surface}
 We, first,  consider the stability of $n=1$ tearing modes 
-in a zero pressure plasma equilibrium that only contain a single $n=1$ rational surface: namely, the 2/1 surface. 
+in a zero pressure plasma equilibrium with a circular poloidal boundary that only contain a single $n=1$ rational surface: namely, the 2/1 surface. 
 
 \subsubsection{Benchmark Test 1}
 The first benchmark  test has plasma equilibria characterized by $q_0=1.1$ and $p_\sigma=1.36$, with a range of different inverse aspect-ratios, $a$. 
@@ -121,7 +124,7 @@ the $E_{11}$ values calculate by TEAR shows no such increase, because the ideal 
 
 \subsection{Two Rational Surfaces}
  Next, we consider the stability of $n=1$ tearing modes 
-in a plasma equilibrium  that  contains two $n=1$ rational surface: namely, the 2/1 surface and the 3/1 surface. 
+in a  plasma equilibrium with a circular poloidal boundary  that  contains two $n=1$ rational surface: namely, the 2/1 surface and the 3/1 surface. 
 
 \subsubsection{Benchmark Test 3}
 The third benchmark test has plasma equilibria characterized by $q_0=1.1$ and $a=0.2$, with a range of different edge safety-factor values, $q_a$. 
@@ -141,7 +144,7 @@ TJ and STRIDE are in reasonably good agreement.
 
 \subsection{Conclusions}
 The elements of the tearing stability matrix calculated by the TJ and STRIDE codes are in excellent agreement with one another. Given that that the RDCON code,
-which is closely related to the STRIDE code, has been previously benchmarked against the MARS-F and PEST3 codes,\cite{am2,aglas2} we can be confident  that the TJ code is operating as designed. 
+which is closely related to the STRIDE code, has been previously benchmarked against the MARS-F and PEST-III codes,\cite{am2,aglas2} we can be confident  that the TJ code is operating as designed. 
 
 \section{Tearing Mode Stability Near Ideal Stability Boundaries}\label{invest}
 
@@ -863,8 +866,8 @@ The following resistive layer equations, which govern the response of the plasma
 where $X=S_k^{\,1/3}\,(r-r_k)/r_k$. Here, it is assumed that $S_k\gg 1$.  The asymptotic behavior of the tearing-parity [i.e., $\psi(-X)=\psi(X)$, $\phi(-X)= -\phi(X)$, and $N(-X)=-N(X)$] solution of the layer
 equations is such that
 \begin{align}\label{e47y}
-\psi(X)\rightarrow  \psi_0\left[\frac{\hat{\mit\Delta}_k}{2}\,|X| +1 + {\cal O}\left(\frac{1}{X}\right)\right],\\[0.5ex]
-\phi(X)\rightarrow  {\rm i}\,\hat{\gamma}_k\,\psi_0\left[\frac{\hat{\mit\Delta}_k}{2}\,{\rm sgn}(X) +\frac{1}{X} + {\cal O}\left(\frac{1}{X^2}\right)\right]\label{e85y}
+\psi(X)&\rightarrow  \psi_0\left[\frac{\hat{\mit\Delta}_k}{2}\,|X| +1 + {\cal O}\left(\frac{1}{X}\right)\right],\\[0.5ex]
+\phi(X)&\rightarrow  {\rm i}\,\hat{\gamma}_k\,\psi_0\left[\frac{\hat{\mit\Delta}_k}{2}\,{\rm sgn}(X) +\frac{1}{X} + {\cal O}\left(\frac{1}{X^2}\right)\right]\label{e85y}
 \end{align}
 as $|X|\rightarrow\infty$, where $\psi_0$ is an arbitrary constant, and 
 $\hat{\mit\Delta}_k = S_k^{-1/3}\,{\mit\Delta}_k$. Here, ${\mit\Delta}_k$ is the layer response parameter introduced in Sect.~\ref{disp}. 
@@ -1086,7 +1089,7 @@ Now,\cite{eda}
 Q_{\nu_k}(z)&= \frac{\pi^{1/2}\,\Gamma(1/2+\nu_k/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,(1+\nu_k)}}{2\,\Gamma(1+\nu_k/2)}F\left(-\frac{\nu_k}{2},\frac{1}{2}+\frac{\nu_k}{2};\frac{1}{2};z^2\right)\nonumber\\[0.5ex]
 &\phantom{=}+\frac{\pi^{1/2}\,\Gamma(1+\nu_k/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,\nu_k}}{\Gamma(1/2+\nu_k/2)}\,z\,F\left(\frac{1}{2}-\frac{\nu_k}{2},1+\frac{\nu_k}{2};\frac{3}{2};z^2\right),
 \end{align}
-where $F$ is a hypergeometric function and $\Gamma$ is a gamma function,\cite{abramb,abramd}
+where $F(a,b;c;z)$ is a hypergeometric function and $\Gamma(z)$ is a gamma function,\cite{abramb,abramd}
 which yields
 \begin{align}
 Q_{\nu_k}'(z)&\simeq\frac{\pi^{1/2}\,\Gamma(1+\nu_k/2)\,{\rm e}^{-{\rm i}\,(\pi/2)\,\nu_k}}{\Gamma(1/2+\nu_k/2)}\nonumber\\[0.5ex]
@@ -1161,7 +1164,7 @@ which parallel thermal transport forces the electron temperature to be a flux-su
 \delta_{d\,k}&= \sqrt{8}\left(\frac{\chi_\perp}{\chi_\parallel}\right)^{1/4}
 \frac{r_k}{(r_k\,s_k\,n)^{1/2}},\\[0.5ex]
 \chi_\parallel &= \frac{\chi_\parallel^{\rm smfp} \,\chi_\parallel^{\rm lmfp}}{\chi_\parallel^{\rm smfp}+\chi_\parallel^{\rm lmfp}},\\[0.5ex]
-\chi_\parallel^{\rm smfp} &= \frac{1.581\,\tau_{ee\,k}\,v_{t\,e\,k}^2}{1+ 0.2535\,Z_{\rm eff}},\\[0.5ex]
+\chi_\parallel^{\rm smfp} &= \frac{1.581\,\tau_{ee\,k}\,v_{t\,e\,k}^{\,2}}{1+ 0.2535\,Z_{\rm eff}},\\[0.5ex]
 \chi_\parallel^{\rm lmfp}&= \frac{2\,R_0\,v_{t\,e\,k}\,r_k}{\pi^{1/2}\,n\,s_k\,\delta_{d\,k}},\\[0.5ex]
 v_{t\,e\,k} &= \left(\frac{2\,T_{e\,k}}{m_e}\right)^{1/2}.
 \end{align}
@@ -1321,26 +1324,26 @@ A.~Pletzer, Phys.\ Plasmas {\bf 9}, 2998 (2002).
 \newpage
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Test1.pdf}}
-\caption{Benchmark Test 1: $q_0=1.1$, $p_\sigma=1.36$, $\beta_0=0.0$. Variation of the  2/1 tearing stability index with the inverse-aspect ratio, $a$. }
+\caption{TJ/STRIDE Benchmark Test 1. Circular cross-section:  $q_0=1.1$, $p_\sigma=1.36$,  and $\beta_0=0.0$. Variation of the  2/1 tearing stability index with the inverse-aspect ratio, $a$. }
 \end{figure}
 
 \newpage
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Test2.pdf}}
-\caption{Benchmark Test 2: $q_0=1.1$, $a=0.2$, $\beta_0=0.0$. Variation of the 2/1 tearing stability index with  the edge safety-factor, $q_a$. }
+\caption{TJ/STRIDE Benchmark Test 2. Circular cross-section: $q_0=1.1$, $a=0.2$, and $\beta_0=0.0$. Variation of the 2/1 tearing stability index with  the edge safety-factor, $q_a$. }
 \end{figure}
 
 \newpage
 \begin{figure}
 \centerline{\includegraphics[width=0.9\textwidth]{Test3.pdf}}
-\caption{Benchmark Test 3: $q_0=1.1$, $a=0.2$, $\beta_0=0.0$. Variation of the elements of the tearing stability matrix with $q_a$. In the middle panel, the squares
+\caption{TJ/STRIDE Benchmark Test 3. Circular cross-section: $q_0=1.1$, $a=0.2$, and $\beta_0=0.0$. Variation of the elements of the tearing stability matrix with $q_a$. In the middle panel, the squares
 indicate  $E_{12}$ and the crosses indicate $E_{21}$. }
 \end{figure}
 
 \newpage
 \begin{figure}
 \centerline{\includegraphics[width=0.9\textwidth]{Test4.pdf}}
-\caption{Benchmark Test 4: $q_0=1.1$, $a=0.2$, $p_\sigma=2.1$,  and $p_p=2.0$. Variation of the elements of the tearing stability matrix with the central plasma beta,  $\beta_0$. In the middle panel, the squares
+\caption{TJ/STRIDE Benchmark Test 4. Circular cross-section: $q_0=1.1$, $a=0.2$, $p_\sigma=2.1$,  and $p_p=2.0$. Variation of the elements of the tearing stability matrix with the central plasma beta,  $\beta_0$. In the middle panel, the squares
 indicate  $E_{12}$ and the crosses indicate $E_{21}$. The TJ $\beta_0$ has been rescaled by a factor $1.08$.}
 \end{figure}
 

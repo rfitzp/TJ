@@ -13,12 +13,14 @@ an analytic solution that is valid in the immediate vicinity of the surface.
 
 Either free or fixed boundary conditions are imposed at the plasma boundary.
 The free boundary conditions are generated via an expansion in toroidal
-functions in the vacuum region surrounding the plasma.
+functions in the vacuum region surrounding the plasma. Alternatively,
+a model ideal wall can be used to interpolate between free and fixed
+boundary conditions.
 
 The free boundary response of the plasma to specified non-axisymmetric currents
 flowing in external magnetic field coils is calculated.
 
-The ideal stability of the plasma is calculated.
+The ideal stability of the plasma is optionally calculated.
 
 The growth-rates and real frequencies of the unreconnected modes as well
 as the torque curves and shielding factors at the various rational
@@ -72,10 +74,10 @@ Program to calculate stability indices of tearing modes in cylindrical tokamak p
   - *Plots*:		Python plotting scripts for codes
   - *Python*:           Useful python scripts
   - *Reduce*:		REDUCE programs that perform analysis for TJ code
-  - *Runs:              Data from running TJ code
+  - *Runs*:             Data from running TJ code
   - *TJ*:		Source for code TJ
   - *Tear*:		Source for code Tear
-  - *Utility:           Source for class Utility
+  - *Utility*:          Source for class Utility
   - *WriteEFIT*:	Source for code WriteEFIT
   - *bin*:		Binaries for codes
   - *lib*:		Libraries
