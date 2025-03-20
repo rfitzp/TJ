@@ -71,4 +71,5 @@ plt.legend (fontsize = '12')
 
 plt.tight_layout ()
 
-plt.show ()    
+#plt.show ()    
+plt.savefig("xIdeale.pdf")

@@ -109,7 +109,7 @@ plt.plot    (b0, e11r, color = 'blue',  linewidth = 1,   linestyle = 'dotted', m
 plt.axvline (0.0886*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\beta_0$',        fontsize = "15")
-plt.ylabel (r"$Re(E_{11})$", fontsize = "15")
+plt.ylabel (r"$E_{11}$", fontsize = "15")
 
 plt.subplot (3, 1, 2)
 
@@ -121,7 +121,7 @@ plt.plot (b0, e21r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker
 plt.axvline (0.088519*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\beta_0$',                fontsize = "15")
-plt.ylabel (r"$Re(E_{12}), Re(E_{21})$", fontsize = "15")
+plt.ylabel (r"$E_{12}, E_{21}$", fontsize = "15")
 plt.legend (fontsize = "15");
 
 plt.subplot (3, 1, 3)
@@ -133,9 +133,9 @@ plt.plot (b0, e22r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker
 plt.axvline (0.088519*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\beta_0$',        fontsize = "15")
-plt.ylabel (r"$Re(E_{22})$", fontsize = "15")
+plt.ylabel (r"$E_{22}$", fontsize = "15")
 
 plt.tight_layout ()
 
-plt.show ()    
-#plt.savefig("Test4.pdf")
+#plt.show ()    
+plt.savefig("Ematrixa.pdf")

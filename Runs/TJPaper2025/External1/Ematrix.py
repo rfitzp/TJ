@@ -138,5 +138,5 @@ plt.ylabel (r"$E_{22}$", fontsize = "15")
 
 plt.tight_layout ()
 
-plt.show ()    
-#plt.savefig("Test4.pdf")
+#plt.show ()    
+plt.savefig("Ematrix.pdf")

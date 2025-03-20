@@ -36,11 +36,13 @@ for line in infile:
 b0 = []
 for b,p1,w1,p2,w2 in zip(bw,pc1,dW1,pc2,dW2):
     p0 = (p1*w2 - p2*w1) /(w2 - w1)
-    pc.append(p0)
+    pc.append(p2)
     bc.append(0.08*p0)
 
+"""
 for b,p in zip(bw, pc):
-    print (b, p)    
+    print (b, p)
+"""
     
 fig = plt.figure (figsize = (8.0, 6.0))
 plt.rc ('xtick', labelsize = 15) 
@@ -56,5 +58,5 @@ plt.ylabel (r"$\beta_{0\,{\rm crit}}$", fontsize = "15")
 
 plt.tight_layout ()
 
-plt.show ()    
-#plt.savefig("Test4.pdf")
+#plt.show ()    
+plt.savefig("BetaLimit1.pdf")

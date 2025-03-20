@@ -103,5 +103,5 @@ plt.legend (fontsize = '15')
 
 plt.tight_layout ()
 
-plt.show ()    
-#plt.savefig("Test4.pdf")
+#plt.show ()    
+plt.savefig("gammaa.pdf")

@@ -46,9 +46,9 @@ plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel (r'$\hat{r}$',    fontsize = "15") 
-plt.ylabel (r"Re($\psi_m$)", fontsize = "15")
-plt.legend (fontsize = '15')
+plt.xlabel (r'$r/a$',    fontsize = "15") 
+plt.ylabel (r'$\psi_m$', fontsize = "15")
+plt.legend (fontsize = '14')
 
 plt.subplot(2, 1, 2)
 
@@ -67,10 +67,11 @@ plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel (r'$\hat{r}$',    fontsize = "15") 
-plt.ylabel (r"Re($\psi_m$)", fontsize = "15")
+plt.xlabel (r'$r/a$',    fontsize = "15") 
+plt.ylabel (r"$\psi_m$", fontsize = "14")
 plt.legend (fontsize = '14')
 
 plt.tight_layout ()
 
-plt.show ()    
+#plt.show ()    
+plt.savefig("Unrc1a.pdf")

@@ -12,9 +12,19 @@
 \begin{document}
 \title{Investigation of  Tearing Mode Stability Near Ideal Stability Boundaries Via Asymptotic Matching Techniques}
 \author{Richard Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
-\affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin, TX 78712}
+\affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin TX 78712}
 
 \begin{abstract}
+A number of improvement to the TJ toroidal tearing mode code are documented. The TJ
+code is also successfully benchmarked against the STRIDE toroidal tearing mode code. Finally, the 
+ new capabilities of the TJ code are used to investigate the stability of tearing modes in tokamak plasmas as
+an ideal stability boundary, associated with either an external-kink or an internal-kink mode, is  approached. 
+All elements of the tearing stability matrix are found to tend to infinity as an ideal stability boundary is approached. 
+The eigenfunctions of the various tearing modes in the plasma, which are decoupled by sheared plasma rotation,
+are all found to morph into that of the marginally-stable ideal mode   as the boundary is
+approached. However, the growth-rates and real frequencies of the various ideal-tearing-modes are different.
+Moreover, the growth-rate of the ideal-tearing-mode that reconnects magnetic flux at the rational surface that lies closest to the
+edge of the plasma is the one that takes off as the boundary is approached. 
 
 \end{abstract}
 \maketitle
@@ -25,12 +35,11 @@ matching problem in which the  plasma is  divided into two distinct regions.\cit
 of the plasma, the tearing perturbation is described by the equations of linearized, marginally-stable, ideal magnetohydrodynamics (a.k.a.\ the ``ideal-MHD'' equations). 
 However, these equations become singular on   ``rational'' magnetic flux-surfaces at which the perturbed magnetic field resonates with the equilibrium field. In the ``inner region'', which
 consists of a set of narrow layers centered on the various rational surfaces, non-ideal-MHD effects such as plasma inertia, resistivity, 
-viscosity,  diamagnetic flows, the ion sound radius,  and perpendicular and parallel energy transport, become important.\cite{hkm,fw,cole,diff}  The resistive layer
+viscosity,  diamagnetic flows, the ion sound radius,  and perpendicular and parallel energy transport, become important.\cite{ara,hkm,fw,cole,diff}  The resistive layer
 solutions in the various segments of the inner region must be simultaneously asymptotically matched to the ideal-MHD solution in the outer region to produce a matrix 
-dispersion relation that determines the growth-rates and angular rotation frequencies of the various tearing modes to which the plasma is subject.\cite{con0,cht} (See Sect.~\ref{disp}.)
+dispersion relation that determines the growth-rates and  rotation frequencies of the various tearing modes to which the plasma is subject.\cite{con0,cht} (See Sect.~\ref{disp}.)
 
-In general, the  determination of the ideal-MHD contributions to the elements of the  tearing mode dispersion relation is an exceptionally challenging computational task.\cite{connor,nish,gal,pletz,pletz1,
-tokuda,brennan,ham,ham1,ham2,am1,am2,am3,aglas,aglas1,aglas2}
+In general, the  determination of the ideal-MHD contributions to the elements of the  tearing mode dispersion relation is an exceptionally challenging computational task.\cite{connor,nish,gal,pletz,pletz1,tokuda,brennan,ham,ham1,ham2,am1,am2,am3,aglas,aglas1,aglas2}
 One way of greatly reducing the complexity of this task is to employ an inverse aspect-ratio expanded plasma equilibrium.\cite{greene,gim,inverse} In such an equilibrium,
 the metric elements of the flux-coordinate system can be expressed analytically in terms of a relatively small number of  flux-surface functions,
 which represents a major simplification.\cite{con0} Another significant advantage of an inverse aspect-ratio expanded equilibrium is that the magnetic perturbation in the plasma can be efficiently 
@@ -40,7 +49,7 @@ which is described in Ref.~\onlinecite{tj}.
 The first aim of this paper is to document three major improvements to the TJ code. 
 
 As is well known, tearing modes in tokamak plasmas become extremely
-unstable as an ideal stability boundary is approached.\cite{brennan,bren1,bren2} When investigating such phenomena, it is imperative to know the exact location
+unstable as an ideal stability boundary is approached.\cite{brennan,bren1,bren2} When investigating this phenomenon, it is imperative to know the exact location
 of the  stability boundary. Appendix~\ref{ideal} explains how the the ideal-MHD solutions in the outer region, calculated by the TJ code, can be repurposed to
 construct a complete set of marginally-stable ideal eigenfunctions, and how these eigenfunctions can then be used to calculate the total ideal perturbed potential
 energy, $\delta W$, of all possible ideal modes.  Of course, the ideal stability boundary corresponds to the point at which the smallest possible value of $\delta W$ passes through
@@ -50,23 +59,23 @@ Previously, the TJ code either allowed for fixed boundary calculations, or calcu
 new capability that allows for the presence of a perfectly conducting wall in the vacuum region. The radius of the wall, relative to the plasma, can be varied. 
 
 Previously, the TJ code only calculated the ``tearing stability matrix'' that emanates from the ideal-MHD solution in the outer region. However, this is only half of the tearing stability problem. 
-In order to determine the growth-rates and real frequencies of possible tearing modes, it is necessary to combine the data contained in the tearing stability matrix with data obtained from resistive layer solutions
+In order to determine the growth-rates and rotation frequencies of possible tearing modes, it is necessary to combine the data contained in the tearing stability matrix with data obtained from resistive layer solutions
 in the various segments of the inner region. Appendices~\ref{lmodel} and \ref{asym}   describe a new resistive layer model that has been implemented in the TJ code. The model takes into account 
 plasma resistivity, plasma inertia, electron and ion diamagnetic flows, the decoupling of the electron and ion fluids on lengthscales below the ion sound radius, perpendicular
 momentum transport, parallel and perpendicular energy transport, and the stabilizing effect of average magnetic field-line curvature.
 
-The second aim of the paper is to benchmark the results of the TJ toroidal tearing mode code against results from the STRIDE toroidal tearing mode code. This benchmarking
+The second aim of the paper is to benchmark the results of the TJ toroidal tearing mode code against results from the STRIDE\,\cite{aglas1} toroidal tearing mode code. This benchmarking
 exercise is described in Sect.~\ref{benchmark}. 
 
-The final, and main, aim of the paper is to combine all of the new features of the TJ code in an investigation of the behavior of the growth-rates and real frequencies of tearing modes as
+The final aim of the paper is to combine all of the new features of the TJ code in an investigation of the stability of tearing modes in tokamak plasmas as
 an ideal stability boundary is approached. We are particularly interested in understanding the similarities and differences when the ideal stability boundary in question is associated with
-an ideal {\em external}\/ kink mode and an ideal {\em internal}\/ kink mode. This investigation is described in Sect.~\ref{invest}.
+an {\em external-kink}\/ mode and an {\em internal-kink}\/ mode. This investigation is described in Sect.~\ref{invest}.
 
 Finally, the paper is summarized, and conclusions are drawn, in Sect.~\ref{conc}. 
 
 \section{Benchmark of TJ Code against STRIDE Code}\label{benchmark}
 \subsection{Introduction}
-The STRIDE toroidal tearing mode code\,\cite{aglas1} is a variant of the RDCON toroidal tearing mode code.\cite{aglas2} Both codes are built on top of the
+The STRIDE toroidal tearing mode code\,\cite{aglas1} performs the same task as the RDCON toroidal tearing mode code,.\cite{aglas2} but in a generally more reliable fashion Both codes are built on top of the
 DCON ideal stability code.\cite{dcon} The three latter codes are all  part of the GPEC package.\cite{gpec} This section compares the tearing stability matrix, $E_{kk'}$ (see Sect.~\ref{disp}), where $k$ and $k'$ index the various rational surfaces in the
 plasma, calculated by the TJ code with the equivalent symmetrized tearing stability matrix, $\hat{\mit\Delta}_{kk'}$, calculated by the STRIDE code. (Appendix~\ref{comp} explains how
 $\hat{\mit\Delta}_{kk'}$ is related to the actual tearing stability matrix, ${\mit\Delta}_{kk'}$, calculated by STRIDE.)
@@ -84,12 +93,12 @@ p(r) = \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p}.
 Here, $r$ is the flux-surface label with the dimensions of length that is defined in Sect.~\ref{coord}.  Moreover, the magnetic axis corresponds to $r=0$, and the plasma
 boundary to $r=a$.  Note that $a$ is the effective inverse aspect-ratio of the plasma (given that all lengths are normalized to the major radius of the magnetic axis, $R_0$---see Sect.~\ref{norm}.)
 Furthermore, $q_0=q(0)$ is the safety-factor on the magnetic axis, and  $\beta_0$ is the central plasma beta. 
-The value of $\nu$ is adjusted to obtain the desired value of $q_a=q(a)$. 
+The value of $\nu$ is adjusted to obtain the desired value of the safety-factor at the plasma boundary, $q_a=q(a)$. 
 
 In the  STRIDE code, we make use of a slightly modified form of the \verb|lar| 
 large-aspect-ratio, circular cross-section analytic equilibrium. This equilibrium is also characterized by two profile functions. 
 The 
- normalized parallel current profile, $\sigma={\bf J}\cdot{\bf B}/B^2$,  is written
+ normalized parallel current profile, $\sigma={\bf J}\cdot{\bf B}/B^{\,2}$,  is written
 \begin{equation}
 \sigma(r) = \frac{2}{q_0}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_\sigma}.
 \end{equation}
@@ -97,46 +106,46 @@ whereas the  normalized pressure profile takes the form
 \begin{equation}
 p(r)= \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p}.
 \end{equation}
-In order to obtain (almost) the same equilibrium in the two codes (each of which is based on an expansion of the Grad-Shafranov equation in terms of the inverse aspect-ratio of the plasma), we choose the values of $q_0$, $p_\sigma$, $\beta_0$, and $p_p$, and then
+In order to obtain (almost) the same equilibrium in the two codes (each of which is based on an expansion of the Grad-Shafranov equation in terms of the inverse aspect-ratio of the plasma), we choose common values of $q_0$, $p_\sigma$, $\beta_0$, and $p_p$, and then
 adjust the parameter $\nu$ in the TJ code until both codes have the same value of the safety-factor at the plasma boundary, $q_a$. This procedure ensures that the locations of the various rational surfaces in the plasma are
-almost identical in both codes. All of the TJ runs described in this paper include poloidal harmonics in the range $m=-10$ to $m=+20$. 
+almost identical in both codes. All of the benchmark tests  described in this section calculate the stability of $n=1$ tearing modes  in free-boundary plasma equilibria (i.e., plasmas surrounded by a vacuum region that contains no ideal wall). The TJ calculations include all poloidal harmonics in the range $m=-10$ to $m=+20$. 
 
 \subsection{Single Rational Surface}
 We, first,  consider the stability of $n=1$ tearing modes 
-in a zero pressure plasma equilibrium with a circular poloidal boundary that only contain a single $n=1$ rational surface: namely, the 2/1 surface. 
+in a zero pressure plasma equilibrium with a circular poloidal boundary that only contain a single rational surface: namely, the $m=2/n=1$ surface. 
 
 \subsubsection{Benchmark Test 1}
 The first benchmark  test has plasma equilibria characterized by $q_0=1.1$ and $p_\sigma=1.36$, with a range of different inverse aspect-ratios, $a$. 
-Figure~1 compares the $E_{11}$ (i.e.,
-the tearing stability index of the 2/1 tearing mode) values calculated by the TJ code,\cite{tj} the TEAR code (which is a cylindrical tearing mode code), and
+Figure~\ref{fig1} compares the $E_{11}$ (i.e.,
+the tearing stability index of the  $m=2/n=1$ tearing mode) values calculated by the TJ code,\cite{tj} the TEAR code (which is a cylindrical tearing mode code), and
 the STRIDE code. It can be seen that the tearing stability indices calculated by  TJ and STRIDE are in very good agreement, and that both asymptote to the stability index calculated by the TEAR code
-in the cylindrical limit, $a\rightarrow 0$. Given that  $E_{kk'}$ is necessarily Hermitian,\cite{tj} the imaginary part of $E_{11}$ should be zero. This is the case, to a high
+in the cylindrical limit, $a\rightarrow 0$. Given that  $E_{kk'}$ is necessarily Hermitian,\cite{tj} the imaginary part of $E_{11}$ should be zero. This is found to be the case, to a high
 degree of accuracy, in both the TJ and the STRIDE codes. 
 
 \subsubsection{Benchmark Test 2}
 The second benchmark test has plasma equilibria characterized by $q_0=1.1$ and $a=0.2$, with a range of different edge safety-factor values, $q_a$. 
-Figure~2 compares the $E_{11}$ (i.e.,
-the tearing stability index of the 2/1 tearing mode) values calculated by the TJ code, the TEAR code, and
+Figure~\ref{fig2} compares the $E_{11}$ (i.e.,
+the tearing stability index of the $m=2/n=1$ tearing mode) values calculated by the TJ code, the TEAR code, and
 the STRIDE code. It can be seen that the tearing stability indices calculated by the TJ and STRIDE are in good agreement, except when the $q=3$ surface very closely approaches the
 plasma boundary (i.e., $q_a\rightarrow 3$). 
 Note that, according to TJ and STRIDE,  $E_{11}$ becomes very large as $q_a\rightarrow 3$ because the plasma approaches an ideal stability boundary. On the other hand,
-the $E_{11}$ values calculate by TEAR shows no such increase, because the ideal stability boundary is associated with a 3/1 mode, and this mode does not couple to the 2/1 mode in a cylindrical plasma. 
+the $E_{11}$ values calculate by TEAR shows no such increase, because the ideal stability boundary is associated with an $m=3/n=1$ external-kink mode, and this mode does not couple to the $m=2/n=1$ tearing mode in a cylindrical plasma. 
 
 \subsection{Two Rational Surfaces}
  Next, we consider the stability of $n=1$ tearing modes 
-in a  plasma equilibrium with a circular poloidal boundary  that  contains two $n=1$ rational surface: namely, the 2/1 surface and the 3/1 surface. 
+in a  plasma equilibrium with a circular poloidal boundary  that  contains two rational surfaces: namely, the $m=2/n=1$ surface and the $m=3/n=1$ surface. 
 
 \subsubsection{Benchmark Test 3}
 The third benchmark test has plasma equilibria characterized by $q_0=1.1$ and $a=0.2$, with a range of different edge safety-factor values, $q_a$. 
-Figure~3 compares the elements of the tearing stability matrix, $E_{kk'}$,  calculated by the TJ and the STRIDE codes. It can be seen that the elements calculated by
+Figure~\ref{fig3} compares the elements of the tearing stability matrix, $E_{kk'}$,  calculated by the TJ and the STRIDE codes. It can be seen that the elements calculated by
 the two codes are in good agreement. In particular, both codes predict that $E_{21}=E_{12}$, as should be the case because $E_{kk'}$ is necessarily Hermitian.\cite{tj} 
 Both codes also predict that the imaginary parts of $E_{11}$ and $E_{22}$ are zero to a high degree of accuracy (again, as should be the case, because $E_{kk'}$ is Hermitian),
-and the imaginary part of $E_{12}$ and $E_{21}$ are also zero (as should be the case, because the plasma equilibrium is up-down symmetric). 
+and that the imaginary part of $E_{12}$ and $E_{21}$ are also zero (as should be the case, because the plasma equilibrium is up-down symmetric). 
 
 \subsubsection{Benkmark Test 4}
 The fourth, and final,  benchmark test has plasma equilibria characterized by $q_0=1.1$, $a=0.2$, $p_\sigma = 2.1$, and $p_p=2.0$, with a range of different $\beta_0$ values.  
-Figure~4 compares the elements of the tearing stability matrix calculated by the TJ and the STRIDE codes. The TJ $\beta_0$ values have been rescaled
-by a factor $1.08$ to compensate for the slightly different beta-limits in the slightly different TJ and STRIDE equilibria. (The STRIDE beta-limit, at which all of the
+Figure~\ref{fig4} compares the elements of the tearing stability matrix calculated by the TJ and the STRIDE codes. The $\beta_0$ values from TJ have been rescaled
+by a factor $1.08$ to compensate for the slightly different $\beta$-limits in the slightly different TJ and STRIDE equilibria. (The STRIDE $\beta$-limit, at which all of the
 elements of the $E_{kk'}$ matrix become infinite,  lies at
 $\beta_0=0.025$.)
  Once this correction has been made, it can be seen that the elements calculated by
@@ -144,15 +153,316 @@ TJ and STRIDE are in reasonably good agreement.
 
 \subsection{Conclusions}
 The elements of the tearing stability matrix calculated by the TJ and STRIDE codes are in excellent agreement with one another. Given that that the RDCON code,
-which is closely related to the STRIDE code, has been previously benchmarked against the MARS-F and PEST-III codes,\cite{am2,aglas2} we can be confident  that the TJ code is operating as designed. 
+which has been benchmarked against the STRIDE code, has been previously benchmarked against the MARS-F and PEST-III codes,\cite{am2,aglas2} we can be confident  that the TJ code is operating as designed. 
 
 \section{Tearing Mode Stability Near Ideal Stability Boundaries}\label{invest}
 
-\section{Summary and Conclusion}\label{conc}
+\subsection{Tearing Mode Dispersion Relation}
+Consider the stability of a tokamak plasma to a tearing perturbation that is characterized by the toroidal mode number $n$. (See Sect.~\ref{perturbed}.)
+Suppose that there are $K$ rational surfaces in the plasma at which the perturbation resonates with the equilibrium magnetic field. (See Sect.~\ref{rational}.)
+Let ${\mit\Psi}_k$, ${\mit\Delta\Psi}_k$, and ${\mit\Delta}_k$ be the reconnected helical magnetic flux, the helical current sheet density, and the
+tearing-parity layer response parameter, respectively, at the $k$th rational surface. (See Sects.~\ref{rational} and \ref{disp}.) Note that all of these
+quantities are, in general, complex. The matrix tearing-mode dispersion relation takes the form (see Sect.~\ref{disp}) 
+\begin{equation}\label{tmdisp}
+\sum_{k'=1,K}(E_{kk'}-{\mit\Delta}_k\,\delta_{kk'})\,{\mit\Psi}_{k'} = 0
+\end{equation}
+for $k=1,K$. Here, $E_{kk'}$ is the Hermitian tearing stability matrix determined from the ideal-MHD solution in the outer region. 
+Moreover, ${\mit\Delta\Psi}_k = {\mit\Delta}_k\,{\mit\Psi}_k$ for $k=1,K$. Note that, in this paper, we are neglecting the twisting-parity responses of the
+various segments of the inner region to the ideal-MHD solution in the outer region in favor of the, generally, much larger tearing-parity responses.\cite{am3}
+In fact, the neglect of the twisting-parity responses   is not a good approximation in very high-$\beta$ plasmas,\cite{bren2} but is justified in the relatively low-$\beta$
+plasmas considered in this paper. 
+
+The tearing-parity layer response parameter at the $k$th rational surface takes the form (see Sect.~\ref{match})
+\begin{equation}
+{\mit\Delta}_k = S_k^{\,1/3}\,\hat{\mit\Delta}_k(\gamma_k) + {\mit\Delta}_{k\,{\rm crit}},
+\end{equation}
+where
+\begin{equation}\label{dcrit}
+{\mit\Delta}_{k\,{\rm crit}} =- \sqrt{2}\,\pi^{3/2}\,D_{R\,k}\,\frac{r_k}{\delta_{d\,k}}.
+\end{equation}
+Here, $r_k$ (see Sect.~\ref{coord}), $S_k$ (see Sect.~\ref{rpara}), $D_{R\,k}$ [see Eq.~(\ref{dr})], and $\delta_{d\,k}$ (see Sect.~\ref{match}) are the minor radius,  Lundquist number, resistive interchange parameter, and critical layer width above
+which parallel thermal transport forces the electron temperature to be a flux-surface function, respectively, at the $k$th rational surface.  Moreover, $\hat{\mit\Delta}_k(\gamma_k)$ is
+the ${\cal O}(1)$ complex layer response parameter obtained by solving  resistive layer equations in the segment of the inner region centered on the $k$th rational
+surface. (See Sect.~\ref{lmodel}.) This quantity is a function of the complex growth-rate of the tearing mode, $\gamma_k$,  as seen in the local E-cross-B frame at the surface. 
+
+In general, the elements of the $E_{kk'}$ matrix, the $\hat{\mit\Delta}_k$ values, and  the ${\mit\Delta}_{k\,{\rm crit}}$ values are all ${\cal O}(1)$, whereas the
+$S_k^{\,1/3}$ values are much greater than unity. In this case, the only way of finding a solution of the tearing mode dispersion relation, (\ref{tmdisp}), is
+to choose $\gamma_k$, for some particular value of $k$,  in such a manner that $|\hat{\mit\Delta}_k|\ll 1$. However, because of sheared E-cross-B and diamagnetic rotation in  the plasma, 
+this choice of $\gamma_k$ is generally such that $|\hat{\mit\Delta}_{k'}|\sim{\cal O}(1)$ for $k\neq k'$.\cite{am1} In this situation, the $K\times K$ 
+matrix tearing mode dispersion relation, (\ref{tmdisp}), decouples to give $K$ independent dispersion relations of the form\,\cite{am1}
+\begin{equation}\label{decouple}
+S_k^{\,1/3}\,\hat{\mit\Delta}_k(\gamma_k) = E_{kk}-{\mit\Delta}_{k\,{\rm crit}}
+\end{equation}
+for $k=1,K$. Here, the $k$th decoupled dispersion relation corresponds to a tearing mode that only reconnects helical magnetic flux at the
+$k$th rational surface. The complex growth-rate of this mode only depends on the resistive layer physics at the $k$th rational surface. The
+real quantity $E_{kk}$ is the effective tearing stability index of the mode.\cite{fkr} Moreover, the real quantity ${\mit\Delta}_{k\,{\rm crit}}$ is the critical
+value of $E_{kk}$ above which the mode becomes unstable. 
+
+The marginal stability point of the $k$th tearing mode is $E_{kk}=  {\mit\Delta}_{k\,{\rm crit}}$, rather than $E_{kk}=0$,\cite{fkr,ara} because of the
+stabilizing effect of average equilibrium magnetic field-line curvature in tokamak plasmas.\cite{ggj,ggj1} Note that our expression, (\ref{dcrit}),  for
+${\mit\Delta}_{k\,{\rm crit}}$ differs from that of Refs.~\onlinecite{ggj} and \onlinecite{ggj1} because  $\delta_{d\,k}$ is the critical layer width above which
+parallel thermal transport dominates perpendicular transport, which has no dependence on $S_k$, rather that the much smaller resistive
+layer width, which scales as $S_k^{\,-1/4}$.\cite{lut,con1} This fact resolves a mystery in tearing mode stability theory. According to Refs.~\onlinecite{ggj} and \onlinecite{ggj1},
+large hot tokamak plasmas should be much more stable to tearing modes than small cold tokamak plasmas, because the latter plasmas are characterized by much
+larger Lundquist numbers, and the critical value of the tearing stability index, $E_{kk}$,  above which the tearing mode that reconnects
+magnetic flux at the $k$th rational surface becomes unstable scales as ${\mit\Delta}_{k\,{\rm crit}}\propto S_k^{\,1/4}$. In fact, large  tokamak plasmas are only moderately more
+stable to tearing modes than small  plasmas. The reason for this is that when parallel transport is taken into account, ${\mit\Delta}_{k\,{\rm crit}}$, in large tokamak
+plasmas is of order unity, rather than much greater than unity. Thus, the stabilizing effect of average magnetic field-line curvature is a moderate effect in
+large tokamak plasmas, rather than a dominant effect. Nevertheless, this moderate stabilizing effect is important. For instance, it is virtually impossible to find a
+sensible tokamak equilibrium in which $E_{kk}$ for the $m=2/n=1$ tearing mode is not positive. However,  the classical $m=2/n=1$ tearing mode is usually observed to
+be stable in large tokamak plasmas. The reason for this is that $E_{kk}$ does not generally exceed ${\mit\Delta}_{k\,{\rm crit}}$ for the $m=2/n=1$  mode in such  plasmas. 
+
+\subsection{Approach to an Ideal Stability Boundary}\label{approach}
+The matrix tearing mode dispersion relation, (\ref{tmdisp}), can be written in the alternative form\,\cite{am1}
+\begin{equation}
+\sum_{k'=1,K} F_{kk'}\,{\mit\Delta\Psi}_{k'} = {\mit\Psi}_k
+\end{equation}
+for $k=1,K$, where $F_{kk'}$ is the inverse of $E_{kk'}$. Now, a marginally-stable ideal mode is characterized by ${\mit\Psi}_k=0$ for $k=1,K$. In other words, the
+mode does not reconnect helical magnetic flux at any rational surface in the plasma.  (The mode is marginally-stable
+because our ideal-MHD solution in the outer region neglects plasma inertia.) Thus, for such a mode, 
+\begin{equation}
+\sum_{k'=1,K} F_{kk'}\,{\mit\Delta\Psi}_{k'} =0
+\end{equation}
+for $k=1,K$. The only way of finding a non-trivial solution of the previous equation is if the determinant of $F_{kk'}$ is zero. In general, the elements of
+the $F_{kk'}$ matrix remain finite as ${\rm det}(F_{kk'})\rightarrow 0$.\cite{am1} Hence, we deduce that, as an ideal stability boundary is approached
+[i.e., as ${\rm det}(F_{kk'})\rightarrow 0$], the elements of the $E_{kk'}= {\rm adj}(F_{kk'})/{\rm det}(F_{kk'})$ matrix  all become {\em infinite}. This implies, from Eq.~(\ref{decouple}), that all
+of the decoupled tearing modes in the plasma simultaneously become extremely unstable.\cite{brennan,bren1,bren2} 
+
+\subsection{Determination of Ideal Stability Boundary}\label{determine}
+The DCON ideal stability code\,\cite{dcon} implements two tests for ideal stability. The first test is for fixed-boundary ideal modes (i.e., modes in which the
+radial plasma displacement is constrained to be zero at the plasma boundary). This test involves calculating the perturbed ideal plasma potential energy
+matrix, $\underline{\underline{W}}_{\,p}(r)$  (see Sect.~\ref{penergy}), in the region lying between the magnetic axis and the equilibrium magnetic
+flux-surface whose label is $r$. If ${\rm det}(\underline{\underline{W}}_{\,p}^{\,-1}) =0$
+for any value of $r$ lying in the range $0\leq r\leq a$ then the plasma is unstable to a fixed-boundary ideal mode. The second test is for
+free-boundary ideal modes (i.e., modes in which the radial plasma displacement is not constrained to be zero at the plasma boundary 
+because the magnetic perturbation extends into the vacuum region surrounding the plasma). This test involves calculating the Hermitian perturbed ideal plasma potential energy
+matrix, $\underline{\underline{W}}_{\,p}$,  in the region between the magnetic axis and the plasma boundary, and adding to it the Hermitian vacuum energy matrix,  $\underline{\underline{W}}_{\,v}$,  in order to
+form the Hermitian  total energy matrix, $\underline{\underline{W}} =\underline{\underline{W}}_{\,p} +  \underline{\underline{W}}_{\,v}$. If any of the real eigenvalues
+of the total energy matrix are negative then the plasma is unstable to a free-boundary ideal mode.  As described in Sect.~\ref{ideal}, the TJ code
+implements the relatively straightforward second test, rather than the much more complicated first test. One question that we would like to address in
+this paper is whether the second test is sufficient to detect ideal stability boundaries associated with $m=1/n=1$ internal-kink modes. 
+
+\subsection{Approach to External-Kink Ideal Stability Boundary} \label{external}
+\subsubsection{Plasma Equilibria}
+In this section, we shall investigate the behavior of $n=1$ tearing modes as an ideal stability boundary associated with an  external-kink mode is approached. 
+
+For the sake of simplicity and clarity, all of the calculations described in this section are performed for circular poloidal cross-section plasma equilibria that contain two rational surfaces: namely, the $m=2/n=1$ and the $m=3/n=1$ surfaces (a.k.a. the $q=2$ and the $q=3$ surfaces). 
+The equilibria are characterized by $q_0=1.5$, $q_a=3.6$, $p_p=2.0$, and $a=0.2$. The calculations include all poloidal harmonics in the range $m=-10$ to $m=+20$. 
+
+Resistive layer quantities are calculated with the following plasma parameters (see Sect.~\ref{ppara}) that are broadly characteristic of a high-field tokamak fusion reactor:
+$B_0=12\,{\rm T}$, $R_0=2\,{\rm m}$, $n_0=3\times 10^{20}\,{\rm m}^{-3}$, $T_{e\,{\rm edge}}=100\,{\rm eV}$, $\alpha =0.5$, $Z_{\rm eff}=2$, $M=2$, 
+and $\chi_\perp=0.2\,{\rm m}^{-3}$. Note that the electron and ion temperatures in the plasma are assumed to be equal to one another, as is likely to be the case in a
+fusion reactor. Moreover, the
+perpendicular momentum/energy diffusivity, $\chi_\perp$, is assumed to be spatially uniform, for the sake of simplicity. 
+
+\subsubsection{Ideal Stability of Free-Boundary Modes}
+Figure~\ref{fig5} shows the variation of the smallest eigenfunction of the free-boundary (i.e., with no ideal wall in the vacuum region surrounding the plasma), $n=1$, 
+total ideal energy matrix, $\delta W$, and the corresponding eigenvalues of the plasma and vacuum energy matrices, $\delta W_p$, and $\delta W_v$, with the
+central plasma beta, $\beta_0$. It can be seen that $\delta W$ decreases monotonically with increasing $\beta_0$. This decrease is due
+to a corresponding decrease in the plasma energy, $\delta W_p$, rather than the positive definite vacuum energy, $\delta W_v$ (which actually increases). 
+At low $\beta_0$ values, the total energy is positive, indicating that the plasma equilibrium is ideally stable.\cite{freidberg,ideal} However,  the
+total energy passes through zero at $\beta_0=0.0134$, which implies that the plasma equilibrium is ideally unstable for $\beta_0>0.0134$,
+and that the marginal stability boundary corresponds to $\beta_0=0.0134$. 
+
+\subsubsection{Free-Boundary Tearing Stability Matrix}
+Figure~\ref{fig6} shows the variation of the elements of the free-boundary, $n=1$, tearing stability matrix with $\beta_0$. In accordance with the discussion in
+Sect.~\ref{approach}, the elements all tend to infinity as the ideal stability boundary is approached. This implies that the decoupled tearing modes that
+only reconnected magnetic flux at the $q=2$  (a.k.a.\ the $2/1$ mode) and the $q=3$  (a.k.a.\ the $3/1$ mode)surfaces simultaneously become very unstable as the
+stability boundary is approached. Furthermore, the coupling between the two modes (which is due to the off-diagonal elements of the matrix)
+becomes very large as the  boundary is approached. 
+
+\subsubsection{Growth and Rotation of Free-Boundary Tearing Modes}
+Figure~\ref{fig7} shows the variations  with $\beta_0$ of the real growth-rates and real frequencies of free-boundary $2/1$ and $3/1$  modes.  At low $\beta_0$ values, both modes are
+unstable. However, as $\beta_0$ increases, the $2/1$ mode is eventually stabilized by
+magnetic curvature effects. (Unfortunately, this is a little hard to see in the figure.) This is because $E_{11}$, despite being positive, falls below ${\mit\Delta}_{1\,{\rm crit}}\propto\beta_0$.  As $\beta_0$ further increases, 
+$E_{11}$ eventually becomes  large enough to overcome curvature stabilization, and the $2/1$ mode becomes unstable again. As the ideal stability
+boundary is approached, the growth-rate of the $3/1$ mode becomes extremely large, whereas that of the $2/1$ mode remains finite. 
+This is partly because $E_{22}>E_{11}$ (i.e., the $3/1$ mode is more intrinsically unstable than the $2/1$ mode), but mostly because
+the plasma at the $q=3$ surface is significantly colder than that at the $q=2$ surface, so the resistive diffusion time at the former surface is much  shorter than
+that at the latter. The real frequencies of the two modes (which are measured in the local E-cross-B frames at the surfaces at which they reconnect magnetic flux) initially increase linearly with $\beta_0$, because the frequencies are diamagnetic in nature, and therefore scale linearly with the plasma
+pressure.\cite{ara} However, the frequencies of both modes exhibit sharp downturns as the ideal stability boundary is approached. The orgin
+of these downturns is elucidated  in the bottom panel of the figure. The parameters $f_1$ and $f_2$ are designed to take the values $+1$/0/$-1$ if the $2/1$ and
+$3/1$ tearing modes, respectively,  co-rotate with the
+electron/E-cross-B/ion fluids at the surfaces at which they reconnect magnetic flux,  and to take appropriate linear intermediate values. It can be seen that, 
+at intermediate values of $\beta_0$,  $f_1$ and $f_2$ are both close to $+1$. This indicates that the modes in question are ``drift-tearing modes'' that co-rotate
+with the electric fluids at the associated rational surfaces.\cite{ara} However, as the ideal stability boundary is approached, and the growth-rates of
+both modes become very large, there is a shift in the frequency of each mode in the ion direction. This indicates that the mode are transitioning to
+``resistive-kink modes'', which we expect to co-rotate with the ion fluids at the associated rational surfaces.\cite{ara}
+
+\subsubsection{Structure of Free-Boundary Tearing Modes}
+Figures~\ref{fig8} and \ref{fig9} show the poloidal harmonics and contours of the perturbed magnetic flux, $\psi(r,\theta)$ [see Eq.~(\ref{a3})], associated
+with the free-boundary  $2/1$ and $3/1$ modes in a  plasma equilibrium that is not close to the ideal stability boundary. It is clear from Fig.~\ref{fig9} that both modes are essentially $m=2$ modes inside the $q=2$ rational surface, $m=3$ modes between
+the $q=2$ and $q=3$ rational surfaces, and $m=4$ modes outside the $q=3$ rational surface. Although both modes look fairly similar to
+one another (modulo a multiplicative constant), there are subtle differences. The $2/1$ mode  has $\psi_{m=2}\neq 0$ at the $q=2$ surface, and $\psi_{m=3}=0$ at the $q=3$ surface.
+On the other hand, the $3/1$ mode  has $\psi_{m=2}= 0$ at the $q=2$ surface, and $\psi_{m=3}\neq 0$ at the $q=3$  surface. The  $3/1$ mode also has a much larger $m=4$ component at the plasma boundary than the $2/1$ mode. 
+
+Figure~\ref{fig10} shows the poloidal harmonics of the perturbed magnetic flux associated
+with the free-boundary $2/1$ and $3/1$ modes in a  plasma equilibrium 
+that lies exactly at the ideal stability boundary. Figures~\ref{fig11} and \ref{fig12} show the poloidal harmonics and contours of the perturbed magnetic flux, as well
+as the poloidal harmonics of the radial
+plasma displacement, $\xi^r(r,\theta)$ [see Eq.~(\ref{e10})], associated with the marginally-stable, $n=1$, ideal mode at the stability boundary. It is
+clear, from a comparison of Fig.~\ref{fig10} and the top panel of Fig.~\ref{fig11}, that at the ideal stability boundary the eigenfunctions of the two
+tearing modes are both  identical to that of the marginally-stable ideal mode (modulo an arbitrary multiplicative constant). Thus, we deduce that, as
+an ideal stability boundary is approached, all of the decoupled tearing modes in the plasma (with the same toroidal mode number as the ideal mode)
+effectively morph into the ideal mode. However, the growth-rate and real frequency of a given ideal-tearing-mode is determined by the 
+resistive layer solution at the rational surface at which it reconnects magnetic flux. In other words, at an ideal stability boundary, there are as
+many independent marginally-stable ideal modes as there are associated rational surfaces in the plasma, each possessing a different growth-rate and
+real frequency. As is clear from Fig.~\ref{fig7}, in the present case, the ideal mode that reconnects flux closest to the edge of the plasma has the largest growth-rate. 
+
+Finally, according to the bottom panel of Fig.~\ref{fig11} and Fig.~\ref{fig12}, the marginally-stable ideal mode at the stability boundary is predominately an
+$m=4$ mode at the plasma boundary. In other words, the ideal mode is essentially an $m=4/n=1$ external-kink mode, as we would expect from
+cylindrical theory.\cite{freidberg,wesson} 
+
+\subsubsection{Stabilizing Effect of an Ideal Wall}\label{stabw1}
+Figure~\ref{fig13} shows how the critical central beta value at marginal ideal stability, $\beta_{0\,{\rm crit}}$, varies with the
+relative radius, $b_w$, of an ideal wall that is situated in the vacuum region surrounding the plasma. It is clear that the
+presence of the wall has a stabilizing effect on the ideal mode.  It is plausible, from
+the figure, that $\beta_{0\,{\rm crit}}$ approaches its free-boundary value as $b_w\rightarrow \infty$. On the other hand,
+as the wall approaches the plasma boundary (i.e., as $b_w\rightarrow 1$), the critical beta value becomes larger, and seems
+to asymptote to infinity at $b_w=1.179$. This implies that a close-fitting ideal wall is capable of completely stabilizing the
+$m=4/n=1$ ideal external-kink mode. Again, this is in accordance with cylindrical theory.\cite{freidberg,wesson}
+
+\subsection{Approach to Internal-Kink Ideal Stability Boundary}
+\subsubsection{Plasma Equilibria}
+In this section, we shall investigate the behavior of $n=1$ tearing modes as an ideal stability boundary associated with an  $m=1/n=1$ internal-kink mode is approached. 
+
+All of the calculations described in this section are performed for circular poloidal cross-section plasma equilibria that contain two rational surfaces: namely, the $m=1/n=1$ and the $m=2/n=1$ surfaces (a.k.a.\ the $q=1$ and $q=2$ surfaces). 
+The equilibria are  characterized by $q_0=0.8$, $q_a=2.8$, $p_p=2.0$, and $a=0.2$. The calculations include all poloidal harmonics in the range $m=-10$ to $m=+20$. 
+
+The same  plasma parameters  are used to calculate resistive layer quantities as those used in Sect.~\ref{external}. 
+
+\subsubsection{Ideal Stability of Free-Boundary Modes}
+Figure~\ref{fig14} shows the variation of the smallest eigenfunction of the free-boundary, $n=1$, 
+total ideal energy matrix, $\delta W$, and the corresponding eigenvalues of the plasma and vacuum energy matrices, $\delta W_p$, and $\delta W_v$, with the
+central plasma beta, $\beta_0$. Similarly to Fig.~\ref{fig5}, $\delta W$ decreases monotonically with increasing $\beta_0$  due
+to a decrease in the plasma energy, $\delta W_p$, rather than the positive definite vacuum energy, $\delta W_v$. 
+ The marginal stability boundary corresponds to $\beta_0=0.00708$.  
+
+\subsubsection{Free-Boundary Tearing Stability Matrix}
+Figure~\ref{fig15} shows the variation of the elements of the free-boundary, $n=1$, tearing stability matrix with $\beta_0$. As before, in accordance with the discussion in
+Sect.~\ref{approach}, the elements all tend to infinity as the ideal stability boundary is approached. This implies that the decoupled tearing modes that
+only reconnected magnetic flux at the $q=1$ (a.k.a.\ the $1/1$ mode) and the $q=2$ (a.k.a.\ the $2/1$ mode)  surfaces simultaneously become very unstable as the
+stability boundary is approached. Note that $E_{11}$ (i.e., the tearing stability index for the $1/1$ internal-kink mode) is
+considerably larger that $E_{22}$ (i.e., the tearing stability index for the $2/1$ tearing mode), in accordance with cylindrical theory.\cite{freidberg,wesson}
+
+\subsubsection{Growth and Rotation of Free-Boundary Tearing Modes}
+Figure~\ref{fig16} shows the variations  with $\beta_0$ of the real growth-rates and real frequencies of the free-boundary $1/1$ and $2/1$ modes.  At low values of $\beta_0$, the growth-rates of both modes decrease with increasing
+$\beta_0$. This is because  the plasma temperature is proportional to $\beta_0$, and the decrease in the resistive diffusion times at the $q=1$ and $q=2$ surfaces
+with increasing temperature offsets the increase in $E_{11}$ and $E_{22}$ with increasing $\beta_0$. 
+At low to intermediate values of $\beta_0$, the growth-rate
+of the $1/1$ mode is considerably larger than that of the $2/1$ mode, because the former mode is much more intrinsically
+unstable than the latter (i.e., $E_{11}\gg E_{22}$). The fact that $f_1$ is less than unity, whereas $f_2=+1$,  suggests that the former mode is transitioning to a resistive-kink mode,
+whereas the latter mode remains a drift-tearing mode.\cite{ara} Somewhat surprisingly, as the ideal stability boundary is approached, the growth-rate of the
+$2/1$ mode, rather than the $1/1$ mode, becomes very large.  This is because
+the plasma at the $q=2$ surface is much colder than that at the $q=1$ surface, so the resistive diffusion time at the former surface is very much  shorter than
+that at the latter. As the stability boundary is approached, the frequency of the  $2/1$ mode shifts  in the ion direction as it
+transitions from a drift-tearing to a resistive-kink mode.\cite{ara}
+
+\subsubsection{Structure of Free-Boundary Tearing Modes}
+Figures~\ref{fig17} and \ref{fig18} show the poloidal harmonics and contours of the perturbed magnetic flux, $\psi(r,\theta)$, associated
+with the free-boundary $1/1$ and the $2/1$ modes in a  plasma equilibrium that is not close to the ideal stability boundary. It is clear from Fig.~\ref{fig17} that both modes are essentially $m=1$ modes inside the $q=1$ surface, $m=2$ modes between
+the $q=1$ and $q=2$  surfaces, and $m=3$ modes outside the $q=2$  surface. Although both modes look fairly similar to
+one another (modulo a multiplicative constant), there is a slight difference in that the $2/1$ mode has $\psi_{m=2}\neq 0$ at the $q=2$ rational surface, whereas the $1/1$ mode has 
+$\psi_{m=2}=0$ .
+
+Figure~\ref{fig19} shows the poloidal harmonics of the perturbed magnetic flux associated
+with the free-boundary $1/1$ and the $2/1$ modes  in a  plasma equilibrium 
+that lies exactly at the ideal stability boundary. Figures~\ref{fig20} and \ref{fig21} show the poloidal harmonics and contours of the perturbed magnetic flux, as well
+as the poloidal harmonics of the radial
+plasma displacement, $\xi^r(r,\theta)$, associated with the marginally-stable, $n=1$, ideal mode at the stability boundary. It is
+clear, from a comparison of Fig.~\ref{fig19} and the top panel of Fig.~\ref{fig20}, that at the ideal stability boundary the eigenfunctions of the two
+tearing modes have both become identical with that of the marginally-stable ideal mode (modulo an arbitrary multiplicative constant). Thus, we again deduce that, as
+an ideal stability boundary is approached, all of the decoupled tearing modes in the plasma 
+effectively morph into the ideal mode, but that the growth-rate and real frequency of a given ideal-tearing-mode is determined by the 
+resistive layer solution at the rational surface at which it reconnects magnetic flux. As is clear from Fig.~\ref{fig16}, it is again the case that the ideal mode that reconnects flux closest to the edge of the plasma has the largest growth-rate. 
+
+Finally, according to the bottom panel of Fig.~\ref{fig20} and Fig.~\ref{fig21}, the marginally-stable ideal mode at the stability boundary is a $1/1$
+internal-kink mode in which the $m=1$ plasma displacement is almost constant inside the $q=1$ surface, and essentially zero
+outside the surface.\cite{freidberg,wesson} Note, in particular, that the harmonics of the plasma displacement are all comparatively small at the 
+plasma boundary.
+
+\subsubsection{Stabilizing Effect of an Ideal Wall}
+Figure~\ref{fig22} shows how the critical central beta value at marginal ideal stability, $\beta_{0\,{\rm crit}}$, varies with the
+relative radius, $b_w$, of an ideal wall that is situated in the vacuum region surrounding the plasma.  It is clear that the
+presence of the wall has a stabilizing effect on the ideal mode.   However, unlike the case discussed in Sect.~\ref{stabw1}, a close-fitting wall is incapable of
+completely stabilizing the ideal mode. In other words,  $\beta_{0\,{\rm crit}}$ remains finite as $b_w\rightarrow 1$. This is in accordance with cylindrical theory, according to which a close-fitting ideal
+wall is capable of stabilizing an ideal external-kink mode, but not an ideal internal-kink mode.\cite{freidberg,wesson}
+Note that the TJ code cannot calculate the ideal $\delta W$ for a fixed-boundary (i.e., $b_w=1$)  plasma because, in this
+case, the vacuum energy, $\delta W_v$, is infinite. However, a fixed-boundary plasma is an idealization. No real tokamak
+plasma possesses an ideal wall that lies exactly at the plasma boundary: there is always a small vacuum gap
+between the boundary and the wall. We conclude that, in practice, the relatively simple second test for ideal stability
+discussed in Sect.~\ref{determine} is capable of determining the ideal stability of both internal-kink and external-kink
+modes, even when the wall surrounding the plasma is very close to the plasma boundary. In other words, the
+relatively complicated first test for the ideal stability of fixed-boundary modes discussed in Sect.~\ref{determine}
+seems unnecessary. 
+
+\section{Summary and Conclusions}\label{conc}
+This paper documents three major improvements to the TJ toroidal tearing stability code.\cite{tj} The first improvement is a repurposing of the
+ideal-MHD solutions in the outer-region in order to determine the eigenvalues of the ideal perturbed potential energy matrix. (See Appendix~\ref{ideal}.)
+This new capability allows TJ to accurately identify ideal stability boundaries. The second improvement allows for the presence of
+a perfectly conducting wall in the vacuum region surrounding the plasma. (See Appendix~\ref{vacuum}.) This new capability permits the TJ code 
+to calculate the stabilizing effect of a perfectly conducting wall on both ideal and resistive modes. The third improvement is the addition of
+a resistive layer model that allows TJ to determine the  growth-rates and rotation frequencies of the various tearing modes to which a
+given plasma equilibrium is subject. (See Appendices~\ref{lmodel} and \ref{asym}.) The layer model incorporates 
+plasma resistivity, plasma inertia, electron and ion diamagnetic flows, the decoupling of the electron and ion fluids on lengthscales below the ion sound radius, perpendicular
+momentum transport, parallel and perpendicular energy transport, and the stabilizing effect of average magnetic field-line curvature.
+
+Section~\ref{benchmark} describes a successful benchmarking exercise of the TJ code against the STRIDE\,\cite{aglas1} toroidal tearing mode code.
+
+Finally, in Sect.~\ref{invest}, the new capabilities of the TJ code are used to investigate the stability of tearing modes in tokamak plasmas as
+an ideal stability boundary, associated with either an external-kink or an internal-kink mode, is  approached. A number of conclusion can be drawn
+from this investigation. 
+
+The first conclusion is that, when using the asymptotic matching approach to determining tearing mode stability, it is necessary to
+solve both halves of the problem, and then combine them together, in order to gain a complete picture. In other words, only calculating the tearing
+stability matrix from the ideal-MHD solution in the outer region can be misleading because, when the resistive layer solutions in the
+various segments of the inner region are incorporated into the calculation, it turns out that modes with larger tearing stability indices do not
+necessarily have  larger growth-rates. 
+
+The second conclusion is that a realistic resistive layer model must be employed in the calculation. 
+In particular, the conventional single-fluid resistive-MHD layer model is completely inadequate, because it fails to take into account the fact that
+the ion and electron fluid velocities are significantly different from one another as a consequence of diamagnetic flows. As is well known,
+diamagnetic flows strongly influence both the growth-rates and rotation frequencies of tearing modes and resistive-kink modes (which is
+what tearing modes become when they are very unstable).\cite{ara} Another problem with a  single-fluid resistive-MHD model is that,
+unless it takes parallel thermal transport into account, it significantly overestimates the stabilizing effect of average magnetic
+field-line curvature on tearing modes.\cite{lut,con1}  Of course, parallel thermal transport in tokamak plasmas is
+non-diffusive in nature, because the mean-free-path between collisions is very much longer than the size of the plasma.\cite{hel,hel1}
+This fact  needs to be taken into account in the layer model, otherwise the calculation of the stabilizing  effect of average magnetic
+field-line curvature will give incorrect results. (See Sect.~\ref{match}.)
+
+The third conclusion is that, for a given toroidal mode number, a tokamak plasma is subject to as many linearly independent tearing modes as
+there are rational surfaces in the plasma. Suppose that there are $K$ surfaces. The $K$ tearing modes are coupled together by the ideal-MHD solution in the outer region (as a
+consequence of the Shafranov shifts and shaping of equilibrium magnetic flux-surfaces). However, under normal circumstances,
+when the layer solutions in the inner region are taken into account, 
+this coupling is overridden by sheared E-cross-B and diamagnetic flows, giving rise to $K$ decoupled tearing modes that only
+reconnect magnetic flux at one particular rational surface in the plasma, and whose growth-rates and rotation frequencies are determined by
+the layer solution at this surface.\cite{am1} 
+
+The fourth conclusion is that, as an ideal stability boundary associated with either an ideal external-kink or an internal-kink
+mode is approached, all of the elements of the tearing stability matrix tend to infinity, and the eigenfunctions of the $K$ decoupled tearing modes
+all morph into the eigenfunction of the marginally-stable ideal mode. However, the growth-rate
+and rotation frequency of each ideal-tearing-mode is determined by the layer physics at the rational surface at which it reconnects
+magnetic flux. We find that the growth-rate of the ideal-tearing-mode whose rational surface lies closest to the edge of the plasma
+ is the one that takes off as the stability boundary is approached, even when the boundary is that associated
+with an internal-kink mode. 
+
+The fifth conclusion is as follows. The off-diagonal elements of the tearing stability index parameterize the coupling of the
+various tearing modes due to the ideal-MHD solution in the outer region. The fact that these elements tend to infinity as
+an ideal stability boundary is approached implies that the coupling becomes very strong in this limit. Hence, as the boundary is
+approached, we would eventually expect  a bifurcation in the plasma flow profile to be triggered  by the nonlinear electromagnetic
+torques that develop at the rational surfaces.\cite{am1,bif} This bifurcation would cause the various ideal-tearing-modes to
+lock together to form a single ideal mode that is more unstable than any of the original modes. Note, however,  that this is a strictly nonlinear effect. 
+
+The final conclusion is that the relatively simple second test for ideal stability, described in Sect.~\ref{determine}, that involves calculating
+the eigenvalues of the sum of the perturbed ideal plasma potential energy and vacuum energy matrices,\cite{dcon} is perfectly adequate for
+determining the ideal stability boundaries associated with both external-kink and internal-kink modes, even when an ideal wall lies
+very close to the plasma boundary. The only case that the second test cannot deal with is the unrealistic case of determining
+the ideal stability boundary of an internal-kink mode when the wall exactly corresponds to the plasma boundary. This comclusion seems to suggest
+that the much more complicated first test for the ideal stability of fixed-boundary modes,\cite{dcon} described in Sect.~\ref{determine}, is generally unnecessary. 
 
 \section*{Acknowledgements}
 This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
-The author would like to thank Daniel Burgess, Nikolas Logan, J.-K.~Park and J.-M.~Lee for help with getting the STRIDE code to
+The author would like to thank Daniel Burgess, Nikolas Logan, Jong-Kyu~Park and J.-M.~Lee for help with getting the STRIDE code to
 run reliably. 
 
 \section*{Data Availability Statement}
@@ -194,7 +504,7 @@ Equilibrium force balance requires that
 $ \nabla P={\bf J}\times {\bf B}$, 
 where $P(r)$ is the equilibrium scalar plasma pressure, and ${\bf J}=\nabla\times {\bf B}$ the equilibrium plasma current density. 
 
-\subsection{Perturbed Magnetic Field}
+\subsection{Perturbed Magnetic Field}\label{perturbed}
 All perturbed quantities are assumed to vary toroidally as $\exp(-{\rm i}\,n\,\phi)$,
 where the positive integer  $n$ is the toroidal mode number of the perturbation. 
 According to Eqs.~(47), (78), (99), and (101) of Ref.~\onlinecite{tj}, the radial and toroidal components of the perturbed magnetic field are written 
@@ -405,7 +715,7 @@ associated with the ideal eigenfunctions are all zero (i.e., ${\mit\Psi}_k=0$ fo
 \end{equation}
 where use has been made of Eq.~(\ref{e29}).
 
-\subsection{Plasma Energy Matrix}
+\subsection{Plasma Energy Matrix}\label{penergy}
 We can write a general ideal solution just inside the plasma-vacuum interface as
 \begin{align}
 \psi_m(a) &= \sum_{m'}\psi_{m\,m'}^i(a)\,\alpha_{m'},\\[0.5ex]
@@ -433,7 +743,7 @@ The fact that $\delta W_p$ is real implies that
  \underline{\underline{\psi}}^{\dag}_{\,i}\,\underline{\underline{\chi}}_{\,i}= \underline{\underline{\chi}}^{\dag}_{\,i}\,\underline{\underline{\psi}}_{\,i}.
  \end{equation}
 
-Let us define the ``plasma energy matrix'', $\underline{\underline{W}}_{\,p}$, such that 
+Let us define the ``perturbed plasma potential energy matrix'', $\underline{\underline{W}}_{\,p}$, such that 
 \begin{equation}\label{e48}
 \underline{\underline{\chi}}_{\,i} = \underline{\underline{W}}_{\,p}\,\underline{\underline{\psi}}_{\,i}.
 \end{equation}
@@ -557,7 +867,7 @@ where
 \underline{J} = \underline{\chi}+ \underline{\underline{W}}_{\,v}\,\underline{\psi}.
 \end{equation}
 Here,  $\underline{J}$ is the column vector of the $J_m$ values, 
-and the ``vacuum energy matrix'', $\underline{\underline{W}}_{\,v}$,  is the Hermitian matrix of the $-H_{m\,m'}$ values. 
+and the ``perturbed vacuum energy matrix'', $\underline{\underline{W}}_{\,v}$,  is the Hermitian matrix of the $-H_{m\,m'}$ values. 
 Making use of Eqs.~(\ref{e41}), (\ref{e42}), and (\ref{e48}), we get 
 \begin{equation}
 \underline{J} = \underline{\underline{W}}\,\underline{\psi},
@@ -572,7 +882,7 @@ where
 \end{equation}
 
 Note that $\underline{\underline{W}}_{\,p}$ and $\underline{\underline{W}}_{\,v}$ are both Hermitian, so $\underline{\underline{W}}$ is also
-Hermitian. Thus the ``total energy matrix'', $\underline{\underline{W}}$, possesses real eigenvalues and orthonormal eigenvectors, $\underline{\beta}_m$. Let $(\underline{\beta}_{m'})_{m} = \beta_{m\,m'}$, and let $\underline{\underline{\beta}}$ be the matrix of the $\beta_{mm'}$ values. It follows that  
+Hermitian. Thus the ``perturbed total energy matrix'', $\underline{\underline{W}}$, possesses real eigenvalues and orthonormal eigenvectors, $\underline{\beta}_m$. Let $(\underline{\beta}_{m'})_{m} = \beta_{m\,m'}$, and let $\underline{\underline{\beta}}$ be the matrix of the $\beta_{mm'}$ values. It follows that  
 $\underline{\underline{\beta}}^\dag\,\underline{\underline{\beta}}= \underline{\underline{1}}$. 
 We conclude that there are as many linearly independent ideal eigenmodes of the plasma as there are poloidal harmonics included in the calculation. The $m$th
 eigenmode has the associated energy
@@ -596,7 +906,7 @@ Thus, given that the $\hat{\alpha}_m$ are arbitrary, we deduce that if any of th
 
 \section{Vacuum Solution}\label{vacuum}
 \subsection{Toroidal Coordinates}
-Let $\mu$, $\eta$, $\phi$ be right-handed toroidal coordinates defined such that
+Let $\mu$, $\eta$, $\phi$ be right-handed toroidal coordinates defined such that (see Sect.~\ref{coord})
 \begin{align}
 R &= \frac{\sinh\mu}{\cosh\mu-\cos\eta},\\[0.5ex]
 Z&=\frac{\sin\eta}{\cosh\mu-\cos\eta}.
@@ -806,7 +1116,7 @@ Thus,  the vacuum matrix, $\underline{\underline{H}}$, is Hermitian because  the
  because the fourth field is only important at high-$\beta$, and an aspect-ratio expanded equilibrium is, by definition, a relatively low-$\beta$
  equilibrium. 
  
-\subsection{Plasma Parameters}
+\subsection{Plasma Parameters}\label{ppara}
 The values of the following plasma parameters must be specified in order to calculate layer quantities:
 \begin{itemize}
 \item $B_0$ - the toroidal magnetic field-strength at the magnetic axis (T).
@@ -816,10 +1126,10 @@ The values of the following plasma parameters must be specified in order to calc
 \item $T_{e\,{\rm edge}}$ - the electron temperature at the plasma-vacuum interface (eV).
 \item $Z_{\rm eff}$  - the (assumed spatially uniform) effective ion charge number.
 \item $M$ - the ion mass number.
-\item $\chi_\perp$ - the (assumed spatially uniform) perpendicular momentum/energy diffusivity.
+\item $\chi_\perp$ - the (assumed spatially uniform) perpendicular momentum/energy diffusivity (${\rm m}^2/{\rm s}$).
 \end{itemize}
 
-\subsection{Rational Surface Parameters}
+\subsection{Rational Surface Parameters}\label{rpara}
 Let the $k$th rational surface  lie at $r=r_k$, and possess the resonant poloidal mode number $m_k$. 
 We can define  $q_k = q(r_k)$,  $s_k= s(r_k)$, 
 $n_{e\,k} = n_0\,(1-r_k^{\,2}/a^2)^\alpha$, $g_k = g(r_k)$, 
@@ -870,7 +1180,7 @@ equations is such that
 \phi(X)&\rightarrow  {\rm i}\,\hat{\gamma}_k\,\psi_0\left[\frac{\hat{\mit\Delta}_k}{2}\,{\rm sgn}(X) +\frac{1}{X} + {\cal O}\left(\frac{1}{X^2}\right)\right]\label{e85y}
 \end{align}
 as $|X|\rightarrow\infty$, where $\psi_0$ is an arbitrary constant, and 
-$\hat{\mit\Delta}_k = S_k^{-1/3}\,{\mit\Delta}_k$. Here, ${\mit\Delta}_k$ is the layer response parameter introduced in Sect.~\ref{disp}. 
+$\hat{\mit\Delta}_k = S_k^{\,-1/3}\,{\mit\Delta}_k$. Here, ${\mit\Delta}_k$ is the layer response parameter introduced in Sect.~\ref{disp}. 
 
 \subsection{Fourier Transformation}\label{ft}
 Equations~(\ref{e80y})--(\ref{e82y}) are most conveniently solved in Fourier transform space.\cite{cole}
@@ -976,7 +1286,7 @@ integrate it to small $p$. We can then deduce the value of $\hat{\mit\Delta}_k$ 
 \section{Asymptotic Matching Between Outer and Inner Regions}\label{asym}
 \subsection{Introduction}
 Consider the segment of the inner region that is centered on the $k$th rational surface. Let the surface lie at $r=r_k$, and possess the
-resonant poloidal mode number $m_k$. According to Sect.~\ref{rational},   in the limit $r\rightarrow r_k$,  the asymptotic behavior of the resonant tearing-parity component of the perturbed helical magnetic 
+resonant poloidal mode number $m_k$. According to Sect.~\ref{rational},   in the limit $r\rightarrow r_k$,  the asymptotic behavior of the resonant, tearing-parity, component of the perturbed helical magnetic 
 flux, $\psi$,  [see Eq.~(\ref{a3})] in the outer region is
 \begin{equation}\label{ee1}
 \psi_{m_k}(x) = A_{L\,k}\,|x|^{-\nu_k} + A_{S\,k}\,|x|^{\,1+\nu_k},
@@ -1153,7 +1463,7 @@ a_{LS}&\rightarrow -\frac{\nu_k\,\pi}{2},\\[0.5ex]
 a_{SS} &\rightarrow 1.\label{ee39}
 \end{align}
 
-\subsection{Matching Formula}
+\subsection{Matching Formula}\label{match}
 A large aspect-ratio tokamak equilibrium is characterized by $|\nu_k|\ll 1$. In this limit, Eqs.~(\ref{ee20}) (\ref{ee32}), (\ref{ee33}), (\ref{ee38x}), and (\ref{ee39}) yield
 \begin{equation}
  {\mit\Delta}_{k\,{\rm out}} = {\mit\Delta}_{k\,{\rm in}}+ \frac{\pi\,\nu_k\,r_k}{\delta_k}.
@@ -1171,7 +1481,7 @@ v_{t\,e\,k} &= \left(\frac{2\,T_{e\,k}}{m_e}\right)^{1/2}.
 The previous five equations can be solved via iteration. In fact, if we choose $\delta_k= \delta_{d\,k}/(2\sqrt{\pi})$, identify ${\mit\Delta}_{k\,{\rm out}}$ with the
 ${\mit\Delta}_k$ appearing in the tearing mode dispersion relation (\ref{dispersion}), identify ${\mit\Delta}_{k\,{\rm in}}$ with the $S_k^{1/3}\,\hat{\mit\Delta}_k$
 obtained from the solution of the layer equations (see Appendix.~\ref{lmodel}), and identify $\nu_k$ with minus the resistive interchange stability parameter,\cite{ggj,ggj1}
-\begin{equation}
+\begin{equation}\label{dr}
 D_{R\,k} = \left(\frac{2\,q^2}{s^2}\,r\,\frac{dP}{dr}\right)_{r_k}\left[1-\frac{1}{q_k^{\,2}}+ \frac{q_k^{\,2}\,s_k}{r_k^{\,4}}\int_0^{r_k}
 \left(\frac{r^3}{q^2} -2\,R_0^{\,2}\,r^2\,\frac{dP}{dr}\right)dr\right]
 \end{equation}
@@ -1193,8 +1503,7 @@ The TJ toroidal tearing stability code calculates a $K$-dimensional square teari
 ideal-MHD solution in the outer region.\cite{tj} Similarly, the STRIDE toroidal tearing mode stability code calculates a $K$-dimensional square tearing stablility
 matrix whose elements are denoted ${\mit\Delta}_{kk'}$, for $k,k'=1,K$.\cite{aglas1} As described in Ref.~\onlinecite{tj}, the $E_{kk'}$ matrix is necessarily Hermitian,
 otherwise toroidal electromagnetic angular momentum would not be conserved. On the other hand, the ${\mit\Delta}_{kk'}$ matrix is not generally Hermitian. 
-(Note that it was originally appreciated that the ${\mit\Delta}_{kk'}$ matrix must satisfy certain symmetry requirements,\cite{pletz1} but this requirement
-was forgotten over the years.) Fortunately, it is possible to transform the ${\mit\Delta}_{kk'}$ into an Hermitian matrix, whose elements are denoted $\hat{\mit\Delta}_{kk'}$, 
+Fortunately, it is possible to transform the ${\mit\Delta}_{kk'}$ into an Hermitian matrix, whose elements are denoted $\hat{\mit\Delta}_{kk'}$, 
 that is equivalent to the $E_{kk'}$ matrix calculated by the TJ code. 
 
 The normalized  equilibrium poloidal magnetic flux is defined as ${\mit\Psi}(r)= \int_0^r f(r')\,dr'$. Let ${\mit\Psi}_a={\mit\Psi}(a)$ be the total flux enclosed in the plasma. 
@@ -1214,6 +1523,8 @@ STRIDE code needs to be run using the following non-default parameters: \verb|to
 \begin{thebibliography}{99}\baselineskip 5ex
 
 \bibitem{fkr} H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).
+
+\bibitem{ara} G.~Ara, B.~ Basu, B.~Coppi, G.~Laval, M.N.~Rosenbluth and B.V.~Waddell, Annals of Physics (NY) {\bf 112}, 443 (1978). 
 
 \bibitem{hkm} R.D.~Hazeltine, M.~Kotschenreuther and P.G.~Morrison, Phys.\ Fluids {\bf 2}, 2466  (1985). 
 
@@ -1281,11 +1592,23 @@ A.~Pletzer, Phys.\ Plasmas {\bf 9}, 2998 (2002).
 
 \bibitem{gpec} J.-K.~Park, A.H.~Boozer and A.H. Glasser, Phys.\  Plasmas {\bf 14}, 52110 (2007).
 
-\bibitem{mercier} C.~Mercier, Nucl.\ Fusion {\bf 1}, 47 (1960).
-
 \bibitem{ggj} A.H.~Glasser, J.M.~Greene and J.L.~Johnson, Phys.\ Fluids {\bf 18}, 875 (1975).
 
 \bibitem{ggj1} A.H.~Glasser, J.M.~Greene  and J.L.~Johnson, Phys.\ Fluids {\bf 19}, 567 (1976).
+
+\bibitem{lut} H.~L\"{u}tjens, J.-F.~Luciani and X.~Garbet, Phys.\ Plasmas {\bf 8}, 4267 (2001).
+
+\bibitem{con1} J.W.~Connor, C.J.~Ham, R.J.~Hastie and Y.Q.~Liu, Plasma Phys.\ Control.\ Fusion {\bf 57}, 065001 (2015). 
+
+\bibitem{wesson} J.A.~Wesson, Nucl.\ Fusion {\bf 18},  87 (1978).
+
+\bibitem{hel} R.~Fitzpatrick, Phys.\ Plasmas {\bf 2}, 825 (1995).
+
+\bibitem{hel1} R.~Fitzpatrick, R.~Maingi, J.-K.~Park and S.~Sabbagh, Phys.\ Plasmas {\bf 30}, 072505 (2023).
+
+\bibitem{bif} R.~Fitzpatrick, Phys.\ Plasmas {\bf 5}, 3325 (1998).
+
+\bibitem{mercier} C.~Mercier, Nucl.\ Fusion {\bf 1}, 47 (1960).
 
 \bibitem{abrama} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}\/ (Dover, New York NY, 1964), sect.~8.11.
 
@@ -1309,14 +1632,6 @@ A.~Pletzer, Phys.\ Plasmas {\bf 9}, 2998 (2002).
 
 \bibitem{abramd} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}\/ (Dover, New York NY, 1964), ch.~15.
 
-\bibitem{lut} H.~L\"{u}tjens, J.-F.~Luciani and X.~Garbet, Phys.\ Plasmas {\bf 8}, 4267 (2001).
-
-\bibitem{con1} J.W.~Connor, C.J.~Ham, R.J.~Hastie and Y.Q.~Liu, Plasma Phys.\ Control.\ Fusion {\bf 57}, 065001 (2015). 
-
-\bibitem{hel} R.~Fitzpatrick, Phys.\ Plasmas {\bf 2}, 825 (1995).
-
-\bibitem{hel1} R.~Fitzpatrick, R.~Maingi, J.-K.~Park and S.~Sabbagh, Phys.\ Plasmas {\bf 30}, 072505 (2023).
-
 \bibitem{kot} M.~Kotschenreuther, R.D.~Hazeltine and P.J.~Morrison, Phys.\ Fluids {\bf 28}, 294 (1985). 
 
 \end{thebibliography}
@@ -1324,27 +1639,152 @@ A.~Pletzer, Phys.\ Plasmas {\bf 9}, 2998 (2002).
 \newpage
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Test1.pdf}}
-\caption{TJ/STRIDE Benchmark Test 1. Circular cross-section:  $q_0=1.1$, $p_\sigma=1.36$,  and $\beta_0=0.0$. Variation of the  2/1 tearing stability index with the inverse-aspect ratio, $a$. }
+\caption{TJ/STRIDE Benchmark Test 1. Circular cross-section plasma with  $q_0=1.1$, $p_\sigma=1.36$,  and $\beta_0=0.0$. Variation of the  free-boundary $m=2/n=1$ tearing stability index with the inverse-aspect ratio, $a$. \label{fig1}}
 \end{figure}
 
-\newpage
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Test2.pdf}}
-\caption{TJ/STRIDE Benchmark Test 2. Circular cross-section: $q_0=1.1$, $a=0.2$, and $\beta_0=0.0$. Variation of the 2/1 tearing stability index with  the edge safety-factor, $q_a$. }
+\caption{TJ/STRIDE Benchmark Test 2. Circular cross-section plasma with  $q_0=1.1$, $a=0.2$, and $\beta_0=0.0$. Variation of the free-boundary  $m=2/n=1$ tearing stability index with  the edge safety-factor, $q_a$.\label{fig2} }
 \end{figure}
 
-\newpage
 \begin{figure}
 \centerline{\includegraphics[width=0.9\textwidth]{Test3.pdf}}
-\caption{TJ/STRIDE Benchmark Test 3. Circular cross-section: $q_0=1.1$, $a=0.2$, and $\beta_0=0.0$. Variation of the elements of the tearing stability matrix with $q_a$. In the middle panel, the squares
-indicate  $E_{12}$ and the crosses indicate $E_{21}$. }
+\caption{TJ/STRIDE Benchmark Test 3. Circular cross-section plasma with $q_0=1.1$, $a=0.2$, and $\beta_0=0.0$. Variation of the elements of the free-boundary $n=1$ tearing stability matrix with $q_a$. In the middle panel, the squares
+indicate  $E_{12}$ and the crosses indicate $E_{21}$. \label{fig3}}
 \end{figure}
 
-\newpage
 \begin{figure}
 \centerline{\includegraphics[width=0.9\textwidth]{Test4.pdf}}
-\caption{TJ/STRIDE Benchmark Test 4. Circular cross-section: $q_0=1.1$, $a=0.2$, $p_\sigma=2.1$,  and $p_p=2.0$. Variation of the elements of the tearing stability matrix with the central plasma beta,  $\beta_0$. In the middle panel, the squares
-indicate  $E_{12}$ and the crosses indicate $E_{21}$. The TJ $\beta_0$ has been rescaled by a factor $1.08$.}
+\caption{TJ/STRIDE Benchmark Test 4. Circular cross-section plasma with $q_0=1.1$, $a=0.2$, $p_\sigma=2.1$,  and $p_p=2.0$. Variation of the elements of the free-boundary $n=1$ tearing stability matrix with the central plasma beta,  $\beta_0$. In the middle panel, the squares
+indicate  $E_{12}$ and the crosses indicate $E_{21}$. The $\beta_0$ values from TJ have  been rescaled by a factor $1.08$.\label{fig4}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{deltaW.pdf}}
+\caption{Variation of the smallest eigenvalue of the free-boundary, $n=1$, total ideal energy matrix, $\delta W$, and the corresponding eigenvalues of the plasma and vacuum energy matrices, 
+$\delta W_p$ and $\delta W_v$, with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, and
+$a=0.2$. The vertical dotted line corresponds to the ideal stability boundary (at which $\delta W=0$), $\beta_0=0.0134$.  \label{fig5}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Ematrix.pdf}}
+\caption{Variation of the elements of the free-boundary, $n=1$, tearing stability matrix with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium  characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, and
+$a=0.2$. The vertical dotted line corresponds to the ideal stability boundary, $\beta_0=0.0134$. \label{fig6}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{gamma.pdf}}
+\caption{Variation of the real growth-rates and real frequencies of the free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the  $q=2$ (labelled $1$) and $q=3$ (labelled $2$)  surfaces with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, and
+$a=0.2$. The vertical dotted line corresponds to the ideal stability boundary, $\beta_0=0.0134$. The $f_k$ parameters would take the values $+1$/0/$-1$ if the tearing modes were to co-rotate with the
+electron/E-cross-B/ion fluids at the surface at which they reconnect magnetic flux.\label{fig7}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Unrc1.pdf}}
+\caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$,  associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=2$  (top panel) and the $q=3$ (bottom panel) surfaces in a 
+circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$,
+$a=0.2$, and $\beta_0 =0.0064$. The vertical dashed lines show the locations of the $q=2$ and $q=3$ surfaces. \label{fig8}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Psi1.pdf}}
+\caption{Contour plots of the real (left columns) and imaginary (right columns) parts the perturbed magnetic flux, $\psi(r,\theta)$, associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=2$  (top panels) and the $q=3$ (bottom panels) surfaces in a 
+circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$,
+$a=0.2$, and $\beta_0 =0.0064$. Here, red/blue/white denotes positive/negative/zero values. The black dot shows the location of the magnetic axis, and the
+black circles show the locations of the $q=2$ and $q=3$ surfaces. \label{fig9}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Unrc.pdf}}
+\caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$,  associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=2$  (top panel) and the $q=3$ (bottom panel) surfaces in a marginally-ideally-stable, 
+circular cross-section, plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, and
+$a=0.2$, and  $\beta_0=0.0134$. See caption to Fig.~\ref{fig8}.\label{fig10}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{xIdeale.pdf}}
+\caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$ (top panel), and the radial plasma displacement, $\xi^r(r,\theta)$,  associated with a free-boundary, 
+marginally-stable, $n=1$, ideal mode in a circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, 
+$a=0.2$, and $\beta_0=0.0134$. See caption to Fig.~\ref{fig8}.\label{fig11}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Psi.pdf}}
+\caption{Contour plots of the real (left panel) and imaginary (right panel) parts of the perturbed magnetic flux, $\psi(r,\theta)$, associated with a free-boundary,
+marginally-stable, $n=1$, ideal mode in a 
+circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, 
+$a=0.2$, and $\beta_0=0.0134$. See caption to Fig.~\ref{fig9}. \label{fig12}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{BetaLimit.pdf}}
+\caption{Variation of the critical central beta value at marginal ideal stability, $\beta_{0\,{\rm crit}}$, with the relative radius, $b_w$, of the ideal wall surrounding the plasma in 
+a circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, and
+$a=0.2$. The horizontal dashed line corresponds to the no-wall  marginal stability boundary, $\beta_{0\,{\rm crit}}=0.0134$. The vertical dashed line corresponds to $b_w=1.179$.  \label{fig13}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{deltaWa.pdf}}
+\caption{Variation of the smallest eigenvalue of the free-boundary, $n=1$, total ideal energy matrix, $\delta W$, and the corresponding eigenvalues of the plasma and vacuum energy matrices, 
+$\delta W_p$ and $\delta W_v$, with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, and
+$a=0.2$. The vertical dotted line corresponds to the ideal stability boundary, $\beta_0=0.00708$.  \label{fig14}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Ematrixa.pdf}}
+\caption{Variation of the elements of the free-boundary, $n=1$, tearing stability matrix with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium  characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, and
+$a=0.2$. The vertical dotted line corresponds to the ideal stability boundary, $\beta_0=0.00708$. \label{fig15}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{gammaa.pdf}}
+\caption{Variation of the real growth-rates and real frequencies of the free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the  $q=1$ (labelled $1$) and $q=2$ (labelled $2$)  surfaces with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, and
+$a=0.2$. The vertical dotted line corresponds to the ideal stability boundary, $\beta_0=0.00708$. See caption to Fig.~\ref{fig7}.\label{fig16}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Unrc1a.pdf}}
+\caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$,  associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=1$  (top panel) and the $q=2$ (bottom panel)  surfaces in a 
+circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$,
+$a=0.2$, and $\beta_0 =0.004$. The vertical dashed lines show the locations of the $q=1$ and $q=2$ surfaces. \label{fig17}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Psi1a.pdf}}
+\caption{Contour plots of the real (left columns) and imaginary (right columns) parts the perturbed magnetic flux, $\psi(r,\theta)$, associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=1$  (top panels) and the $q=2$ (bottom panels)  surfaces in a 
+circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$,
+$a=0.2$, and $\beta_0 =0.004$.  The
+black circles show the locations of the $q=1$ and $q=2$  surfaces. See caption to Fig.~\ref{fig9}.\label{fig18}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Unrca.pdf}}
+\caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$,  associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=2$  (top panel) and the $q=2$ (bottom panel) surfaces in a marginally-ideally-stable, 
+circular cross-section,  plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, 
+$a=0.2$, and $\beta_0=0.00708$. See caption to Fig.~\ref{fig17}.\label{fig19}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{xIdealea.pdf}}
+\caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$ (top panel), and the radial plasma displacement, $\xi^r(r,\theta)$,  associated with a free-boundary,
+marginally-stable, $n=1$, ideal mode in a 
+circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, 
+$a=0.2$, and $\beta_0=0.00708$. See caption to Fig.~\ref{fig17}.\label{fig20}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Psia.pdf}}
+\caption{Contour plots of the real (left panel) and imaginary (right panel) parts the perturbed magnetic flux, $\psi(r,\theta)$, associated with a free-boundary, marginally-stable, $n=1$,
+ideal mode mode  in a 
+circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 3.6$, $p_p=2.0$, 
+$a=0.2$, and $\beta_0=0.00708$. See captions to Figs.~\ref{fig9} and \ref{fig21}. \label{fig21}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{BetaLimit1.pdf}}
+\caption{Variation of the critical central beta value at marginal ideal stability, $\beta_{0\,{\rm crit}}$, with the relative radius, $b_w$, of the ideal wall surrounding the plasma in 
+a circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, and
+$a=0.2$. The horizontal dashed line corresponds to the no-wall  marginal stability boundary, $\beta_{0\,{\rm crit}}=0.00708$. The vertical dashed line corresponds to $b_w=1.0$.  \label{fig22}}
 \end{figure}
 
 \end{document}

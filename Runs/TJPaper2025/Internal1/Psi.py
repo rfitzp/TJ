@@ -35,8 +35,8 @@ psi_r = ds1['Psi_unrc_eig_r']
 psi_i = ds1['Psi_unrc_eig_i']
 
 fig = plt.figure (figsize = (12.5, 6.0))
-plt.rc ('xtick', labelsize=12) 
-plt.rc ('ytick', labelsize=12) 
+plt.rc ('xtick', labelsize=16) 
+plt.rc ('ytick', labelsize=16) 
 
 """
 m = input ("rational surface number ? ")
@@ -84,6 +84,7 @@ for i in range (np.size(PPi,0)):
             val1 = 0.
         PPi[i][j] = val1        
 
+scale = 0.25
 plt.subplot (1, 2, 1)
 plt.xlim (1.-scale, 1.+scale)
 plt.ylim (-scale, scale)
@@ -96,8 +97,8 @@ cp = plt.contourf (RR, ZZ, PPr, ncont, cmap = ReBu)
 
 plt.plot ([1.], [0.], marker = 'o', markersize = 1, color = "black")
 
-plt.xlabel (r'$R/R_0$', fontsize = "12")
-plt.ylabel (r'$Z/R_0$', fontsize = "12")
+plt.xlabel (r'$R/R_0$', fontsize = "16")
+plt.ylabel (r'$Z/R_0$', fontsize = "16")
 
 plt.subplot(1, 2, 2)
 plt.xlim(1.-scale, 1.+scale)
@@ -111,9 +112,10 @@ ci = plt.contourf (RR, ZZ, PPi, ncont, cmap = ReBu)
 
 plt.plot ([1.], [0.], marker = 'o', markersize = 1, color="black")
 
-plt.xlabel (r'$R/R_0$', fontsize = "12")
-plt.ylabel (r'$Z/R_0$', fontsize = "12")
+plt.xlabel (r'$R/R_0$', fontsize = "16")
+plt.ylabel (r'$Z/R_0$', fontsize = "16")
 
 plt.tight_layout()
 
-plt.show()    
+#plt.show()    
+plt.savefig("Psia.pdf")

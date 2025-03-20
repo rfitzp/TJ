@@ -51,8 +51,8 @@ scl = input ("scaling exponent ? ")
 
 scl = 1
 
-Pr  = psi_r[k,:,:]
-Pi  = psi_i[k,:,:]
+Pr  = -psi_r[k,:,:]
+Pi  = -psi_i[k,:,:]
 
 PPr = np.asarray (Pr)
 PPi = np.asarray (Pi)
@@ -179,4 +179,5 @@ plt.ylabel (r'$Z/R_0$', fontsize = "12")
 
 plt.tight_layout()
 
-plt.show()    
+#plt.show()    
+plt.savefig("Psi1a.pdf")
