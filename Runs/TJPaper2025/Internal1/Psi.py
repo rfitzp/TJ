@@ -118,4 +118,5 @@ plt.ylabel (r'$Z/R_0$', fontsize = "16")
 plt.tight_layout()
 
 #plt.show()    
-plt.savefig("Psia.pdf")
+#plt.savefig("Psia.pdf")
+plt.savefig("Psia.png")

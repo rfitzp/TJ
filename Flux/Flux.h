@@ -1,6 +1,6 @@
 // Flux.h
 
-// #####################################################################
+// #####################################################################################
 // Class to read EFIT file and generate TJ coordinate system in order to
 // check accuracy of EFIT data
 
@@ -218,7 +218,7 @@ private:
   // Calculate Stage2 straight angle coordinate system
   void Stage2CalcStraightAngle ();
   // Calculate boundary data for TJ
-  void Stage2CalcBoundary ();
+xf  void Stage2CalcBoundary ();
 
   // ................
   // In Integrate.cpp
