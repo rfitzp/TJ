@@ -69,5 +69,5 @@ plt.legend (fontsize = "15")
 
 plt.tight_layout ()
 
-#plt.show ()    
-plt.savefig("deltaWa.pdf")
+plt.show ()    
+#plt.savefig("deltaWa.pdf")

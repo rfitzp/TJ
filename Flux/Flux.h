@@ -218,7 +218,7 @@ private:
   // Calculate Stage2 straight angle coordinate system
   void Stage2CalcStraightAngle ();
   // Calculate boundary data for TJ
-xf  void Stage2CalcBoundary ();
+  void Stage2CalcBoundary ();
 
   // ................
   // In Integrate.cpp

@@ -23,8 +23,8 @@
     "Eps":     1.0e-12,   // Minimum magnitude of (F1^2+F2^2)^1/2 at root F1(x1,x2) = F2(x1,x2) = 0 
     "MaxIter": 100,       // Maximum number of Newton iterations
     "dS":      1.0e-6,    // Step-size for calculation of Jacobian
-    "Smax":    0.01,      // Maximum Newton step-size
-    "Smin":    1.0e-6     // Minimum Newton step-size
+    "Smax":    0.1,       // Maximum Newton step-size
+    "Smin":    1.0e-7     // Minimum Newton step-size
 }
 
 

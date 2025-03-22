@@ -72,6 +72,7 @@ Utility::Utility ()
   Smax    = 0.1;
   Smin    = 1.e-6;
   Eps     = 1.e-12;
+  alpha   = 1.e-4;
   MaxIter = 50;
 };
 
@@ -855,69 +856,141 @@ void Utility::NewtonFunction (double x1, double x2, double& F1, double& F2)
 //   Smax    ... Maximum step-size
 //   Smin    ... Minimum step-size 
 //   Eps     ... Minimum magnitude of |F1^2+F2^2|^1/2 at root F1(x1,x2) = F2(x1,x2) = 0
-//   MaxIter ... Maximum number of iterations 
+//   MaxIter ... Maximum number of iterations
+//   alpha   ... Ensures sufficient decrease in function value
 //
 // #################################################################################
 void Utility::NewtonRoot (double& x1, double& x2, double& Residual, int verbose)
 {
-  double F1, F2, J11, J12, J21, J22, det, iJ11, iJ12, iJ21, iJ22, dx1, dx2, dx, Resold, lambda;
-  int    iter, iter1;
-
-  NewtonFunction (x1, x2, F1, F2);
- 
-  Resold = sqrt (F1*F1 + F2*F2);
-  lambda = 2.;
+  double F1, F2, J11, J12, J21, J22, det, iJ11, iJ12, iJ21, iJ22, dx1, dx2, dx, f, g1, g2, lambda;
+  int    iter;
 
   iter = 0;
   do
     {
-      iter1 = 0;
-      do
-	{
-	  lambda /= 2.;
-	  
-	  NewtonJacobian (x1, x2, J11, J12, J21, J22);
-      
-	  det = J11 * J22 - J12 * J21;
-      
-	  iJ11 =   J22 /det;
-	  iJ12 = - J12 /det;
-	  iJ21 = - J21 /det;
-	  iJ22 =   J11 /det;
-	  
-	  dx1 = - (iJ11 * F1 + iJ12 * F2);
-	  dx2 = - (iJ21 * F1 + iJ22 * F2);
-	  
-	  dx = sqrt (dx1*dx1 + dx2*dx2);
-	  
-	  if (dx > Smax)
-	    {
-	      dx1 = dx1 * Smax /dx;
-	      dx2 = dx2 * Smax /dx;
-	      dx  = Smax;
-	    }
-	  
-	  x1 = x1 + lambda * dx1;
-	  x2 = x2 + lambda * dx2;
+      NewtonFunction (x1, x2, F1, F2);
 
-	  NewtonFunction (x1, x2, F1, F2);
+      NewtonJacobian (x1, x2, J11, J12, J21, J22);
+      
+      det = J11 * J22 - J12 * J21;
+      
+      iJ11 =   J22 /det;
+      iJ12 = - J12 /det;
+      iJ21 = - J21 /det;
+      iJ22 =   J11 /det;
+      
+      dx1 = - (iJ11 * F1 + iJ12 * F2);
+      dx2 = - (iJ21 * F1 + iJ22 * F2);
+
+      dx = sqrt (dx1*dx1 + dx2*dx2);
+
+      f = 0.5 * (F1*F1 + F2*F2);
+
+      g1 = F1*J11 + F2*J21;
+      g2 = F1*J12 + F2*J22;
+
+      NewtonBackTrack (x1, x2, dx1, dx2, dx, f, g1, g2, lambda);
+ 
+      NewtonFunction (x1, x2, F1, F2);
 	
-	  Residual = sqrt (F1*F1 + F2*F2);
+      Residual = sqrt (F1*F1 + F2*F2);
 
-	  iter1++;
-	}
-      while (Residual > Resold && iter1 < MaxIter);
-
-      lambda = 2.;
-      Resold = Residual;
-
-      if (verbose )
-	printf ("x = (%10.3e, %10.3e)  F = (%10.3e, %10.3e) Residual = %10.3e dg = %10.3e\n",
-		x1, x2, F1, F2, Residual, dx);
+      if (verbose)
+	printf ("x = (%10.3e, %10.3e) F = (%10.3e, %10.3e) Residual = %10.3e lambda = %10.3e dx = %10.3e\n",
+		x1, x2, F1, F2, Residual, lambda, dx);
     
       iter++;
     }
   while (Residual > Eps && dx > Smin && iter < MaxIter);
+}
+
+// #################################################################################################
+// Function to backtrack along Newton step in order to minimize f = (F1*F1 + F2*F2) /2
+//
+// Press, Teukolsky, Vetterling, and Flannery, Numerical Recipies in C (Cambridge, 1992), Sect. 9.7
+//
+// ##################################################################################################
+void Utility::NewtonBackTrack (double& x1, double& x2, double dx1, double dx2, double& dx, double f, double g1, double g2, double& lambda)
+{
+  double x1old, x2old, dxold, fold, slope, F1, F2, tmplam, rhs1, rhs2, a, b, disc, lambd2, f2;
+  int count; 
+
+  x1old = x1;
+  x2old = x2;
+  dxold = dx;
+  fold  = f;
+ 
+  if (dxold > Smax)
+    {
+      dx1   = dx1 * Smax /dxold;
+      dx2   = dx2 * Smax /dxold;
+      dxold = Smax;
+    }
+
+  slope = g1*dx1 + g2*dx2;
+
+  if (slope >= 0.)
+    {
+      printf ("Utility::NewtonBackTrack: Error - roundoff problem\n");
+    }
+
+  lambda  = 1.;
+
+  for (int i = 0; i <= Maxiter; i++)
+    {
+      x1 = x1old + lambda * dx1;
+      x2 = x2old + lambda * dx2;
+
+      NewtonFunction (x1, x2, F1, F2);
+
+      f = 0.5 * (F1*F1 + F2*F2);
+
+      if (f <= fold + alpha * slope)
+	{
+	  dx = lambda * dxold;
+	  
+	  return;
+	}
+      else
+	{
+	  if (lambda == 1.)
+	    tmplam = - slope /2. /(f - fold - slope);
+	  else
+	    {
+	      rhs1 = f  - fold - lambda * slope;
+	      rhs2 = f2 - fold - lambd2 * slope;
+
+	      a = (           rhs1 /lambda/lambda -          rhs2 /lambd2/lambd2) /(lambda - lambd2);
+	      b = (- lambd2 * rhs1 /lambda/lambda + lambda * rhs2 /lambd2/lambd2) /(lambda - lambd2);
+
+	      if (a == 0.)
+		tmplam = - slope /2./b;
+	      else
+		{
+		  disc = b*b - 3. * a * slope;
+
+		  if (disc < 0.)
+		    tmplam = 0.5 * lambda;
+		  else if (b <= 0.)
+		    tmplam = (- b + sqrt (disc)) /3./a;
+		  else
+		    tmplam = - slope /(b + sqrt (disc));
+		}
+
+	      if (tmplam > 0.5 * lambda)
+		tmplam = 0.5 * lambda;
+	    }
+	}
+
+      lambd2 = lambda;
+      f2     = f;
+      lambda = Fmax (tmplam, 0.1*lambda);
+     }
+
+  lambda = Fmax (tmplam, 0.1*lambda);
+  dx     = lambda * dxold;
+	  
+  return;
 }
 
 // #####################################################################
@@ -938,6 +1011,28 @@ void Utility::NewtonJacobian (double x1, double x2, double& J11, double& J12, do
 
   J12 = (F1p - F1m) /2./dS;
   J22 = (F2p - F2m) /2./dS;
+}
+
+// ########################################
+// Function to return maximum of two values
+// ########################################
+double Utility::Fmax (double f1, double f2)
+{
+  if (f1 > f2)
+    return f1;
+  else
+    return f2;
+}
+
+// ########################################
+// Function to return minimum of two values
+// ########################################
+double Utility::Fmin (double f1, double f2)
+{
+  if (f1 < f2)
+    return f1;
+  else
+    return f2;
 }
 
 // ########################################

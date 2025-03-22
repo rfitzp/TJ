@@ -4,7 +4,7 @@
     "MMAX":   20,      // Maximum poloidal mode number included in calculation
 
     "EQLB":   0,       // Flag for equilibrium calculation only
-    "FREE":   0,       // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary calculations
+    "FREE":   1,       // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary calculations
     "FVAL":   0,       // Flag for calculating eigenvalues and eigenvectors of F-matrix
     "VIZ":    0,       // Flag for generating unreconnected eigenfunction visualization data
     "IDEAL":  1,       // Flag for ideal calculation
