@@ -909,7 +909,7 @@ void Utility::NewtonRoot (double& x1, double& x2, double& Residual, int verbose)
 //
 // Press, Teukolsky, Vetterling, and Flannery, Numerical Recipies in C (Cambridge, 1992), Sect. 9.7
 //
-// ##################################################################################################
+// #################################################################################################
 void Utility::NewtonBackTrack (double& x1, double& x2, double dx1, double dx2, double& dx, double f, double g1, double g2, double& lambda)
 {
   double x1old, x2old, dxold, fold, slope, F1, F2, tmplam, rhs1, rhs2, a, b, disc, lambd2, f2;
@@ -987,8 +987,7 @@ void Utility::NewtonBackTrack (double& x1, double& x2, double dx1, double dx2, d
       lambda = Fmax (tmplam, 0.1*lambda);
      }
 
-  lambda = Fmax (tmplam, 0.1*lambda);
-  dx     = lambda * dxold;
+  dx = lambda * dxold;
 	  
   return;
 }
