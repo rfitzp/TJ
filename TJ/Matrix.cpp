@@ -208,10 +208,10 @@ void TJ::GetMatrices (double r, int m, int mp,
   delete[] Hn; delete[] Hnp; delete[] Vn; delete[] Vnp;
 }
 
-// ###############################
-// Function to return values of km
-// ###############################
-double TJ::Getkm (double r, int m)
+// ################################
+// Function to return values of kmp
+// ################################
+double TJ::Getkmp (double r, int m)
 {
   double pp  = Getpp  (r);
   double q   = Getq   (r);
@@ -242,4 +242,12 @@ double TJ::Getkm (double r, int m)
 	+ epsa*epsa * tms2 * S3 /mm
 	+ epsa*epsa * ntor * r * (- q*pp + r * tms2 * mnq /mm/q) /mm/mm;
     }
-}		     
+}
+
+// ###############################
+// Function to return values of km
+// ###############################
+double TJ::Getkm (double r, int m)
+{
+  return Getkmp (r, m) - Getkmp (r, 0);
+}

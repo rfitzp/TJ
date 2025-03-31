@@ -1,6 +1,6 @@
-# km.py
+# kmp.py
 
-# Plots k_m versus radius.
+# Plots k_m' versus radius.
 # User is prompted for values of m.
 # Locations of rational surfaces are shown.
 
@@ -14,10 +14,10 @@ ds     = nc.Dataset(fn)
 r      = ds['r']
 mpol   = ds['mpol']
 rres   = ds['r_res']
-km     = ds['km']
+km     = ds['kmp']
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r"TJ Code: k_m")
+fig.canvas.manager.set_window_title (r"TJ Code: k_m'")
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 
@@ -41,7 +41,7 @@ for rx in rres:
     plt.axvline (rx, color = 'red', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\hat{r}$', fontsize = "15")
-plt.ylabel (r"$k_m$",     fontsize = "15")
+plt.ylabel (r"$k_m'$",     fontsize = "15")
 
 plt.tight_layout ()
 

@@ -95,6 +95,7 @@ class TJ : private Utility
   int    NTOR;    // Toroidal mode number (read from TJ JSON file)
   int    MMIN;    // Minimum poloidal mode number included in calculation (read from TJ JSON file)
   int    MMAX;    // Maximum poloidal mode number included in calculation (read from TJ JSON file)
+  double ISLAND;  // Island width/displacement (divided by minor radius) used to regularize perturbed magnetic field (read from TJ JSON file)
 
   double EPS;     // Solutions launched from magnetic axis at r = EPS (read from TJ JSON file)
   double DEL;     // Distance of closest approach to rational surface is DEL (read from TJ JSON file)
@@ -304,6 +305,7 @@ class TJ : private Utility
   double* Pres;    // PsiN values at rational surfaces
   double* qerr;    // Residual in determination of rational surface
   double* sres;    // Magnetic shears at rational surfaces
+  double* gres;    // g values at rational surfaces
   double* DIres;   // DI values at rational surfaces
   double* DRres;   // DR values at rational surfaces
   double* nuLres;  // Ideal Mercier indices of large solution at rational surfaces
@@ -358,6 +360,9 @@ class TJ : private Utility
   Array<complex<double>,3> Zf;    // Z componnents of fully reconnected tearing eigenfunctions
   Array<complex<double>,3> Psiu;  // Psi components of unreconnected tearing eigenfunctions
   Array<complex<double>,3> Zu;    // Z components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> psiu;  // Scaled psi components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> zu;    // z components of unreconneted tearing eigenfunctions
+  Array<complex<double>,3> chiu;  // chi components of unreconneted tearing eigenfunctions
   Array<double,2>          Tf;    // Torques associated with fully reconnected eigenfunctions
   Array<double,2>          Tu;    // Torques associated with unreconnected eigenfunctions
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
@@ -384,13 +389,28 @@ class TJ : private Utility
   double*                  rf;     // Radial grid-points on visualization grid (from Equilibrium.nc)
   Array<double,2>          RR;     // R coordinates of visualization grid-points (from Equilibrium.nc)
   Array<double,2>          ZZ;     // Z coordinates of visualization grid-points (from Equilibrium.nc)
-  Array<double,2>          rvals;  // r values of visulalization grid-points (from Equilibrium.nc)
+  Array<double,2>          dRdr;   // dR/dr values at visualization grid-points (from Equilibrium.nc)
+  Array<double,2>          dRdt;   // dR/dtheta values at visualization grid-points (from Equilibrium.nc)
+  Array<double,2>          dZdr;   // dZ/dr values at visualization grid-points (from Equilibrium.nc)
+  Array<double,2>          dZdt;   // dZ/dtheta values at visualization grid-points (from Equilibrium.nc)
+  Array<double,2>          rvals;  // r values of visualization grid-points (from Equilibrium.nc)
   Array<double,2>          thvals; // theta values of visualization grid-points (from Equilibrium.nc)
   Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 
   Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
+  Array<complex<double>,3> psiuf;  // Scaled psi components of Fourier-transformed unreconnected tearing eigenfunctions 
+  Array<complex<double>,3> zuf;    // z components of Fourier-transformed unreconnected tearing eigenfunctions 
+  Array<complex<double>,3> chiuf;  // chi components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visualization grid
   Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
-
+  Array<complex<double>,3> zuv;    // z components of unreconnected tearing eigenfunctions on visualization grid
+  Array<complex<double>,3> chiuv;  // Chi components of unreconnected tearing eigenfunctions on visualization grid
+  Array<double,3>          bRc;    // Cosine component of b^R on visualization grid
+  Array<double,3>          bRs;    // Sin component of b^R on visualization grid
+  Array<double,3>          bZc;    // Cosine component of b^Z on visualization grid
+  Array<double,3>          bZs;    // Sin component of b^Z on visualization grid
+  Array<double,3>          bPc;    // Cosine component of R b^phi on visualization grid
+  Array<double,3>          bPs;    // Sin component of R b^^phi on visualization grid
+  
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response
   // --------------------------------------------------------
@@ -568,6 +588,8 @@ class TJ : private Utility
   void GetMatrices (double r, int m, int mp,
 		    complex<double>& Lmmp, complex<double>& Mmmp,
 		    complex<double>& Nmmp, complex<double>& Pmmp);
+  // Get values of kmp 
+  double Getkmp (double r, int m);
   // Get values of km 
   double Getkm (double r, int m);
 

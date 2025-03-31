@@ -57,7 +57,7 @@ void TJ::CalculateIdealStability ()
 	{
 	  complex<double> sump = YYY(j,   jp, i);
 	  complex<double> sumz = YYY(J+j, jp, i);
-	  double          km   = Getkm (Rgrid[i], MPOL[j]);
+	  double          kmp  = Getkmp (Rgrid[i], MPOL[j]);
 	  
 	  for (int k = 0; k < nres; k++)
 	    {
@@ -69,7 +69,7 @@ void TJ::CalculateIdealStability ()
 	  Zi  (j, jp, i) = sumz;
 	  Xii (j, jp, i) = sump /(mpol[j] - ntor * Getq (Rgrid[i]));
 	  xii (j, jp, i) = Xii(j, jp, i) * Rgrid[i] /Getf (Rgrid[i]);
-	  Chii(j, jp, i) = km * sump + sumz;
+	  Chii(j, jp, i) = kmp * sump + sumz;
 	}
   
   // -----------------------------------------------------

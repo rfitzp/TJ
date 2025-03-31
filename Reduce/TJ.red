@@ -962,6 +962,19 @@ lamm4 := sub(m=kk-4,lam00)$
 lamm4 := sub(kk=m,  lamm4)$
 
 % %%%%%%%%%%%%%
+% Calculate km
+% %%%%%%%%%%%%%
+km  := lam0/n$
+km0 := coeffn(km,eps,0)$
+km1 := coeffn(km,eps,1)$
+km2 := coeffn(km,eps,2)$
+
+k0  := 0$
+k00 := coeffn(k0,eps,0)$
+k01 := coeffn(k0,eps,1)$
+k02 := coeffn(k0,eps,2)$
+
+% %%%%%%%%%%%%%
 % Calculate kmp
 % %%%%%%%%%%%%%
 kmp  := lam0/n + gf/n$
@@ -1436,6 +1449,14 @@ k0p2_target := - ((3/2)*r**2 - 2*r*df(H1,r) + sp4a + 2*sp5 - sp6)/n/q
    + (2-sh) * (- (3/4)*r**2 + r**2/q**2 + H1 + (3/2)*sp4a - (1/2)*sp6)/n/q
    + q*pp * (2*g2 + r**2/2 + r**2/q**2 - 2*H1 - 3*r*df(H1,r))/n/r$
 
+km0_target := kmp0_target - k0p0_target$
+km1_target := 0$
+km2_target := kmp2_target - k0p2_target$
+
+k00_target := k0p0_target - k0p0_target$
+k01_target := 0$
+k02_target := k0p2_target - k0p2_target$$
+
 write "Equilibrium residuals:";
 dg2p  := g2p  - g2p_target;
 dg4p  := g4p  - g4p_target;
@@ -1446,6 +1467,14 @@ dH3pp := H3pp - H3pp_target;
 dV3pp := V3pp - V3pp_target;
 dH4pp := H4pp - H4pp_target;
 dV4pp := V4pp - V4pp_target;
+
+dkm0 := km0 - km0_target;
+dkm1 := km1 - km1_target;
+dkm2 := km2 - km2_target;
+
+dk00 := k00 - k00_target;
+dk01 := k01 - k01_target;
+dk02 := k02 - k02_target;
 
 dkmp0 := kmp0 - kmp0_target;
 dkmp1 := kmp1 - kmp1_target;

@@ -9,7 +9,7 @@ void Equilibrium::WriteNetcdf (double sa)
 {
   printf ("Writing equilibrium data to netcdf file Outputs/Equilibrium/Equilibrium.nc:\n");
 
-  double para[3], Input[15], Beta[4];
+  double para[3], Input[17], Beta[4];
 
   double* Hna   = new double[Ns+1];
   double* Vna   = new double[Ns+1];
@@ -30,6 +30,8 @@ void Equilibrium::WriteNetcdf (double sa)
   Input[12] = h0;
   Input[13] = hmin;
   Input[14] = hmax;
+  Input[15] = double (SRC);
+  Input[16] = bw;
   
   para[0] = epsa;
   para[1] = sa;
@@ -61,7 +63,7 @@ void Equilibrium::WriteNetcdf (double sa)
       dataFile.putAtt ("Compile_Time", COMPILE_TIME);
       dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
   
-      NcDim i_d = dataFile.addDim ("Ni",    15);
+      NcDim i_d = dataFile.addDim ("Ni",    17);
       NcDim p_d = dataFile.addDim ("Np",    3);
       NcDim b_d = dataFile.addDim ("Nb",    4);
       NcDim r_d = dataFile.addDim ("Nr",    Nr+1);
@@ -174,19 +176,31 @@ void Equilibrium::WriteNetcdf (double sa)
 
       if (VIZ)
 	{
-	  NcVar R_x  = dataFile.addVar ("R",     ncDouble, flux_d);
+	  NcVar R_x    = dataFile.addVar ("R",     ncDouble, flux_d);
 	  R_x.putVar (RR.data());
-	  NcVar Z_x  = dataFile.addVar ("Z",     ncDouble, flux_d);
+	  NcVar Z_x    = dataFile.addVar ("Z",     ncDouble, flux_d);
 	  Z_x.putVar (ZZ.data());
-	  NcVar Rw_x = dataFile.addVar ("Rw",    ncDouble, flux_d);
+	  NcVar dRdr_x = dataFile.addVar ("dRdr",  ncDouble, flux_d);
+	  dRdr_x.putVar (dRdr.data());
+	  NcVar dRdt_x = dataFile.addVar ("dRdt",  ncDouble, flux_d);
+	  dRdt_x.putVar (dRdt.data());
+	  NcVar dZdr_x = dataFile.addVar ("dZdr",  ncDouble, flux_d);
+	  dZdr_x.putVar (dZdr.data());
+	  NcVar dZdt_x = dataFile.addVar ("dZdt",  ncDouble, flux_d);
+	  dZdt_x.putVar (dZdt.data());
+	  NcVar Jac_x  = dataFile.addVar ("Jac",   ncDouble, flux_d);
+	  Jac_x.putVar (Jac.data());
+	  NcVar Jax_x  = dataFile.addVar ("Jax",   ncDouble, flux_d);
+	  Jax_x.putVar (Jax.data());
+	  NcVar Rw_x   = dataFile.addVar ("Rw",    ncDouble, flux_d);
 	  Rw_x.putVar (RRw.data());
-	  NcVar Zw_x = dataFile.addVar ("Zw",    ncDouble, flux_d);
+	  NcVar Zw_x   = dataFile.addVar ("Zw",    ncDouble, flux_d);
 	  Zw_x.putVar (ZZw.data());
-	  NcVar rr_x = dataFile.addVar ("rr",    ncDouble, flux_d);
+	  NcVar rr_x   = dataFile.addVar ("rr",    ncDouble, flux_d);
 	  rr_x.putVar (rvals.data());
-	  NcVar t_x  = dataFile.addVar ("theta", ncDouble, flux_d);
+	  NcVar t_x    = dataFile.addVar ("theta", ncDouble, flux_d);
 	  t_x.putVar (thvals.data());
-	  NcVar w_x  = dataFile.addVar ("omega", ncDouble, flux_d);
+	  NcVar w_x    = dataFile.addVar ("omega", ncDouble, flux_d);
 	  w_x.putVar (wvals.data());
 	}
 

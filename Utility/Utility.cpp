@@ -945,7 +945,7 @@ void Utility::NewtonBackTrack (double& x1, double& x2, double dx1, double dx2, d
 
       f = 0.5 * (F1*F1 + F2*F2);
 
-      if (f <= fold + alpha * slope)
+      if (f <= fold + alpha * slope || lambda * dxold < Smin)
 	{
 	  dx = lambda * dxold;
 	  

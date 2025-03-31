@@ -23,7 +23,7 @@ All elements of the tearing stability matrix are found to tend to infinity as an
 Furthermore, as the stability boundary is approached, the eigenfunctions of the various tearing modes in the plasma, which are decoupled by sheared plasma rotation,
 are all found to morph into that of the marginally-stable ideal mode. However, the growth-rates and real frequencies of the various ``ideal-tearing-modes'' are different from one another.
 Moreover, the growth-rate of the ideal-tearing-mode that reconnects magnetic flux at the rational surface that lies closest to the
-edge of the plasma is the one that tends to a very large value as the boundary is approached. A relatively simple test for
+edge of the plasma is the one that tends to a very large value as the stability boundary is approached. A relatively simple test for
 ideal stability that is capable of detecting stability boundaries for external-kink and internal-kink modes, even in the presence of
 a very close-fitting ideal wall, is described and verified.
 
@@ -1030,7 +1030,7 @@ T_\phi&= -\pi^2\,n\,\left[
 - \underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal R}})\,\underline{p}
 +\underline{q}^\dag\,(\underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal S}}
 - \underline{\underline{\cal S}}^\dag\,\underline{\underline{\cal R}})\,\underline{q}
-\right]
+\right].
 \end{align}
 The previous equation is consistent with Eq.~(\ref{e39x}) provided that
 \begin{align}\label{e41x}
@@ -1080,7 +1080,7 @@ where
   Here, $\underline{\underline{\cal P}}_{\,a}= \underline{\underline{\cal P}}(a_+)$, et cetera. 
 Making use of Eqs.~(\ref{e41x})--(\ref{e43}), it is easily demonstrated that
  \begin{equation}\label{e53}
- \underline{\underline{H}}-\underline{\underline{H}}^\dag =- [(\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}]^{\dag}\,(\underline{\underline{I}}_{\,b} -\underline{\underline{I}}^\dag_{\,b})\,  (\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}
+ \underline{\underline{H}}-\underline{\underline{H}}^\dag =- [(\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}]^{\dag}\,(\underline{\underline{I}}_{\,b} -\underline{\underline{I}}^\dag_{\,b})\,  (\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}.
 \end{equation}
 Thus,  the vacuum matrix, $\underline{\underline{H}}$, is Hermitian because  the wall matrix, $\underline{\underline{I}}_{\,b}$, is Hermitian. 
  
@@ -1637,56 +1637,56 @@ STRIDE code needs to be run using the following non-default parameters: \verb|to
 
 \newpage
 \begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Test1.pdf}}
+\centerline{\includegraphics[width=\textwidth]{Fig1.pdf}}
 \caption{TJ/STRIDE Benchmark Test 1. Circular cross-section plasma with  $q_0=1.1$, $p_\sigma=1.36$,  and $\beta_0=0.0$. Variation of the  free-boundary $m=2/n=1$ tearing stability index with the inverse-aspect ratio, $a$. \label{fig1}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Test2.pdf}}
+\centerline{\includegraphics[width=\textwidth]{Fig2.pdf}}
 \caption{TJ/STRIDE Benchmark Test 2. Circular cross-section plasma with  $q_0=1.1$, $a=0.2$, and $\beta_0=0.0$. Variation of the free-boundary  $m=2/n=1$ tearing stability index with  the edge safety-factor, $q_a$.\label{fig2} }
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{Test3.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig3.pdf}}
 \caption{TJ/STRIDE Benchmark Test 3. Circular cross-section plasma with $q_0=1.1$, $a=0.2$, and $\beta_0=0.0$. Variation of the elements of the free-boundary $n=1$ tearing stability matrix with $q_a$. In the middle panel, the squares
 indicate  $E_{12}$ and the crosses indicate $E_{21}$. \label{fig3}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{Test4.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig4.pdf}}
 \caption{TJ/STRIDE Benchmark Test 4. Circular cross-section plasma with $q_0=1.1$, $a=0.2$, $p_\sigma=2.1$,  and $p_p=2.0$. Variation of the elements of the free-boundary $n=1$ tearing stability matrix with the central plasma beta,  $\beta_0$. In the middle panel, the squares
 indicate  $E_{12}$ and the crosses indicate $E_{21}$. The $\beta_0$ values from TJ have  been rescaled by a factor $1.08$.\label{fig4}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{deltaW.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig5.pdf}}
 \caption{Variation of the smallest eigenvalue of the free-boundary, $n=1$, total ideal energy matrix, $\delta W$, and the corresponding eigenvalues of the plasma and vacuum energy matrices, 
 $\delta W_p$ and $\delta W_v$, with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, and
 $a=0.2$. The vertical dotted line corresponds to the ideal stability boundary (at which $\delta W=0$), $\beta_0=0.0134$.  \label{fig5}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{Ematrix.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig6.pdf}}
 \caption{Variation of the elements of the free-boundary, $n=1$, tearing stability matrix with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium  characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, and
 $a=0.2$. The vertical dotted line corresponds to the ideal stability boundary, $\beta_0=0.0134$. \label{fig6}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{gamma.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig7.pdf}}
 \caption{Variation of the real growth-rates and real frequencies of the free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the  $q=2$ (labelled $1$) and $q=3$ (labelled $2$)  surfaces with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, and
 $a=0.2$. The vertical dotted line corresponds to the ideal stability boundary, $\beta_0=0.0134$. The $f_k$ parameters would take the values $+1$/0/$-1$ if the tearing modes were to co-rotate with the
 electron/E-cross-B/ion fluids at the surface at which they reconnect magnetic flux.\label{fig7}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{Unrc1.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig8.pdf}}
 \caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$,  associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=2$  (top panel) and the $q=3$ (bottom panel) surfaces in a 
 circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$,
 $a=0.2$, and $\beta_0 =0.0064$. The vertical dashed lines show the locations of the $q=2$ and $q=3$ surfaces. \label{fig8}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Psi1.png}}%{Psi1.pdf}}
+\centerline{\includegraphics[width=\textwidth]{Fig9.png}}
 \caption{Contour plots of the real (left columns) and imaginary (right columns) parts the perturbed magnetic flux, $\psi(r,\theta)$, associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=2$  (top panels) and the $q=3$ (bottom panels) surfaces in a 
 circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$,
 $a=0.2$, and $\beta_0 =0.0064$. Here, red/blue/white denotes positive/negative/zero values. The black dot shows the location of the magnetic axis, and the
@@ -1694,21 +1694,21 @@ black circles show the locations of the $q=2$ and $q=3$ surfaces. \label{fig9}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{Unrc.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig10.pdf}}
 \caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$,  associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=2$  (top panel) and the $q=3$ (bottom panel) surfaces in a marginally-ideally-stable, 
 circular cross-section, plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, and
 $a=0.2$, and  $\beta_0=0.0134$. See caption to Fig.~\ref{fig8}.\label{fig10}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{xIdeale.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig11.pdf}}
 \caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$ (top panel), and the radial plasma displacement, $\xi^r(r,\theta)$,  associated with a free-boundary, 
 marginally-stable, $n=1$, ideal mode in a circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, 
 $a=0.2$, and $\beta_0=0.0134$. See caption to Fig.~\ref{fig8}.\label{fig11}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Psi.png}}`%{Psi.pdf}}
+\centerline{\includegraphics[width=\textwidth]{Fig12.png}}
 \caption{Contour plots of the real (left panel) and imaginary (right panel) parts of the perturbed magnetic flux, $\psi(r,\theta)$, associated with a free-boundary,
 marginally-stable, $n=1$, ideal mode in a 
 circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, 
@@ -1716,40 +1716,40 @@ $a=0.2$, and $\beta_0=0.0134$. See caption to Fig.~\ref{fig9}. \label{fig12}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{BetaLimit.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig13.pdf}}
 \caption{Variation of the critical central beta value at marginal ideal stability, $\beta_{0\,{\rm crit}}$, with the relative radius, $b_w$, of the ideal wall surrounding the plasma in 
 a circular cross-section plasma equilibrium characterized by $q_0=1.5$, $q_a= 3.6$, $p_p=2.0$, and
 $a=0.2$. The horizontal dashed line corresponds to the no-wall  marginal stability boundary, $\beta_{0\,{\rm crit}}=0.0134$. The vertical dashed line corresponds to $b_w=1.179$.  \label{fig13}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{deltaWa.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig14.pdf}}
 \caption{Variation of the smallest eigenvalue of the free-boundary, $n=1$, total ideal energy matrix, $\delta W$, and the corresponding eigenvalues of the plasma and vacuum energy matrices, 
 $\delta W_p$ and $\delta W_v$, with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, and
 $a=0.2$. The vertical dotted line corresponds to the ideal stability boundary, $\beta_0=0.00708$.  \label{fig14}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{Ematrixa.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig15.pdf}}
 \caption{Variation of the elements of the free-boundary, $n=1$, tearing stability matrix with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium  characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, and
 $a=0.2$. The vertical dotted line corresponds to the ideal stability boundary, $\beta_0=0.00708$. \label{fig15}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{gammaa.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig16.pdf}}
 \caption{Variation of the real growth-rates and real frequencies of the free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the  $q=1$ (labelled $1$) and $q=2$ (labelled $2$)  surfaces with the central plasma beta, $\beta_0$, in a circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, and
 $a=0.2$. The vertical dotted line corresponds to the ideal stability boundary, $\beta_0=0.00708$. See caption to Fig.~\ref{fig7}.\label{fig16}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{Unrc1a.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig17.pdf}}
 \caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$,  associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=1$  (top panel) and the $q=2$ (bottom panel)  surfaces in a 
 circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$,
 $a=0.2$, and $\beta_0 =0.004$. The vertical dashed lines show the locations of the $q=1$ and $q=2$ surfaces. \label{fig17}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Psi1a.png}}%{Psi1a.pdf}}
+\centerline{\includegraphics[width=\textwidth]{Fig18.png}}
 \caption{Contour plots of the real (left columns) and imaginary (right columns) parts the perturbed magnetic flux, $\psi(r,\theta)$, associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=1$  (top panels) and the $q=2$ (bottom panels)  surfaces in a 
 circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$,
 $a=0.2$, and $\beta_0 =0.004$.  The
@@ -1757,14 +1757,14 @@ black circles show the locations of the $q=1$ and $q=2$  surfaces. See caption t
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{Unrca.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig19.pdf}}
 \caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$,  associated with free-boundary, $n=1$, tearing modes that only reconnect magnetic flux at the $q=2$  (top panel) and the $q=2$ (bottom panel) surfaces in a marginally-ideally-stable, 
 circular cross-section,  plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, 
 $a=0.2$, and $\beta_0=0.00708$. See caption to Fig.~\ref{fig17}.\label{fig19}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{xIdealea.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig20.pdf}}
 \caption{Poloidal harmonics of the perturbed magnetic flux, $\psi(r,\theta)$ (top panel), and the radial plasma displacement, $\xi^r(r,\theta)$,  associated with a free-boundary,
 marginally-stable, $n=1$, ideal mode in a 
 circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, 
@@ -1772,7 +1772,7 @@ $a=0.2$, and $\beta_0=0.00708$. See caption to Fig.~\ref{fig17}.\label{fig20}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Psia.png}}%{Psia.pdf}}
+\centerline{\includegraphics[width=\textwidth]{Fig21.png}}
 \caption{Contour plots of the real (left panel) and imaginary (right panel) parts the perturbed magnetic flux, $\psi(r,\theta)$, associated with a free-boundary, marginally-stable, $n=1$,
 ideal mode mode  in a 
 circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 3.6$, $p_p=2.0$, 
@@ -1780,7 +1780,7 @@ $a=0.2$, and $\beta_0=0.00708$. See captions to Figs.~\ref{fig9} and \ref{fig21}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=0.9\textwidth]{BetaLimit1.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Fig22.pdf}}
 \caption{Variation of the critical central beta value at marginal ideal stability, $\beta_{0\,{\rm crit}}$, with the relative radius, $b_w$, of the ideal wall surrounding the plasma in 
 a circular cross-section plasma equilibrium characterized by $q_0=0.8$, $q_a= 2.8$, $p_p=2.0$, and
 $a=0.2$. The horizontal dashed line corresponds to the no-wall  marginal stability boundary, $\beta_{0\,{\rm crit}}=0.00708$. The vertical dashed line corresponds to $b_w=1.0$.  \label{fig22}}

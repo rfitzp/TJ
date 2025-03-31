@@ -39,9 +39,10 @@ TJ::TJ ()
   string JSONFilename = "../Inputs/TJ.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  NTOR    = JSONData["NTOR"].get<int>();
-  MMIN    = JSONData["MMIN"].get<int>();
-  MMAX    = JSONData["MMAX"].get<int>();
+  NTOR    = JSONData["NTOR"]  .get<int>();
+  MMIN    = JSONData["MMIN"]  .get<int>();
+  MMAX    = JSONData["MMAX"]  .get<int>();
+  ISLAND  = JSONData["ISLAND"].get<double>();
 
   EQLB    = JSONData["EQLB"] .get<int>();
   FREE    = JSONData["FREE"] .get<int>();
@@ -194,6 +195,11 @@ TJ::TJ ()
       printf ("TJ: Error - Teped must be positive\n");
       exit (1);
     }
+  if (ISLAND <= 0.)
+    {
+      printf ("TJ: Error - ISLAND must be positive\n");
+      exit (1);
+    }
 
   // No resonant magnetic perturbation calculation for fixed boundary
   if (FREE < 0)
@@ -237,8 +243,8 @@ void TJ::Solve ()
       printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d\n",
 	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER);
       printf ("Calculation parameters:\n");
-      printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e\n",
-	      NTOR, MMIN, MMAX, EPS, DEL);
+      printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e\n",
+	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND);
       printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d\n",
 	      NFIX, NDIAG, NULC, ITERMAX);
       printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
@@ -427,7 +433,7 @@ void TJ::CleanUp ()
   delete[] mres; delete[] qres;  delete[] rres;   delete[] qerr;
   delete[] sres; delete[] DIres; delete[] nuLres; delete[] nuSres;
   delete[] Jres; delete[] DRres; delete[] Flarge; delete[] Fsmall;
-  delete[] Pres;
+  delete[] Pres; delete[] gres;
 
   delete[] S13res; delete[] taures; delete[] ieres; delete[] QEres;
   delete[] Qeres;  delete[] Qires;  delete[] Dres;  delete[] Pmres;

@@ -1,9 +1,9 @@
 {
     "SRC":  0,                // Flag for reading safety-factor and pressure profiles from Inputs/Profile.txt
     
-    "qc":   0.8,              // Safety-factor on magnetic axis
-    "qa":   2.8,              // Safety-factor at plasma boundary
-    "pc":   8.85e-02,     // Normalized plasma pressure on magnetic axis 
+    "qc":   1.2,              // Safety-factor on magnetic axis
+    "qa":   3.8,              // Safety-factor at plasma boundary
+    "pc":   8.0e-02,          // Normalized plasma pressure on magnetic axis 
     "mu":   2.0,              // Pressure peaking parameter
     "epsa": 0.2,              // Inverse aspect-ratio of plasma
 

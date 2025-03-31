@@ -30,6 +30,9 @@ void TJ::FindDispersion ()
   Tf   .resize(nres, NDIAG);
   Psiu .resize(J,    nres, NDIAG);
   Zu   .resize(J,    nres, NDIAG);
+  psiu .resize(J,    nres, NDIAG);
+  zu   .resize(J,    nres, NDIAG);
+  chiu .resize(J,    nres, NDIAG);
   Tu   .resize(nres, NDIAG);
   Tfull.resize(nres, nres, NDIAG);
   Tunrc.resize(nres, nres, NDIAG);
@@ -263,6 +266,9 @@ void TJ::FindDispersion ()
   // ..............................................
   for (int i = 0; i < NDIAG; i++)
     {
+      double r = Rgrid[i];
+      double q = Getq (r);
+	    
       for (int j = 0; j < J; j++)
 	for (int k = 0; k < nres; k++)
 	  {
@@ -275,6 +281,67 @@ void TJ::FindDispersion ()
 
 	    for (int kp = 0; kp < nres; kp++)
 	      Zu(j, k, i) += Zf(j, kp, i) * Emat(kp, k);
+
+	    double delta = double (mres[k]) * sres[k] * ISLAND /2. /rres[k];
+	    double mnq   = double (mres[k]) - ntor * q;
+	    double imnq  = mnq / (delta*delta + mnq*mnq);
+
+	    double PSI;
+	    if (mres[k] == 1)
+	      PSI = epsa * (rres[k] * gres[k] * sres[k] /qres[k]) * ISLAND /abs (Emat(k, k));
+	    else
+	      PSI = epsa * (ISLAND*ISLAND /16.) *  (gres[k] * sres[k] /qres[k]); 
+
+	    psiu(j, k, i) = PSI * Psiu(j, k, i); 
+	    
+	    if (MPOL[j] == mres[k])
+	      zu(j, k, i) = PSI * (Zu(j, k, i) + Getkm (r, MPOL[j]) * Psiu(j, k, i)) * imnq;
+	    else
+	      zu(j, k, i) = PSI * (Zu(j, k, i) + Getkm (r, MPOL[j]) * Psiu(j, k, i)) /(mpol[j] - ntor * q);
+	  }
+    }
+
+  for (int i = 0; i < NDIAG; i++)
+    {
+      double r = Rgrid[i];
+      double q = Getq (r);
+      
+      Array<complex<double>,2> LLmmp (J, J);
+      Array<complex<double>,2> MMmmp (J, J);
+      Array<complex<double>,2> NNmmp (J, J);
+      Array<complex<double>,2> PPmmp (J, J);
+      
+      GetMatrices (r, LLmmp, MMmmp, NNmmp, PPmmp);
+
+      for (int j = 0; j < J; j++)
+	for (int k = 0; k < nres; k++)
+	  {
+	    double delta = double (mres[k]) * sres[k] * ISLAND /2. /rres[k];
+	    double mnq   = double (mres[k]) - ntor * q;
+	    double imnq  = mnq / (delta*delta + mnq*mnq);
+
+	    double PSI;
+	    if (mres[k] == 1)
+	      PSI = epsa * (rres[k] * gres[k] * sres[k] /qres[k]) * ISLAND /abs (Emat(k, k));
+	    else
+	      PSI = epsa * (ISLAND*ISLAND /16.) *  (gres[k] * sres[k] /qres[k]); 
+	    
+	    if (MPOL[j] == 0)
+	      chiu(j, k, i) = complex<double> (0., 0.);
+	    else
+	      {
+		chiu(j, k, i) = - epsa*epsa * ntor*ntor * r*r * zu(j, k, i);
+
+		for (int jp = 0; jp < J; jp++)
+		  {
+		    if (MPOL[jp] == mres[k])
+		      chiu(j, k, i) += (LLmmp(j, jp) * Zu(jp, k, i) + MMmmp(j, jp) * Psiu(jp, k, i)) * imnq;
+		    else
+		      chiu(j, k, i) += (LLmmp(j, jp) * Zu(jp, k, i) + MMmmp(j, jp) * Psiu(jp, k, i)) /(mpol[jp] - ntor * q);
+		  }
+
+		chiu(j, k, i) *= PSI /mpol[j];
+	      }
 	  }
     }
 

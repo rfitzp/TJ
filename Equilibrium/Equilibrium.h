@@ -122,16 +122,16 @@ class Equilibrium : private Utility
   // ------------------
   // Profile parameters
   // ------------------
-  int      NPTS;        // Number of data points in profile file (Inputs/Profile
-  double*  rin;         // Radial grid-points in profile file
-  double*  qin;         // Lowest order safety-factor profile read from profile file
-  double*  f1in;        // f1 profile derived from qin; f1in = r^2/qin
-  double*  p2in;        // p2 profile read from profile file
+  int                NPTS;        // Number of data points in profile file (Inputs/Profile
+  double*            rin;         // Radial grid-points in profile file
+  double*            qin;         // Lowest order safety-factor profile read from profile file
+  double*            f1in;        // f1 profile derived from qin; f1in = r^2/qin
+  double*            p2in;        // p2 profile read from profile file
 
-  gsl_spline*        f1inspline;   // Interpolated f1in function
-  gsl_spline*        p2inspline;   // Interpolated p2in function
-  gsl_interp_accel*  f1inacc;      // Accelerator for interpolated f1in function
-  gsl_interp_accel*  p2inacc;      // Accelerator for interpolated p2in function
+  gsl_spline*        f1inspline;  // Interpolated f1in function
+  gsl_spline*        p2inspline;  // Interpolated p2in function
+  gsl_interp_accel*  f1inacc;     // Accelerator for interpolated f1in function
+  gsl_interp_accel*  p2inacc;     // Accelerator for interpolated p2in function
 
   // ----------------------
   // Calculation parameters
@@ -145,43 +145,43 @@ class Equilibrium : private Utility
   // ----------------
   // Calculation data
   // ----------------
-  double* rr;                   // Radial grid-points
-  double* p2;                   // Plasma pressure profile
-  double* f1;                   // Lowest-order poloidal flux function
-  double* f3;                   // Higher-order poloidal flux function
-  double* g2;                   // Lowest-order toroidal flux function
-  double* q0;                   // Lowest-order safety-factor
-  double* q2;                   // Higher-order safety-factor
-  double* It;                   // Toroidal plasma current
-  double* Ip;                   // Poloidal plasma current
-  double* Jt;                   // Radial derivative of toroidal plasma current
-  double* Jp;                   // Radial derivative of poloidal plasma current
-  double* pp;                   // Radial derivative of plasma pressure
-  double* ppp;                  // Second radial derivative of plasma pressure 
-  double* qq;                   // First radial derivative of safety-factor times r
-  double* qqq;                  // Radial derivative of qq times r
-  double* s;                    // Higher-order magnetic shear:  s  = r q2'/q2
-  double* s2;                   // Derivative of magnetic shear: s2 = r^2 q2''/q2
-  double* s0;                   // Lowest-order magnetic shear (s0=2 at boundary)
-  double* S1;                   // First shaping function
-  double* S2;                   // Second shaping function
-  double* S3;                   // Third shaping function
-  double* P1;                   // First profile function: (2-s) /q2
-  double* P1a;                  // Lowest-order first profile function: (2-s0) /q0 
-  double* P2;                   // Second profile function: r dP1/dr
-  double* P2a;                  // Lowest-order second profile function: r dP1a/dr
-  double* P3;                   // Third profile function
-  double* P3a;                  // Auxillary third profile function
-  double* ff;                   // f profile
-  double* ggr2;                 // <|nabla r|^2> profile
-  double* RR2;                  // <R^2> profile
-  double* IR2;                  // <|nabla r|^2/R^2> profile
-  double* Psi;                  // Psi(r) array
-  double* PsiN;                 // PsiN(r) array
-  double* Tf;                   // Toroidal flux-function
-  double* mu0P;                 // mu_0 times pressure
-  double* DI;                   // Ideal Mercier index
-  double* DR;                   // Resistive Mercier index
+  double*            rr;        // Radial grid-points
+  double*            p2;        // Plasma pressure profile
+  double*            f1;        // Lowest-order poloidal flux function
+  double*            f3;        // Higher-order poloidal flux function
+  double*            g2;        // Lowest-order toroidal flux function
+  double*            q0;        // Lowest-order safety-factor
+  double*            q2;        // Higher-order safety-factor
+  double*            It;        // Toroidal plasma current
+  double*            Ip;        // Poloidal plasma current
+  double*            Jt;        // Radial derivative of toroidal plasma current
+  double*            Jp;        // Radial derivative of poloidal plasma current
+  double*            pp;        // Radial derivative of plasma pressure
+  double*            ppp;       // Second radial derivative of plasma pressure 
+  double*            qq;        // First radial derivative of safety-factor times r
+  double*            qqq;       // Radial derivative of qq times r
+  double*            s;         // Higher-order magnetic shear:  s  = r q2'/q2
+  double*            s2;        // Derivative of magnetic shear: s2 = r^2 q2''/q2
+  double*            s0;        // Lowest-order magnetic shear (s0=2 at boundary)
+  double*            S1;        // First shaping function
+  double*            S2;        // Second shaping function
+  double*            S3;        // Third shaping function
+  double*            P1;        // First profile function: (2-s) /q2
+  double*            P1a;       // Lowest-order first profile function: (2-s0) /q0 
+  double*            P2;        // Second profile function: r dP1/dr
+  double*            P2a;       // Lowest-order second profile function: r dP1a/dr
+  double*            P3;        // Third profile function
+  double*            P3a;       // Auxillary third profile function
+  double*            ff;        // f profile
+  double*            ggr2;      // <|nabla r|^2> profile
+  double*            RR2;       // <R^2> profile
+  double*            IR2;       // <|nabla r|^2/R^2> profile
+  double*            Psi;       // Psi(r) array
+  double*            PsiN;      // PsiN(r) array
+  double*            Tf;        // Toroidal flux-function
+  double*            mu0P;      // mu_0 times pressure
+  double*            DI;        // Ideal Mercier index
+  double*            DR;        // Resistive Mercier index
    
   Array<double,2>    HHfunc;    // Horizontal shaping functions
   Array<double,2>    VVfunc;    // Vertical shaping functions
@@ -235,6 +235,12 @@ class Equilibrium : private Utility
 
   Array<double,2>    RR;        // R coodinates of magnetic flux-surfaces for visualization purposes (uniform theta grid)
   Array<double,2>    ZZ;        // Z coodinates of magnetic flux-surfaces for visualization purposes (uniform theta grid)
+  Array<double,2>    dRdr;      // dR/dr values on visualization grid
+  Array<double,2>    dRdt;      // (dR/dtheta)/r values on visualization grid
+  Array<double,2>    dZdr;      // dZ/dr values on visualization grid
+  Array<double,2>    dZdt;      // (dZ/dtheta)/r values on visualization grid
+  Array<double,2>    Jac;       // Jacobian
+  Array<double,2>    Jax;       // Analytic Jacobian
   Array<double,2>    RRw;       // R coodinates of magnetic flux-surfaces for visualization purposes (uniform omega grid)
   Array<double,2>    ZZw;       // Z coodinates of magnetic flux-surfaces for visualization purposes (uniform omega grid)
   Array<double,2>    rvals;     // r values on magnetic flux-surfaces for visualization purposes
@@ -382,6 +388,8 @@ private:
   double GetdZdw (double r, double w, int order);
   // Return theta (r, omega) function
   double Gettheta (double r, double w, int order);
+  // Return dtheta (r, omega)/domega function
+  double Getdthetadomega (double r, double w, int order);
   // Return R2
   double GetR2 (double r, double t);
   // Return H_j in vacuum

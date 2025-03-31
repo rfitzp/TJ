@@ -11,3 +11,4 @@
 - *Flux.pdf*:                     Document specifying how Flux calculations are performed
 - *IdealStability.pdf*:		  Document specifying how TJ caclulates ideal stability
 - *RWM.pdf*:			  Document specifying how TJ deals with ideal/resisitive wall
+- *Perturbation.pdf*:             Document specifying how TJ calculates magnetic perturbations associated with tearing modes
