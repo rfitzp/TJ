@@ -39,6 +39,8 @@ fig.canvas.manager.set_window_title (r'TJ Code: b^phi(R, Z)')
 plt.rc ('xtick', labelsize=12) 
 plt.rc ('ytick', labelsize=12) 
 
+nres = len(rres)
+print ("rational surface = (%d .. %d)" % (1, nres))
 m = input ("rational surface number ? ")
 k = int(m) - 1
 

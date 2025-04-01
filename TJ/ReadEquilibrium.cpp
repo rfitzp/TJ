@@ -31,6 +31,8 @@ void TJ::ReadEquilibrium ()
   P1spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P3spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  nepspline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  Tepspline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
 
   Pacc      = gsl_interp_accel_alloc ();
   facc      = gsl_interp_accel_alloc ();
@@ -48,6 +50,8 @@ void TJ::ReadEquilibrium ()
   P1acc     = gsl_interp_accel_alloc ();
   P2acc     = gsl_interp_accel_alloc ();
   P3acc     = gsl_interp_accel_alloc ();
+  nepacc    = gsl_interp_accel_alloc ();
+  Tepacc    = gsl_interp_accel_alloc ();
 
   HHspline  = new gsl_spline* [Ns+1];
   VVspline  = new gsl_spline* [Ns+1];
@@ -91,6 +95,8 @@ void TJ::ReadEquilibrium ()
   gsl_spline_init (P1spline,  rr, P1,   Nr+1);
   gsl_spline_init (P2spline,  rr, P2,   Nr+1);
   gsl_spline_init (P3spline,  rr, P3,   Nr+1);
+  gsl_spline_init (nepspline, rr, nep,  Nr+1);
+  gsl_spline_init (Tepspline, rr, Tep,  Nr+1);
 
   double* data = new double[Nr+1];
 

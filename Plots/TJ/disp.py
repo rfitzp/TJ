@@ -1,4 +1,4 @@
-# dips.py
+# disp.py
 
 # Plots xi^r component of unreconnected eigenfunction associated with given rational surface in R, Z plane.
 # User prompted for rational surface number and scaling exponent
@@ -39,6 +39,8 @@ fig.canvas.manager.set_window_title (r'TJ Code: xi^r(R, Z)')
 plt.rc ('xtick', labelsize=12) 
 plt.rc ('ytick', labelsize=12) 
 
+nres = len(rres)
+print ("rational surface = (%d .. %d)" % (1, nres))
 m = input ("rational surface number ? ")
 k = int(m) - 1
 

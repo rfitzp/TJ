@@ -1,6 +1,6 @@
-# Psi.py
+# dTe.py
 
-# Plots Psi component of unreconnected eigenfunction associated with given rational surface in R, Z plane.
+# Plots delta T_e component of unreconnected eigenfunction associated with given rational surface in R, Z plane.
 # User prompted for rational surface number and scaling exponent
 
 import math
@@ -31,11 +31,11 @@ nt = RR.shape[1]
 fn1   = '../../Outputs/TJ/TJ.nc'
 ds1   = nc.Dataset(fn1)
 rres  = ds1['r_res']
-psi_r = ds1['Psi_unrc_eig_r']
-psi_i = ds1['Psi_unrc_eig_i']
+psi_r = ds1['dTe_cos']
+psi_i = ds1['dTe_sin']
 
 fig = plt.figure (figsize = (12.5, 6.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Psi(R, Z)')
+fig.canvas.manager.set_window_title (r'TJ Code: delta T_e(R, Z)')
 plt.rc ('xtick', labelsize=12) 
 plt.rc ('ytick', labelsize=12) 
 
@@ -56,6 +56,9 @@ prmin = np.amin (PPr)
 prmax = np.amax (PPr)
 pimin = np.amin (PPi)
 pimax = np.amax (PPi)
+
+print ("delta T_e_cos = (%10.3e, %10.3e)" % (prmin, prmax))
+print ("delta T_e_sin = (%10.3e, %10.3e)" % (pimin, pimax))
 
 for i in range (np.size(PPr,0)):
     for j in range (np.size(PPr,1)):

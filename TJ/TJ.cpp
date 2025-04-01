@@ -354,7 +354,7 @@ void TJ::CleanUp ()
   delete[] s;    delete[] s2;  delete[] S1;  delete[] P1;
   delete[] P2;   delete[] P3;  delete[] g2;  delete[] p2;
   delete[] PsiN; delete[] S2;  delete[] S3;  delete[] s0;
-  delete[] f;    delete[] Psi;
+  delete[] f;    delete[] Psi; delete[] nep; delete[] Tep;
 
   gsl_spline_free (Pspline);
   gsl_spline_free (fspline);
@@ -372,6 +372,8 @@ void TJ::CleanUp ()
   gsl_spline_free (P1spline);
   gsl_spline_free (P2spline);
   gsl_spline_free (P3spline);
+  gsl_spline_free (nepspline);
+  gsl_spline_free (Tepspline);
 
   gsl_interp_accel_free (Pacc);
   gsl_interp_accel_free (facc);
@@ -389,6 +391,8 @@ void TJ::CleanUp ()
   gsl_interp_accel_free (P1acc);
   gsl_interp_accel_free (P2acc);
   gsl_interp_accel_free (P3acc);
+  gsl_interp_accel_free (nepacc);
+  gsl_interp_accel_free (Tepacc);
 
   for (int i = 0; i <= Ns; i++)
     {

@@ -125,6 +125,22 @@ double TJ::GetP3 (double r)
   else
     return gsl_spline_eval (P3spline, r, P3acc);
 }
+
+double TJ::Getnep (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (nepspline, 1., nepacc);
+  else
+    return gsl_spline_eval (nepspline, r, nepacc);
+}
+
+double TJ::GetTep (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (Tepspline, 1., nepacc);
+  else
+    return gsl_spline_eval (Tepspline, r, nepacc);
+}
  
 double TJ::GetHn (int n, double r)
 {

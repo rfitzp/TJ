@@ -131,6 +131,8 @@ class TJ : private Utility
   double*            P1;        // First profile function: (2-s)/q
   double*            P2;        // Second profile function: r dP1/dr
   double*            P3;        // Third profile function
+  double*            nep;       // Radial derivative of electron number density
+  double*            Tep;       // Radial derivative of electron temperature
 
   Array<double,2>    HHfunc;    // Horizontal shaping functions
   Array<double,2>    VVfunc;    // Vertical shaping functions
@@ -153,6 +155,8 @@ class TJ : private Utility
   gsl_spline*        P1spline;  // Interpolated P1 function
   gsl_spline*        P2spline;  // Interpolated P2 function
   gsl_spline*        P3spline;  // Interpolated P3 function
+  gsl_spline*        nepspline; // Interpolated nep function
+  gsl_spline*        Tepspline; // Interpolated Tep function
 
   gsl_interp_accel*  Pacc;      // Accelerator for interpolated P function
   gsl_interp_accel*  facc;      // Accelerator for interpolated f function
@@ -170,6 +174,8 @@ class TJ : private Utility
   gsl_interp_accel*  P1acc;     // Accelerator for interpolated P1 function
   gsl_interp_accel*  P2acc;     // Accelerator for interpolated P2 function
   gsl_interp_accel*  P3acc;     // Accelerator for interpolated P3 function
+  gsl_interp_accel*  nepacc;    // Accelerator for interpolated nep function
+  gsl_interp_accel*  Tepacc;    // Accelerator for interpolated Tep function
   
   gsl_spline**       HHspline;  // Interpolated horizontal shaping functions
   gsl_spline**       VVspline;  // Interpolated vertical shaping functions
@@ -364,6 +370,8 @@ class TJ : private Utility
   Array<complex<double>,3> zu;    // z components of unreconneted tearing eigenfunctions
   Array<complex<double>,3> chiu;  // chi components of unreconneted tearing eigenfunctions
   Array<complex<double>,3> xiu;   // xi components of unreconneted tearing eigenfunctions
+  Array<complex<double>,3> dneu;  // delta n_e components of unreconneted tearing eigenfunctions
+  Array<complex<double>,3> dTeu;  // delta T_e components of unreconneted tearing eigenfunctions
   Array<double,2>          Tf;    // Torques associated with fully reconnected eigenfunctions
   Array<double,2>          Tu;    // Torques associated with unreconnected eigenfunctions
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
@@ -402,6 +410,8 @@ class TJ : private Utility
   Array<complex<double>,3> zuf;    // z components of Fourier-transformed unreconnected tearing eigenfunctions 
   Array<complex<double>,3> chiuf;  // chi components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> xiuf;   // xi^r components of Fourier-transformed unreconnected tearing eigenfunctions
+  Array<complex<double>,3> dneuf;  // delta n_e components of Fourier-transformed unreconnected tearing eigenfunctions
+  Array<complex<double>,3> dTeuf;  // delta T_e components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visualization grid
   Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
   Array<complex<double>,3> zuv;    // z components of unreconnected tearing eigenfunctions on visualization grid
@@ -414,6 +424,10 @@ class TJ : private Utility
   Array<double,3>          bPs;    // Sin component of R b^^phi on visualization grid
   Array<double,3>          xic;    // Cosine component of xi^r on visualization grid
   Array<double,3>          xis;    // Sin component of xi^r on visualization grid
+  Array<double,3>          dnec;   // Cosine component of delta n_e on visualization grid
+  Array<double,3>          dnes;   // Sin component of delta n_e on visualization grid
+  Array<double,3>          dTec;   // Cosine component of delta T_e on visualization grid
+  Array<double,3>          dTes;   // Sin component of delta T_e on visualization grid
   
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response
@@ -723,6 +737,10 @@ class TJ : private Utility
   double GetP2 (double r);
   // Return value of P3
   double GetP3 (double r);
+  // Return value of nep
+  double Getnep (double r);
+  // Return value of Tep
+  double GetTep (double r);
   // Return value of Hn
   double GetHn (int n, double r);
   // Return value of Hnp

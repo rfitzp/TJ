@@ -717,6 +717,10 @@ void Equilibrium::Solve ()
     }
   DI[0] = DI[1];
   DR[0] = DR[1];
+  ne [Nr] = 2.*ne [Nr-1] - ne [Nr-2];
+  Te [Nr] = 2.*Te [Nr-1] - Te [Nr-2];
+  nep[Nr] = 2.*nep[Nr-1] - nep[Nr-2];
+  Tep[Nr] = 2.*Tep[Nr-1] - Tep[Nr-2];
 
   // ............................
   // Calculate li and beta values
@@ -1262,11 +1266,11 @@ double Equilibrium::GetTep (double r)
   double mu0  = 4.*M_PI*1.e-7;
   
   double p2  = Getp2  (r);
-  double pp  = Getp2p (r);
+  double p2p = Getp2p (r);
   double ne  = Getne  (r);
   double nep = Getnep (r);
 
-  return (B0*B0/mu0/e/2.) * epsa*epsa * (pp /ne - p2 * nep /ne/ne);
+  return (B0*B0/mu0/e/2.) * epsa*epsa * (p2p /ne - p2 * nep /ne/ne);
 }
 
 // ######################

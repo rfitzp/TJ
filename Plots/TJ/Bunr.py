@@ -27,8 +27,8 @@ plt.rc ('ytick', labelsize  =15)
 
 nres = len(rres)
 print ("rational surface = (%d .. %d)" % (1, nres))
-m   = input ("rational surface number ? ")
-j   = int(m) - 1
+m = input ("rational surface number ? ")
+j = int(m) - 1
 
 J = Psi_r.shape[0]    
 

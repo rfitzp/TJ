@@ -48,6 +48,8 @@
 - *bZ.py*:           Plots b_Z components of unreconnected solution vector in R, Z plane
 - *bphi.py*:         Plots R b_phi components of unreconnected solution vector in R, Z plane
 - *disp.py*:         Plots xi components of unreconnected solution vector in R, Z plane
+- *dne.py*:          Plots delta n_e components of unreconnected solution vector in R, Z plane
+- *dTe.py*:          Plots delta T_ecomponents of unreconnected solution vector in R, Z plane
 - *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field at given radial gridpoint
 
 ## Electromagnetic torques:
