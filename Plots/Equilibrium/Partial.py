@@ -2,6 +2,7 @@
 
 # Script plots partial derivatives
 
+import math
 import netCDF4 as nc
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,7 +20,7 @@ Jac   = ds['Jac']
 Jax   = ds['Jax']
 
 r     = rx[:,0]
-theta = thetx[0]
+theta = thetx[0]/math.pi
 
 fig = plt.figure (figsize = (12.0, 7.0))
 fig.canvas.manager.set_window_title ("Equilibrium: Partial Derivatives")
@@ -56,39 +57,39 @@ plt.subplot (3,  2, 1)
 
 plt.contour (XX, YY, RR, levrr, linewidths = [1.0])
 
-plt.xlabel ('$r$')
+plt.xlabel ('$\hat{r}$')
 plt.ylabel ("$\\theta/\\pi$")
-plt.title ("$\\partial R/\\partial r$")
+plt.title ("$\\partial R/\\partial \hat{r}$")
 
 plt.subplot (3, 2, 2)
 
 plt.contour (XX, YY, RT, levrt, linewidths = [1.0])
 
-plt.xlabel ('$r$')
+plt.xlabel ('$\hat{r}$')
 plt.ylabel ("$\\theta/\\pi$")
-plt.title ("$(\\partial R/\\partial\\theta)/r$")
+plt.title ("$(\\partial R/\\partial\\theta)/\hat{r}$")
 
 plt.subplot (3, 2, 3)
 
 plt.contour (XX, YY, ZR, levrr, linewidths=[1.0])
 
-plt.xlabel ('$r$')
+plt.xlabel ('$\hat{r}$')
 plt.ylabel ("$\\theta/\\pi$")
-plt.title ("$\\partial Z/\\partial r$")
+plt.title ("$\\partial Z/\\partial \hat{r}$")
 
 plt.subplot (3, 2, 4)
 
 plt.contour (XX, YY, ZT, levrt, linewidths=[1.0])
 
-plt.xlabel ('$r$')
+plt.xlabel ('$\hat{r}$')
 plt.ylabel ("$\\theta/\\pi$")
-plt.title ("$(\\partial Z/\\partial\\theta)/r$")
+plt.title ("$(\\partial Z/\\partial\\theta)/\hat{r}$")
 
 plt.subplot (3, 2, 5)
 
 plt.contour (XX, YY, JT, levjt, linewidths=[1.0]) 
 
-plt.xlabel ('$r$')
+plt.xlabel ('$\hat{r}$')
 plt.ylabel ("$\\theta/\\pi$")
 plt.title ("$J$")
 
@@ -96,7 +97,7 @@ plt.subplot (3, 2, 6)
 
 plt.contour (XX, YY, JX, levjt, linewidths=[1.0])
 
-plt.xlabel ('$r$')
+plt.xlabel ('$\hat{r}$')
 plt.ylabel ("$\\theta/\\pi$")
 plt.title ("$J$ (analytic)")
 

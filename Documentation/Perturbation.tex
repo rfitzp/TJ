@@ -66,7 +66,31 @@ Thus,
 \begin{equation}
 r\,R^{\,2}\,b^\theta = -\frac{1}{r}\sum_{m}^{m\neq 0} \hat{\chi}_m\,{\rm e}^{\,{\rm i}\,m\,\theta},
 \end{equation}
-where $\hat{\chi}_m = \chi_m/m$. 
+where 
+\begin{equation}
+\hat{\chi}_m(r) =\frac{ \chi_m}{m}.
+\end{equation} 
+
+According to Eqs.~(4), (26), (79), and (98) of TJ, 
+\begin{equation}
+\xi^r = \frac{q}{r\,g}\sum_m \hat{\psi}_m\,{\rm e}^{\,{\rm i}\,m\,\theta},
+\end{equation}
+where
+\begin{equation}
+\hat{\psi}_m(r) = \frac{\psi_m}{m-n\,q}.
+\end{equation}
+Thus,
+\begin{equation}
+\delta T_e = \xi^r\,\frac{dT_e}{dr}.
+\end{equation}
+But,
+\begin{equation}
+T_e(r) = \frac{B_0^{\,2}}{2\,\mu_0\,e\,n_0}\,\epsilon_a^{\,2}\,p_c\,(1-\hat{r}^{\,2})^{\mu-\alpha},
+\end{equation}
+giving
+\begin{equation}
+\frac{dT_e}{dr} = - \frac{B_0^{\,2}}{\mu_0\,e\,n_0}\,\epsilon_a\,p_c\,(\mu-\alpha)\,\hat{r}\,(1-\hat{r}^{\,2})^{\mu-\alpha-1}.
+\end{equation}
 
 \section{Regularization}
 In evaluating the perturbed magnetic field associated with the unreconnected eigenfunction at the $k$th rational surface, we make the
@@ -105,7 +129,7 @@ Thus,
 \begin{align}
 b^R(r,\theta,\phi) &= b^{\,R}_C(r,\theta)\,\cos(n\,\phi) + b_S^{\,R}(r,\theta)\,\sin(n\,\phi),\\[0.5ex]
 b^Z(r,\theta,\phi) &= b^{\,Z}_C(r,\theta)\,\cos(n\,\phi) + b_S^{\,Z}(r,\theta)\,\sin(n\,\phi),\\[0.5ex]
-R\,b^\phi(r,\theta,\phi) &= b^{\,\phi}_C(r,\theta)\,\cos(n\,\phi) + b_S^{\,\phi}(r,\theta)\,\sin(n\,\phi),
+R\,b^\phi(r,\theta,\phi) &= b^{\,\phi}_C(r,\theta)\,\cos(n\,\phi) + b_S^{\,\phi}(r,\theta)\,\sin(n\,\phi),\\[0.5ex]\xi^r(r,\theta,\phi)&= \xi^{\,r}_{C}(r,\theta)\,\cos(n\,\phi) + \xi^{\,r}_{S}\,\sin(n\,\phi),
 \end{align}
 where
 \begin{align}
@@ -118,7 +142,9 @@ b_C^{\,Z}(r,\theta) &= -\frac{{\mit\Psi}_k}{\epsilon_a\,\hat{r}\,R^{\,2}}\left\{
 b_S^{\,Z}(r,\theta) &= -\frac{{\mit\Psi}_k}{\epsilon_a\,\hat{r}\,R^{\,2}}\left\{\frac{1}{\epsilon_a}\frac{\partial Z}{\partial \hat{r}}\sum_m\left[-{\rm Re}(\psi_m)\,\cos(m\,\theta) + {\rm Im}(\psi_m)\,\sin(m\,\theta)\right]\right.\\[0.5ex]
 &\phantom{=} \left.+ \frac{1}{\epsilon_a\,\hat{r}}\,\frac{\partial Z}{\partial\theta}\sum_{m\neq 0}\left[{\rm Re}(\hat{\chi}_m)\,\sin(m\,\theta) +{\rm Im}(\hat{\chi}_m)\,\cos(m\,\theta)\right]\right\},\\[0.5ex]
 b_C^{\,\phi}(r,\theta) & =\frac{n\,{\mit\Psi}_k}{R}\sum_{m}\left[{\rm Re}(z_m)\,\cos(m\,\theta) - {\rm Im}(z_m)\,\sin(m\,\theta)\right],\\[0.5ex]
-b_S^{\,\phi}(r,\theta) &= \frac{n\,{\mit\Psi}_k}{R}\sum_{m}\left[{\rm Re}(z_m)\,\sin(m\,\theta) + {\rm Im}(z_m)\,\cos(m\,\theta)\right].
+b_S^{\,\phi}(r,\theta) &= \frac{n\,{\mit\Psi}_k}{R}\sum_{m}\left[{\rm Re}(z_m)\,\sin(m\,\theta) + {\rm Im}(z_m)\,\cos(m\,\theta)\right],\\[0.5ex]
+\xi_C^{\,r}(r,\theta) & =\frac{{\mit\Psi}_k\,q}{\epsilon_a\,\hat{r}\,g}\sum_{m}\left[{\rm Re}(\hat{\psi}_m)\,\cos(m\,\theta) - {\rm Im}(\hat{\psi}_m)\,\sin(m\,\theta)\right],\\[0.5ex]
+\xi_S^{\,r}(r,\theta) &= \frac{{\mit\Psi}_k\,q}{\epsilon_a\,\hat{r}\,g}\sum_{m}\left[{\rm Re}(\hat{\psi}_m)\,\sin(m\,\theta) + {\rm Im}(\hat{\psi}_m)\,\cos(m\,\theta)\right].
 \end{align}
 
 \section{Value of $k_m$}

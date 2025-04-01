@@ -15,6 +15,7 @@ void TJ::VisualizeEigenfunctions ()
   psiuf.resize(J, nres, Nf);
   zuf  .resize(J, nres, Nf);
   chiuf.resize(J, nres, Nf);
+  xiuf .resize(J, nres, Nf);
 
   Psiuv.resize(nres, Nf, Nw+1);
   Zuv  .resize(nres, Nf, Nw+1);
@@ -26,6 +27,8 @@ void TJ::VisualizeEigenfunctions ()
   bZs  .resize(nres, Nf, Nw+1);
   bPc  .resize(nres, Nf, Nw+1);
   bPs  .resize(nres, Nf, Nw+1);
+  xic  .resize(nres, Nf, Nw+1);
+  xis  .resize(nres, Nf, Nw+1);
  
   // .........................................................................................
   // Interpolate unreconnected eigenfunction data from diagnostic to visualization radial grid
@@ -45,20 +48,24 @@ void TJ::VisualizeEigenfunctions ()
 	double* z_i   = new double[NDIAG];
 	double* chi_r = new double[NDIAG];
 	double* chi_i = new double[NDIAG];
+	double* xi_r  = new double[NDIAG];
+	double* xi_i  = new double[NDIAG];
 
 	for (int i = 0; i < NDIAG; i++)
 	  {
-	    psi_r[i] = real(Psiu(j, k, i));
-	    psi_i[i] = imag(Psiu(j, k, i));
-	    Z_r  [i] = real(Zu  (j, k, i));
-	    Z_i  [i] = imag(Zu  (j, k, i));
+	    psi_r[i] = real (Psiu(j, k, i));
+	    psi_i[i] = imag (Psiu(j, k, i));
+	    Z_r  [i] = real (Zu  (j, k, i));
+	    Z_i  [i] = imag (Zu  (j, k, i));
 
-	    p_r  [i] = real(psiu(j, k, i));
-	    p_i  [i] = imag(psiu(j, k, i));
-	    z_r  [i] = real(zu  (j, k, i));
-	    z_i  [i] = imag(zu  (j, k, i));
-	    chi_r[i] = real(chiu(j, k, i));
-	    chi_i[i] = imag(chiu(j, k, i));
+	    p_r  [i] = real (psiu(j, k, i));
+	    p_i  [i] = imag (psiu(j, k, i));
+	    z_r  [i] = real (zu  (j, k, i));
+	    z_i  [i] = imag (zu  (j, k, i));
+	    chi_r[i] = real (chiu(j, k, i));
+	    chi_i[i] = imag (chiu(j, k, i));
+	    xi_r [i] = real (xiu (j, k, i));
+	    xi_i [i] = imag (xiu (j, k, i));
 	  }
 
 	// Interpolate data from diagnostic grid
@@ -73,6 +80,8 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_interp_accel* z_i_acc   = gsl_interp_accel_alloc ();
 	gsl_interp_accel* chi_r_acc = gsl_interp_accel_alloc ();
 	gsl_interp_accel* chi_i_acc = gsl_interp_accel_alloc ();
+	gsl_interp_accel* xi_r_acc  = gsl_interp_accel_alloc ();
+	gsl_interp_accel* xi_i_acc  = gsl_interp_accel_alloc ();
 	
 	gsl_spline* psi_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* psi_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
@@ -85,6 +94,8 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline* z_i_spline   = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* chi_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* chi_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	gsl_spline* xi_r_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	gsl_spline* xi_i_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 
 	gsl_spline_init (psi_r_spline, Rgrid, psi_r, NDIAG);
 	gsl_spline_init (psi_i_spline, Rgrid, psi_i, NDIAG);
@@ -97,6 +108,8 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline_init (z_i_spline,   Rgrid, z_i,   NDIAG);
 	gsl_spline_init (chi_r_spline, Rgrid, chi_r, NDIAG);
 	gsl_spline_init (chi_i_spline, Rgrid, chi_i, NDIAG);
+	gsl_spline_init (xi_r_spline,  Rgrid, xi_r,  NDIAG);
+	gsl_spline_init (xi_i_spline,  Rgrid, xi_i,  NDIAG);
 		
 	// Interpolate data onto visualization grid
 	for (int i = 0; i < Nf; i++)
@@ -125,12 +138,17 @@ void TJ::VisualizeEigenfunctions ()
 	    y = gsl_spline_eval (chi_i_spline, rf[i], chi_i_acc);
 
 	    chiuf(j, k, i) = complex<double> (x, y);
+
+	    x = gsl_spline_eval (xi_r_spline, rf[i], xi_r_acc);
+	    y = gsl_spline_eval (xi_i_spline, rf[i], xi_i_acc);
+
+	    xiuf(j, k, i) = complex<double> (x, y);
 	  }
 
 	// Clean up
-	delete[] psi_r; delete[] psi_i; delete[] Z_r; delete[] Z_i;
-	delete[] chi_r; delete[] chi_i; delete[] z_r; delete[] z_i;
-	delete[] p_r;   delete[] p_i;
+	delete[] psi_r; delete[] psi_i; delete[] Z_r;  delete[] Z_i;
+	delete[] chi_r; delete[] chi_i; delete[] z_r;  delete[] z_i;
+	delete[] p_r;   delete[] p_i;   delete[] xi_r; delete[] xi_i;
 
 	gsl_spline_free (psi_r_spline);
 	gsl_spline_free (psi_i_spline);
@@ -142,6 +160,8 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline_free (z_i_spline);
 	gsl_spline_free (chi_r_spline);
 	gsl_spline_free (chi_i_spline);
+	gsl_spline_free (xi_r_spline);
+	gsl_spline_free (xi_i_spline);
 	
 	gsl_interp_accel_free (psi_r_acc);
 	gsl_interp_accel_free (psi_i_acc);
@@ -153,6 +173,8 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_interp_accel_free (z_i_acc);
 	gsl_interp_accel_free (chi_r_acc);
 	gsl_interp_accel_free (chi_i_acc);
+	gsl_interp_accel_free (xi_r_acc);
+	gsl_interp_accel_free (xi_i_acc);
       }
 
   // ............................................................
@@ -170,6 +192,7 @@ void TJ::VisualizeEigenfunctions ()
 	  double psi_r = 0., psi_i = 0., Z_r   = 0., Z_i   = 0.;
 	  double z_r   = 0., z_i   = 0., chi_r = 0., chi_i = 0.;
 	  double bR_c  = 0., bR_s  = 0., bZ_c  = 0., bZ_s  = 0., bP_c = 0., bP_s = 0.;
+	  double xi_c  = 0., xi_s  = 0.;
 
 	  for (int j = 0; j < J; j++)
 	    {
@@ -201,6 +224,9 @@ void TJ::VisualizeEigenfunctions ()
 		      + dZdt(i, l) * (   real (chiuf(j, k, i)) * sin(m*theta) + imag (chiuf(j, k, i)) * cos(m*theta));
 	      bP_c +=                    real (zuf  (j, k, i)) * cos(m*theta) - imag (zuf  (j, k, i)) * sin(m*theta);
 	      bP_s +=                    real (zuf  (j, k, i)) * sin(m*theta) + imag (zuf  (j, k, i)) * cos(m*theta);
+
+	      xi_c +=                    real (xiuf (j, k, i)) * cos(m*theta) - imag (xiuf (j, k, i)) * sin(m*theta);
+	      xi_s +=                    real (xiuf (j, k, i)) * sin(m*theta) + imag (xiuf (j, k, i)) * cos(m*theta);
 	    }
 
 	  Psiuv(k, i, l) = complex<double> (psi_r, psi_i);
@@ -214,6 +240,9 @@ void TJ::VisualizeEigenfunctions ()
 	  bZs(k, i, l) = - B0 * bZ_s /r/R/R;
 	  bPc(k, i, l) =   B0 * epsa * ntor * bP_c /R;
 	  bPs(k, i, l) =   B0 * epsa * ntor * bP_s /R;
+
+	  xic(k, i, l) = xi_c;
+	  xis(k, i, l) = xi_s;
 	}
 }
 

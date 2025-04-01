@@ -118,6 +118,9 @@ class Equilibrium : private Utility
 
   double         R0;    // Major radius of magnetic axis (read from Layer JSON file)
   double         B0;    // Toroidal magnetic field-strength on magnetic axis (read from Layer JSON file)
+  double         n0;    // Electron number density on magnetic axis (read from Layer JSON file)
+  double         alpha; // Electron number density profile parameter (read from Layer JSON file)
+  double         Teped; // Electron temperature at plasma boudnary (read from Layer JSON file)
 
   // ------------------
   // Profile parameters
@@ -182,6 +185,10 @@ class Equilibrium : private Utility
   double*            mu0P;      // mu_0 times pressure
   double*            DI;        // Ideal Mercier index
   double*            DR;        // Resistive Mercier index
+  double*            Te;        // Electron temperature
+  double*            ne;        // Electron number density  
+  double*            Tep;       // Radial derivative of electron temperature
+  double*            nep;       // Radial derivative of electron number density
    
   Array<double,2>    HHfunc;    // Horizontal shaping functions
   Array<double,2>    VVfunc;    // Vertical shaping functions
@@ -369,6 +376,14 @@ private:
   double GetDI (double r);
   // Return DR
   double GetDR (double r);
+  // Return Te
+  double GetTe (double r);
+  // Return ne
+  double Getne (double r);
+  // Return Tep
+  double GetTep (double r);
+  // Return nep
+  double Getnep (double r);
   // Return Hnp
   double GetHnp (int n, double r);
 

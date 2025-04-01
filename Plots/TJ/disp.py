@@ -1,6 +1,6 @@
-# bphi.py
+# dips.py
 
-# Plots R b^phi component of unreconnected eigenfunction associated with given rational surface in R, Z plane.
+# Plots xi^r component of unreconnected eigenfunction associated with given rational surface in R, Z plane.
 # User prompted for rational surface number and scaling exponent
 
 import math
@@ -31,11 +31,11 @@ nt = RR.shape[1]
 fn1   = '../../Outputs/TJ/TJ.nc'
 ds1   = nc.Dataset(fn1)
 rres  = ds1['r_res']
-psi_r = ds1['b_phi_cos']
-psi_i = ds1['b_phi_sin']
+psi_r = ds1['xi_cos']
+psi_i = ds1['xi_sin']
 
 fig = plt.figure (figsize = (12.5, 6.0))
-fig.canvas.manager.set_window_title (r'TJ Code: b^phi(R, Z)')
+fig.canvas.manager.set_window_title (r'TJ Code: xi^r(R, Z)')
 plt.rc ('xtick', labelsize=12) 
 plt.rc ('ytick', labelsize=12) 
 
@@ -55,8 +55,8 @@ prmax = np.amax (PPr)
 pimin = np.amin (PPi)
 pimax = np.amax (PPi)
 
-print ("b_phi_cos = (%10.3e, %10.3e)" % (prmin, prmax))
-print ("b_phi_sin = (%10.3e, %10.3e)" % (pimin, pimax))
+print ("xi^r_cos = (%10.3e, %10.3e)" % (prmin, prmax))
+print ("xi^r_sin = (%10.3e, %10.3e)" % (pimin, pimax))
 
 for i in range (np.size(PPr,0)):
     for j in range (np.size(PPr,1)):

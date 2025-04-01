@@ -157,6 +157,14 @@ void Equilibrium::WriteNetcdf (double sa)
       DI_x.putVar (DI);
       NcVar DR_x  = dataFile.addVar ("DR",   ncDouble, r_d);
       DR_x.putVar (DR);
+      NcVar ne_x  = dataFile.addVar ("ne",   ncDouble, r_d);
+      ne_x.putVar (ne);
+      NcVar Te_x  = dataFile.addVar ("Te",   ncDouble, r_d);
+      Te_x.putVar (Te);
+      NcVar nep_x = dataFile.addVar ("nep",  ncDouble, r_d);
+      nep_x.putVar (nep);
+      NcVar Tep_x = dataFile.addVar ("Tep",  ncDouble, r_d);
+      Tep_x.putVar (Tep);
  
       NcVar Hn_x  = dataFile.addVar ("Hn",  ncDouble, shape_d);
       Hn_x.putVar (HHfunc.data());

@@ -33,6 +33,7 @@ void TJ::FindDispersion ()
   psiu .resize(J,    nres, NDIAG);
   zu   .resize(J,    nres, NDIAG);
   chiu .resize(J,    nres, NDIAG);
+  xiu  .resize(J,    nres, NDIAG);
   Tu   .resize(nres, NDIAG);
   Tfull.resize(nres, nres, NDIAG);
   Tunrc.resize(nres, nres, NDIAG);
@@ -268,6 +269,7 @@ void TJ::FindDispersion ()
     {
       double r = Rgrid[i];
       double q = Getq (r);
+      double g = 1. + epsa*epsa * Getg2 (r);
 	    
       for (int j = 0; j < J; j++)
 	for (int k = 0; k < nres; k++)
@@ -292,12 +294,18 @@ void TJ::FindDispersion ()
 	    else
 	      PSI = epsa * (ISLAND*ISLAND /16.) *  (gres[k] * sres[k] /qres[k]); 
 
-	    psiu(j, k, i) = PSI * Psiu(j, k, i); 
+	    psiu(j, k, i) = PSI * Psiu(j, k, i);
 	    
 	    if (MPOL[j] == mres[k])
-	      zu(j, k, i) = PSI * (Zu(j, k, i) + Getkm (r, MPOL[j]) * Psiu(j, k, i)) * imnq;
+	      {
+		zu (j, k, i) = PSI * (Zu(j, k, i) + Getkm (r, MPOL[j]) * Psiu(j, k, i)) * imnq;
+		xiu(j, k, i) = PSI * (q /r /g) * Psiu(j, k, i) * imnq;
+	      }
 	    else
-	      zu(j, k, i) = PSI * (Zu(j, k, i) + Getkm (r, MPOL[j]) * Psiu(j, k, i)) /(mpol[j] - ntor * q);
+	      {
+		zu (j, k, i) = PSI * (Zu(j, k, i) + Getkm (r, MPOL[j]) * Psiu(j, k, i)) /(mpol[j] - ntor * q);
+		xiu(j, k, i) = PSI * (q /r /g) * Psiu(j, k, i) /(mpol[j] - ntor * q);
+	      }
 	  }
     }
 

@@ -2,7 +2,7 @@
     "NTOR":   1,       // Toroidal mode number
     "MMIN":  -10,      // Minimum poloidal mode number included in calculation
     "MMAX":   20,      // Maximum poloidal mode number included in calculation
-    "ISLAND": 0.01,    // Island width/displacement (divided by minor radius) used to regularize perturbed magnetic field
+    "ISLAND": 0.05,    // Island width/displacement (divided by minor radius) used to regularize perturbed magnetic field
 
     "EQLB":   0,       // Flag for equilibrium calculation only
     "FREE":   1,       // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary calculations

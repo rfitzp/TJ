@@ -339,6 +339,8 @@ void TJ::WriteNetcdf ()
   double* zzU_i   = new double[J*nres*NDIAG];
   double* ccU_r   = new double[J*nres*NDIAG];
   double* ccU_i   = new double[J*nres*NDIAG];
+  double* xiU_r   = new double[J*nres*NDIAG];
+  double* xiU_i   = new double[J*nres*NDIAG];
   double* PPV_r   = new double[nres*Nf*(Nw+1)];
   double* PPV_i   = new double[nres*Nf*(Nw+1)];
   double* ZZV_r   = new double[nres*Nf*(Nw+1)];
@@ -347,6 +349,15 @@ void TJ::WriteNetcdf ()
   double* zzV_i   = new double[nres*Nf*(Nw+1)];
   double* ccV_r   = new double[nres*Nf*(Nw+1)];
   double* ccV_i   = new double[nres*Nf*(Nw+1)];
+  double* bR_c    = new double[nres*Nf*(Nw+1)];
+  double* bR_s    = new double[nres*Nf*(Nw+1)];
+  double* bZ_c    = new double[nres*Nf*(Nw+1)];
+  double* bZ_s    = new double[nres*Nf*(Nw+1)];
+  double* bP_c    = new double[nres*Nf*(Nw+1)];
+  double* bP_s    = new double[nres*Nf*(Nw+1)];
+  double* xi_c    = new double[nres*Nf*(Nw+1)];
+  double* xi_s    = new double[nres*Nf*(Nw+1)];
+
   double* Fmat_r  = new double[nres*nres];
   double* Fmat_i  = new double[nres*nres];
   double* Emat_r  = new double[nres*nres];
@@ -374,12 +385,6 @@ void TJ::WriteNetcdf ()
   double* PPRV_i  = new double[Nf*(Nw+1)];
   double* ZZRV_r  = new double[Nf*(Nw+1)];
   double* ZZRV_i  = new double[Nf*(Nw+1)];
-  double* bR_c    = new double[Nf*(Nw+1)];
-  double* bR_s    = new double[Nf*(Nw+1)];
-  double* bZ_c    = new double[Nf*(Nw+1)];
-  double* bZ_s    = new double[Nf*(Nw+1)];
-  double* bP_c    = new double[Nf*(Nw+1)];
-  double* bP_s    = new double[Nf*(Nw+1)];
 
   double* Psii_r  = new double[J*J*NDIAG];
   double* Psii_i  = new double[J*J*NDIAG];
@@ -603,6 +608,8 @@ void TJ::WriteNetcdf ()
 	  zzU_i[cnt] = imag (zu  (j, jp, i));
 	  ccU_r[cnt] = real (chiu(j, jp, i));
 	  ccU_i[cnt] = imag (chiu(j, jp, i));
+	  xiU_r[cnt] = real (xiu (j, jp, i));
+	  xiU_i[cnt] = imag (xiu (j, jp, i));
 	  cnt++;
 	}
 
@@ -628,6 +635,8 @@ void TJ::WriteNetcdf ()
 	      bZ_s[cnt] = bZs(k, i, l);
 	      bP_c[cnt] = bPc(k, i, l);
 	      bP_s[cnt] = bPs(k, i, l);
+	      xi_c[cnt] = xic(k, i, l);
+	      xi_s[cnt] = xis(k, i, l);
 	      cnt++;
 	    }
     }
@@ -1143,6 +1152,10 @@ void TJ::WriteNetcdf ()
       ccur_x.putVar (ccU_r);
       NcVar ccui_x = dataFile.addVar ("chi_unrc_i", ncDouble, full_d);
       ccui_x.putVar (ccU_i);
+      NcVar xir_x  = dataFile.addVar ("xi_unrc_r",  ncDouble, full_d);
+      xir_x.putVar (xiU_r);
+      NcVar xii_x  = dataFile.addVar ("xi_unrc_i",  ncDouble, full_d);
+      xii_x.putVar (xiU_i);
 
       NcVar mres_x   = dataFile.addVar ("m_res",    ncInt,    x_d);
       mres_x.putVar (mres);
@@ -1189,18 +1202,22 @@ void TJ::WriteNetcdf ()
 	  ccvr_x.putVar (ccV_r);
 	  NcVar ccvi_x = dataFile.addVar ("chi_unrc_eig_i", ncDouble, v_d);
 	  ccvi_x.putVar (ccV_i);
-	  NcVar brc_x = dataFile.addVar ("b_R_cos",         ncDouble, v_d);
+	  NcVar brc_x  = dataFile.addVar ("b_R_cos",        ncDouble, v_d);
 	  brc_x.putVar (bR_c);
-	  NcVar brs_x = dataFile.addVar ("b_R_sin",         ncDouble, v_d);
+	  NcVar brs_x  = dataFile.addVar ("b_R_sin",        ncDouble, v_d);
 	  brs_x.putVar (bR_s);
-	  NcVar bzc_x = dataFile.addVar ("b_Z_cos",         ncDouble, v_d);
+	  NcVar bzc_x  = dataFile.addVar ("b_Z_cos",        ncDouble, v_d);
 	  bzc_x.putVar (bZ_c);
-	  NcVar bzs_x = dataFile.addVar ("b_Z_sin",         ncDouble, v_d);
+	  NcVar bzs_x  = dataFile.addVar ("b_Z_sin",        ncDouble, v_d);
 	  bzs_x.putVar (bZ_s);
-	  NcVar bpc_x = dataFile.addVar ("b_phi_cos",       ncDouble, v_d);
+	  NcVar bpc_x  = dataFile.addVar ("b_phi_cos",      ncDouble, v_d);
 	  bpc_x.putVar (bP_c);
-	  NcVar bps_x = dataFile.addVar ("b_phi_sin",       ncDouble, v_d);
+	  NcVar bps_x  = dataFile.addVar ("b_phi_sin",      ncDouble, v_d);
 	  bps_x.putVar (bP_s);
+	  NcVar xic_x  = dataFile.addVar ("xi_cos",         ncDouble, v_d);
+	  xic_x.putVar (xi_c);
+	  NcVar xis_x  = dataFile.addVar ("xi_sin",         ncDouble, v_d);
+	  xis_x.putVar (xi_s);
 	}
 
       NcVar fmatr_x = dataFile.addVar ("Fmat_r", ncDouble, e_d);
@@ -1481,6 +1498,7 @@ void TJ::WriteNetcdf ()
   delete[] PPF_r;   delete[] PPF_i;   delete[] ZZF_r; delete[] ZZF_i;
   delete[] PPU_r;   delete[] PPU_i;   delete[] ZZU_r; delete[] ZZU_i;
   delete[] zzU_r;   delete[] zzU_i;   delete[] ccU_r; delete[] ccU_i;
+  delete[] xiU_r;   delete[] xiU_i;
 
   delete[] PPV_r;   delete[] PPV_i;  delete[] ZZV_r;  delete[] ZZV_i;
   delete[] zzV_r;   delete[] zzV_i;  delete[] ccV_r;  delete[] ccV_i;
@@ -1493,7 +1511,7 @@ void TJ::WriteNetcdf ()
   delete[] PPR_r;  delete[] PPR_i;  delete[] ZZR_r;  delete[] ZZR_i;
   delete[] PPRV_r; delete[] PPRV_i; delete[] ZZRV_r; delete[] ZZRV_i;
   delete[] bR_c;   delete[] bR_s;   delete[] bZ_c;   delete[] bZ_s;
-  delete[] bP_c;   delete[] bP_s;   
+  delete[] bP_c;   delete[] bP_s;   delete[] xi_c;   delete[] xi_s;  
 
   delete[] Psii_r;   delete[] Psii_i;   delete[] Zi_r;    delete[] Zi_i;
   delete[] Xii_r;    delete[] Xii_i;    delete[] Uvec_r;  delete[] Uvec_i;

@@ -39,13 +39,16 @@
 - *Unrc1.py*:        Plots kth poloidal harmonic of unreconnected solution vector versus r
 - *Bunr.py*:         Plots poloidal harmonics of unreconnected perturbed magnetic fields versus r
 - *Bunr1.py*:        Plots kth poloidal harmonics of unreconnected perturbed magnetic fields versus r
+- *xiunr.py*:        Plots poloidal harmonics of unreconnected psi and radial plasma displacement versus r
+- *xiunr1.py*:       Plots kth poloidal harmonics of unreconnected psi and radial plasma displacement versus r
 - *Psi.py*:          Plots psi components of unreconnected solution vector in R, Z plane  
 - *PsiZ.py*:         Plots psi and Z components of unreconnected solution vector in R, Z plane
 - *zchi.py*:         Plots z and chi components of unreconnected solution vector in R, Z plane
 - *bR.py*:           Plots b_R components of unreconnected solution vector in R, Z plane
 - *bZ.py*:           Plots b_Z components of unreconnected solution vector in R, Z plane
 - *bphi.py*:         Plots R b_phi components of unreconnected solution vector in R, Z plane
-- *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field at plasma boundary
+- *disp.py*:         Plots xi components of unreconnected solution vector in R, Z plane
+- *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field at given radial gridpoint
 
 ## Electromagnetic torques:
 

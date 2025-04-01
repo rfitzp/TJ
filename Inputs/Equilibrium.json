@@ -18,7 +18,7 @@
     "eps": 1.0e-4,    // Distance of closest approach to magnetic axis
     "Ns":  20,        // Number of shaping harmonics included in calculation
     "Nr":  1000,      // Number of radial grid-points for calculation purposes
-    "Nf":  500,       // Number of radial grid-points for visualization purposes
+    "Nf":  1000,      // Number of radial grid-points for visualization purposes
     "Nw":  1000,      // Number of angular grid-points for visualization purposes
     
     "acc":  1.0e-12,  // Adaptive integration accuracy

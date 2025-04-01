@@ -55,6 +55,9 @@ prmax = np.amax (PPr)
 pimin = np.amin (PPi)
 pimax = np.amax (PPi)
 
+print ("b_Z_cos = (%10.3e, %10.3e)" % (prmin, prmax))
+print ("b_Z_sin = (%10.3e, %10.3e)" % (pimin, pimax))
+
 for i in range (np.size(PPr,0)):
     for j in range (np.size(PPr,1)):
         val = PPr[i][j]

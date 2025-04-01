@@ -55,6 +55,9 @@ prmax = np.amax (PPr)
 pimin = np.amin (PPi)
 pimax = np.amax (PPi)
 
+print ("b_R_cos = (%10.3e, %10.3e)" % (prmin, prmax))
+print ("b_R_sin = (%10.3e, %10.3e)" % (pimin, pimax))
+
 for i in range (np.size(PPr,0)):
     for j in range (np.size(PPr,1)):
         val = PPr[i][j]
@@ -85,7 +88,7 @@ plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid'
 
 plt.contour (RR, ZZ, rr, rres, colors = 'black', linewidths = 0.5)    
 
-cp = plt.contourf (RR, ZZ, PPr, ncont, cmap = ReBu)
+cp  = plt.contourf (RR, ZZ, PPr, ncont, cmap = ReBu)
 
 plt.plot ([1.], [0.], marker = 'o', markersize = 1, color = "black")
 

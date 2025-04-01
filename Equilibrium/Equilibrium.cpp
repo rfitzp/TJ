@@ -54,8 +54,11 @@ Equilibrium::Equilibrium ()
   JSONFilename = "../Inputs/Layer.json";
   JSONData     = ReadJSONFile (JSONFilename);
 
-  B0 = JSONData["B0"].get<double> ();
-  R0 = JSONData["R0"].get<double> ();
+  B0    = JSONData["B0"]   .get<double> ();
+  R0    = JSONData["R0"]   .get<double> ();
+  n0    = JSONData["n0"]   .get<double> ();
+  alpha = JSONData["alpha"].get<double> ();
+  Teped = JSONData["Teped"].get<double> ();
   
   JSONFilename = "../Inputs/TJ.json";
   JSONData     = ReadJSONFile (JSONFilename);
@@ -271,6 +274,10 @@ void Equilibrium::Solve ()
   mu0P  = new double[Nr+1];
   DI    = new double[Nr+1];
   DR    = new double[Nr+1];
+  Te    = new double[Nr+1];
+  ne    = new double[Nr+1];
+  Tep   = new double[Nr+1];
+  nep   = new double[Nr+1];
   Lfunc = new double[Nr+1];
 
   HHfunc.resize (Ns+1, Nr+1);
@@ -699,10 +706,14 @@ void Equilibrium::Solve ()
 
   for (int i = 0; i <= Nr; i++)
     {
-      Jt[i] = 
-      Jp[i] = gsl_spline_eval_deriv (Ipspline, rr[i], Ipacc);
-      DI[i] = GetDI (rr[i]);
-      DR[i] = GetDR (rr[i]);
+      Jt [i] = gsl_spline_eval_deriv (Itspline, rr[i], Itacc);
+      Jp [i] = gsl_spline_eval_deriv (Ipspline, rr[i], Ipacc);
+      DI [i] = GetDI  (rr[i]);
+      DR [i] = GetDR  (rr[i]);
+      ne [i] = Getne  (rr[i]);
+      Te [i] = GetTe  (rr[i]);
+      nep[i] = Getnep (rr[i]);
+      Tep[i] = GetTep (rr[i]);
     }
   DI[0] = DI[1];
   DR[0] = DR[1];
@@ -1066,7 +1077,8 @@ void Equilibrium::Solve ()
   delete[] Rwall; delete[] Zwall; delete[] wwall; 
 
   delete[] Psi; delete[] PsiN; delete[] Tf;    delete[] mu0P;
-  delete[] DI;   delete[] DR;  delete[] Lfunc;
+  delete[] DI;  delete[] DR;   delete[] Lfunc; delete[] Te;
+  delete[] ne;  delete[] Tep;  delete[] nep;  
 
   delete[] Rcoil; delete[] Zcoil; delete[] Icoil;
 
@@ -1209,6 +1221,52 @@ double Equilibrium::GetDR (double r)
   double s   = Gets (r);
 
   return - epsa*epsa * 2. * r*pp * (1. - q*q) /s/s - epsa*epsa * 2. * pp * q*q * H1p /s; 
+}
+
+// #####################
+// Function to return ne
+// #####################
+double Equilibrium::Getne (double r)
+{
+  return n0 * pow (1. - r*r, alpha);
+}
+
+// ######################
+// Function to return nep
+// ######################
+double Equilibrium::Getnep (double r)
+{
+  return - 2. * n0 * alpha * r * pow (1. - r*r, alpha-1.);
+}
+
+// #####################
+// Function to return Te
+// #####################
+double Equilibrium::GetTe (double r)
+{
+  double e    = 1.602176634e-19;
+  double mu0  = 4.*M_PI*1.e-7;
+  
+  double p2 = Getp2 (r);
+  double ne = Getne (r);
+
+  return (B0*B0/mu0/e/2.) * epsa*epsa * p2 /ne + Teped;
+}
+
+// #####################
+// Function to return Tep
+// #####################
+double Equilibrium::GetTep (double r)
+{
+  double e    = 1.602176634e-19;
+  double mu0  = 4.*M_PI*1.e-7;
+  
+  double p2  = Getp2  (r);
+  double pp  = Getp2p (r);
+  double ne  = Getne  (r);
+  double nep = Getnep (r);
+
+  return (B0*B0/mu0/e/2.) * epsa*epsa * (pp /ne - p2 * nep /ne/ne);
 }
 
 // ######################

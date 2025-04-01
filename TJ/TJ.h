@@ -363,6 +363,7 @@ class TJ : private Utility
   Array<complex<double>,3> psiu;  // Scaled psi components of unreconnected tearing eigenfunctions
   Array<complex<double>,3> zu;    // z components of unreconneted tearing eigenfunctions
   Array<complex<double>,3> chiu;  // chi components of unreconneted tearing eigenfunctions
+  Array<complex<double>,3> xiu;   // xi components of unreconneted tearing eigenfunctions
   Array<double,2>          Tf;    // Torques associated with fully reconnected eigenfunctions
   Array<double,2>          Tu;    // Torques associated with unreconnected eigenfunctions
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
@@ -400,6 +401,7 @@ class TJ : private Utility
   Array<complex<double>,3> psiuf;  // Scaled psi components of Fourier-transformed unreconnected tearing eigenfunctions 
   Array<complex<double>,3> zuf;    // z components of Fourier-transformed unreconnected tearing eigenfunctions 
   Array<complex<double>,3> chiuf;  // chi components of Fourier-transformed unreconnected tearing eigenfunctions
+  Array<complex<double>,3> xiuf;   // xi^r components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visualization grid
   Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
   Array<complex<double>,3> zuv;    // z components of unreconnected tearing eigenfunctions on visualization grid
@@ -410,6 +412,8 @@ class TJ : private Utility
   Array<double,3>          bZs;    // Sin component of b^Z on visualization grid
   Array<double,3>          bPc;    // Cosine component of R b^phi on visualization grid
   Array<double,3>          bPs;    // Sin component of R b^^phi on visualization grid
+  Array<double,3>          xic;    // Cosine component of xi^r on visualization grid
+  Array<double,3>          xis;    // Sin component of xi^r on visualization grid
   
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response
