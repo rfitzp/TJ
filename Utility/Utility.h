@@ -141,7 +141,7 @@ public:
   virtual void NewtonFunction (double x1, double x2, double& F1, double& F2);
   // Find root of F1(x1,x2) = F2(x1,x2) = 0 via Newton-Raphson method
   void NewtonRoot (double& x1, double& x2, double& Residual, int verbose);
-    // Backtrack along Newton step in order to minimize f = (F1*F1 + F2*F2) /2
+  // Backtrack along Newton step in order to minimize f = (F1*F1 + F2*F2) /2
   void NewtonBackTrack (double& x1, double& x2, double dx1, double dx2, double& dx, double f, double g1, double g2, double& lambda);
   // Calculate Jacobian matrix for Newton-Raphson root finding
   void NewtonJacobian (double x1, double x2, double& J11, double& J12, double& J21, double& J22);

@@ -34,6 +34,8 @@ void TJ::FindDispersion ()
   zu   .resize(J,    nres, NDIAG);
   chiu .resize(J,    nres, NDIAG);
   xiu  .resize(J,    nres, NDIAG);
+  neu  .resize(J,    nres, NDIAG);
+  Teu  .resize(J,    nres, NDIAG);
   dneu .resize(J,    nres, NDIAG);
   dTeu .resize(J,    nres, NDIAG);
   Tu   .resize(nres, NDIAG);
@@ -272,6 +274,8 @@ void TJ::FindDispersion ()
       double r   = Rgrid[i];
       double q   = Getq (r);
       double g   = 1. + epsa*epsa * Getg2 (r);
+      double xne = Getne (r);
+      double xTe = GetTe (r);
       double nep = Getnep (r) /epsa;
       double Tep = GetTep (r) /epsa;
 	    
@@ -296,7 +300,7 @@ void TJ::FindDispersion ()
 	    if (mres[k] == 1)
 	      PSI = epsa * (rres[k] * gres[k] * sres[k] /qres[k]) * ISLAND /abs (Emat(k, k));
 	    else
-	      PSI = epsa * (ISLAND*ISLAND /16.) *  (gres[k] * sres[k] /qres[k]); 
+	      PSI = epsa * (ISLAND*ISLAND) * (gres[k] * sres[k] * ntor); 
 
 	    psiu(j, k, i) = PSI * Psiu(j, k, i);
 	    
@@ -304,15 +308,22 @@ void TJ::FindDispersion ()
 	      {
 		zu  (j, k, i) = PSI * (Zu(j, k, i) + Getkm (r, MPOL[j]) * Psiu(j, k, i)) * imnq;
 		xiu (j, k, i) = PSI * (q /r /g) * Psiu(j, k, i) * imnq;
-		dneu(j, k, i) = nep * xiu(j, k, i);
-		dTeu(j, k, i) = Tep * xiu(j, k, i);
 	      }
 	    else
 	      {
 		zu  (j, k, i) = PSI * (Zu(j, k, i) + Getkm (r, MPOL[j]) * Psiu(j, k, i)) /(mpol[j] - ntor * q);
 		xiu (j, k, i) = PSI * (q /r /g) * Psiu(j, k, i) /(mpol[j] - ntor * q);
-		dneu(j, k, i) = nep * xiu(j, k, i);
-		dTeu(j, k, i) = Tep * xiu(j, k, i);
+	      }
+
+	    dneu(j, k, i) = nep * xiu(j, k, i);
+	    dTeu(j, k, i) = Tep * xiu(j, k, i);
+	    neu (j, k, i) = dneu(j, k, i);
+	    Teu (j, k, i) = dTeu(j, k, i);
+
+	    if (MPOL[j] == 0)
+	      {
+		neu (j, k, i) += complex<double> (xne, 0.);
+		Teu (j, k, i) += complex<double> (xTe, 0.);
 	      }
 	  }
     }

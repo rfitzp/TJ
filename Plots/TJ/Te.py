@@ -1,13 +1,13 @@
-# dTe.py
+# Te.py
 
-# Plots delta T_e component of unreconnected eigenfunction associated with given rational surface in R, Z plane.
+# Plots T_e component of unreconnected eigenfunction associated with given rational surface in R, Z plane.
 # User prompted for rational surface number and scaling exponent
 
 import math
 import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4 as nc
-ReBu = plt.get_cmap ('seismic')
+ReBu = plt.get_cmap ('rainbow')
 
 ncont = 160
 
@@ -31,11 +31,11 @@ nt = RR.shape[1]
 fn1   = '../../Outputs/TJ/TJ.nc'
 ds1   = nc.Dataset(fn1)
 rres  = ds1['r_res']
-psi_r = ds1['dTe_cos']
-psi_i = ds1['dTe_sin']
+psi_r = ds1['Te_cos']
+psi_i = ds1['Te_sin']
 
 fig = plt.figure (figsize = (12.5, 6.0))
-fig.canvas.manager.set_window_title (r'TJ Code: delta T_e(R, Z)')
+fig.canvas.manager.set_window_title (r'TJ Code: T_e(R, Z)')
 plt.rc ('xtick', labelsize=12) 
 plt.rc ('ytick', labelsize=12) 
 
@@ -57,8 +57,8 @@ prmax = np.amax (PPr)
 pimin = np.amin (PPi)
 pimax = np.amax (PPi)
 
-print ("delta T_e_cos = (%10.3e, %10.3e)" % (prmin, prmax))
-print ("delta T_e_sin = (%10.3e, %10.3e)" % (pimin, pimax))
+print ("T_e_cos = (%10.3e, %10.3e)" % (prmin, prmax))
+print ("T_e_sin = (%10.3e, %10.3e)" % (pimin, pimax))
 
 for i in range (np.size(PPr,0)):
     for j in range (np.size(PPr,1)):
@@ -88,7 +88,9 @@ plt.ylim (-scale, scale)
 
 plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
 
-plt.contour (RR, ZZ, rr, rres, colors = 'black', linewidths = 0.5)    
+plt.contour (RR, ZZ, rr, rres, colors = 'black', linewidths = 0.5)
+
+#plt.contour (RR, ZZ, PPr, levels = 40, colors = 'black', linewidths = 0.5)  
 
 cp = plt.contourf (RR, ZZ, PPr, ncont, cmap = ReBu)
 

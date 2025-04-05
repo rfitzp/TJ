@@ -12,3 +12,5 @@
 - *Boundary.py*:      Plots data relating to plasma boundary
 - *Wall.py*:          Plots data relating to wall
 - *Te.py*:            Plots electron number density and temperature profiles
+- *Chord.py*:	      Plots equilibrium quantities on tilted central chord
+- *Chord1.py*:	      Plots metric quantities on tilted central chord

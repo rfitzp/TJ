@@ -49,8 +49,10 @@
 - *bphi.py*:         Plots R b_phi components of unreconnected solution vector in R, Z plane
 - *disp.py*:         Plots xi_r components of unreconnected solution vector in R, Z plane
 - *dne.py*:          Plots delta n_e components of unreconnected solution vector in R, Z plane
-- *dTe.py*:          Plots delta T_ecomponents of unreconnected solution vector in R, Z plane
+- *dTe.py*:          Plots delta T_e components of unreconnected solution vector in R, Z plane
+- *ece.py*:          Plots delta T_e and delta n_e components of unreconnected solution vector versus r at given angular gridpoint        
 - *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field versus theta at given radial gridpoint
+- *Chord.py*:        Plots perturbed quantities along tilted central chord
 
 ## Electromagnetic torques:
 

@@ -1,8 +1,8 @@
 {
     "SRC":  0,                // Flag for reading safety-factor and pressure profiles from Inputs/Profile.txt
     
-    "qc":   0.8,              // Safety-factor on magnetic axis
-    "qa":   2.8,              // Safety-factor at plasma boundary
+    "qc":   1.2,              // Safety-factor on magnetic axis
+    "qa":   3.8,              // Safety-factor at plasma boundary
     "pc":   8.0e-02,          // Normalized plasma pressure on magnetic axis 
     "mu":   2.0,              // Pressure peaking parameter
     "epsa": 0.2,              // Inverse aspect-ratio of plasma
@@ -11,6 +11,8 @@
     "Vna": [0.0, 0.0, 0.0],   // Vertical shaping harmonic values at plasma boundary
 
     "bw": 1.05,               // Relative wall radius
+
+    "tilt": 10.0,             // Tilt of central chord (degrees)
    
     "wcoil": [ 0.7,  0.85, -0.85, -0.7],  // omega/M_PI coodinates of RMP coil strands
     "Icoil": [-1.0,  1.0,  -1.0,   1.0],  // Toroidal currents flowing in RMP coil strands

@@ -9,7 +9,7 @@ void Equilibrium::WriteNetcdf (double sa)
 {
   printf ("Writing equilibrium data to netcdf file Outputs/Equilibrium/Equilibrium.nc:\n");
 
-  double para[3], Input[17], Beta[4];
+  double para[3], Input[18], Beta[4];
 
   double* Hna   = new double[Ns+1];
   double* Vna   = new double[Ns+1];
@@ -32,6 +32,7 @@ void Equilibrium::WriteNetcdf (double sa)
   Input[14] = hmax;
   Input[15] = double (SRC);
   Input[16] = bw;
+  Input[17] = tilt;
   
   para[0] = epsa;
   para[1] = sa;
@@ -63,7 +64,7 @@ void Equilibrium::WriteNetcdf (double sa)
       dataFile.putAtt ("Compile_Time", COMPILE_TIME);
       dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
   
-      NcDim i_d = dataFile.addDim ("Ni",    17);
+      NcDim i_d = dataFile.addDim ("Ni",    18);
       NcDim p_d = dataFile.addDim ("Np",    3);
       NcDim b_d = dataFile.addDim ("Nb",    4);
       NcDim r_d = dataFile.addDim ("Nr",    Nr+1);
@@ -71,6 +72,7 @@ void Equilibrium::WriteNetcdf (double sa)
       NcDim f_d = dataFile.addDim ("Nf",    Nf);
       NcDim w_d = dataFile.addDim ("Nw",    Nw+1);
       NcDim c_d = dataFile.addDim ("ncoil", ncoil);
+      NcDim e_d = dataFile.addDim ("Neq",   2*Nf);
  
       vector<NcDim> shape_d;
       shape_d.push_back (s_d);
@@ -210,6 +212,31 @@ void Equilibrium::WriteNetcdf (double sa)
 	  t_x.putVar (thvals.data());
 	  NcVar w_x    = dataFile.addVar ("omega", ncDouble, flux_d);
 	  w_x.putVar (wvals.data());
+
+	  NcVar req_x  = dataFile.addVar ("r_eq",     ncDouble, e_d);
+	  req_x.putVar (req);
+	  NcVar weq_x  = dataFile.addVar ("omega_eq", ncDouble, e_d);
+	  weq_x.putVar (weq);
+	  NcVar teq_x  = dataFile.addVar ("theta_eq", ncDouble, e_d);
+	  teq_x.putVar (teq);
+	  NcVar Req_x  = dataFile.addVar ("R_eq",     ncDouble, e_d);
+	  Req_x.putVar (Req);
+	  NcVar Zeq_x  = dataFile.addVar ("Z_eq",     ncDouble, e_d);
+	  Zeq_x.putVar (Zeq);
+	  NcVar BReq_x = dataFile.addVar ("BR_eq",    ncDouble, e_d);
+	  BReq_x.putVar (BReq);
+	  NcVar neeq_x = dataFile.addVar ("ne_eq",    ncDouble, e_d);
+	  neeq_x.putVar (neeq);
+	  NcVar Teeq_x = dataFile.addVar ("Te_eq",    ncDouble, e_d);
+	  Teeq_x.putVar (Teeq);
+	  NcVar Rreq_x = dataFile.addVar ("dRdr_eq",  ncDouble, e_d);
+	  Rreq_x.putVar (dRdreq);
+	  NcVar Rteq_x = dataFile.addVar ("dRdt_eq",  ncDouble, e_d);
+	  Rteq_x.putVar (dRdteq);
+	  NcVar Zreq_x = dataFile.addVar ("dZdr_eq",  ncDouble, e_d);
+	  Zreq_x.putVar (dZdreq);
+	  NcVar Zteq_x = dataFile.addVar ("dZdt_eq",  ncDouble, e_d);
+	  Zteq_x.putVar (dZdteq);
 	}
 
       NcVar Rbound_x   = dataFile.addVar ("Rbound",    ncDouble, w_d);

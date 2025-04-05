@@ -14,6 +14,8 @@ para = ds['para']
 R    = ds['R']
 Z    = ds['Z']
 r    = ds['rr']
+Req  = ds['R_eq']
+Zeq  = ds['Z_eq']
 
 epsa = para[0]
 
@@ -82,6 +84,8 @@ for R, Z, I in zip (Rcoil, Zcoil, Icoil):
     if I < 0.:
         plt.plot ([R], [Z], marker = 'o', markersize = 5, color = "red")
 
+plt.plot (Req, Zeq, color = 'cyan', linewidth = 1.5, linestyle = 'dashed')
+        
 plt.xlabel (r'$R/R_0$', fontsize = "20")
 plt.ylabel (r'$Z/R_0$', fontsize = "20")
 

@@ -25,10 +25,10 @@ plt.rc('xtick', labelsize = 15)
 plt.rc('ytick', labelsize = 15)
 
 nres = len(rres)
-print ("rational surface = (%d .. %d)" % (1, nres))
+print ("rational surface = [%d .. %d]" % (1, nres))
 m   = input ("rational surface number ? ")
 j   = int(m) - 1
-print ("poloidal mode number = (%d .. %d)" % (mpol[0], mpol[-1]))
+print ("poloidal mode number = [%d .. %d]" % (mpol[0], mpol[-1]))
 mp   = input ("m  ? ")
 jp   = int(mp) - mpol[0]
 

@@ -131,6 +131,8 @@ class TJ : private Utility
   double*            P1;        // First profile function: (2-s)/q
   double*            P2;        // Second profile function: r dP1/dr
   double*            P3;        // Third profile function
+  double*            ne;        // Electron number density
+  double*            Te;        // Electron temperature
   double*            nep;       // Radial derivative of electron number density
   double*            Tep;       // Radial derivative of electron temperature
 
@@ -155,6 +157,8 @@ class TJ : private Utility
   gsl_spline*        P1spline;  // Interpolated P1 function
   gsl_spline*        P2spline;  // Interpolated P2 function
   gsl_spline*        P3spline;  // Interpolated P3 function
+  gsl_spline*        nespline;  // Interpolated ne function
+  gsl_spline*        Tespline;  // Interpolated Te function
   gsl_spline*        nepspline; // Interpolated nep function
   gsl_spline*        Tepspline; // Interpolated Tep function
 
@@ -174,6 +178,8 @@ class TJ : private Utility
   gsl_interp_accel*  P1acc;     // Accelerator for interpolated P1 function
   gsl_interp_accel*  P2acc;     // Accelerator for interpolated P2 function
   gsl_interp_accel*  P3acc;     // Accelerator for interpolated P3 function
+  gsl_interp_accel*  neacc;     // Accelerator for interpolated ne function
+  gsl_interp_accel*  Teacc;     // Accelerator for interpolated Te function
   gsl_interp_accel*  nepacc;    // Accelerator for interpolated nep function
   gsl_interp_accel*  Tepacc;    // Accelerator for interpolated Tep function
   
@@ -204,6 +210,32 @@ class TJ : private Utility
   gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function on plasma boundary
   gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function on plasma boundary
 
+  // -------------------------
+  // Synthetic diagnostic data 
+  // -------------------------
+  double  tilt;    // tilt of central chord (read from Equilibrium JSON file)
+  double* req;     // r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* weq;     // omega values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* teq;     // theta values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Req;     // R values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Zeq;     // Z values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* BReq;    // B_parallel values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* neeq;    // n_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Teeq;    // T_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dRdreq;  // dR/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dRdteq;  // (dR/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dZdreq;  // dZ/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dZdteq;  // (dZ/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+
+  Array<double,2> bReqc;  // cosine component of delta B_parallel values on tilted central chord
+  Array<double,2> bReqs;  // sine component of delta B_parallel values on tilted central chord
+  Array<double,2> dneeqc; // cosine component of delta n_e values on tilted central chord
+  Array<double,2> dneeqs; // cosine component of delta n_e values on tilted central chord
+  Array<double,2> dTeeqc; // cosine component of delta T_e values on tilted central chord
+  Array<double,2> dTeeqs; // sine component of delta T_e values on tilted central chord
+
+  double* Leq; // Length along tilted central chord
+  
   // --------------------------
   // Plasma boundary parameters
   // --------------------------
@@ -367,11 +399,13 @@ class TJ : private Utility
   Array<complex<double>,3> Psiu;  // Psi components of unreconnected tearing eigenfunctions
   Array<complex<double>,3> Zu;    // Z components of unreconnected tearing eigenfunctions
   Array<complex<double>,3> psiu;  // Scaled psi components of unreconnected tearing eigenfunctions
-  Array<complex<double>,3> zu;    // z components of unreconneted tearing eigenfunctions
-  Array<complex<double>,3> chiu;  // chi components of unreconneted tearing eigenfunctions
-  Array<complex<double>,3> xiu;   // xi components of unreconneted tearing eigenfunctions
-  Array<complex<double>,3> dneu;  // delta n_e components of unreconneted tearing eigenfunctions
-  Array<complex<double>,3> dTeu;  // delta T_e components of unreconneted tearing eigenfunctions
+  Array<complex<double>,3> zu;    // z components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> chiu;  // chi components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> xiu;   // xi components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> neu;   // n_e components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> Teu;   // T_e components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> dneu;  // delta n_e components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> dTeu;  // delta T_e components of unreconnected tearing eigenfunctions
   Array<double,2>          Tf;    // Torques associated with fully reconnected eigenfunctions
   Array<double,2>          Tu;    // Torques associated with unreconnected eigenfunctions
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
@@ -410,6 +444,8 @@ class TJ : private Utility
   Array<complex<double>,3> zuf;    // z components of Fourier-transformed unreconnected tearing eigenfunctions 
   Array<complex<double>,3> chiuf;  // chi components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> xiuf;   // xi^r components of Fourier-transformed unreconnected tearing eigenfunctions
+  Array<complex<double>,3> neuf;   // n_e components of Fourier-transformed unreconnected tearing eigenfunctions
+  Array<complex<double>,3> Teuf;   // T_e components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> dneuf;  // delta n_e components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> dTeuf;  // delta T_e components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> Psiuv;  // Psi components of unreconnected tearing eigenfunctions on visualization grid
@@ -424,11 +460,15 @@ class TJ : private Utility
   Array<double,3>          bPs;    // Sin component of R b^^phi on visualization grid
   Array<double,3>          xic;    // Cosine component of xi^r on visualization grid
   Array<double,3>          xis;    // Sin component of xi^r on visualization grid
+  Array<double,3>          nec;    // Cosine component of n_e on visualization grid
+  Array<double,3>          nes;    // Sin component of n_e on visualization grid
+  Array<double,3>          Tec;    // Cosine component of T_e on visualization grid
+  Array<double,3>          Tes;    // Sin component of T_e on visualization grid
   Array<double,3>          dnec;   // Cosine component of delta n_e on visualization grid
   Array<double,3>          dnes;   // Sin component of delta n_e on visualization grid
   Array<double,3>          dTec;   // Cosine component of delta T_e on visualization grid
   Array<double,3>          dTes;   // Sin component of delta T_e on visualization grid
-  
+    
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response
   // --------------------------------------------------------
@@ -737,6 +777,10 @@ class TJ : private Utility
   double GetP2 (double r);
   // Return value of P3
   double GetP3 (double r);
+  // Return value of ne
+  double Getne (double r);
+  // Return value of Te
+  double GetTe (double r);
   // Return value of nep
   double Getnep (double r);
   // Return value of Tep

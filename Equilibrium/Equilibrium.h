@@ -125,7 +125,7 @@ class Equilibrium : private Utility
   // ------------------
   // Profile parameters
   // ------------------
-  int                NPTS;        // Number of data points in profile file (Inputs/Profile
+  int                NPTS;        // Number of data points in profile file (Inputs/Profile.txt)
   double*            rin;         // Radial grid-points in profile file
   double*            qin;         // Lowest order safety-factor profile read from profile file
   double*            f1in;        // f1 profile derived from qin; f1in = r^2/qin
@@ -221,6 +221,9 @@ class Equilibrium : private Utility
   gsl_spline*        sspline;   // Interpolated s function versus r
   gsl_spline*        qspline;   // Interpolated q function versus r
 
+  // ------------------
+  // Vizualization data
+  // ------------------
   gsl_interp_accel*  Itacc;     // Accelerator for interpolated It function
   gsl_interp_accel*  Ipacc;     // Accelerator for interpolated Ip function
   gsl_interp_accel*  g2acc;     // Accelerator for interpolated g2 function
@@ -254,6 +257,9 @@ class Equilibrium : private Utility
   Array<double,2>    thvals;    // theta values on magnetic flux-surfaces for visualization purposes
   Array<double,2>    wvals;     // omega values on magnetic flux-surfaces for visualization purposes
 
+  // -------------
+  // Boundary data
+  // -------------
   double*            Rbound;    // R values on plasma boundary
   double*            Zbound;    // Z values on plasma boundary
   double*            tbound;    // theta values on plasma boundary
@@ -265,9 +271,29 @@ class Equilibrium : private Utility
   double*            R2b;       // R^2 values on plasma boundary
   double*            grr2b;     // |nabla r|^2 values on plasma boundary
 
+  // ---------
+  // Wall data
+  // ---------
   double*            Rwall;     // R values on wall
   double*            Zwall;     // Z values on wall
   double*            wwall;     // omega values on wall
+
+  // -------------------------
+  // Synthetic diagnostic data
+  // -------------------------
+  double  tilt;   // tilt of central chord (degrees) (read from JSON file)
+  double* req;    // r values on central chord
+  double* weq;    // omega values on central chord
+  double* teq;    // theta values on central chord
+  double* Req;    // R values on central chord
+  double* Zeq;    // Z values on central chord
+  double* BReq;   // B_parallel values on central chord
+  double* neeq;   // n_e values on central chord
+  double* Teeq;   // T_e values on central chord
+  double* dRdreq; // dRdr values on central chord
+  double* dRdteq; // dRdt values on central chord
+  double* dZdreq; // dZdr values on central chord
+  double* dZdteq; // dZdt values on central chord
 
   // ---------------
   // EFIT parameters

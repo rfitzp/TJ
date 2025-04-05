@@ -41,6 +41,7 @@ Equilibrium::Equilibrium ()
   h0   = JSONData["h0"]  .get<double> ();
   hmin = JSONData["hmin"].get<double> ();
   hmax = JSONData["hmax"].get<double> ();
+  tilt = JSONData["tilt"].get<double> ();
 
   for (const auto& number : JSONData["Hna"])
     {
@@ -147,6 +148,11 @@ Equilibrium::Equilibrium ()
       printf ("Equilibrium:: Error - Hna and Van arrays must be the same size\n");
       exit (1);
     }
+  if (tilt < -180. || tilt > 180.)
+    {
+       printf ("Equilibrium:: Error -  tilt must lie in range -180 to +180\n");
+      exit (1);
+    }
 }
 
 // ##########
@@ -180,8 +186,8 @@ void Equilibrium::Solve ()
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Calculation parameters:\n");
-  printf ("qc = %10.3e qa = %10.3e epsa = %10.3e pc = %10.3e mu = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d SRC = %1d\n",
-	  qc, qa, epsa, pc, mu, Ns, Nr, Nf, Nw, SRC);
+  printf ("qc = %10.3e qa = %10.3e epsa = %10.3e pc = %10.3e mu = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d SRC = %1d tilt = %10.3e\n",
+	  qc, qa, epsa, pc, mu, Ns, Nr, Nf, Nw, SRC, tilt);
 
   // ....................
   // Read in profile data
@@ -279,6 +285,19 @@ void Equilibrium::Solve ()
   Tep   = new double[Nr+1];
   nep   = new double[Nr+1];
   Lfunc = new double[Nr+1];
+
+  req    = new double[2*Nf];
+  weq    = new double[2*Nf];
+  teq    = new double[2*Nf];
+  Req    = new double[2*Nf];
+  Zeq    = new double[2*Nf];
+  BReq   = new double[2*Nf];
+  neeq   = new double[2*Nf];
+  Teeq   = new double[2*Nf];
+  dRdreq = new double[2*Nf];
+  dRdteq = new double[2*Nf];
+  dZdreq = new double[2*Nf];
+  dZdteq = new double[2*Nf];
 
   HHfunc.resize (Ns+1, Nr+1);
   VVfunc.resize (Ns+1, Nr+1);
@@ -868,6 +887,103 @@ void Equilibrium::Solve ()
 	      ZZw(i-1, j) = Z;
 	    }
 	}
+
+      // ...................................
+      // Calculate synthetic diagnostic data
+      // ...................................
+      for (int i = 0; i < Nf; i++)
+	{
+	  double rf = 1. - double (i) /double (Nf);
+	  double wt = tilt*M_PI/180.;
+	  double wf = wt;
+
+	  double Ro, Z0, dZ0dw;
+	  for (int j = 0; j < 5; j++)
+	    {
+	      Ro    = GetR    (rf, wf, 1);
+	      Z0    = GetZ    (rf, wf, 1);
+	      dZ0dw = GetdZdw (rf, wf, 1);
+
+	      wf += ((1. - Ro) * tan(wt) - Z0) /dZ0dw;
+	    }
+
+	  req[i] = rf;
+	  weq[i] = wf;
+	  teq[i] = wf + Gettheta (rf, wf, 1);
+	  Req[i] = GetR (rf, wf, 1);
+	  Zeq[i] = GetZ (rf, wf, 1);
+
+	  if (teq[i] < 1.)
+	    teq[i] += 2.*M_PI;
+	  if (teq[i] > 2.*M_PI)
+	    teq[i] -= 2.*M_PI;
+
+	  double Rr   = GetdRdr (rf, wf, 1);
+	  double Rw   = GetdRdw (rf, wf, 1);
+	  double Zr   = GetdZdr (rf, wf, 1);
+	  double Zw   = GetdZdw (rf, wf, 1);
+	  double dtdw = 1. + Getdthetadomega (rf, wf, 1);
+	  double g2   = gsl_spline_eval (g2spline, rf, g2acc);
+	  double q    = Getq (rf);
+	      
+	  dRdreq[i] = Rr;
+	  dRdteq[i] = Rw /dtdw /rf;
+	  dZdreq[i] = Zr;
+	  dZdteq[i] = Zw /dtdw /rf;
+
+	  BReq[i] = epsa * B0 * (1. + epsa*epsa*g2) * (Rw * cos(wt) - Zw * sin(wt)) /q /Req[i]/Req[i] /dtdw;
+	  neeq[i] = Getne (rf);
+	  Teeq[i] = GetTe (rf);
+	}
+      neeq[0] = 2.*neeq[1] - neeq[2];
+      Teeq[0] = 2.*Teeq[1] - Teeq[2];
+
+      for (int i = 0; i < Nf; i++)
+	{
+	  double rf = double (i+1) /double (Nf);
+	  double wt = M_PI + tilt*M_PI/180.;
+	  double wf = wt;
+
+	  double Ro, Z0, dZ0dw;
+	  for (int j = 0; j < 5; j++)
+	    {
+	      Ro    = GetR    (rf, wf, 1);
+	      Z0    = GetZ    (rf, wf, 1);
+	      dZ0dw = GetdZdw (rf, wf, 1);
+	      
+	      wf += ((1. - Ro) * tan(wt) - Z0) /dZ0dw;
+	    }
+
+	  req[i+Nf] = rf;
+	  weq[i+Nf] = wf;
+	  teq[i+Nf] = wf + Gettheta (rf, wf, 1);
+	  Req[i+Nf] = GetR (rf, wf, 1);
+	  Zeq[i+Nf] = GetZ (rf, wf, 1);
+
+	  if (teq[i] < 1.)
+	    teq[i] += 2.*M_PI;
+	  if (teq[i] > 2.*M_PI)
+	    teq[i] -= 2.*M_PI;
+
+	  double Rr   = GetdRdr (rf, wf, 1);
+	  double Rw   = GetdRdw (rf, wf, 1);
+	  double Zr   = GetdZdr (rf, wf, 1);
+	  double Zw   = GetdZdw (rf, wf, 1);
+	  double dtdw = 1. + Getdthetadomega (rf, wf, 1);
+	  double g2   = gsl_spline_eval (g2spline, rf, g2acc);
+	  double q    = Getq (rf);
+	      
+	  dRdreq[i+Nf] = Rr;
+	  dRdteq[i+Nf] = Rw /dtdw /rf;
+	  dZdreq[i+Nf] = Zr;
+	  dZdteq[i+Nf] = Zw /dtdw /rf;
+
+	  BReq[i+Nf] = epsa * B0 * (1. + epsa*epsa*g2) * (Rw * cos(wt) - Zw * sin(wt)) /q /Req[i]/Req[i] /dtdw;
+	  neeq[i+Nf] = Getne (rf);
+	  Teeq[i+Nf] = GetTe (rf);
+	}
+      neeq[2*Nf-1] = 2.*neeq[2*Nf-2] - neeq[2*Nf-3];
+      Teeq[2*Nf-1] = 2.*Teeq[2*Nf-2] - Teeq[2*Nf-3];
     }
   
   // .......................
@@ -1028,7 +1144,11 @@ void Equilibrium::Solve ()
   delete[] s;   delete[] s2;  delete[] S1;  delete[] S2;  delete[] P1;
   delete[] P2;  delete[] P3;  delete[] P3a; delete[] ff;  delete[] ggr2;
   delete[] RR2; delete[] IR2; delete[] S3;  delete[] P1a; delete[] P2a;
-  delete[] s0;  
+  delete[] s0;
+
+  delete[] req;    delete[] weq;    delete[] teq;    delete[] Req; 
+  delete[] Zeq;    delete[] BReq;   delete[] neeq;   delete[] Teeq;
+  delete[] dRdreq; delete[] dRdteq; delete[] dZdreq; delete[] dZdteq;
  
   gsl_spline_free (Itspline);
   gsl_spline_free (Ipspline);
@@ -1248,13 +1368,16 @@ double Equilibrium::Getnep (double r)
 // #####################
 double Equilibrium::GetTe (double r)
 {
-  double e    = 1.602176634e-19;
-  double mu0  = 4.*M_PI*1.e-7;
+  double e   = 1.602176634e-19;
+  double mu0 = 4.*M_PI*1.e-7;
   
   double p2 = Getp2 (r);
   double ne = Getne (r);
 
-  return (B0*B0/mu0/e/2.) * epsa*epsa * p2 /ne + Teped;
+  if (ne <= 0.)
+    return Teped;
+  else
+    return (B0*B0/mu0/e/2.) * epsa*epsa * p2 /ne + Teped;
 }
 
 // #####################
@@ -2004,7 +2127,7 @@ double Equilibrium::Gettheta (double r, double w, int order)
 	}
       
       if (Ns >= 2)
-	tfun  -= epsa*epsa * (hn[2] /2. + r * hnp[2] /2. + hnp[1] * hn[2] /r + sums[1]) * sin (w);
+	tfun -= epsa*epsa * (hn[2] /2. + r * hnp[2] /2. + hnp[1] * hn[2] /r + sums[1]) * sin (w);
       
       tfun += epsa*epsa * (r*r /4. - r*hnp[1] /4.) * sin (2. * w);
       

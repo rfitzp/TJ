@@ -16,6 +16,8 @@ void TJ::VisualizeEigenfunctions ()
   zuf  .resize(J, nres, Nf);
   chiuf.resize(J, nres, Nf);
   xiuf .resize(J, nres, Nf);
+  neuf .resize(J, nres, Nf);
+  Teuf .resize(J, nres, Nf);
   dneuf.resize(J, nres, Nf);
   dTeuf.resize(J, nres, Nf);
 
@@ -31,10 +33,23 @@ void TJ::VisualizeEigenfunctions ()
   bPs  .resize(nres, Nf, Nw+1);
   xic  .resize(nres, Nf, Nw+1);
   xis  .resize(nres, Nf, Nw+1);
+  nec  .resize(nres, Nf, Nw+1);
+  nes  .resize(nres, Nf, Nw+1);
+  Tec  .resize(nres, Nf, Nw+1);
+  Tes  .resize(nres, Nf, Nw+1);
   dnec .resize(nres, Nf, Nw+1);
   dnes .resize(nres, Nf, Nw+1);
   dTec .resize(nres, Nf, Nw+1);
   dTes .resize(nres, Nf, Nw+1);
+
+  bReqc .resize(nres, 2*Nf);
+  bReqs .resize(nres, 2*Nf);
+  dneeqc.resize(nres, 2*Nf);
+  dneeqs.resize(nres, 2*Nf);
+  dTeeqc.resize(nres, 2*Nf);
+  dTeeqs.resize(nres, 2*Nf);
+
+  Leq = new double[2*Nf];
  
   // .........................................................................................
   // Interpolate unreconnected eigenfunction data from diagnostic to visualization radial grid
@@ -56,6 +71,10 @@ void TJ::VisualizeEigenfunctions ()
 	double* chi_i = new double[NDIAG];
 	double* xi_r  = new double[NDIAG];
 	double* xi_i  = new double[NDIAG];
+	double* ne_r  = new double[NDIAG];
+	double* ne_i  = new double[NDIAG];
+	double* Te_r  = new double[NDIAG];
+	double* Te_i  = new double[NDIAG];
 	double* dne_r = new double[NDIAG];
 	double* dne_i = new double[NDIAG];
 	double* dTe_r = new double[NDIAG];
@@ -77,6 +96,10 @@ void TJ::VisualizeEigenfunctions ()
 	    chi_i[i] = imag (chiu(j, k, i));
 	    xi_r [i] = real (xiu (j, k, i));
 	    xi_i [i] = imag (xiu (j, k, i));
+	    ne_r [i] = real (neu (j, k, i));
+	    ne_i [i] = real (neu (j, k, i));
+	    Te_r [i] = real (Teu (j, k, i));
+	    Te_i [i] = real (Teu (j, k, i));
 	    dne_r[i] = real (dneu(j, k, i));
 	    dne_i[i] = real (dneu(j, k, i));
 	    dTe_r[i] = real (dTeu(j, k, i));
@@ -97,6 +120,10 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_interp_accel* chi_i_acc = gsl_interp_accel_alloc ();
 	gsl_interp_accel* xi_r_acc  = gsl_interp_accel_alloc ();
 	gsl_interp_accel* xi_i_acc  = gsl_interp_accel_alloc ();
+	gsl_interp_accel* ne_r_acc  = gsl_interp_accel_alloc ();
+	gsl_interp_accel* ne_i_acc  = gsl_interp_accel_alloc ();
+	gsl_interp_accel* Te_r_acc  = gsl_interp_accel_alloc ();
+	gsl_interp_accel* Te_i_acc  = gsl_interp_accel_alloc ();
 	gsl_interp_accel* dne_r_acc = gsl_interp_accel_alloc ();
 	gsl_interp_accel* dne_i_acc = gsl_interp_accel_alloc ();
 	gsl_interp_accel* dTe_r_acc = gsl_interp_accel_alloc ();
@@ -115,6 +142,10 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline* chi_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* xi_r_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* xi_i_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	gsl_spline* ne_r_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	gsl_spline* ne_i_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	gsl_spline* Te_r_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	gsl_spline* Te_i_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* dne_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* dne_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* dTe_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
@@ -133,6 +164,10 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline_init (chi_i_spline, Rgrid, chi_i, NDIAG);
 	gsl_spline_init (xi_r_spline,  Rgrid, xi_r,  NDIAG);
 	gsl_spline_init (xi_i_spline,  Rgrid, xi_i,  NDIAG);
+	gsl_spline_init (ne_r_spline,  Rgrid, ne_r,  NDIAG);
+	gsl_spline_init (ne_i_spline,  Rgrid, ne_i,  NDIAG);
+	gsl_spline_init (Te_r_spline,  Rgrid, Te_r,  NDIAG);
+	gsl_spline_init (Te_i_spline,  Rgrid, Te_i,  NDIAG);		
 	gsl_spline_init (dne_r_spline, Rgrid, dne_r, NDIAG);
 	gsl_spline_init (dne_i_spline, Rgrid, dne_i, NDIAG);
 	gsl_spline_init (dTe_r_spline, Rgrid, dTe_r, NDIAG);
@@ -171,6 +206,16 @@ void TJ::VisualizeEigenfunctions ()
 
 	    xiuf(j, k, i) = complex<double> (x, y);
 
+	    x = gsl_spline_eval (ne_r_spline, rf[i], ne_r_acc);
+	    y = gsl_spline_eval (ne_i_spline, rf[i], ne_i_acc);
+
+	    neuf(j, k, i) = complex<double> (x, y);
+
+	    x = gsl_spline_eval (Te_r_spline, rf[i], Te_r_acc);
+	    y = gsl_spline_eval (Te_i_spline, rf[i], Te_i_acc);
+
+	    Teuf(j, k, i) = complex<double> (x, y);
+
 	    x = gsl_spline_eval (dne_r_spline, rf[i], dne_r_acc);
 	    y = gsl_spline_eval (dne_i_spline, rf[i], dne_i_acc);
 
@@ -187,6 +232,7 @@ void TJ::VisualizeEigenfunctions ()
 	delete[] chi_r; delete[] chi_i; delete[] z_r;   delete[] z_i;
 	delete[] p_r;   delete[] p_i;   delete[] xi_r;  delete[] xi_i;
 	delete[] dne_r; delete[] dne_i; delete[] dTe_r; delete[] dTe_i; 
+	delete[] ne_r;  delete[] ne_i;  delete[] Te_r;  delete[] Te_i; 
 
 	gsl_spline_free (psi_r_spline);
 	gsl_spline_free (psi_i_spline);
@@ -200,6 +246,10 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline_free (chi_i_spline);
 	gsl_spline_free (xi_r_spline);
 	gsl_spline_free (xi_i_spline);
+	gsl_spline_free (ne_r_spline);
+	gsl_spline_free (ne_i_spline);
+	gsl_spline_free (Te_r_spline);
+	gsl_spline_free (Te_i_spline);
 	gsl_spline_free (dne_r_spline);
 	gsl_spline_free (dne_i_spline);
 	gsl_spline_free (dTe_r_spline);
@@ -217,6 +267,10 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_interp_accel_free (chi_i_acc);
 	gsl_interp_accel_free (xi_r_acc);
 	gsl_interp_accel_free (xi_i_acc);
+	gsl_interp_accel_free (ne_r_acc);
+	gsl_interp_accel_free (ne_i_acc);
+	gsl_interp_accel_free (Te_r_acc);
+	gsl_interp_accel_free (Te_i_acc);
 	gsl_interp_accel_free (dne_r_acc);
 	gsl_interp_accel_free (dne_i_acc);
 	gsl_interp_accel_free (dTe_r_acc);
@@ -239,6 +293,7 @@ void TJ::VisualizeEigenfunctions ()
 	  double z_r   = 0., z_i   = 0., chi_r = 0., chi_i = 0.;
 	  double bR_c  = 0., bR_s  = 0., bZ_c  = 0., bZ_s  = 0., bP_c  = 0., bP_s  = 0.;
 	  double xi_c  = 0., xi_s  = 0., dne_c = 0., dne_s = 0., dTe_c = 0., dTe_s = 0.;
+	  double ne_c  = 0., ne_s  = 0., Te_c  = 0., Te_s  = 0.;
 
 	  for (int j = 0; j < J; j++)
 	    {
@@ -260,23 +315,27 @@ void TJ::VisualizeEigenfunctions ()
 	      chi_r += real (chiuf(j, k, i) * (cos(m*theta) + II*sin(m*theta)));
 	      chi_i += imag (chiuf(j, k, i) * (cos(m*theta) + II*sin(m*theta)));
 
-	      bR_c +=   dRdr(i, l) * (   real (psiuf(j, k, i)) * sin(m*theta)  + imag (psiuf(j, k, i)) * cos(m*theta))
-	 	      + dRdt(i, l) * (   real (chiuf(j, k, i)) * cos(m*theta)  - imag (chiuf(j, k, i)) * sin(m*theta));
-	      bR_s +=   dRdr(i, l) * ( - real (psiuf(j, k, i)) * cos(m*theta)  + imag (psiuf(j, k, i)) * sin(m*theta))
-		      + dRdt(i, l) * (   real (chiuf(j, k, i)) * sin(m*theta)  + imag (chiuf(j, k, i)) * cos(m*theta));
-	      bZ_c +=   dZdr(i, l) * (   real (psiuf(j, k, i)) * sin(m*theta)  + imag (psiuf(j, k, i)) * cos(m*theta))
-	 	      + dZdt(i, l) * (   real (chiuf(j, k, i)) * cos(m*theta)  - imag (chiuf(j, k, i)) * sin(m*theta));
-	      bZ_s +=   dZdr(i, l) * ( - real (psiuf(j, k, i)) * cos(m*theta)  + imag (psiuf(j, k, i)) * sin(m*theta))
-		      + dZdt(i, l) * (   real (chiuf(j, k, i)) * sin(m*theta)  + imag (chiuf(j, k, i)) * cos(m*theta));
-	      bP_c +=                    real (zuf  (j, k, i)) * cos(m*theta)  - imag (zuf  (j, k, i)) * sin(m*theta);
-	      bP_s +=                    real (zuf  (j, k, i)) * sin(m*theta)  + imag (zuf  (j, k, i)) * cos(m*theta);
+	      bR_c +=   dRdr(i, l) * (   real (psiuf(j, k, i)) * sin(m*theta) + imag (psiuf(j, k, i)) * cos(m*theta))
+	 	      + dRdt(i, l) * (   real (chiuf(j, k, i)) * cos(m*theta) - imag (chiuf(j, k, i)) * sin(m*theta));
+	      bR_s +=   dRdr(i, l) * ( - real (psiuf(j, k, i)) * cos(m*theta) + imag (psiuf(j, k, i)) * sin(m*theta))
+		      + dRdt(i, l) * (   real (chiuf(j, k, i)) * sin(m*theta) + imag (chiuf(j, k, i)) * cos(m*theta));
+	      bZ_c +=   dZdr(i, l) * (   real (psiuf(j, k, i)) * sin(m*theta) + imag (psiuf(j, k, i)) * cos(m*theta))
+	 	      + dZdt(i, l) * (   real (chiuf(j, k, i)) * cos(m*theta) - imag (chiuf(j, k, i)) * sin(m*theta));
+	      bZ_s +=   dZdr(i, l) * ( - real (psiuf(j, k, i)) * cos(m*theta) + imag (psiuf(j, k, i)) * sin(m*theta))
+		      + dZdt(i, l) * (   real (chiuf(j, k, i)) * sin(m*theta) + imag (chiuf(j, k, i)) * cos(m*theta));
+	      bP_c +=                    real (zuf  (j, k, i)) * cos(m*theta) - imag (zuf  (j, k, i)) * sin(m*theta);
+	      bP_s +=                    real (zuf  (j, k, i)) * sin(m*theta) + imag (zuf  (j, k, i)) * cos(m*theta);
 
-	      xi_c +=                    real (xiuf  (j, k, i)) * cos(m*theta) - imag (xiuf  (j, k, i)) * sin(m*theta);
-	      xi_s +=                    real (xiuf  (j, k, i)) * sin(m*theta) + imag (xiuf  (j, k, i)) * cos(m*theta);
-	      dne_c +=                   real (dneuf (j, k, i)) * cos(m*theta) - imag (dneuf (j, k, i)) * sin(m*theta);
-	      dne_s +=                   real (dneuf (j, k, i)) * sin(m*theta) + imag (dneuf (j, k, i)) * cos(m*theta);
-	      dTe_c +=                   real (dTeuf (j, k, i)) * cos(m*theta) - imag (dTeuf (j, k, i)) * sin(m*theta);
-	      dTe_s +=                   real (dTeuf (j, k, i)) * sin(m*theta) + imag (dTeuf (j, k, i)) * cos(m*theta);
+	      xi_c  +=                   real (xiuf (j, k, i)) * cos(m*theta) - imag (xiuf (j, k, i)) * sin(m*theta);
+	      xi_s  +=                   real (xiuf (j, k, i)) * sin(m*theta) + imag (xiuf (j, k, i)) * cos(m*theta);
+	      ne_c  +=                   real (neuf (j, k, i)) * cos(m*theta) - imag (neuf (j, k, i)) * sin(m*theta);
+	      ne_s  +=                   real (neuf (j, k, i)) * sin(m*theta) + imag (neuf (j, k, i)) * cos(m*theta);
+	      Te_c  +=                   real (Teuf (j, k, i)) * cos(m*theta) - imag (Teuf (j, k, i)) * sin(m*theta);
+	      Te_s  +=                   real (Teuf (j, k, i)) * sin(m*theta) + imag (Teuf (j, k, i)) * cos(m*theta);
+	      dne_c +=                   real (dneuf(j, k, i)) * cos(m*theta) - imag (dneuf(j, k, i)) * sin(m*theta);
+	      dne_s +=                   real (dneuf(j, k, i)) * sin(m*theta) + imag (dneuf(j, k, i)) * cos(m*theta);
+	      dTe_c +=                   real (dTeuf(j, k, i)) * cos(m*theta) - imag (dTeuf(j, k, i)) * sin(m*theta);
+	      dTe_s +=                   real (dTeuf(j, k, i)) * sin(m*theta) + imag (dTeuf(j, k, i)) * cos(m*theta);
 	    }
 
 	  Psiuv(k, i, l) = complex<double> (psi_r, psi_i);
@@ -293,11 +352,107 @@ void TJ::VisualizeEigenfunctions ()
 
 	  xic (k, i, l) = xi_c;
 	  xis (k, i, l) = xi_s;
+	  nec (k, i, l) = ne_c;
+	  nes (k, i, l) = ne_s;
+	  Tec (k, i, l) = Te_c;
+	  Tes (k, i, l) = Te_s;
 	  dnec(k, i, l) = dne_c;
 	  dnes(k, i, l) = dne_s;
 	  dTec(k, i, l) = dTe_c;
 	  dTes(k, i, l) = dTe_s;
 	}
+
+  // ......................................................
+  // Calculate perturbed quantities on tilted central chord
+  // ......................................................
+  for (int k = 0; k < nres; k++)
+    for (int i = 0; i < Nf; i++)
+      {
+	double R     = Req[i];
+	double Z     = Zeq[i];
+	double r     = req[i];
+	double theta = teq[i];
+	double dRdr  = dRdreq[i];
+	double dRdt  = dRdteq[i];
+	double dZdr  = dZdreq[i];
+	double dZdt  = dZdteq[i];
+	double bR_c  = 0., bR_s  = 0., bZ_c  = 0., bZ_s  = 0.;
+	double dne_c = 0., dne_s = 0., dTe_c = 0., dTe_s = 0.;
+	
+	for (int j = 0; j < J; j++)
+	  {
+	    double m = mpol[j];
+	    
+	    bR_c +=   dRdr * (   real (psiuf(j, k, Nf-1-i)) * sin(m*theta)  + imag (psiuf(j, k, Nf-1-i)) * cos(m*theta))
+	            + dRdt * (   real (chiuf(j, k, Nf-1-i)) * cos(m*theta)  - imag (chiuf(j, k, Nf-1-i)) * sin(m*theta));
+	    bR_s +=   dRdr * ( - real (psiuf(j, k, Nf-1-i)) * cos(m*theta)  + imag (psiuf(j, k, Nf-1-i)) * sin(m*theta))
+	            + dRdt * (   real (chiuf(j, k, Nf-1-i)) * sin(m*theta)  + imag (chiuf(j, k, Nf-1-i)) * cos(m*theta));
+	    bZ_c +=   dZdr * (   real (psiuf(j, k, Nf-1-i)) * sin(m*theta)  + imag (psiuf(j, k, Nf-1-i)) * cos(m*theta))
+	            + dZdt * (   real (chiuf(j, k, Nf-1-i)) * cos(m*theta)  - imag (chiuf(j, k, Nf-1-i)) * sin(m*theta));
+	    bZ_s +=   dZdr * ( - real (psiuf(j, k, Nf-1-i)) * cos(m*theta)  + imag (psiuf(j, k, Nf-1-i)) * sin(m*theta))
+	            + dZdt * (   real (chiuf(j, k, Nf-1-i)) * sin(m*theta)  + imag (chiuf(j, k, Nf-1-i)) * cos(m*theta));
+	    dne_c += real (dneuf (j, k, Nf-1-i)) * cos(m*theta) - imag (dneuf (j, k, Nf-1-i)) * sin(m*theta);
+	    dne_s += real (dneuf (j, k, Nf-1-i)) * sin(m*theta) + imag (dneuf (j, k, Nf-1-i)) * cos(m*theta);
+	    dTe_c += real (dTeuf (j, k, Nf-1-i)) * cos(m*theta) - imag (dTeuf (j, k, Nf-1-i)) * sin(m*theta);
+	    dTe_s += real (dTeuf (j, k, Nf-1-i)) * sin(m*theta) + imag (dTeuf (j, k, Nf-1-i)) * cos(m*theta);
+	  }
+
+	double wt = tilt * M_PI/180;
+	
+	bReqc(k, i) = - B0 * (bR_c * cos(wt) - bZ_c * sin(wt)) /r/R/R;
+	bReqs(k, i) = - B0 * (bR_s * cos(wt) - bZ_c * sin(wt)) /r/R/R;
+	
+	dneeqc(k, i) = dne_c;
+	dneeqs(k, i) = dne_s;
+	dTeeqc(k, i) = dTe_c;
+	dTeeqs(k, i) = dTe_s;
+
+	Leq[i] = (R - 1.) /cos(wt);
+      }
+
+  for (int k= 0; k < nres; k++)
+    for (int i = 0; i < Nf; i++)
+      {
+	double R     = Req[Nf+i];
+	double r     = req[Nf+i];
+	double theta = teq[Nf+i];
+	double dRdr  = dRdreq[Nf+i];
+	double dRdt  = dRdteq[Nf+i];
+	double dZdr  = dZdreq[Nf+i];
+	double dZdt  = dZdteq[Nf+i];
+	double bR_c  = 0., bR_s  = 0., bZ_c  = 0., bZ_s  = 0.;
+	double dne_c = 0., dne_s = 0., dTe_c = 0., dTe_s = 0.;
+	
+	for (int j = 0; j < J; j++)
+	  {
+	    double m = mpol[j];
+	    
+	    bR_c +=   dRdr * (   real (psiuf(j, k, i)) * sin(m*theta)  + imag (psiuf(j, k, i)) * cos(m*theta))
+	            + dRdt * (   real (chiuf(j, k, i)) * cos(m*theta)  - imag (chiuf(j, k, i)) * sin(m*theta));
+	    bR_s +=   dRdr * ( - real (psiuf(j, k, i)) * cos(m*theta)  + imag (psiuf(j, k, i)) * sin(m*theta))
+	            + dRdt * (   real (chiuf(j, k, i)) * sin(m*theta)  + imag (chiuf(j, k, i)) * cos(m*theta));
+	    bZ_c +=   dZdr * (   real (psiuf(j, k, i)) * sin(m*theta)  + imag (psiuf(j, k, i)) * cos(m*theta))
+	            + dZdt * (   real (chiuf(j, k, i)) * cos(m*theta)  - imag (chiuf(j, k, i)) * sin(m*theta));
+	    bZ_s +=   dZdr * ( - real (psiuf(j, k, i)) * cos(m*theta)  + imag (psiuf(j, k, i)) * sin(m*theta))
+	            + dZdt * (   real (chiuf(j, k, i)) * sin(m*theta)  + imag (chiuf(j, k, i)) * cos(m*theta));
+	    dne_c += real (dneuf (j, k, i)) * cos(m*theta) - imag (dneuf (j, k, i)) * sin(m*theta);
+	    dne_s += real (dneuf (j, k, i)) * sin(m*theta) + imag (dneuf (j, k, i)) * cos(m*theta);
+	    dTe_c += real (dTeuf (j, k, i)) * cos(m*theta) - imag (dTeuf (j, k, i)) * sin(m*theta);
+	    dTe_s += real (dTeuf (j, k, i)) * sin(m*theta) + imag (dTeuf (j, k, i)) * cos(m*theta);
+	  }
+
+	double wt = tilt * M_PI/180;
+	
+	bReqc(k, Nf+i) = - B0 * (bR_c * cos(wt) - bZ_c * sin(wt)) /r/R/R;
+	bReqs(k, Nf+i) = - B0 * (bR_s * cos(wt) - bZ_c * sin(wt)) /r/R/R;
+	
+	dneeqc(k, Nf+i) = dne_c;
+	dneeqs(k, Nf+i) = dne_s;
+	dTeeqc(k, Nf+i) = dTe_c;
+	dTeeqs(k, Nf+i) = dTe_s;
+
+	Leq[Nf+i] = (R - 1.) /cos(wt);
+      }
 }
 
 // #################################################################################
