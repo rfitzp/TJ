@@ -7,8 +7,8 @@
     "EQLB":   0,       // Flag for equilibrium calculation only
     "FREE":   1,       // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary calculations
     "FVAL":   0,       // Flag for calculating eigenvalues and eigenvectors of F-matrix
-    "VIZ":    1,       // Flag for generating unreconnected eigenfunction visualization data
-    "IDEAL":  0,       // Flag for ideal calculation
+    "VIZ":    0,       // Flag for generating unreconnected eigenfunction visualization data
+    "IDEAL":  1,       // Flag for ideal calculation
     "XI":     1,       // Flag for using Xi, rather than Psi, as ideal eigenfunction basis
     "INTR":   0,       // Flag for internal ideal stability calculation
     "RWM":    0,       // Flag for resistive wall mode calculation
