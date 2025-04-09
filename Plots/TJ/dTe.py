@@ -1,7 +1,6 @@
-# dTe.py
+# dT.py
 
-# Plots delta T_e component of unreconnected eigenfunction associated with given rational surface in R, Z plane.
-# User prompted for rational surface number and scaling exponent
+# Plots delta T_e versus x and zeta
 
 import math
 import numpy as np

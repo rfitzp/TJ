@@ -81,7 +81,7 @@ where
 \end{equation}
 Thus,
 \begin{equation}
-\delta T_e = \xi^r\,\frac{dT_e}{dr}.
+\delta T_e = -\xi^r\,\frac{dT_e}{dr}.
 \end{equation}
 But,
 \begin{equation}
@@ -89,7 +89,7 @@ T_e(r) = \frac{B_0^{\,2}}{2\,\mu_0\,e\,n_0}\,\epsilon_a^{\,2}\,p_c\,(1-\hat{r}^{
 \end{equation}
 giving
 \begin{equation}
-\frac{dT_e}{dr} = - \frac{B_0^{\,2}}{\mu_0\,e\,n_0}\,\epsilon_a\,p_c\,(\mu-\alpha)\,\hat{r}\,(1-\hat{r}^{\,2})^{\mu-\alpha-1}.
+\frac{dT_e}{dr} =  \frac{B_0^{\,2}}{\mu_0\,e\,n_0}\,\epsilon_a\,p_c\,(\mu-\alpha)\,\hat{r}\,(1-\hat{r}^{\,2})^{\mu-\alpha-1}.
 \end{equation}
 
 \section{Regularization}
@@ -150,28 +150,28 @@ b_S^{\,\phi}(r,\theta) &= \frac{n\,{\mit\Psi}_k}{R}\sum_{m}\left[{\rm Re}(z_m)\,
 \section{Value of $k_m$}
 Now, 
 \begin{align}
-k_m'&= -\frac{2-s}{m}
--\frac{\epsilon^2}{m}\left(-\hat{r}\,p_2'+
+\tilde{k}_m&= -\frac{2-s}{m}
+-\frac{\epsilon_a^{\,2}}{m}\left(-\hat{r}\,p_2'+
 \frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1' +S_2\right)\nonumber\\[0.5ex]
 &\phantom{=}
-+\epsilon^2\,\frac{(2-s)}{m}\left(-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1+S_1\right)\nonumber\\[0.5ex]
++\epsilon_a^{\,2}\,\frac{(2-s)}{m}\left(-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1+S_1\right)\nonumber\\[0.5ex]
 &\phantom{=}
-+\epsilon^2\,\frac{n\,\hat{r}}{m^2}\left[-q\,p_2' + \frac{\hat{r}}{m\,q}\,(2-s)\,(m-n\,q)\right].
++\epsilon_a^{\,2}\,\frac{n\,\hat{r}}{m^2}\left[-q\,p_2' + \frac{\hat{r}}{m\,q}\,(2-s)\,(m-n\,q)\right].
 \end{align}
 But, for the special case $m=0$, 
 \begin{align}
-k_0' &= - \frac{q\,p_2'}{n\,\hat{r}} - \frac{2-s}{n\,q} 
+\tilde{k}_0 &= - \frac{q\,p_2'}{n\,\hat{r}} - \frac{2-s}{n\,q} 
 \nonumber\\[0.5ex]
-&\phantom{=}-\frac{\epsilon^2}{n\,q}\left(
+&\phantom{=}-\frac{\epsilon_a^{\,2}}{n\,q}\left(
 \frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1+S_2\right)\nonumber\\[0.5ex]
 &\phantom{=}
-+\epsilon^2\,\frac{(2-s)}{n\,q}\,\left(-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1 +S_1\right)\nonumber\\[0.5ex]
++\epsilon_a^{\,2}\,\frac{(2-s)}{n\,q}\,\left(-\frac{3\,\hat{r}^{\,2}}{4} +\frac{\hat{r}^{\,2}}{q^2}+H_1 +S_1\right)\nonumber\\[0.5ex]
 &\phantom{=}
-+\epsilon^2\,\frac{q\,p_2'}{n\,\hat{r}}\left(2\,g_2+\frac{\hat{r}^{\,2}}{2}+\frac{\hat{r}^{\,2}}{q^2}-2\,H_1-3\,\hat{r}\,H_1'\right).
++\epsilon_a^{\,2}\,\frac{q\,p_2'}{n\,\hat{r}}\left(2\,g_2+\frac{\hat{r}^{\,2}}{2}+\frac{\hat{r}^{\,2}}{q^2}-2\,H_1-3\,\hat{r}\,H_1'\right).
 \end{align}
 It turns out that
 \begin{equation}
-k_m = k_m' - k_0'
+k_m = \tilde{k}_m - \tilde{k}_0
 \end{equation}
 for all $m$. 
 

@@ -8,6 +8,7 @@ all:
 	(cd WriteEFIT;   make)
 	(cd Flux;        make)
 	(cd Tear;        make)
+	(cd Island;      make)
 
 clean:
 
@@ -18,3 +19,4 @@ clean:
 	(cd WriteEFIT;   make clean)
 	(cd Flux;        make clean)
 	(cd Tear;        make clean)
+	(cd Island;      make clean)

@@ -61,6 +61,10 @@ This program is used to compare the EFIT equilibrium with the approximate equili
 
 Program to calculate the stability indices of tearing modes in a cylindrical tokamak plasma.
 
+# Program Island
+
+Program to calculate temperarature in vicinity of magnetic island
+
 # Directories
 
   - *Benchmark*:        Benchmark tests
@@ -69,6 +73,7 @@ Program to calculate the stability indices of tearing modes in a cylindrical tok
   - *Equilibrium*:	Source for class Equilibrium
   - *Flux*:		Source for class Flux
   - *Inputs*:		JSON files controlling behaviors of codes
+  - *Island*:           Source code for program Island
   - *Layer*:		Source for class Layer
   - *Outputs*:		Outputs from codes
   - *Plots*:		Python plotting scripts for codes

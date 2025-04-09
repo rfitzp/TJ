@@ -5,9 +5,9 @@
 // ###########
 Layer::Layer ()
 {
-  // --------------------------------------------
-  // Ensure that directory ../Outputs/Layer exits
-  // --------------------------------------------
+  // ---------------------------------------------
+  // Ensure that directory ../Outputs/Layer exists
+  // ---------------------------------------------
   if (!CreateDirectory ("../Outputs"))
     {
       exit (1);
@@ -54,6 +54,75 @@ Layer::Layer ()
   Eps     = JSONData1["Eps"]    .get<double> ();
   MaxIter = JSONData1["MaxIter"].get<int>    ();
 
+  // ------------
+  // Sanity check
+  // ------------
+  if (pend < 0.)
+    {
+      printf ("Layer:: Error - pstart cannot be negative\n");
+      exit (1);
+    }
+  if (pstart < pend)
+    {
+      printf ("Layer:: Error - pstart cannot be less than pend\n");
+      exit (1);
+    }
+  if (P3max < 0.)
+    {
+      printf ("Layer:: Error - P3max cannot be negative\n");
+      exit (1);
+    }
+  if (Nscan < 0)
+    {
+      printf ("Layer:: Error - Nscan cannot be negative\n");
+      exit (1);
+    }
+  if (acc < 0.)
+    {
+      printf ("Layer:: Error - acc cannot be negative\n");
+      exit (1);
+    }
+  if (h0 < 0.)
+    {
+      printf ("Layer:: Error - h0 cannot be negative\n");
+      exit (1);
+    }
+   if (hmin < 0.)
+    {
+      printf ("Layer:: Error - hmin cannot be negative\n");
+      exit (1);
+    }
+   if (hmax < hmin)
+    {
+      printf ("Layer:: Error - hmax cannot be less than hmin\n");
+      exit (1);
+    }
+   if (dS < 0.)
+    {
+      printf ("Layer:: Error - dS cannot be negative\n");
+      exit (1);
+    }
+  if (Smin < 0.)
+    {
+      printf ("Layer:: Error - Smin cannot be negative\n");
+      exit (1);
+    }
+  if (Smax < Smin)
+    {
+      printf ("Layer:: Error - Smax cannot be less than Smin\n");
+      exit (1);
+    }
+  if (Eps < 0.)
+    {
+      printf ("Layer:: Error - Eps cannot be less than zero\n");
+      exit (1);
+    }
+   if (Maxiter < 0)
+    {
+      printf ("Layer:: Error - Maxiter cannot be less than zero\n");
+      exit (1);
+    }
+    
   printf ("\n");
   printf ("Class LAYER::\n");
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");

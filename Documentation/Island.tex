@@ -1,0 +1,210 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage {amsmath}
+\usepackage{amssymb}
+\pdfoutput = 1 
+\usepackage {graphicx}
+\newcommand{\bomega}{\mbox{\boldmath$\omega$}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\title{Pressure Flattening due to Magnetic Island}
+\author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies,  Department of Physics,  University of Texas at Austin,  Austin TX 78712, USA}\begin{abstract}
+\end{abstract}
+\maketitle
+
+\section{Magnetic Island}
+Let $x=r-r_s$, $X=x/W$, and $\zeta= m\,\theta-n\,\phi$, where $W$ is the island width. The magnetic flux-surfaces of the magnetic island are contours of
+\begin{equation}
+{\mit\Omega}(X,\zeta) = 8\,X^2 + \cos\zeta.
+\end{equation}
+The X-points lie at $X=0$ and $\zeta = 0$, $2\pi$, whereas the X-point lies at
+$X=0$ and $\zeta=\pi$. The O-point corresponds to ${\mit\Omega}=-1$, whereas the magnetic separatrix corresponds to ${\mit\Omega}=1$.  Note that ${\mit\Omega}\simeq
+8\,X^2$ in the limit $|X|\gg 1$. 
+
+\section{Temperature Perturbation in Inner Region}
+Let $T_0(X)$ be the unperturbed temperature profile. Let 
+\begin{equation}\label{e2}
+T(X,\zeta) = T_s + {\rm sgn}(X)\,W\,T_s'\,\tilde{T}({\mit\Omega})
+\end{equation}
+ be the temperature profile in the presence of the island,
+where $T_s=T_0(0)$, and  $T_s'=(dT_0/dx)_{x=0}$. 
+The perturbed temperature profile, $\tilde{T}({\mit\Omega})$,  satisfies the energy conservation equation
+\begin{equation}\label{e3}
+\frac{d}{d{\mit\Omega}}\!\left[\oint({\mit\Omega}-\cos\zeta)^{1/2}\,\frac{d\zeta}{2\pi}\,\frac{d\tilde{T}}{d
+{\mit\Omega}} \right]= 0,
+\end{equation}
+subject to the boundary condition that
+\begin{equation}\label{e4}
+\tilde{T}({\mit\Omega}) \rightarrow |X|
+\end{equation}
+as $|X|\rightarrow\infty$. 
+
+Equations~(\ref{e2}) and (\ref{e3})
+imply that
+\begin{equation}
+\tilde{T}({\mit\Omega}) = 0
+\end{equation}
+for $-1\leq {\mit\Omega}<1$, and
+\begin{equation}\label{e6}
+\frac{d\tilde{T}}{d{\mit\Omega}} = \frac{c}{\oint({\mit\Omega}-\cos\zeta)^{1/2}\,d\zeta/2\pi}
+\end{equation}
+for ${\mit\Omega}\geq 1$, where $c$ is a constant. 
+Let
+\begin{equation}
+k = \left(\frac{1+{\mit\Omega}}{2}\right)^{1/2}.
+\end{equation}
+The O-point corresponds to $k=0$, whereas the magnetic separatrix corresponds to $k=1$. Note that $k\rightarrow 2\,|X|$ as $|X| \rightarrow\infty$. 
+
+Equation~(\ref{e6}) yields
+\begin{equation}
+\frac{d\tilde{T}}{dk} = \frac{\sqrt{2}\,\pi\,c}{E(1/k)},
+\end{equation}
+where
+\begin{equation}
+E(p) \equiv \int_0^{\pi/2}(1-p^2\,\sin^2\theta)^{1/2}\,d\theta.
+\end{equation}
+The boundary condition (\ref{e4}) implies that
+\begin{equation}
+c = \frac{1}{4\sqrt{2}}.
+\end{equation}
+Hence, we conclude that
+\begin{equation}
+\frac{d\tilde{T}}{dk} =\frac{\pi}{4}\,\frac{1}{E(1/k)}
+\end{equation}
+for $k\geq 1$. 
+Thus, 
+\begin{equation}
+\tilde{T}(k)= 0
+\end{equation}
+for $0\leq k< 1$, and
+\begin{equation}
+\tilde{T}(k)=F(k)
+\end{equation}
+for $k\geq 1$,
+where
+\begin{equation}
+F(k) =\frac{\pi}{4}\int_1^k \frac{dk'}{E(1/k')}.
+\end{equation}
+
+\section{Harmonics of Temperature Perturbation}
+We can write
+\begin{equation}
+\tilde{T}(|X|,\zeta) = \sum_{\nu=0,\infty}\delta T_\nu(|X|)\,\cos(\nu\,\zeta).
+\end{equation}
+
+Now,
+\begin{equation}
+\delta T_0(|X|) = \oint\tilde{T}(|X|,\zeta)\,\frac{d\zeta}{2\pi},
+\end{equation}
+where the integral is at constant $|X|$. It follows that
+\begin{equation}
+\delta T_0(|X|) =  \int_0^{\zeta_c}\,F(k)\,\frac{d\zeta}{\pi},
+\end{equation}
+where 
+\begin{equation}
+\zeta_c = \cos^{-1}\left(1-8\,X^2\right)
+\end{equation}
+for $|X|< 1/2$, and $\zeta_c=\pi$ for $|X|\geq 1/2$. Furthermore, 
+\begin{equation}
+k = \left[4\,|X|^2+\cos^2\left(\frac{\zeta}{2}\right)\right]^{1/2}.
+\end{equation}
+
+For $\nu>0$, we have
+\begin{equation}
+\delta T_\nu(|X|) = 2\oint \tilde{T}(|X|,\zeta)\,\cos(\nu\,\zeta)\,\frac{d\zeta}{2\pi},
+\end{equation}
+where the integral is at constant $|X|$. Integrating by parts, we obtain
+\begin{equation}
+\delta T_\nu(|X|) =-\frac{2}{\nu}\oint\frac{\partial\tilde{T}}{\partial \zeta}\,\sin(\nu\,\zeta)\,\frac{d\zeta}{2\pi}.
+\end{equation}
+But,
+\begin{equation}
+\frac{\partial T}{\partial \zeta}=\frac{dT}{dk}\,\frac{\partial k}{\partial\zeta}=-\frac{dT}{dk}\,\frac{\sin\zeta}{4\,k} = -\frac{\pi}{16}\,\frac{\sin\zeta}{k\,E(1/k)},
+\end{equation}
+so
+\begin{equation}
+\delta T_\nu(X) =\frac{1}{16\,\nu} \int_0^{\zeta_c}\frac{\cos[(\nu-1)\,\zeta]-\cos[(\nu+1)\,\zeta]}{k\,E(1/k)}\,d\zeta.
+\end{equation}
+
+\section{Asymptotic Behavior}
+In the limit $|X| \ll 1$, we have
+\begin{align}
+\zeta_c &\simeq 4\,|X|,\\[0.5ex]
+k &\simeq 1 + \frac{\zeta_c^{\,2}-\zeta^2}{8},\\[0.5ex]
+E(1/k)&\simeq 1,\\[0.5ex]
+F(k)&\simeq \frac{\pi}{4}\,(k-1).
+\end{align}
+It follows that
+\begin{align}
+\delta T_0(|X|) \simeq \frac{4}{3}\,|X|^3,\\[0.5ex]
+\delta T_{\nu>0}(|X|) \simeq \frac{8}{3}\,|X|^3
+\end{align}
+
+In the limit $|x|/W\gg 1$, we have
+\begin{align}
+k&\simeq 2\,|X|,\\[0.5ex]
+E(1/k) &\simeq \frac{\pi}{2}.
+\end{align}
+It follows that 
+\begin{align}
+F(k) &\simeq \frac{k}{2} - F_\infty,\\[0.5ex]
+\delta T_0(|X|)&\simeq |X| - F_\infty,\\[0.5ex]
+\delta T_1(|X|) &\simeq \frac{1}{16\,|X|},\\[0.5ex]
+\delta T_{\nu>1}(|X|)& \sim {\cal O}\left(\frac{1}{|X|^3}\right).
+\end{align}
+
+\section{Asymptotic Matching}
+Consider the $k$th rational surface whose radius is $r_k$ and whose resonant poloidal mode number is $m_k$. Let $\zeta_k=m_k\,\theta-n\,\phi$. 
+Let $x=r-r_k$.
+
+ In the outer region,  we write the total electron temperature as 
+\begin{equation}
+\tilde{T}_e(r, \theta,\phi)=T_e(r) - {\mit\Psi}_k\,\frac{q(r)}{r\,g(r)}\,\frac{T_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k},
+\end{equation}
+where $T_e'=dT_e/dr$, $T_e(r)$ is the equilibrium electron temperature profile, ${\mit\Psi}_k$ is the reconnected flux, and 
+\begin{equation}
+W_k = 4\left(\frac{q}{g\,s}\right)^{1/2}_{r_k}\,{\mit\Psi}_k^{1/2}
+\end{equation}
+is the island width. In the limit, $|x|\ll 1$, we get
+\begin{equation}
+\tilde{T}_e(x, \theta,\phi)=T_{e\,k} + T_{e\,k}'\,x + \frac{T_{e\,k}'\,W_k^{\,2}}{16\,x}\,{\rm e}^{\,{\rm i}\,\zeta_k},
+\end{equation}
+Here, $T_{e\,k}=T_e(r_k)$ and $T_{e\,k}'= T_e'(r_k)$. 
+
+In the inner region, we write the total electron temperature as 
+\begin{equation}
+\tilde{T}_e(x, \theta,\phi)=T_{e\,k} +{\rm sgn}(x)\,T_{e\,k}'\,W_k\sum_{\nu=0,\infty}\delta T_\nu(|x|/W_k)\,{\rm e}^{\,{\rm i}\,\nu\,\zeta_k}+T_{e\,k}'\,W_k\,F_\infty,
+\end{equation}
+In the limit $x\gg W_k$, we get
+\begin{equation}
+\tilde{T}_e(x,\theta,\phi) \simeq T_{e\,k} + T_{e\,k}'\,x + \frac{T_{e\,k}'\,W_k^{\,2}}{16\,x}\,{\rm e}^{\,{\rm i}\,\zeta_k},
+\end{equation}
+On the other hand, in the limit $x\ll -W_k$, we get 
+\begin{equation}
+\tilde{T}_e(x,\theta,\phi) \simeq T_{e\,k} + T_{e\,k}'\,x  + 2\,T_{e\,k}'\,W_k\,F_\infty + \frac{T_{e\,k}'\,W_k^{\,2}}{16\,x}\,{\rm e}^{\,{\rm i}\,\zeta_k}.
+\end{equation}
+
+The asymptotic matching consists of writing
+\begin{equation}
+\tilde{T}_e(r,\theta,\phi) = T_e(r) + \delta T_{e\,+} - {\mit\Psi}_{k+}\,\frac{q(r)}{r\,g(r)}\,\frac{T_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k}
+\end{equation}
+in the region $r>r_k+W_k$, 
+\begin{equation}
+\tilde{T}_e(r,\theta,\phi) = T_e(r) + \delta T_{e\,-} - {\mit\Psi}_{k-}\,\frac{q(r)}{r\,g(r)}\,\frac{T_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k}
+\end{equation}
+in the region $r< r_k-W_k$, and 
+\begin{equation}
+\tilde{T}_e(r, \theta,\phi)=T_{e\,k} +{\rm sgn}(x)\,T_{e\,k}'\,W_k\sum_{\nu=0,\infty}\delta T_\nu(|x|/W_k)\,{\rm e}^{\,{\rm i}\,\nu\,\zeta_k}+T_{e\,k}'\,W_k\,F_\infty
+\end{equation}
+in the region $r_k-W_k \leq r\leq r_k+W_k$. Continuity of the solution at $r=r_k\pm W_k$ implies that
+\begin{align}
+\delta T_{e\,+} &= T_{e\,k} + T_{e\,k}'\,W_k\,\delta T_0(1)+T_{e\,k}'\,W_k\,F_\infty - T_e(r_k+W_k),\\[0.5ex]
+\delta T_{e\,-} &= T_{e\,k} - T_{e\,k}'\,W_k\,\delta T_0(1) +T_{e\,k}'\,W_k\,F_\infty- T_w(r_k-W_k),\\[0.5ex]
+{\mit\Psi}_{k\,+} &= - T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_e'\,\psi_{m\,k}}\right)_{r_k+W_k},\\[0.5ex]
+{\mit\Psi}_{k\,-} &= T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_e'\,\psi_{m\,k}}\right)_{r_k-W_k}.
+\end{align}
+
+
+\end{document}

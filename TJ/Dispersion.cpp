@@ -292,9 +292,9 @@ void TJ::FindDispersion ()
 	    for (int kp = 0; kp < nres; kp++)
 	      Zu(j, k, i) += Zf(j, kp, i) * Emat(kp, k);
 
-	    double delta = double (mres[k]) * sres[k] * ISLAND /2. /rres[k];
+	    double delta = pow (3./8., 0.25) * double (mres[k]) * sres[k] * ISLAND /2. /rres[k];
 	    double mnq   = double (mres[k]) - ntor * q;
-	    double imnq  = mnq / (delta*delta + mnq*mnq);
+	    double imnq  = mnq*mnq*mnq / (delta*delta*delta*delta + mnq*mnq*mnq*mnq);
 
 	    double PSI;
 	    if (mres[k] == 1)
@@ -315,8 +315,8 @@ void TJ::FindDispersion ()
 		xiu (j, k, i) = PSI * (q /r /g) * Psiu(j, k, i) /(mpol[j] - ntor * q);
 	      }
 
-	    dneu(j, k, i) = nep * xiu(j, k, i);
-	    dTeu(j, k, i) = Tep * xiu(j, k, i);
+	    dneu(j, k, i) = - nep * xiu(j, k, i);
+	    dTeu(j, k, i) = - Tep * xiu(j, k, i);
 	    neu (j, k, i) = dneu(j, k, i);
 	    Teu (j, k, i) = dTeu(j, k, i);
 
