@@ -17,6 +17,7 @@
 //  Inputs/Equilibrium.json  - JSON file
 //  Inputs/TJ.json           - JSON file
 //  Inputs/Layer.json        - JSON file
+//  Inputs/Island.json       - JSON file
 
 // Outputs:
 //  Outputs/TJ/TJ.nc
@@ -58,6 +59,7 @@
 #include "Utility.h"
 #include "Equilibrium.h"
 #include "Layer.h"
+#include "Island.h"
 
 using namespace blitz;
 using namespace netCDF;
@@ -213,28 +215,40 @@ class TJ : private Utility
   // -------------------------
   // Synthetic diagnostic data 
   // -------------------------
-  double  tilt;    // tilt of central chord (read from Equilibrium JSON file)
-  double* req;     // r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* weq;     // omega values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* teq;     // theta values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* Req;     // R values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* Zeq;     // Z values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* BReq;    // B_parallel values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* neeq;    // n_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* Teeq;    // T_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* dRdreq;  // dR/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* dRdteq;  // (dR/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* dZdreq;  // dZ/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* dZdteq;  // (dZ/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double  tilt;           // Tilt angle of central chord (degrees) (read from Equilibrium JSON file)
+  double* req;            // r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* weq;            // omega values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* teq;            // theta values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Req;            // R values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Zeq;            // Z values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* BReq;           // B_parallel values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* neeq;           // n_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Teeq;           // T_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dRdreq;         // dR/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dRdteq;         // (dR/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dZdreq;         // dZ/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dZdteq;         // (dZ/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Leq;            // Length along central chord
 
-  Array<double,2> bReqc;  // cosine component of delta B_parallel values on tilted central chord
-  Array<double,2> bReqs;  // sine component of delta B_parallel values on tilted central chord
-  Array<double,2> dneeqc; // cosine component of delta n_e values on tilted central chord
-  Array<double,2> dneeqs; // cosine component of delta n_e values on tilted central chord
-  Array<double,2> dTeeqc; // cosine component of delta T_e values on tilted central chord
-  Array<double,2> dTeeqs; // sine component of delta T_e values on tilted central chord
+  Array<double,2> bReqc;  // cosine component of delta B_parallel values central chord
+  Array<double,2> bReqs;  // sine component of delta B_parallel values on central chord
+  Array<double,2> dneeqc; // cosine component of delta n_e values on central chord
+  Array<double,2> dneeqs; // cosine component of delta n_e values on central chord
+  Array<double,2> dTeeqc; // cosine component of delta T_e values on central chord
+  Array<double,2> dTeeqs; // sine component of delta T_e values on central chord
 
-  double* Leq; // Length along tilted central chord
+  // -----------
+  // Island data
+  // -----------
+  int                Nh;         // Number of harmonics in island calculation (read from ISLAND JSON file)
+  int                NX;         // Number radial grid-points in island calculation (read from ISLAND JSON file)
+  double             Finf;       // Asymptotic value of X - deltaT[0] (read from Outputs/Island/Island.nc)
+  double*            XX;         // Island solution radial grid (read from Outputs/Island/Island.nc)
+  Array<double,2>    deltaTh;    // Harmonics of perturbed electron temperature in vicinity of island (read from Outputs/Island/Island.nc)
+
+  gsl_spline**       dThspline;  // Interpolated island harmonic functions
+     
+  gsl_interp_accel** dThacc;     // Accelerator for interpolated island harmonic functions
   
   // --------------------------
   // Plasma boundary parameters
@@ -428,7 +442,7 @@ class TJ : private Utility
   // Visualization of tearing eigenfunctions
   // ---------------------------------------
   int                      Nf;     // Number of radial grid-points on visualization grid (from Equilibrium.nc)
-  int                      Nw;     // Number of angular grid-points on visualization grid (from Equilibrium.nc)
+  int                      Nw;     // Number of poloidal grid-points on visualization grid (from Equilibrium.nc)
   double*                  rf;     // Radial grid-points on visualization grid (from Equilibrium.nc)
   Array<double,2>          RR;     // R coordinates of visualization grid-points (from Equilibrium.nc)
   Array<double,2>          ZZ;     // Z coordinates of visualization grid-points (from Equilibrium.nc)
@@ -460,14 +474,20 @@ class TJ : private Utility
   Array<double,3>          bPs;    // Sin component of R b^^phi on visualization grid
   Array<double,3>          xic;    // Cosine component of xi^r on visualization grid
   Array<double,3>          xis;    // Sin component of xi^r on visualization grid
-  Array<double,3>          nec;    // Cosine component of n_e on visualization grid
-  Array<double,3>          nes;    // Sin component of n_e on visualization grid
-  Array<double,3>          Tec;    // Cosine component of T_e on visualization grid
-  Array<double,3>          Tes;    // Sin component of T_e on visualization grid
-  Array<double,3>          dnec;   // Cosine component of delta n_e on visualization grid
-  Array<double,3>          dnes;   // Sin component of delta n_e on visualization grid
-  Array<double,3>          dTec;   // Cosine component of delta T_e on visualization grid
-  Array<double,3>          dTes;   // Sin component of delta T_e on visualization grid
+
+  // ----------------------------------------
+  // Vizualization of temperature and density 
+  // ----------------------------------------
+  int                      NPHI;   // Number of toroidal grid-points on extended vizualization grid (from TJ JSON file)
+  double*                  PP;     // Toroidal grid-points on extended visualization grid
+  Array<double,3>          nec;    // Cosine component of n_e on extended visualization grid
+  Array<double,3>          nes;    // Sin component of n_e on extended visualization grid
+  Array<double,3>          Tec;    // Cosine component of T_e on extended visualization grid
+  Array<double,3>          Tes;    // Sin component of T_e on extended visualization grid
+  Array<double,3>          dnec;   // Cosine component of delta n_e on extended visualization grid
+  Array<double,3>          dnes;   // Sin component of delta n_e on extended visualization grid
+  Array<double,3>          dTec;   // Cosine component of delta T_e on extended visualization grid
+  Array<double,3>          dTes;   // Sin component of delta T_e on extended visualization grid
     
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response
@@ -602,12 +622,14 @@ class TJ : private Utility
   // In ReadEquilibrium.cpp
   // ......................
 
-  // Read equilibrium data from Inputs/Equilibrium.nc
+  // Read equilibrium data from Outputs/Equilibrium/Equilibrium.nc
   void ReadEquilibrium ();
   // Calculate metric data at plasma boundary
   void CalculateMetricBoundary ();
   // Calculate metric data at wall
   void CalculateMetricWall ();
+  // Read island data from Outputs/Island/Island.nc
+  void ReadIsland ();
     
   // .............
   // In Vacuum.cpp
@@ -860,7 +882,9 @@ class TJ : private Utility
   // .............
 
   // Read equilibrium data from netcdf file
-  void ReadNetcdf ();
+  void ReadEquilibriumNetcdf ();
+  // Read island data from netcdf file
+  void ReadIslandNetcdf ();
   // Write stability data to netcdf file
   void WriteNetcdf ();
 };

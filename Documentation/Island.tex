@@ -24,13 +24,13 @@ $X=0$ and $\zeta=\pi$. The O-point corresponds to ${\mit\Omega}=-1$, whereas the
 8\,X^2$ in the limit $|X|\gg 1$. 
 
 \section{Temperature Perturbation in Inner Region}
-Let $T_0(X)$ be the unperturbed temperature profile. Let 
+Let $T_0(r)$ be the unperturbed temperature profile. Let 
 \begin{equation}\label{e2}
 T(X,\zeta) = T_s + {\rm sgn}(X)\,W\,T_s'\,\tilde{T}({\mit\Omega})
 \end{equation}
  be the temperature profile in the presence of the island,
-where $T_s=T_0(0)$, and  $T_s'=(dT_0/dx)_{x=0}$. 
-The perturbed temperature profile, $\tilde{T}({\mit\Omega})$,  satisfies the energy conservation equation
+where $T_s=T_0(r_s)$, and  $T_s'=(dT_0/dr)_{r=r_s}$. 
+The normalized perturbed temperature profile, $\tilde{T}({\mit\Omega})$,  satisfies the energy conservation equation
 \begin{equation}\label{e3}
 \frac{d}{d{\mit\Omega}}\!\left[\oint({\mit\Omega}-\cos\zeta)^{1/2}\,\frac{d\zeta}{2\pi}\,\frac{d\tilde{T}}{d
 {\mit\Omega}} \right]= 0,
@@ -39,7 +39,7 @@ subject to the boundary condition that
 \begin{equation}\label{e4}
 \tilde{T}({\mit\Omega}) \rightarrow |X|
 \end{equation}
-as $|X|\rightarrow\infty$. 
+as $|X|\rightarrow\infty$. Note that $T(X,\zeta)-T_s$ is an odd function of $X$. 
 
 Equations~(\ref{e2}) and (\ref{e3})
 imply that
@@ -55,7 +55,7 @@ Let
 \begin{equation}
 k = \left(\frac{1+{\mit\Omega}}{2}\right)^{1/2}.
 \end{equation}
-The O-point corresponds to $k=0$, whereas the magnetic separatrix corresponds to $k=1$. Note that $k\rightarrow 2\,|X|$ as $|X| \rightarrow\infty$. 
+The island O-point corresponds to $k=0$, whereas the magnetic separatrix corresponds to $k=1$. Note that $k\rightarrow 2\,|X|$ as $|X| \rightarrow\infty$. 
 
 Equation~(\ref{e6}) yields
 \begin{equation}
@@ -63,8 +63,9 @@ Equation~(\ref{e6}) yields
 \end{equation}
 where
 \begin{equation}
-E(p) \equiv \int_0^{\pi/2}(1-p^2\,\sin^2\theta)^{1/2}\,d\theta.
+E(p) \equiv \int_0^{\pi/2}(1-p^2\,\sin^2\theta)^{1/2}\,d\theta
 \end{equation}
+is a complete elliptic integral. 
 The boundary condition (\ref{e4}) implies that
 \begin{equation}
 c = \frac{1}{4\sqrt{2}}.
@@ -121,7 +122,7 @@ where the integral is at constant $|X|$. Integrating by parts, we obtain
 \end{equation}
 But,
 \begin{equation}
-\frac{\partial T}{\partial \zeta}=\frac{dT}{dk}\,\frac{\partial k}{\partial\zeta}=-\frac{dT}{dk}\,\frac{\sin\zeta}{4\,k} = -\frac{\pi}{16}\,\frac{\sin\zeta}{k\,E(1/k)},
+\frac{\partial\tilde{T}}{\partial \zeta}=\frac{d\tilde{T}}{dk}\,\frac{\partial k}{\partial\zeta}=-\frac{d\tilde{T}}{dk}\,\frac{\sin\zeta}{4\,k} = -\frac{\pi}{16}\,\frac{\sin\zeta}{k\,E(1/k)},
 \end{equation}
 so
 \begin{equation}
@@ -152,32 +153,43 @@ It follows that
 F(k) &\simeq \frac{k}{2} - F_\infty,\\[0.5ex]
 \delta T_0(|X|)&\simeq |X| - F_\infty,\\[0.5ex]
 \delta T_1(|X|) &\simeq \frac{1}{16\,|X|},\\[0.5ex]
-\delta T_{\nu>1}(|X|)& \sim {\cal O}\left(\frac{1}{|X|^3}\right).
+\delta T_{\nu>1}(|X|)& \sim {\cal O}\left(\frac{1}{|X|^3}\right),
 \end{align}
+where
+\begin{equation}
+F_\infty = 0.3447.
+\end{equation}
 
 \section{Asymptotic Matching}
-Consider the $k$th rational surface whose radius is $r_k$ and whose resonant poloidal mode number is $m_k$. Let $\zeta_k=m_k\,\theta-n\,\phi$. 
-Let $x=r-r_k$.
+Consider the $k$th rational surface whose radius is $r_k$ and whose resonant poloidal mode number is $m_k$. Let  $x=r-r_k$ and $\zeta_k=m_k\,\theta-n\,\phi$. 
 
  In the outer region,  we write the total electron temperature as 
-\begin{equation}
-\tilde{T}_e(r, \theta,\phi)=T_e(r) - {\mit\Psi}_k\,\frac{q(r)}{r\,g(r)}\,\frac{T_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k},
+\begin{equation}\label{e36}
+\tilde{T}_e(r, \theta,\phi)=T_0(r) - {\mit\Psi}_k\,\frac{q(r)}{r\,g(r)}\,\frac{T_0'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k},
 \end{equation}
-where $T_e'=dT_e/dr$, $T_e(r)$ is the equilibrium electron temperature profile, ${\mit\Psi}_k$ is the reconnected flux, and 
+where $T_0'=dT_0/dr$, $T_0(r)$ is the equilibrium electron temperature profile, ${\mit\Psi}_k$ is the reconnected flux, and 
 \begin{equation}
 W_k = 4\left(\frac{q}{g\,s}\right)^{1/2}_{r_k}\,{\mit\Psi}_k^{1/2}
 \end{equation}
-is the island width. In the limit, $|x|\ll 1$, we get
+is the island width. Note that 
+\begin{equation}
+T_0(r) = \frac{B_0^{\,2}}{2\,\mu_0\,e\,n_0}\,\epsilon_a^{\,2}\,p_c\,(1-\hat{r}^{\,2})^{\mu-\alpha} + T_{e\,{\rm ped}},
+\end{equation}
+giving
+\begin{equation}
+\frac{dT_0}{dr} =  \frac{B_0^{\,2}}{\mu_0\,e\,n_0}\,\epsilon_a\,p_c\,(\mu-\alpha)\,\hat{r}\,(1-\hat{r}^{\,2})^{\mu-\alpha-1}.
+\end{equation}
+ In the limit, $|x|\ll 1$, Eq.~(\ref{e36}) yield 
 \begin{equation}
 \tilde{T}_e(x, \theta,\phi)=T_{e\,k} + T_{e\,k}'\,x + \frac{T_{e\,k}'\,W_k^{\,2}}{16\,x}\,{\rm e}^{\,{\rm i}\,\zeta_k},
 \end{equation}
-Here, $T_{e\,k}=T_e(r_k)$ and $T_{e\,k}'= T_e'(r_k)$. 
+Here, $T_{e\,k}=T_0(r_k)$ and $T_{e\,k}'= (dT_0/dr)_{r_k}$. 
 
 In the inner region, we write the total electron temperature as 
 \begin{equation}
 \tilde{T}_e(x, \theta,\phi)=T_{e\,k} +{\rm sgn}(x)\,T_{e\,k}'\,W_k\sum_{\nu=0,\infty}\delta T_\nu(|x|/W_k)\,{\rm e}^{\,{\rm i}\,\nu\,\zeta_k}+T_{e\,k}'\,W_k\,F_\infty,
 \end{equation}
-In the limit $x\gg W_k$, we get
+In the limit $x\gg W_k$, the previous equation yields 
 \begin{equation}
 \tilde{T}_e(x,\theta,\phi) \simeq T_{e\,k} + T_{e\,k}'\,x + \frac{T_{e\,k}'\,W_k^{\,2}}{16\,x}\,{\rm e}^{\,{\rm i}\,\zeta_k},
 \end{equation}
@@ -186,13 +198,13 @@ On the other hand, in the limit $x\ll -W_k$, we get
 \tilde{T}_e(x,\theta,\phi) \simeq T_{e\,k} + T_{e\,k}'\,x  + 2\,T_{e\,k}'\,W_k\,F_\infty + \frac{T_{e\,k}'\,W_k^{\,2}}{16\,x}\,{\rm e}^{\,{\rm i}\,\zeta_k}.
 \end{equation}
 
-The asymptotic matching consists of writing
+The asymptotic matching process consists of writing
 \begin{equation}
-\tilde{T}_e(r,\theta,\phi) = T_e(r) + \delta T_{e\,+} - {\mit\Psi}_{k+}\,\frac{q(r)}{r\,g(r)}\,\frac{T_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k}
+\tilde{T}_e(r,\theta,\phi) = T_0(r) + \delta T_{e\,+} - {\mit\Psi}_{k+}\,\frac{q(r)}{r\,g(r)}\,\frac{T_0'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k}
 \end{equation}
 in the region $r>r_k+W_k$, 
 \begin{equation}
-\tilde{T}_e(r,\theta,\phi) = T_e(r) + \delta T_{e\,-} - {\mit\Psi}_{k-}\,\frac{q(r)}{r\,g(r)}\,\frac{T_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k}
+\tilde{T}_e(r,\theta,\phi) = T_0(r) + \delta T_{e\,-} - {\mit\Psi}_{k-}\,\frac{q(r)}{r\,g(r)}\,\frac{T_0'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k}
 \end{equation}
 in the region $r< r_k-W_k$, and 
 \begin{equation}
@@ -200,10 +212,39 @@ in the region $r< r_k-W_k$, and
 \end{equation}
 in the region $r_k-W_k \leq r\leq r_k+W_k$. Continuity of the solution at $r=r_k\pm W_k$ implies that
 \begin{align}
-\delta T_{e\,+} &= T_{e\,k} + T_{e\,k}'\,W_k\,\delta T_0(1)+T_{e\,k}'\,W_k\,F_\infty - T_e(r_k+W_k),\\[0.5ex]
-\delta T_{e\,-} &= T_{e\,k} - T_{e\,k}'\,W_k\,\delta T_0(1) +T_{e\,k}'\,W_k\,F_\infty- T_w(r_k-W_k),\\[0.5ex]
-{\mit\Psi}_{k\,+} &= - T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_e'\,\psi_{m\,k}}\right)_{r_k+W_k},\\[0.5ex]
-{\mit\Psi}_{k\,-} &= T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_e'\,\psi_{m\,k}}\right)_{r_k-W_k}.
+\delta T_{e\,+} &= T_{e\,k} + T_{e\,k}'\,W_k\,\delta T_0(1)+T_{e\,k}'\,W_k\,F_\infty - T_0(r_k+W_k),\\[0.5ex]
+\delta T_{e\,-} &= T_{e\,k} - T_{e\,k}'\,W_k\,\delta T_0(1) +T_{e\,k}'\,W_k\,F_\infty- T_0(r_k-W_k),\\[0.5ex]
+{\mit\Psi}_{k\,+} &= - T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_0'\,\psi_{m\,k}}\right)_{r_k+W_k},\\[0.5ex]
+{\mit\Psi}_{k\,-} &= T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_0'\,\psi_{m\,k}}\right)_{r_k-W_k}.
+\end{align}
+
+Finally, for the special case $m=1$, we write
+\begin{equation}
+\tilde{T}(r,\theta,\phi) = - \xi^r(r,\theta,\phi)\,\frac{dT_0}{dr}.
+\end{equation}
+
+\subsection{Normalized Quantities}
+Let $\hat{r}=r/\epsilon_a$, $\hat{r}_k=r_k/\epsilon_a$, $\hat{x}= x/\epsilon_a$, $\hat{T}_0' = \epsilon_a\,T_0'$, $T_{e\,k}'=\epsilon_a\,T_{e\,k}$, 
+$\hat{W}_k = W_k/\epsilon_a$, and $\hat{\mit\Psi}_k={\mit\Psi}_k/\epsilon_a^{\,2}$, etc., 
+then
+\begin{equation}
+\tilde{T}_e(\hat{r},\theta,\phi) = T_0(r) + \delta T_{e\,+} - \hat{\mit\Psi}_{k+}\,\frac{q(\hat{r})}{\hat{r}\,g(\hat{r})}\,\frac{\hat{T}_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(\hat{r})}\,{\rm e}^{\,{\rm i}\,\zeta_k}
+\end{equation}
+in the region $\hat{r}>\hat{r}_k+\hat{W}_k$, 
+\begin{equation}
+\tilde{T}_e(\hat{r},\theta,\phi) = T_0(\hat{r}) + \delta T_{e\,-} - \hat{{\mit\Psi}}_{k-}\,\frac{q(\hat{r})}{\hat{r}\,g(\hat{r})}\,\frac{\hat{T}_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(\hat{r})}\,{\rm e}^{\,{\rm i}\,\zeta_k}
+\end{equation}
+in the region $\hat{r}< \hat{r}_k-\hat{W}_k$, and 
+\begin{equation}
+\tilde{T}_e(\hat{r}, \theta,\phi)=T_{e\,k} +{\rm sgn}(\hat{x})\,\hat{T}_{e\,k}'\,\hat{W}_k\sum_{\nu=0,\infty}\delta T_\nu(|\hat{x}|/\hat{W}_k)\,{\rm e}^{\,{\rm i}\,\nu\,\zeta_k}+\hat{T}_{e\,k}'\,\hat{W}_k\,F_\infty
+\end{equation}
+in the region $\hat{r}_k-\hat{W}_k \leq \hat{r}\leq \hat{r}_k+\hat{W}_k$. Here, 
+\begin{align}
+\delta T_{e\,+} &= T_{e\,k} + \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_0(1)+\hat{T}_{e\,k}'\,\hat{W}_k\,F_\infty - T_0(\hat{r}_k+\hat{W}_k),\\[0.5ex]
+\delta T_{e\,-} &= T_{e\,k} - \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_0(1) +\hat{T}_{e\,k}'\,\hat{W}_k\,F_\infty- T_0(\hat{r}_k-\hat{W}_k),\\[0.5ex]
+\hat{\mit\Psi}_k&=\left(\frac{\hat{W}_k}{4}\right)^2\left(\frac{g\,s}{q}\right)_{\hat{r}_k},\\[0.5ex]
+\hat{\mit\Psi}_{k\,+} &= - \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_1(1)\left(\frac{\hat{r}\,g}{q}\,\frac{m_k-n\,q}{\hat{T}_0'\,\psi_{m\,k}}\right)_{\hat{r}_k+\hat{W}_k},\\[0.5ex]
+\hat{\mit\Psi}_{k\,-} &= \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_1(1)\left(\frac{\hat{r}\,g}{q}\,\frac{m_k-n\,q}{\hat{T}_0'\,\psi_{m\,k}}\right)_{\hat{r}_k-\hat{W}_k}.
 \end{align}
 
 

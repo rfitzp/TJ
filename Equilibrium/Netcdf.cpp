@@ -2,6 +2,10 @@
 
 #include "Equilibrium.h"
 
+#define NINPUT 18
+#define NPARA 3
+#define NBETA 4
+
 // #################################################
 // Function to write equilibrium data to netcdf file
 // #################################################
@@ -9,7 +13,7 @@ void Equilibrium::WriteNetcdf (double sa)
 {
   printf ("Writing equilibrium data to netcdf file Outputs/Equilibrium/Equilibrium.nc:\n");
 
-  double para[3], Input[18], Beta[4];
+  double para[NPARA], Input[NINPUT], Beta[NBETA];
 
   double* Hna   = new double[Ns+1];
   double* Vna   = new double[Ns+1];
@@ -64,9 +68,9 @@ void Equilibrium::WriteNetcdf (double sa)
       dataFile.putAtt ("Compile_Time", COMPILE_TIME);
       dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
   
-      NcDim i_d = dataFile.addDim ("Ni",    18);
-      NcDim p_d = dataFile.addDim ("Np",    3);
-      NcDim b_d = dataFile.addDim ("Nb",    4);
+      NcDim i_d = dataFile.addDim ("Ni",    NINPUT);
+      NcDim p_d = dataFile.addDim ("Np",    NPARA);
+      NcDim b_d = dataFile.addDim ("Nb",    NBETA);
       NcDim r_d = dataFile.addDim ("Nr",    Nr+1);
       NcDim s_d = dataFile.addDim ("Ns",    Ns+1);
       NcDim f_d = dataFile.addDim ("Nf",    Nf);

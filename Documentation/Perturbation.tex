@@ -79,18 +79,6 @@ where
 \begin{equation}
 \hat{\psi}_m(r) = \frac{\psi_m}{m-n\,q}.
 \end{equation}
-Thus,
-\begin{equation}
-\delta T_e = -\xi^r\,\frac{dT_e}{dr}.
-\end{equation}
-But,
-\begin{equation}
-T_e(r) = \frac{B_0^{\,2}}{2\,\mu_0\,e\,n_0}\,\epsilon_a^{\,2}\,p_c\,(1-\hat{r}^{\,2})^{\mu-\alpha},
-\end{equation}
-giving
-\begin{equation}
-\frac{dT_e}{dr} =  \frac{B_0^{\,2}}{\mu_0\,e\,n_0}\,\epsilon_a\,p_c\,(\mu-\alpha)\,\hat{r}\,(1-\hat{r}^{\,2})^{\mu-\alpha-1}.
-\end{equation}
 
 \section{Regularization}
 In evaluating the perturbed magnetic field associated with the unreconnected eigenfunction at the $k$th rational surface, we make the
@@ -109,12 +97,12 @@ W_k = 4\left(\frac{q}{g\,s}\right)_{r_k}^{1/2}{\mit\Psi}_k^{\,1/2}
 is the magnetic island width at the $k$th rational surface. 
 Thus, 
 \begin{equation}
-{\mit\Psi}_k= \epsilon_a^{\,2} \left(\frac{W_k}{4\,\epsilon_a}\right)^2\left(\frac{g\,s}{q}\right)_{r_k}.
+\frac{{\mit\Psi}_k}{\epsilon_a}= \epsilon_a \left(\frac{W_k}{4\,\epsilon_a}\right)^2\left(\frac{g\,s}{q}\right)_{r_k}.
 \end{equation}
 For the special case of an $m=1$ mode,
 \begin{align}
 \delta_k &= \frac{m_k\,s(r_k)}{2\,\hat{r}_k}\,\frac{\xi_k}{\epsilon_a},\\[0.5ex]
-{\mit\Psi}_k &= \epsilon_a^{\,2}\,\left(\frac{\hat{r}\,g\,s}{q}\right)_{r_k}\frac{1}{|E_{kk}|} \left(\frac{\xi_k}{\epsilon_a}\right),
+\frac{{\mit\Psi}_k}{\epsilon_a} &= \epsilon_a\left(\frac{\hat{r}\,g\,s}{q}\right)_{r_k}\frac{1}{|E_{kk}|} \left(\frac{\xi_k}{\epsilon_a}\right),
 \end{align}
 where $\xi_k$ is the displacement of the plasma core. 
 
@@ -174,94 +162,5 @@ It turns out that
 k_m = \tilde{k}_m - \tilde{k}_0
 \end{equation}
 for all $m$. 
-
-
-\iffalse
-\section{Magnetic Field-Line Tracing}
-The magnetic field-line tracing equation is
-\begin{equation}
-\frac{d{\bf x}}{d\zeta} = {\bf B} +{\bf b},
-\end{equation}
-where ${\bf x}$ is a vector position, $\zeta$ parameterizes location on a given magnetic field-line, ${\bf B}$ is the equilibrium magnetic
-field, and ${\bf b}$ the perturbed magnetic field. 
-In the $r$, $\theta$, $\phi$ flux coordinate system (where all lengths are normalized to $R_0$, and all magnetic field-strengths to $B_0$), we can write
-\begin{equation}
-d{\bf x} = dr\,{\cal J}\,\nabla\theta\times \nabla\phi + d\theta\,{\cal J}\,\nabla\phi\times\nabla r + d\phi\,{\cal J}\,\nabla r\times\nabla \theta,
-\end{equation}
-so that $dr = d{\bf x}\cdot\,\nabla r$, et cetera. We can also write [see TJ Eq.~(A1)] 
-\begin{equation}
-{\bf b} +{\bf B} = (B^{\,r}+b^r)\,{\cal J}\,\nabla\theta\times \nabla\phi + (B^{\,\theta}+b^\theta)\,{\cal J}\,\nabla\phi\times\nabla r + (B^{\,\phi}+b^\phi)\,{\cal J}\,\nabla r\times\nabla \theta.
-\end{equation}
-Hence, we deduce that
-\begin{align}
-\frac{dr}{d\zeta} & = B^{\,r} + b^r,\\[0.5ex]
-\frac{d\theta}{d\zeta}&= B^{\,\theta}+ b^\theta,\\[0.5ex]
-\frac{d\phi}{d\zeta} &= B^{\,\phi}+ b^\phi.
-\end{align}
-However [see TJ Eqs.~(4)--(7)], 
-\begin{align}
-B^{\,r} &=0,\\[0.5ex]
-B^{\,\theta}&= \frac{g}{q\,R^{\,2}},\\[0.5ex]
-B^{\,\phi}&= \frac{g}{R^{\,2}},
-\end{align}
-
-It follows that 
-\begin{align}
-\frac{dr}{d\bar{\zeta}}&= -\frac{1}{r\,g(r)}\sum_m\left\{{\rm Re}[\psi_m(r)]\,\sin(m\,\theta-n\,\phi) + {\rm Im}[\psi_m(r)]\,\cos(m\,\theta-n\,\phi)\right\},\\[0.5ex]
-\frac{d\theta}{d\bar{\zeta}}&= \frac{1}{q(r)} -\frac{1}{r^2\,g(r)}\sum_m^{m\neq 0} \frac{{\rm Re}[\chi_m(r)]\,\cos(m\,\theta-n\,\phi) - {\rm Im}[\chi_m(r)]\,\sin(m\,\theta-n\,\phi)}{m}, \\[0.5ex]
-\frac{d\phi}{d\bar{\zeta}}&= 1 + \frac{n}{g(r)}\sum_m\frac{{\rm Re}[Y_m(r)]\,\cos(m\,\theta-n\,\phi) - {\rm Im}[Y_m(r)]\,\sin(m\,\theta-n\,\phi)}{m-n\,q(r)},
-\end{align}
-where $g\,d\zeta/R^{\,2}= d\bar{\zeta}$, and
-\begin{align}
-Y_m(r)= Z_m(r) + k_m(r)\,\psi_m(r).
-\end{align}
-
-Thus,
-\begin{align}
-\frac{dr}{d\bar{\zeta}}&= C_r(r,\theta)\,\cos(n\,\phi) + S_r(r,\theta)\,\sin(n\,\phi),\\[0.5ex]
-\frac{d\theta}{d\bar{\zeta}}&=\frac{1}{q(r)}+ C_\theta(r,\theta)\,\cos(n\,\phi) + C_\theta(r,\theta)\,\sin(n\,\phi),\\[0.5ex]
-\frac{d\phi}{d\bar{\zeta}}&= 1+C_\phi(r,\theta)\,\cos(n\,\phi) + S_\phi(r,\theta)\,\sin(n\,\phi),
-\end{align}
-where
-\begin{align}
-C_r(r,\theta)&=-\frac{1}{r\,g(r)}\sum_m\left\{{\rm Re}[\psi_m(r)]\,\sin(m\,\theta) + {\rm Im}[\psi_m(r)]\,\cos(m\,\theta)\right\},\\[0.5ex]
-S_r(r,\theta)&=-\frac{1}{r\,g(r)}\sum_m\left\{ -{\rm Re}[\psi_m(r)]\,\cos(m\,\theta) + {\rm Im}[\psi_m(r)]\,\sin(m\,\theta)\right\},\\[0.5ex]
-C_\theta(r,\theta)&=-\frac{1}{r^2\,g(r)}\sum_{m}^{m\neq 0}\frac{{\rm Re}[\chi_m(r)]\,\cos(m\,\theta) - {\rm Im}[\chi_m(r)]\,\sin(m\,\theta)}{m},\\[0.5ex]
-S_\theta(r,\theta)&=-\frac{1}{r^2\,g(r)}\sum_{m}^{m\neq 0}\frac{{\rm Re}[\chi_m(r)]\,\sin(m\,\theta) + {\rm Im}[\chi_m(r)]\,\cos(m\,\theta)}{m},\\[0.5ex]
-C_\phi(r,\theta)&=\frac{n}{g(r)}\sum_{m}\frac{{\rm Re}[Y_m(r)]\,\cos(m\,\theta) - {\rm Im}[Y_m(r)]\,\sin(m\,\theta)}{m-n\,q(r)},\\[0.5ex]
-S_\phi(r,\theta)&=\frac{n}{g(r)}\sum_{m}\frac{{\rm Re}[Y_m(r)]\,\sin(m\,\theta) + {\rm Im}[Y_m(r)]\,\cos(m\,\theta)}{m-n\,q(r)}.
-\end{align}
-
-We can perform a field-line tracing exercise for every unreconnected eigenfunction. Thus, for the reconnected eigenfunction associated with the $k$th rational surface, 
-\begin{align}
-\frac{dr}{d\bar{\zeta}}&= C_{r\,k}(r,\theta)\,\cos(n\,\phi) + S_{r\,k}(r,\theta)\,\sin(n\,\phi),\\[0.5ex]
-\frac{d\theta}{d\bar{\zeta}}&=\frac{1}{q(r)}+ C_{\theta\,k}(r,\theta)\,\cos(n\,\phi) + C_{\theta\,k}(r,\theta)\,\sin(n\,\phi),\\[0.5ex]
-\frac{d\phi}{d\bar{\zeta}}&= 1+C_{\phi\,k}(r,\theta)\,\cos(n\,\phi) + S_{\phi\,k}(r,\theta)\,\sin(n\,\phi),
-\end{align}
-where
-\begin{align}
-C_{r\,k}(r,\theta)&=-\frac{{\mit\Psi}_k}{r\,g(r)}\sum_m\left\{{\rm Re}[\psi_{m\,k}^u(r)]\,\sin(m\,\theta) + {\rm Im}[\psi_{m\,k}^u(r)]\,\cos(m\,\theta)\right\},\\[0.5ex]
-S_{r\,k}(r,\theta)&=-\frac{{\mit\Psi}_k}{r\,g(r)}\sum_m\left\{ -{\rm Re}[\psi_{m\,k}^u(r)]\,\cos(m\,\theta) + {\rm Im}[\psi_{m\,k}^u(r)]\,\sin(m\,\theta)\right\},\\[0.5ex]
-C_{\theta\,k}(r,\theta)&=-\frac{{\mit\Psi}_k}{r^2\,g(r)}\sum_{m}^{m\neq 0}\frac{{\rm Re}[\chi_{m\,k}^u(r)]\,\cos(m\,\theta) - {\rm Im}[\chi_{m\,k}^u(r)]\,\sin(m\,\theta)}{m},\\[0.5ex]
-S_{\theta\,k}(r,\theta)&=-\frac{{\mit\Psi}_k}{r^2\,g(r)}\sum_{m}^{m\neq 0}\frac{{\rm Re}[\chi_{m\,k}^u(r)]\,\sin(m\,\theta) + {\rm Im}[\chi_{m\,k}^u(r)]\,\cos(m\,\theta)}{m},\\[0.5ex]
-C_{\phi\,k}(r,\theta)&=\frac{n\,{\mit\Psi}_k}{g(r)}\sum_{m}\frac{{\rm Re}[Y_{m\,k}^u(r)]\,\cos(m\,\theta) - {\rm Im}[Y_{m\,k}^u(r)]\,\sin(m\,\theta)}{m-n\,q(r)},\\[0.5ex]
-S_{\phi\,k}(r,\theta)&=\frac{n\,{\mit\Psi}_k}{g(r)}\sum_{m}\frac{{\rm Re}[Y_{m\,k}^u(r)]\,\sin(m\,\theta) + {\rm Im}[Y_{m\,k}^u(r)]\,\cos(m\,\theta)}{m-n\,q(r)},
-\end{align}
-and ${\mit\Psi}_k$ is the reconnected helical magnetic flux at the $k$th rational surface. 
-In evaluating the previous expressions, we write
-\begin{align}
-\frac{1}{m_k-n\,q} = \frac{m_k-n\,q}{\delta_k^{\,2} + (m_k-n\,q)^2},
-\end{align}
-where $m_k$ is the resonant poloidal mode number at the $k$ rational surface, and
-\begin{equation}
-\delta_k = \frac{m_k\,s(r_k)}{2}\,\frac{W_k}{r_k}.
-\end{equation}
-Here, $r_k$ is the minor radius of the $k$th rational surface, $s(r)$ is the magnetic shear, and 
-\begin{equation}
-W_k = 4\left(\frac{q}{g\,s}\right)_{r_k}^{1/2}{\mit\Psi}_k^{\,1/2}
-\end{equation}
-is the magnetic island width at the $k$th rational surface. If $n\,\phi=0$ then we expect the island O-point to be located at $\theta=\pi/m_k$. If $n\,\phi=\pi$ then
-we expect the island O-point to be located at $\theta=0$. 
-\fi
 
 \end{document}

@@ -59,22 +59,22 @@ private:
   // .................
   int    Nh;    // Number of harmonics in calculation (read from JSON file)
   int    Nz;    // Number of angular grid points (read from JSON file)
-  int    Nx;    // Number of radial grid points (read from JSON file)
-  double xmax;  // Maximum value of radial variable (in island widths) (read from JSON file)
+  int    NX;    // Number of radial grid points (read from JSON file)
+  double Xmax;  // Maximum value of radial variable (in island widths) (read from JSON file)
 
   // ................
   // Calculation data
   // ................
-  double          x;       // Radial coordinate
-  double*         xx;      // Radial grid points
+  double          X;       // Normalized Radial coordinate
+  double*         XX;      // Normalized radial grid points
   double*         kk;      // k grid points
   double*         zz;      // Angular grid points
   double*         F;       // Temperature perturbation flux-function
-  double          Finf;    // Asymptotic value of x - F at large x
-  double*         dTo;     // Temperature perturbation versus x at zeta = pi
-  double*         dTx;     // Temperature perturbation versus x at zeta = 0
-  Array<double,2> deltaTh; // Harmonics of temperature perturbation versus x
-  Array<double,2> deltaT;  // Temperature perturbation versus x and zeta
+  double          Finf;    // Asymptotic value of X - deltaT[0] at large X
+  double*         dTo;     // Temperature perturbation versus X at zeta = pi
+  double*         dTx;     // Temperature perturbation versus X at zeta = 0
+  Array<double,2> deltaTh; // Harmonics of temperature perturbation versus X
+  Array<double,2> deltaT;  // Temperature perturbation versus X and zeta
   
   gsl_spline*        Fspline;  // Interpolated F(k) function
   gsl_interp_accel*  Facc;     // Accelerator for interpolated F(k) function

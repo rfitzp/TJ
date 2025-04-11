@@ -11,7 +11,7 @@ ncont = 360
 
 fn   = '../../Outputs/Island/Island.nc'
 ds   = nc.Dataset(fn)
-x    = np.asarray(ds['x'])
+x    = np.asarray(ds['X'])
 z    = np.asarray(ds['zeta']) /math.pi
 t    = np.asarray(ds['delta_T'])
 

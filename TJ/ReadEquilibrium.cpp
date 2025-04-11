@@ -2,15 +2,15 @@
 
 #include "TJ.h"
 
-// ###########################################################
-// Function to read equilibrium data from Plots/Equilibrium.nc
-// ###########################################################
+// #########################################################################
+// Function to read equilibrium data from Outputs/Equilibrium/Equilibrium.nc
+// #########################################################################
 void TJ::ReadEquilibrium ()
 {
   // ......................................
   // Read equilibrium data from netcdf file
   // ......................................
-  ReadNetcdf ();
+  ReadEquilibriumNetcdf ();
   
   // .....................................................
   // Allocate memory for interpolation of equilibrium data
@@ -210,3 +210,41 @@ void TJ::CalculateMetricBoundary ()
   gsl_spline_init (Rrespline, tbound, R2grge, Nw+1);
 }
 
+// ##########################################################
+// Function to read island data from Outputs/Island/Island.nc
+// ##########################################################
+void TJ::ReadIsland ()
+{
+  // ......................................
+  // Read equilibrium data from netcdf file
+  // ......................................
+  ReadIslandNetcdf ();
+
+  // .....................................................
+  // Allocate memory for interpolation of island harmonics
+  // .....................................................
+  dThspline = new gsl_spline* [Nh];
+
+  dThacc    = new gsl_interp_accel* [Nh];
+
+  for (int n = 0; n < Nh; n++)
+    {
+      dThspline[n] = gsl_spline_alloc (gsl_interp_cspline, NX);
+
+      dThacc[n]    = gsl_interp_accel_alloc ();
+    }
+
+  // ................................
+  // Interpolate island harmonic data
+  // ................................
+  double* data = new double[NX];
+  
+  for (int n = 0; n < Nh; n++)
+    {
+      for (int i = 0; i < NX; i++)
+	data[i] = deltaTh(n, i);
+      gsl_spline_init (dThspline[n], XX, data, NX);
+    }
+  delete[] data;
+}
+  

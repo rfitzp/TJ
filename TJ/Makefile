@@ -12,9 +12,11 @@ LIB_DIR         = ../lib
 UTILITY_DIR     = ../Utility
 EQUILIBRIUM_DIR = ../Equilibrium
 LAYER_DIR       = ../Layer
+ISLAND_DIR      = ../Island
 
 EQUILIBRIUM_LIB = $(LIB_DIR)/libEquilibrium.a
 LAYER_LIB       = $(LIB_DIR)/libLayer.a
+ISLAND_LIB      = $(LIB_DIR)/libIsland.a
 
 C_HEADER = TJ.h 
 C_SOURCE = main.cpp TJ.cpp ReadEquilibrium.cpp Interpolate.cpp Rational.cpp Matrix.cpp Vacuum.cpp Armadillo.cpp\
@@ -24,8 +26,8 @@ U_OBJECT = ../Utility/Utility.o
 
 EXECUTABLE = ../bin/tj
 
-$(EXECUTABLE):	 	$(C_OBJECT) $(BUILD_DIR) $(EQUILIBRIUM_LIB) $(LAYER_LIB)
-			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(U_OBJECT) $(C_LIBS) -L../lib -lEquilibrium -lLayer 
+$(EXECUTABLE):	 	$(C_OBJECT) $(BUILD_DIR) $(EQUILIBRIUM_LIB) $(LAYER_LIB) $(ISLAND_LIB)
+			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(U_OBJECT) $(C_LIBS) -L../lib -lEquilibrium -lLayer -lIsland
 
 $(BUILD_DIR):
 			@mkdir -p $(BUILD_DIR)
@@ -41,6 +43,9 @@ $(EQUILIBRIUM_LIB):
 
 $(LAYER_LIB):
 			$(MAKE) -C $(LAYER_DIR)
+
+$(ISLAND_LIB):
+			$(MAKE) -C $(ISLAND_DIR)
 
 clean: 
 			rm -f $(C_OBJECT) $(EXECUTABLE)

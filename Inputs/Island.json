@@ -1,6 +1,6 @@
 {
     "Nh":     8,      // Number of harmonics in calculation
     "Nz":     1000,   // Number of angular grid points
-    "Nx":     1000,   // Number of radial grid points 
-    "xmax":   2.0     // Maximum value of radial variable (in island widths)
+    "NX":     1000,   // Number of radial grid points 
+    "Xmax":   2.0     // Maximum value of radial variable (in island widths)
 }

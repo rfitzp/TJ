@@ -12,7 +12,7 @@
 
     "bw": 1.05,               // Relative wall radius
 
-    "tilt": 10.0,             // Tilt of central chord (degrees)
+    "tilt": 5.0,             // Tilt of central chord (degrees)
    
     "wcoil": [ 0.7,  0.85, -0.85, -0.7],  // omega/M_PI coodinates of RMP coil strands
     "Icoil": [-1.0,  1.0,  -1.0,   1.0],  // Toroidal currents flowing in RMP coil strands

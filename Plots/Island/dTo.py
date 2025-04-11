@@ -9,7 +9,7 @@ import netCDF4 as nc
 
 fn  = '../../Outputs/Island/Island.nc'
 ds  = nc.Dataset(fn)
-x   = ds['x']
+x   = ds['X']
 dTo = ds['delta_T_o']
 dTx = ds['delta_T_x']
 

@@ -2,10 +2,12 @@
 
 #include "TJ.h"
 
+#define NINPUT 26
+
 // ##################################################
 // Function to read equilibrium data from netcdf file
 // ##################################################
-void TJ::ReadNetcdf ()
+void TJ::ReadEquilibriumNetcdf ()
 {
   printf ("Reading data from netcdf file Outputs/Equilibrium/Equilibrium.nc:\n");
   
@@ -291,6 +293,56 @@ void TJ::ReadNetcdf ()
     }
 }
 
+// #############################################
+// Function to read island data from netcdf file
+// #############################################
+void TJ::ReadIslandNetcdf ()
+{
+  printf ("Reading data from netcdf file Outputs/Island/Island.nc:\n");
+  
+  try
+    {
+      NcFile dataFile ("../Outputs/Island/Island.nc", NcFile::read);
+      
+      NcVar p_x = dataFile.getVar ("para");
+      NcDim p_d = p_x.getDim (0);
+      
+      int     Np   = p_d.getSize ();
+      double* para = new double[Np];
+      
+      p_x.getVar (para);
+      
+      Finf = para[0];
+      
+      NcVar XX_x  = dataFile.getVar ("X");
+      NcVar dTh_x = dataFile.getVar ("delta_T_h");
+      
+      XX              = new double[NX];
+      double* dThdata = new double[Nh*NX];
+      
+      deltaTh.resize (Nh, NX);
+      
+      XX_x .getVar (XX);
+      dTh_x.getVar (dThdata);
+      
+      int cnt = 0;
+      for (int n = 0; n < Nh; n++)
+	for (int i = 0; i < NX; i++)
+	  {
+	    deltaTh(n, i) = dThdata[cnt];
+	    cnt++;
+	  }
+      
+      delete[] para; delete[] dThdata;
+    }
+  catch (NcException& e)
+    {
+      printf ("Error reading data from netcdf file Outputs/Island/Island.nc\n");
+      printf ("%s\n", e.what ());
+      exit (1);
+    }
+}
+
 // ###############################################
 // Function to write stability data to netcdf file
 // ###############################################
@@ -298,7 +350,7 @@ void TJ::WriteNetcdf ()
 {
   printf ("Writing stability data to netcdf file Outputs/TJ/TJ.nc:\n");
  
-  double Input[25];
+  double Input[NINPUT];
 
   double* Lmmp_r  = new double[(Nr+1)*J*J];
   double* Mmmp_r  = new double[(Nr+1)*J*J];
@@ -536,6 +588,7 @@ void TJ::WriteNetcdf ()
   Input[22] = Teped;
   Input[23] = double (XI);
   Input[24] = ISLAND;
+  Input[25] = double (NPHI);
   
   int cnt = 0;
   for (int i = 0; i <= Nr; i++)
@@ -915,7 +968,7 @@ void TJ::WriteNetcdf ()
       dataFile.putAtt ("Compile_Time", COMPILE_TIME);
       dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
 
-      NcDim i_d = dataFile.addDim ("Ni",    25);
+      NcDim i_d = dataFile.addDim ("Ni",    NINPUT);
       NcDim r_d = dataFile.addDim ("Nr",    Nr+1);
       NcDim s_d = dataFile.addDim ("Ns",    Ns+1);
       NcDim x_d = dataFile.addDim ("nres",  nres);

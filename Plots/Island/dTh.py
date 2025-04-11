@@ -9,7 +9,7 @@ import netCDF4 as nc
 
 fn  = '../../Outputs/Island/Island.nc'
 ds  = nc.Dataset(fn)
-x   = np.asarray(ds['x'])
+x   = np.asarray(ds['X'])
 xx  = - x;
 dT  = np.asarray(ds['delta_T_h'])
 dTT = - dT;

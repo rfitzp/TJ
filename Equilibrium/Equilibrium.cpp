@@ -913,7 +913,7 @@ void Equilibrium::Solve ()
 	  Req[i] = GetR (rf, wf, 1);
 	  Zeq[i] = GetZ (rf, wf, 1);
 
-	  if (teq[i] < 1.)
+	  if (teq[i] < 0.)
 	    teq[i] += 2.*M_PI;
 	  if (teq[i] > 2.*M_PI)
 	    teq[i] -= 2.*M_PI;
@@ -960,7 +960,7 @@ void Equilibrium::Solve ()
 	  Req[i+Nf] = GetR (rf, wf, 1);
 	  Zeq[i+Nf] = GetZ (rf, wf, 1);
 
-	  if (teq[i] < 1.)
+	  if (teq[i] < 0.)
 	    teq[i] += 2.*M_PI;
 	  if (teq[i] > 2.*M_PI)
 	    teq[i] -= 2.*M_PI;
@@ -1380,9 +1380,9 @@ double Equilibrium::GetTe (double r)
     return (B0*B0/mu0/e/2.) * epsa*epsa * p2 /ne + Teped;
 }
 
-// #####################
+// ######################
 // Function to return Tep
-// #####################
+// ######################
 double Equilibrium::GetTep (double r)
 {
   double e    = 1.602176634e-19;

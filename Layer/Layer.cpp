@@ -1,5 +1,7 @@
 #include "Layer.h"
 
+#define NINPUT 14
+
 // ###########
 // Constructor
 // ###########
@@ -463,6 +465,8 @@ void Layer::WriteNetcdf ()
 {
    printf ("Writing data to netcdf file Outputs/Layer/Layer.nc:\n");
 
+   double Input[NINPUT];
+   
    int*    np_y = new int[nres];
    double* gr_y = new double[nres*10];
    double* gi_y = new double[nres*10];
@@ -474,6 +478,21 @@ void Layer::WriteNetcdf ()
    double* Di_y = new double[nres*(Nscan+1)];
    double* xi_y = new double[nres*(Nscan+1)];
    double* t_y  = new double[nres*(Nscan+1)];
+
+   Input[0]  = double (MARG);
+   Input[1]  = pstart;
+   Input[2]  = pend;
+   Input[3]  = P3max;
+   Input[4]  = double (Nscan);
+   Input[5]  = acc;
+   Input[6]  = h0;
+   Input[7]  = hmin;
+   Input[8]  = hmax;
+   Input[9]  = Eps;
+   Input[10] = double (MaxIter);
+   Input[11] = dS;
+   Input[12] = Smax;
+   Input[13] = Smin;
 
    for (int i = 0; i < nres; i++)
      np_y[i] = np_marg(i);
@@ -509,6 +528,7 @@ void Layer::WriteNetcdf ()
        dataFile.putAtt ("Compile_Time", COMPILE_TIME);
        dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
 
+       NcDim i_d = dataFile.addDim ("Ni",    NINPUT);
        NcDim x_d = dataFile.addDim ("nres",  nres);
        NcDim y_d = dataFile.addDim ("nmarg", 10);
        NcDim z_d = dataFile.addDim ("Nscan", Nscan+1);
@@ -521,31 +541,34 @@ void Layer::WriteNetcdf ()
        torq_d.push_back (x_d);
        torq_d.push_back (z_d);
 
-       NcVar rres_x      = dataFile.addVar ("r_res",      ncDouble, x_d);
+       
+       NcVar i_x         = dataFile.addVar ("InputParameters", ncDouble, i_d);
+       i_x.putVar (Input);
+       NcVar rres_x      = dataFile.addVar ("r_res",           ncDouble, x_d);
        rres_x.putVar (r_res);
-       NcVar mres_x      = dataFile.addVar ("m_res",      ncInt,    x_d);
+       NcVar mres_x      = dataFile.addVar ("m_res",           ncInt,    x_d);
        mres_x.putVar (m_res);
-       NcVar Deltares_x  = dataFile.addVar ("Delta_res",  ncDouble, x_d);
+       NcVar Deltares_x  = dataFile.addVar ("Delta_res",       ncDouble, x_d);
        Deltares_x.putVar (Delta_res);
-       NcVar Deltacres_x = dataFile.addVar ("Deltac_res", ncDouble, x_d);
+       NcVar Deltacres_x = dataFile.addVar ("Deltac_res",      ncDouble, x_d);
        Deltacres_x.putVar (Deltac_res);
-       NcVar S13res_x    = dataFile.addVar ("S13_res",    ncDouble, x_d);
+       NcVar S13res_x    = dataFile.addVar ("S13_res",         ncDouble, x_d);
        S13res_x.putVar (S13_res);
-       NcVar taures_x    = dataFile.addVar ("tau_res",    ncDouble, x_d);
+       NcVar taures_x    = dataFile.addVar ("tau_res",         ncDouble, x_d);
        taures_x.putVar (tau_res);
-       NcVar QEres_x     = dataFile.addVar ("QE_res",     ncDouble, x_d);
+       NcVar QEres_x     = dataFile.addVar ("QE_res",          ncDouble, x_d);
        QEres_x.putVar (QE_res);
-       NcVar Qeres_x     = dataFile.addVar ("Qe_res",     ncDouble, x_d);
+       NcVar Qeres_x     = dataFile.addVar ("Qe_res",          ncDouble, x_d);
        Qeres_x.putVar (Qe_res);
-       NcVar Qires_x     = dataFile.addVar ("Qi_res",     ncDouble, x_d);
+       NcVar Qires_x     = dataFile.addVar ("Qi_res",          ncDouble, x_d);
        Qires_x.putVar (Qi_res);
-       NcVar iotaeres_x  = dataFile.addVar ("iotae_res",  ncDouble, x_d);
+       NcVar iotaeres_x  = dataFile.addVar ("iotae_res",       ncDouble, x_d);
        iotaeres_x.putVar (iotae_res);
-       NcVar D_x         = dataFile.addVar ("D_res",      ncDouble, x_d);
+       NcVar D_x         = dataFile.addVar ("D_res",           ncDouble, x_d);
        D_x.putVar (D_res);
-       NcVar Pphires_x   = dataFile.addVar ("Pphi_res",   ncDouble, x_d);
+       NcVar Pphires_x   = dataFile.addVar ("Pphi_res",        ncDouble, x_d);
        Pphires_x.putVar (Pphi_res);
-       NcVar Pperpres_x  = dataFile.addVar ("Pperp_res",  ncDouble, x_d);
+       NcVar Pperpres_x  = dataFile.addVar ("Pperp_res",       ncDouble, x_d);
        Pperpres_x.putVar (Pperp_res);
        
        NcVar gammae_x = dataFile.addVar ("gamma_e", ncDouble, x_d);

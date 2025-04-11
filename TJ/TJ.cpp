@@ -43,6 +43,7 @@ TJ::TJ ()
   MMIN    = JSONData["MMIN"]  .get<int>();
   MMAX    = JSONData["MMAX"]  .get<int>();
   ISLAND  = JSONData["ISLAND"].get<double>();
+  NPHI    = JSONData["NPHI"]  .get<int>();
 
   EQLB    = JSONData["EQLB"] .get<int>();
   FREE    = JSONData["FREE"] .get<int>();
@@ -87,6 +88,12 @@ TJ::TJ ()
   Chip  = JSONData["Chip"] .get<double>();
   Teped = JSONData["Teped"].get<double>();
 
+  JSONFilename = "../Inputs/Island.json";
+  JSONData     = ReadJSONFile (JSONFilename);
+
+  Nh = JSONData["Nh"].get<int>();
+  NX = JSONData["NX"].get<int>();
+
   // ------------
   // Sanity check
   // ------------
@@ -103,6 +110,11 @@ TJ::TJ ()
   if (MMAX < MMIN)
     {
       printf ("TJ: Error - MMIN must be less that MMAX\n");
+      exit (1);
+    }
+  if (NPHI < 1)
+    {
+      printf ("TJ: Error - NPHI must be positive\n");
       exit (1);
     }
   if (EPS <= 0.)
@@ -230,6 +242,16 @@ void TJ::Solve ()
     equilibrium.Solve ();
   }
 
+  // ...................................................................................
+  // Call class Island to determine perturbed temperature in vicinity of magnetic island
+  // ...................................................................................
+  if (!EQLB && VIZ)
+    {
+      Island island;
+
+      island.Solve ();
+    }
+
   if (!EQLB)
     {
       // -----------------------------
@@ -243,8 +265,8 @@ void TJ::Solve ()
       printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d\n",
 	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER);
       printf ("Calculation parameters:\n");
-      printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e\n",
-	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND);
+      printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e NPHI = %3d\n",
+	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND, NPHI);
       printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d\n",
 	      NFIX, NDIAG, NULC, ITERMAX);
       printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
@@ -257,6 +279,10 @@ void TJ::Solve ()
       
       // Read equilibrium data
       ReadEquilibrium ();
+
+      // Read island data
+      if (VIZ)
+	ReadIsland ();
       
       // Calculate metric data at plasma boundary
       CalculateMetricBoundary ();
@@ -468,11 +494,18 @@ void TJ::CleanUp ()
 
   if (VIZ)
     {
+      for (int i = 0; i < Nh; i++)
+	{
+	  gsl_spline_free (dThspline[i]);
+	  
+	  gsl_interp_accel_free (dThacc[i]);
+	}
+      delete[] dThspline; delete[] dThspline; 
+      
       delete[] rf;     delete[] req;    delete[] teq;    delete[] Req; 
       delete[] Zeq;    delete[] BReq;   delete[] neeq;   delete[] Teeq;
       delete[] dRdreq; delete[] dRdteq; delete[] dZdreq; delete[] dZdteq;
-
-      delete[] Leq;
+      delete[] Leq;    delete[] XX;
     }
   delete[] rho;
 }
