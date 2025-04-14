@@ -87,6 +87,7 @@ TJ::TJ ()
   Mion  = JSONData["Mion"] .get<double>();
   Chip  = JSONData["Chip"] .get<double>();
   Teped = JSONData["Teped"].get<double>();
+  neped = JSONData["neped"].get<double>();
 
   JSONFilename = "../Inputs/Island.json";
   JSONData     = ReadJSONFile (JSONFilename);
@@ -207,6 +208,11 @@ TJ::TJ ()
       printf ("TJ: Error - Teped must be positive\n");
       exit (1);
     }
+  if (neped <= 0.)
+    {
+      printf ("TJ: Error - neped must be positive\n");
+      exit (1);
+    }
   if (ISLAND <= 0.)
     {
       printf ("TJ: Error - ISLAND must be positive\n");
@@ -245,7 +251,7 @@ void TJ::Solve ()
   // ...................................................................................
   // Call class Island to determine perturbed temperature in vicinity of magnetic island
   // ...................................................................................
-  if (!EQLB && VIZ)
+  if (!EQLB)
     {
       Island island;
 
@@ -265,14 +271,16 @@ void TJ::Solve ()
       printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d\n",
 	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER);
       printf ("Calculation parameters:\n");
-      printf ("ntor = %3d        mmin  = %3d        mmax = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e NPHI = %3d\n",
+      printf ("ntor = %3d        mmin  = %3d        mmax  = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e NPHI = %3d\n",
 	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND, NPHI);
-      printf ("nfix = %3d        ndiag = %3d       nulc = %10.3e itermax = %3d\n",
+      printf ("nfix = %3d        ndiag = %3d       nulc  = %10.3e itermax = %3d\n",
 	      NFIX, NDIAG, NULC, ITERMAX);
-      printf ("acc  = %10.3e h0    = %10.3e hmin = %10.3e hmax    = %10.3e epsf = %10.3e\n",
+      printf ("acc  = %10.3e h0    = %10.3e hmin  = %10.3e hmax    = %10.3e epsf = %10.3e\n",
 	      acc, h0, hmin, hmax, EPSF);
-      printf ("B0   = %10.3e R0    = %10.3e n0   = %10.3e alpha   = %10.3e Zeff = %10.3e Mion = %10.3e Chip = %10.3e Teped = %10.3e\n",
-	      B0, R0, n0, alpha, Zeff, Mion, Chip, Teped);
+      printf ("B0   = %10.3e R0    = %10.3e n0    = %10.3e alpha   = %10.3e Zeff = %10.3e\n",
+	      B0, R0, n0, alpha, Zeff);
+      printf ("Mion = %10.3e Chip  = %10.3e Teped = %10.3e neped   = %10.3e\n",
+	      Mion, Chip, Teped, neped);
       
       // Set toroidal and poloidal mode numbers
       SetModeNumbers ();
@@ -281,8 +289,7 @@ void TJ::Solve ()
       ReadEquilibrium ();
 
       // Read island data
-      if (VIZ)
-	ReadIsland ();
+      ReadIsland ();
       
       // Calculate metric data at plasma boundary
       CalculateMetricBoundary ();
@@ -465,20 +472,23 @@ void TJ::CleanUp ()
 
   delete[] wwall;  delete[] Rwall;  delete[] Zwall;
   
-  delete[] mres; delete[] qres;  delete[] rres;   delete[] qerr;
-  delete[] sres; delete[] DIres; delete[] nuLres; delete[] nuSres;
-  delete[] Jres; delete[] DRres; delete[] Flarge; delete[] Fsmall;
-  delete[] Pres; delete[] gres;
+  delete[] mres;  delete[] qres;   delete[] rres;   delete[] qerr;
+  delete[] sres;  delete[] DIres;  delete[] nuLres; delete[] nuSres;
+  delete[] Jres;  delete[] DRres;  delete[] Flarge; delete[] Fsmall;
+  delete[] Pres;  delete[] gres;   delete[] neres;  delete[] nepres;
+  delete[] Teres; delete[] Tepres;
 
   delete[] S13res; delete[] taures; delete[] ieres; delete[] QEres;
   delete[] Qeres;  delete[] Qires;  delete[] Dres;  delete[] Pmres;
-  delete[] Peres;  delete[] Teres;  delete[] Dcres;
+  delete[] Peres;  delete[] Dcres;
 
   delete[] MPOL; delete[] mpol;
      
   delete[] Rgrid; delete[] hode; delete[] eode; delete[] Pgrid;
 
-  delete[] Fval;
+  delete[] Fval; delete[] Psik; delete[] PsTp; delete[] PsTm;
+  delete[] dTp;  delete[] dTm;  delete[] Psnp; delete[] Psnm;
+  delete[] dnp;  delete[] dnm;
 
   if (IDEAL)
     {
@@ -492,20 +502,22 @@ void TJ::CleanUp ()
       delete[] FFvl; delete[] fw;
     }
 
-  if (VIZ)
+  for (int i = 0; i < Nh; i++)
     {
-      for (int i = 0; i < Nh; i++)
-	{
-	  gsl_spline_free (dThspline[i]);
-	  
-	  gsl_interp_accel_free (dThacc[i]);
-	}
-      delete[] dThspline; delete[] dThspline; 
+      gsl_spline_free (dThspline[i]);
       
+      gsl_interp_accel_free (dThacc[i]);
+    }
+  delete[] dThspline; delete[] dThacc;
+
+  delete[] XX;
+      
+ if (VIZ)
+    {
       delete[] rf;     delete[] req;    delete[] teq;    delete[] Req; 
       delete[] Zeq;    delete[] BReq;   delete[] neeq;   delete[] Teeq;
       delete[] dRdreq; delete[] dRdteq; delete[] dZdreq; delete[] dZdteq;
-      delete[] Leq;    delete[] XX;
+      delete[] Leq;    delete[] PP;
     }
   delete[] rho;
 }

@@ -9,6 +9,7 @@
     "Mion":  2.0,         // Ion mass number
     "Chip":  0.2,         // Perpendicular momentum/energy diffusivity (m^2/s)
     "Teped": 100.0,       // Electron temperature at edge of plasma (eV)
+    "neped": 3.0e18,      // Electron number densityx at edge of plasma (eV)
     	  
     "pstart": 6.0,        // Layer equations integrated from p = pstart to p = pend 
     "pend":   1.0e-8,     // Layer equations integrated from p = pstart to p = pend 

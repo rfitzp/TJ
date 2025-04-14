@@ -212,31 +212,6 @@ class TJ : private Utility
   gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function on plasma boundary
   gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function on plasma boundary
 
-  // -------------------------
-  // Synthetic diagnostic data 
-  // -------------------------
-  double  tilt;           // Tilt angle of central chord (degrees) (read from Equilibrium JSON file)
-  double* req;            // r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* weq;            // omega values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* teq;            // theta values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* Req;            // R values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* Zeq;            // Z values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* BReq;           // B_parallel values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* neeq;           // n_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* Teeq;           // T_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* dRdreq;         // dR/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* dRdteq;         // (dR/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* dZdreq;         // dZ/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* dZdteq;         // (dZ/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* Leq;            // Length along central chord
-
-  Array<double,2> bReqc;  // cosine component of delta B_parallel values central chord
-  Array<double,2> bReqs;  // sine component of delta B_parallel values on central chord
-  Array<double,2> dneeqc; // cosine component of delta n_e values on central chord
-  Array<double,2> dneeqs; // cosine component of delta n_e values on central chord
-  Array<double,2> dTeeqc; // cosine component of delta T_e values on central chord
-  Array<double,2> dTeeqs; // sine component of delta T_e values on central chord
-
   // -----------
   // Island data
   // -----------
@@ -247,7 +222,6 @@ class TJ : private Utility
   Array<double,2>    deltaTh;    // Harmonics of perturbed electron temperature in vicinity of island (read from Outputs/Island/Island.nc)
 
   gsl_spline**       dThspline;  // Interpolated island harmonic functions
-     
   gsl_interp_accel** dThacc;     // Accelerator for interpolated island harmonic functions
   
   // --------------------------
@@ -365,6 +339,10 @@ class TJ : private Utility
   int*    Jres;    // Index of resonant poloidal harmonic at rational surfaces
   double* Flarge;  // TJ/STRIDE scaling factors for large solution
   double* Fsmall;  // TJ/STRIDE scaling factors for small solution
+  double* neres;   // Electron number densities at rational surfaces
+  double* nepres;  // Radial gradients of electron number densities at rational surfaces
+  double* Teres;   // Electron temperatures at rational surfaces
+  double* Tepres;  // Radial gradients of electron temperatures at rational surfaces
 
   // ----------------
   // Mode number data
@@ -416,14 +394,28 @@ class TJ : private Utility
   Array<complex<double>,3> zu;    // z components of unreconnected tearing eigenfunctions
   Array<complex<double>,3> chiu;  // chi components of unreconnected tearing eigenfunctions
   Array<complex<double>,3> xiu;   // xi components of unreconnected tearing eigenfunctions
-  Array<complex<double>,3> neu;   // n_e components of unreconnected tearing eigenfunctions
-  Array<complex<double>,3> Teu;   // T_e components of unreconnected tearing eigenfunctions
-  Array<complex<double>,3> dneu;  // delta n_e components of unreconnected tearing eigenfunctions
-  Array<complex<double>,3> dTeu;  // delta T_e components of unreconnected tearing eigenfunctions
   Array<double,2>          Tf;    // Torques associated with fully reconnected eigenfunctions
   Array<double,2>          Tu;    // Torques associated with unreconnected eigenfunctions
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
+
+  // ............................
+  // Temperature and density data
+  // ............................
+  double*                  Psik;  // Reconnected fluxes at rational surfaces
+  complex<double>*         PsTp;  // Reconnected fluxes for temperature calculation outside rational surfaces
+  complex<double>*         PsTm;  // Reconnected fluxes for temperature calculation inside rational surfaces
+  double*                  dTp;   // Temperature adjustments outside rational surfaces
+  double*                  dTm;   // Temperature adjustments inside rational surfaces
+  complex<double>*         Psnp;  // Reconnected fluxes for electron number density  calculation outside rational surfaces
+  complex<double>*         Psnm;  // Reconnected fluxes for electron number density calculation inside rational surfaces
+  double*                  dnp;   // Electron number density adjustments outside rational surfaces
+  double*                  dnm;   // Electron number density  adjustments inside rational surfaces
+  
+  Array<complex<double>,3> neu;   // n_e components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> Teu;   // T_e components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> dneu;  // delta n_e components of unreconnected tearing eigenfunctions
+  Array<complex<double>,3> dTeu;  // delta T_e components of unreconnected tearing eigenfunctions
 
   // -----------------------------------
   // Resonant magnetic perturbation data
@@ -480,15 +472,35 @@ class TJ : private Utility
   // ----------------------------------------
   int                      NPHI;   // Number of toroidal grid-points on extended vizualization grid (from TJ JSON file)
   double*                  PP;     // Toroidal grid-points on extended visualization grid
-  Array<double,3>          nec;    // Cosine component of n_e on extended visualization grid
-  Array<double,3>          nes;    // Sin component of n_e on extended visualization grid
-  Array<double,3>          Tec;    // Cosine component of T_e on extended visualization grid
-  Array<double,3>          Tes;    // Sin component of T_e on extended visualization grid
-  Array<double,3>          dnec;   // Cosine component of delta n_e on extended visualization grid
-  Array<double,3>          dnes;   // Sin component of delta n_e on extended visualization grid
-  Array<double,3>          dTec;   // Cosine component of delta T_e on extended visualization grid
-  Array<double,3>          dTes;   // Sin component of delta T_e on extended visualization grid
-    
+  Array<double,4>          nec;    // n_e on extended visualization grid
+  Array<double,4>          Tec;    // T_e on extended visualization grid
+  Array<double,4>          dnec;   // delta n_e on extended visualization grid
+  Array<double,4>          dTec;   // delta T_e on extended visualization grid
+
+  // -----------------------------
+  // Synthetic ECE diagnostic data 
+  // -----------------------------
+  double  tilt;           // Tilt angle of central chord (degrees) (read from Equilibrium JSON file)
+  double* req;            // r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* weq;            // omega values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* teq;            // theta values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Req;            // R values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Zeq;            // Z values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* BReq;           // B_parallel values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* neeq;           // n_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Teeq;           // T_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dRdreq;         // dR/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dRdteq;         // (dR/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dZdreq;         // dZ/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* dZdteq;         // (dZ/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Leq;            // Length along central chord
+
+  Array<double,3> bReqc;  // delta B_parallel values on central chord
+  Array<double,3> neeqc;  // n_e values on central chord
+  Array<double,3> Teeqc;  // T_e values on central chord
+  Array<double,3> dneeqc; // delta n_e values on central chord
+  Array<double,3> dTeeqc; // delta T_e values on central chord
+
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response
   // --------------------------------------------------------
@@ -570,12 +582,12 @@ class TJ : private Utility
   double Mion;    // Ion mass number (read from Layer JSON file)
   double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from Layer JSON file)
   double Teped;   // Electron temperature at edge of plasma (eV) (read from Layer JSON file)
+  double neped;   // Electron number density at edge of plasma (m^-3) (read from Layer JSON file)
   double apol;    // Plasma minor radius (m)
 
   // -------------------
   // Resonant layer data
   // -------------------
-  double* Teres;  // Electron temperature (eV)
   double* S13res; // Cube root of Lundquist number
   double* taures; // Magnetic reconnection timescale S^(1/3) tauH (s)
   double* ieres;  // Minus ratio of electron diamagnetic frequency to ion diamagnetic frequency
@@ -781,6 +793,8 @@ class TJ : private Utility
   double Getq (double r);
   // Return value of g2
   double Getg2 (double r);
+  // Return value of g
+  double Getg (double r);
   // Return value of s
   double Gets (double r);
   // Return value of s2

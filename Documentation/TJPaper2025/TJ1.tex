@@ -89,7 +89,7 @@ q(r) = \frac{q_0\,\nu\,(r/a)^2}{1-[1-(r/a)^2]^\nu},
 \end{equation}
 and the normalized (see Sect.~\ref{norm}) pressure profile takes the form
 \begin{equation}
-p(r) = \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p}.
+P(r) = \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p}.
 \end{equation}
 Here, $r$ is the flux-surface label with the dimensions of length that is defined in Sect.~\ref{coord}.  Moreover, the magnetic axis corresponds to $r=0$, and the plasma
 boundary to $r=a$.  Note that $a$ is the effective inverse aspect-ratio of the plasma (given that all lengths are normalized to the major radius of the magnetic axis, $R_0$---see Sect.~\ref{norm}.)
@@ -105,7 +105,7 @@ The
 \end{equation}
 whereas the  normalized pressure profile takes the form
 \begin{equation}
-p(r)= \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p}.
+P(r)= \frac{\beta_0}{2}\left[1-\left(\frac{r}{a}\right)^2\right]^{p_p}.
 \end{equation}
 In order to obtain (almost) the same equilibrium in the two codes (each of which is based on an expansion of the Grad-Shafranov equation in terms of the inverse aspect-ratio of the plasma), we choose common values of $q_0$, $p_\sigma$, $\beta_0$, and $p_p$, and then
 adjust the parameter $\nu$ in the TJ code until both codes have the same value of the safety-factor at the plasma boundary, $q_a$. This procedure ensures that the locations of the various rational surfaces in the plasma are
@@ -148,7 +148,7 @@ The fourth, and final,  benchmark test has plasma equilibria characterized by $q
 Figure~\ref{fig4} compares the elements of the tearing stability matrix calculated by the TJ and the STRIDE codes. The $\beta_0$ values from TJ have been rescaled
 by a factor $1.08$ to compensate for the slightly different $\beta$-limits in the slightly different TJ and STRIDE equilibria. (The STRIDE $\beta$-limit, at which all of the
 elements of the $E_{kk'}$ matrix become infinite,  lies at
-$\beta_0=0.025$.)
+$\beta_0=0.025$, whereas the TJ $\beta$-limit lies at $\beta=0.023$.)
  Once this correction has been made, it can be seen that the elements calculated by
 TJ and STRIDE are in reasonably good agreement.  
 
@@ -1123,8 +1123,9 @@ The values of the following plasma parameters must be specified in order to calc
 \item $B_0$ - the toroidal magnetic field-strength at the magnetic axis (T).
 \item $R_0$ - the major radius of the magnetic axis  (m).
 \item $n_0$ - the  electron number density at the magnetic axis (${\rm m}^{-3}$).
-\item $\alpha$ - the electron density profile is assumed to be $n_e(r)=n_0\,(1-r^2/a^2)^\alpha$.
-\item $T_{e\,{\rm edge}}$ - the electron temperature at the plasma-vacuum interface (eV).
+\item $n_{e\,{\rm ped}}$ - the  electron number density at the magnetic axis (${\rm m}^{-3}$).
+\item $\alpha$ - the electron density profile is assumed to be $n_e(r)=n_0\,(1-r^2/a^2)^\alpha + n_{e\,\rm ped}$.
+\item $T_{e\,{\rm ped}}$ - the electron temperature at the plasma-vacuum interface (eV).
 \item $Z_{\rm eff}$  - the (assumed spatially uniform) effective ion charge number.
 \item $M$ - the ion mass number.
 \item $\chi_\perp$ - the (assumed spatially uniform) perpendicular momentum/energy diffusivity (${\rm m}^2/{\rm s}$).
@@ -1132,11 +1133,11 @@ The values of the following plasma parameters must be specified in order to calc
 
 \subsection{Rational Surface Parameters}\label{rpara}
 Let the $k$th rational surface  lie at $r=r_k$, and possess the resonant poloidal mode number $m_k$. 
-We can define  $q_k = q(r_k)$,  $s_k= s(r_k)$, 
-$n_{e\,k} = n_0\,(1-r_k^{\,2}/a^2)^\alpha$, $g_k = g(r_k)$, 
+We can define  $q_k = q(r_k)$,  $s_k= s(r_k)$, $g_k = g(r_k)$, 
 \begin{align}
+n_{e\,k} &= n_0\,(1-r_k^{\,2}/a^2)^\alpha + n_{e\,\rm ped},\\[0.5ex]
 p_k &= \frac{B_0^{\,2}\,P(r_k),}{\mu_0}\\[0.5ex]
-T_{e\,k} &= \frac{p_k}{2\,n_{e\,k}\,e} + T_{e\,{\rm edge}},\\[0.5ex]
+T_{e\,k} &= \frac{p_k}{2\,(n_{e\,k}-n_{e\,{\rm ped}})\,e} + T_{e\,{\rm ped}},\\[0.5ex]
 \ln{\Lambda}_k &= 24 + 3\,\ln 10-\frac{1}{2}\ln n_{e\,k} + \ln T_{e\,k},\\[0.5ex]
 \tau_{ee\,k}&= \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_{e\,k}^{\,3/2}}{\ln{\Lambda}_k\,e^{5/2}\,n_{e\,k}},\\[0.5ex]
 \sigma_{\parallel\,k} &= \frac{\sqrt{2}+13\,Z_{\rm eff}/4}{Z_{\rm eff}\,(\sqrt{2}+Z_{\rm eff})}\,\frac{n_{e\,k}\,e^2\,\tau_{ee\,k}}{m_e},\\[0.5ex]

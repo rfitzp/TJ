@@ -41,18 +41,8 @@
 - *Bunr1.py*:        Plots kth poloidal harmonics of unreconnected perturbed magnetic fields versus r
 - *xiunr.py*:        Plots poloidal harmonics of unreconnected psi and radial plasma displacement versus r
 - *xiunr1.py*:       Plots kth poloidal harmonics of unreconnected psi and radial plasma displacement versus r
-- *Psi.py*:          Plots psi components of unreconnected solution vector in R, Z plane  
-- *PsiZ.py*:         Plots psi and Z components of unreconnected solution vector in R, Z plane
-- *zchi.py*:         Plots z and chi components of unreconnected solution vector in R, Z plane
-- *bR.py*:           Plots b_R components of unreconnected solution vector in R, Z plane
-- *bZ.py*:           Plots b_Z components of unreconnected solution vector in R, Z plane
-- *bphi.py*:         Plots R b_phi components of unreconnected solution vector in R, Z plane
-- *disp.py*:         Plots xi_r components of unreconnected solution vector in R, Z plane
-- *dne.py*:          Plots delta n_e components of unreconnected solution vector in R, Z plane
-- *dTe.py*:          Plots delta T_e components of unreconnected solution vector in R, Z plane
-- *ece.py*:          Plots delta T_e and delta n_e components of unreconnected solution vector versus r at given angular gridpoint        
-- *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field versus theta at given radial gridpoint
-- *Chord.py*:        Plots perturbed quantities along tilted central chord
+- *dTunr.py*:        Plots poloidal harmonics of unreconnected delta n_e and delta T_e versus r
+- *dTunr1.py*:       Plots kth poloidal harmonics of unreconnected delta n_e amd delta T_e versus r
 
 ## Electromagnetic torques:
 
@@ -61,7 +51,29 @@
 
 ## Tearing dispersion relation:
 
-- *Emat.py*:	 Visualizes tearing stability matrix
+- *Emat.py*:	     Visualizes tearing stability matrix
+
+## Visualization:
+
+- *Psi.py*:          Plots psi components of unreconnected solution vector in R, Z plane  
+- *PsiZ.py*:         Plots psi and Z components of unreconnected solution vector in R, Z plane
+- *zchi.py*:         Plots z and chi components of unreconnected solution vector in R, Z plane
+- *bR.py*:           Plots b_R components of unreconnected solution vector in R, Z plane
+- *bZ.py*:           Plots b_Z components of unreconnected solution vector in R, Z plane
+- *bphi.py*:         Plots R b_phi components of unreconnected solution vector in R, Z plane
+- *disp.py*:         Plots xi_r components of unreconnected solution vector in R, Z plane
+
+## Electron temperature and number density profiles:
+
+- *dne.py*:          Plots delta n_e components of unreconnected solution vector in R, Z plane
+- *dTe.py*:          Plots delta T_e components of unreconnected solution vector in R, Z plane
+- *ne.py*:           Plots n_e components of unreconnected solution vector in R, Z plane
+- *Te.py*:           Plots T_e components of unreconnected solution vector in R, Z plane
+
+## Synthetic diagnostics:
+
+- *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field versus theta at given radial gridpoint
+- *Chord.py*:        Plots quantities along tilted central chord
 
 ## RMP coils:
 

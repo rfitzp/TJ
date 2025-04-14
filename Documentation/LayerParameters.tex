@@ -19,6 +19,8 @@ The following additional plasma parameters are required to calculate layer quant
 \item $B_0$ - the toroidal magnetic field-strength at the magnetic axis
 \item $R_0$ - the plasma major radius
 \item $n_0$ - the  electron number density at the magnetic axis
+\item $n_{e\,{\rm ped}}$ - the  electron number density at the plasma boundary
+\item $T_{e\,{\rm ped}}$ - the  electron temperature at the plasma boundary
 \item $\alpha$ - the electron density profile is assumed to be $n_e=n_0\,(1-\hat{r}^2)^\alpha$
 \item $Z_{\rm eff}$  - the (assumed spatially uniform) effective ion charge number
 \item $M$ - the ion mass number
@@ -35,9 +37,9 @@ We can define
 \begin{align}
 q_k &= q(\hat{r}_k),\\[0.5ex]
 s_k&= s(\hat{r}_k),\\[0.5ex]
-n_{e\,k} &= n_0\,(1-\hat{r}_k^{\,2})^\alpha,\\[0.5ex]
+n_{e\,k} &= n_0\,(1-\hat{r}_k^{\,2})^\alpha + n_{e\,{\rm ped}},\\[0.5ex]
 p_k &= \frac{\epsilon^2\,B_0^{\,2}\,p_2(\hat{r}_k),}{\mu_0}\\[0.5ex]
-T_{e\,k} &= \frac{p_k}{2\,n_{e\,k}\,e},\\[0.5ex]
+T_{e\,k} &= \frac{p_k}{2\,(n_{e\,k}-n_{e\,{\rm ped}})\,e}+ T_{e\,{\rm ped}},\\[0.5ex]
 \ln{\mit\Lambda}_k &= 24 + 3\,\ln 10-\frac{1}{2}\,\ln n_{e\,k} + \ln T_{e\,k},\\[0.5ex]
 \tau_{ee\,k}&= \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_{e\,k}^{\,3/2}}{\ln{\mit\Lambda}_k\,e^{5/2}\,n_{e\,k}},\\[0.5ex]
 \sigma_{\parallel\,k} &= \frac{\sqrt{2}+13\,Z_{\rm eff}/4}{Z_{\rm eff}\,(\sqrt{2}+Z_{\rm eff})}\,\frac{n_{e\,k}\,e^2\,\tau_{ee\,k}}{m_e},\\[0.5ex]

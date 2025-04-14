@@ -120,7 +120,8 @@ class Equilibrium : private Utility
   double         B0;    // Toroidal magnetic field-strength on magnetic axis (read from Layer JSON file)
   double         n0;    // Electron number density on magnetic axis (read from Layer JSON file)
   double         alpha; // Electron number density profile parameter (read from Layer JSON file)
-  double         Teped; // Electron temperature at plasma boudnary (read from Layer JSON file)
+  double         Teped; // Electron temperature at plasma boundnary (read from Layer JSON file)
+  double         neped; // Electron number at plasma boundnary (read from Layer JSON file)
 
   // ------------------
   // Profile parameters

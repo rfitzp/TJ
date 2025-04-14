@@ -60,6 +60,7 @@ Equilibrium::Equilibrium ()
   n0    = JSONData["n0"]   .get<double> ();
   alpha = JSONData["alpha"].get<double> ();
   Teped = JSONData["Teped"].get<double> ();
+  neped = JSONData["neped"].get<double> ();
   
   JSONFilename = "../Inputs/TJ.json";
   JSONData     = ReadJSONFile (JSONFilename);
@@ -1352,7 +1353,7 @@ double Equilibrium::GetDR (double r)
 // #####################
 double Equilibrium::Getne (double r)
 {
-  return n0 * pow (1. - r*r, alpha);
+  return n0 * pow (1. - r*r, alpha) + neped;
 }
 
 // ######################
@@ -1390,7 +1391,7 @@ double Equilibrium::GetTep (double r)
   
   double p2  = Getp2  (r);
   double p2p = Getp2p (r);
-  double ne  = Getne  (r);
+  double ne  = n0 * pow (1. - r*r, alpha);
   double nep = Getnep (r);
 
   return (B0*B0/mu0/e/2.) * epsa*epsa * (p2p /ne - p2 * nep /ne/ne);

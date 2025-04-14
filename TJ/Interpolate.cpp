@@ -54,6 +54,11 @@ double TJ::Getg2 (double r)
     return gsl_spline_eval (g2spline, r, g2acc);
 }
 
+double TJ::Getg (double r)
+{
+ return 1. + epsa*epsa * Getg2 (r);
+}
+
 double TJ::Gets (double r)
 {
   if (r >= 1.)

@@ -223,15 +223,13 @@ void TJ::ReadIsland ()
   // .....................................................
   // Allocate memory for interpolation of island harmonics
   // .....................................................
-  dThspline = new gsl_spline* [Nh];
-
-  dThacc    = new gsl_interp_accel* [Nh];
+  dThspline = new gsl_spline*      [Nh];
+  dThacc    = new gsl_interp_accel*[Nh];
 
   for (int n = 0; n < Nh; n++)
     {
       dThspline[n] = gsl_spline_alloc (gsl_interp_cspline, NX);
-
-      dThacc[n]    = gsl_interp_accel_alloc ();
+      dThacc   [n] = gsl_interp_accel_alloc ();
     }
 
   // ................................

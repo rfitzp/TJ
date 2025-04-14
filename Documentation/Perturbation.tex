@@ -81,30 +81,57 @@ where
 \end{equation}
 
 \section{Regularization}
-In evaluating the perturbed magnetic field associated with the unreconnected eigenfunction at the $k$th rational surface, we make the
-transformation
-\begin{align}
-\frac{1}{m_k-n\,q} \rightarrow \frac{m_k-n\,q}{\delta_k^{\,2} + (m_k-n\,q)^2},
-\end{align}
-where $m_k$ is the resonant poloidal mode number at the $k$th rational surface, and
+In the vicinity of the $k$th rational surface, whose resonant poloidal mode number is $m_k$,  the resonant harmonic of the displacement varies as
 \begin{equation}
-\delta_k = \frac{m_k\,s(r_k)}{2\,\hat{r}_k}\,\frac{W_k}{\epsilon_a}.
+\xi^r_{m_k}(x)= \frac{q}{r\,g}\,\frac{\psi_{m_k}\,{\mit\Psi}_k}{m_k-n\,q}\simeq -\left(\frac{q}{g\,s}\right)_{r_k} \,\frac{{\mit\Psi}_k}{x}= -\frac{W_k^{\,2}}{16\,x},
 \end{equation}
-Here, $r_k=\epsilon_a\,\hat{r}_k$ is the minor radius of the $k$th rational surface, $s(r)$ is the magnetic shear, and 
+where $x=r-r_k$ , ${\mit\Psi}_k$ is the reconnected magnetic flux at the $k$th rational surface, and
 \begin{equation}
 W_k = 4\left(\frac{q}{g\,s}\right)_{r_k}^{1/2}{\mit\Psi}_k^{\,1/2}
 \end{equation}
-is the magnetic island width at the $k$th rational surface. 
-Thus, 
+is the corresponding magnetic island width. Here, we have made use of the fact that $\psi_{m_k}(r_k)\simeq m_k$. 
+We wish $\xi^r_{m_k}(x)$ to be zero at $x=0$, and to reach a maximum value of $-W_k/\sqrt{8}$ at $x=W_k/\sqrt{8}$. 
+The function
 \begin{equation}
-\frac{{\mit\Psi}_k}{\epsilon_a}= \epsilon_a \left(\frac{W_k}{4\,\epsilon_a}\right)^2\left(\frac{g\,s}{q}\right)_{r_k}.
+F(y)= \frac{y^3}{3/4-(5/4)\,y^{\,2}+y^{\,4}}
 \end{equation}
-For the special case of an $m=1$ mode,
-\begin{align}
-\delta_k &= \frac{m_k\,s(r_k)}{2\,\hat{r}_k}\,\frac{\xi_k}{\epsilon_a},\\[0.5ex]
-\frac{{\mit\Psi}_k}{\epsilon_a} &= \epsilon_a\left(\frac{\hat{r}\,g\,s}{q}\right)_{r_k}\frac{1}{|E_{kk}|} \left(\frac{\xi_k}{\epsilon_a}\right),
-\end{align}
-where $\xi_k$ is the displacement of the plasma core. 
+is zero at $y=0$, attains its maximum value 2 at $x=1$,  and is approximately $1/y$  for $y\gg 1$. Thus, we can write
+\begin{equation}
+\xi^r_{m_k}(r) = \frac{q}{r\,g}\,\frac{\psi_{m_k}\,{\mit\Psi}_k\,(m_k-n\,q)^3}{(3/4)\,\delta_k^{\,4} -(5/4)\,\delta_k^{\,2}\,(m_k-n\,q)^2 +(m_k-n\,q)^4},
+\end{equation}
+where 
+\begin{equation}
+\delta_k = \frac{m_k\,s(r_k)}{\sqrt{8}\,\hat{r}_k}\,\frac{W_k}{\epsilon_a}.
+\end{equation}
+Note that
+\begin{equation}
+\frac{{\mit\Psi}_k}{\epsilon_a}= \epsilon_a \left(\frac{g\,s}{q}\right)_{r_k}\left(\frac{W_k}{4\,\epsilon_a}\right)^2.
+\end{equation}
+
+For the special case of $m_k=1$, we expect
+\begin{equation}
+{\mit\Delta\Psi}_k = E_{kk}\,{\mit\Psi}_k =- \frac{r_k}{m_k}\,A_{S\,k},
+\end{equation}
+so that 
+\begin{equation}
+{\mit\Psi}_k\,\psi_{m_k}(x) \simeq \frac{m_k\,E_{kk}\,{\mit\Psi}_k}{r_k}\,x
+\end{equation}
+for $x<0$. Thus,
+\begin{equation}
+\xi^r_{m_k}\simeq - \left(\frac{q}{g\,s}\right)_{r_k}\,\frac{E_{kk}\,{\mit\Psi}_k}{r_k}
+\end{equation}
+for $x<0$. Hence, we can write
+\begin{equation}
+\frac{{\mit\Psi}_k}{\epsilon_a}= -\epsilon_a\left(\frac{\hat{r}\,g\,s}{q}\right)_{r_k}\frac{1}{E_{kk}} \left(\frac{\xi_c}{\epsilon_a}\right),
+\end{equation}
+where $\xi_c$ is the plasma displacement in the core. We can also write
+\begin{equation}
+\xi^r_{m_k}(r) = \frac{q}{r\,g}\,\frac{\psi_{m_k}\,{\mit\Psi}_k\,(m_k-n\,q)}{\delta_k^{\,2}  +(m_k-n\,q)^2},
+\end{equation}
+where 
+\begin{equation}
+\delta_k = \frac{m_k\,s(r_k)}{2\,\hat{r}_k}\,\frac{W_k}{\epsilon_a}.
+\end{equation}
 
 \section{Magnetic Perturbations in Cylindrical Coordinates}
 We can write the perturbed magnetic field associated with the tearing mode that reconnects magnetic flux at the $k$th rational surface as
@@ -112,6 +139,12 @@ We can write the perturbed magnetic field associated with the tearing mode that 
 b^R &\equiv {\bf b}\cdot\nabla R = b^r\,\frac{\partial R}{\partial r}+ b^\theta\,\frac{\partial R}{\partial\theta},\\[0.5ex]
 b^Z &\equiv {\bf b}\cdot\nabla Z = b^r\,\frac{\partial Z}{\partial r}+ b^\theta\,\frac{\partial Z}{\partial\theta},\\[0.5ex]
 R\,b^\phi&\equiv R\,{\bf b}\cdot\nabla\phi = R\,b^\phi.
+\end{align}
+It follows that
+\begin{align}
+b^R&= \frac{{\mit\Psi}_k}{\epsilon_a\,\hat{r}\,R^2}\sum_m{\rm Re}\left[\left(\frac{1}{\epsilon_a}\,\frac{\partial R}{\partial\hat{r}}\,{\rm i}\,\psi_m - \frac{1}{\epsilon_a\,\hat{r}}\,\frac{\partial R}{\partial \theta}\right){\rm e}^{\,{\rm i}\,(m\,\theta-n\,\phi)}\right],\\[0.5ex]
+b^Z&= \frac{{\mit\Psi}_k}{\epsilon_a\,\hat{r}\,R^2}\sum_m{\rm Re}\left[\left(\frac{1}{\epsilon_a}\,\frac{\partial Z}{\partial\hat{r}}\,{\rm i}\,\psi_m - \frac{1}{\epsilon_a\,\hat{r}}\,\frac{\partial Z}{\partial \theta}\right){\rm e}^{\,{\rm i}\,(m\,\theta-n\,\phi)}\right],\\[0.5ex]
+R\,b^\phi &= \frac{n\,{\mit\Psi}_k}{R}\sum_m {\rm Re}\left[z_m\,{\rm e}^{\,{\rm i}\,(m\,\theta-n\,\phi)}\right].
 \end{align}
 Thus,
 \begin{align}

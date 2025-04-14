@@ -24,13 +24,13 @@ $X=0$ and $\zeta=\pi$. The O-point corresponds to ${\mit\Omega}=-1$, whereas the
 8\,X^2$ in the limit $|X|\gg 1$. 
 
 \section{Temperature Perturbation in Inner Region}
-Let $T_0(r)$ be the unperturbed temperature profile. Let 
+Let $T_{e\,0}(r)$ be the unperturbed electron temperature profile. Let 
 \begin{equation}\label{e2}
-T(X,\zeta) = T_s + {\rm sgn}(X)\,W\,T_s'\,\tilde{T}({\mit\Omega})
+T_e(X,\zeta) = T_{e\,s} + {\rm sgn}(X)\,W\,T_{e\,s}'\,\tilde{T}({\mit\Omega})
 \end{equation}
  be the temperature profile in the presence of the island,
-where $T_s=T_0(r_s)$, and  $T_s'=(dT_0/dr)_{r=r_s}$. 
-The normalized perturbed temperature profile, $\tilde{T}({\mit\Omega})$,  satisfies the energy conservation equation
+where $T_{e\,s}=T_{e\,0}(r_s)$, and  $T_{e\,s}'=(dT_{e\,0}/dr)_{r=r_s}$. 
+The normalized perturbed electron temperature profile, $\tilde{T}({\mit\Omega})$,  satisfies the energy conservation equation
 \begin{equation}\label{e3}
 \frac{d}{d{\mit\Omega}}\!\left[\oint({\mit\Omega}-\cos\zeta)^{1/2}\,\frac{d\zeta}{2\pi}\,\frac{d\tilde{T}}{d
 {\mit\Omega}} \right]= 0,
@@ -39,7 +39,7 @@ subject to the boundary condition that
 \begin{equation}\label{e4}
 \tilde{T}({\mit\Omega}) \rightarrow |X|
 \end{equation}
-as $|X|\rightarrow\infty$. Note that $T(X,\zeta)-T_s$ is an odd function of $X$. 
+as $|X|\rightarrow\infty$. Note that $T(X,\zeta)-T_{e\,s}$ is an odd function of $X$. 
 
 Equations~(\ref{e2}) and (\ref{e3})
 imply that
@@ -97,7 +97,7 @@ We can write
 
 Now,
 \begin{equation}
-\delta T_0(|X|) = \oint\tilde{T}(|X|,\zeta)\,\frac{d\zeta}{2\pi},
+\delta T_{0}(|X|) = \oint\tilde{T}(|X|,\zeta)\,\frac{d\zeta}{2\pi},
 \end{equation}
 where the integral is at constant $|X|$. It follows that
 \begin{equation}
@@ -165,25 +165,18 @@ Consider the $k$th rational surface whose radius is $r_k$ and whose resonant pol
 
  In the outer region,  we write the total electron temperature as 
 \begin{equation}\label{e36}
-\tilde{T}_e(r, \theta,\phi)=T_0(r) - {\mit\Psi}_k\,\frac{q(r)}{r\,g(r)}\,\frac{T_0'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k},
+\tilde{T}_e(r, \theta,\phi)=T_{e\,0}(r) - {\mit\Psi}_k\,\frac{q(r)}{r\,g(r)}\,\frac{T_{e\,0}'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k},
 \end{equation}
-where $T_0'=dT_0/dr$, $T_0(r)$ is the equilibrium electron temperature profile, ${\mit\Psi}_k$ is the reconnected flux, and 
+where $T_{e\,0}'=dT_{e\,0}/dr$, $T_{e\,0}(r)$ is the equilibrium electron temperature profile, ${\mit\Psi}_k$ is the reconnected flux, and 
 \begin{equation}
 W_k = 4\left(\frac{q}{g\,s}\right)^{1/2}_{r_k}\,{\mit\Psi}_k^{1/2}
 \end{equation}
-is the island width. Note that 
-\begin{equation}
-T_0(r) = \frac{B_0^{\,2}}{2\,\mu_0\,e\,n_0}\,\epsilon_a^{\,2}\,p_c\,(1-\hat{r}^{\,2})^{\mu-\alpha} + T_{e\,{\rm ped}},
-\end{equation}
-giving
-\begin{equation}
-\frac{dT_0}{dr} =  \frac{B_0^{\,2}}{\mu_0\,e\,n_0}\,\epsilon_a\,p_c\,(\mu-\alpha)\,\hat{r}\,(1-\hat{r}^{\,2})^{\mu-\alpha-1}.
-\end{equation}
+is the island width.
  In the limit, $|x|\ll 1$, Eq.~(\ref{e36}) yield 
 \begin{equation}
 \tilde{T}_e(x, \theta,\phi)=T_{e\,k} + T_{e\,k}'\,x + \frac{T_{e\,k}'\,W_k^{\,2}}{16\,x}\,{\rm e}^{\,{\rm i}\,\zeta_k},
 \end{equation}
-Here, $T_{e\,k}=T_0(r_k)$ and $T_{e\,k}'= (dT_0/dr)_{r_k}$. 
+Here, $T_{e\,k}=T_{e\,0}(r_k)$ and $T_{e\,k}'= (dT_{e\,0}/dr)_{r_k}$, and we have made use of the fact that $\psi_{m_k}(r_k)\simeq m_k$. 
 
 In the inner region, we write the total electron temperature as 
 \begin{equation}
@@ -200,11 +193,11 @@ On the other hand, in the limit $x\ll -W_k$, we get
 
 The asymptotic matching process consists of writing
 \begin{equation}
-\tilde{T}_e(r,\theta,\phi) = T_0(r) + \delta T_{e\,+} - {\mit\Psi}_{k+}\,\frac{q(r)}{r\,g(r)}\,\frac{T_0'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k}
+\tilde{T}_e(r,\theta,\phi) = T_{e\,0}(r) + \delta T_{e\,+} - {\mit\Psi}_{k+}\,\frac{q(r)}{r\,g(r)}\,\frac{T_{e\,0}'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k}
 \end{equation}
 in the region $r>r_k+W_k$, 
 \begin{equation}
-\tilde{T}_e(r,\theta,\phi) = T_0(r) + \delta T_{e\,-} - {\mit\Psi}_{k-}\,\frac{q(r)}{r\,g(r)}\,\frac{T_0'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k}
+\tilde{T}_e(r,\theta,\phi) = T_{e\,0}(r) + \delta T_{e\,-} - {\mit\Psi}_{k-}\,\frac{q(r)}{r\,g(r)}\,\frac{T_{e\,0}'(r)\,\psi_{m_k}(r)}{m_k-n\,q(r)}\,{\rm e}^{\,{\rm i}\,\zeta_k}
 \end{equation}
 in the region $r< r_k-W_k$, and 
 \begin{equation}
@@ -212,27 +205,27 @@ in the region $r< r_k-W_k$, and
 \end{equation}
 in the region $r_k-W_k \leq r\leq r_k+W_k$. Continuity of the solution at $r=r_k\pm W_k$ implies that
 \begin{align}
-\delta T_{e\,+} &= T_{e\,k} + T_{e\,k}'\,W_k\,\delta T_0(1)+T_{e\,k}'\,W_k\,F_\infty - T_0(r_k+W_k),\\[0.5ex]
-\delta T_{e\,-} &= T_{e\,k} - T_{e\,k}'\,W_k\,\delta T_0(1) +T_{e\,k}'\,W_k\,F_\infty- T_0(r_k-W_k),\\[0.5ex]
-{\mit\Psi}_{k\,+} &= - T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_0'\,\psi_{m\,k}}\right)_{r_k+W_k},\\[0.5ex]
-{\mit\Psi}_{k\,-} &= T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_0'\,\psi_{m\,k}}\right)_{r_k-W_k}.
+\delta T_{e\,+} &= T_{e\,k}'\,W_k\,\delta T_{e\,0}(1)+T_{e\,k}'\,W_k\,F_\infty - T_{e\,k}'\,W_k,\\[0.5ex]
+\delta T_{e\,-} &= - T_{e\,k}'\,W_k\,\delta T_{e\,0}(1) +T_{e\,k}'\,W_k\,F_\infty+ T_{e\,k}'\,W_k,\\[0.5ex]
+{\mit\Psi}_{k\,+} &= - T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_{e\,0}'\,\psi_{m\,k}}\right)_{r_k+W_k},\\[0.5ex]
+{\mit\Psi}_{k\,-} &= T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_{e\,0}'\,\psi_{m\,k}}\right)_{r_k-W_k}.
 \end{align}
 
 Finally, for the special case $m=1$, we write
 \begin{equation}
-\tilde{T}(r,\theta,\phi) = - \xi^r(r,\theta,\phi)\,\frac{dT_0}{dr}.
+\tilde{T}_e(r,\theta,\phi) = - \xi^r(r,\theta,\phi)\,\frac{dT_{e\,0}}{dr}.
 \end{equation}
 
 \subsection{Normalized Quantities}
-Let $\hat{r}=r/\epsilon_a$, $\hat{r}_k=r_k/\epsilon_a$, $\hat{x}= x/\epsilon_a$, $\hat{T}_0' = \epsilon_a\,T_0'$, $T_{e\,k}'=\epsilon_a\,T_{e\,k}$, 
+Let $\hat{r}=r/\epsilon_a$, $\hat{r}_k=r_k/\epsilon_a$, $\hat{x}= x/\epsilon_a$, $\hat{T}_{e\,0}' = \epsilon_a\,T_{e\,0}'$, $\hat{T}_{e\,k}'=\epsilon_a\,\hat{T}_{e\,k}'$, 
 $\hat{W}_k = W_k/\epsilon_a$, and $\hat{\mit\Psi}_k={\mit\Psi}_k/\epsilon_a^{\,2}$, etc., 
 then
 \begin{equation}
-\tilde{T}_e(\hat{r},\theta,\phi) = T_0(r) + \delta T_{e\,+} - \hat{\mit\Psi}_{k+}\,\frac{q(\hat{r})}{\hat{r}\,g(\hat{r})}\,\frac{\hat{T}_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(\hat{r})}\,{\rm e}^{\,{\rm i}\,\zeta_k}
+\tilde{T}_e(\hat{r},\theta,\phi) = T_{e\,0}(\hat{r}) + \delta T_{e\,+} - \hat{\mit\Psi}_{k+}\,\frac{q(\hat{r})}{\hat{r}\,g(\hat{r})}\,\frac{\hat{T}_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(\hat{r})}\,{\rm e}^{\,{\rm i}\,\zeta_k}
 \end{equation}
 in the region $\hat{r}>\hat{r}_k+\hat{W}_k$, 
 \begin{equation}
-\tilde{T}_e(\hat{r},\theta,\phi) = T_0(\hat{r}) + \delta T_{e\,-} - \hat{{\mit\Psi}}_{k-}\,\frac{q(\hat{r})}{\hat{r}\,g(\hat{r})}\,\frac{\hat{T}_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(\hat{r})}\,{\rm e}^{\,{\rm i}\,\zeta_k}
+\tilde{T}_e(\hat{r},\theta,\phi) = T_{e\,0}(\hat{r}) + \delta T_{e\,-} - \hat{{\mit\Psi}}_{k-}\,\frac{q(\hat{r})}{\hat{r}\,g(\hat{r})}\,\frac{\hat{T}_e'(r)\,\psi_{m_k}(r)}{m_k-n\,q(\hat{r})}\,{\rm e}^{\,{\rm i}\,\zeta_k}
 \end{equation}
 in the region $\hat{r}< \hat{r}_k-\hat{W}_k$, and 
 \begin{equation}
@@ -240,12 +233,16 @@ in the region $\hat{r}< \hat{r}_k-\hat{W}_k$, and
 \end{equation}
 in the region $\hat{r}_k-\hat{W}_k \leq \hat{r}\leq \hat{r}_k+\hat{W}_k$. Here, 
 \begin{align}
-\delta T_{e\,+} &= T_{e\,k} + \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_0(1)+\hat{T}_{e\,k}'\,\hat{W}_k\,F_\infty - T_0(\hat{r}_k+\hat{W}_k),\\[0.5ex]
-\delta T_{e\,-} &= T_{e\,k} - \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_0(1) +\hat{T}_{e\,k}'\,\hat{W}_k\,F_\infty- T_0(\hat{r}_k-\hat{W}_k),\\[0.5ex]
+\delta T_{e\,+} &= \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_0(1)+\hat{T}_{e\,k}'\,\hat{W}_k\,F_\infty - \hat{T}_{e\,k}'\,\hat{W}_k,\\[0.5ex]
+\delta T_{e\,-} &=- \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_0(1) +\hat{T}_{e\,k}'\,\hat{W}_k\,F_\infty +\hat{T}_{e\,k}'\,\hat{W}_k,\\[0.5ex]
 \hat{\mit\Psi}_k&=\left(\frac{\hat{W}_k}{4}\right)^2\left(\frac{g\,s}{q}\right)_{\hat{r}_k},\\[0.5ex]
-\hat{\mit\Psi}_{k\,+} &= - \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_1(1)\left(\frac{\hat{r}\,g}{q}\,\frac{m_k-n\,q}{\hat{T}_0'\,\psi_{m\,k}}\right)_{\hat{r}_k+\hat{W}_k},\\[0.5ex]
-\hat{\mit\Psi}_{k\,-} &= \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_1(1)\left(\frac{\hat{r}\,g}{q}\,\frac{m_k-n\,q}{\hat{T}_0'\,\psi_{m\,k}}\right)_{\hat{r}_k-\hat{W}_k}.
+\hat{\mit\Psi}_{k\,+} &= - \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_1(1)\left(\frac{\hat{r}\,g}{q}\,\frac{m_k-n\,q}{\hat{T}_{e\,0}'\,\psi_{m\,k}}\right)_{\hat{r}_k+\hat{W}_k},\\[0.5ex]
+\hat{\mit\Psi}_{k\,-} &= \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_1(1)\left(\frac{\hat{r}\,g}{q}\,\frac{m_k-n\,q}{\hat{T}_{e\,0}'\,\psi_{m\,k}}\right)_{\hat{r}_k-\hat{W}_k}.
 \end{align}
+For the special case $m=1$, 
+\begin{equation}
+\tilde{T}_e(\hat{r},\theta,\phi) = - \frac{\xi^r(\hat{r},\theta,\phi)}{\epsilon_a}\,\frac{ dT_{e\,0}}{d\hat{r}}.
+\end{equation}
 
 
 \end{document}

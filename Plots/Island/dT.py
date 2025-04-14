@@ -1,6 +1,7 @@
 # dT.py
 
 # Plots delta T_e versus x and zeta
+
 import math
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,12 +17,6 @@ z    = np.asarray(ds['zeta']) /math.pi
 t    = np.asarray(ds['delta_T'])
 
 xx = np.sin(math.pi*z/2.)/2.
-
-fn1   = '../../Outputs/TJ/TJ.nc'
-ds1   = nc.Dataset(fn1)
-rres  = ds1['r_res']
-psi_r = ds1['dTe_cos']
-psi_i = ds1['dTe_sin']
 
 fig = plt.figure (figsize = (8.0, 8.0))
 fig.canvas.manager.set_window_title (r'TJ Code: delta T_e(x, zeta)')

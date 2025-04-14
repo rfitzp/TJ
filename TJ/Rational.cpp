@@ -51,6 +51,10 @@ void TJ::FindRational ()
   Jres   = new int   [nres];
   Flarge = new double[nres];
   Fsmall = new double[nres];
+  neres  = new double[nres];
+  nepres = new double[nres];
+  Teres  = new double[nres];
+  Tepres = new double[nres];
   
   for (int i = 0; i < nres; i++)
     {
@@ -60,12 +64,16 @@ void TJ::FindRational ()
       qval     = qres[i];
       rres[i]  = RootFind (EPS, 1.);
       
-      qerr [i]  = fabs (Getq (rres[i]) - qres[i]);
-      sres [i]  = Gets (rres[i]);
-      gres [i]  = 1. + epsa*epsa * Getg2 (rres[i]);
-      DIres[i]  = GetDI (rres[i]);
-      DRres[i]  = GetDR (rres[i]);
-      Pres [i]  = GetPsiN (rres[i]);
+      qerr  [i] = fabs (Getq (rres[i]) - qres[i]);
+      sres  [i] = Gets (rres[i]);
+      gres  [i] = 1. + epsa*epsa * Getg2 (rres[i]);
+      DIres [i] = GetDI (rres[i]);
+      DRres [i] = GetDR (rres[i]);
+      Pres  [i] = GetPsiN (rres[i]);
+      neres [i] = Getne (rres[i]);
+      nepres[i] = Getnep (rres[i]);
+      Teres [i] = GetTe (rres[i]);
+      Tepres[i] = GetTep (rres[i]);
 
       if (DIres[i] > 0.)
 	{
@@ -87,8 +95,8 @@ void TJ::FindRational ()
 
   printf ("Rational surface data:\n");
   for (int i = 0; i < nres; i++)
-    printf ("m = %3d PsiN = %10.3e, r = %10.3e s = %10.3e DI = %10.3e DR = %10.3e nuL = %10.3e nuS = %10.3e |q-qs| = %10.3e\n",
-	    mres[i], Pres[i], rres[i], sres[i], DIres[i], DRres[i], nuLres[i], nuSres[i], qerr[i]);
+    printf ("m = %3d PsiN = %10.3e, r = %10.3e s = %10.3e DI = %10.3e DR = %10.3e nuL = %10.3e nuS = %10.3e |q-qs| = %10.3e Tep = %10.3e nep = %10.3e\n",
+	    mres[i], Pres[i], rres[i], sres[i], DIres[i], DRres[i], nuLres[i], nuSres[i], qerr[i], Tepres[i], nepres[i]);
 
   // Abort calculation if resonant mode numbers outside range of included poloidal harmonics
   if (mres[0] < MMIN || mres[nres-1] > MMAX)
@@ -106,7 +114,6 @@ void TJ::GetLayerData ()
   // ...............
   // Allocate memory
   // ...............
-  Teres  = new double[nres];
   S13res = new double[nres];
   taures = new double[nres];
   ieres  = new double[nres];
@@ -136,9 +143,8 @@ void TJ::GetLayerData ()
       double p2k = gsl_spline_eval (p2spline, rres[k], p2acc);
       double ppk = gsl_spline_eval (ppspline, rres[k], ppacc);
 
-      double nek  = n0 * pow (1. - rres[k]*rres[k], alpha);
-      double pk   = epsa*epsa * B0*B0 * p2k /mu0;
-      double Tek  = (pk /2. /nek) /e + Teped;
+      double nek  = neres[k];
+      double Tek  = Teres[k];
       double Lnk  = 24. + 3.*log(10.) - 0.5 * log(nek) + log(Tek);
       double teek = 6.*sqrt(2.)*pow(M_PI, 1.5) * eps0*eps0 * sqrt(me) * pow(Tek, 1.5)
 	/Lnk /pow(e, 2.5) /nek;
@@ -165,7 +171,6 @@ void TJ::GetLayerData ()
 	  Wd          = sqrt(8.) * pow (Chip /Chpa, 0.25) /sqrt (epsa * rres[k] * sres[k] * double(NTOR));
 	}
 
-      Teres [k] = Tek;
       S13res[k] = pow (tRk/tHk, 1./3.);
       taures[k] = S13res[k] * tHk;
       ieres [k] = 0.5;

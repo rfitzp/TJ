@@ -234,6 +234,7 @@ void Island::Solve ()
   // ........
   // Clean up
   // ........
+  printf ("Cleaning up\n");
   delete[] XX; delete[] zz; delete[] dTo; delete[] kk; delete[] F; delete[] dTx;
 
   gsl_spline_free (Fspline);

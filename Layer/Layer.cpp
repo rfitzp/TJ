@@ -626,6 +626,8 @@ void Layer::WriteNetcdf ()
 // #############################
 void Layer::CleanUp ()
 {
+  printf ("Cleaning up\n");
+  
   delete[] r_res,    delete[] m_res;     delete[] Delta_res; delete[] Deltac_res; delete[] tau_res;
   delete[] QE_res;   delete[] Qe_res;    delete[] Qi_res;    delete[] iotae_res;  delete[] D_res;
   delete[] Pphi_res; delete[] Pperp_res; delete[] S13_res;   delete[] Chi_res;    delete[] input;
@@ -664,7 +666,7 @@ void Layer::SolveLayerEquations ()
     lowD = 0;
   else
     {
-      lowD = 1;
+      lowD    = 1;
       Pmax[3] = pow (abs (gEe /Pperp), 0.5);
       Pmax[4] = pow (Pphi, -1./6.);
       Pmax[5] = 1.;
