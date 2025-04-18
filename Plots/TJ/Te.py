@@ -55,7 +55,7 @@ plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid'
 
 plt.contour (RR, ZZ, Pr0, levels = 360, colors = 'white', linewidths = 0.2)
 
-#plt.contour (RR, ZZ, rr, rres, colors = 'black', linewidths = 1.0)    
+plt.contour (RR, ZZ, rr, rres, colors = 'black', linewidths = 0.5, linestyles = 'dashed')    
 
 cp = plt.contourf (RR, ZZ, Pr0, ncont, cmap = ReBu)
 

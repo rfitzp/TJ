@@ -1,0 +1,254 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage {amsmath}
+\usepackage{amssymb}
+\pdfoutput = 1 
+\usepackage {graphicx}
+\newcommand{\bomega}{\mbox{\boldmath$\omega$}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\title{Pressure Flattening due to Asymmetric Magnetic Island}
+\author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies,  Department of Physics,  University of Texas at Austin,  Austin TX 78712, USA}\begin{abstract}
+\end{abstract}
+\maketitle
+
+\section{Magnetic Island}
+Let $x=r-r_s$, $X=x/W$, and $\zeta= m\,\theta-n\,\phi$, where $W$ is the island width. The magnetic flux-surfaces of the magnetic island are contours of
+\begin{equation}
+{\mit\Omega}(X,\zeta) = 8\,X^2 + \cos(\zeta-\delta^2\,\sin\zeta) - 2\sqrt{8}\,\delta\,X\,\cos\zeta+\delta^2\,\cos^2\zeta,
+\end{equation}
+where $|\delta|<1$. 
+The X-points lie at $X=\delta/\sqrt{8}$ and $\zeta = 0$, $2\pi$, whereas the O-point lies at
+$X=-\delta/\sqrt{8}$ and $\zeta=\pi$. The O-point corresponds to ${\mit\Omega}=-1$, whereas the magnetic separatrix corresponds to ${\mit\Omega}=1$.  
+
+Let
+\begin{align}
+Y &= X -\frac{\delta}{\sqrt{8}}\,\cos\zeta,\\[0.5ex]
+\xi &= \zeta-\delta^2\,\sin\zeta.
+\end{align}
+It follows that
+\begin{equation}
+{\mit\Omega}(Y,\zeta) = 8\,Y^2 +\cos\xi,
+\end{equation}
+The X-points lie at $Y=0$ and $\xi = 0$, $2\pi$, whereas the O-point lies at
+$Y=0$ and $\zeta=\pi$. 
+Moreover, 
+\begin{align}
+\zeta &= \xi+2\sum_{n=1,\infty} \left[\frac{J_n(n\,\delta^2)}{n}\right]\sin(n\,\xi),\\[0.5ex]
+\cos\zeta&=-\frac{\delta^2}{2}+\sum_{n=1,\infty}\left[\frac{J_{n-1}(n\,\delta^2)-J_{n+1}(n\,\delta^2)}{n}\right]\cos(n\,\xi),\\[0.5ex]
+\sin\zeta &= \frac{2}{\delta^2}\sum_{n=1,\infty} \left[\frac{J_n(n\,\delta^2)}{n}\right]\sin(n\,\xi),\\[0.5ex]
+\cos(m\,\zeta)&= m\sum_{n=1,\infty}\left[\frac{J_{n-m}(n\,\delta^2)-J_{n+m}(n\,\delta^2)}{n}\right]\cos(n\,\xi),\\[0.5ex]
+\sin(m\,\zeta) &= m\sum_{n=1,\infty}\left[\frac{J_{n-m}(n\,\delta^2)+J_{n+m}(n\,\delta^2)}{n}\right]\sin(n\,\xi),
+\end{align}
+for $m>1$. 
+
+\section{Plasma Displacement}
+Outside the separatrix, we can write
+\begin{equation}
+{\mit\Omega}(X,\zeta) = 8\,(X-{\mit\Xi})^2,
+\end{equation}
+where ${\mit\Xi}= \xi^r/W$. It follows that
+\begin{align}
+{\mit\Xi}(X,\zeta)&\simeq -\frac{[{\mit\Omega}(X,\zeta)-8\,X^2]}{16\,X}\nonumber\\[0.5ex]
+&=- \frac{\cos(\zeta-\delta^2\,\sin\zeta) +\delta^2\,\cos^2\zeta}{16\,X}+\frac{\delta}{\sqrt{8}}\,\cos\zeta.
+\end{align}
+Note that ${\mit\Xi}$ is an even function of $\zeta$. 
+Let us write
+\begin{equation}
+{\mit\Xi}(X,\zeta)= \sum_{n=0,\infty} {\mit\Xi}_n(X)\,\cos(n\,\zeta).
+\end{equation}
+Thus,
+\begin{align}
+{\mit\Xi}_1(X) =2 \oint {\mit\Xi}(X,\zeta)\,\cos(\zeta)\,\frac{d\zeta}{2\pi} &= -\frac{1}{8\,X}\oint\cos(\zeta-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}+\frac{\delta}{\sqrt{8}} \\[0.5ex]
+&=-\frac{1}{16\,X}\oint\cos(-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}\nonumber\\[0.5ex]
+&\phantom{=}- \frac{1}{16\,X}\oint\cos(2\,\zeta-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}+\frac{\delta}{\sqrt{8}} .
+\end{align}
+But,
+\begin{equation}
+J_n(\delta^2) = \oint\cos(n\,\zeta-\delta^2\,\sin\zeta)\,\frac{d\zeta}{2\pi},
+\end{equation}
+so
+\begin{equation}
+{\mit\Xi}_1(X) =- \frac{J_0(\delta^2) + J_2(\delta^2)}{16\,X}+ \frac{\delta}{\sqrt{8}} ,
+\end{equation}
+and
+\begin{equation}
+\xi^r_1(x) =- \frac{W^2}{16\,x}\,[J_0(\delta^2)+ J_2(\delta^2)]+ \frac{W\,\delta}{\sqrt{8}} .
+\end{equation}
+Thus,
+\begin{align}
+\psi_1(x) &= \frac{r\,g}{q}\,(m-n\,q)\,\xi_1^r = -(n\,s\,g)_{r_s}\,x\,\xi_1^r\nonumber\\[0.5ex]
+&= (n\,s\,g)_{r_k}\,\frac{W^2}{16}\,[J_0(\delta^2)+ J_2(\delta^2)] - (n\,s\,g)_{r_s}\,\frac{W\,\delta}{\sqrt{8}}\,x,
+\end{align}
+so
+\begin{equation}
+\frac{\psi_m(x)}{m} = J_0(\delta^2)+ J_2(\delta^2) - 2\sqrt{8}\,\frac{\delta}{W}\,x.
+\end{equation}
+It follows that
+\begin{align}
+\delta &= -\frac{W}{2\sqrt{8}\,m}\,\frac{d\psi_m(0)}{dr}\\[0.5ex]
+&\simeq -\left[\frac{\psi_m(r_s+W)-\psi_m(r_s-W)}{4\sqrt{8}\,m}\right].
+\end{align}
+
+\section{Flux-Surface Average Operator}
+Now,
+\begin{equation}
+[A,B] \equiv \left.\frac{\partial A}{\partial X}\right|_\zeta\left.\frac{\partial B}{\partial\zeta}\right|_X- \left.\frac{\partial B}{\partial X}\right|_\zeta\left.\frac{\partial A}{\partial\zeta}\right|_X.
+\end{equation}
+But,
+\begin{equation}
+\left.\frac{\partial}{\partial X}\right|_\zeta= \left.\frac{\partial{\mit\Omega}}{\partial X}\right|_\zeta\left.\frac{\partial}{\partial{\mit\Omega}}\right|_{\xi}+ \left.\frac{\partial\xi}{\partial X}\right|_\zeta\left.\frac{\partial}{\partial\xi}\right|_{\mit\Omega}=16\,Y\left.\frac{\partial}{\partial{\mit\Omega}}\right|_{\xi},
+\end{equation}
+and
+\begin{equation}
+\left.\frac{\partial}{\partial \zeta}\right|_X= \left.\frac{\partial{\mit\Omega}}{\partial \zeta}\right|_X\left.\frac{\partial}{\partial{\mit\Omega}}\right|_{\xi}+ \left.\frac{\partial\xi}{\partial \zeta}\right|_X\left.\frac{\partial}{\partial\xi}\right|_{\mit\Omega},
+\end{equation}
+so
+\begin{equation}
+[A,B] \equiv \frac{16\,Y}{\sigma}\left(\left.\frac{\partial A}{\partial{\mit\Omega}}\right|_\xi\left.\frac{\partial B}{\partial\xi}\right|_{\mit\Omega}-\left.\frac{\partial B}{\partial{\mit\Omega}}\right|_\xi\left.\frac{\partial A}{\partial\xi}\right|_{\mit\Omega}\right),
+\end{equation}
+where
+\begin{equation}
+\sigma(\xi) \equiv\frac{d\zeta}{d\xi}=  1+2\sum_{n=1,\infty} J_n(n\,\delta^2)\,\cos(n\,\xi).
+\end{equation}
+In particular,
+\begin{equation}
+[A,{\mit\Omega}] = -\frac{16\,Y}{\sigma}\left.\frac{\partial A}{\partial\xi}\right|_{\mit\Omega}.
+\end{equation}
+
+The flux-surface average operator, $\langle\cdots\rangle$, is the annihilator of $[A,{\mit\Omega}]$ for arbitrary $A(s,{\mit\Omega},\xi)$. Here, $s=+1$ for $Y>0$ and $s=-1$ for
+$Y<0$. It follows that
+\begin{equation}
+\langle A\rangle = \int_{\zeta_0}^{2\pi-\zeta_0}\frac{\sigma(\xi)\,A_+({\mit\Omega},\xi)}{\sqrt{2\,({\mit\Omega}-\cos\xi)}}\,\frac{d\xi}{2\pi}
+\end{equation}
+for $-1\leq {\mit\Omega}\leq 1$, and
+\begin{equation}
+\langle A\rangle = \int_0^{2\pi}\frac{\sigma(\xi)\,A(s,{\mit\Omega},\xi)}{\sqrt{2\,({\mit\Omega}-\cos\xi)}}\,\frac{d\xi}{2\pi}
+\end{equation}
+for ${\mit\Omega}>1$. Here, $\xi_0=\cos^{-1}({\mit\Omega})$, and
+\begin{equation}
+A_+({\mit\Omega},\xi)= \frac{1}{2}\left[A(+1,{\mit\Omega},\xi) + A(-1,{\mit\Omega},\xi)\right].
+\end{equation}
+
+\section{Temperature Perturbation}
+The electron temperature in the vicinity of the island can be written
+\begin{equation}
+T_e(X,\zeta) = T_{e\,s} + s\,W\,T_{e\,s}'\,\tilde{T}({\mit\Omega}).
+\end{equation}
+Here, $\tilde{T}({\mit\Omega})$ satisfies
+\begin{equation}\label{e30}
+\left\langle \left.\frac{\partial ^2\tilde{T}}{\partial X^2}\right|_\zeta \right\rangle =0,
+\end{equation}
+subject to the boundary condition that
+\begin{equation}
+\tilde{T}({\mit\Omega})\rightarrow |X|
+\end{equation}
+as $|X|\rightarrow \infty$. It
+follows that
+\begin{equation}\label{e34}
+\frac{d}{d{\mit\Omega}}\!\left(\langle Y^2\rangle\,\frac{d\tilde{T}}{d{\mit\Omega}}\right)=0
+\end{equation}
+subject to the boundary condition that
+\begin{equation}
+\tilde{T}({\mit\Omega})\rightarrow \frac{{\mit\Omega}^{1/2}}{\sqrt{8}}
+\end{equation}
+as ${\mit\Omega}\rightarrow\infty$. 
+
+Outside the separatrix,
+\begin{equation}
+\langle Y^2\rangle({\mit\Omega}) = \frac{1}{16}\int_0^{2\pi}\sigma(\xi)\sqrt{2\,({\mit\Omega}-\cos\xi)}\,\frac{d\xi}{2\pi}.
+\end{equation}
+Let 
+\begin{equation}
+k = \left(\frac{1+{\mit\Omega}}{2}\right)^{1/2}.
+\end{equation}
+Thus, the O-point corresponds to $k=0$ and the separatrix to $k=1$. 
+It follows that 
+\begin{equation}
+\langle Y^2\rangle(k) = \frac{k}{4\pi}\int_0^{\pi/2}\sigma(2\,\theta-\pi)\,(1-\sin^2\theta/k^2)^{1/2}\,d\theta.
+\end{equation}
+Thus,
+\begin{equation}
+\langle Y^2\rangle(k) = \frac{k}{4\pi}\,G(1/k),
+\end{equation}
+where
+\begin{align}
+G(p) &=E_0(p) +2\,\cos(n\,\pi)\sum_{n=1,\infty}J_n(n\,\delta^2)\,E_n(p),\\[0.5ex]
+E_n(p) &= \int_0^{\pi/2} \cos(2\,n\,\theta)\,(1-p^2\,\sin^2\theta)^{1/2}\,d\theta.
+\end{align}
+
+Equation~(\ref{e34}) yields
+\begin{equation}
+\tilde{T}(k) = 0
+\end{equation}
+for $0\leq k\leq 1$, and 
+\begin{equation}
+\frac{d}{dk}\!\left[G(1/k)\,\frac{d\tilde{T}}{dk}\right]=0
+\end{equation}
+for $k>1$. Thus,
+\begin{equation}
+\frac{d\tilde{T}}{dk} = \frac{c}{G(1/k)}
+\end{equation}
+for $k>1$, subject to the boundary condition that
+\begin{equation}
+\tilde{T}(k)\rightarrow \frac{k}{2}
+\end{equation}
+as $k\rightarrow \infty$. In the limit that $p\rightarrow 0$, 
+\begin{align}
+E_0(p)&=\frac{\pi}{2},\\[0.5ex]
+E_{n>0}(p) &= 0,
+\end{align}
+which implies that $c=\pi/4$. So
+\begin{align}
+\frac{d\tilde{T}}{dk} &= \frac{\pi}{4}\,\frac{1}{G(1/k)},\\[0.5ex]
+\tilde{T}(k) &= F(k),\\[0.5ex]
+F(k) &= \frac{\pi}{4}\int_1^k\frac{dk'}{G(1/k')}
+\end{align}
+for $k>1$. 
+
+\section{Harmonics of Temperature Perturbation}
+We can write
+\begin{equation}
+\tilde{T}(X,\zeta)=\sum_{\nu=0,\infty}\delta T_\nu(X)\,\cos(\nu\,\zeta).
+\end{equation}
+Now,
+\begin{equation}
+\delta T_0(X) = \oint \tilde{T}(X,\zeta)\,\frac{d\zeta}{2\pi},
+\end{equation}
+where the integral is at constant $X$. It follows that
+\begin{equation}
+\delta T_0(X) = \int_0^{\xi_c}F(k)\,\sigma(\xi)\,\frac{d\xi}{\pi},
+\end{equation}
+where 
+\begin{equation}
+\xi_c = \cos^{-1}(1-8\,Y^2)
+\end{equation}
+for $|Y|<1/2$, and $\xi_c=\pi$ for $|Y|\geq 1/2$. Furthermore,
+\begin{equation}
+k =\left[4\,Y^2 +\cos^2\left(\frac{\xi}{2}\right)\right]^{1/2}.
+\end{equation}
+
+For $\nu>0$, we have
+\begin{equation}
+\delta T_\nu(X) = 2\oint\tilde{T}(X,\zeta)\,\cos(\nu\,\zeta)\,\frac{d\zeta}{2\pi}.
+\end{equation}
+Integrating by parts, we obtain
+\begin{equation}
+\delta T_\nu(X) = -\frac{2}{\nu}\oint\left.\frac{\partial \tilde{T}}{\partial\zeta}\right|_X\,\sin(\nu\,\zeta)\,\frac{d\zeta}{2\pi}.
+\end{equation}
+But,
+\begin{equation}
+\left.\frac{\partial \tilde{T}}{\partial\zeta}\right|_X=\frac{d\tilde{T}}{dk}\left.\frac{\partial k}{\partial\zeta}\right|_{X}
+=\frac{1}{4\,k}\frac{d\tilde{T}}{dk}\,\left.\frac{\partial {\mit\Omega}}{\partial\zeta}\right|_{X}=-\frac{1}{4\,k}\,\frac{d\tilde{T}}{dk}\,\kappa(\xi),
+\end{equation}
+where
+\begin{equation}
+\kappa(\xi) = \sin\xi\,(1-\delta^2\,\cos\zeta)  -2\sqrt{8}\,\delta\,X\,\sin\zeta +\delta^2\,\sin(2\,\zeta).
+\end{equation}
+Hence,
+\begin{equation}
+\delta T_\nu(X) =\frac{1}{8\,\nu}\int_0^{\xi_c}\frac{\sin(\nu\,\zeta)\,\kappa(\xi)\,\sigma(\xi)}{k\,G(1/k)}\,d\xi.
+\end{equation}
+\end{document}
