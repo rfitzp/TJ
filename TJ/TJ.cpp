@@ -55,6 +55,7 @@ TJ::TJ ()
   INTR    = JSONData["INTR"] .get<int>();
   RWM     = JSONData["RWM"]  .get<int>();
   LAYER   = JSONData["LAYER"].get<int>();
+  TEMP    = JSONData["TEMP"] .get<int>();
 
   EPS     = JSONData["EPS"]  .get<double>();
   DEL     = JSONData["DEL"]  .get<double>();
@@ -248,16 +249,6 @@ void TJ::Solve ()
     equilibrium.Solve ();
   }
 
-  // ...................................................................................
-  // Call class Island to determine perturbed temperature in vicinity of magnetic island
-  // ...................................................................................
-  if (!EQLB)
-    {
-      Island island;
-
-      island.Solve ();
-    }
-
   if (!EQLB)
     {
       // -----------------------------
@@ -268,8 +259,8 @@ void TJ::Solve ()
       printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
       printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
       printf ("Calculation flags:\n");
-      printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d\n",
-	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER);
+      printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d TEMP = %1d\n",
+	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER, TEMP);
       printf ("Calculation parameters:\n");
       printf ("ntor = %3d        mmin  = %3d        mmax  = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e NPHI = %3d\n",
 	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND, NPHI);
@@ -287,9 +278,6 @@ void TJ::Solve ()
       
       // Read equilibrium data
       ReadEquilibrium ();
-
-      // Read island data
-      ReadIsland ();
       
       // Calculate metric data at plasma boundary
       CalculateMetricBoundary ();
@@ -476,7 +464,7 @@ void TJ::CleanUp ()
   delete[] sres;  delete[] DIres;  delete[] nuLres; delete[] nuSres;
   delete[] Jres;  delete[] DRres;  delete[] Flarge; delete[] Fsmall;
   delete[] Pres;  delete[] gres;   delete[] neres;  delete[] nepres;
-  delete[] Teres; delete[] Tepres;
+  delete[] Teres; delete[] Tepres; 
 
   delete[] S13res; delete[] taures; delete[] ieres; delete[] QEres;
   delete[] Qeres;  delete[] Qires;  delete[] Dres;  delete[] Pmres;
@@ -488,7 +476,7 @@ void TJ::CleanUp ()
 
   delete[] Fval; delete[] Psik; delete[] PsTp; delete[] PsTm;
   delete[] dTp;  delete[] dTm;  delete[] Psnp; delete[] Psnm;
-  delete[] dnp;  delete[] dnm;
+  delete[] dnp;  delete[] dnm;  delete[] delta;
 
   if (IDEAL)
     {
@@ -502,15 +490,18 @@ void TJ::CleanUp ()
       delete[] FFvl; delete[] fw;
     }
 
-  for (int i = 0; i < Nh; i++)
+  if (TEMP)
     {
-      gsl_spline_free (dThspline[i]);
+      for (int i = 0; i < Nh; i++)
+	{
+	  gsl_spline_free (dThspline[i]);
+	  
+	  gsl_interp_accel_free (dThacc[i]);
+	}
+      delete[] dThspline; delete[] dThacc;
       
-      gsl_interp_accel_free (dThacc[i]);
+      delete[] XX;
     }
-  delete[] dThspline; delete[] dThacc;
-
-  delete[] XX;
       
  if (VIZ)
     {

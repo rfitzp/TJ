@@ -90,6 +90,7 @@ class TJ : private Utility
   int INTR;    // Flag for internal ideal stability calculation (read from TJ JSON file)
   int RWM;     // Flag for resistive wall mode calculation (read from TJ JSON file)
   int LAYER;   // Flag for layer calculation (read from TJ JSON file)
+  int TEMP;    // Flag for perturbed temperature calculation (read from TJ JSON file)
 
   // ----------------------
   // Calculation parameters
@@ -217,9 +218,9 @@ class TJ : private Utility
   // -----------
   int                Nh;         // Number of harmonics in island calculation (read from ISLAND JSON file)
   int                NX;         // Number radial grid-points in island calculation (read from ISLAND JSON file)
-  double             Finf;       // Asymptotic value of X - deltaT[0] (read from Outputs/Island/Island.nc)
+  double*            T0inf;      // Asymptotic value of X - deltaT[0] at given rational surface (read from Outputs/Island/Island.nc)
   double*            XX;         // Island solution radial grid (read from Outputs/Island/Island.nc)
-  Array<double,2>    deltaTh;    // Harmonics of perturbed electron temperature in vicinity of island (read from Outputs/Island/Island.nc)
+  Array<double,3>    deltaTh;    // Harmonics of perturbed electron temperature in vicinity of island at given rational surface (read from Outputs/Island/Island.nc)
 
   gsl_spline**       dThspline;  // Interpolated island harmonic functions
   gsl_interp_accel** dThacc;     // Accelerator for interpolated island harmonic functions
@@ -343,7 +344,7 @@ class TJ : private Utility
   double* nepres;  // Radial gradients of electron number densities at rational surfaces
   double* Teres;   // Electron temperatures at rational surfaces
   double* Tepres;  // Radial gradients of electron temperatures at rational surfaces
-
+ 
   // ----------------
   // Mode number data
   // ----------------
@@ -411,6 +412,7 @@ class TJ : private Utility
   complex<double>*         Psnm;  // Reconnected fluxes for electron number density calculation inside rational surfaces
   double*                  dnp;   // Electron number density adjustments outside rational surfaces
   double*                  dnm;   // Electron number density  adjustments inside rational surfaces
+  double*                  delta; // Island asymmetry parameters at rational surfaces
   
   Array<complex<double>,3> neu;   // n_e components of unreconnected tearing eigenfunctions
   Array<complex<double>,3> Teu;   // T_e components of unreconnected tearing eigenfunctions

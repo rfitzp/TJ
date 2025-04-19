@@ -15,6 +15,7 @@
     "RWM":    0,       // Flag for resistive wall mode calculation
     "RMP":    0,       // Flag for resonant magnetic perturbation calculation
     "LAYER":  0,       // Flag for layer calculation
+    "TEMP":   0,       // Flag for perturbed temperature calculation
  
     "EPS":   1.0e-4,   // Solutions launched from magnetic axis at r = EPS 
     "DEL":   1.0e-9,   // Distance of closest approach to rational surface

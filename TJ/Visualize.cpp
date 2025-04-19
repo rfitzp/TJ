@@ -81,7 +81,7 @@ void TJ::VisualizeEigenfunctions ()
 	double* dne_i = new double[NDIAG];
 	double* dTe_r = new double[NDIAG];
 	double* dTe_i = new double[NDIAG];
-	
+		
 	for (int i = 0; i < NDIAG; i++)
 	  {
 	    psi_r[i] = real (Psiu(j, k, i));
@@ -98,14 +98,17 @@ void TJ::VisualizeEigenfunctions ()
 	    xi_r [i] = real (xiu (j, k, i));
 	    xi_i [i] = imag (xiu (j, k, i));
 
-	    ne_r [i] = real (neu (j, k, i));
-	    ne_i [i] = imag (neu (j, k, i));
-	    Te_r [i] = real (Teu (j, k, i));
-	    Te_i [i] = imag (Teu (j, k, i));
-	    dne_r[i] = real (dneu(j, k, i));
-	    dne_i[i] = imag (dneu(j, k, i));
-	    dTe_r[i] = real (dTeu(j, k, i));
-	    dTe_i[i] = imag (dTeu(j, k, i));
+	    if (TEMP)
+	      {
+		ne_r [i] = real (neu (j, k, i));
+		ne_i [i] = imag (neu (j, k, i));
+		Te_r [i] = real (Teu (j, k, i));
+		Te_i [i] = imag (Teu (j, k, i));
+		dne_r[i] = real (dneu(j, k, i));
+		dne_i[i] = imag (dneu(j, k, i));
+		dTe_r[i] = real (dTeu(j, k, i));
+		dTe_i[i] = imag (dTeu(j, k, i));
+	      }
 	  }
 
 	// Interpolate data from diagnostic grid
@@ -122,8 +125,8 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_interp_accel* chi_i_acc = gsl_interp_accel_alloc ();
 	gsl_interp_accel* xi_r_acc  = gsl_interp_accel_alloc ();
 	gsl_interp_accel* xi_i_acc  = gsl_interp_accel_alloc ();
-	gsl_interp_accel* ne_r_acc  = gsl_interp_accel_alloc ();
 
+	gsl_interp_accel* ne_r_acc  = gsl_interp_accel_alloc ();
 	gsl_interp_accel* ne_i_acc  = gsl_interp_accel_alloc ();
 	gsl_interp_accel* Te_r_acc  = gsl_interp_accel_alloc ();
 	gsl_interp_accel* Te_i_acc  = gsl_interp_accel_alloc ();
@@ -131,6 +134,7 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_interp_accel* dne_i_acc = gsl_interp_accel_alloc ();
 	gsl_interp_accel* dTe_r_acc = gsl_interp_accel_alloc ();
 	gsl_interp_accel* dTe_i_acc = gsl_interp_accel_alloc ();
+      
 	
 	gsl_spline* psi_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* psi_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
@@ -154,7 +158,7 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline* dne_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* dTe_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* dTe_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
-
+      	
 	gsl_spline_init (psi_r_spline, Rgrid, psi_r, NDIAG);
 	gsl_spline_init (psi_i_spline, Rgrid, psi_i, NDIAG);
 	gsl_spline_init (Z_r_spline,   Rgrid, Z_r,   NDIAG);
@@ -169,14 +173,17 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline_init (xi_r_spline,  Rgrid, xi_r,  NDIAG);
 	gsl_spline_init (xi_i_spline,  Rgrid, xi_i,  NDIAG);
 
-	gsl_spline_init (ne_r_spline,  Rgrid, ne_r,  NDIAG);
-	gsl_spline_init (ne_i_spline,  Rgrid, ne_i,  NDIAG);
-	gsl_spline_init (Te_r_spline,  Rgrid, Te_r,  NDIAG);
-	gsl_spline_init (Te_i_spline,  Rgrid, Te_i,  NDIAG);		
-	gsl_spline_init (dne_r_spline, Rgrid, dne_r, NDIAG);
-	gsl_spline_init (dne_i_spline, Rgrid, dne_i, NDIAG);
-	gsl_spline_init (dTe_r_spline, Rgrid, dTe_r, NDIAG);
-	gsl_spline_init (dTe_i_spline, Rgrid, dTe_i, NDIAG);
+	if (TEMP)
+	  {
+	    gsl_spline_init (ne_r_spline,  Rgrid, ne_r,  NDIAG);
+	    gsl_spline_init (ne_i_spline,  Rgrid, ne_i,  NDIAG);
+	    gsl_spline_init (Te_r_spline,  Rgrid, Te_r,  NDIAG);
+	    gsl_spline_init (Te_i_spline,  Rgrid, Te_i,  NDIAG);		
+	    gsl_spline_init (dne_r_spline, Rgrid, dne_r, NDIAG);
+	    gsl_spline_init (dne_i_spline, Rgrid, dne_i, NDIAG);
+	    gsl_spline_init (dTe_r_spline, Rgrid, dTe_r, NDIAG);
+	    gsl_spline_init (dTe_i_spline, Rgrid, dTe_i, NDIAG);
+	  }
 		
 	// Interpolate data onto visualization grid
 	for (int i = 0; i < Nf; i++)
@@ -211,33 +218,37 @@ void TJ::VisualizeEigenfunctions ()
 
 	    xiuf(j, k, i) = complex<double> (x, y);
 
-	    x = gsl_spline_eval (ne_r_spline, rf[i], ne_r_acc);
-	    y = gsl_spline_eval (ne_i_spline, rf[i], ne_i_acc);
+	    if (TEMP)
+	      {
+		x = gsl_spline_eval (ne_r_spline, rf[i], ne_r_acc);
+		y = gsl_spline_eval (ne_i_spline, rf[i], ne_i_acc);
 
-	    neuf(j, k, i) = complex<double> (x, y);
-
-	    x = gsl_spline_eval (Te_r_spline, rf[i], Te_r_acc);
-	    y = gsl_spline_eval (Te_i_spline, rf[i], Te_i_acc);
-
-	    Teuf(j, k, i) = complex<double> (x, y);
-
-	    x = gsl_spline_eval (dne_r_spline, rf[i], dne_r_acc);
-	    y = gsl_spline_eval (dne_i_spline, rf[i], dne_i_acc);
-
-	    dneuf(j, k, i) = complex<double> (x, y);
-
-	    x = gsl_spline_eval (dTe_r_spline, rf[i], dTe_r_acc);
-	    y = gsl_spline_eval (dTe_i_spline, rf[i], dTe_i_acc);
-
-	    dTeuf(j, k, i) = complex<double> (x, y);
+		neuf(j, k, i) = complex<double> (x, y);
+		
+		x = gsl_spline_eval (Te_r_spline, rf[i], Te_r_acc);
+		y = gsl_spline_eval (Te_i_spline, rf[i], Te_i_acc);
+		
+		Teuf(j, k, i) = complex<double> (x, y);
+		
+		x = gsl_spline_eval (dne_r_spline, rf[i], dne_r_acc);
+		y = gsl_spline_eval (dne_i_spline, rf[i], dne_i_acc);
+		
+		dneuf(j, k, i) = complex<double> (x, y);
+		
+		x = gsl_spline_eval (dTe_r_spline, rf[i], dTe_r_acc);
+		y = gsl_spline_eval (dTe_i_spline, rf[i], dTe_i_acc);
+		
+		dTeuf(j, k, i) = complex<double> (x, y);
+	      }
 	  }
 
 	// Clean up
 	delete[] psi_r; delete[] psi_i; delete[] Z_r;   delete[] Z_i;
 	delete[] chi_r; delete[] chi_i; delete[] z_r;   delete[] z_i;
 	delete[] p_r;   delete[] p_i;   delete[] xi_r;  delete[] xi_i;
+
 	delete[] dne_r; delete[] dne_i; delete[] dTe_r; delete[] dTe_i; 
-	delete[] ne_r;  delete[] ne_i;  delete[] Te_r;  delete[] Te_i; 
+	delete[] ne_r;  delete[] ne_i;  delete[] Te_r;  delete[] Te_i;
 
 	gsl_spline_free (psi_r_spline);
 	gsl_spline_free (psi_i_spline);
@@ -251,6 +262,7 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline_free (chi_i_spline);
 	gsl_spline_free (xi_r_spline);
 	gsl_spline_free (xi_i_spline);
+
 	gsl_spline_free (ne_r_spline);
 	gsl_spline_free (ne_i_spline);
 	gsl_spline_free (Te_r_spline);
@@ -259,7 +271,7 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_spline_free (dne_i_spline);
 	gsl_spline_free (dTe_r_spline);
 	gsl_spline_free (dTe_i_spline);
-	
+      	
 	gsl_interp_accel_free (psi_r_acc);
 	gsl_interp_accel_free (psi_i_acc);
 	gsl_interp_accel_free (Z_r_acc);
@@ -272,6 +284,7 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_interp_accel_free (chi_i_acc);
 	gsl_interp_accel_free (xi_r_acc);
 	gsl_interp_accel_free (xi_i_acc);
+
 	gsl_interp_accel_free (ne_r_acc);
 	gsl_interp_accel_free (ne_i_acc);
 	gsl_interp_accel_free (Te_r_acc);
@@ -282,103 +295,106 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_interp_accel_free (dTe_i_acc);
       }
 
-  for (int k = 0; k < nres; k++)
+  if (TEMP)
     {
-      // Get data from diagnostic grid
-      double* ne_r  = new double[NDIAG];
-      double* ne_i  = new double[NDIAG];
-      double* Te_r  = new double[NDIAG];
-      double* Te_i  = new double[NDIAG];
-      double* dne_r = new double[NDIAG];
-      double* dne_i = new double[NDIAG];
-      double* dTe_r = new double[NDIAG];
-      double* dTe_i = new double[NDIAG];
-      
-      for (int i = 0; i < NDIAG; i++)
+      for (int k = 0; k < nres; k++)
 	{
-	  ne_r [i] = real (neu (J, k, i));
-	  ne_i [i] = imag (neu (J, k, i));
-	  Te_r [i] = real (Teu (J, k, i));
-	  Te_i [i] = imag (Teu (J, k, i));
-	  dne_r[i] = real (dneu(J, k, i));
-	  dne_i[i] = imag (dneu(J, k, i));
-	  dTe_r[i] = real (dTeu(J, k, i));
-	  dTe_i[i] = imag (dTeu(J, k, i));
+	  // Get data from diagnostic grid
+	  double* ne_r  = new double[NDIAG];
+	  double* ne_i  = new double[NDIAG];
+	  double* Te_r  = new double[NDIAG];
+	  double* Te_i  = new double[NDIAG];
+	  double* dne_r = new double[NDIAG];
+	  double* dne_i = new double[NDIAG];
+	  double* dTe_r = new double[NDIAG];
+	  double* dTe_i = new double[NDIAG];
+	  
+	  for (int i = 0; i < NDIAG; i++)
+	    {
+	      ne_r [i] = real (neu (J, k, i));
+	      ne_i [i] = imag (neu (J, k, i));
+	      Te_r [i] = real (Teu (J, k, i));
+	      Te_i [i] = imag (Teu (J, k, i));
+	      dne_r[i] = real (dneu(J, k, i));
+	      dne_i[i] = imag (dneu(J, k, i));
+	      dTe_r[i] = real (dTeu(J, k, i));
+	      dTe_i[i] = imag (dTeu(J, k, i));
+	    }
+	  
+	  // Interpolate data from diagnostic grid
+	  gsl_interp_accel* ne_r_acc  = gsl_interp_accel_alloc ();
+	  gsl_interp_accel* ne_i_acc  = gsl_interp_accel_alloc ();
+	  gsl_interp_accel* Te_r_acc  = gsl_interp_accel_alloc ();
+	  gsl_interp_accel* Te_i_acc  = gsl_interp_accel_alloc ();
+	  gsl_interp_accel* dne_r_acc = gsl_interp_accel_alloc ();
+	  gsl_interp_accel* dne_i_acc = gsl_interp_accel_alloc ();
+	  gsl_interp_accel* dTe_r_acc = gsl_interp_accel_alloc ();
+	  gsl_interp_accel* dTe_i_acc = gsl_interp_accel_alloc ();
+	  
+	  gsl_spline* ne_r_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	  gsl_spline* ne_i_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	  gsl_spline* Te_r_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	  gsl_spline* Te_i_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	  gsl_spline* dne_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	  gsl_spline* dne_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	  gsl_spline* dTe_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	  gsl_spline* dTe_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	  
+	  gsl_spline_init (ne_r_spline,  Rgrid, ne_r,  NDIAG);
+	  gsl_spline_init (ne_i_spline,  Rgrid, ne_i,  NDIAG);
+	  gsl_spline_init (Te_r_spline,  Rgrid, Te_r,  NDIAG);
+	  gsl_spline_init (Te_i_spline,  Rgrid, Te_i,  NDIAG);		
+	  gsl_spline_init (dne_r_spline, Rgrid, dne_r, NDIAG);
+	  gsl_spline_init (dne_i_spline, Rgrid, dne_i, NDIAG);
+	  gsl_spline_init (dTe_r_spline, Rgrid, dTe_r, NDIAG);
+	  gsl_spline_init (dTe_i_spline, Rgrid, dTe_i, NDIAG);
+	  
+	  // Interpolate data onto visualization grid
+	  for (int i = 0; i < Nf; i++)
+	    {
+	      double x = gsl_spline_eval (ne_r_spline, rf[i], ne_r_acc);
+	      double y = gsl_spline_eval (ne_i_spline, rf[i], ne_i_acc);
+	      
+	      neuf(J, k, i) = complex<double> (x, y);
+	      
+	      x = gsl_spline_eval (Te_r_spline, rf[i], Te_r_acc);
+	      y = gsl_spline_eval (Te_i_spline, rf[i], Te_i_acc);
+	      
+	      Teuf(J, k, i) = complex<double> (x, y);
+	      
+	      x = gsl_spline_eval (dne_r_spline, rf[i], dne_r_acc);
+	      y = gsl_spline_eval (dne_i_spline, rf[i], dne_i_acc);
+	      
+	      dneuf(J, k, i) = complex<double> (x, y);
+	      
+	      x = gsl_spline_eval (dTe_r_spline, rf[i], dTe_r_acc);
+	      y = gsl_spline_eval (dTe_i_spline, rf[i], dTe_i_acc);
+	      
+	      dTeuf(J, k, i) = complex<double> (x, y);
+	    }
+	  
+	  // Clean up
+	  delete[] dne_r; delete[] dne_i; delete[] dTe_r; delete[] dTe_i; 
+	  delete[] ne_r;  delete[] ne_i;  delete[] Te_r;  delete[] Te_i; 
+	  
+	  gsl_spline_free (ne_r_spline);
+	  gsl_spline_free (ne_i_spline);
+	  gsl_spline_free (Te_r_spline);
+	  gsl_spline_free (Te_i_spline);
+	  gsl_spline_free (dne_r_spline);
+	  gsl_spline_free (dne_i_spline);
+	  gsl_spline_free (dTe_r_spline);
+	  gsl_spline_free (dTe_i_spline);
+      
+	  gsl_interp_accel_free (ne_r_acc);
+	  gsl_interp_accel_free (ne_i_acc);
+	  gsl_interp_accel_free (Te_r_acc);
+	  gsl_interp_accel_free (Te_i_acc);
+	  gsl_interp_accel_free (dne_r_acc);
+	  gsl_interp_accel_free (dne_i_acc);
+	  gsl_interp_accel_free (dTe_r_acc);
+	  gsl_interp_accel_free (dTe_i_acc);
 	}
-      
-      // Interpolate data from diagnostic grid
-      gsl_interp_accel* ne_r_acc  = gsl_interp_accel_alloc ();
-      gsl_interp_accel* ne_i_acc  = gsl_interp_accel_alloc ();
-      gsl_interp_accel* Te_r_acc  = gsl_interp_accel_alloc ();
-      gsl_interp_accel* Te_i_acc  = gsl_interp_accel_alloc ();
-      gsl_interp_accel* dne_r_acc = gsl_interp_accel_alloc ();
-      gsl_interp_accel* dne_i_acc = gsl_interp_accel_alloc ();
-      gsl_interp_accel* dTe_r_acc = gsl_interp_accel_alloc ();
-      gsl_interp_accel* dTe_i_acc = gsl_interp_accel_alloc ();
-      
-      gsl_spline* ne_r_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
-      gsl_spline* ne_i_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
-      gsl_spline* Te_r_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
-      gsl_spline* Te_i_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
-      gsl_spline* dne_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
-      gsl_spline* dne_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
-      gsl_spline* dTe_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
-      gsl_spline* dTe_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
-      
-      gsl_spline_init (ne_r_spline,  Rgrid, ne_r,  NDIAG);
-      gsl_spline_init (ne_i_spline,  Rgrid, ne_i,  NDIAG);
-      gsl_spline_init (Te_r_spline,  Rgrid, Te_r,  NDIAG);
-      gsl_spline_init (Te_i_spline,  Rgrid, Te_i,  NDIAG);		
-      gsl_spline_init (dne_r_spline, Rgrid, dne_r, NDIAG);
-      gsl_spline_init (dne_i_spline, Rgrid, dne_i, NDIAG);
-      gsl_spline_init (dTe_r_spline, Rgrid, dTe_r, NDIAG);
-      gsl_spline_init (dTe_i_spline, Rgrid, dTe_i, NDIAG);
-      
-      // Interpolate data onto visualization grid
-      for (int i = 0; i < Nf; i++)
-	{
-	  double x = gsl_spline_eval (ne_r_spline, rf[i], ne_r_acc);
-	  double y = gsl_spline_eval (ne_i_spline, rf[i], ne_i_acc);
-	  
-	  neuf(J, k, i) = complex<double> (x, y);
-	  
-	  x = gsl_spline_eval (Te_r_spline, rf[i], Te_r_acc);
-	  y = gsl_spline_eval (Te_i_spline, rf[i], Te_i_acc);
-	  
-	  Teuf(J, k, i) = complex<double> (x, y);
-	  
-	  x = gsl_spline_eval (dne_r_spline, rf[i], dne_r_acc);
-	  y = gsl_spline_eval (dne_i_spline, rf[i], dne_i_acc);
-	  
-	  dneuf(J, k, i) = complex<double> (x, y);
-	  
-	  x = gsl_spline_eval (dTe_r_spline, rf[i], dTe_r_acc);
-	  y = gsl_spline_eval (dTe_i_spline, rf[i], dTe_i_acc);
-	  
-	  dTeuf(J, k, i) = complex<double> (x, y);
-	}
-      
-      // Clean up
-      delete[] dne_r; delete[] dne_i; delete[] dTe_r; delete[] dTe_i; 
-      delete[] ne_r;  delete[] ne_i;  delete[] Te_r;  delete[] Te_i; 
-      
-      gsl_spline_free (ne_r_spline);
-      gsl_spline_free (ne_i_spline);
-      gsl_spline_free (Te_r_spline);
-      gsl_spline_free (Te_i_spline);
-      gsl_spline_free (dne_r_spline);
-      gsl_spline_free (dne_i_spline);
-      gsl_spline_free (dTe_r_spline);
-      gsl_spline_free (dTe_i_spline);
-      
-      gsl_interp_accel_free (ne_r_acc);
-      gsl_interp_accel_free (ne_i_acc);
-      gsl_interp_accel_free (Te_r_acc);
-      gsl_interp_accel_free (Te_i_acc);
-      gsl_interp_accel_free (dne_r_acc);
-      gsl_interp_accel_free (dne_i_acc);
-      gsl_interp_accel_free (dTe_r_acc);
-      gsl_interp_accel_free (dTe_i_acc);
     }
 
   // ............................................................
@@ -449,210 +465,213 @@ void TJ::VisualizeEigenfunctions ()
 	  xis (k, i, l) = xi_s;
 	}
 
-  for (int k = 0; k < nres; k++)
-    for (int i = 0; i < Nf; i++)
-      for (int l = 0; l <= Nw; l++)
-	for (int np = 0; np < NPHI; np++)
-	  {
-	    double r     = rvals (i, l);
-	    double theta = thvals(i, l);
-	    
-	    double ne_c  = real (neuf(J, k, i));
-	    double Te_c  = real (Teuf(J, k, i));		       
-	    double dne_c = 0.;
-	    double dTe_c = 0.;
-
-	    for (int j = 0; j < J; j++)
+  if (TEMP)
+    {
+      for (int k = 0; k < nres; k++)
+	for (int i = 0; i < Nf; i++)
+	  for (int l = 0; l <= Nw; l++)
+	    for (int np = 0; np < NPHI; np++)
 	      {
-		double m = mpol[j];
+		double r     = rvals (i, l);
+		double theta = thvals(i, l);
 		
-		complex<double> eik = cos (m*theta - ntor*PP[np]) + II * sin (m*theta - ntor*PP[np]);
+		double ne_c  = real (neuf(J, k, i));
+		double Te_c  = real (Teuf(J, k, i));		       
+		double dne_c = 0.;
+		double dTe_c = 0.;
 		
-		ne_c  += real (neuf (j, k, i) * eik);
-		Te_c  += real (Teuf (j, k, i) * eik);
-		dne_c += real (dneuf(j, k, i) * eik);
-		dTe_c += real (dTeuf(j, k, i) * eik);
-		
-		double x = r - rres[k];
-		
-		if (fabs(x) < ISLAND && m == mres[k])
+		for (int j = 0; j < J; j++)
 		  {
-		    for (int nh = 2; nh < Nh; nh++)
+		    double m = mpol[j];
+		    
+		    complex<double> eik = cos (m*theta - ntor*PP[np]) + II * sin (m*theta - ntor*PP[np]);
+		    
+		    ne_c  += real (neuf (j, k, i) * eik);
+		    Te_c  += real (Teuf (j, k, i) * eik);
+		    dne_c += real (dneuf(j, k, i) * eik);
+		    dTe_c += real (dTeuf(j, k, i) * eik);
+		    
+		    double x = r - rres[k];
+		    
+		    if (fabs(x) < ISLAND && m == mres[k])
 		      {
-			complex<double> eikh = cos (double (nh) * (m*theta - ntor*PP[np])) + II * sin (double (nh) * (m*theta - ntor*PP[np]));
-			
-			if (x > 0.)
+			for (int nh = 2; nh < Nh; nh++)
 			  {
-			    double dTh = gsl_spline_eval (dThspline[nh], x /ISLAND, dThacc[nh]);
+			    complex<double> eikh = cos (double (nh) * (m*theta - ntor*PP[np])) + II * sin (double (nh) * (m*theta - ntor*PP[np]));
 			    
-			    ne_c  += real (nepres[k] * ISLAND * dTh * eikh);
-			    Te_c  += real (Tepres[k] * ISLAND * dTh * eikh);
-			    dne_c += real (nepres[k] * ISLAND * dTh * eikh);
-			    dTe_c += real (Tepres[k] * ISLAND * dTh * eikh);
-			  }
-			else
-			  {
-			    double dTh = gsl_spline_eval (dThspline[nh], - x /ISLAND, dThacc[nh]);
-			    
-			    ne_c  -= real (nepres[k] * ISLAND * dTh * eikh);
-			    Te_c  -= real (Tepres[k] * ISLAND * dTh * eikh);
-			    dne_c -= real (nepres[k] * ISLAND * dTh * eikh);
-			    dTe_c -= real (Tepres[k] * ISLAND * dTh * eikh);
+			    if (x > 0.)
+			      {
+				double dTh = gsl_spline_eval (dThspline[nh], x /ISLAND, dThacc[nh]);
+				
+				ne_c  += real (nepres[k] * ISLAND * dTh * eikh);
+				Te_c  += real (Tepres[k] * ISLAND * dTh * eikh);
+				dne_c += real (nepres[k] * ISLAND * dTh * eikh);
+				dTe_c += real (Tepres[k] * ISLAND * dTh * eikh);
+			      }
+			    else
+			      {
+				double dTh = gsl_spline_eval (dThspline[nh], - x /ISLAND, dThacc[nh]);
+				
+				ne_c  -= real (nepres[k] * ISLAND * dTh * eikh);
+				Te_c  -= real (Tepres[k] * ISLAND * dTh * eikh);
+				dne_c -= real (nepres[k] * ISLAND * dTh * eikh);
+				dTe_c -= real (Tepres[k] * ISLAND * dTh * eikh);
+			      }
 			  }
 		      }
 		  }
+		
+		nec (k, i, l, np) = ne_c;
+		Tec (k, i, l, np) = Te_c;
+		dnec(k, i, l, np) = dne_c;
+		dTec(k, i, l, np) = dTe_c;
 	      }
-	    
-	    nec (k, i, l, np) = ne_c;
-	    Tec (k, i, l, np) = Te_c;
-	    dnec(k, i, l, np) = dne_c;
-	    dTec(k, i, l, np) = dTe_c;
-	  }
-
-  // ............................................
-  // Calculate quantities on tilted central chord
-  // ............................................
-  double wt = tilt * M_PI/180;
-  for (int i = 0; i < Nf; i++)
-    Leq[i] = (Req[i] - 1.) /cos(wt);
-  
-  for (int k = 0; k < nres; k++)
-    for (int i = 0; i < Nf; i++)
-      for (int np = 0; np < NPHI; np++)
-	{
-	  double R     = Req   [i];
-	  double r     = req   [i];
-	  double theta = teq   [i];
-	  double dRdr  = dRdreq[i];
-	  double dRdt  = dRdteq[i];
-	  double dZdr  = dZdreq[i];
-	  double dZdt  = dZdteq[i];
-	  double bR_c  = 0., bZ_c  = 0., dne_c = 0., dTe_c = 0.;
-
-	  double ne_c = real (neuf(J, k, Nf-1-i));
-	  double Te_c = real (Teuf(J, k, Nf-1-i));
-	  
-	  for (int j = 0; j < J; j++)
+      
+      // ............................................
+      // Calculate quantities on tilted central chord
+      // ............................................
+      double wt = tilt * M_PI/180;
+      for (int i = 0; i < Nf; i++)
+	Leq[i] = (Req[i] - 1.) /cos(wt);
+      
+      for (int k = 0; k < nres; k++)
+	for (int i = 0; i < Nf; i++)
+	  for (int np = 0; np < NPHI; np++)
 	    {
-	      double m = mpol[j];
-
-	      complex<double> eik = cos (m*theta - ntor*PP[np]) + II * sin (m*theta - ntor*PP[np]);
+	      double R     = Req   [i];
+	      double r     = req   [i];
+	      double theta = teq   [i];
+	      double dRdr  = dRdreq[i];
+	      double dRdt  = dRdteq[i];
+	      double dZdr  = dZdreq[i];
+	      double dZdt  = dZdteq[i];
+	      double bR_c  = 0., bZ_c  = 0., dne_c = 0., dTe_c = 0.;
 	      
-	      bR_c += real ((dRdr * II * psiuf(j, k, Nf-1-i) - dRdt * chiuf(j, k, Nf-1-i)) * eik);
-	      bZ_c += real ((dZdr * II * psiuf(j, k, Nf-1-i) - dZdt * chiuf(j, k, Nf-1-i)) * eik);
+	      double ne_c = real (neuf(J, k, Nf-1-i));
+	      double Te_c = real (Teuf(J, k, Nf-1-i));
 	      
-	      ne_c  += real (neuf (j, k, Nf-1-i) * eik);
-	      Te_c  += real (Teuf (j, k, Nf-1-i) * eik);
-	      dne_c += real (dneuf(j, k, Nf-1-i) * eik);
-	      dTe_c += real (dTeuf(j, k, Nf-1-i) * eik);
-
-	      double x = r - rres[k];
-	      	      	
-	      if (fabs(x) < ISLAND && m == mres[k])
+	      for (int j = 0; j < J; j++)
 		{
-		  for (int nh = 2; nh < Nh; nh++)
+		  double m = mpol[j];
+		  
+		  complex<double> eik = cos (m*theta - ntor*PP[np]) + II * sin (m*theta - ntor*PP[np]);
+		  
+		  bR_c += real ((dRdr * II * psiuf(j, k, Nf-1-i) - dRdt * chiuf(j, k, Nf-1-i)) * eik);
+		  bZ_c += real ((dZdr * II * psiuf(j, k, Nf-1-i) - dZdt * chiuf(j, k, Nf-1-i)) * eik);
+		  
+		  ne_c  += real (neuf (j, k, Nf-1-i) * eik);
+		  Te_c  += real (Teuf (j, k, Nf-1-i) * eik);
+		  dne_c += real (dneuf(j, k, Nf-1-i) * eik);
+		  dTe_c += real (dTeuf(j, k, Nf-1-i) * eik);
+		  
+		  double x = r - rres[k];
+		  
+		  if (fabs(x) < ISLAND && m == mres[k])
 		    {
-		      complex<double> eikh = cos (double (nh) * (m*theta - ntor*PP[np])) + II * sin (double (nh) * (m*theta - ntor*PP[np]));
-		      
-		      if (x > 0.)
+		      for (int nh = 2; nh < Nh; nh++)
 			{
-			  double dTh = gsl_spline_eval (dThspline[nh], x /ISLAND, dThacc[nh]);
+			  complex<double> eikh = cos (double (nh) * (m*theta - ntor*PP[np])) + II * sin (double (nh) * (m*theta - ntor*PP[np]));
 			  
-			  ne_c  += real (nepres[k] * ISLAND * dTh * eikh);
-			  Te_c  += real (Tepres[k] * ISLAND * dTh * eikh);
-			  dne_c += real (nepres[k] * ISLAND * dTh * eikh);
-			  dTe_c += real (Tepres[k] * ISLAND * dTh * eikh);
-			}
-		      else
-			{
-			  double dTh = gsl_spline_eval (dThspline[nh], - x /ISLAND, dThacc[nh]);
-			  
-			  ne_c  -= real (nepres[k] * ISLAND * dTh * eikh);
-			  Te_c  -= real (Tepres[k] * ISLAND * dTh * eikh);
-			  dne_c -= real (nepres[k] * ISLAND * dTh * eikh);
-			  dTe_c -= real (Tepres[k] * ISLAND * dTh * eikh);
+			  if (x > 0.)
+			    {
+			      double dTh = gsl_spline_eval (dThspline[nh], x /ISLAND, dThacc[nh]);
+			      
+			      ne_c  += real (nepres[k] * ISLAND * dTh * eikh);
+			      Te_c  += real (Tepres[k] * ISLAND * dTh * eikh);
+			      dne_c += real (nepres[k] * ISLAND * dTh * eikh);
+			      dTe_c += real (Tepres[k] * ISLAND * dTh * eikh);
+			    }
+			  else
+			    {
+			      double dTh = gsl_spline_eval (dThspline[nh], - x /ISLAND, dThacc[nh]);
+			      
+			      ne_c  -= real (nepres[k] * ISLAND * dTh * eikh);
+			      Te_c  -= real (Tepres[k] * ISLAND * dTh * eikh);
+			      dne_c -= real (nepres[k] * ISLAND * dTh * eikh);
+			      dTe_c -= real (Tepres[k] * ISLAND * dTh * eikh);
+			    }
 			}
 		    }
 		}
+	      
+	      bReqc (k, i, np) = - B0 * (bR_c * cos(wt) - bZ_c * sin(wt)) /r/R/R;
+	      neeqc (k, i, np) = ne_c;
+	      Teeqc (k, i, np) = Te_c;
+	      dneeqc(k, i, np) = dne_c;
+	      dTeeqc(k, i, np) = dTe_c;
 	    }
-	  
-	  bReqc (k, i, np) = - B0 * (bR_c * cos(wt) - bZ_c * sin(wt)) /r/R/R;
-	  neeqc (k, i, np) = ne_c;
-	  Teeqc (k, i, np) = Te_c;
-	  dneeqc(k, i, np) = dne_c;
-	  dTeeqc(k, i, np) = dTe_c;
-	}
-  	  
-  wt = tilt * M_PI/180;
-  for (int i = 0; i < Nf; i++)
-    Leq[Nf+i] = (Req[Nf+i] - 1.) /cos(wt);
-  
-  for (int k = 0; k < nres; k++)
-    for (int i = 0; i < Nf; i++)
-      for (int np = 0; np < NPHI; np++)
-	{
-	  double R     = Req   [Nf+i];
-	  double r     = req   [Nf+i];
-	  double theta = teq   [Nf+i];
-	  double dRdr  = dRdreq[Nf+i];
-	  double dRdt  = dRdteq[Nf+i];
-	  double dZdr  = dZdreq[Nf+i];
-	  double dZdt  = dZdteq[Nf+i];
-	  double bR_c  = 0., bZ_c  = 0., dne_c = 0., dTe_c = 0.;
-
-	  double ne_c = real (neuf(J, k, i));
-	  double Te_c = real (Teuf(J, k, i));
-	  
-	  for (int j = 0; j < J; j++)
+      
+      wt = tilt * M_PI/180;
+      for (int i = 0; i < Nf; i++)
+	Leq[Nf+i] = (Req[Nf+i] - 1.) /cos(wt);
+      
+      for (int k = 0; k < nres; k++)
+	for (int i = 0; i < Nf; i++)
+	  for (int np = 0; np < NPHI; np++)
 	    {
-	      double m = mpol[j];
-
-	      complex<double> eik = cos (m*theta - ntor*PP[np]) + II * sin (m*theta - ntor*PP[np]);
+	      double R     = Req   [Nf+i];
+	      double r     = req   [Nf+i];
+	      double theta = teq   [Nf+i];
+	      double dRdr  = dRdreq[Nf+i];
+	      double dRdt  = dRdteq[Nf+i];
+	      double dZdr  = dZdreq[Nf+i];
+	      double dZdt  = dZdteq[Nf+i];
+	      double bR_c  = 0., bZ_c  = 0., dne_c = 0., dTe_c = 0.;
 	      
-	      bR_c += real ((dRdr * II * psiuf(j, k, i) - dRdt * chiuf(j, k, i)) * eik);
-	      bZ_c += real ((dZdr * II * psiuf(j, k, i) - dZdt * chiuf(j, k, i)) * eik);
+	      double ne_c = real (neuf(J, k, i));
+	      double Te_c = real (Teuf(J, k, i));
 	      
-	      ne_c  += real (neuf (j, k, i) * eik);
-	      Te_c  += real (Teuf (j, k, i) * eik);
-	      dne_c += real (dneuf(j, k, i) * eik);
-	      dTe_c += real (dTeuf(j, k, i) * eik);
-
-	      double x = r - rres[k];
-	      	      	
-	      if (fabs(x) < ISLAND && m == mres[k])
-		  {
-		    for (int nh = 2; nh < Nh; nh++)
-		      {
-			complex<double> eikh = cos (double (nh) * (m*theta - ntor*PP[np])) + II * sin (double (nh) * (m*theta - ntor*PP[np]));
-			
-			if (x > 0.)
-			  {
-			    double dTh = gsl_spline_eval (dThspline[nh], x /ISLAND, dThacc[nh]);
-			    
-			    ne_c  += real (nepres[k] * ISLAND * dTh * eikh);
-			    Te_c  += real (Tepres[k] * ISLAND * dTh * eikh);
-			    dne_c += real (nepres[k] * ISLAND * dTh * eikh);
-			    dTe_c += real (Tepres[k] * ISLAND * dTh * eikh);
-			  }
-			else
-			  {
-			    double dTh = gsl_spline_eval (dThspline[nh], - x /ISLAND, dThacc[nh]);
-			    
-			    ne_c  -= real (nepres[k] * ISLAND * dTh * eikh);
-			    Te_c  -= real (Tepres[k] * ISLAND * dTh * eikh);
-			    dne_c -= real (nepres[k] * ISLAND * dTh * eikh);
-			    dTe_c -= real (Tepres[k] * ISLAND * dTh * eikh);
-			  }
-		      }
-		  }
+	      for (int j = 0; j < J; j++)
+		{
+		  double m = mpol[j];
+		  
+		  complex<double> eik = cos (m*theta - ntor*PP[np]) + II * sin (m*theta - ntor*PP[np]);
+		  
+		  bR_c += real ((dRdr * II * psiuf(j, k, i) - dRdt * chiuf(j, k, i)) * eik);
+		  bZ_c += real ((dZdr * II * psiuf(j, k, i) - dZdt * chiuf(j, k, i)) * eik);
+		  
+		  ne_c  += real (neuf (j, k, i) * eik);
+		  Te_c  += real (Teuf (j, k, i) * eik);
+		  dne_c += real (dneuf(j, k, i) * eik);
+		  dTe_c += real (dTeuf(j, k, i) * eik);
+		  
+		  double x = r - rres[k];
+		  
+		  if (fabs(x) < ISLAND && m == mres[k])
+		    {
+		      for (int nh = 2; nh < Nh; nh++)
+			{
+			  complex<double> eikh = cos (double (nh) * (m*theta - ntor*PP[np])) + II * sin (double (nh) * (m*theta - ntor*PP[np]));
+			  
+			  if (x > 0.)
+			    {
+			      double dTh = gsl_spline_eval (dThspline[nh], x /ISLAND, dThacc[nh]);
+			      
+			      ne_c  += real (nepres[k] * ISLAND * dTh * eikh);
+			      Te_c  += real (Tepres[k] * ISLAND * dTh * eikh);
+			      dne_c += real (nepres[k] * ISLAND * dTh * eikh);
+			      dTe_c += real (Tepres[k] * ISLAND * dTh * eikh);
+			    }
+			  else
+			    {
+			      double dTh = gsl_spline_eval (dThspline[nh], - x /ISLAND, dThacc[nh]);
+			      
+			      ne_c  -= real (nepres[k] * ISLAND * dTh * eikh);
+			      Te_c  -= real (Tepres[k] * ISLAND * dTh * eikh);
+			      dne_c -= real (nepres[k] * ISLAND * dTh * eikh);
+			      dTe_c -= real (Tepres[k] * ISLAND * dTh * eikh);
+			    }
+			}
+		    }
+		}
+	      
+	      bReqc (k, Nf+i, np) = - B0 * (bR_c * cos(wt) - bZ_c * sin(wt)) /r/R/R;
+	      neeqc (k, Nf+i, np) = ne_c;
+	      Teeqc (k, Nf+i, np) = Te_c;
+	      dneeqc(k, Nf+i, np) = dne_c;
+	      dTeeqc(k, Nf+i, np) = dTe_c;
 	    }
-	  
-	  bReqc (k, Nf+i, np) = - B0 * (bR_c * cos(wt) - bZ_c * sin(wt)) /r/R/R;
-	  neeqc (k, Nf+i, np) = ne_c;
-	  Teeqc (k, Nf+i, np) = Te_c;
-	  dneeqc(k, Nf+i, np) = dne_c;
-	  dTeeqc(k, Nf+i, np) = dTe_c;
-	}
+    }
 }
 
 // #################################################################################

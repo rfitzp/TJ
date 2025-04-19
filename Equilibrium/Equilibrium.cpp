@@ -187,8 +187,10 @@ void Equilibrium::Solve ()
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Calculation parameters:\n");
-  printf ("qc = %10.3e qa = %10.3e epsa = %10.3e pc = %10.3e mu = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d SRC = %1d tilt = %10.3e\n",
-	  qc, qa, epsa, pc, mu, Ns, Nr, Nf, Nw, SRC, tilt);
+  printf ("qc  = %10.3e qa   = %10.3e epsa = %10.3e pc = %10.3e mu = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
+	  qc, qa, epsa, pc, mu, Ns, Nr, Nf, Nw);
+  printf ("SRC =  %1d         tilt = %10.3e\n",
+	  SRC, tilt);
 
   // ....................
   // Read in profile data

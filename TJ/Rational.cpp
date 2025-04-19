@@ -55,7 +55,7 @@ void TJ::FindRational ()
   nepres = new double[nres];
   Teres  = new double[nres];
   Tepres = new double[nres];
-  
+ 
   for (int i = 0; i < nres; i++)
     {
       mres[i]  = mmin + i;
@@ -95,9 +95,14 @@ void TJ::FindRational ()
 
   printf ("Rational surface data:\n");
   for (int i = 0; i < nres; i++)
-    printf ("m = %3d PsiN = %10.3e, r = %10.3e s = %10.3e DI = %10.3e DR = %10.3e nuL = %10.3e nuS = %10.3e |q-qs| = %10.3e Tep = %10.3e nep = %10.3e\n",
-	    mres[i], Pres[i], rres[i], sres[i], DIres[i], DRres[i], nuLres[i], nuSres[i], qerr[i], Tepres[i], nepres[i]);
-
+    {
+    printf ("m = %3d PsiN = %10.3e, r   = %10.3e s = %10.3e DI = %10.3e DR = %10.3e nuL = %10.3e nuS = %10.3e |q-qs| = %10.3e\n",
+	    mres[i], Pres[i], rres[i], sres[i], DIres[i], DRres[i], nuLres[i], nuSres[i], qerr[i]);
+    if (TEMP)
+      printf ("        Tep  = %10.3e  nep = %10.3e\n",
+	      Tepres[i], nepres[i]);
+    }
+  
   // Abort calculation if resonant mode numbers outside range of included poloidal harmonics
   if (mres[0] < MMIN || mres[nres-1] > MMAX)
     {
