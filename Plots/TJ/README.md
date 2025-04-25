@@ -74,6 +74,7 @@
 
 - *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field versus theta at given radial gridpoint
 - *Chord.py*:        Plots quantities along tilted central chord
+- *Berrino.py*:      Implements Berrino algorithm for island detection
 
 ## RMP coils:
 
@@ -88,22 +89,22 @@
 
 ## Ideal stability:
 
-- *Ideal.py*:		Plots poloidal harmonics of ideal solutions launched from magnetic axis versus r
-- *Ideal1.py*:		Plots kth poloidal harmomic of ideal solutions launched from magnetic axis versus r
+- *Ideal.py*:		    Plots poloidal harmonics of ideal solutions launched from magnetic axis versus r
+- *Ideal1.py*:		    Plots kth poloidal harmomic of ideal solutions launched from magnetic axis versus r
 - *Internal.py*:        Plots poloidal harmonics of internal ideal solutions launched from magnetic axis versus r
-- *Umat.py*:		Visualizes total ideal energy matrix
+- *Umat.py*:		    Visualizes total ideal energy matrix
 - *Ideale.py*:      	Plots poloidal harmonics of ideal eigenfunctions versus r
 - *Ideale1.py*:     	Plots kth poloidal harmonic of ideal eigenfunctions versus r
 - *xIdeale.py*:      	Plots poloidal harmonics of ideal eigenfunctions versus r (plots xi instead of Xi)
 - *xideale1.py*:     	Plots kth poloidal harmonic of ideal eigenfunctions versus r (plots xi instead of Xi)
-- *Evals.py*:	 	Plots eigenvalues of W, V, U matrices 
-- *deltaW.py*:	 	Plots delta W values versus eigenfunction number
-- *deltaW1.py*:	 	Plots select number of delta W values versus eigenfunction number
-- *deltaW2.py*:	 	Plots delta W values versus eigenfunction number in range of y
+- *Evals.py*:	 	    Plots eigenvalues of W, V, U matrices 
+- *deltaW.py*:	 	    Plots delta W values versus eigenfunction number
+- *deltaW1.py*:	 	    Plots select number of delta W values versus eigenfunction number
+- *deltaW2.py*:	 	    Plots delta W values versus eigenfunction number in range of y
 - *Xi.py*:              Plots Xi Fourier harmonics of ideal eigenfunctions on plasma boundary
 - *PsiJSurface.py*: 	Plots psi and J on plasma boundary associated with ideal eigenfunctions
 - *lambda.py*:          Plots eigenvalues of plasma energy matrix versus r
-- *crit.py*:		Plots smallest eigenvalue of plasma energy matrix versus r
+- *crit.py*:		    Plots smallest eigenvalue of plasma energy matrix versus r
 
 ## Resistive wall mode stability:
 

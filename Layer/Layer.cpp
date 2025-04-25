@@ -280,6 +280,8 @@ void Layer::ReadNetcdf ()
 
       if (RMP)
 	Chia_x.getVar (Chi_res);
+
+      dataFile.close ();
     }
   catch (NcException& e)
      {

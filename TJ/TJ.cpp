@@ -42,8 +42,12 @@ TJ::TJ ()
   NTOR    = JSONData["NTOR"]  .get<int>();
   MMIN    = JSONData["MMIN"]  .get<int>();
   MMAX    = JSONData["MMAX"]  .get<int>();
-  ISLAND  = JSONData["ISLAND"].get<double>();
   NPHI    = JSONData["NPHI"]  .get<int>();
+
+  for (const auto& number : JSONData["ISLAND"])
+    {
+      ISLAND.push_back (number.get<double> ());
+    }
 
   EQLB    = JSONData["EQLB"] .get<int>();
   FREE    = JSONData["FREE"] .get<int>();
@@ -214,12 +218,13 @@ TJ::TJ ()
       printf ("TJ: Error - neped must be positive\n");
       exit (1);
     }
-  if (ISLAND <= 0.)
-    {
-      printf ("TJ: Error - ISLAND must be positive\n");
-      exit (1);
-    }
-
+  for (int k = 0; k < ISLAND.size(); k++)
+    if (ISLAND[k] <= 0.)
+      {
+	printf ("TJ: Error - ISLAND must be positive\n");
+	exit (1);
+      }
+  
   // No resonant magnetic perturbation calculation for fixed boundary
   if (FREE < 0)
     RMP = 0;
@@ -263,7 +268,7 @@ void TJ::Solve ()
 	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER, TEMP);
       printf ("Calculation parameters:\n");
       printf ("ntor = %3d        mmin  = %3d        mmax  = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e NPHI = %3d\n",
-	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND, NPHI);
+	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND[0], NPHI);
       printf ("nfix = %3d        ndiag = %3d       nulc  = %10.3e itermax = %3d\n",
 	      NFIX, NDIAG, NULC, ITERMAX);
       printf ("acc  = %10.3e h0    = %10.3e hmin  = %10.3e hmax    = %10.3e epsf = %10.3e\n",
@@ -492,15 +497,16 @@ void TJ::CleanUp ()
 
   if (TEMP)
     {
-      for (int i = 0; i < Nh; i++)
-	{
-	  gsl_spline_free (dThspline[i]);
-	  
-	  gsl_interp_accel_free (dThacc[i]);
-	}
+      for (int k = 0; k < nres; k++)
+	for (int n = 0; n < Nh; n++)
+	  {
+	    gsl_spline_free (dThspline[k*Nh + n]);
+	    
+	    gsl_interp_accel_free (dThacc[k*Nh + n]);
+	  }
       delete[] dThspline; delete[] dThacc;
       
-      delete[] XX;
+      delete[] XX; delete[] T0inf;
     }
       
  if (VIZ)
@@ -508,8 +514,19 @@ void TJ::CleanUp ()
       delete[] rf;     delete[] req;    delete[] teq;    delete[] Req; 
       delete[] Zeq;    delete[] BReq;   delete[] neeq;   delete[] Teeq;
       delete[] dRdreq; delete[] dRdteq; delete[] dZdreq; delete[] dZdteq;
-      delete[] Leq;    delete[] PP;
+      delete[] Leq;    delete[] PP;     delete[] Lres;   delete[] itheta;
+      delete[] Rres;   delete[] Ores;   delete[] Xres;
+
+      for (int k = 0; k < nres; k++)
+	for (int np = 0; np < NPHI; np++)
+	  {
+	    gsl_spline_free (dTeeqcspline[k*NPHI + np]);
+	    
+	    gsl_interp_accel_free (dTeeqcacc[k*NPHI + np]);
+	  }
+      delete[] dTeeqcspline; delete[] dTeeqcacc;
     }
+ 
   delete[] rho;
 }
 

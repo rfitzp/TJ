@@ -321,7 +321,7 @@ in the region $\hat{r}>\hat{r}_k+\hat{W}_k$,
 \end{equation}
 in the region $\hat{r}< \hat{r}_k-\hat{W}_k$, and 
 \begin{equation}
-\tilde{T}_e(\hat{r}, \theta,\phi)=T_{e\,k} +{\rm sgn}(\hat{x})\,\hat{T}_{e\,k}'\,\hat{W}_k\sum_{\nu=0,\infty}\delta T_\nu(|\hat{x}|/\hat{W}_k)\,{\rm e}^{\,{\rm i}\,\nu\,\zeta_k}+\hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_{0\,\infty}
+\tilde{T}_e(\hat{r}, \theta,\phi)=T_{e\,k} +\hat{T}_{e\,k}'\,\hat{W}_k\sum_{\nu=0,\infty}\delta T_\nu(\hat{x}/\hat{W}_k)\,{\rm e}^{\,{\rm i}\,\nu\,\zeta_k}+\hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_{0\,\infty}
 \end{equation}
 in the region $\hat{r}_k-\hat{W}_k \leq \hat{r}\leq \hat{r}_k+\hat{W}_k$. Here, 
 \begin{align}
@@ -336,6 +336,38 @@ For the special case $m=1$,
 \tilde{T}_e(\hat{r},\theta,\phi) = - \frac{\xi^r(\hat{r},\theta,\phi)}{\epsilon_a}\,\frac{ dT_{e\,0}}{d\hat{r}}.
 \end{equation}
 
-
+\section{Relativistic Downshifting and Broadening}
+Neglecting doppler broadening, the angular frequency of an $n$th harmonic electron cyclotron emission (ece) signal is
+\begin{equation}
+\omega = \frac{n\,{\mit\Omega}_0\,R_0}{R}\,\left[1-\left(\frac{v}{c}\right)^2\right]^{1/2},
+\end{equation}
+where $v$ is the electron speed, and ${\mit\Omega}_0=e\,B_0/R_0$. Here, we are neglecting the poloidal magnetic field-strength, and assuming that the toroidal
+field-strength falls off like $1/R$. Let
+\begin{equation}
+R_\omega(\omega) = \frac{n\,{\mit\Omega}_0\,R_0}{\omega}
+\end{equation}
+be the major radius from which the ece of frequency $\omega$ is emitted  in the absence of relativistic downshifting and broadening. We can write
+\begin{align}
+\frac{v}{c} =\left\{\begin{array}{ccc}\left[1-\left(\frac{R}{R_\omega}\right)^2\right]^{1/2} &~~~~~&R\leq R_\omega\\[0.5ex]
+0&&R>R_\omega
+\end{array}\right..
+\end{align}
+Now, the distribution of electron speeds is
+\begin{equation}
+f(v)= A\,v^2\left(-\frac{1}{\theta_\omega}\left[1-\left(\frac{v}{c}\right)^2\right]^{-1/2}\right),
+\end{equation}
+where
+\begin{equation}
+\theta_\omega(\omega) = \frac{T_e(R_\omega)}{m_e\,c^{\,2}}.
+\end{equation}
+Thus, we can define
+\begin{equation}
+F(R,R_\omega) = \left[1-\left(\frac{R}{R_\omega}\right)^2\right]\exp\!\left(-\frac{1}{\theta_\omega}\,\frac{R_\omega}{R}\right).
+\end{equation}
+The electron temperature measured by the ece diagnostic is
+\begin{equation}
+T_e(R_\omega) = \frac{\int_{R_{\rm min}}^{R_\omega} T_e(R)\,F(R,R_\omega)\,dR}
+                                     {\int_{R_{\rm min}}^{R_\omega}             F(R,R_\omega)\,dR}.
+\end{equation}
 
 \end{document}

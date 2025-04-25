@@ -95,10 +95,10 @@ class TJ : private Utility
   // ----------------------
   // Calculation parameters
   // ----------------------
-  int    NTOR;    // Toroidal mode number (read from TJ JSON file)
-  int    MMIN;    // Minimum poloidal mode number included in calculation (read from TJ JSON file)
-  int    MMAX;    // Maximum poloidal mode number included in calculation (read from TJ JSON file)
-  double ISLAND;  // Island width/displacement (divided by minor radius) used to regularize perturbed magnetic field (read from TJ JSON file)
+  int            NTOR;    // Toroidal mode number (read from TJ JSON file)
+  int            MMIN;    // Minimum poloidal mode number included in calculation (read from TJ JSON file)
+  int            MMAX;    // Maximum poloidal mode number included in calculation (read from TJ JSON file)
+  vector<double> ISLAND;  // Island widths/displacements (divided by minor radius) used to regularize perturbed magnetic field (read from TJ JSON file)
 
   double EPS;     // Solutions launched from magnetic axis at r = EPS (read from TJ JSON file)
   double DEL;     // Distance of closest approach to rational surface is DEL (read from TJ JSON file)
@@ -488,20 +488,32 @@ class TJ : private Utility
   double* teq;            // theta values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* Req;            // R values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* Zeq;            // Z values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* BReq;           // B_parallel values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* neeq;           // n_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* Teeq;           // T_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* BReq;           // Equilibrium B_parallel values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* neeq;           // Equilibrium n_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Teeq;           // Equilibrium T_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* dRdreq;         // dR/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* dRdteq;         // (dR/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* dZdreq;         // dZ/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* dZdteq;         // (dZ/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* Leq;            // Length along central chord
+  double* Lres;           // Positions of rational surfaces on central chord
+  double* Rres;           // Positions of rational surfaces on central chord
+  double* Ores;           // Positions of island O-points on central chord
+  double* Xres;           // Positions of island X-points on central chord
 
-  Array<double,3> bReqc;  // delta B_parallel values on central chord
-  Array<double,3> neeqc;  // n_e values on central chord
-  Array<double,3> Teeqc;  // T_e values on central chord
-  Array<double,3> dneeqc; // delta n_e values on central chord
-  Array<double,3> dTeeqc; // delta T_e values on central chord
+  Array<double,3> bReqc;  // Perturbed B_parallel values on central chord
+  Array<double,3> neeqc;  // Total n_e values on central chord
+  Array<double,3> Teeqc;  // Total T_e values on central chord
+  Array<double,3> dneeqc; // Perturbed n_e values on central chord
+  Array<double,3> dTeeqc; // Perturbed T_e values on central chord
+
+  double*            itheta;       // m_e c^2 /Te on central chord
+  gsl_spline**       Teeqcspline;  // Interpolated total T_e values on central chord
+  gsl_spline**       dTeeqcspline; // Interpolated perturbed T_e values on central chord
+  gsl_interp_accel** Teeqcacc;     // Accelerator for interpolated total T_e values on central chord
+  gsl_interp_accel** dTeeqcacc;    // Accelerator for interpolated perturbed T_e values on central chord
+  Array<double,3>    Teeqd;        // Total T_e values on central chord modified by relativistic ece broadening
+  Array<double,3>    dTeeqd;       // Perturbed T_e values on central chord modified by relativistic ece broadening
 
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response
@@ -604,7 +616,7 @@ class TJ : private Utility
   // ----
   // Misc
   // ----
-  int    rhs_chooser;
+  int    rhs_chooser, iomega;
   double qval;
   
  public:
@@ -764,6 +776,8 @@ class TJ : private Utility
   void VisualizeEigenfunctions ();
   // Calculate resonant magnetic response visualization data
   void VisualizeRMP ();
+  // Evaluate right-hand sides of ece odes
+  void CashKarp45Rhs (double R, double* Y, double* dYdr) override;
 
   // ............
   // In Ideal.cpp
@@ -900,7 +914,7 @@ class TJ : private Utility
   // Read equilibrium data from netcdf file
   void ReadEquilibriumNetcdf ();
   // Read island data from netcdf file
-  void ReadIslandNetcdf ();
+  void ReadIslandNetcdf (int k);
   // Write stability data to netcdf file
   void WriteNetcdf ();
 };

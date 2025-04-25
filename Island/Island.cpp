@@ -74,12 +74,14 @@ Island::Island ()
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Nh = %-4d Nb = %-4d Nz = %-4d NX = %-4d Xmax = %10.3e delta = %10.3e\n",
 	  Nh, Nb, Nz, NX, Xmax, delta);
+
+  sprintf (buffer, "../Outputs/Island/Island.nc");
 }
 
 // #######################
 // Alternative constructor
 // #######################
-Island::Island (double _delta)
+Island::Island (int k, double _delta)
 {
   // ----------------------------------------------
   // Ensure that directory ../Outputs/Island exists
@@ -146,10 +148,11 @@ Island::Island (double _delta)
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("Nh = %-4d Nb = %-4d Nz = %-4d NX = %-4d Xmax = %10.3e delta = %10.3e\n",
-	  Nh, Nb, Nz, NX, Xmax, delta);
-}
+  printf ("Rational surface %-4d: Nh = %-4d Nb = %-4d Nz = %-4d NX = %-4d Xmax = %10.3e delta = %10.3e\n",
+	  k+1, Nh, Nb, Nz, NX, Xmax, delta);
 
+  sprintf (buffer, "../Outputs/Island/Island%04d.nc", k);
+}
 
 // #########################
 // Function to solve problem
@@ -388,9 +391,15 @@ void Island::Solve (int FLAG)
   // Clean up
   // ........
   printf ("Cleaning up\n");
-  delete[] XX; delete[] kk; delete[] dTdk; delete[] ximx;
+  
+  delete[] XX; delete[] kk; delete[] dTdk; delete[] ximx; delete[] F; 
 
-  delete[] zz; delete[] dTo; delete[] F; delete[] dTx;
+  if (FLAG)
+    {
+       delete[] zz;
+       delete[] dTo;
+       delete[] dTx;
+    }
 
   for (int n = 0; n < Nb; n++)
     {
@@ -413,7 +422,7 @@ void Island::Solve (int FLAG)
 // #####################################
 void Island::WriteNetcdf (int FLAG)
 {
-  printf ("Writing data to netcdf file Outputs/Island/Island.nc:\n");
+  printf ("Writing data to netcdf file %s\n", buffer);
 
   double Input[NINPUT], Para[NPARA];
 
@@ -456,11 +465,11 @@ void Island::WriteNetcdf (int FLAG)
 	    cnt++;
 	  }
     }
-  
-  try
+
+   try
     {
-      NcFile dataFile ("../Outputs/Island/Island.nc", NcFile::replace);
-      
+      NcFile dataFile (buffer, NcFile::replace);
+ 
       dataFile.putAtt ("Git_Hash",     GIT_HASH);
       dataFile.putAtt ("Compile_Time", COMPILE_TIME);
       dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
@@ -500,28 +509,30 @@ void Island::WriteNetcdf (int FLAG)
       F_x.putVar (F);
       NcVar dT_x   = dataFile.addVar ("delta_T_h",       ncDouble, T_d);
       dT_x.putVar (dTh_y);
-      NcVar zz_x   = dataFile.addVar ("zeta",            ncDouble, z_d);
-      zz_x.putVar (zz);
       NcVar xim_x  = dataFile.addVar ("xi_c",            ncDouble, x_d);
       xim_x.putVar (ximx);
 
       if (FLAG)
 	{
-	  NcVar dto_x = dataFile.addVar ("delta_T_o", ncDouble, x_d);
+	  NcVar zz_x  = dataFile.addVar ("zeta",      ncDouble, z_d);
+	  zz_x.putVar (zz);
+ 	  NcVar dto_x = dataFile.addVar ("delta_T_o", ncDouble, x_d);
 	  dto_x.putVar (dTo);
 	  NcVar dtx_x = dataFile.addVar ("delta_T_x", ncDouble, x_d);
 	  dtx_x.putVar (dTx);	
 	  NcVar dTT_x = dataFile.addVar ("delta_T",   ncDouble, TT_d);
 	  dTT_x.putVar (dT_y);
 	}
+ 
+      dataFile.close ();
      }
   catch (NcException& e)
     {
-      printf ("Error writing data to netcdf file Outputs/Island/Island.nc\n");
+      printf ("Error writing data to netcdf file %s\n", buffer);
       printf ("%s\n", e.what ());
       exit (1);
     }
-  
+
   delete[] En_y; delete[] dTh_y; delete[] dT_y;
 }
 
@@ -542,9 +553,9 @@ double Island::GetG (double k)
   return G;
 }
 
-// ############################
-// Function to return cos(zeta)
-// ############################
+// #############################
+// Function to return cos (zeta)
+// #############################
 double Island::GetCosZeta (double xi)
 {
   double sum = - delta*delta/2.;
@@ -559,9 +570,9 @@ double Island::GetCosZeta (double xi)
   return sum;
 }
 
-// ############################
-// Function to return sin(zeta)
-// ############################
+// #############################
+// Function to return sin (zeta)
+// #############################
 double Island::GetSinZeta (double xi)
 {
   if (fabs (delta) < 1.e-15)
@@ -581,9 +592,9 @@ double Island::GetSinZeta (double xi)
     }
 }
 
-// ##############################
-// Function to return cos(n*zeta)
-// ##############################
+// ###############################
+// Function to return cos (n*zeta)
+// ###############################
 double Island::GetCosnZeta (int n, double xi)
 {
   double nn  = double (n);
@@ -623,17 +634,17 @@ double Island::GetSinnZeta (int n, double xi)
   return sum;
 }
 
-// ########################
-// Function to calculate xi
-// ########################
+// ###############################
+// Function to calculate xi (zeta)
+// ###############################
 double Island::GetXi (double zeta)
 {
   return zeta - delta*delta * sin (zeta);
 }
 
-// ##############################
-// Function to calculate zeta(xi)
-// ##############################
+// ###############################
+// Function to calculate zeta (xi)
+// ###############################
 double Island::GetZeta (double xi)
 {
   double sum = xi;
@@ -648,31 +659,23 @@ double Island::GetZeta (double xi)
   return sum;
 }
 
-// ##########################
-// Function to calculate xi_c
-// ##########################
+// ##############################
+// Function to calculate xi_c (X)
+// ##############################
 double Island::GetXic (double x)
 {
-  double xic;
-
-  if (1. - 8.*x*x < -1.)
-    xic = M_PI;
+  if (x < - 0.5 - delta/sqrt(8.) || x > 0.5 - delta/sqrt(8.))
+    return M_PI;
   else
-    xic = acos (1. - 8.*x*x);
-
-  for (int i = 0; i < 50; i++)
     {
-      double Y = x - (delta /sqrt(8.)) * GetCosZeta (xic);
+      X = x;
+      
+      double z = RootFind (0., M_PI);
 
-      if (1. - 8.*Y*Y < -1.)
-	xic = M_PI;
-      else
-	xic = acos (1. - 8.*Y*Y);
+      return z;
     }
-
-  return xic;
 }
-
+  
 // ###############################
 // Function to calculate k (X, xi)
 // ###############################
@@ -691,9 +694,9 @@ double Island::Getk (double x, double xi)
     return kx;
 }
 
-// ###############################
-// Function to calculate sigma(xi)
-// ###############################
+// ################################
+// Function to calculate sigma (xi)
+// ################################
 double Island::GetSigma (double xi)
 {
   double sum = 1.;
@@ -708,9 +711,9 @@ double Island::GetSigma (double xi)
   return sum;
 }
 
-// ##################################
-// Function to calculate kappa(X, xi)
-// ##################################
+// ###################################
+// Function to calculate kappa (X, xi)
+// ###################################
 double Island::GetKappa (double x, double xi)
 {
   double zeta = GetZeta (xi);
@@ -769,3 +772,12 @@ void Island::CashKarp45Rhs (double z, double* Y, double* dYdz)
     }
 }
 
+// ################################
+// Target function for finding xi_c
+// ################################
+double Island::RootFindF (double xi)
+{ 
+  double cosz = GetCosZeta (xi);
+
+  return 1. - (sqrt(8.)*X - delta * cosz) * (sqrt(8.)*X - delta * cosz) - cos (xi);
+}

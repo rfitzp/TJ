@@ -11,11 +11,11 @@ ReBu = plt.get_cmap ('prism')
 ncont = 360
 
 fn = '../../Outputs/Island/Island.nc'
-ds = nc.Dataset(fn)
-x  = np.asarray(ds['X'])
-z  = np.asarray(ds['zeta']) /math.pi
-t  = np.asarray(ds['delta_T'])
-p  = np.asarray(ds['InputParameters'])
+ds = nc.Dataset (fn)
+x  = np.asarray (ds['X'])
+z  = np.asarray (ds['zeta']) /math.pi
+t  = np.asarray (ds['delta_T'])
+p  = np.asarray (ds['InputParameters'])
 
 delta = p[5];
 
@@ -31,9 +31,9 @@ for y in z:
 
 x0 = []
 for y in z:
-    x0.append(0.)
+    x0.append (0.)
 
-fig = plt.figure (figsize = (8.0, 8.0))
+fig = plt.figure (figsize = (14.0, 7.0))
 fig.canvas.manager.set_window_title (r'TJ Code: delta T_e(zeta, x)')
 plt.rc ('xtick', labelsize=12) 
 plt.rc ('ytick', labelsize=12) 
@@ -53,7 +53,7 @@ plt.contourf (z, x, t, ncont, cmap = ReBu)
 plt.ylabel (r'$x/W$',       fontsize = "12")
 plt.xlabel (r'$\zeta/\pi$', fontsize = "12")
 
-plt.tight_layout()
+plt.tight_layout ()
 
-plt.show()    
+plt.show ()    
 #plt.savefig("dTe.png")

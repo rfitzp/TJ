@@ -25,7 +25,7 @@ plt.subplot (1, 1, 1)
 plt.xlim (x[0], x[-1])
 plt.ylim (0.,   1.05)
 
-plt.plot    (x, c,                 color = 'blue', linewidth = 2,   linestyle = 'solid')
+plt.plot    (x, c,                 color = 'blue',  linewidth = 2,   linestyle = 'solid')
 plt.axhline (1.,                   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline ( 0.5 - delta/8.**0.5, color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline ( 0.0 + delta/8.**0.5, color = 'black', linewidth = 1.5, linestyle = 'dotted')

@@ -90,6 +90,8 @@ private:
   gsl_interp_accel*   dTdkacc;    // Accelerator for interpolated dTdk(k) function
   gsl_interp_accel*   Facc;       // Accelerator for interpolated F(k) function
 
+  char buffer[100]; // Name of netcdf file
+
   // Misc
   int rhs_chooser;
 
@@ -97,7 +99,7 @@ public:
 
   // Constructors
   Island ();
-  Island (double _delta);
+  Island (int k, double _delta);
 
   // Solve problem
   void Solve (int FLAG);
@@ -129,7 +131,10 @@ private:
   
   // Write Island data to netcdf file
   void WriteNetcdf (int FLAG);
-
+  
   // Evaluate right-hand sides of differential equations
   void CashKarp45Rhs (double x, double*  y, double*  dydx) override;
+
+  // Target function for one-dimensional root finding
+  double RootFindF (double xi) override;
 };
