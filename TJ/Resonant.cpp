@@ -354,8 +354,8 @@ void TJ::JumpRational (int jres, double& r, Array<complex<double>,2> YY)
 		}
 	      else
 		{
-		  PPsi(k, j) += 2. * DEL * (AL * dnuL * ck[k] + Pbar1[k]) + 2. * akt[k] * AS * dnuS;
-		  ZZ  (k, j) += 2. * DEL * (AL * dnuL * dk[k] + Zbar1[k]) + 2. * bkt[k] * AS * dnuS;
+		  PPsi(k, j) += 2. * DEL * (AL*dnuL * ck[k] + Pbar1[k]) + 2. * akt[k] * AS * dnuS;
+		  ZZ  (k, j) += 2. * DEL * (AL*dnuL * dk[k] + Zbar1[k]) + 2. * bkt[k] * AS * dnuS;
 		} 
 	    }
 

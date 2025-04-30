@@ -34,7 +34,7 @@ for y in z:
     x0.append (0.)
 
 fig = plt.figure (figsize = (14.0, 7.0))
-fig.canvas.manager.set_window_title (r'TJ Code: delta T_e(zeta, x)')
+fig.canvas.manager.set_window_title (r'Island Code: delta T_e(zeta, x)')
 plt.rc ('xtick', labelsize=12) 
 plt.rc ('ytick', labelsize=12) 
 

@@ -16,7 +16,7 @@ p   = np.asarray(ds['InputParameters'])
 delta = p[5];
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Harmonics of Temperature Perturbation')
+fig.canvas.manager.set_window_title (r'Island Code: Harmonics of Temperature Perturbation')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 
@@ -24,14 +24,16 @@ nharm = dT.shape[0]
 
 plt.subplot (1, 1, 1)
 
-ymax = 1.1 * max (max (dT[1,:]), max (dT[2,:]))
-ymin = 1.1 * min (min (dT[1,:]), min (dT[2,:]))
+dT1 = dT[1,:] + delta/8.**0.5
+
+ymax = 1.1 * max (dT1)
+ymin = 1.1 * min (dT1)
 
 plt.xlim (-1.5, 1.5)
 plt.ylim (ymin, ymax)
 
 plt.plot (x, dT[0,:], color = 'red',     linewidth = 2, linestyle = 'solid', label = r"$\nu=0$")
-plt.plot (x, dT[1,:], color = 'green',   linewidth = 2, linestyle = 'solid', label = r"$\nu=1$")
+plt.plot (x, dT1,     color = 'green',   linewidth = 2, linestyle = 'solid', label = r"$\nu=1$")
 plt.plot (x, dT[2,:], color = 'blue',    linewidth = 2, linestyle = 'solid', label = r"$\nu=2$")
 plt.plot (x, dT[3,:], color = 'yellow',  linewidth = 2, linestyle = 'solid', label = r"$\nu=3$")
 plt.plot (x, dT[4,:], color = 'cyan',    linewidth = 2, linestyle = 'solid', label = r"$\nu=4$")

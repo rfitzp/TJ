@@ -4,5 +4,14 @@
     "Nz":     1000,   // Number of angular grid points
     "NX":     1000,   // Number of radial grid points 
     "Xmax":   2.0,    // Maximum value of radial variable (in island widths)
-    "delta":  0.5     // Island asymmetry parameter
+    "delta":  0.5,    // Island asymmetry parameter
+
+    "ECCD":   -1,     // Flag for eccd calculation (0/+1/-1 no calcualation/W scan/D scan)
+    "Nk":     200,    // Number of k grid points
+    "Nscan":  200,    // Number of points in W/D scan
+    "Kmax":   4.0,    // Maximum value of k on k grid
+    "Wmax":   2.0,    // Maximum value of W in W scan
+    "Dmax":   5.0,    // Maximum value of D in D scan
+    "W":      0.1,    // Island width (in units of width of eccd deposition)
+    "D":      2.0     // Radial offset (in units of width of eccd deposition)
 }

@@ -469,7 +469,7 @@ void TJ::CleanUp ()
   delete[] sres;  delete[] DIres;  delete[] nuLres; delete[] nuSres;
   delete[] Jres;  delete[] DRres;  delete[] Flarge; delete[] Fsmall;
   delete[] Pres;  delete[] gres;   delete[] neres;  delete[] nepres;
-  delete[] Teres; delete[] Tepres; 
+  delete[] Teres; delete[] Tepres; delete[] hres;
 
   delete[] S13res; delete[] taures; delete[] ieres; delete[] QEres;
   delete[] Qeres;  delete[] Qires;  delete[] Dres;  delete[] Pmres;

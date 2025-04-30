@@ -20,7 +20,7 @@ Finf  = g[0]
 dT0 = dT[0,:] - x + Finf 
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Zeroth Harmonic of Temperature Perturbation')
+fig.canvas.manager.set_window_title (r'Island Code: Zeroth Harmonic of Temperature Perturbation')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 

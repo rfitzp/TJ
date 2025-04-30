@@ -65,9 +65,9 @@ private:
   double Xmax;  // Maximum value of radial variable (in island widths) (read from JSON file)
   double delta; // Asymmetry parameter (read from JSON file)
 
-  // ................
-  // Calculation data
-  // ................
+  // .......................
+  // Island calculation data
+  // .......................
   double          X;       // Normalized radial coordinate
   double*         XX;      // Normalized radial grid points
   double*         kk;      // k grid points
@@ -90,10 +90,45 @@ private:
   gsl_interp_accel*   dTdkacc;    // Accelerator for interpolated dTdk(k) function
   gsl_interp_accel*   Facc;       // Accelerator for interpolated F(k) function
 
-  char buffer[100]; // Name of netcdf file
+  // ...............
+  // ECCD parameters
+  // ...............
+  int     ECCD;   // Flag for eccd calculation (read from JSON file) (0/+1/-1 no calculation/W scan/D scan
+  int     Nk;     // Number of k grid points (read from JSON file)
+  int     Nscan;  // Number of points in W scan (read from JSON file)
+  double  Kmax;   // Maximum value of k on k grid (read from JSON file)
+  double  Wmax;   // Maximum value of W in W scan (read from JSON file)
+  double  Dmax;   // Maximum value of D in W scan (read from JSON file)
+  double  D;      // Radial offset relative to radial width of eccd deposition in W scan (read from JSON file)
+  double  W;      // Island width relative to radial width of eccd deposition in D scan (read from JSON file)
+
+  // .....................
+  // ECCD calculation data
+  // .....................
+  double*            kkk;         // k grid points
+  double*            Flux0;       // Flux-surface average of 1
+  double*            Flux1;       // Flux-surface average of cos(zeta)
+  double*            Flux2;       // k <cos(zeta)> /<1>
+  double*            WW;          // Island width grid
+  double*            DD;          // Radial offset grid
+  Array<double,2>    JO;          // Flux-surface average of eccd when aimed at O-point
+  Array<double,2>    JX;          // Flux-surface average of eccd when aimed at X-point
+  Array<double,2>    IO;          // Integrand for Delta_eccd calculation when eccd aimed at O-point
+  Array<double,2>    IX;          // Integrand for Delta_eccd calculation when eccd aimed at X-point
+
+  gsl_spline**       IO_spline;   // Interpolated IO functions
+  gsl_spline**       IX_spline;   // Interpolated IX functions
+ 
+  gsl_interp_accel** IO_acc;      // Accelerator for interpolated IO functions
+  gsl_interp_accel** IX_acc;      // Accelerator for interpolated IX functions
+
+  double* DeltaO;                 // Delta_eccd values when eccd aimed at O-point
+  double* DeltaX;                 // Delta_eccd values when eccd aimed at X-point
 
   // Misc
-  int rhs_chooser;
+  char   buffer[100];     // Name of netcdf file
+  double kval, Wval;
+  int    rhs_chooser;
 
 public:
 
@@ -128,6 +163,15 @@ private:
   double GetSigma (double xi);
   // Get kappa(x, xi)
   double GetKappa (double x, double xi);
+
+  // Get JO (s, k, xi, W, D)
+  double GetJO (int s, double k, double xi, double Wval, double Dval);
+  // Get JO_plus (k, xi, W, D)
+  double GetJOplus (double k, double xi, double Wval, double Dval);
+  // Get JX (s, k, xi, W, D)
+  double GetJX (int s, double k, double xi, double Wval, double Dval);
+  // Get JX_plus (k, xi, W, D)
+  double GetJXplus (double k, double xi, double Wval, double Dval);
   
   // Write Island data to netcdf file
   void WriteNetcdf (int FLAG);

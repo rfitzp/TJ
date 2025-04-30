@@ -53,6 +53,7 @@
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
 #include <gsl/gsl_sf_gamma.h>
+#include <gsl/gsl_sf_bessel.h>
 #include <netcdf>
 #include <armadillo>
 
@@ -333,6 +334,7 @@ class TJ : private Utility
   double* qerr;    // Residual in determination of rational surface
   double* sres;    // Magnetic shears at rational surfaces
   double* gres;    // g values at rational surfaces
+  double* hres;    // h values at rational surfaces
   double* DIres;   // DI values at rational surfaces
   double* DRres;   // DR values at rational surfaces
   double* nuLres;  // Ideal Mercier indices of large solution at rational surfaces
@@ -694,11 +696,13 @@ class TJ : private Utility
   void GetMatrices (double r, int m, int mp,
 		    complex<double>& Lmmp, complex<double>& Mmmp,
 		    complex<double>& Nmmp, complex<double>& Pmmp);
-  // Get values of kmp 
+  // Get value of kmp 
   double Getkmp (double r, int m);
-  // Get values of km 
+  // Get value of km 
   double Getkm (double r, int m);
-
+  // Get value of Lmm
+  double GetLmm (double r, int m);
+  
   // ...............
   // In Resonant.cpp
   // ...............

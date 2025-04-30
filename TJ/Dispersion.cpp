@@ -455,8 +455,13 @@ void TJ::FindDispersion ()
 	      
 	      double rm  = rres[k] - island;
 	      double prm = gsl_spline_eval (psikrspline, rm, psikracc);
-	      
-	      delta[k] = - (prp - prm) /4./sqrt(8.) /double (mres[k]);
+
+	      double del = 0.;
+	      for (int i = 0; i < 10; i++)
+		{
+		  del = - (gsl_sf_bessel_Jn (0, del*del) + gsl_sf_bessel_Jn (2, del*del)) * (prp - prm) /4./sqrt(8.) /double (mres[k]) /hres[k];
+		}
+	      delta[k] = del;
 
 	      if (delta[k] > 1.)
 		delta[k] = 1.;
@@ -487,7 +492,7 @@ void TJ::FindDispersion ()
 
 	  if (mres[k] == 1)
 	    {
-	      Psik[k] = (rres[k] * gres[k] * sres[k] /qres[k]) * island /abs (Emat(k, k));
+	      Psik[k] = (rres[k] * gres[k] * sres[k] /qres[k] /hres[k]) * island /abs (Emat(k, k));
 	      PsTp[k] = complex<double> (Psik[k], 0.);
 	      PsTm[k] = complex<double> (Psik[k], 0.);
 	      dTp [k] = 0.;
@@ -499,7 +504,8 @@ void TJ::FindDispersion ()
 	    }
 	  else
 	    { 
-	      Psik[k] = (island*island /16.) *  (gres[k] * sres[k] /qres[k]); 
+	      Psik[k] = (island*island /16.) *  (gres[k] * sres[k] /qres[k] /hres[k])
+		* (gsl_sf_bessel_Jn (0, delta[k]*delta[k]) + gsl_sf_bessel_Jn (2, delta[k]*delta[k])); 
 	      
 	      int     j     = Jres[k];
 	      double* psikr = new double[NDIAG];
@@ -564,9 +570,18 @@ void TJ::FindDispersion ()
 	}
       
       printf ("Electron temperature matching data:\n");
+      double zero = 0.;
       for (int k = 0; k < nres; k++)
-	printf ("m = %3d W = %10.3e Psi = %10.3e Psip = (%10.3e, %10.3e) Psim = (%10.3e, %10.3e) dTp = %10.3e dTm = %10.3e\n",
-		mres[k], ISLAND[k], Psik[k], real(PsTp[k]), imag(PsTp[k]), real(PsTm[k]), imag(PsTm[k]), dTp[k], dTm[k]);
+	if (k > ISLAND.size () - 1)
+	  {
+	    printf ("m = %3d W = %10.3e Psi = %10.3e Psip = (%10.3e, %10.3e) Psim = (%10.3e, %10.3e) dTp = %10.3e dTm = %10.3e\n",
+		    mres[k], zero, Psik[k], real(PsTp[k]), imag(PsTp[k]), real(PsTm[k]), imag(PsTm[k]), dTp[k], dTm[k]);
+	  }
+	else
+	  {
+	    printf ("m = %3d W = %10.3e Psi = %10.3e Psip = (%10.3e, %10.3e) Psim = (%10.3e, %10.3e) dTp = %10.3e dTm = %10.3e\n",
+		    mres[k], ISLAND[k], Psik[k], real(PsTp[k]), imag(PsTp[k]), real(PsTm[k]), imag(PsTm[k]), dTp[k], dTm[k]);
+	  }
   
       // .......................................................................................................
       // Calculate electron temperature and number density profiles associated with unreconnected eigenfunctions

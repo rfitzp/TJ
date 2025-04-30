@@ -1463,17 +1463,19 @@ void TJ::WriteNetcdf ()
 	      NcVar dTeeqd_x = dataFile.addVar ("dTe_ece", ncDouble, vv_d);
 	      dTeeqd_x.putVar (dTeeq_d);
 
-	      NcVar Req_x  = dataFile.addVar ("R_eq",  ncDouble, q_d);
+	      NcVar Req_x  = dataFile.addVar ("R_eq",      ncDouble, q_d);
 	      Req_x.putVar (Req); 
-	      NcVar Leq_x  = dataFile.addVar ("L_eq",  ncDouble, q_d);
-	      Leq_x.putVar (Leq); 
-	      NcVar Lres_x = dataFile.addVar ("L_res", ncDouble, x_d);
+	      NcVar Leq_x  = dataFile.addVar ("L_eq",      ncDouble, q_d);
+	      Leq_x.putVar (Leq);
+	      NcVar ith_x  = dataFile.addVar ("itheta_eq", ncDouble, q_d);
+	      ith_x.putVar (itheta);
+	      NcVar Lres_x = dataFile.addVar ("L_res",     ncDouble, x_d);
 	      Lres_x.putVar (Lres);
-	      NcVar Rres_x = dataFile.addVar ("R_res", ncDouble, x_d);
+	      NcVar Rres_x = dataFile.addVar ("R_res",     ncDouble, x_d);
 	      Rres_x.putVar (Rres); 
-	      NcVar Ores_x = dataFile.addVar ("O_res", ncDouble, x_d);
+	      NcVar Ores_x = dataFile.addVar ("O_res",     ncDouble, x_d);
 	      Ores_x.putVar (Ores);
-	      NcVar Xres_x = dataFile.addVar ("X_res", ncDouble, x_d);
+	      NcVar Xres_x = dataFile.addVar ("X_res",     ncDouble, x_d);
 	      Xres_x.putVar (Xres);
 	    }
 	}

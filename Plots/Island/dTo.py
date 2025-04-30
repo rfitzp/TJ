@@ -17,7 +17,7 @@ p   = np.asarray(ds['InputParameters'])
 delta = p[5];
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Temperature Perturbation across O- and X-Points')
+fig.canvas.manager.set_window_title (r'Island Code: Temperature Perturbation across O- and X-Points')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 

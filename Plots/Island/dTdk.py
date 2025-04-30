@@ -13,7 +13,7 @@ k    = np.asarray(ds['k'])
 dTdk = np.asarray(ds['dTdk'])
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: dTdk(k)')
+fig.canvas.manager.set_window_title (r'Island Code: dTdk(k)')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 

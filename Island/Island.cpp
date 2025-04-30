@@ -1,6 +1,6 @@
 #include "Island.h"
 
-#define NINPUT 6
+#define NINPUT 14
 #define NPARA 1
 
 // ###########
@@ -32,6 +32,15 @@ Island::Island ()
   NX    = JSONData["NX"]   .get<int>    ();
   Xmax  = JSONData["Xmax"] .get<double> ();
   delta = JSONData["delta"].get<double> ();
+
+  ECCD  = JSONData["ECCD"] .get<int>    ();
+  Nk    = JSONData["Nk"]   .get<int>    ();
+  Nscan = JSONData["Nscan"].get<int>    ();
+  Kmax  = JSONData["Kmax"] .get<double> ();
+  Wmax  = JSONData["Wmax"] .get<double> ();
+  Dmax  = JSONData["Dmax"] .get<double> ();
+  D     = JSONData["D"]    .get<double> ();
+  W     = JSONData["W"]    .get<double> ();
 
   // ............
   // Sanity check
@@ -66,14 +75,46 @@ Island::Island ()
       printf ("Island:: Error - delta must lie in range -1 to +1\n");
       exit (1);
     }
+  if (Nint < 1)
+    {
+      printf ("Island:: Error - Nint must be positive\n");
+      exit (1);
+    }
+  if (Wmax <= 0.)
+    {
+      printf ("Island:: Error - Wmax must be positive\n");
+      exit (1);
+    }
+  if (Dmax <= 0.)
+    {
+      printf ("Island:: Error - Dmax must be positive\n");
+      exit (1);
+    }
+  if (W <= 0.)
+    {
+      printf ("Island:: Error - W must be positive\n");
+      exit (1);
+    }
+  if (Nk < 1)
+    {
+      printf ("Island:: Error - Nk must be positive\n");
+      exit (1);
+    }
+  if (Kmax <= 1.)
+    {
+      printf ("Island:: Error - Kmax must be greater than unity\n");
+      exit (1);
+    }
  
   printf ("\n");
   printf ("Class ISLAND::\n");
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("Nh = %-4d Nb = %-4d Nz = %-4d NX = %-4d Xmax = %10.3e delta = %10.3e\n",
+  printf ("Nh   = %-4d Nb =  %-4d Nz    = %-4d NX   = %-4d       Xmax = %-10.3e delta = %10.3e\n",
 	  Nh, Nb, Nz, NX, Xmax, delta);
+  printf ("ECCD = %2d   Nk = %-4d  Nscan = %-4d Kmax = %-10.3e Wmax = %-10.3e D     = %10.3e Dmax = %-10.3e W = %-10.3e\n",
+	  ECCD, Nk, Nscan, Kmax, Wmax, D, Dmax, W);
 
   sprintf (buffer, "../Outputs/Island/Island.nc");
 }
@@ -381,7 +422,160 @@ void Island::Solve (int FLAG)
 	    }
 	}
     }
-      
+
+  if (ECCD)
+    {
+      // .............
+      // Set up k grid
+      // .............
+      kkk   = new double[2*Nk];
+      Flux0 = new double[2*Nk];
+      Flux1 = new double[2*Nk];
+      Flux2 = new double[2*Nk];
+      WW    = new double[Nscan];
+      DD    = new double[Nscan];
+
+      JO.resize (2*Nk, Nscan);
+      JX.resize (2*Nk, Nscan);
+      IO.resize (2*Nk, Nscan);
+      IX.resize (2*Nk, Nscan);
+       
+      for (int i = 0; i < Nk; i++)
+	kkk[i] = double (i) /double (Nk);
+      for (int i = 0; i < Nk; i++)
+	kkk[Nk+i] = 1. + (Kmax - 1.) * double (i+1) /double (Nk);
+
+      for (int j = 0; j < Nscan; j++)
+	WW[j] = Wmax * double (j + 1) /double (Nscan);
+      for (int j = 0; j < Nscan; j++)
+	DD[j] = - Dmax + 2.*Dmax * double (j) /double (Nscan-1);
+
+       // .............................
+       // Calculate <1> and <cos(zeta)>
+       // .............................
+       double theta;
+       Y   = new double[2+2*Nscan];
+       err = new double[2+2*Nscan];
+
+       rhs_chooser = 3;
+
+       for (int i = 0; i < 2*Nk; i++)
+	 {
+	   if (i%40 == 0)
+	     {
+	       printf (".");
+	       fflush (stdout);
+	     }
+	   
+	   kval = kkk[i];
+	   
+	   count = 0;
+	   h     = h0;
+	   theta = 0.;
+
+	   Y[0]  = 0.;
+	   Y[1]  = 0.;
+	   for (int j = 0; j < 2*Nscan; j++)
+	     {
+	       Y[2         + j] = 0.;
+	       Y[2 + Nscan + j] = 0.;
+	     }
+
+	   do
+	     {
+	       CashKarp45Adaptive (2+2*Nscan, theta, Y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+	     }
+	   while (theta < M_PI/2.);
+	   CashKarp45Fixed (2+2*Nscan, theta, Y, err, M_PI/2. - theta);
+
+	   Flux0[i] = Y[0];
+	   Flux1[i] = Y[1];
+	   Flux2[i] = kval * Y[1]/Y[0];
+
+	   for (int j = 0; j < Nscan; j++)
+	     {
+	       JO(i, j) = Y[2         + j];
+	       JX(i, j) = Y[2 + Nscan + j];
+
+	       IO(i, j) = - 64. * Flux2[i] * JO(i, j);
+	       IX(i, j) = - 64. * Flux2[i] * JX(i, j);
+	     }
+	 }
+       printf ("\n");
+
+       delete[] Y; delete[] err;
+  
+
+       // ...............................
+       // Inerpolate IO and IX functions
+       // ...............................
+       IO_spline = new gsl_spline*      [Nscan];
+       IX_spline = new gsl_spline*      [Nscan];
+       IO_acc    = new gsl_interp_accel*[Nscan];
+       IX_acc    = new gsl_interp_accel*[Nscan];
+
+       for (int j = 0; j < Nscan; j++)
+	 {
+	   IO_spline[j] = gsl_spline_alloc       (gsl_interp_cspline, 2*Nk);
+	   IX_spline[j] = gsl_spline_alloc       (gsl_interp_cspline, 2*Nk);
+	   IO_acc   [j] = gsl_interp_accel_alloc ();
+	   IX_acc   [j] = gsl_interp_accel_alloc ();
+	 }
+       
+       double* data1 = new double[2*Nk];
+       double* data2 = new double[2*Nk];
+       
+       for (int j = 0; j < Nscan; j++)
+	 {
+	   for (int i = 0; i < 2*Nk; i++)
+	     {
+	       data1[i] = IO(i, j);
+	       data2[i] = IX(i, j);
+	     }
+	   
+	   gsl_spline_init (IO_spline[j], kkk, data1, 2*Nk);
+	   gsl_spline_init (IX_spline[j], kkk, data2, 2*Nk);
+	 }
+       
+       delete[] data1; delete[] data2;
+       
+       // ...........................
+       // Calculate Delta_eccd values
+       // ...........................
+       DeltaO = new double[Nscan];
+       DeltaX = new double[Nscan];
+       
+       double k;
+       Y   = new double[2*Nscan];
+       err = new double[2*Nscan];
+       
+       rhs_chooser = 4;
+       
+       count = 0;
+       h     = h0;
+       k     = 0.;
+       
+       for (int j = 0; j < 2*Nscan; j++)
+	 {
+	   Y[j] = 0.;
+	 }
+       
+       do
+	 {
+	   CashKarp45Adaptive (2*Nscan, k, Y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+	 }
+       while (k < Kmax);
+       CashKarp45Fixed (2*Nscan, k, Y, err, Kmax - k);
+       
+       for (int j = 0; j < Nscan; j++)
+	 {
+	   DeltaO[j] = Y[        j];
+	   DeltaX[j] = Y[Nscan + j];
+	 }
+       
+       delete[] Y; delete[] err;
+    }
+
   // .........................
   // Write data to Netcdf file
   // .........................
@@ -415,6 +609,22 @@ void Island::Solve (int FLAG)
 
   gsl_interp_accel_free (dTdkacc);
   gsl_interp_accel_free (Facc);
+
+  if (ECCD)
+    {
+      delete[] kkk; delete[] Flux0; delete[] Flux1; delete[] Flux2; delete[] WW; delete[] DD;
+
+      for (int j = 0; j < Nscan; j++)
+	{
+	  gsl_spline_free       (IO_spline[j]);
+	  gsl_spline_free       (IX_spline[j]);
+	  gsl_interp_accel_free (IO_acc[j]);
+	  gsl_interp_accel_free (IX_acc[j]);
+	}
+      delete[] IO_spline; delete[] IX_spline; delete[] IO_acc; delete[] IX_acc;
+
+      delete[] DeltaO; delete[] DeltaX;
+    }
 }
 
 // #####################################
@@ -429,13 +639,25 @@ void Island::WriteNetcdf (int FLAG)
   double* En_y  = new double[Nb*NX];
   double* dTh_y = new double[Nh*NX];
   double* dT_y  = new double[NX*Nz];
-
-  Input[0] = double (Nh);
-  Input[1] = double (Nb);
-  Input[2] = double (Nz);
-  Input[3] = double (NX);
-  Input[4] = double (Xmax);
-  Input[5] = double (delta);
+  double* JO_y  = new double[2*Nk*Nscan];
+  double* JX_y  = new double[2*Nk*Nscan];
+  double* IO_y  = new double[2*Nk*Nscan];
+  double* IX_y  = new double[2*Nk*Nscan];
+  
+  Input[0]  = double (Nh);
+  Input[1]  = double (Nb);
+  Input[2]  = double (Nz);
+  Input[3]  = double (NX);
+  Input[4]  = Xmax;
+  Input[5]  = delta;
+  Input[6]  = double (ECCD);
+  Input[7]  = double (Nk);
+  Input[8]  = double (Nscan);
+  Input[9]  = Kmax;
+  Input[10] = Wmax;
+  Input[11] = D;
+  Input[12] = Dmax;
+  Input[13] = W;
    
   Para[0] = T0inf;
 
@@ -466,6 +688,20 @@ void Island::WriteNetcdf (int FLAG)
 	  }
     }
 
+  if (ECCD)
+    {
+      cnt = 0;
+      for (int i = 0; i < 2*Nk; i++)
+	for (int j = 0; j < Nscan; j++)
+	  {
+	    JO_y[cnt] = JO (i, j);
+	    JX_y[cnt] = JX (i, j);
+	    IO_y[cnt] = IO (i, j);
+	    IX_y[cnt] = IX (i, j);
+	    cnt++;
+	  }
+    }
+
    try
     {
       NcFile dataFile (buffer, NcFile::replace);
@@ -477,9 +713,11 @@ void Island::WriteNetcdf (int FLAG)
       NcDim i_d = dataFile.addDim ("Ni", NINPUT);
       NcDim p_d = dataFile.addDim ("Np", NPARA);
       NcDim h_d = dataFile.addDim ("Nh", Nh);
-      NcDim b_d = dataFile.addDim ("Nb", Nh);
+      NcDim b_d = dataFile.addDim ("Nb", Nb);
       NcDim x_d = dataFile.addDim ("NX", NX);
       NcDim z_d = dataFile.addDim ("Nz", Nz);
+      NcDim k_d = dataFile.addDim ("Nk", 2*Nk);
+      NcDim s_d = dataFile.addDim ("Ns", Nscan);
 
       vector<NcDim> E_d;
       E_d.push_back (b_d);
@@ -492,6 +730,10 @@ void Island::WriteNetcdf (int FLAG)
       vector<NcDim> TT_d;
       TT_d.push_back (x_d);
       TT_d.push_back (z_d);
+
+      vector<NcDim> J_d;
+      J_d.push_back (k_d);
+      J_d.push_back (s_d);
 
       NcVar i_x    = dataFile.addVar ("InputParameters", ncDouble, i_d);
       i_x.putVar (Input);
@@ -523,17 +765,45 @@ void Island::WriteNetcdf (int FLAG)
 	  NcVar dTT_x = dataFile.addVar ("delta_T",   ncDouble, TT_d);
 	  dTT_x.putVar (dT_y);
 	}
- 
-      dataFile.close ();
-     }
-  catch (NcException& e)
-    {
-      printf ("Error writing data to netcdf file %s\n", buffer);
-      printf ("%s\n", e.what ());
-      exit (1);
-    }
 
-  delete[] En_y; delete[] dTh_y; delete[] dT_y;
+      if (ECCD)
+	{
+	  NcVar kk_x = dataFile.addVar ("kk",     ncDouble, k_d);
+	  kk_x.putVar (kkk);  
+	  NcVar f0_x = dataFile.addVar ("Flux_0", ncDouble, k_d);
+	  f0_x.putVar (Flux0);
+	  NcVar f1_x = dataFile.addVar ("Flux_1", ncDouble, k_d);
+	  f1_x.putVar (Flux1);
+	  NcVar f2_x = dataFile.addVar ("Flux_2", ncDouble, k_d);
+	  f2_x.putVar (Flux2);
+	  NcVar JO_x = dataFile.addVar ("JO",     ncDouble, J_d);
+	  JO_x.putVar (JO_y);
+	  NcVar JX_x = dataFile.addVar ("JX",     ncDouble, J_d);
+	  JX_x.putVar (JX_y);
+	  NcVar IO_x = dataFile.addVar ("IO",     ncDouble, J_d);
+	  IO_x.putVar (IO_y);
+	  NcVar IX_x = dataFile.addVar ("IX",     ncDouble, J_d);
+	  IX_x.putVar (IX_y);
+	  NcVar W_x = dataFile.addVar  ("W",      ncDouble, s_d);
+	  W_x.putVar (WW);
+	  NcVar D_x = dataFile.addVar  ("D",      ncDouble, s_d);
+	  D_x.putVar (DD);
+	  NcVar DX_x = dataFile.addVar ("DeltaX", ncDouble, s_d);
+	  DX_x.putVar (DeltaX);
+	  NcVar DO_x = dataFile.addVar ("DeltaO", ncDouble, s_d);
+	  DO_x.putVar (DeltaO);
+	}
+      dataFile.close ();
+    }
+   catch (NcException& e)
+     {
+       printf ("Error writing data to netcdf file %s\n", buffer);
+       printf ("%s\n", e.what ());
+       exit (1);
+     }
+
+   delete[] En_y; delete[] dTh_y; delete[] dT_y; delete[] JO_y; delete[] JX_y;
+   delete[] IO_y; delete[] IX_y;
 }
 
 // ##########################
@@ -721,6 +991,66 @@ double Island::GetKappa (double x, double xi)
   return sin (xi) * (1. - delta*delta * cos (zeta)) - 2.*sqrt(8.) * delta * x * sin (zeta) + delta*delta * sin (2.*zeta);
 }
 
+// ######################################
+// Function to calculate JO (s, k, xi, W)
+// ######################################
+double Island::GetJO (int s, double k, double xi, double Wval, double Dval)
+{
+  double Y; 
+  double arg = k*k - cos(xi/2.)*cos(xi/2.);
+  if (arg > 0.)
+    Y = sqrt (arg) /2.;
+  else
+    Y = 0.;
+
+  double cosz   = GetCosZeta (xi);
+  double sigmah = 1.   /Wval;
+  double dh     = Dval /Wval;
+
+  double X     = (s * Y + delta * cosz /sqrt(8.) - dh);
+  double expon = exp (- X*X /2./sigmah/sigmah) * (1. - cosz) /2.;
+
+  return expon /sqrt(2.*M_PI);
+}
+
+// #####################################
+// Function to calculate JO_plus (k, xi)
+// #####################################
+double Island::GetJOplus (double k, double xi, double Wval, double Dval)
+{
+  return (GetJO (1, k, xi, Wval, Dval) + GetJO (-1, k, xi, Wval, Dval)) /2.;
+}
+
+// ###################################
+// Function to calculate JX (s, k, xi)
+// ###################################
+double Island::GetJX (int s, double k, double xi, double Wval, double Dval)
+{
+  double Y; 
+  double arg = k*k - cos(xi/2.)*cos(xi/2.);
+  if (arg > 0.)
+    Y = sqrt (arg) /2.;
+  else
+    Y = 0.;
+
+  double cosz   = GetCosZeta (xi);
+  double sigmah = 1.   /Wval;
+  double dh     = Dval /Wval;
+
+  double X     = (s * Y + delta * cosz /sqrt(8.) - dh);
+  double expon = exp (- X*X /2./sigmah/sigmah) * (1. + cosz) /2.;
+
+  return expon /sqrt(2.*M_PI);
+}
+
+// #####################################
+// Function to calculate JX_plus (k, xi)
+// #####################################
+double Island::GetJXplus (double k, double xi, double Wval, double Dval)
+{
+  return (GetJX (1, k, xi, Wval, Dval) + GetJX (-1, k, xi, Wval, Dval)) /2.;
+}
+
 // ###################################
 // Right hand sides of layer equations
 // ###################################
@@ -742,7 +1072,7 @@ void Island::CashKarp45Rhs (double z, double* Y, double* dYdz)
       else
 	dYdz[0] = gsl_spline_eval (dTdkspline, z, dTdkacc);
     }
-  else
+  else if (rhs_chooser == 2)
     {
       double k     = Getk (X, z);
       double sigma = GetSigma (z);
@@ -768,6 +1098,82 @@ void Island::CashKarp45Rhs (double z, double* Y, double* dYdz)
 	    dYdz[nu] =   sinnu * kappa * sigma /k /G /8. /double (nu);
 	  else
 	    dYdz[nu] = - sinnu * kappa * sigma /k /G /8. /double (nu);
+	}
+    }
+  else if (rhs_chooser == 3)
+    {
+      double sint = sin (z);
+
+      if (kval < 1.)
+	{
+	  double xi    = 2. * acos (kval * sint);
+	  double sigma = GetSigma   (xi);
+	  double cosz  = GetCosZeta (xi);
+	  
+	  dYdz[0] = sigma        /sqrt (1. - kval*kval * sint*sint) /M_PI;
+	  dYdz[1] = sigma * cosz /sqrt (1. - kval*kval * sint*sint) /M_PI;
+
+	  for (int j = 0; j < Nscan; j++)
+	    {
+	      double Wval, Dval;
+	      if (ECCD > 0)
+		{
+		  Wval = WW[j];
+		  Dval = D;
+		}
+	      else
+		{
+		  Wval = W;
+		  Dval = DD[j];
+		}
+
+	      dYdz[2         + j] = GetJOplus (kval, xi, Wval, Dval) * sigma /sqrt (1. - kval*kval * sint*sint) /M_PI;
+	      dYdz[2 + Nscan + j] = GetJXplus (kval, xi, Wval, Dval) * sigma /sqrt (1. - kval*kval * sint*sint) /M_PI;
+	    }
+	}
+      else 
+	{
+	  double xi    = M_PI - 2.*z;
+	  double sigma = GetSigma   (xi);
+	  double cosz  = GetCosZeta (xi);
+	  
+	  dYdz[0] = sigma        /sqrt (kval*kval - sint*sint) /M_PI;
+	  dYdz[1] = sigma * cosz /sqrt (kval*kval - sint*sint) /M_PI;
+
+	  for (int j = 0; j < Nscan; j++)
+	    {
+	      double Wval, Dval;
+
+	      if (ECCD > 0)
+		{
+		  Wval = WW[j];
+		  Dval = D;
+		}
+	      else
+		{
+		  Wval = W;
+		  Dval = DD[j];
+		}
+	      
+	      dYdz[2         + j] = GetJOplus (kval, xi, Wval, Dval) * sigma /sqrt (kval*kval - sint*sint) /M_PI;
+	      dYdz[2 + Nscan + j] = GetJXplus (kval, xi, Wval, Dval) * sigma /sqrt (kval*kval - sint*sint) /M_PI;
+	    }
+	}
+    }
+  else
+    {
+      for (int j = 0; j < Nscan; j++)
+	{
+	  if (z < Kmax)
+	    {
+	      dYdz[        j] = gsl_spline_eval (IO_spline[j], z, IO_acc[j]);
+	      dYdz[Nscan + j] = gsl_spline_eval (IX_spline[j], z, IX_acc[j]);
+	    }
+	  else
+	    {
+	      dYdz[        j] = 0.;
+	      dYdz[Nscan + j] = 0.;
+	    }
 	}
     }
 }

@@ -41,8 +41,6 @@
 - *Bunr1.py*:        Plots kth poloidal harmonics of unreconnected perturbed magnetic fields versus r
 - *xiunr.py*:        Plots poloidal harmonics of unreconnected psi and radial plasma displacement versus r
 - *xiunr1.py*:       Plots kth poloidal harmonics of unreconnected psi and radial plasma displacement versus r
-- *dTunr.py*:        Plots poloidal harmonics of unreconnected delta n_e and delta T_e versus r
-- *dTunr1.py*:       Plots kth poloidal harmonics of unreconnected delta n_e amd delta T_e versus r
 
 ## Electromagnetic torques:
 
@@ -65,6 +63,8 @@
 
 ## Electron temperature and number density profiles:
 
+- *dTunr.py*:        Plots poloidal harmonics of unreconnected delta n_e and delta T_e versus r
+- *dTunr1.py*:       Plots kth poloidal harmonics of unreconnected delta n_e amd delta T_e versus r
 - *dne.py*:          Plots delta n_e components of unreconnected solution vector in R, Z plane
 - *dTe.py*:          Plots delta T_e components of unreconnected solution vector in R, Z plane
 - *ne.py*:           Plots n_e components of unreconnected solution vector in R, Z plane
@@ -73,7 +73,7 @@
 ## Synthetic diagnostics:
 
 - *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field versus theta at given radial gridpoint
-- *Chord.py*:        Plots quantities along tilted central chord
+- *Chord.py*:        Plots quantities along central chord
 - *Berrino.py*:      Implements Berrino algorithm for island detection
 
 ## RMP coils:

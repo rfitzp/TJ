@@ -45,7 +45,7 @@ void TJ::VisualizeEigenfunctions ()
   Teeqc .resize(nres, 2*Nf, NPHI);
   dneeqc.resize(nres, 2*Nf, NPHI);
   dTeeqc.resize(nres, 2*Nf, NPHI);
-  Teeqd.resize (nres, 2*Nf, NPHI);
+  Teeqd .resize(nres, 2*Nf, NPHI);
   dTeeqd.resize(nres, 2*Nf, NPHI);
 
   Leq  = new double[2*Nf]; 
@@ -645,9 +645,17 @@ void TJ::VisualizeEigenfunctions ()
 
       for (int k = 0; k < nres; k++)
 	{
-	  Rres[k] = gsl_spline_eval (dataspline, rres[k],                               dataacc);
-	  Ores[k] = gsl_spline_eval (dataspline, rres[k] - delta[k]*ISLAND[k]/sqrt(8.), dataacc);
-	  Xres[k] = gsl_spline_eval (dataspline, rres[k] + delta[k]*ISLAND[k]/sqrt(8.), dataacc);
+	  Rres[k] = gsl_spline_eval (dataspline, rres[k], dataacc);
+	  if (k > ISLAND.size () - 1)
+	    {
+	      Ores[k] = Rres[k];
+	      Xres[k] = Rres[k];
+	    }
+	  else
+	    {
+	      Ores[k] = gsl_spline_eval (dataspline, rres[k] - delta[k]*ISLAND[k]/sqrt(8.), dataacc);
+	      Xres[k] = gsl_spline_eval (dataspline, rres[k] + delta[k]*ISLAND[k]/sqrt(8.), dataacc);
+	    }
 	}
 
       delete[] data1; delete[] data2;
@@ -753,6 +761,11 @@ void TJ::VisualizeEigenfunctions ()
 
       for (int i = 1; i < 2*Nf; i++)
 	{
+	  if (i%200 == 0)
+	    {
+	      printf (".");
+	      fflush (stdout);
+	    }
 	  iomega = i;
 
 	  for (int k = 0; k < nres; k++)
@@ -815,6 +828,7 @@ void TJ::VisualizeEigenfunctions ()
 		Teeqd(k, i, np) = Y[k*NPHI + np] /Y[nres*NPHI + k*NPHI + np];
 	      }
 	}
+      printf ("\n");
 
       delete[] Y; delete[] err;
     }
@@ -934,20 +948,31 @@ void TJ::CashKarp45Rhs (double R, double* Y, double* dYdR)
   for (int k = 0; k < nres; k++)
     for (int np = 0; np < NPHI; np++)
       {
-	double dTe;
-	if (R > Req[2*Nf-1])
+	if (R > Romega)
 	  {
-	    dTe = dTeeqc(k, 2*Nf-1, np);
+	    dYdR[            k*NPHI + np] = 0.;
+	    dYdR[nres*NPHI + k*NPHI + np] = 0.;
 	  }
 	else
 	  {
-	    if (rhs_chooser == 0)
-	      dTe = gsl_spline_eval (dTeeqcspline[k*NPHI + np], R, dTeeqcacc[k*NPHI + np]);
+	    double dTe;
+	    if (R > Req[2*Nf-1])
+	      {
+		if (rhs_chooser == 0)
+		  dTe = dTeeqc(k, 2*Nf-1, np);
+		else
+		  dTe = Teeqc (k, 2*Nf-1, np);
+	      }
 	    else
-	      dTe = gsl_spline_eval (Teeqcspline [k*NPHI + np], R, Teeqcacc [k*NPHI + np]);
+	      {
+		if (rhs_chooser == 0)
+		  dTe = gsl_spline_eval (dTeeqcspline[k*NPHI + np], R, dTeeqcacc[k*NPHI + np]);
+		else
+		  dTe = gsl_spline_eval (Teeqcspline [k*NPHI + np], R, Teeqcacc [k*NPHI + np]);
+	      }
+	    
+	    dYdR[            k*NPHI + np] =  dTe * (1. - R*R /Romega*Romega) * exp (- ith * (Romega /R - 1.));
+	    dYdR[nres*NPHI + k*NPHI + np] =        (1. - R*R /Romega*Romega) * exp (- ith * (Romega /R - 1.));
 	  }
-
-	dYdR[            k*NPHI + np] =  dTe * (1. - R*R /Romega*Romega) * exp (- ith * (Romega /R - 1.));
-	dYdR[nres*NPHI + k*NPHI + np] =        (1. - R*R /Romega*Romega) * exp (- ith * (Romega /R - 1.));
       }
 }

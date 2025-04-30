@@ -22,6 +22,7 @@ Let $x=r-r_s$, $X=x/W$, and $\zeta= m\,\theta-n\,\phi$, where $W$ is the island 
 where $|\delta|<1$. 
 The X-points lie at $X=\delta/\sqrt{8}$ and $\zeta = 0$, $2\pi$, whereas the O-point lies at
 $X=-\delta/\sqrt{8}$ and $\zeta=\pi$. The O-point corresponds to ${\mit\Omega}=-1$, whereas the magnetic separatrix corresponds to ${\mit\Omega}=1$.  
+The maximum width of the separatrix (in $x$) is $W$. 
 
 Let
 \begin{align}
@@ -51,17 +52,18 @@ Outside the separatrix, we can write
 \end{equation}
 where ${\mit\Xi}= \xi^r/W$. It follows that
 \begin{align}
-{\mit\Xi}(X,\zeta)&\simeq -\frac{[{\mit\Omega}(X,\zeta)-8\,X^2]}{16\,X}\nonumber\\[0.5ex]
-&=- \frac{\cos(\zeta-\delta^2\,\sin\zeta) +\delta^2\,\cos^2\zeta}{16\,X}+\frac{\delta}{\sqrt{8}}\,\cos\zeta.
+{\mit\Xi}(X,\zeta)&\simeq -\frac{[{\mit\Omega}(X,\zeta)-8\,X^2 - 8\,{\mit\Xi}^2]}{16\,X}\nonumber\\[0.5ex]
+&=- \frac{\cos(\zeta-\delta^2\,\sin\zeta) +\delta^2\,\cos^2\zeta}{16\,X}+\frac{\delta}{\sqrt{8}}\,\cos\zeta + \frac{{\mit\Xi}^2}{2\,X}\nonumber\\[0.5ex]
+&\simeq - \frac{\cos(\zeta-\delta^2\,\sin\zeta)}{16\,X}+\frac{\delta}{\sqrt{8}}\,\cos\zeta 
 \end{align}
-Note that ${\mit\Xi}$ is an even function of $\zeta$. 
+Note that ${\mit\Xi}(X,\zeta)$ is an even function of $\zeta$. 
 Let us write
 \begin{equation}
 {\mit\Xi}(X,\zeta)= \sum_{n=0,\infty} {\mit\Xi}_n(X)\,\cos(n\,\zeta).
 \end{equation}
 Thus,
 \begin{align}
-{\mit\Xi}_1(X) =2 \oint {\mit\Xi}(X,\zeta)\,\cos(\zeta)\,\frac{d\zeta}{2\pi} &= -\frac{1}{8\,X}\oint\cos(\zeta-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}+\frac{\delta}{\sqrt{8}} \\[0.5ex]
+{\mit\Xi}_1(X) =2 \oint {\mit\Xi}(X,\zeta)\,\cos(\zeta)\,\frac{d\zeta}{2\pi} &= -\frac{1}{8\,X}\oint\cos(\zeta-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}+\frac{\delta}{\sqrt{8}}\nonumber \\[0.5ex]
 &=-\frac{1}{16\,X}\oint\cos(-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}\nonumber\\[0.5ex]
 &\phantom{=}- \frac{1}{16\,X}\oint\cos(2\,\zeta-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}+\frac{\delta}{\sqrt{8}} .
 \end{align}
@@ -80,16 +82,28 @@ and
 Thus,
 \begin{align}
 \psi_1(x) &= \frac{r\,g}{q}\,(m-n\,q)\,\xi_1^r = -(n\,s\,g)_{r_s}\,x\,\xi_1^r\nonumber\\[0.5ex]
-&= (n\,s\,g)_{r_k}\,\frac{W^2}{16}\,[J_0(\delta^2)+ J_2(\delta^2)] - (n\,s\,g)_{r_s}\,\frac{W\,\delta}{\sqrt{8}}\,x,
+&= (n\,s\,g)_{r_k}\,\frac{W^2}{16}\,[J_0(\delta^2)+ J_2(\delta^2)] - (n\,s\,g)_{r_s}\,\frac{W\,\delta}{\sqrt{8}}\,x.
 \end{align}
-so
+Now,
 \begin{equation}
-\frac{\psi_m(x)}{m} = J_0(\delta^2)+ J_2(\delta^2) - 2\sqrt{8}\,\frac{\delta}{W}\,x.
+{\mit\Psi} = \frac{\psi_m(0)}{(L_m^{\,m})_{r_s}^{1/2}},
+\end{equation}
+which yields
+\begin{equation}
+{\mit\Psi} = \left(\frac{W}{4}\right)^2\left(\frac{s\,g}{h\,q}\right)_{r_s}\left[J_0(\delta^2)+ J_2(\delta^2)\right],
+\end{equation}
+where
+\begin{equation}
+h = \frac{(L_m^m)^{1/2}}{m}.
+\end{equation}
+Thus, assuming that $\psi_m(x)$ is normalized such that ${\mit\Psi}=1$, 
+\begin{equation}
+\frac{\psi_m(x)}{(L_m^{\,m})^{1/2}_{r_s}} =1 - 2\sqrt{8}\,\frac{\delta}{J_0(\delta^2)+ J_2(\delta^2)}\,\frac{x}{W}.
 \end{equation}
 It follows that
 \begin{align}
-\delta &= -\frac{W}{2\sqrt{8}\,m}\,\frac{d\psi_m(0)}{dr}\\[0.5ex]
-&\simeq -\left[\frac{\psi_m(r_s+W)-\psi_m(r_s-W)}{4\sqrt{8}\,m}\right].
+\frac{\delta}{J_0(\delta^2)+J_2(\delta^2)} &= -\frac{W}{2\sqrt{8}\,(L_m^{\,m})^{1/2}_{r_s}}\,\frac{d\psi_m(0)}{dr}\nonumber\\[0.5ex]
+&\simeq -\left[\frac{\psi_m(r_s+W)-\psi_m(r_s-W)}{4\sqrt{8}\,(L_m^{\,m})^{1/2}_{r_s}}\right].
 \end{align}
 
 \section{Flux-Surface Average Operator}
@@ -265,18 +279,18 @@ Consider the $k$th rational surface whose radius is $r_k$ and whose resonant pol
 \end{equation}
 where $T_{e\,0}'=dT_{e\,0}/dr$, $T_{e\,0}(r)$ is the equilibrium electron temperature profile, ${\mit\Psi}_k$ is the reconnected flux, and 
 \begin{equation}
-W_k = 4\left(\frac{q}{g\,s}\right)^{1/2}_{r_k}\,{\mit\Psi}_k^{1/2}\delta T_{0\,\infty}
+{\mit\Psi}_k = \left(\frac{W_k}{4}\right)^2\left(\frac{s\,g}{h\,q}\right)_{r_k}\left[J_0(\delta_k^{\,2})+ J_2(\delta_k^{\,2})\right],
 \end{equation}
-is the island width.
- In the limit, $|x|\ll 1$, Eq.~(\ref{e36}) yield 
+where $W_k$ is the island width.
+In the limit, $|x|\ll 1$, Eq.~(\ref{e36}) yields
 \begin{equation}
-\tilde{T}_e(x, \theta,\phi)=T_{e\,k} + T_{e\,k}'\,x + T_{e\,k}'\,W_k\left(\frac{W_k}{16\,x} - \frac{\delta_k}{\sqrt{8}}\right){\rm e}^{\,{\rm i}\,\zeta_k},
+\tilde{T}_e(x, \theta,\phi)=T_{e\,k} + T_{e\,k}'\,x + T_{e\,k}'\,W_k\left([J_0(\delta_k^{\,2})+J_2(\delta_k^{\,2})]\,\frac{W_k}{16\,x} - \frac{\delta_k}{\sqrt{8}}\right){\rm e}^{\,{\rm i}\,\zeta_k},
 \end{equation}
 Here, $T_{e\,k}=T_{e\,0}(r_k)$ and $T_{e\,k}'= (dT_{e\,0}/dr)_{r_k}$, 
 \begin{equation}
-\delta_k =  -\frac{W_k}{2\sqrt{8}\,m}\,\frac{d\psi_{m_k}(r_k)}{dr},
+\frac{\delta_k} {J_0(\delta_k^{\,2})+J_2(\delta_k^{\,2})}=  -\frac{W_k}{2\sqrt{8}\,(L_{m_k}^{\,m_k})^{1/2}_{r_k}}\,\frac{d\psi_{m_k}(r_k)}{dr},
 \end{equation}
-and we have made use of the fact that $\psi_{m_k}(r_k)\simeq m_k$. 
+and we have made use of the fact that $\psi_{m_k}(r_k)=(L_{m_k}^{\,m_k})^{1/2}_{r_k}$. 
 
 In the inner region, we write the total electron temperature as 
 \begin{equation}
@@ -297,8 +311,8 @@ in the region $r< r_k-W_k$, and
 \end{equation}
 in the region $r_k-W_k \leq r\leq r_k+W_k$. Continuity of the solution at $r=r_k\pm W_k$ implies that
 \begin{align}
-\delta T_{e\,+} &= T_{e\,k}'\,W_k\,\delta T_{e\,0}(1)+T_{e\,k}'\,W_k\,\delta T_{0\,\infty} - T_{e\,k}'\,W_k,\\[0.5ex]
-\delta T_{e\,-} &= T_{e\,k}'\,W_k\,\delta T_{e\,0}(-1) +T_{e\,k}'\,W_k\,\delta T_{0\,\infty}+ T_{e\,k}'\,W_k,\\[0.5ex]
+\delta T_{e\,+} &= T_{e\,k}'\,W_k\,\delta T_{0}(1)+T_{e\,k}'\,W_k\,\delta T_{0\,\infty} - T_{e\,k}'\,W_k,\\[0.5ex]
+\delta T_{e\,-} &= T_{e\,k}'\,W_k\,\delta T_{0}(-1) +T_{e\,k}'\,W_k\,\delta T_{0\,\infty}+ T_{e\,k}'\,W_k,\\[0.5ex]
 {\mit\Psi}_{k\,+} &= - T_{e\,k}'\,W_k\,\delta T_1(1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_{e\,0}'\,\psi_{m\,k}}\right)_{r_k+W_k},\\[0.5ex]
 {\mit\Psi}_{k\,-} &=- T_{e\,k}'\,W_k\,\delta T_1(-1)\left(\frac{r\,g}{q}\,\frac{m_k-n\,q}{T_{e\,0}'\,\psi_{m\,k}}\right)_{r_k-W_k}.
 \end{align}
@@ -308,7 +322,7 @@ Finally, for the special case $m=1$, we write
 \tilde{T}_e(r,\theta,\phi) = - \xi^r(r,\theta,\phi)\,\frac{dT_{e\,0}}{dr}.
 \end{equation}
 
-\subsection{Normalized Quantities}
+\section{Normalized Quantities}
 Let $\hat{r}=r/\epsilon_a$, $\hat{r}_k=r_k/\epsilon_a$, $\hat{x}= x/\epsilon_a$, $\hat{T}_{e\,0}' = \epsilon_a\,T_{e\,0}'$, $\hat{T}_{e\,k}'=\epsilon_a\,\hat{T}_{e\,k}'$, 
 $\hat{W}_k = W_k/\epsilon_a$, and $\hat{\mit\Psi}_k={\mit\Psi}_k/\epsilon_a^{\,2}$, etc., 
 then
@@ -327,7 +341,7 @@ in the region $\hat{r}_k-\hat{W}_k \leq \hat{r}\leq \hat{r}_k+\hat{W}_k$. Here,
 \begin{align}
 \delta T_{e\,+} &= \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_0(1)+\hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_{0\,\infty} - \hat{T}_{e\,k}'\,\hat{W}_k,\\[0.5ex]
 \delta T_{e\,-} &=\hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_0(-1) +\hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_{0\,\infty} +\hat{T}_{e\,k}'\,\hat{W}_k,\\[0.5ex]
-\hat{\mit\Psi}_k&=\left(\frac{\hat{W}_k}{4}\right)^2\left(\frac{g\,s}{q}\right)_{\hat{r}_k},\\[0.5ex]
+\hat{\mit\Psi}_k&=\left(\frac{\hat{W}_k}{4}\right)^2\left(\frac{g\,s}{h\,q}\right)_{\hat{r}_k}[J_0(\delta_k^{\,2})+J_2(\delta_k^{\,2})],\\[0.5ex]
 \hat{\mit\Psi}_{k\,+} &= - \hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_1(1)\left(\frac{\hat{r}\,g}{q}\,\frac{m_k-n\,q}{\hat{T}_{e\,0}'\,\psi_{m\,k}}\right)_{\hat{r}_k+\hat{W}_k},\\[0.5ex]
 \hat{\mit\Psi}_{k\,-} &= -\hat{T}_{e\,k}'\,\hat{W}_k\,\delta T_1(-1)\left(\frac{\hat{r}\,g}{q}\,\frac{m_k-n\,q}{\hat{T}_{e\,0}'\,\psi_{m\,k}}\right)_{\hat{r}_k-\hat{W}_k}.
 \end{align}
@@ -341,7 +355,7 @@ Neglecting doppler broadening, the angular frequency of an $n$th harmonic electr
 \begin{equation}
 \omega = \frac{n\,{\mit\Omega}_0\,R_0}{R}\,\left[1-\left(\frac{v}{c}\right)^2\right]^{1/2},
 \end{equation}
-where $v$ is the electron speed, and ${\mit\Omega}_0=e\,B_0/R_0$. Here, we are neglecting the poloidal magnetic field-strength, and assuming that the toroidal
+where $v$ is the electron speed, and ${\mit\Omega}_0=e\,B_0/m_e$. Here, we are neglecting the poloidal magnetic field-strength, and assuming that the toroidal
 field-strength falls off like $1/R$. Let
 \begin{equation}
 R_\omega(\omega) = \frac{n\,{\mit\Omega}_0\,R_0}{\omega}
@@ -366,8 +380,50 @@ F(R,R_\omega) = \left[1-\left(\frac{R}{R_\omega}\right)^2\right]\exp\!\left(-\fr
 \end{equation}
 The electron temperature measured by the ece diagnostic is
 \begin{equation}
-T_e(R_\omega) = \frac{\int_{R_{\rm min}}^{R_\omega} T_e(R)\,F(R,R_\omega)\,dR}
-                                     {\int_{R_{\rm min}}^{R_\omega}             F(R,R_\omega)\,dR}.
+T_e(R_\omega) = \frac{\int_{R_{\rm min}}^{R_\omega} T_e(R)\,F(R,R_\omega)\,dR}  {\int_{R_{\rm min}}^{R_\omega} F(R,R_\omega)\,dR}.
 \end{equation}
+
+\section{Electron Cyclotron Current Drive}
+The stabilizing electron cyclotron current drive contribution to the Rutherford equation is
+\begin{equation}
+{\mit\Delta}_{eccd} \,W= -\frac{16}{W}\int_{-1}^\infty J_+({\mit\Omega})\,\langle\cos\zeta\rangle\,d{\mit\Omega},
+\end{equation}
+where $J(x,\zeta)$ is the driven current density. Suppose that
+\begin{equation}
+J(x,\zeta)= \frac{1}{\sqrt{2\pi}\,\sigma}\exp\!\left[-\frac{(x-d)^2}{2\,\sigma^2}\right]\left[\frac{1-\cos(\zeta-{\mit\Delta}\zeta)}{2}\right].
+\end{equation}
+However, only the component of $J(x,\zeta)$ that is even in $\zeta$ contributes to ${\mit\Delta}_{eccd}$, so 
+\begin{equation}
+J(x,\zeta)= \frac{1}{\sqrt{2\pi}\,\sigma}\exp\!\left[-\frac{(x-d)^2}{2\,\sigma^2}\right]\left(\frac{1-\cos\zeta\,\cos{\mit\Delta}\zeta}{2}\right).
+\end{equation}
+Let $\hat{\sigma}=\sigma/W$ and $\hat{d}=d/W$.  It follows that
+\begin{equation}
+J(s,Y,\zeta) =  \frac{1}{\sqrt{2\pi}\,\sigma}\exp\!\left[-\frac{(s\,Y+\delta\,\cos\zeta/\sqrt{8}-\hat{d})^2}{2\,\hat{\sigma}^2}\right]\left(\frac{1-\cos\zeta\,\cos{\mit\Delta}\zeta}{2}\right).
+\end{equation}
+Note that 
+\begin{equation}
+Y = \frac{\sqrt{k^2-\cos^2(\xi/2)}}{2}.
+\end{equation}
+Thus,
+\begin{equation}
+J_+(Y,\zeta) = \frac{J(1,Y,\zeta) + J(-1,Y,\zeta)}{2}.
+\end{equation}
+Moreover, 
+\begin{equation}
+J_+({\mit\Omega}) = \frac{\langle J_+(Y,\zeta)\rangle}{\langle 1\rangle}.
+\end{equation}
+Thus,
+\begin{equation}
+{\mit\Delta}_{eccd} \,W= -64\int_0^\infty \frac{\langle J_+\rangle\,\langle\cos\zeta\rangle}{\langle 1\rangle}\,k\,dk.
+\end{equation}
+Finally,
+\begin{equation}
+\langle A(k,\xi)\rangle(k) = \frac{1}{\pi}\int_0^{\pi/2}\frac{\sigma(\xi)\,A(k,\xi)}{\sqrt{1-k^2\,\sin^2\theta}}\,d\theta
+\end{equation}
+for $0\leq k\leq 1$, where $\xi=2\,\cos^{-1}(k\,\sin\theta)$. Likewise, 
+\begin{equation}
+\langle A(k,\xi)\rangle(k) = \frac{1}{\pi}\int_0^{\pi/2}\frac{\sigma(\xi)\,A(k,\xi)}{\sqrt{k^2-\sin^2\theta}}\,d\theta
+\end{equation}
+for $k>1$, where $\xi=\pi-2\,\theta$.
 
 \end{document}

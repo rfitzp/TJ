@@ -1,0 +1,217 @@
+\documentclass[12pt,prb,aps]{revtex4-1}
+\usepackage{amsmath}           		          	
+\usepackage{graphicx,epstopdf}					
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{esint}
+\pdfoutput = 1 
+\newcommand {\bxi}{\mbox{\boldmath$\xi$}}
+\allowdisplaybreaks
+
+\begin{document}
+\title{Investigation of Neoclassical Tearing Mode Detection with ECE in  Tokamak Reactors via Asymptotic Matching Techniques}
+\author{Richard Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin TX 78712}
+
+\begin{abstract}
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+The transient heat fluxes and electromagnetic stresses that the plasma facing components would experience during a disruption in
+a tokamak fusion reactor are unacceptably large.\cite{iter,wesson}  Hence, such a reactor must be capable of reliably operating in an essentially disruption-free manner. 
+Disruptions in tokamaks are triggered by macroscopic magnetohydrodynamical (MHD) instabilities.\cite{jet} Fortunately, disruptions associated with ideal   and
+``classical'' tearing instabilities can   be readily avoided  by keeping the toroidal plasma current, the  mean plasma pressure, and
+the mean electron number density below  critical values that are either easily calculable or well-known empirically.\cite{iter}  
+
+A tearing mode\,\cite{tear1} of finite amplitude generates a helical magnetic island chain\,\cite{ntm1} in the vicinity of the rational surface\,\cite{ideal3} at which it reconnects magnetic flux.
+If the radial width of the island chain exceeds a relatively small threshold value then fast parallel heat transport causes a local flattering of the  electron temperature profile
+ within the chain's magnetic separatrix.\cite{ntm2} The associated loss of the pressure-gradient-driven non-inductive neoclassical bootstrap current\,\cite{ntm3} within the separatrix
+has a destabilizing effect that can render a linearly-stable tearing mode unstable at finite amplitude. This type of instability is known as a ``neoclassical tearing mode"  (NTM).  All fusion-relevant tokamak
+discharges are potentially unstable  to 2/1 and 3/2 NTMs.\cite{ntm4,ntm5}  (Here, $m/n$ denotes a mode whose resonant harmonic has $m$ periods in the poloidal
+direction, and $n$ periods in the toroidal direction.) It is, therefore, not  surprising that NTMs are, by far, the most common cause of disruptions in fusion-relevant tokamak
+discharges.\cite{iter,ntm4,ntm5}
+Now, an NTM needs to exceed a critical  threshold amplitude
+before it is triggered. In practice, NTMs are
+triggered by transient magnetic perturbations associated with other more benign instabilities in the plasma, such as sawtooth oscillations, and
+edge localized modes (ELMs).\cite{ntm4,ntm5} NTMs pose a unique challenge to tokamak fusion reactors  because  it is impossible to operate 
+a fusion-relevant tokamak discharge in such a manner that multiple NTMs are not potentially unstable. Moreover, NTM onset is essentially unpredictable, because it
+is impossible to determine ahead of time which particular sawtooth crash or ELM is going to trigger a particular NTM. Indeed, not all NTMs possess identifiable
+triggers.\cite{ntm4,ntm5} 
+
+Neoclassical tearing  modes can be suppressed via localized electron cyclotron current drive (ECCD).\cite{prater} This technique, which has been
+successfully implemented on many tokamaks,\cite{eccd1,eccd2,eccd3,eccd4,eccd5} involves
+launching electron cyclotron waves into the plasma in such a manner that they drive a toroidal current that is concentrated inside the magnetic separatrix of
+the NTM island chain. The ideal is to compensate for the loss of the bootstrap current inside the separatrix consequent on the local flattening
+of the electron temperature profile.\cite{ntm4,ntm5} 
+
+The successful suppression of NTMs via ECCD depends crucially on the early detection of the mode, combined with an accurate measurement  of 
+the instantaneous location of, at least, one of the O-points  of the associated island chain.\cite{eccd6} In fact, because the island chain is radially thin, 
+but relatively extended in poloidal and toroidal angle, the measurement  of the radial location of the O-point is, by far,  the most difficult aspect of
+this process. The most accurate method of determining the radial location of the O-point is to measure the temperature fluctuations associated with the island
+chain by means of electron cyclotron emission (ECE) radiometry.\cite{ece1,ece2,ece3,ece4}
+
+Given the crucial importance of early and accurate detection of NTMs via ECE radiometry to the success of tokamak fusion reactors, existing calculations of
+the expected ECE signal, which are based on single-harmonic cylindrical theory, are surprisingly primitive.\cite{eccd6,ece4,ece4a} The aim of this paper is to
+improve such calculations by taking into account the fact that an NTM  in a realistic toroidal tokamak equilibrium consists of multiple coupled poloidal and toroidal harmonics. Harmonics with the same toroidal mode number as the NTM, but different poloidal mode numbers, are linearly coupled by the
+Shafranov shift, elongation, and triangularity of the equilibrium magnetic flux-surfaces.\cite{tear2,tear3,tear5} Furthermore, harmonics whose poloidal and
+toroidal mode numbers are in the same ratio as those of the NTM are coupled nonlinearly in the immediate vicinity of the island chain.\cite{ntm1,ece3}
+Previous calculations take into account the fact that the island chain is radially asymmetric with respect to the rational surface,\cite{ece5} 
+due to the radial gradient of the tearing eigenfunction at the rational surface, but do not necessarily make an accurate
+determination of the degree of this asymmetry.\cite{eccd6} Our improved calculation incorporates an accurate assessment of the asymmetry. Finally, ECE emission
+is downshifted and broadened in frequency due to the relativistic mass increase of the emitting electrons.\cite{ece1,ece2}  This leads to a shift in the inferred location
+of the ECE emission to larger major radius, as well as radial smearing out the emission. Both of these effects, which limit the accuracy to which the
+radial location of the island O-point can be measured via ECE emission,  are taken into account in our improved calculation.
+
+The calculation of the magnetic perturbation associated with an NTM is most efficiently formulated as an asymptotic matching problem in which the  plasma is  divided into two distinct regions.\cite{tear1,tear2,tear3,tear4,tear5,tear6,tear7,tear8,tear9,tear10}    In the ``outer region'', which comprises most
+of the plasma, the perturbation is described by the equations of linearized, marginally-stable, ideal magnetohydrodynamics. 
+However, these equations become singular on   ``rational'' magnetic flux-surfaces at which the perturbed magnetic field resonates with the equilibrium field. In the ``inner region'', which
+consists of a set of narrow layers centered on the various rational surfaces, non-ideal-MHD effects such as plasma resistivity, as well as nonlinear effects,  become important. 
+ In the calculation described in this paper, the NTM is assumed to reconnect magnetic flux at one particular rational surface in the plasma (i.e., the
+ $q=2$ surface for the case of a 2/1 mode, and the $q=1.5$ surface in the case of a 3/2 mode). The response of the plasma at the
+ other rational surfaces is assumed to be ideal, as we would expect to be the case in the presence of sheared plasma rotation.\cite{tear5}
+The magnetic perturbation in the segment of the inner region centered on the reconnecting rational surface is that associated with a radially asymmetric magnetic island chain.\cite{ntm1,island}
+The nonlinear island solution needs to be asymptotically matched to the ideal solution in the outer region. Once this has been achieved, the
+temperature perturbation associated with the NTM is readily determined. 
+
+In this paper, the asymptotic matching is performed using the TJ toroidal tearing mode code,\cite{tear9,tear10}  which employs an aspect-ratio
+expanded torodial magnetic equilibrium.\cite{exp} The TJ code is used for the sake of convenience. However, the calculations described in this paper
+could just as well be implemented in a toroidal tearing mode code, such as STRIDE,\cite{tear7,tear8} that employs a true toroidal magnetic 
+equilibrium. 
+
+\section{Plasma Equilibrium}
+\subsection{Normalization}\label{norm}
+Unless otherwise specified, all lengths in this paper are normalized to  the major radius of the plasma magnetic axis, $R_0$, All  magnetic field-strengths
+are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All plasma pressures are normalized to $B_0^{\,2}/\mu_0$.
+
+\subsection{Coordinates}\label{coord}
+Let $R$, $\phi$, $Z$ be right-handed cylindrical coordinates whose Jacobian 
+is $ (\nabla R\times \nabla\phi\cdot\nabla Z)^{-1} = R$, 
+and whose symmetry axis corresponds to the symmetry axis of the axisymmetric toroidal plasma equilibrium. 
+
+Let $r$, $\theta$, $\phi$ be right-handed flux-coordinates whose
+Jacobian is
+\begin{equation}\label{jac}
+{\cal J}(r,\theta)\equiv (\nabla r\times \nabla\theta\cdot\nabla\phi)^{-1}= r\,R^{\,2}.
+\end{equation}
+Note that $r=r(R,Z)$ and $\theta=\theta(R,Z)$. 
+The magnetic axis corresponds to $r=0$, and the plasma-vacuum interface to $r=a$. Here, $a\ll 1$ is the effective inverse aspect-ratio of the plasma. 
+
+\subsection{Equilibrium Magnetic Field}\label{equilb}
+Consider a tokamak plasma equilibrium whose magnetic field takes the form
+\begin{equation}
+{\bf B}(r,\theta) = f(r)\,\nabla\phi\times \nabla r + g(r)\,\nabla\phi = f\,\nabla(\phi-q\,\theta)\times \nabla r,
+\end{equation}
+where
+$q(r) = r\,g/f$ is the safety-factor.
+Equilibrium force balance requires that
+$ \nabla P={\bf J}\times {\bf B}$, 
+where 
+\begin{equation}
+P(r)= a^2\,p_2(r),
+\end{equation}
+ is the equilibrium scalar plasma pressure, and ${\bf J}=\nabla\times {\bf B}$ the equilibrium plasma current density. 
+
+\subsection{Equilibrium Magnetic Flux-Surfaces}
+Let $r=\epsilon\,\hat{r}$. 
+The loci of the up-down symmetric equilibrium magnetic flux-surfaces are written in the parametric form
+\begin{align}
+R(\hat{r},\omega) &= 1 -a\,\hat{r}\,\cos\omega + a^{2}\left[H_1(\hat{r})\,\cos \omega + H_2(\hat{r})\,\cos 2\,\omega+H_3(\hat{r})\,\cos 3\,\omega\right], \label{e19x}\\[0.5ex]
+Z(\hat{r},\omega)&= a\,\hat{r}\,\sin\omega +a^{2}\left[H_2(\hat{r})\,\sin 2\,\omega+H_3(\hat{r})\,\sin 3\,\omega\right], \label{e20x}
+\end{align}
+where  $r=a\,\hat{r}$. 
+Here, $H_1(\hat{r})$, $H_2(\hat{r})$, and $H_2(\hat{r})$ control the Shafranov shifts, vertical elongations, and  triangularities of
+the equilibrium magnetic flux-surfaces, respectively. 
+Moreover, 
+\begin{align}
+g(\hat{r}) &= 1+ a^2\,g_2(\hat{r}),\\[0.5ex]
+g_2'&= -p_2' - \frac{\hat{r}}{q^2}\,(2-s),\\[0.5ex]
+H_1''&= -(3-2\,s)\,\frac{H_1' }{\hat{r}}-1+\frac{2\,p_2'\,q^2}{\hat{r}},\label{e27}\\[0.5ex]
+H_j''&= -(3-2\,s)\,\frac{H_j'}{\hat{r}}+(j^2-1)\,\frac{H_j}{\hat{r}^{\,2}}~~~~~\mbox{for $j>1$},\label{e33x}\\[0.5ex]
+\theta &= \omega+a\,\hat{r}\,\sin\omega - a\sum_{j=1,3}\frac{1}{j}\left[H_j'-(j-1)\,\frac{H_j}{\hat{r}}\right]\sin j\,\omega,
+\end{align}
+where $s(\hat{r}) = \hat{r}\,q'/q$ is the magnetic shear, and $'$ denotes $d/d\hat{r}$. The plasma equilibrium is specified by the value of $a$, the two free
+flux-surface functions $q(\hat{r})$ and $p_2(\hat{r})$, and the values of $H_2(1)$ and $H_3(1)$. 
+
+\section*{Acknowledgements}
+This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
+
+\section*{Data Availability Statement}
+The digital data used in the figures in this paper can be obtained from the author upon reasonable request. The TJ codes is freely 
+available at {\tt https://github.com/rfitzp/TJ}. 
+
+\begin{thebibliography}{99}\baselineskip 5ex
+
+\bibitem{iter} T.C.~Hender, J.C~Wesley, J.~Bialek, A.~Bondeson, A.H.~Boozer, R.J~Buttery, A.~Garofalo, T.P~Goodman, R.S.~Granetz, Y.~Gribov, O.~Gruber, 
+M.~Gryaznevich, et al., Nucl.\  Fusion {\bf 47}, S128 (2007).
+
+\bibitem{wesson} J.A.~Wesson, {\em Tokamaks}, 4th Ed.\ (Oxford University Press, Oxford UK, 2011).
+
+\bibitem{jet} J.A.~Wesson, R.D.~Gill, M.~Hugon, F.C.~Sch\"{u}ller, J.A.~Snipes, D.J.~Ward, D.V.~Bartlett, D.J.~Campbell, P.A.~Duperrex, A.W.~Edwards, 
+R.S.~Granetz, N.A.O.~Gottardi, T.C~ Hender, E.~Lazzaro, P.J~Lomas, N.~Lopes Cardozo, K.F.~Mast, M.F.F.~Nave, N.A.~Salmon, P.~Smeulders, 
+P.R.~Thomas, B.J.D.~Tubbing, M.F.~Turner and A.~Weller, Nucl.\ Fusion {\bf 29} 641 (1989). 
+
+\bibitem{tear1} H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).
+\bibitem{ntm1} P.H.~Rutherford, Phys.\ Fluids {\bf 16}, 1906 (1973).
+\bibitem{ideal3} R.D.~Hazeltine and J.D.~Meiss, Phys.\ Reports {\bf 121}, 1 (1985).
+\bibitem{ntm2} R. Fitzpatrick, Phys.\ Plasmas {\bf 2}, 825 (1995).
+\bibitem{ntm3} R.J.~Bickerton, J.W.~Connor and R.J.~Taylor, Nat.\ Phys.\ Sci.\ {\bf 229}, 110 (1971). 
+\bibitem{ntm4} R.J.~La Haye, Phys.\ Plasmas {\bf 13}, 055501 (2006).
+\bibitem{ntm5} M.~Maraschek, Nucl.\ Fusion {\bf 52}, 074007 (2007). 
+
+\bibitem{prater} R.~Prater, Phys.\ Plasmas {\bf 13}, 055501 (2006).
+
+\bibitem{eccd1} G.~Gantenbein, H.~Zohm, G.~Giruzzi, S.~G\"{u}nter, F.~Leuterer, M.~Maraschek, J.~Meskat, Q.~Yu,  ASDEX Upgrade Team and ECRH-Group (AUG), 
+Phys.\ Rev.\ Lett.\ {\bf 85}, 1242 (2000). 
+\bibitem{eccd2} A.~Isayama, Y.~Kamada, S.~Ide, K.~Hamamatsu, T.~Oikawa, T.~Suzuki, Y.~Neyatani, T.~Ozeki, Y.~Ikeda, K.~Kajiwara and the JT-60 team,  
+Plasma Phys.\  Control.\ Fusion {\bf 42}, L37 (2000).
+\bibitem{eccd3} R.J.~La Haye,  S.~G\"{u}nter,  D.A.~Humphreys,  J.~Lohr,  T.C.~Luce,  M.E.~Maraschek,  C.C.~Petty, R.~Prater,  J.T.~Scoville and E.J.~Strait,
+ Phys.\ Plasmas {\bf 9}, 2051 (2002).
+\bibitem{eccd4} Y.S.~Park, M.H.~Woo, S.A.~Sabbagh, H.S.~Han, B.H.~Park, J.S.~Kang and H.S.~Kim,  Plasma Phys.\ Control.\ Fusion {\bf 66}, 125013
+(2024).
+\bibitem {eccd5} Y.~Zhang, X.J.~Wang, F.~Hong, W.~Zhang, H.D.~Xu, T.H.~Shi, E.Z.~Li, Q.~Ma, H.L.~Zhao, S.X.~Wang, Y.Q.~Chu, H.Q.~Liu, Y.W.~Sun, 
+X.D.~Zhang, Q.~Yu, J.P.~Qian, X.Z.~Gong, J.S.~Hu, K.~Lu, Y.T.~Song and the EAST Team, 
+ Nucl.\ Fusion {\bf 64},  076016 (2024).
+\bibitem{eccd6} H.~van den Brand, M.R.~de Baar, N.J.~Lopes-Cardozo and E.~Westerhof, Nucl.\ Fusion {\bf 53}, 013005 (2013). 
+  
+\bibitem{ece1} M.~Bornatici, R.~Cano, O.~de Barbieri and F.~Englemann, Nucl.\ Fusion {\bf 23}, 1153 (1983). 
+\bibitem{ece2} M.~Bornatici, F.~Englemann and U.~Ruffina, Sov.\ J.\ Quantum Electron.\ {\bf 13}, 68 (1983).
+\bibitem{ece3} R.~Fitzpatrick, Phys.\ Plasmas {\bf 2}, 825 (1995).
+\bibitem{ece4} J.~Berrino, E.~Lazzaro, S.~Cirant, G.~D'Antona, F.~Gandini, E.~Minardi and G.~Granuci, Nucl.\ Fusion {\bf 45}, 1350 (2005).
+\bibitem{ece4a} J.P.~Ziegel, W.L.~Rowan and F.L.~Waelbroeck, Nucl.\ Fusion {\bf 64}, 126032 (2024).
+
+\bibitem{tear2} J.W.~Connor, R.J.~Hastie and J.B.~Taylor, Phys.\ Fluids B {\bf 3}, 1539 (1991).
+\bibitem{tear3} J.W.~Connor,  S.C.~Cowley, R.J.~Hastie,  T.C.~Hender,  A.~Hood  and T.J.~Martin,  Phys.\ Fluids {\bf 31}, 577 (1988).
+\bibitem{tear5} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin and C.M.~Roach, Nucl.\ Fusion {\bf 33}, 1533 (1993).
+
+\bibitem{ece5} J.P.~Ziegel, W.L.~Rowan and F.L.~Waelbroeck, Rev.\ Sci.\ Instrum.\ {\bf 95}, 073510 (2024).
+\bibitem{ece5} D.~De Lazzari and F.~Westerhof, Plasma Phys.\ Control.\ Fusion {\bf 53}, 035020 (2011).
+
+\bibitem{tear2} J.W.~Connor, R.J.~Hastie and J.B.~Taylor, Phys.\ Fluids B {\bf 3}, 1539 (1991).
+\bibitem{tear3} J.W.~Connor,  S.C.~Cowley, R.J.~Hastie,  T.C.~Hender,  A.~Hood  and T.J.~Martin,  Phys.\ Fluids {\bf 31}, 577 (1988).
+\bibitem{tear4} A.~Pletzer and R.L.~Dewar, J.\ Plasma Physics {\bf 45}, 427 (1991).
+\bibitem{tear5} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin and C.M.~Roach, Nucl.\ Fusion {\bf 33}, 1533 (1993).
+\bibitem{tear6} A.H.~Glasser, Z.R.~Wang and J.-K.~Park, Phys.\ Plasmas {\bf 23}, 112506 (2016).
+\bibitem{tear7} A.S.~Glasser, E.~Kolemen and A.H.~Glasser, Phys.\ Plasmas {\bf 25}, 032507 (2018).
+\bibitem{tear8} A.S.~Glasser and E.~Koleman, Phys.\ Plasmas {\bf 25}, 082502 (2018). 
+\bibitem{tear9} R. Fitzpatrick, Phys.\ Plasmas {\bf 31}, 102507 (2024).
+\bibitem{tear10} R.~Fitzpatrick,  {\em Investigation of  Tearing Mode Stability Near Ideal Stability Boundaries Via Asymptotic Matching Techniques}, submitted
+to Physics of Plasmas (2025).
+
+\bibitem{island} R.~Fitzpatrick, Phys.\ Plasmas {\bf 23}, 122502 (2016).
+
+\bibitem{exp} R.~Fitzpatrick, Phys. Plasmas {\bf 31}, 102507 (2024).
+
+
+\iffalse
+
+\bibitem{ggj1} A.H.~Glasser, J.M.~Greene and J.L.~Johnson, Phys.\ Fluids {\bf 18}, 875 (1975).
+\bibitem{ggj2} A.H.~Glasser, J.M.~Greene  and J.L.~Johnson, Phys.\ Fluids {\bf 19}, 567 (1976).
+\bibitem{ggj3} H.~L\"{u}tjens, J.-F.~Luciani and X.~Garbet, Phys.\ Plasmas {\bf 8}, 4267 (2001).
+\bibitem{ggj4} J.W.~Connor, C.J.~Ham, R.J.~Hastie and Y.Q.~Liu, Plasma Phys.\ Control.\ Fusion {\bf 57}, 065001 (2015). 
+\fi
+
+\end{thebibliography}
+
+\end{document}

@@ -16,7 +16,7 @@ p  = np.asarray(ds['InputParameters'])
 delta = p[5]
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: \xi_c(X)')
+fig.canvas.manager.set_window_title (r'Island Code: \xi_c(X)')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 

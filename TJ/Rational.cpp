@@ -44,6 +44,7 @@ void TJ::FindRational ()
   qerr   = new double[nres];
   sres   = new double[nres];
   gres   = new double[nres];
+  hres   = new double[nres];
   DIres  = new double[nres];
   DRres  = new double[nres];
   nuLres = new double[nres];
@@ -67,6 +68,7 @@ void TJ::FindRational ()
       qerr  [i] = fabs (Getq (rres[i]) - qres[i]);
       sres  [i] = Gets (rres[i]);
       gres  [i] = 1. + epsa*epsa * Getg2 (rres[i]);
+      hres  [i] = sqrt (GetLmm (rres[i], mres[i])) /double (mres[i]);
       DIres [i] = GetDI (rres[i]);
       DRres [i] = GetDR (rres[i]);
       Pres  [i] = GetPsiN (rres[i]);

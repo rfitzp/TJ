@@ -15,7 +15,7 @@ En  = np.asarray(ds['E_n'])
 Nb = En.shape[0]
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: En(k)')
+fig.canvas.manager.set_window_title (r'Island Code: En(k)')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 
