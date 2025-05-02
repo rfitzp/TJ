@@ -77,34 +77,25 @@ so
 \end{equation}
 and
 \begin{equation}
-\xi^r_1(x) =- \frac{W^2}{16\,x}\,[J_0(\delta^2)+ J_2(\delta^2)]+ \frac{W\,\delta}{\sqrt{8}} .
+\xi^r_1(r_s+x) =- \frac{W^2}{16\,x}\,[J_0(\delta^2)+ J_2(\delta^2)]+ \frac{W\,\delta}{\sqrt{8}} .
 \end{equation}
-Thus,
-\begin{align}
-\psi_1(x) &= \frac{r\,g}{q}\,(m-n\,q)\,\xi_1^r = -(n\,s\,g)_{r_s}\,x\,\xi_1^r\nonumber\\[0.5ex]
-&= (n\,s\,g)_{r_k}\,\frac{W^2}{16}\,[J_0(\delta^2)+ J_2(\delta^2)] - (n\,s\,g)_{r_s}\,\frac{W\,\delta}{\sqrt{8}}\,x.
-\end{align}
-Now,
+
+In the outer region,
 \begin{equation}
-{\mit\Psi} = \frac{\psi_m(0)}{(L_m^{\,m})_{r_s}^{1/2}},
+\xi_1(r_s+x)={\mit\Psi}\,\frac{q}{r\,g}\,\frac{\hat{\psi}_m}{m-n\,q}= -{\mit\Psi}\left(\frac{h\,q}{s\,q}\right)_{r_s}\frac{1}{x} + {\cal O}(1),
 \end{equation}
-which yields
-\begin{equation}
-{\mit\Psi} = \left(\frac{W}{4}\right)^2\left(\frac{s\,g}{h\,q}\right)_{r_s}\left[J_0(\delta^2)+ J_2(\delta^2)\right],
-\end{equation}
-where
+where 
 \begin{equation}
 h = \frac{(L_m^m)^{1/2}}{m}.
 \end{equation}
-Thus, assuming that $\psi_m(x)$ is normalized such that ${\mit\Psi}=1$, 
+Thus,
 \begin{equation}
-\frac{\psi_m(x)}{(L_m^{\,m})^{1/2}_{r_s}} =1 - 2\sqrt{8}\,\frac{\delta}{J_0(\delta^2)+ J_2(\delta^2)}\,\frac{x}{W}.
+{\mit\Psi} = \left(\frac{W}{4}\right)^2\left(\frac{s\,g}{h\,q}\right)_{r_s}\left[J_0(\delta^2)+ J_2(\delta^2)\right],
 \end{equation}
-It follows that
-\begin{align}
-\frac{\delta}{J_0(\delta^2)+J_2(\delta^2)} &= -\frac{W}{2\sqrt{8}\,(L_m^{\,m})^{1/2}_{r_s}}\,\frac{d\psi_m(0)}{dr}\nonumber\\[0.5ex]
-&\simeq -\left[\frac{\psi_m(r_s+W)-\psi_m(r_s-W)}{4\sqrt{8}\,(L_m^{\,m})^{1/2}_{r_s}}\right].
-\end{align}
+and
+\begin{equation}
+\delta \simeq \frac{\sqrt{2}}{W}\left[\xi_1^r(r_s+W)+\xi_1^r(r_s-W)\right].
+\end{equation}
 
 \section{Flux-Surface Average Operator}
 Now,
@@ -386,11 +377,16 @@ T_e(R_\omega) = \frac{\int_{R_{\rm min}}^{R_\omega} T_e(R)\,F(R,R_\omega)\,dR}  
 \section{Electron Cyclotron Current Drive}
 The stabilizing electron cyclotron current drive contribution to the Rutherford equation is
 \begin{equation}
-{\mit\Delta}_{eccd} \,W= -\frac{16}{W}\int_{-1}^\infty J_+({\mit\Omega})\,\langle\cos\zeta\rangle\,d{\mit\Omega},
+{\mit\Delta}_{eccd} \,W= -16\,J_0\int_{-1}^\infty J_+({\mit\Omega})\,\langle\cos\zeta\rangle\,d{\mit\Omega},
 \end{equation}
-where $J(x,\zeta)$ is the driven current density. Suppose that
+where $J(x,\zeta)$ is the normalized driven current density. 
+Suppose that
 \begin{equation}
 J(x,\zeta)= \frac{1}{\sqrt{2\pi}\,\sigma}\exp\!\left[-\frac{(x-d)^2}{2\,\sigma^2}\right]\left[\frac{1-\cos(\zeta-{\mit\Delta}\zeta)}{2}\right].
+\end{equation}
+It follows that the total eccd current is
+\begin{equation}
+I_{eccd} = 2\pi\,\frac{B_0}{\mu_0}\,\frac{\epsilon_s\,s_s}{q_s}\,J_0.
 \end{equation}
 However, only the component of $J(x,\zeta)$ that is even in $\zeta$ contributes to ${\mit\Delta}_{eccd}$, so 
 \begin{equation}

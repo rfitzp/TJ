@@ -434,7 +434,10 @@ void TJ::FindDispersion ()
 	    island = ISLAND[k];
 	    
 	  if (mres[k] == 1)
-	    delta[k] = 0.;
+	    {
+	      Psik [k] = (rres[k] * gres[k] * sres[k] /qres[k] /hres[k]) * island /abs (Emat(k, k));
+	      delta[k] = 0.;
+	    }
 	  else
 	    {
 	      int     j     = Jres[k];
@@ -450,24 +453,36 @@ void TJ::FindDispersion ()
 	      
 	      gsl_spline_init (psikrspline, Rgrid, psikr, NDIAG);
 
-	      double rp  = rres[k] + island;
-	      double prp = gsl_spline_eval (psikrspline, rp, psikracc);
+	      double rp   = rres[k] + island;
+	      double prp  = gsl_spline_eval (psikrspline, rp, psikracc);
+	      double gp   = Getg (rp);
+	      double qp   = Getq (rp);
+	      double mnqp = double (mres[k]) - ntor * qp;
+	      double xip  = (qp /rp /gp) * prp /mnqp;
 	      
-	      double rm  = rres[k] - island;
-	      double prm = gsl_spline_eval (psikrspline, rm, psikracc);
+	      double rm   = rres[k] - island;
+	      double prm  = gsl_spline_eval (psikrspline, rm, psikracc);
+	      double gm   = Getg (rm);
+	      double qm   = Getq (rm);
+	      double mnqm = double (mres[k]) - ntor * qm;
+	      double xim  = (qm /rm /gm) * prm /mnqm;
 
-	      double del = 0.;
-	      for (int i = 0; i < 10; i++)
+	      delta[k] = 0.;
+	      for (int jj = 0; jj < 10; jj++)
 		{
-		  del = - (gsl_sf_bessel_Jn (0, del*del) + gsl_sf_bessel_Jn (2, del*del)) * (prp - prm) /4./sqrt(8.) /double (mres[k]) /hres[k];
-		}
-	      delta[k] = del;
+		  Psik[k] = (island*island /16.) *  (gres[k] * sres[k] /qres[k] /hres[k])
+		    * (gsl_sf_bessel_Jn (0, delta[k]*delta[k]) + gsl_sf_bessel_Jn (2, delta[k]*delta[k])); 
 
-	      if (delta[k] > 1.)
-		delta[k] = 1.;
-	      if (delta[k] < -1.)
-		delta[k] = -1.;
-	      
+		  double del = Psik[k] * sqrt(2.) * (xip + xim) /island;
+
+		   if (del > 1.)
+		     delta[k] = 1.;
+		   else if (del < -1.)
+		     delta[k] = -1.;
+		   else
+		     delta[k] = del;
+		}
+
 	      delete[] psikr; 
 	      gsl_spline_free (psikrspline);   
 	      gsl_interp_accel_free (psikracc);
@@ -492,7 +507,6 @@ void TJ::FindDispersion ()
 
 	  if (mres[k] == 1)
 	    {
-	      Psik[k] = (rres[k] * gres[k] * sres[k] /qres[k] /hres[k]) * island /abs (Emat(k, k));
 	      PsTp[k] = complex<double> (Psik[k], 0.);
 	      PsTm[k] = complex<double> (Psik[k], 0.);
 	      dTp [k] = 0.;
@@ -504,9 +518,6 @@ void TJ::FindDispersion ()
 	    }
 	  else
 	    { 
-	      Psik[k] = (island*island /16.) *  (gres[k] * sres[k] /qres[k] /hres[k])
-		* (gsl_sf_bessel_Jn (0, delta[k]*delta[k]) + gsl_sf_bessel_Jn (2, delta[k]*delta[k])); 
-	      
 	      int     j     = Jres[k];
 	      double* psikr = new double[NDIAG];
 	      double* psiki = new double[NDIAG];
