@@ -107,6 +107,14 @@ double TJ::GetS3 (double r)
     return gsl_spline_eval (S3spline, r, S3acc);
 }
 
+double TJ::GetS4 (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (S4spline, 1., S4acc);
+  else
+    return gsl_spline_eval (S4spline, r, S4acc);
+}
+
 double TJ::GetP1 (double r)
 {
   if (r >= 1.)

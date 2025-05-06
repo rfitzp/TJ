@@ -27,6 +27,8 @@ as the torque curves and shielding factors at the various rational
 surfaces are optionally calculated using a three-field reduced-MHD resonant
 layer model.
 
+The TJ suite is available for use under the terms of the standard MIT license.
+
 # Class Utility
 
 Class to perform various standard tasks, such as reading and writing to

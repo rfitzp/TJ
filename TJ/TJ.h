@@ -16,7 +16,6 @@
 // Inputs:
 //  Inputs/Equilibrium.json  - JSON file
 //  Inputs/TJ.json           - JSON file
-//  Inputs/Layer.json        - JSON file
 //  Inputs/Island.json       - JSON file
 
 // Outputs:
@@ -101,14 +100,28 @@ class TJ : private Utility
   int            MMAX;    // Maximum poloidal mode number included in calculation (read from TJ JSON file)
   vector<double> ISLAND;  // Island widths/displacements (divided by minor radius) used to regularize perturbed magnetic field (read from TJ JSON file)
 
-  double EPS;     // Solutions launched from magnetic axis at r = EPS (read from TJ JSON file)
-  double DEL;     // Distance of closest approach to rational surface is DEL (read from TJ JSON file)
-  int    NFIX;    // Number of fixups (read from TJ JSON file)
-  int    NDIAG;   // Number of radial grid-points for diagnostics (read from TJ JSON file)
-  double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from TJ JSON file)
-  int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from TJ JSON file)
+  double         EPS;     // Solutions launched from magnetic axis at r = EPS (read from TJ JSON file)
+  double         DEL;     // Distance of closest approach to rational surface is DEL (read from TJ JSON file)
+  int            NFIX;    // Number of fixups (read from TJ JSON file)
+  int            NDIAG;   // Number of radial grid-points for diagnostics (read from TJ JSON file)
+  double         NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from TJ JSON file)
+  int            ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from TJ JSON file)
 
-  double EPSF;    // Step-length for finite difference determination of derivatives
+  double         EPSF;    // Step-length for finite difference determination of derivatives
+
+  // ------------------
+  // Machine parameters
+  // ------------------
+  double B0;      // On-axis toroidal magnetic field-strength (T) (read from Equilibrium JSON file)
+  double R0;      // On-axis plasma major radius (m) (read from  Equilibrium JSON file)
+  double n0;      // On-axis electron number density (m^-3) (read from  Equilibrium JSON file)
+  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from Equilibrium JSON file)
+  double Zeff;    // Effective ion charge number (read from Equilibrium JSON file)
+  double Mion;    // Ion mass number (read from Equilibrium JSON file)
+  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from Equilibrium JSON file)
+  double Teped;   // Electron temperature at edge of plasma (eV) (read from Equilibrium JSON file)
+  double neped;   // Electron number density at edge of plasma (m^-3) (read from Equilibrium JSON file)
+  double apol;    // Plasma minor radius (m)
 
   // ---------------------------------------------------------------
   // Equilibrium data (read from Outputs/Equilibrium/Equilibrium.nc)
@@ -132,6 +145,7 @@ class TJ : private Utility
   double*            S1;        // First shaping function
   double*            S2;        // Second shaping function
   double*            S3;        // Third shaping function
+  double*            S4;        // Fourth shaping function
   double*            P1;        // First profile function: (2-s)/q
   double*            P2;        // Second profile function: r dP1/dr
   double*            P3;        // Third profile function
@@ -158,6 +172,7 @@ class TJ : private Utility
   gsl_spline*        S1spline;  // Interpolated S1 function
   gsl_spline*        S2spline;  // Interpolated S2 function
   gsl_spline*        S3spline;  // Interpolated S3 function
+  gsl_spline*        S4spline;  // Interpolated S4 function
   gsl_spline*        P1spline;  // Interpolated P1 function
   gsl_spline*        P2spline;  // Interpolated P2 function
   gsl_spline*        P3spline;  // Interpolated P3 function
@@ -179,6 +194,7 @@ class TJ : private Utility
   gsl_interp_accel*  S1acc;     // Accelerator for interpolated S1 function
   gsl_interp_accel*  S2acc;     // Accelerator for interpolated S2 function
   gsl_interp_accel*  S3acc;     // Accelerator for interpolated S3 function
+  gsl_interp_accel*  S4acc;     // Accelerator for interpolated S4 function
   gsl_interp_accel*  P1acc;     // Accelerator for interpolated P1 function
   gsl_interp_accel*  P2acc;     // Accelerator for interpolated P2 function
   gsl_interp_accel*  P3acc;     // Accelerator for interpolated P3 function
@@ -448,6 +464,9 @@ class TJ : private Utility
   Array<double,2>          dZdt;   // dZ/dtheta values at visualization grid-points (from Equilibrium.nc)
   Array<double,2>          rvals;  // r values of visualization grid-points (from Equilibrium.nc)
   Array<double,2>          thvals; // theta values of visualization grid-points (from Equilibrium.nc)
+  Array<double,2>          Bmod;   // |B| on visulalization grid
+  Array<double,2>          Btor;   // |B_toroidal| on visualization grid
+  Array<double,2>          Bpol;   // |B_poloidal| on visualization grid
   Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 
   Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> psiuf;  // Scaled psi components of Fourier-transformed unreconnected tearing eigenfunctions 
@@ -587,20 +606,6 @@ class TJ : private Utility
   Array<complex<double>,2> Psir;    // Psi components of resistive wall mode eigenfunctions on boundary
   Array<complex<double>,2> Xir;     // Xi components of resistive wall mode  eigenfunctions on boundary
   
-  // ----------------------------
-  // Layer calculation parameters
-  // ----------------------------
-  double B0;      // On-axis toroidal magnetic field-strength (T) (read from Layer JSON file)
-  double R0;      // On-axis plasma major radius (m) (read from  Layer JSON file)
-  double n0;      // On-axis electron number density (m^-3) (read from  Layer JSON file)
-  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from Layer JSON file)
-  double Zeff;    // Effective ion charge number (read from Layer JSON file)
-  double Mion;    // Ion mass number (read from Layer JSON file)
-  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from Layer JSON file)
-  double Teped;   // Electron temperature at edge of plasma (eV) (read from Layer JSON file)
-  double neped;   // Electron number density at edge of plasma (m^-3) (read from Layer JSON file)
-  double apol;    // Plasma minor radius (m)
-
   // -------------------
   // Resonant layer data
   // -------------------
@@ -827,6 +832,8 @@ class TJ : private Utility
   double GetS2 (double r);
   // Return value of S3
   double GetS3 (double r);
+  // Return value of S4
+  double GetS4 (double r);
   // Return value of P1
   double GetP1 (double r);
   // Return value of P2

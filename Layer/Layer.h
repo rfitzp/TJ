@@ -5,8 +5,8 @@
 // Class to solve three-field resonant layer equations in tokamak plasma
 
 // Inputs:
-//  Inputs/TJ.json    - TJ JSON file
-//  Inputs/Layer.json - JSON file
+//  Inputs/TJ.json          - TJ JSON file
+//  Inputs/Layer.json       - Layer JSON file
 
 // Outputs:
 //  Outputs/Layer/Layer.nc

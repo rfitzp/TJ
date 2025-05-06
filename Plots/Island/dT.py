@@ -33,10 +33,10 @@ x0 = []
 for y in z:
     x0.append (0.)
 
-fig = plt.figure (figsize = (14.0, 7.0))
+fig = plt.figure (figsize = (12.0, 7.0))
 fig.canvas.manager.set_window_title (r'Island Code: delta T_e(zeta, x)')
-plt.rc ('xtick', labelsize=12) 
-plt.rc ('ytick', labelsize=12) 
+plt.rc ('xtick', labelsize=17) 
+plt.rc ('ytick', labelsize=17) 
 
 plt.subplot (1, 1, 1)
 plt.ylim (-1., 1.)
@@ -44,14 +44,14 @@ plt.xlim (z[0], z[-1])
 
 plt.plot (z, xp, color = 'black', linewidth = 3, linestyle = 'solid')
 plt.plot (z, xm, color = 'black', linewidth = 3, linestyle = 'solid')
-plt.plot (z, x0, color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.plot (z, x0, color = 'black', linewidth = 2, linestyle = 'dotted')
 
 plt.plot ([1.], [-delta/8.**0.5], marker = 'o', markersize = 4, color = "black")
 
 plt.contourf (z, x, t, ncont, cmap = ReBu)
 
-plt.ylabel (r'$x/W$',       fontsize = "12")
-plt.xlabel (r'$\zeta/\pi$', fontsize = "12")
+plt.ylabel (r'$x/W$',       fontsize = "17")
+plt.xlabel (r'$\zeta/\pi$', fontsize = "17")
 
 plt.tight_layout ()
 

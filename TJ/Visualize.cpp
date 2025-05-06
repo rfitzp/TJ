@@ -10,6 +10,10 @@ void TJ::VisualizeEigenfunctions ()
   // ...............
   // Allocate memory
   // ...............
+  Bmod.resize (Nf, Nw+1);
+  Btor.resize (Nf, Nw+1);
+  Bpol.resize (Nf, Nw+1);
+  
   Psiuf.resize(J, nres, Nf);
   Zuf  .resize(J, nres, Nf);
   psiuf.resize(J, nres, Nf);
@@ -419,6 +423,28 @@ void TJ::VisualizeEigenfunctions ()
 	}
     }
 
+  // ..........................................................
+  // Calculate B_mod, B_tor, and B_phi on on visualization grid
+  // ..........................................................
+  for (int i = 0; i < Nf; i++)
+    for (int l = 0; l <= Nw; l++)
+      {
+	double R     = RR    (i, l);
+	double r     = rvals (i, l);
+	double theta = thvals(i, l);
+
+	double grr2 = 1. + epsa*epsa * GetS4(r);
+
+	for (int n = 1; n <= Ns; n++)
+	  grr2 += 2.*epsa * GetHnp(n, r) * cos (double(n) * theta);
+	for (int n = 2; n <= Ns; n++)
+	  grr2 += 2.*epsa * GetVnp(n, r) * sin (double(n) * theta);
+
+	Btor(i, l) = Getg(r) /R;
+	Bpol(i, l) = epsa * Getf(r) * sqrt(fabs(grr2)) /r /R;
+	Bmod(i, l) = sqrt (Btor(i, l) * Btor(i, l) + Bpol(i, l) * Bpol(i, l));
+      }
+	
   // ............................................................
   // Calculate unreconnected eigenfunctions on visualization grid
   // ............................................................

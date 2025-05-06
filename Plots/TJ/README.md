@@ -53,13 +53,15 @@
 
 ## Visualization:
 
-- *Psi.py*:          Plots psi components of unreconnected solution vector in R, Z plane  
+- *Psi.py*:          Plots psi components of unreconnected solution vector in R, Z plane 
 - *PsiZ.py*:         Plots psi and Z components of unreconnected solution vector in R, Z plane
 - *zchi.py*:         Plots z and chi components of unreconnected solution vector in R, Z plane
 - *bR.py*:           Plots b_R components of unreconnected solution vector in R, Z plane
 - *bZ.py*:           Plots b_Z components of unreconnected solution vector in R, Z plane
 - *bphi.py*:         Plots R b_phi components of unreconnected solution vector in R, Z plane
 - *disp.py*:         Plots xi_r components of unreconnected solution vector in R, Z plane
+- *Btoroidal.py*:    Plots B_toroidal and B_modulus in R, Z plane
+- *Bpoloidal.py*:    Plots B_poloidal and B_toroidal in R, Z plane
 
 ## Electron temperature and number density profiles:
 

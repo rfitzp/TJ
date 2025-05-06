@@ -1,9 +1,9 @@
 {
     "SRC":  0,                // Flag for reading safety-factor and pressure profiles from Inputs/Profile.txt
     
-    "qc":   1.1,              // Safety-factor on magnetic axis
-    "qa":   3.6,              // Safety-factor at plasma boundary
-    "pc":   1.6e-1,           // Normalized plasma pressure on magnetic axis 
+    "qc":   1.01,             // Safety-factor on magnetic axis
+    "qa":   3.60,             // Safety-factor at plasma boundary
+    "pc":   2.0e-1,           // Normalized plasma pressure on magnetic axis 
     "mu":   2.0,              // Pressure peaking parameter
     "epsa": 0.2,              // Inverse aspect-ratio of plasma
 
@@ -12,11 +12,21 @@
 
     "bw": 1.1,                // Relative wall radius
 
-    "tilt": 0.0,              // Tilt of central chord (degrees)
-   
+    "B0":    5.3,             // On-axis toroidal magnetic field-strength (T)
+    "R0":    6.2,             // On-axis plasma major radius (m) 
+    "n0":    1.0e20,          // On-axis electron number density (m^-3)
+    "alpha": 1.0,             // Assumed electron number density profile: n0 (1 - r^2)^alpha
+    "Zeff":  2.0,             // Effective ion charge number
+    "Mion":  2.0,             // Ion mass number
+    "Chip":  0.2,             // Perpendicular momentum/energy diffusivity (m^2/s)
+    "Teped": 100.0,           // Electron temperature at edge of plasma (eV)
+    "neped": 1.0e18,          // Electron number density at edge of plasma (m^-3)
+ 
     "wcoil": [ 0.7,  0.85, -0.85, -0.7],  // omega/M_PI coodinates of RMP coil strands
     "Icoil": [-1.0,  1.0,  -1.0,   1.0],  // Toroidal currents flowing in RMP coil strands
 
+    "tilt": 0.0,      // Tilt of central chord (degrees)
+   
     "eps": 1.0e-4,    // Distance of closest approach to magnetic axis
     "Ns":  20,        // Number of shaping harmonics included in calculation
     "Nr":  1000,      // Number of radial grid-points for calculation purposes

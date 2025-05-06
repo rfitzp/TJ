@@ -1,7 +1,8 @@
 # Documentation for Program TJ
 
-- *TJPaper2024/TJ.pdf*:	          Document detailing initial TJ code
-- *TJPaper2025/TJ.pdf*:	          Document detailing improvements to TJ code
+- *TJPaper2024/TJ.pdf*:	          Paper detailing initial TJ code
+- *TJPaper2025/TJ1.pdf*:	      Paper detailing improvements to TJ code
+- *ECEPapers2025/ECE.pdf*:        Paper detailing use of TJ to simulate ECE signal of neoclassical tearing mode
 - *HigherOrderEquilibrium.pdf*:   Document specifying higher-order corrections to aspect-ratio expanded equilibriu
 - *LayerParameters.pdf*: 	      Document specifying how layer parameters are estimated
 - *Layer.pdf*:		              Document specifying how layer equations are solved

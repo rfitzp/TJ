@@ -41,6 +41,7 @@ void TJ::ReadEquilibriumNetcdf ()
       NcVar S1_x  = dataFile.getVar ("S1");
       NcVar S2_x  = dataFile.getVar ("S2");
       NcVar S3_x  = dataFile.getVar ("S3");
+      NcVar S4_x  = dataFile.getVar ("S4");
       NcVar P1_x  = dataFile.getVar ("P1");
       NcVar P2_x  = dataFile.getVar ("P2");
       NcVar P3_x  = dataFile.getVar ("P3");
@@ -67,6 +68,7 @@ void TJ::ReadEquilibriumNetcdf ()
       S1   = new double[Nr+1];
       S2   = new double[Nr+1];
       S3   = new double[Nr+1];
+      S4   = new double[Nr+1];
       P1   = new double[Nr+1];
       P2   = new double[Nr+1];
       P3   = new double[Nr+1];
@@ -90,6 +92,7 @@ void TJ::ReadEquilibriumNetcdf ()
       S1_x .getVar (S1);
       S2_x .getVar (S2);
       S3_x .getVar (S3);
+      S4_x .getVar (S4);
       P1_x .getVar (P1);
       P2_x .getVar (P2);
       P3_x .getVar (P3);
@@ -210,7 +213,7 @@ void TJ::ReadEquilibriumNetcdf ()
 	  double* dRdrdata = new double[Nf*(Nw+1)];
 	  double* dRdtdata = new double[Nf*(Nw+1)];
 	  double* dZdrdata = new double[Nf*(Nw+1)];
-	  double* dZdtdata = new double[Nf*(Nw+1)];
+	  double* dZdtdata = new double[Nf*(Nw+1)];	  
 	  
 	  RR_x.getVar (RRdata);
 	  ZZ_x.getVar (ZZdata);
@@ -471,6 +474,10 @@ void TJ::WriteNetcdf ()
   double* bP_s    = new double[nres*Nf*(Nw+1)];
   double* xi_c    = new double[nres*Nf*(Nw+1)];
   double* xi_s    = new double[nres*Nf*(Nw+1)];
+
+  double* Btor_r  = new double[Nf*(Nw+1)];
+  double* Bpol_r  = new double[Nf*(Nw+1)];
+  double* Bmod_r  = new double[Nf*(Nw+1)];
 
   double* ne_c    = new double[nres*Nf*(Nw+1)*NPHI];
   double* Te_c    = new double[nres*Nf*(Nw+1)*NPHI];
@@ -785,6 +792,16 @@ void TJ::WriteNetcdf ()
 	      bP_s [cnt] = bPs (k, i, l);
 	      xi_c [cnt] = xic (k, i, l);
 	      xi_s [cnt] = xis (k, i, l);
+	      cnt++;
+	    }
+
+      cnt = 0;
+      	for (int i = 0; i < Nf; i++)
+	  for (int l = 0; l <= Nw; l++)
+	    {
+	      Btor_r[cnt] = Btor (i, l);
+	      Bpol_r[cnt] = Bpol (i, l);
+	      Bmod_r[cnt] = Bmod (i, l);
 	      cnt++;
 	    }
 
@@ -1436,6 +1453,12 @@ void TJ::WriteNetcdf ()
 	  xic_x.putVar (xi_c);
 	  NcVar xis_x  = dataFile.addVar ("xi_sin",         ncDouble, v_d);
 	  xis_x.putVar (xi_s);
+	  NcVar Btor_x = dataFile.addVar ("B_toroidal",     ncDouble, vr_d);
+	  Btor_x.putVar (Btor_r);
+	  NcVar Bpol_x = dataFile.addVar ("B_poloidal",     ncDouble, vr_d);
+	  Bpol_x.putVar (Bpol_r);
+	  NcVar Bmod_x = dataFile.addVar ("B_modulus",      ncDouble, vr_d);
+	  Bmod_x.putVar (Bmod_r);
 
 	  if (TEMP)
 	    {
@@ -1761,6 +1784,8 @@ void TJ::WriteNetcdf ()
   delete[] PPU_r;   delete[] PPU_i;   delete[] ZZU_r; delete[] ZZU_i;
   delete[] zzU_r;   delete[] zzU_i;   delete[] ccU_r; delete[] ccU_i;
   delete[] xiU_r;   delete[] xiU_i;
+
+  delete[] Btor_r; delete[] Bpol_r; delete[] Bmod_r;
 
   delete[] dnU_r; delete[] dnU_i; delete[] dTU_r; delete[] dTU_i;
   delete[] nU_r;  delete[] nU_i;  delete[] TU_r;  delete[] TU_i;

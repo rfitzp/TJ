@@ -113,7 +113,7 @@ Island::Island ()
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Nh   = %-4d Nb =  %-4d Nz    = %-4d NX   = %-4d       Xmax = %-10.3e delta = %10.3e\n",
 	  Nh, Nb, Nz, NX, Xmax, delta);
-  printf ("ECCD = %2d   Nk = %-4d  Nscan = %-4d Kmax = %-10.3e Wmax = %-10.3e D     = %10.3e Dmax = %-10.3e W = %-10.3e\n",
+  printf ("ECCD = %-1d    Nk = %-4d  Nscan = %-4d Kmax = %-10.3e Wmax = %-10.3e D     = %10.3e Dmax = %-10.3e W = %-10.3e\n",
 	  ECCD, Nk, Nscan, Kmax, Wmax, D, Dmax, W);
 
   sprintf (buffer, "../Outputs/Island/Island.nc");
@@ -147,6 +147,15 @@ Island::Island (int k, double _delta)
   Nz    = JSONData["Nz"]   .get<int>    ();
   NX    = JSONData["NX"]   .get<int>    ();
   Xmax  = JSONData["Xmax"] .get<double> ();
+
+  ECCD  = JSONData["ECCD"] .get<int>    ();
+  Nk    = JSONData["Nk"]   .get<int>    ();
+  Nscan = JSONData["Nscan"].get<int>    ();
+  Kmax  = JSONData["Kmax"] .get<double> ();
+  Wmax  = JSONData["Wmax"] .get<double> ();
+  Dmax  = JSONData["Dmax"] .get<double> ();
+  D     = JSONData["D"]    .get<double> ();
+  W     = JSONData["W"]    .get<double> ();
 
   delta = _delta;
 
@@ -183,6 +192,36 @@ Island::Island (int k, double _delta)
       printf ("Island:: Error - delta must lie in range -1 to +1\n");
       exit (1);
     }
+  if (Nint < 1)
+    {
+      printf ("Island:: Error - Nint must be positive\n");
+      exit (1);
+    }
+  if (Wmax <= 0.)
+    {
+      printf ("Island:: Error - Wmax must be positive\n");
+      exit (1);
+    }
+  if (Dmax <= 0.)
+    {
+      printf ("Island:: Error - Dmax must be positive\n");
+      exit (1);
+    }
+  if (W <= 0.)
+    {
+      printf ("Island:: Error - W must be positive\n");
+      exit (1);
+    }
+  if (Nk < 1)
+    {
+      printf ("Island:: Error - Nk must be positive\n");
+      exit (1);
+    }
+  if (Kmax <= 1.)
+    {
+      printf ("Island:: Error - Kmax must be greater than unity\n");
+      exit (1);
+    }
  
   printf ("\n");
   printf ("Class ISLAND::\n");
@@ -204,7 +243,7 @@ void Island::Solve (int FLAG)
   // Set up k grid
   // ..............
   kk          = new double[NX];
-  double Ymax = Xmax + delta /sqrt(8.);
+  double Ymax = Xmax + fabs(delta) /sqrt(8.);
   double kmax = sqrt (4.*Ymax*Ymax + 1.) + 1.e-15;
   for (int i = 0; i < NX; i++)
     kk[i] = 1. + (kmax - 1.) * double (i) /double (NX-1) + 1.e-15;
@@ -249,23 +288,22 @@ void Island::Solve (int FLAG)
   // ........................
   // Interpolate En functions
   // ........................
-  Enspline = new gsl_spline* [Nb];
+  Enspline = new gsl_spline*       [Nb];
   Enacc    = new gsl_interp_accel* [Nb];
 
+  double* data = new double[NX];
   for (int n = 0; n < Nb; n++)
     {
       Enspline[n] = gsl_spline_alloc (gsl_interp_cspline, NX);
-      Enacc[n]    = gsl_interp_accel_alloc ();
+      Enacc   [n] = gsl_interp_accel_alloc ();
 
-      double* data = new double[NX];
-
+  
       for (int i = 0; i < NX; i++)
 	data[i] = En(n, i);
 
        gsl_spline_init (Enspline[n], kk, data, NX);
-
-       delete[] data;
     }
+  delete[] data;
 
   // ..............
   // Calculate dTdk
@@ -340,9 +378,6 @@ void Island::Solve (int FLAG)
 
   rhs_chooser = 2;
   
-  for (int j = 0; j < Nh; j++)
-    deltaTh (j, 0) = 0.;
-
   for (int i = 0; i < NX; i++)
     {
       if (i%100 == 0)
@@ -423,7 +458,7 @@ void Island::Solve (int FLAG)
 	}
     }
 
-  if (ECCD)
+  if (ECCD && FLAG)
     {
       // .............
       // Set up k grid
@@ -446,7 +481,7 @@ void Island::Solve (int FLAG)
 	kkk[Nk+i] = 1. + (Kmax - 1.) * double (i+1) /double (Nk);
 
       for (int j = 0; j < Nscan; j++)
-	WW[j] = Wmax * double (j + 1) /double (Nscan);
+	WW[j] = Wmax * double (j+1) /double (Nscan);
       for (int j = 0; j < Nscan; j++)
 	DD[j] = - Dmax + 2.*Dmax * double (j) /double (Nscan-1);
 
@@ -610,7 +645,7 @@ void Island::Solve (int FLAG)
   gsl_interp_accel_free (dTdkacc);
   gsl_interp_accel_free (Facc);
 
-  if (ECCD)
+  if (ECCD && FLAG)
     {
       delete[] kkk; delete[] Flux0; delete[] Flux1; delete[] Flux2; delete[] WW; delete[] DD;
 
@@ -688,7 +723,7 @@ void Island::WriteNetcdf (int FLAG)
 	  }
     }
 
-  if (ECCD)
+  if (ECCD && FLAG)
     {
       cnt = 0;
       for (int i = 0; i < 2*Nk; i++)
@@ -766,7 +801,7 @@ void Island::WriteNetcdf (int FLAG)
 	  dTT_x.putVar (dT_y);
 	}
 
-      if (ECCD)
+      if (ECCD && FLAG)
 	{
 	  NcVar kk_x = dataFile.addVar ("kk",     ncDouble, k_d);
 	  kk_x.putVar (kkk);  

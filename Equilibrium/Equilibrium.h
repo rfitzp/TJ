@@ -21,7 +21,6 @@
 
 // Inputs:
 //  Inputs/Equilibrium.json - JSON file
-//  Inputs/Layer.json       - JSON file
 
 // Outputs:
 //  Outputs/Equilibrium/Equilibrium.nc
@@ -116,12 +115,15 @@ class Equilibrium : private Utility
   double*        Rcoil; // R coodinates of RMP strands 
   double*        Zcoil; // Z coodinates of RMP strands 
 
-  double         R0;    // Major radius of magnetic axis (read from Layer JSON file)
-  double         B0;    // Toroidal magnetic field-strength on magnetic axis (read from Layer JSON file)
-  double         n0;    // Electron number density on magnetic axis (read from Layer JSON file)
-  double         alpha; // Electron number density profile parameter (read from Layer JSON file)
-  double         Teped; // Electron temperature at plasma boundnary (read from Layer JSON file)
-  double         neped; // Electron number at plasma boundnary (read from Layer JSON file)
+  // ------------------
+  // Machine parameters
+  // =-----------------
+  double         R0;    // Major radius of magnetic axis (read from JSON file)
+  double         B0;    // Toroidal magnetic field-strength on magnetic axis (read from JSON file)
+  double         n0;    // Electron number density on magnetic axis (read from JSON file)
+  double         alpha; // Electron number density profile parameter (read from JSON file)
+  double         Teped; // Electron temperature at plasma boundnary (read from JSON file)
+  double         neped; // Electron number at plasma boundnary (read from JSON file)
 
   // ------------------
   // Profile parameters
@@ -170,6 +172,7 @@ class Equilibrium : private Utility
   double*            S1;        // First shaping function
   double*            S2;        // Second shaping function
   double*            S3;        // Third shaping function
+  double*            S4;        // Fourth shaping function
   double*            P1;        // First profile function: (2-s) /q2
   double*            P1a;       // Lowest-order first profile function: (2-s0) /q0 
   double*            P2;        // Second profile function: r dP1/dr

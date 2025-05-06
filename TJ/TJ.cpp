@@ -78,12 +78,8 @@ TJ::TJ ()
 
   JSONFilename = "../Inputs/Equilibrium.json";
   JSONData     = ReadJSONFile (JSONFilename);
-
-  SRC  = JSONData["SRC"].get<int>();
-
-  JSONFilename = "../Inputs/Layer.json";
-  JSONData     = ReadJSONFile (JSONFilename);
   
+  SRC   = JSONData["SRC"]  .get<int>   ();
   B0    = JSONData["B0"]   .get<double>();
   R0    = JSONData["R0"]   .get<double>();
   n0    = JSONData["n0"]   .get<double>();
@@ -93,7 +89,7 @@ TJ::TJ ()
   Chip  = JSONData["Chip"] .get<double>();
   Teped = JSONData["Teped"].get<double>();
   neped = JSONData["neped"].get<double>();
-
+  
   JSONFilename = "../Inputs/Island.json";
   JSONData     = ReadJSONFile (JSONFilename);
 
@@ -381,7 +377,7 @@ void TJ::CleanUp ()
   delete[] P2;   delete[] P3;  delete[] g2;  delete[] p2;
   delete[] PsiN; delete[] S2;  delete[] S3;  delete[] s0;
   delete[] f;    delete[] Psi; delete[] nep; delete[] Tep;
-  delete[] ne;   delete[] Te;
+  delete[] ne;   delete[] Te;  delete[] S4;
 
   gsl_spline_free (Pspline);
   gsl_spline_free (fspline);

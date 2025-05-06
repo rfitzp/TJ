@@ -20,24 +20,24 @@
 
 \section{Introduction}
 The transient heat fluxes and electromagnetic stresses that the plasma facing components would experience during a disruption in
-a tokamak fusion reactor are unacceptably large.\cite{iter,wesson}  Hence, such a reactor must be capable of reliably operating in an essentially disruption-free manner. 
+a tokamak fusion reactor are unacceptably large.\cite{iter,wesson}  Hence, such a reactor must be capable of  operating reliably in an essentially disruption-free manner. 
 Disruptions in tokamaks are triggered by macroscopic magnetohydrodynamical (MHD) instabilities.\cite{jet} Fortunately, disruptions associated with ideal   and
 ``classical'' tearing instabilities can   be readily avoided  by keeping the toroidal plasma current, the  mean plasma pressure, and
 the mean electron number density below  critical values that are either easily calculable or well-known empirically.\cite{iter}  
 
 A tearing mode\,\cite{tear1} of finite amplitude generates a helical magnetic island chain\,\cite{ntm1} in the vicinity of the rational surface\,\cite{ideal3} at which it reconnects magnetic flux.
-If the radial width of the island chain exceeds a relatively small threshold value then fast parallel heat transport causes a local flattering of the  electron temperature profile
+If the radial width of the island chain exceeds a relatively small threshold value then fast  heat transport parallel to magnetic field-lines causes a local flattering of the  electron temperature profile
  within the chain's magnetic separatrix.\cite{ntm2} The associated loss of the pressure-gradient-driven non-inductive neoclassical bootstrap current\,\cite{ntm3} within the separatrix
 has a destabilizing effect that can render a linearly-stable tearing mode unstable at finite amplitude. This type of instability is known as a ``neoclassical tearing mode"  (NTM).  All reactor-relevant tokamak
 discharges are potentially unstable  to 2/1 and 3/2 NTMs.\cite{ntm4,ntm5}  (Here, $m/n$ denotes a mode whose resonant harmonic has $m$ periods in the poloidal
 direction, and $n$ periods in the toroidal direction.) It is, therefore, not  surprising that NTMs are, by far, the most common cause of disruptions in high-performance  tokamak
-discharges.\cite{iter,ntm4,ntm5}
+discharges.\cite{iter,ntm4,ntm5,vries}
 Now, an NTM needs to exceed a critical  threshold amplitude
 before it is triggered. In practice, NTMs are
-triggered by transient magnetic perturbations associated with other more benign instabilities in the plasma, such as sawtooth oscillations, and
-edge localized modes (ELMs).\cite{ntm4,ntm5} NTMs pose a unique challenge to tokamak fusion reactors  because  all reactor-relevent tokamak discharges
+triggered by transient magnetic perturbations associated with other more benign instabilities in the plasma, such as sawtooth oscillations, fishbones, and
+edge localized modes (ELMs).\cite{ntm4,ntm5,sawtooth,elm} NTMs pose a unique challenge to tokamak fusion reactors  because  all reactor-relevant tokamak discharges
 are potentially unstable to multiple NTMs. Moreover, NTM onset is essentially unpredictable, because it
-is impossible to determine ahead of time which particular sawtooth crash or ELM is going to trigger a particular NTM. Indeed, not all previously documented NTMs possess identifiable
+is impossible to determine ahead of time which particular sawtooth crash, fishbone, or ELM is going to trigger a particular NTM.\cite{nstx} Indeed, not all previously documented NTMs possess identifiable
 triggers.\cite{ntm6} 
 
 Neoclassical tearing  modes can be suppressed via electron cyclotron current drive (ECCD).\cite{prater} This technique, which has been
@@ -58,9 +58,9 @@ the expected ECE signal, which are based on single-harmonic cylindrical theory, 
 improve such calculations by taking into account the fact that an NTM  in a realistic toroidal tokamak equilibrium consists of multiple coupled poloidal and toroidal harmonics. Harmonics with the same toroidal mode number as the NTM, but different poloidal mode numbers, are linearly coupled by the
 Shafranov shifts, elongations, and triangularities of the equilibrium magnetic flux-surfaces.\cite{tear2,tear3,tear5} Furthermore, harmonics whose poloidal and
 toroidal mode numbers are in the same ratio as those of the NTM are coupled nonlinearly in the immediate vicinity of the island chain.\cite{ntm1,ntm2}
-Previous calculations have taken into account the important fact that the island chain is radially asymmetric with respect to the rational surface,\cite{ece6} 
-due to the mean radial gradient of the tearing eigenfunction at the  surface, but have not necessarily make an accurate
-determination the asymmetry.\cite{eccd6} Our improved calculation incorporates an accurate assessment of the asymmetry. Finally, ECE emission
+Previous calculations have taken into account the important fact that an NTM island chain is likely to be radially asymmetric with respect to the rational surface,\cite{ece6} 
+due to the mean radial plasma displacement at the  surface, but have not necessarily make an accurate
+determination this asymmetry.\cite{eccd6} Our improved calculation incorporates an accurate assessment of the asymmetry. Finally, ECE emission
 is downshifted and broadened in frequency due to the relativistic mass increase of the emitting electrons.\cite{ece1,ece2,ece5}  This process leads to a shift in the inferred location
 of the ECE emission to larger major radius, as well as a radial smearing out the emission. Both of these effects, which limit the accuracy to which the
 radial location of the island O-point can be measured via ECE emission,  are taken into account in our improved calculation.
@@ -73,7 +73,7 @@ consists of a set of narrow layers centered on the various rational surfaces, no
  $q=2$ surface for the case of a 2/1 mode, and the $q=3/2$ surface in the case of a 3/2 mode). The response of the plasma at the
  other rational surfaces is assumed to be ideal, as we would expect to be the case in the presence of sheared plasma rotation.\cite{tear5}
 The magnetic perturbation in the segment of the inner region centered on the reconnecting rational surface is that associated with a radially asymmetric magnetic island chain.\cite{ntm1,island}
-The nonlinear island solution needs to be asymptotically matched to the ideal-MHD solution in the outer region. The
+The nonlinear island solution needs to be asymptotically matched to the linear ideal-MHD solution in the outer region. The
 temperature perturbation associated with the NTM in the inner and outer regions is simultaneously  determined by the asymptotic matching process. 
 
 In this paper, the asymptotic matching is performed using the TJ toroidal tearing mode code,\cite{tear9,tear10}  which employs an aspect-ratio
@@ -144,10 +144,10 @@ $q(r_k) = m_k/n$ is satisfied, where the positive integer $m_k$ is the resonant 
 \begin{equation}
 b^r(r,\theta,\phi)\equiv {\bf b}\cdot\nabla r = \frac{{\rm i}}{r\,R^{\,2}}\sum_{j=1,J} \psi_{m_j}(r)\,{\rm e}^{\,{\rm i}\,(m_j\,\theta-n\,\phi)}.
 \end{equation}
-Here, ${\bf b}$ is the perturbed magnetic field-strength, and the $m_j$ are the poloidal mode numbers included in the calculation. (The $m_k$ are a subset of the $m_j$.) 
+Here, ${\bf b}(r,\theta,\phi)$ is the perturbed magnetic field-strength, and the $m_j$ are the  $J>K$ poloidal mode numbers included in the calculation. (The $m_k$ are a subset of the $m_j$.) 
 
 The functions $\psi_{m_j}(r)$ are determined by solving a set of $2\,J$ coupled ordinary differential equations that are singular at the
-various rational surfaces in the plasma. The solutions to these equations must be launched from the magnetic axis ($r=0$), integrated outward in $r$, stopped and  just before and  restarted just after each rational surface in the plasma, integrated to the plasma boundary ($r=a$), and then matched to a free-boundary vacuum
+various rational surfaces in the plasma. The solutions to these equations must be launched from the magnetic axis ($r=0$), integrated outward in $r$, stopped   just before and  restarted just after each rational surface in the plasma, integrated to the plasma boundary ($r=a$), and then matched to a free-boundary vacuum
 solution. This process is described in detail in Ref.~\onlinecite{tear9}. 
 
 \subsection{Behavior in Vicinity of Rational Surface}\label{rational}
@@ -155,15 +155,13 @@ Consider the behavior of the $\psi_{m_j}(r)$ in the vicinity of the $k$th ration
 The non-resonant $\psi_{m_j}(r$), for which $m_j\neq m_k$,   are continuous across the surface. On the other hand, the resonant $\psi_{m_j}(r)$ is
 such that
 \begin{align}\label{rat}
-\psi_{m\,k}(r_k+x) &= A_{L\,k}\,|x|^{\nu_{L\,k}} + {\rm sgn}(x)\,A_{S\,k}^{\pm}\,|x|^{\nu_{S\,k}},\\[0.5ex]
+\psi_{m_k}(r_k+x) &= A_{L\,k}\,|x|^{\nu_{L\,k}} + {\rm sgn}(x)\,A_{S\,k}^{\pm}\,|x|^{\nu_{S\,k}},\\[0.5ex]
 \end{align}
 where
 \begin{align}
 \nu_{L\,k} &= \frac{1}{2}-\sqrt{-D_{I\,k}},\\[0.5ex]
 \nu_{S\,k} &= \frac{1}{2}+\sqrt{-D_{I\,k}},\\[0.5ex]
-D_{I\,k}&= - \left[\frac{2\,(1-q^2)}{s^2}\,r\,\frac{dP}{dr}\right]_{r_k} -\frac{1}{4},\label{di}\\[0.5ex]
-L_{m_k}^{\,m_k}(r) &= m_k^2\,c_{m_k}^{\,m_k}(r) + n^2\,r^2,\\[0.5ex]
-c_{m_k}^{\,m_k}(r) &=\oint|\nabla r|^{-2}\,\frac{d\theta}{2\pi}.
+D_{I\,k}&= - \left[\frac{2\,(1-q^2)}{s^2}\,r\,\frac{dP}{dr}\right]_{r_k} -\frac{1}{4}\label{di}
 \end{align}
 Here,  $A_{L\,k}$ is termed the coefficient of the ``large'' solution, whereas $A_{S\,k}$ is the coefficient of the ``small'' solution. Furthermore, $D_{I\,k}$ is the ideal
 Mercier interchange parameter (which needs to be negative to ensure stability to localized interchange modes),\cite{mercier,ggj,ggj1} and $\nu_{L\,k}$ and $\nu_{S\,k}$
@@ -174,7 +172,12 @@ It is helpful to define the quantities\,\cite{tear9}
 {\mit\Psi}_k&= r_k^{\,\nu_{L\,k}}\left(\frac{\nu_{S\,k}-\nu_{L\,k}}{L_{m_k}^{\,{m_k}}}\right)^{1/2}_{r_k} A_{L\,k},\\[0.5ex]
 {\mit\Delta\Psi}_k &= r_k^{\,\nu_{S\,k}}\left(\frac{\nu_{S\,k}-\nu_{L\,k}}{L_{m_k}^{\,m_k}}\right)^{1/2}_{r_k} (A_{S\,k}^+-A_{S\,k}^-),\label{edpp}
 \end{align}
-at each rational surface in the plasma. Here, the complex parameter ${\mit\Psi}_k$ is a measure of the reconnected helical magnetic flux at the $k$th rational surface, whereas
+at each rational surface in the plasma, where
+\begin{align}
+L_{m_k}^{\,m_k}(r) &= m_k^2\,c_{m_k}^{\,m_k}(r) + n^2\,r^2,\\[0.5ex]
+c_{m_k}^{\,m_k}(r) &=\oint|\nabla r|^{-2}\,\frac{d\theta}{2\pi}.
+\end{align}
+ Here, the complex parameter ${\mit\Psi}_k$ is a measure of the reconnected helical magnetic flux at the $k$th rational surface, whereas
 the complex parameter ${\mit\Delta\Psi}_k$ is a measure of the strength of a localized current sheet that flows parallel to the equilibrium magnetic field at the surface.
 
  It is assumed that ${\mit\Psi}_k = 0$ for all $k$, except for $k=l$. In other words, the NTM only reconnects magnetic flux at the
@@ -202,14 +205,15 @@ H(x)= \left\{\begin{array}{ccc}1&~~~&x<0\\0&&x>0\end{array}\right..
 \end{equation}
 Here, we are assuming that the electron temperature is passively convected by the plasma in the outer region. We are also
 assuming that there is no change in topology of the magnetic flux-surfaces in the outer region. In other words, any topology changes are
-confined to  the inner region. Finally, $\delta T_{e\,0}$ is the reduction in the equilibrium electron temperature in the plasma
+confined to  the inner region. Finally, $\delta T_{e\,0}<0$ is the reduction in the equilibrium electron temperature in the plasma
 core due to the flattening of the temperature profile in the vicinity of the NTM island chain.\cite{chang}
 
 \section{Electron Temperature Perturbation in Inner Region}
 \subsection{Introduction}
 Consider the segment of the inner region in the vicinity of the $l$th rational surface, where the NTM reconnects magnetic flux. 
-Let $x=r-r_{l}$, $X=x/W$, and $\zeta=m_{l}\,\theta-n\,\phi$, where $W$ is the full width of the magnetic separatrix of the NTM island chain. 
-Let search for a single-helicity solution in which the magnetic flux-surfaces in the vicinity of the island chain are contours of ${\mit\Omega}(X,\zeta)$.
+Let $x=r-r_{l}$, $X=x/W$, and $\zeta=m_{l}\,\theta-n\,\phi$, where $W\ll a$ is the full width  of the NTM island chain's magnetic separatrix. 
+Here, $m_l$ is the resonant poloidal mode number at the $l$th rational surface. 
+Let us search for a single-helicity solution in which the magnetic flux-surfaces in the vicinity of the island chain are contours of some function ${\mit\Omega}(X,\zeta)$.
 Now, a magnetic island chain is a helical magnetic equilibrium.\cite{ntm1} As such, the island magnetic-flux surfaces must satisfy the fundamental
 force balance requirement\,\cite{island}
 \begin{equation}\label{e26}
@@ -219,6 +223,7 @@ where
 \begin{equation}\label{poisson}
 [A,B] \equiv \left.\frac{\partial A}{\partial X}\right|_\zeta \left.\frac{\partial B}{\partial\zeta}\right|_X- \left.\frac{\partial B}{\partial X}\right|_\zeta \left.\frac{\partial A}{\partial\zeta}\right|_X.
 \end{equation}
+This requirment stipulates that the current density in the island region must be constant on magnetic flux-surfaces. 
 
 \subsection{Island Magnetic Flux-Surfaces}
 A suitable solution of Eq.~(\ref{e26}) that connects to the ideal-MHD solution in the outer region is\,\cite{island}
@@ -258,51 +263,51 @@ and ${\mit\Omega}=-1$, and whose X-points lie at $\xi=0$, $2\pi$, $Y=0$, and ${\
 
 The inversion of Eq.~(\ref{ekepler}) is very well known:\,\cite{bc}
 \begin{align}\label{e9a1}
-\zeta &= \xi + 2\sum_{n=1,\infty}\left[\frac{J_n(n\,\delta^2)}{n}\right]\sin(n\,\xi),\\[0.5ex]
-\cos\zeta &=-\frac{\delta^2}{2}+\sum_{n=1,\infty}\left[\frac{J_{n-1}(n\,\delta^2)-J_{n+1}(n\,\delta^2)}{n}\right]\cos(n\,\xi),\\[0.5ex]
-\sin\zeta &=\frac{2}{\delta^2}\sum_{n=1,\infty}\left[\frac{J_n(n\,\delta^2)}{n}\right]\sin(n\,\xi),\label{e9a3}\\[0.5ex]
-\cos(m\,\zeta)&= m\sum_{n=1,\infty}\left[\frac{J_{n-m}(n\,\delta^2)-J_{n+m}(n\,\delta^2)}{n}\right]\cos(n\,\xi),\\[0.5ex]
-\sin(m\,\zeta)&= m\sum_{n=1,\infty}\left[\frac{J_{n-m}(n\,\delta^2)+J_{n+m}(n\,\delta^2)}{n}\right]\cos(n\,\xi),\
+\zeta &= \xi + 2\sum_{\mu=1,\infty}\left[\frac{J_\mu(\mu\,\delta^2)}{\mu}\right]\sin(\mu\,\xi),\\[0.5ex]
+\cos\zeta &=-\frac{\delta^2}{2}+\sum_{\mu=1,\infty}\left[\frac{J_{\mu-1}(\mu\,\delta^2)-J_{\mu+1}(\mu\,\delta^2)}{\mu}\right]\cos(\mu\,\xi),\\[0.5ex]
+\sin\zeta &=\frac{2}{\delta^2}\sum_{\mu=1,\infty}\left[\frac{J_\mu(\mu\,\delta^2)}{\mu}\right]\sin(\mu\,\xi),\label{e9a3}\\[0.5ex]
+\cos(\nu\,\zeta)&= \nu\sum_{\mu=1,\infty}\left[\frac{J_{\mu-\nu}(\mu\,\delta^2)-J_{\mu+\nu}(\mu\,\delta^2)}{\mu}\right]\cos(\mu\,\xi),\\[0.5ex]
+\sin(\nu\,\zeta)&= \nu\sum_{\mu=1,\infty}\left[\frac{J_{\mu-\nu}(\mu\,\delta^2)+J_{\mu+\nu}(\mu\,\delta^2)}{\mu}\right]\cos(\mu\,\xi),\
 \end{align}
-for $m>1$. 
+for $\nu>1$. 
 
 \subsection{Plasma Displacement}
 Outside the magnetic separatrix, we can write
 \begin{equation}
 {\mit\Omega}(X,\zeta) = 8\,(X-{\mit\Xi})^2,
 \end{equation}
-where ${\mit\Xi}= \xi^r/W$ is the normalized radial plasma displacement. It follows that
+where ${\mit\Xi}= \xi^r/W$ is the normalized radial plasma displacement. It follows that, in the limit $|X|\gg 1$, 
 \begin{align}
-{\mit\Xi}(X,\zeta)&\simeq -\frac{[{\mit\Omega}(X,\zeta)-8\,X^2 - 8\,{\mit\Xi}^2]}{16\,X}\nonumber\\[0.5ex]
-&=- \frac{\cos(\zeta-\delta^2\,\sin\zeta) +\delta^2\,\cos^2\zeta}{16\,X}+\frac{\delta}{\sqrt{8}}\,\cos\zeta + \frac{{\mit\Xi}^2}{2\,X}\nonumber\\[0.5ex]
-&\simeq - \frac{\cos(\zeta-\delta^2\,\sin\zeta)}{16\,X}+\frac{\delta}{\sqrt{8}}\,\cos\zeta,
+{\mit\Xi}(X,\zeta)&= -\frac{[{\mit\Omega}(X,\zeta)-8\,X^2 - 8\,{\mit\Xi}^2]}{16\,X}\nonumber\\[0.5ex]
+&=\frac{\delta}{\sqrt{8}}\,\cos\zeta - \frac{\cos(\zeta-\delta^2\,\sin\zeta) +\delta^2\,\cos^2\zeta}{16\,X}+ \frac{{\mit\Xi}^2}{2\,X}\nonumber\\[0.5ex]
+&\simeq \frac{\delta}{\sqrt{8}}\,\cos\zeta- \frac{\cos(\zeta-\delta^2\,\sin\zeta)}{16\,X},
 \end{align}
 where use has been made of Eq.~(\ref{e45}).
 Note that ${\mit\Xi}(X,\zeta)$ is an even function of $\zeta$. 
 Let us write
 \begin{equation}
-{\mit\Xi}(X,\zeta)= \sum_{n=0,\infty} {\mit\Xi}_n(X)\,\cos(n\,\zeta).
+{\mit\Xi}(X,\zeta)= \sum_{\nu=0,\infty} {\mit\Xi}_\nu(X)\,\cos(\nu\,\zeta).
 \end{equation}
 Thus,
 \begin{align}
-{\mit\Xi}_1(X) =2 \oint {\mit\Xi}(X,\zeta)\,\cos(\zeta)\,\frac{d\zeta}{2\pi} &= -\frac{1}{8\,X}\oint\cos(\zeta-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}+\frac{\delta}{\sqrt{8}}\nonumber \\[0.5ex]
-&=-\frac{1}{16\,X}\oint\cos(-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}\nonumber\\[0.5ex]
-&\phantom{=}- \frac{1}{16\,X}\oint\cos(2\,\zeta-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}+\frac{\delta}{\sqrt{8}} .
+{\mit\Xi}_1(X) =2 \oint {\mit\Xi}(X,\zeta)\,\cos(\zeta)\,\frac{d\zeta}{2\pi} &= \frac{\delta}{\sqrt{8}}-\frac{1}{8\,X}\oint\cos(\zeta-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}\nonumber \\[0.5ex]
+&=\frac{\delta}{\sqrt{8}} -\frac{1}{16\,X}\oint\cos(-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}\nonumber\\[0.5ex]
+&\phantom{=}- \frac{1}{16\,X}\oint\cos(2\,\zeta-\delta^2\,\sin\zeta)\,\cos\zeta\,\frac{d\zeta}{2\pi}.
 \end{align}
 But,\cite{bc,grx}
 \begin{equation}
-J_n(\delta^2) = \oint\cos(n\,\zeta-\delta^2\,\sin\zeta)\,\frac{d\zeta}{2\pi},
+J_\nu(\delta^2) = \oint\cos(\nu\,\zeta-\delta^2\,\sin\zeta)\,\frac{d\zeta}{2\pi},
 \end{equation}
 so
 \begin{equation}
-{\mit\Xi}_1(X) =- \frac{J_0(\delta^2) + J_2(\delta^2)}{16\,X}+ \frac{\delta}{\sqrt{8}} ,
+{\mit\Xi}_1(X) =\frac{\delta}{\sqrt{8}} - \frac{J_0(\delta^2) + J_2(\delta^2)}{16\,X},
 \end{equation}
 and
 \begin{equation}\label{ea}
-\xi^r_1(r_{l}+x) =- \frac{W^2}{16\,x}\,[J_0(\delta^2)+ J_2(\delta^2)]+ \frac{W\,\delta}{\sqrt{8}} .
+\xi^r_1(r_{l}+x) = \frac{W\,\delta}{\sqrt{8}} - \frac{W^2}{16\,x}\,[J_0(\delta^2)+ J_2(\delta^2)].
 \end{equation}
 
-In the outer region, the equivalent quantity to $\xi_1^r(r)$ is $\xi_{m_{l}}^r(r)$.  It follows from Eq.~(\ref{xi}) that 
+In the outer region, the equivalent quantity to $\xi_1^r(r)$ is $\xi_{m_{l}}^r(r)$.  It follows from Eq.~(\ref{xi}) that, in the limit $|x|\ll a$, 
 \begin{equation}\label{eb}
 \xi_{m_{l}}^r(r_{l}+x)={\mit\Psi}\,\frac{q}{r\,g}\,\frac{\hat{\psi}_{m_{l}}}{m_{l}-n\,q}
 = -{\mit\Psi}\left(\frac{h\,q}{s\,q}\right)_{r_l}\frac{1}{x} + {\cal O}(1),
@@ -324,8 +329,8 @@ and
 
 Equation~(\ref{e46}) gives the relationship between the reconnected magnetic flux, ${\mit\Psi}$, and the island width $W$. This relationship
 differs from the conventional one\,\cite{ntm1} because of corrections due to the radial asymmetry of the island chain. However, the corrections are fairly
-minor. In fact, $0.880\leq J_0(\delta^2)+ J_2(\delta^2)\leq 1$ for $0\leq \delta\leq 1$. Equation~(\ref{e47}) specifies the relationship between the
-island asymmetry parameter, $\delta$,  and the mean radial gradient in $\hat{\psi}_{m_{l}}(r)$ at the rational surface. Note that the matching
+minor. In fact, $0.880\leq J_0(\delta^2)+ J_2(\delta^2)\leq 1$ for $-1\leq \delta\leq 1$. Equation~(\ref{e47}) specifies the relationship between the
+island asymmetry parameter, $\delta$,  and the mean radial plasma displacement at the rational surface. Note that the matching
 between the inner and outer solutions is made at $r=r_{l}\pm W$. 
 
 \subsection{Flux-Surface Average Operator}
@@ -343,16 +348,16 @@ so
 \end{equation}
 where
 \begin{equation}\label{sigma}
-\sigma(\xi) \equiv\frac{d\zeta}{d\xi}=  1+2\sum_{n=1,\infty} J_n(n\,\delta^2)\,\cos(n\,\xi),
+\sigma(\xi) \equiv\frac{d\zeta}{d\xi}=  1+2\sum_{\mu=1,\infty} J_\mu(\mu\,\delta^2)\,\cos(\mu\,\xi),
 \end{equation}
-and use has been made of Eqs.~(\ref{poisson}) and (\ref{e9a1}). 
+and use has been made of Eqs.~(\ref{poisson})--(\ref{ekepler}) and (\ref{e9a1}). 
 In particular,
-\begin{equation}
+\begin{equation}\label{e52}
 [A,{\mit\Omega}] = -\frac{16\,Y}{\sigma}\left.\frac{\partial A}{\partial\xi}\right|_{\mit\Omega}.
 \end{equation}
 
 The flux-surface average operator, $\langle\cdots\rangle$, is the annihilator of $[A,{\mit\Omega}]$ for arbitrary $A(s,{\mit\Omega},\xi)$.\cite{ntm2,island} Here, $s=+1$ for $Y>0$ and $s=-1$ for
-$Y<0$. It follows that
+$Y<0$. It follows from Eq.~(\ref{e52}) that
 \begin{equation}
 \langle A\rangle = \int_{\zeta_0}^{2\pi-\zeta_0}\frac{\sigma(\xi)\,A_+({\mit\Omega},\xi)}{\sqrt{2\,({\mit\Omega}-\cos\xi)}}\,\frac{d\xi}{2\pi}
 \end{equation}
@@ -371,7 +376,8 @@ the electron temperature in the vicinity of the island chain can be written
 \begin{equation}
 T_e(X,\zeta) = T_{e\,l} + s\,W\,T_{e\,l}'\,\tilde{T}({\mit\Omega}),
 \end{equation}
-where $T_{e\,l}= T_{e\,0}(r_l)$ and $T_{e\,l}' = dT_{e\,0}(r_l)/dr$. 
+where $T_{e\,l}= T_{e\,0}(r_l)$ and $T_{e\,l}' = dT_{e\,0}(r_l)/dr$ are the equilibrium electron temperature and  temperature
+gradient, respectively, at the island rational surface. 
 Here, 
 $\tilde{T}({\mit\Omega})$ satisfies\,\cite{ntm2}
 \begin{equation}\label{e30}
@@ -390,7 +396,8 @@ subject to the boundary condition that
 \begin{equation}
 \tilde{T}({\mit\Omega})\rightarrow \frac{{\mit\Omega}^{1/2}}{\sqrt{8}}
 \end{equation}
-as ${\mit\Omega}\rightarrow\infty$. Note that $\tilde{T}=0$ inside the magnetic separatrix, by symmetry.\cite{ntm2}
+as ${\mit\Omega}\rightarrow\infty$. Note that $\tilde{T}({\mit\Omega})=0$ inside the magnetic separatrix, by symmetry, which implies that the electron
+temperature profile is completely flattened in the region enclosed  by the separatix. \cite{ntm2}
 
 Outside the separatrix,
 \begin{equation}
@@ -400,19 +407,19 @@ Let
 \begin{equation}\label{kappa}
 \kappa= \left(\frac{1+{\mit\Omega}}{2}\right)^{1/2}.
 \end{equation}
-Thus, the O-points correspond to $\kappa=0$ and the magnetic separatrix to $\kappa=1$. 
+Thus, the island O-points correspond to $\kappa=0$, and the magnetic separatrix to $\kappa=1$. 
 It follows that 
 \begin{equation}
 \langle Y^2\rangle(\kappa) = \frac{\kappa}{4\pi}\int_0^{\pi/2}\sigma(2\,\vartheta-\pi)\left(1-\frac{\sin^2\vartheta}{\kappa^2}\right)^{1/2}\,d\vartheta.
 \end{equation}
-Thus,
+Thus, making use of Eq.~(\ref{sigma}), 
 \begin{equation}
 \langle Y^2\rangle(\kappa) = \frac{\kappa}{4\pi}\,G(1/\kappa),
 \end{equation}
 where
 \begin{align}
-G(p) &=E_0(p) +2\,\sum_{n=1,\infty}\cos(n\,\pi)\,J_n(n\,\delta^2)\,E_n(p),\\[0.5ex]
-E_n(p) &= \int_0^{\pi/2} \cos(2\,n\,\vartheta)\,(1-p^2\,\sin^2\vartheta)^{1/2}\,d\vartheta.
+G(p) &=E_0(p) +2\,\sum_{\mu=1,\infty}\cos(\mu\,\pi)\,J_\mu(\mu\,\delta^2)\,E_\mu(p),\\[0.5ex]
+E_\mu(p) &= \int_0^{\pi/2} \cos(2\,\mu\,\vartheta)\,(1-p^2\,\sin^2\vartheta)^{1/2}\,d\vartheta.
 \end{align}
 
 Equation~(\ref{e34}) yields
@@ -431,11 +438,7 @@ for $\kappa>1$, subject to the boundary condition that
 \begin{equation}
 \tilde{T}(\kappa)\rightarrow \frac{\kappa}{2}
 \end{equation}
-as $\kappa\rightarrow \infty$. In the limit that $p\rightarrow 0$, 
-\begin{align}
-E_0(p)&=\frac{\pi}{2},\\[0.5ex]
-E_{n>0}(p) &= 0,
-\end{align}
+as $\kappa\rightarrow \infty$. Now, $E_0(0) = \pi/2$, and  $E_{\mu>0}(0) = 0$,
 which implies that $c=\pi/4$. So
 \begin{align}\label{e47}
 \frac{d\tilde{T}}{d\kappa} &= \frac{\pi}{4}\,\frac{1}{G(1/\kappa)},\\[0.5ex]
@@ -444,7 +447,7 @@ F(\kappa) &= \frac{\pi}{4}\int_1^\kappa\frac{d\kappa'}{G(1/\kappa')}
 \end{align}
 for $\kappa>1$. 
 
-\section{Helical Harmonics of Temperature Perturbation}
+\subsection{Helical Harmonics of Temperature Perturbation}
 We can write
 \begin{equation}
 \tilde{T}(X,\zeta)=\sum_{\nu=0,\infty}\delta T_\nu(X)\,\cos(\nu\,\zeta).
@@ -453,7 +456,7 @@ Now,
 \begin{equation}
 \delta T_0(X) = \oint \tilde{T}(X,\zeta)\,\frac{d\zeta}{2\pi},
 \end{equation}
-where the integral is taken at constant $X$. It follows from Eqs.~(\ref{eeven}), (\ref{sigma}),  (\ref{kappa}), and (\ref{e48}) that
+where the integral is performed at constant $X$. It follows from Eqs.~(\ref{eeven}), (\ref{sigma}),  (\ref{kappa}), and (\ref{e48}) that
 \begin{equation}
 \delta T_0(X) = \int_0^{\xi_c}F(\kappa)\,\sigma(\xi)\,\frac{d\xi}{\pi},
 \end{equation}
@@ -465,15 +468,28 @@ for $|Y|<1/2$, and $\xi_c=\pi$ for $|Y|\geq 1/2$. Furthermore,
 \begin{equation}
 \kappa =\left[4\,Y^2 +\cos^2\left(\frac{\xi}{2}\right)\right]^{1/2}.
 \end{equation}
+
 Let 
 \begin{equation}
 \delta T_{0\,\infty} =\lim_{X\rightarrow \infty}\left[X - \delta T_0(X)\right].
 \end{equation}
+This quantity is related to the reduction of the electron temperature in the plasma core, $\delta T_{e\,0}$, due to the flattening of the
+temperature profile inside the island separatrix, as follows:
+\begin{equation}\label{core}
+\delta T_{e\,0} = 2\,W\,T_{e\,l}'\,\delta T_{0\,\infty}.
+\end{equation}
+Here, we are assuming that the equilibrium electron temperature at the plasma boundary is fixed.\cite{chang}
+Figure~\ref{fig3} shows $T_{0\,\infty}$ plotted as a function of the island asymmetry parameter, $\delta$.  
+Note that $T_{0\,\infty}$ is positive, indicating that a magnetic island chain decreases the core electron temperature, assuming that the
+unperturbed electron temperature gradient at the rational surface is negative. [See Eq.~(\ref{core}).] It is clear that a symmetric (i.e., $\delta=0$) magnetic
+island chain give rise to slightly larger reduction in the core temperature than an asymmetric island chain of the same width. 
+
 
 For $\nu>0$, we have
 \begin{equation}
-\delta T_\nu(X) = 2\oint\tilde{T}(X,\zeta)\,\cos(\nu\,\zeta)\,\frac{d\zeta}{2\pi}.
+\delta T_\nu(X) = 2\oint\tilde{T}(X,\zeta)\,\cos(\nu\,\zeta)\,\frac{d\zeta}{2\pi},
 \end{equation}
+where the integral is performed at constant $X$. 
 Integrating by parts, we obtain
 \begin{equation}
 \delta T_\nu(X) = -\frac{2}{\nu}\oint\left.\frac{\partial \tilde{T}}{\partial\zeta}\right|_X\,\sin(\nu\,\zeta)\,\frac{d\zeta}{2\pi}.
@@ -492,8 +508,16 @@ Hence,
 \begin{equation}
 \delta T_\nu(X) =\frac{1}{8\,\nu}\int_0^{\xi_c}\frac{\sin(\nu\,\zeta)\,\tau(\xi)\,\sigma(\xi)}{\kappa\,G(1/\kappa)}\,d\xi,
 \end{equation}
-where use has been made of Eqs.~(\ref{sigma}) and (\ref{e47}). 
+where use has been made of Eqs.~(\ref{sigma}) and (\ref{e47}).
 
+Figure~\ref{fig4} shows the harmonics of the normalized electron temperature  in the inner region, $\delta T_\nu(x/W)$, calculated for an asymmetric
+magnetic island characterized by $\delta=0.5$.  Note that the harmonics are asymmetric in $X$. (By contrast, Fig.~3 of Ref.~\onlinecite{ntm2} shows
+the symmetric harmonics of a symmetric island.) It can be seen that the $\nu=0$ and $\nu=1$ harmonics extend into the outer region, whereas the
+$\nu>1$ harmonics are strongly localized in the vicinity of the island. 
+
+Finally, Fig.~\ref{fig5} shows the normalized electron temperature distribution, $\tilde{T}(x/W,\zeta)$, in the vicinity of an asymmetric magnetic island  characterized by
+$\delta = 0.5$. As expected, the temperature profile is almost completely flattened in the region enclosed  within the magnetic separatrix. 
+ 
 
 \section*{Acknowledgements}
 This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
@@ -504,65 +528,99 @@ available at {\tt https://github.com/rfitzp/TJ}.
 
 \begin{thebibliography}{99}\baselineskip 5ex
 
-\bibitem{iter} T.C.~Hender, J.C~Wesley, J.~Bialek, A.~Bondeson, A.H.~Boozer, R.J~Buttery, A.~Garofalo, T.P~Goodman, R.S.~Granetz, Y.~Gribov, O.~Gruber, 
+\bibitem{iter} T.C.~Hender, J.C~Wesley, J.~Bialek, A.~Bondeson, A.H.~Boozer, R.J.~Buttery, A.~Garofalo, T.P~Goodman, R.S.~Granetz, Y.~Gribov, O.~Gruber, 
 M.~Gryaznevich, et al., Nucl.\  Fusion {\bf 47}, S128 (2007).
 
 \bibitem{wesson} J.A.~Wesson, {\em Tokamaks}, 4th Ed.\ (Oxford University Press, Oxford UK, 2011).
 
 \bibitem{jet} J.A.~Wesson, R.D.~Gill, M.~Hugon, F.C.~Sch\"{u}ller, J.A.~Snipes, D.J.~Ward, D.V.~Bartlett, D.J.~Campbell, P.A.~Duperrex, A.W.~Edwards, 
-R.S.~Granetz, N.A.O.~Gottardi, T.C~ Hender, E.~Lazzaro, P.J~Lomas, N.~Lopes Cardozo, K.F.~Mast, M.F.F.~Nave, N.A.~Salmon, P.~Smeulders, 
+R.S.~Granetz, N.A.O.~Gottardi, T.C~ Hender, E.~Lazzaro, P.J..~Lomas, N.~Lopes Cardozo, K.F.~Mast, M.F.F.~Nave, N.A.~Salmon, P.~Smeulders, 
 P.R.~Thomas, B.J.D.~Tubbing, M.F.~Turner and A.~Weller, Nucl.\ Fusion {\bf 29} 641 (1989). 
 
 \bibitem{tear1} H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).
+
 \bibitem{ntm1} P.H.~Rutherford, Phys.\ Fluids {\bf 16}, 1906 (1973).
+
 \bibitem{ideal3} R.D.~Hazeltine and J.D.~Meiss, Phys.\ Reports {\bf 121}, 1 (1985).
+
 \bibitem{ntm2} R. Fitzpatrick, Phys.\ Plasmas {\bf 2}, 825 (1995).
-\bibitem{ntm3} R.J.~Bickerton, J.W.~Connor and R.J.~Taylor, Nat.\ Phys.\ Sci.\ {\bf 229}, 110 (1971). 
+
+\bibitem{ntm3} R.J.~Bickerton, J.W.~Connor and J.B.~Taylor, Nat.\ Phys.\ Sci.\ {\bf 229}, 110 (1971). 
+
 \bibitem{ntm4} R.J.~La Haye, Phys.\ Plasmas {\bf 13}, 055501 (2006).
+
 \bibitem{ntm5} M.~Maraschek, Nucl.\ Fusion {\bf 52}, 074007 (2007). 
+
+\bibitem{vries} P.C.~de Vries, M.F.~Johnson, B.~Alper, P.~Buratti, T.C.~Hender, H.R.~Koslowski, V.~Riccardo and JET-EFDA Contributors,  Nucl.\ Fusion {\bf 51},  053018 (2011).
+
+\bibitem{sawtooth} O.~Sauter, E.~Westerhof, M.L.~Mayoral, B.~Alper, P.A.~Belo, R.J.~Buttery, A.~Gondhalekar, T.~Hellsten, T.C.~Hender, 
+D.F.~Howell, T.~Johnson, P.~Lamalle, M.J.~Mantsinen, F.~Milani, M.F.F.~Nave, F.~Nguyen, A.L.~Pecquet, S.D.~Pinches, S.~Podda and J.~Rapp,
+Phys.\ Rev.\ Lett.\ {\bf 88}, 105001 (2002).
+
+\bibitem{elm} R.J.~La Haye, C.~Chrystal, E.J.~Strait, J.D.~Callen, C.C.~Hegna, E.C.~Howell, M.~Okabayashi and R.S.~Wilcox, Nucl.\ Fusion {\bf 62}, 056017 (2022).
+
+\bibitem{nstx}  R.~Fitzpatrick, R.~Maingi, J.-K.~Park and S.~Sabbagh, Phys.\ Plasmas {\bf 30}, 072505 (2023).
+
 \bibitem{ntm6} E.D.~Fredrickson, Phys.\ Plasmas {\bf 9}, 548 (2002).
 
 \bibitem{prater} R.~Prater, Phys.\ Plasmas {\bf 13}, 055501 (2006).
 
 \bibitem{eccd1} G.~Gantenbein, H.~Zohm, G.~Giruzzi, S.~G\"{u}nter, F.~Leuterer, M.~Maraschek, J.~Meskat, Q.~Yu,  ASDEX Upgrade Team and ECRH-Group (AUG), 
 Phys.\ Rev.\ Lett.\ {\bf 85}, 1242 (2000). 
+
 \bibitem{eccd2} A.~Isayama, Y.~Kamada, S.~Ide, K.~Hamamatsu, T.~Oikawa, T.~Suzuki, Y.~Neyatani, T.~Ozeki, Y.~Ikeda, K.~Kajiwara and the JT-60 team,  
 Plasma Phys.\  Control.\ Fusion {\bf 42}, L37 (2000).
+
 \bibitem{eccd3} R.J.~La Haye,  S.~G\"{u}nter,  D.A.~Humphreys,  J.~Lohr,  T.C.~Luce,  M.E.~Maraschek,  C.C.~Petty, R.~Prater,  J.T.~Scoville and E.J.~Strait,
  Phys.\ Plasmas {\bf 9}, 2051 (2002).
+
 \bibitem {eccd4} Y.~Zhang, X.J.~Wang, F.~Hong, W.~Zhang, H.D.~Xu, T.H.~Shi, E.Z.~Li, Q.~Ma, H.L.~Zhao, S.X.~Wang, Y.Q.~Chu, H.Q.~Liu, Y.W.~Sun, 
 X.D.~Zhang, Q.~Yu, J.P.~Qian, X.Z.~Gong, J.S.~Hu, K.~Lu, Y.T.~Song and the EAST Team, 
  Nucl.\ Fusion {\bf 64},  076016 (2024).
-\bibitem{eccd5} Y.S.~Park, M.H.~Woo, S.A.~Sabbagh, H.S.~Han, B.H.~Park, J.S.~Kang and H.S.~Kim,  Plasma Phys.\ Control.\ Fusion {\bf 66}, 125013
-(2024).
+
+\bibitem{eccd5} Y.S.~Park, M.H.~Woo, S.A.~Sabbagh, H.S.~Han, B.H.~Park, J.S.~Kang and H.S.~Kim,  Plasma Phys.\ Control.\ Fusion {\bf 66}, 125013 (2024).
+
 \bibitem{eccd6} H.~van den Brand, M.R.~de Baar, N.J.~Lopes-Cardozo and E.~Westerhof, Nucl.\ Fusion {\bf 53}, 013005 (2013). 
   
 \bibitem{ece1} M.~Bornatici, R.~Cano, O.~de Barbieri and F.~Englemann, Nucl.\ Fusion {\bf 23}, 1153 (1983). 
+
 \bibitem{ece2} M.~Bornatici, F.~Englemann and U.~Ruffina, Sov.\ J.\ Quantum Electron.\ {\bf 13}, 68 (1983).
+
 \bibitem{ece4} J.~Berrino, E.~Lazzaro, S.~Cirant, G.~D'Antona, F.~Gandini, E.~Minardi and G.~Granuci, Nucl.\ Fusion {\bf 45}, 1350 (2005).
+
 \bibitem{ece4a} J.P.~Ziegel, W.L.~Rowan and F.L.~Waelbroeck, Nucl.\ Fusion {\bf 64}, 126032 (2024).
 
 \bibitem{tear2} J.W.~Connor, R.J.~Hastie and J.B.~Taylor, Phys.\ Fluids B {\bf 3}, 1539 (1991).
+
 \bibitem{tear3} J.W.~Connor,  S.C.~Cowley, R.J.~Hastie,  T.C.~Hender,  A.~Hood  and T.J.~Martin,  Phys.\ Fluids {\bf 31}, 577 (1988).
+
 \bibitem{tear5} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin and C.M.~Roach, Nucl.\ Fusion {\bf 33}, 1533 (1993).
 
 \bibitem{ece6} D.~De Lazzari and F.~Westerhof, Plasma Phys.\ Control.\ Fusion {\bf 53}, 035020 (2011).
+
 \bibitem{ece5} J.P.~Ziegel, W.L.~Rowan and F.L.~Waelbroeck, Rev.\ Sci.\ Instrum.\ {\bf 95}, 073510 (2024).
 
 \bibitem{tear4} A.~Pletzer and R.L.~Dewar, J.\ Plasma Physics {\bf 45}, 427 (1991).
+
 \bibitem{tear6} A.H.~Glasser, Z.R.~Wang and J.-K.~Park, Phys.\ Plasmas {\bf 23}, 112506 (2016).
+
 \bibitem{tear7} A.S.~Glasser, E.~Kolemen and A.H.~Glasser, Phys.\ Plasmas {\bf 25}, 032507 (2018).
+
 \bibitem{tear8} A.S.~Glasser and E.~Koleman, Phys.\ Plasmas {\bf 25}, 082502 (2018). 
+
 \bibitem{tear9} R. Fitzpatrick, Phys.\ Plasmas {\bf 31}, 102507 (2024).
+
 \bibitem{tear10} R.~Fitzpatrick,  {\em Investigation of  Tearing Mode Stability Near Ideal Stability Boundaries Via Asymptotic Matching Techniques}, submitted
 to Physics of Plasmas (2025).
 
 \bibitem{island} R.~Fitzpatrick, Phys.\ Plasmas {\bf 23}, 122502 (2016).
 
-\bibitem{exp} R.~Fitzpatrick, Phys. Plasmas {\bf 31}, 082505 (2024).
+\bibitem{exp} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31}, 082505 (2024).
 
 \bibitem{mercier} C.~Mercier, Nucl.\ Fusion {\bf 1}, 47 (1960).
+
 \bibitem{ggj} A.H.~Glasser, J.M.~Greene and J.L.~Johnson, Phys.\ Fluids {\bf 18}, 875 (1975).
+
 \bibitem{ggj1} A.H.~Glasser, J.M.~Greene  and J.L.~Johnson, Phys.\ Fluids {\bf 19}, 567 (1976).
 
 \bibitem{chang} Z.~Chang and J.D.~Callen,  Nucl.\ Fusion {\bf 30}, 219 (1990).
@@ -571,8 +629,7 @@ to Physics of Plasmas (2025).
 
 \bibitem{bc} D.~Brouwer and G.M.~Clemance, {\em Methods of Celestial Mechanics}. (Academic Press, New York NY, 1961).  Ch.~II.
 
-\bibitem{grx} I.S.~Gradshteyn, and I.M.~Ryzhik, {\em Table of Integrals, Series, and Products}, Corrected and Enlarged Edition. (Academic Press, New York NY, 1980). Sect.~3.719.
-
+\bibitem{grx} I.S.~Gradshteyn and I.M.~Ryzhik, {\em Table of Integrals, Series, and Products}, Corrected and Enlarged Edition. (Academic Press, New York NY, 1980). Sect.~3.719.
 
 \end{thebibliography}
 
@@ -584,14 +641,30 @@ lines show the magnetic separatrix (upper and lower curves) and the contour $Y=0
 lines show equally-spaced contours of $Y$, whereas the vertical dotted lines show equally-spaced contours of $\xi$.  \label{fig1}}
 \end{figure}
 
-
 \begin{figure}
 \centerline{\includegraphics[width=0.9\textwidth]{FluxY.eps}}
 \caption{The thin solid curves show the contours of ${\mit\Omega}(Y,\xi)$ evaluated for $\delta=0.5$. The thick solid
 lines show the magnetic separatrix (upper and lower curves) and the contour $Y=0$ (middle curve).   \label{fig2}}
 \end{figure}
 
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{T0infty.pdf}}
+\caption{The island temperature flattening parameter, $T_{0\,\infty}$, plotted as a function of the island asymmetry parameter, $\delta$.  \label{fig3}}
+\end{figure}
 
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{dTh.pdf}}
+\caption{The helical harmonics of the normalized electron temperature  in the inner region, $\delta T_\nu(x/W)$, calculated for an asymmetric
+magnetic island characterized by $\delta=0.5$.  The curve labelled $1$ actually
+shows $\delta T_1(x/W) +  \delta/\sqrt{8}$. The vertical dotted lines show the locations of the inner limit of the magnetic separatrix,
+the island X-point, and the outer limit of the magnetic separatrix, in order from the left to the right.\label{fig4}}
+\end{figure}
 
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{dTe.png}}
+\caption{Contours of the normalized electron temperature profile, $\tilde{T}(x/W,\zeta)$, in the vicinity of an asymmetric magnetic island  characterized by
+$\delta = 0.5$. The thick solid line shows the magnetic separatrix, the dotted line shows the rational surface, and the black dot shows the
+island O-point.\label{fig5}}
+\end{figure}
 
 \end{document}

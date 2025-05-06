@@ -15,10 +15,12 @@ p   = np.asarray(ds['InputParameters'])
 
 delta = p[5];
 
+fontsize = 17
+
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'Island Code: Harmonics of Temperature Perturbation')
-plt.rc ('xtick', labelsize = 15) 
-plt.rc ('ytick', labelsize = 15)
+plt.rc ('xtick', labelsize = fontsize) 
+plt.rc ('ytick', labelsize = fontsize)
 
 nharm = dT.shape[0]
 
@@ -44,9 +46,10 @@ plt.axvline ( 0.5 - delta/8.**0.5, color = 'black', linewidth = 1.5, linestyle =
 plt.axvline ( 0.0 + delta/8.**0.5, color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (-0.5 - delta/8.**0.5, color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$x/W$', fontsize = "15")
-plt.legend (fontsize = "15");
+plt.xlabel (r'$x/W$', fontsize = fontsize)
+plt.legend (fontsize = fontsize);
 
 plt.tight_layout ()
 
 plt.show () 
+#plt.savefig ("dTh.pdf")
