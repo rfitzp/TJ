@@ -235,9 +235,10 @@ for $|Y|<1/2$, and $\xi_c=\pi$ for $|Y|\geq 1/2$. Furthermore,
 k =\left[4\,Y^2 +\cos^2\left(\frac{\xi}{2}\right)\right]^{1/2}.
 \end{equation}
 Let 
-\begin{equation}
-\delta T_{0\,\infty} =\lim_{X\rightarrow \infty}\left[X - \delta T_0(X)\right].
-\end{equation}
+\begin{align}
+\delta T_{0\,+} &=\lim_{X\rightarrow \infty}\left[X - \delta T_0(X)\right],\\[0.5ex]
+\delta T_{0\,-} &=-\lim_{X\rightarrow -\infty}\left[X - \delta T_0(X)\right].
+\end{align}
 
 For $\nu>0$, we have
 \begin{equation}
@@ -374,44 +375,54 @@ The electron temperature measured by the ece diagnostic is
 T_e(R_\omega) = \frac{\int_{R_{\rm min}}^{R_\omega} T_e(R)\,F(R,R_\omega)\,dR}  {\int_{R_{\rm min}}^{R_\omega} F(R,R_\omega)\,dR}.
 \end{equation}
 
-\section{Electron Cyclotron Current Drive}
-The stabilizing electron cyclotron current drive contribution to the Rutherford equation is
+\section{Rutherford Equation}
+The Rutherford equation in the wide island limit takes the form
 \begin{equation}
-{\mit\Delta}_{eccd} \,W= -16\,J_0\int_{-1}^\infty J_+({\mit\Omega})\,\langle\cos\zeta\rangle\,d{\mit\Omega},
+G_{\rm ruth}\,\tau_R\,\frac{d}{dt}\!\left(\frac{W}{r_s}\right) = E_{ss} +\left(\alpha_b\,\frac{L_s}{L_T}\,G_{\rm boot} + J_{\rm max}\,G_{\rm eccd}\right)
+\frac{r_s}{W},
 \end{equation}
-where $J(x,\zeta)$ is the normalized driven current density. 
-Suppose that
-\begin{equation}
-J(x,\zeta)= \frac{1}{\sqrt{2\pi}\,\sigma}\exp\!\left[-\frac{(x-d)^2}{2\,\sigma^2}\right]\left[\frac{1-\cos(\zeta-{\mit\Delta}\zeta)}{2}\right].
-\end{equation}
-It follows that the total eccd current is
-\begin{equation}
-I_{eccd} = 2\pi\,\frac{B_0}{\mu_0}\,\frac{\epsilon_s\,s_s}{q_s}\,J_0.
-\end{equation}
-However, only the component of $J(x,\zeta)$ that is even in $\zeta$ contributes to ${\mit\Delta}_{eccd}$, so 
-\begin{equation}
-J(x,\zeta)= \frac{1}{\sqrt{2\pi}\,\sigma}\exp\!\left[-\frac{(x-d)^2}{2\,\sigma^2}\right]\left(\frac{1-\cos\zeta\,\cos{\mit\Delta}\zeta}{2}\right).
-\end{equation}
-Let $\hat{\sigma}=\sigma/W$ and $\hat{d}=d/W$.  It follows that
-\begin{equation}
-J(s,Y,\zeta) =  \frac{1}{\sqrt{2\pi}\,\sigma}\exp\!\left[-\frac{(s\,Y+\delta\,\cos\zeta/\sqrt{8}-\hat{d})^2}{2\,\hat{\sigma}^2}\right]\left(\frac{1-\cos\zeta\,\cos{\mit\Delta}\zeta}{2}\right).
-\end{equation}
-Note that 
-\begin{equation}
-Y = \frac{\sqrt{k^2-\cos^2(\xi/2)}}{2}.
-\end{equation}
-Thus,
-\begin{equation}
-J_+(Y,\zeta) = \frac{J(1,Y,\zeta) + J(-1,Y,\zeta)}{2}.
-\end{equation}
+where
+\begin{align}
+G_{\rm ruth} &= 2\int_{-1}^\infty \frac{(\langle\cos\xi\rangle + \delta^2\,\langle \sin\xi\,\sin\zeta\rangle)\,\langle \cos\zeta\rangle}{\langle 1\rangle}\,d{\mit\Omega},\\[0.5ex]
+G_{\rm boot} &= \int_1^\infty \frac{\langle \cos\zeta\rangle}{\langle 1\rangle\,\langle Y^2\rangle}\,d{\mit\Omega},\\[0.5ex]
+G_{\rm eccd} &= - 16\int_{-1}^\infty \frac{\langle J_+\rangle\,\langle \cos\zeta\rangle}{\langle 1\rangle}\,d{\mit\Omega},
+\end{align}
+Here,  $J_+$ is the component of the normalized eccd current drive profile that is even in $Y$ and $\zeta$. 
 Moreover, 
+\begin{align}
+\tau_R &= \left(\frac{\mu_0\,r^2}{\eta_\parallel}\right)_{r_s},\\[0.5ex]
+L_s&= \left(\frac{R_0\,q}{s}\right)_{r_s},\\[0.5ex]
+L_T &= -\left(\frac{T_{e\,0}}{dT_{e\,0}/dr}\right)_{r_s},\\[0.5ex]
+\alpha_b &= \left(f_s\,\frac{q}{\epsilon}\,\beta\right)_{r_s},\\[0.5ex]
+\epsilon &= \frac{r}{R_0},\\[0.5ex]
+f_s&= 1.46\,\epsilon^{1/2},\\[0.5ex]
+\beta &= \frac{\mu_0\,n_e\,T_{e\,0}}{B_0^{\,2}}.
+\end{align}
+Finally., 
 \begin{equation}
-J_+({\mit\Omega}) = \frac{\langle J_+(Y,\zeta)\rangle}{\langle 1\rangle}.
+J_{\rm max} = \frac{\mu_0\,L_s}{B_0}\,j_{\rm max},
+\end{equation}
+where $j_{\rm max}$ is the peak electron cyclotron driven current density. 
+
+Suppose that the normalized current drive profile is
+\begin{equation}
+J(x,\zeta)= \exp\!\left[-\frac{(x-d)^2}{2\,D^2}\right]\left[\frac{1-\cos(\zeta-\pi-{\mit\Delta}\zeta)}{2}\right],
+\end{equation}
+where $D$ is the radial width of the profile, $d$ is the radial offset between the peak current and the rational surface, and
+${\mit\Delta}\zeta$ is the angular offset between the peak current and the O-point.
+However, only the component of $J(x,\zeta)$ that is even in $\zeta$ contributes to $J_+$, so we can effectively write
+\begin{equation}
+J(x,\zeta)= \exp\!\left[-\frac{(x-d)^2}{2\,D^2}\right]\left(\frac{1+\cos\zeta\,\cos{\mit\Delta}\zeta}{2}\right).
+\end{equation}
+Let $\hat{D}=D/W$ and $\hat{d}=d/W$.  It follows that
+\begin{equation}
+J(s,Y,\zeta) =  \exp\!\left[-\frac{(s\,Y+\delta\,\cos\zeta/\sqrt{8}-\hat{d})^2}{2\,\hat{D}^2}\right]\left(\frac{1+\cos\zeta\,\cos{\mit\Delta}\zeta}{2}\right).
 \end{equation}
 Thus,
 \begin{equation}
-{\mit\Delta}_{eccd} \,W= -64\int_0^\infty \frac{\langle J_+\rangle\,\langle\cos\zeta\rangle}{\langle 1\rangle}\,k\,dk.
+J_+(Y,\zeta) = \frac{J(1,Y,\zeta) + J(-1,Y,\zeta)}{2},
 \end{equation}
+
 Finally,
 \begin{equation}
 \langle A(k,\xi)\rangle(k) = \frac{1}{\pi}\int_0^{\pi/2}\frac{\sigma(\xi)\,A(k,\xi)}{\sqrt{1-k^2\,\sin^2\theta}}\,d\theta

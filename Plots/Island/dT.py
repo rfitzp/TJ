@@ -6,7 +6,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4 as nc
-ReBu = plt.get_cmap ('prism')
+ReBu = plt.get_cmap ('seismic') #plt.get_cmap ('prism')
 
 ncont = 360
 
@@ -49,6 +49,12 @@ plt.plot (z, x0, color = 'black', linewidth = 2, linestyle = 'dotted')
 plt.plot ([1.], [-delta/8.**0.5], marker = 'o', markersize = 4, color = "black")
 
 plt.contourf (z, x, t, ncont, cmap = ReBu)
+
+levsp = np.arange (0.01, 1., 0.1)
+levsm = - np.arange (0.02, 1., 0.1)
+levs  = np.concatenate((levsm[::-1], levsp))
+
+plt.contour (z, x, t, levels = levs, colors = 'black', linestyles = 'solid', linewidths = 0.5)  
 
 plt.ylabel (r'$x/W$',       fontsize = "17")
 plt.xlabel (r'$\zeta/\pi$', fontsize = "17")

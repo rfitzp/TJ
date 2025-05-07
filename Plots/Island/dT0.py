@@ -15,7 +15,7 @@ p  = np.asarray(ds['InputParameters'])
 g  = np.asarray(ds['para'])
 
 delta = p[5]
-Finf  = g[0]
+Finf  = g[1]
 
 dT0 = dT[0,:] - x + Finf 
 

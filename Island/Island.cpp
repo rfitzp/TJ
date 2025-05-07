@@ -1,7 +1,7 @@
 #include "Island.h"
 
 #define NINPUT 14
-#define NPARA 1
+#define NPARA 3
 
 // ###########
 // Constructor
@@ -113,7 +113,7 @@ Island::Island ()
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Nh   = %-4d Nb =  %-4d Nz    = %-4d NX   = %-4d       Xmax = %-10.3e delta = %10.3e\n",
 	  Nh, Nb, Nz, NX, Xmax, delta);
-  printf ("ECCD = %-1d    Nk = %-4d  Nscan = %-4d Kmax = %-10.3e Wmax = %-10.3e D     = %10.3e Dmax = %-10.3e W = %-10.3e\n",
+  printf ("ECCD = %-2d   Nk = %-4d  Nscan = %-4d Kmax = %-10.3e Wmax = %-10.3e D     = %10.3e Dmax = %-10.3e W = %-10.3e\n",
 	  ECCD, Nk, Nscan, Kmax, Wmax, D, Dmax, W);
 
   sprintf (buffer, "../Outputs/Island/Island.nc");
@@ -411,9 +411,11 @@ void Island::Solve (int FLAG)
   // ....................
   // Calculate T0_infinty
   // ....................
-  T0inf = XX[NX-1] - deltaTh (0, NX-1);
-  
-  printf (" T0_infty = %11.4e\n", T0inf);
+  T0min = - (XX[0]    - deltaTh (0, 0));
+  T0pls =    XX[NX-1] - deltaTh (0, NX-1);
+  T0inf = T0min + T0pls;
+
+  printf (" T0_minus = %11.4e T0_plus = %11.4e T0_infty = %11.4e\n", T0min, T0pls, T0inf);
 
   if (FLAG)
     {
@@ -467,6 +469,11 @@ void Island::Solve (int FLAG)
       Flux0 = new double[2*Nk];
       Flux1 = new double[2*Nk];
       Flux2 = new double[2*Nk];
+      Flux3 = new double[2*Nk];
+      Flux4 = new double[2*Nk];
+      Flux5 = new double[2*Nk];
+      Flux6 = new double[2*Nk];
+      Flux7 = new double[2*Nk];
       WW    = new double[Nscan];
       DD    = new double[Nscan];
 
@@ -474,6 +481,9 @@ void Island::Solve (int FLAG)
       JX.resize (2*Nk, Nscan);
       IO.resize (2*Nk, Nscan);
       IX.resize (2*Nk, Nscan);
+
+      G1 = new double[2*Nk];
+      G2 = new double[2*Nk];
        
       for (int i = 0; i < Nk; i++)
 	kkk[i] = double (i) /double (Nk);
@@ -485,12 +495,12 @@ void Island::Solve (int FLAG)
       for (int j = 0; j < Nscan; j++)
 	DD[j] = - Dmax + 2.*Dmax * double (j) /double (Nscan-1);
 
-       // .............................
-       // Calculate <1> and <cos(zeta)>
-       // .............................
+       // ...............................
+       // Calculate flux surface averages
+       // ...............................
        double theta;
-       Y   = new double[2+2*Nscan];
-       err = new double[2+2*Nscan];
+       Y   = new double[5+2*Nscan];
+       err = new double[5+2*Nscan];
 
        rhs_chooser = 3;
 
@@ -510,39 +520,52 @@ void Island::Solve (int FLAG)
 
 	   Y[0]  = 0.;
 	   Y[1]  = 0.;
+	   Y[2]  = 0.;
+	   Y[3]  = 0.;
+	   Y[4]  = 0.;
 	   for (int j = 0; j < 2*Nscan; j++)
 	     {
-	       Y[2         + j] = 0.;
-	       Y[2 + Nscan + j] = 0.;
+	       Y[5         + j] = 0.;
+	       Y[5 + Nscan + j] = 0.;
 	     }
 
 	   do
 	     {
-	       CashKarp45Adaptive (2+2*Nscan, theta, Y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+	       CashKarp45Adaptive (5+2*Nscan, theta, Y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
 	     }
 	   while (theta < M_PI/2.);
-	   CashKarp45Fixed (2+2*Nscan, theta, Y, err, M_PI/2. - theta);
+	   CashKarp45Fixed (5+2*Nscan, theta, Y, err, M_PI/2. - theta);
 
 	   Flux0[i] = Y[0];
 	   Flux1[i] = Y[1];
-	   Flux2[i] = kval * Y[1]/Y[0];
+	   Flux2[i] = kval * Y[1] /Y[0];
+	   Flux3[i] = Y[2];
+	   Flux4[i] = Y[3];
+	   Flux5[i] = Y[4];
+	   Flux6[i] = kval * (Flux3[i] + delta*delta * Flux4[i]) * Flux1[i] /Flux0[i];
+	   if (kval < 1.)
+	     Flux7[i] = 0.;
+	   else
+	     Flux7[i] = kval * Flux1[i] /Flux0[i] /Flux5[i];
+	   G1[i] = 8. * Flux6[i];
+	   G2[i] = 4. * Flux7[i];
 
 	   for (int j = 0; j < Nscan; j++)
 	     {
-	       JO(i, j) = Y[2         + j];
-	       JX(i, j) = Y[2 + Nscan + j];
+	       JO(i, j) = Y[5         + j];
+	       JX(i, j) = Y[5 + Nscan + j];
 
 	       IO(i, j) = - 64. * Flux2[i] * JO(i, j);
 	       IX(i, j) = - 64. * Flux2[i] * JX(i, j);
+
 	     }
 	 }
        printf ("\n");
 
        delete[] Y; delete[] err;
   
-
        // ...............................
-       // Inerpolate IO and IX functions
+       // Interpolate IO and IX functions
        // ...............................
        IO_spline = new gsl_spline*      [Nscan];
        IX_spline = new gsl_spline*      [Nscan];
@@ -556,10 +579,11 @@ void Island::Solve (int FLAG)
 	   IO_acc   [j] = gsl_interp_accel_alloc ();
 	   IX_acc   [j] = gsl_interp_accel_alloc ();
 	 }
+
        
        double* data1 = new double[2*Nk];
        double* data2 = new double[2*Nk];
-       
+
        for (int j = 0; j < Nscan; j++)
 	 {
 	   for (int i = 0; i < 2*Nk; i++)
@@ -571,8 +595,19 @@ void Island::Solve (int FLAG)
 	   gsl_spline_init (IO_spline[j], kkk, data1, 2*Nk);
 	   gsl_spline_init (IX_spline[j], kkk, data2, 2*Nk);
 	 }
-       
+     
        delete[] data1; delete[] data2;
+
+       // ...............................
+       // Interpolate G1 and G2 functions
+       // ...............................
+       G1_spline = gsl_spline_alloc       (gsl_interp_cspline, 2*Nk);
+       G2_spline = gsl_spline_alloc       (gsl_interp_cspline, 2*Nk);
+       G1_acc    = gsl_interp_accel_alloc ();
+       G2_acc    = gsl_interp_accel_alloc ();
+       
+       gsl_spline_init (G1_spline, kkk, G1, 2*Nk);
+       gsl_spline_init (G2_spline, kkk, G2, 2*Nk);
        
        // ...........................
        // Calculate Delta_eccd values
@@ -581,34 +616,40 @@ void Island::Solve (int FLAG)
        DeltaX = new double[Nscan];
        
        double k;
-       Y   = new double[2*Nscan];
-       err = new double[2*Nscan];
+       Y   = new double[2+2*Nscan];
+       err = new double[2+2*Nscan];
        
        rhs_chooser = 4;
        
        count = 0;
        h     = h0;
        k     = 0.;
-       
+
+       Y[0] = 0.;
+       Y[1] = 0.;
        for (int j = 0; j < 2*Nscan; j++)
 	 {
-	   Y[j] = 0.;
+	   Y[2+j] = 0.;
 	 }
        
        do
 	 {
-	   CashKarp45Adaptive (2*Nscan, k, Y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+	   CashKarp45Adaptive (2+2*Nscan, k, Y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
 	 }
        while (k < Kmax);
-       CashKarp45Fixed (2*Nscan, k, Y, err, Kmax - k);
-       
+       CashKarp45Fixed (2+2*Nscan, k, Y, err, Kmax - k);
+
+       DeltaR = Y[0];
+       DeltaB = Y[1];
        for (int j = 0; j < Nscan; j++)
 	 {
-	   DeltaO[j] = Y[        j];
-	   DeltaX[j] = Y[Nscan + j];
+	   DeltaO[j] = Y[2 +         j];
+	   DeltaX[j] = Y[2 + Nscan + j];
 	 }
        
        delete[] Y; delete[] err;
+
+       printf ("Delta_ruth = %10.3e Delta_boot = %10.3e\n", DeltaR, DeltaB);
     }
 
   // .........................
@@ -647,7 +688,9 @@ void Island::Solve (int FLAG)
 
   if (ECCD && FLAG)
     {
-      delete[] kkk; delete[] Flux0; delete[] Flux1; delete[] Flux2; delete[] WW; delete[] DD;
+      delete[] kkk;   delete[] Flux0; delete[] Flux1; delete[] Flux2; delete[] WW;    delete[] DD;
+      delete[] Flux3; delete[] Flux4; delete[] Flux5; delete[] Flux6; delete[] Flux7;
+      delete[] G1;    delete[] G2;
 
       for (int j = 0; j < Nscan; j++)
 	{
@@ -657,6 +700,9 @@ void Island::Solve (int FLAG)
 	  gsl_interp_accel_free (IX_acc[j]);
 	}
       delete[] IO_spline; delete[] IX_spline; delete[] IO_acc; delete[] IX_acc;
+
+      gsl_spline_free (G1_spline);    gsl_spline_free (G2_spline);
+      gsl_interp_accel_free (G1_acc); gsl_interp_accel_free (G2_acc);
 
       delete[] DeltaO; delete[] DeltaX;
     }
@@ -694,7 +740,9 @@ void Island::WriteNetcdf (int FLAG)
   Input[12] = Dmax;
   Input[13] = W;
    
-  Para[0] = T0inf;
+  Para[0] = T0min;
+  Para[1] = T0pls;
+  Para[2] = T0inf;
 
   int cnt = 0;
   for (int i = 0; i < Nb; i++)
@@ -811,6 +859,16 @@ void Island::WriteNetcdf (int FLAG)
 	  f1_x.putVar (Flux1);
 	  NcVar f2_x = dataFile.addVar ("Flux_2", ncDouble, k_d);
 	  f2_x.putVar (Flux2);
+	  NcVar f3_x = dataFile.addVar ("Flux_3", ncDouble, k_d);
+	  f3_x.putVar (Flux3);
+	  NcVar f4_x = dataFile.addVar ("Flux_4", ncDouble, k_d);
+	  f4_x.putVar (Flux4);
+	  NcVar f5_x = dataFile.addVar ("Flux_5", ncDouble, k_d);
+	  f5_x.putVar (Flux5);
+	  NcVar f6_x = dataFile.addVar ("Flux_6", ncDouble, k_d);
+	  f6_x.putVar (Flux6);
+	  NcVar f7_x = dataFile.addVar ("Flux_7", ncDouble, k_d);
+	  f7_x.putVar (Flux7);
 	  NcVar JO_x = dataFile.addVar ("JO",     ncDouble, J_d);
 	  JO_x.putVar (JO_y);
 	  NcVar JX_x = dataFile.addVar ("JX",     ncDouble, J_d);
@@ -1144,9 +1202,15 @@ void Island::CashKarp45Rhs (double z, double* Y, double* dYdz)
 	  double xi    = 2. * acos (kval * sint);
 	  double sigma = GetSigma   (xi);
 	  double cosz  = GetCosZeta (xi);
+	  double cosx  = cos (xi);
+	  double sinx  = sin (xi) * GetSinZeta (xi);
+	  double Y2    = (kval*kval - cos (xi/2.) * cos (xi/2.)) /4.;
 	  
 	  dYdz[0] = sigma        /sqrt (1. - kval*kval * sint*sint) /M_PI;
 	  dYdz[1] = sigma * cosz /sqrt (1. - kval*kval * sint*sint) /M_PI;
+	  dYdz[2] = sigma * cosx /sqrt (1. - kval*kval * sint*sint) /M_PI;
+	  dYdz[3] = sigma * sinx /sqrt (1. - kval*kval * sint*sint) /M_PI;
+	  dYdz[4] = sigma * Y2   /sqrt (1. - kval*kval * sint*sint) /M_PI;
 
 	  for (int j = 0; j < Nscan; j++)
 	    {
@@ -1162,8 +1226,8 @@ void Island::CashKarp45Rhs (double z, double* Y, double* dYdz)
 		  Dval = DD[j];
 		}
 
-	      dYdz[2         + j] = GetJOplus (kval, xi, Wval, Dval) * sigma /sqrt (1. - kval*kval * sint*sint) /M_PI;
-	      dYdz[2 + Nscan + j] = GetJXplus (kval, xi, Wval, Dval) * sigma /sqrt (1. - kval*kval * sint*sint) /M_PI;
+	      dYdz[5         + j] = GetJOplus (kval, xi, Wval, Dval) * sigma /sqrt (1. - kval*kval * sint*sint) /M_PI;
+	      dYdz[5 + Nscan + j] = GetJXplus (kval, xi, Wval, Dval) * sigma /sqrt (1. - kval*kval * sint*sint) /M_PI;
 	    }
 	}
       else 
@@ -1171,9 +1235,15 @@ void Island::CashKarp45Rhs (double z, double* Y, double* dYdz)
 	  double xi    = M_PI - 2.*z;
 	  double sigma = GetSigma   (xi);
 	  double cosz  = GetCosZeta (xi);
+	  double cosx  = cos (xi);
+	  double sinx  = sin (xi) * GetSinZeta (xi);
+	  double Y2    = (kval*kval - cos (xi/2.) * cos (xi/2.)) /4.;
 	  
 	  dYdz[0] = sigma        /sqrt (kval*kval - sint*sint) /M_PI;
 	  dYdz[1] = sigma * cosz /sqrt (kval*kval - sint*sint) /M_PI;
+	  dYdz[2] = sigma * cosx /sqrt (kval*kval - sint*sint) /M_PI;
+	  dYdz[3] = sigma * sinx /sqrt (kval*kval - sint*sint) /M_PI;
+	  dYdz[4] = sigma * Y2   /sqrt (kval*kval - sint*sint) /M_PI;
 
 	  for (int j = 0; j < Nscan; j++)
 	    {
@@ -1190,24 +1260,35 @@ void Island::CashKarp45Rhs (double z, double* Y, double* dYdz)
 		  Dval = DD[j];
 		}
 	      
-	      dYdz[2         + j] = GetJOplus (kval, xi, Wval, Dval) * sigma /sqrt (kval*kval - sint*sint) /M_PI;
-	      dYdz[2 + Nscan + j] = GetJXplus (kval, xi, Wval, Dval) * sigma /sqrt (kval*kval - sint*sint) /M_PI;
+	      dYdz[5         + j] = GetJOplus (kval, xi, Wval, Dval) * sigma /sqrt (kval*kval - sint*sint) /M_PI;
+	      dYdz[5 + Nscan + j] = GetJXplus (kval, xi, Wval, Dval) * sigma /sqrt (kval*kval - sint*sint) /M_PI;
 	    }
 	}
     }
   else
     {
+      if ( z < Kmax)
+	{
+	  dYdz[0] = gsl_spline_eval (G1_spline, z, G1_acc);
+	  dYdz[1] = gsl_spline_eval (G2_spline, z, G2_acc);
+	}
+      else
+	{
+	  dYdz[0] = 0.;
+	  dYdz[1] = 0.;
+	}
+      
       for (int j = 0; j < Nscan; j++)
 	{
 	  if (z < Kmax)
 	    {
-	      dYdz[        j] = gsl_spline_eval (IO_spline[j], z, IO_acc[j]);
-	      dYdz[Nscan + j] = gsl_spline_eval (IX_spline[j], z, IX_acc[j]);
+	      dYdz[2 +         j] = gsl_spline_eval (IO_spline[j], z, IO_acc[j]);
+	      dYdz[2 + Nscan + j] = gsl_spline_eval (IX_spline[j], z, IX_acc[j]);
 	    }
 	  else
 	    {
-	      dYdz[        j] = 0.;
-	      dYdz[Nscan + j] = 0.;
+	      dYdz[2 +         j] = 0.;
+	      dYdz[2 + Nscan + j] = 0.;
 	    }
 	}
     }

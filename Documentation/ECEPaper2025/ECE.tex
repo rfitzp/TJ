@@ -26,10 +26,10 @@ Disruptions in tokamaks are triggered by macroscopic magnetohydrodynamical (MHD)
 the mean electron number density below  critical values that are either easily calculable or well-known empirically.\cite{iter}  
 
 A tearing mode\,\cite{tear1} of finite amplitude generates a helical magnetic island chain\,\cite{ntm1} in the vicinity of the rational surface\,\cite{ideal3} at which it reconnects magnetic flux.
-If the radial width of the island chain exceeds a relatively small threshold value then fast  heat transport parallel to magnetic field-lines causes a local flattering of the  electron temperature profile
+If the radial width of the island chain exceeds a relatively small threshold value then rapid  heat transport parallel to magnetic field-lines causes a local flattering of the  electron temperature profile
  within the chain's magnetic separatrix.\cite{ntm2} The associated loss of the pressure-gradient-driven non-inductive neoclassical bootstrap current\,\cite{ntm3} within the separatrix
 has a destabilizing effect that can render a linearly-stable tearing mode unstable at finite amplitude. This type of instability is known as a ``neoclassical tearing mode"  (NTM).  All reactor-relevant tokamak
-discharges are potentially unstable  to 2/1 and 3/2 NTMs.\cite{ntm4,ntm5}  (Here, $m/n$ denotes a mode whose resonant harmonic has $m$ periods in the poloidal
+discharges are potentially unstable  to 2, 1 and 3, 2 NTMs.\cite{ntm4,ntm5}  (Here, $m, n$ denotes a mode whose resonant harmonic has $m$ periods in the poloidal
 direction, and $n$ periods in the toroidal direction.) It is, therefore, not  surprising that NTMs are, by far, the most common cause of disruptions in high-performance  tokamak
 discharges.\cite{iter,ntm4,ntm5,vries}
 Now, an NTM needs to exceed a critical  threshold amplitude
@@ -70,7 +70,7 @@ of the plasma, the perturbation governed by the equations of linearized, margina
 However, these equations become singular on   ``rational'' magnetic flux-surfaces at which the perturbed magnetic field resonates with the equilibrium field. In the ``inner region'', which
 consists of a set of narrow layers centered on the various rational surfaces, non-ideal-MHD effects such as plasma resistivity, as well as nonlinear effects,  become important. 
  In the calculation described in this paper, the NTM is assumed to reconnect magnetic flux at one particular rational surface in the plasma (i.e., the
- $q=2$ surface for the case of a 2/1 mode, and the $q=3/2$ surface in the case of a 3/2 mode). The response of the plasma at the
+ $q=2$ surface for the case of a 2, 1 mode, and the $q=3/2$ surface in the case of a 3, 2 mode). The response of the plasma at the
  other rational surfaces is assumed to be ideal, as we would expect to be the case in the presence of sheared plasma rotation.\cite{tear5}
 The magnetic perturbation in the segment of the inner region centered on the reconnecting rational surface is that associated with a radially asymmetric magnetic island chain.\cite{ntm1,island}
 The nonlinear island solution needs to be asymptotically matched to the linear ideal-MHD solution in the outer region. The
@@ -177,8 +177,8 @@ at each rational surface in the plasma, where
 L_{m_k}^{\,m_k}(r) &= m_k^2\,c_{m_k}^{\,m_k}(r) + n^2\,r^2,\\[0.5ex]
 c_{m_k}^{\,m_k}(r) &=\oint|\nabla r|^{-2}\,\frac{d\theta}{2\pi}.
 \end{align}
- Here, the complex parameter ${\mit\Psi}_k$ is a measure of the reconnected helical magnetic flux at the $k$th rational surface, whereas
-the complex parameter ${\mit\Delta\Psi}_k$ is a measure of the strength of a localized current sheet that flows parallel to the equilibrium magnetic field at the surface.
+ Here, the dimensionless complex parameter ${\mit\Psi}_k$ is a measure of the reconnected helical magnetic flux at the $k$th rational surface, whereas
+the dimensionless complex parameter ${\mit\Delta\Psi}_k$ is a measure of the strength of a localized current sheet that flows parallel to the equilibrium magnetic field at the surface.
 
  It is assumed that ${\mit\Psi}_k = 0$ for all $k$, except for $k=l$. In other words, the NTM only reconnects magnetic flux at the
 $l$th rational surface. Let 
@@ -356,14 +356,14 @@ In particular,
 [A,{\mit\Omega}] = -\frac{16\,Y}{\sigma}\left.\frac{\partial A}{\partial\xi}\right|_{\mit\Omega}.
 \end{equation}
 
-The flux-surface average operator, $\langle\cdots\rangle$, is the annihilator of $[A,{\mit\Omega}]$ for arbitrary $A(s,{\mit\Omega},\xi)$.\cite{ntm2,island} Here, $s=+1$ for $Y>0$ and $s=-1$ for
+The flux-surface average operator, $\langle\cdots\rangle$, is the annihilator of $[A,{\mit\Omega}]$ for arbitrary $A(\varsigma,{\mit\Omega},\xi)$.\cite{ntm2,island} Here, $\varsigma=+1$ for $Y>0$ and $\varsigma =-1$ for
 $Y<0$. It follows from Eq.~(\ref{e52}) that
 \begin{equation}
 \langle A\rangle = \int_{\zeta_0}^{2\pi-\zeta_0}\frac{\sigma(\xi)\,A_+({\mit\Omega},\xi)}{\sqrt{2\,({\mit\Omega}-\cos\xi)}}\,\frac{d\xi}{2\pi}
 \end{equation}
 for $-1\leq {\mit\Omega}\leq 1$, and
 \begin{equation}\label{e55}
-\langle A\rangle = \int_0^{2\pi}\frac{\sigma(\xi)\,A(s,{\mit\Omega},\xi)}{\sqrt{2\,({\mit\Omega}-\cos\xi)}}\,\frac{d\xi}{2\pi}
+\langle A\rangle = \int_0^{2\pi}\frac{\sigma(\xi)\,A(\varsigma,{\mit\Omega},\xi)}{\sqrt{2\,({\mit\Omega}-\cos\xi)}}\,\frac{d\xi}{2\pi}
 \end{equation}
 for ${\mit\Omega}>1$. Here, $\xi_0=\cos^{-1}({\mit\Omega})$, and
 \begin{equation}
@@ -374,7 +374,7 @@ A_+({\mit\Omega},\xi)= \frac{1}{2}\left[A(+1,{\mit\Omega},\xi) + A(-1,{\mit\Omeg
 In the so-called ``wide island limit'', in which parallel electron heat transport dominates perpendicular heat transport,\cite{ntm2,island}
 the electron temperature in the vicinity of the island chain can be written
 \begin{equation}
-T_e(X,\zeta) = T_{e\,l} + s\,W\,T_{e\,l}'\,\tilde{T}({\mit\Omega}),
+T_e(X,\zeta) = T_{e\,l} + \varsigma\,W\,T_{e\,l}'\,\tilde{T}({\mit\Omega}),
 \end{equation}
 where $T_{e\,l}= T_{e\,0}(r_l)$ and $T_{e\,l}' = dT_{e\,0}(r_l)/dr$ are the equilibrium electron temperature and  temperature
 gradient, respectively, at the island rational surface. 
@@ -440,7 +440,7 @@ for $\kappa>1$, subject to the boundary condition that
 \end{equation}
 as $\kappa\rightarrow \infty$. Now, $E_0(0) = \pi/2$, and  $E_{\mu>0}(0) = 0$,
 which implies that $c=\pi/4$. So
-\begin{align}\label{e47}
+\begin{align}\label{e47x}
 \frac{d\tilde{T}}{d\kappa} &= \frac{\pi}{4}\,\frac{1}{G(1/\kappa)},\\[0.5ex]
 \tilde{T}(\kappa) &= F(\kappa),\label{e48}\\[0.5ex]
 F(\kappa) &= \frac{\pi}{4}\int_1^\kappa\frac{d\kappa'}{G(1/\kappa')}
@@ -470,20 +470,21 @@ for $|Y|<1/2$, and $\xi_c=\pi$ for $|Y|\geq 1/2$. Furthermore,
 \end{equation}
 
 Let 
-\begin{equation}
-\delta T_{0\,\infty} =\lim_{X\rightarrow \infty}\left[X - \delta T_0(X)\right].
-\end{equation}
-This quantity is related to the reduction of the electron temperature in the plasma core, $\delta T_{e\,0}$, due to the flattening of the
+\begin{align}
+\delta T_{0\,+} &=\lim_{X\rightarrow \infty}\left[X - \delta T_0(X)\right],\\[0.5ex]
+\delta T_{0\,-} &=-\lim_{X\rightarrow -\infty}\left[X - \delta T_0(X)\right],\\[0.5ex]
+\delta T_{0\,\infty} &= \delta T_{0\,+}+ \delta T_{0\,-}.
+\end{align}
+The quantity $\delta T_{0\,\infty}$ is related to the reduction of the electron temperature in the plasma core, $\delta T_{e\,0}$, due to the flattening of the
 temperature profile inside the island separatrix, as follows:
 \begin{equation}\label{core}
-\delta T_{e\,0} = 2\,W\,T_{e\,l}'\,\delta T_{0\,\infty}.
+\delta T_{e\,0} = W\,T_{e\,l}'\,\delta T_{0\,\infty}.
 \end{equation}
 Here, we are assuming that the equilibrium electron temperature at the plasma boundary is fixed.\cite{chang}
-Figure~\ref{fig3} shows $T_{0\,\infty}$ plotted as a function of the island asymmetry parameter, $\delta$.  
+Figure~\ref{fig3} shows $T_{0\,\infty}$ plotted as a function of the modulus of the island asymmetry parameter, $|\delta|$.  
 Note that $T_{0\,\infty}$ is positive, indicating that a magnetic island chain decreases the core electron temperature, assuming that the
 unperturbed electron temperature gradient at the rational surface is negative. [See Eq.~(\ref{core}).] It is clear that a symmetric (i.e., $\delta=0$) magnetic
 island chain give rise to slightly larger reduction in the core temperature than an asymmetric island chain of the same width. 
-
 
 For $\nu>0$, we have
 \begin{equation}
@@ -508,22 +509,101 @@ Hence,
 \begin{equation}
 \delta T_\nu(X) =\frac{1}{8\,\nu}\int_0^{\xi_c}\frac{\sin(\nu\,\zeta)\,\tau(\xi)\,\sigma(\xi)}{\kappa\,G(1/\kappa)}\,d\xi,
 \end{equation}
-where use has been made of Eqs.~(\ref{sigma}) and (\ref{e47}).
+where use has been made of Eqs.~(\ref{sigma}) and (\ref{e47x}).
 
 Figure~\ref{fig4} shows the harmonics of the normalized electron temperature  in the inner region, $\delta T_\nu(x/W)$, calculated for an asymmetric
 magnetic island characterized by $\delta=0.5$.  Note that the harmonics are asymmetric in $X$. (By contrast, Fig.~3 of Ref.~\onlinecite{ntm2} shows
-the symmetric harmonics of a symmetric island.) It can be seen that the $\nu=0$ and $\nu=1$ harmonics extend into the outer region, whereas the
+the anti-symmetric harmonics of a symmetric island.) It can be seen that the $\nu=0$ and $\nu=1$ harmonics extend into the outer region, whereas the
 $\nu>1$ harmonics are strongly localized in the vicinity of the island. 
 
 Finally, Fig.~\ref{fig5} shows the normalized electron temperature distribution, $\tilde{T}(x/W,\zeta)$, in the vicinity of an asymmetric magnetic island  characterized by
 $\delta = 0.5$. As expected, the temperature profile is almost completely flattened in the region enclosed  within the magnetic separatrix. 
+
+\subsection{Rutherford Equation}
+The nonlinear growth of the magnetic island associated with an NTM that is resonant at the $l$th rational surface is governed by a modified Rutherford equation that takes the form\,\cite{ntm1,ntm4,island}
+\begin{equation}\label{eruth}
+G_{\rm ruth}\,\tau_R\,\frac{d}{dt}\!\left(\frac{W}{r_l}\right) = E_{ll} +\left(\alpha_b\,\frac{L_s}{L_T}\,G_{\rm boot} + J_{\rm max}\,G_{\rm eccd}\right)
+\frac{r_l}{W},
+\end{equation}
+where
+\begin{align}
+G_{\rm ruth} &= 2\int_{-1}^\infty \frac{(\langle\cos\xi\rangle + \delta^2\,\langle \sin\xi\,\sin\zeta\rangle)\,\langle \cos\zeta\rangle}{\langle 1\rangle}\,d{\mit\Omega},\\[0.5ex]
+G_{\rm boot} &= \int_1^\infty \frac{\langle \cos\zeta\rangle}{\langle 1\rangle\,\langle Y^2\rangle}\,d{\mit\Omega},\\[0.5ex]
+G_{\rm eccd} &= - 16\int_{-1}^\infty \frac{\langle J_+\rangle\,\langle \cos\zeta\rangle}{\langle 1\rangle}\,d{\mit\Omega},\label{geccd}
+\end{align}
+Here,  $J_+(x,\zeta)$ is the component of the normalized  (such that the peak value is unity) current density profile driven by ECE waves that is even in $Y$ and $\zeta$. 
+Moreover, 
+\begin{align}
+\tau_R &= \left(\frac{\mu_0\,r^2}{\eta_\parallel}\right)_{r_l},\\[0.5ex]
+L_s&=\left(\frac{q}{s}\right)_{r_l},\\[0.5ex]
+L_T &= -\left(\frac{T_{e\,0}}{dT_{e\,0}/dr}\right)_{r_l},\\[0.5ex]
+\alpha_b &= \left(f_t\,\frac{q}{r}\,\beta\right)_{r_l},\\[0.5ex]
+f_t&= 1.46\,r^{1/2},\\[0.5ex]
+\beta &= \frac{\mu_0\,n_e\,T_{e\,0}}{B_0^{\,2}}.
+\end{align}
+Here, $\tau_R$ is the resistive diffusion timescale, $\eta_\parallel(r)$  the plasma parallel electrical resistivity, $L_s$  the magnetic shear-length, 
+$L_T$ the electron temperature gradient scale-length, and $f_t$  the fraction of trapped particles.
+Furthermore,
+\begin{equation}
+J_{\rm max} = \frac{\mu_0\,L_s}{B_0}\,j_{\rm max},
+\end{equation}
+where $j_{\rm max}$ is the unnormalized peak current density driven by ECE waves.  
+ The three terms on the right-hand side of equation (\ref{eruth}) are, respectively, the normalized linear tearing stability index of an $m_l$, $n$ tearing mode
+ that only reconnects magnetic flux at the $l$th rational surface,\cite{tear5} the
+ destabilizing term due to the loss of the bootstrap current inside the island separatrix consequent on the flattening of the electron temperature profile,\cite{ntm2} and the stabilizing term due to the current driven in the island region by ECE waves.\cite{island} In writing Eq.~(\ref{eruth}), we have
+ assumed that we are in the wide island limit.\cite{island} We have also adopted a rather simplistic model of the bootstrap current.\cite{boot}
+ Finally, we have neglected the contribution to  Eq.~(\ref{eruth}) from the ion polarization current (which is only important for
+ very narrow islands) and also from average magnetic field-line curvature (which is similar to, but smaller than,  that of the bootstrap current).\cite{ntm4}
  
+ The following results are useful when performing flux-surface averages:\,\cite{island}
+\begin{equation}
+\langle A(\kappa,\xi)\rangle(\kappa) = \frac{1}{\pi}\int_0^{\pi/2}\frac{\sigma(\xi)\,A(\kappa,\xi)}{\sqrt{1-\kappa^2\,\sin^2\vartheta}}\,d\vartheta
+\end{equation}
+for $0\leq \kappa\leq 1$, where $\xi=2\,\cos^{-1}(\kappa\,\sin\vartheta)$. Likewise, 
+\begin{equation}
+\langle A(\kappa,\xi)\rangle(\kappa) = \frac{1}{\pi}\int_0^{\pi/2}\frac{\sigma(\xi)\,A(\kappa,\xi)}{\sqrt{\kappa^2-\sin^2\vartheta}}\,d\vartheta
+\end{equation}
+for $\kappa>1$, where $\xi=\pi-2\,\vartheta$. Recall that $\kappa=[(1+{\mit\Omega})/2]^{1/2}$. 
+
+Figure~\ref{fig6} shows the integrals $G_{\rm ruth}$ and $G_{\rm boot}$ evaluated as functions of the modulus of the island asymmetry
+parameters, $|\delta|$. It can be seen that both integrals only depend weakly on $|\delta|$, as long as $|\delta|$ does not get too close to
+unity.\cite{ece6}
+ 
+ \subsection{ECCD Deposition Profile}
+ Let us assume that the normalized profile of the current density driven by ECE waves in the island region takes the form
+ \begin{equation}
+ J(x,\zeta) = \exp\left[-\frac{(x-d)^2}{2\,D^{\,2}}\right]\left[\frac{1+\cos(\zeta-{\mit\Delta}\zeta)}{2}\right],
+ \end{equation}
+ where $D$ is the radial width of the profile, $d$  the radial offset between the peak current and the rational surface, and
+${\mit\Delta}\zeta$ the angular offset between the peak current and the island O-point. Note that the profile is  comparatively narrow in $x$, and comparatively
+wide in $\zeta$, as is  generally the case in experiments. However, only the component of $J(x,\zeta)$ that is even in $\zeta$ contributes to the integral (\ref{geccd}), so we can effectively write
+\begin{equation}
+J(x,\zeta)= \exp\!\left[-\frac{(x-d)^2}{2\,D^2}\right]\left(\frac{1+\cos\zeta\,\cos{\mit\Delta}\zeta}{2}\right).
+\end{equation}
+Let $\hat{D}=D/W$ and $\hat{d}=d/W$. Making use of Eq.~(\ref{ek}), we obtain 
+\begin{equation}
+J(\varsigma,Y,\zeta) =  \exp\!\left[-\frac{(\varsigma\,Y+\delta\,\cos\zeta/\sqrt{8}-\hat{d})^2}{2\,\hat{D}^2}\right]\left(\frac{1+\cos\zeta\,\cos{\mit\Delta}\zeta}{2}\right),
+\end{equation}
+
+Let 
+\begin{align}
+J_O(\varsigma,Y,\zeta) &=  \exp\!\left[-\frac{(\varsigma\,Y+\delta\,\cos\zeta/\sqrt{8}-\hat{d})^2}{2\,\hat{D}^2}\right]\left(\frac{1+\cos\zeta}{2}\right),\\[0.5ex]
+J_X(\varsigma,Y,\zeta) &=  \exp\!\left[-\frac{(\varsigma\,Y+\delta\,\cos\zeta/\sqrt{8}-\hat{d})^2}{2\,\hat{D}^2}\right]\left(\frac{1-\cos\zeta}{2}\right),\\[0.5ex]
+J_{O+}(Y,\zeta) &= \frac{J_O(1,Y,\zeta) + J_O(-1,Y,\zeta)}{2},\\[0.5ex]
+J_{X+}(Y,\zeta) &= \frac{J_X(1,Y,\zeta) + J_X(-1,Y,\zeta)}{2}.
+\end{align}
+It follows from Eq.~(\ref{geccd}) that
+\begin{align}
+G_{\rm eccd}& = G_{{\rm eccd}\,O}\left(\frac{1+\cos{\mit\Delta}\zeta}{2}\right)+G_{{\rm eccd}\,X}\left(\frac{1-\cos{\mit\Delta}\zeta}{2}\right),\\[0.5ex]
+G_{{\rm eccd}\,O} &= - 16\int_{-1}^\infty \frac{\langle J_{O+}\rangle\,\langle \cos\zeta\rangle}{\langle 1\rangle}\,d{\mit\Omega},\\[0.5ex]
+G_{{\rm eccd}\,X} &= - 16\int_{-1}^\infty \frac{\langle J_{X+}\rangle\,\langle \cos\zeta\rangle}{\langle 1\rangle}\,d{\mit\Omega}.
+\end{align}
 
 \section*{Acknowledgements}
 This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
 
 \section*{Data Availability Statement}
-The digital data used in the figures in this paper can be obtained from the author upon reasonable request. The TJ codes is freely 
+The digital data used in the figures in this paper can be obtained from the author upon reasonable request. The TJ code is freely 
 available at {\tt https://github.com/rfitzp/TJ}. 
 
 \begin{thebibliography}{99}\baselineskip 5ex
@@ -631,6 +711,8 @@ to Physics of Plasmas (2025).
 
 \bibitem{grx} I.S.~Gradshteyn and I.M.~Ryzhik, {\em Table of Integrals, Series, and Products}, Corrected and Enlarged Edition. (Academic Press, New York NY, 1980). Sect.~3.719.
 
+\bibitem{boot} M.N.~Rosenbluth, R.D.~Hazeltine and F.L.~Hinton, Phys.\ Fluids {\bf 15}, 116 (1972).
+
 \end{thebibliography}
 
 \newpage
@@ -638,24 +720,26 @@ to Physics of Plasmas (2025).
 \centerline{\includegraphics[width=0.9\textwidth]{FluxX.eps}}
 \caption{The thin solid curves show the contours of ${\mit\Omega}(X,\zeta)$ evaluated for $\delta=0.5$. The thick solid
 lines show the magnetic separatrix (upper and lower curves) and the contour $Y=0$ (middle curve). The curved dotted
-lines show equally-spaced contours of $Y$, whereas the vertical dotted lines show equally-spaced contours of $\xi$.  \label{fig1}}
+lines show equally-spaced contours of $Y$, whereas the vertical dotted lines show equally-spaced contours of $\xi$. 
+(Reproduced, with permission, from Ref.~\onlinecite{island}.) \label{fig1}}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[width=0.9\textwidth]{FluxY.eps}}
 \caption{The thin solid curves show the contours of ${\mit\Omega}(Y,\xi)$ evaluated for $\delta=0.5$. The thick solid
-lines show the magnetic separatrix (upper and lower curves) and the contour $Y=0$ (middle curve).   \label{fig2}}
+lines show the magnetic separatrix (upper and lower curves) and the contour $Y=0$ (middle curve). (Reproduced, with permission, from Ref.~\onlinecite{island}.) \  \label{fig2}}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{T0infty.pdf}}
-\caption{The island temperature flattening parameter, $T_{0\,\infty}$, plotted as a function of the island asymmetry parameter, $\delta$.  \label{fig3}}
+\caption{The island temperature flattening parameter, $T_{0\,\infty}$, plotted as a function of the modulus of the island asymmetry parameter, $|\delta|$.  \label{fig3}}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{dTh.pdf}}
 \caption{The helical harmonics of the normalized electron temperature  in the inner region, $\delta T_\nu(x/W)$, calculated for an asymmetric
-magnetic island characterized by $\delta=0.5$.  The curve labelled $1$ actually
+magnetic island characterized by $\delta=0.5$.  The curve labelled $0$ actually shows $[\delta T_0(x/W)-x/W]/3$, whereas the
+curve labelled  $1$ actually
 shows $\delta T_1(x/W) +  \delta/\sqrt{8}$. The vertical dotted lines show the locations of the inner limit of the magnetic separatrix,
 the island X-point, and the outer limit of the magnetic separatrix, in order from the left to the right.\label{fig4}}
 \end{figure}
@@ -665,6 +749,29 @@ the island X-point, and the outer limit of the magnetic separatrix, in order fro
 \caption{Contours of the normalized electron temperature profile, $\tilde{T}(x/W,\zeta)$, in the vicinity of an asymmetric magnetic island  characterized by
 $\delta = 0.5$. The thick solid line shows the magnetic separatrix, the dotted line shows the rational surface, and the black dot shows the
 island O-point.\label{fig5}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{G.pdf}}
+\caption{The integrals $G_{\rm ruth}$ and $G_{\rm boot}/6$ evaluated as functions of the modulus of the island asymmetry parameter, $|\delta|$.  \label{fig6}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{W01.pdf}}
+\caption{The integral $G_{\rm eccd}$ evaluated as a function of $d/D$, for ${\mit\Delta}\zeta = 0$, $\pi/2,$ and $\pi$, for an  island
+of full width $W=0.1\,D$ and asymmetry parameter $\delta=0.5$. \label{fig7}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{W20.pdf}}
+\caption{The integral $G_{\rm eccd}$ evaluated as a function of $d/D$, for ${\mit\Delta}\zeta = 0$, $\pi/2,$ and $\pi$, for an  island
+of full width $W=2.0\,D$ and asymmetry parameter $\delta=0.5$. \label{fig8}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{W40.pdf}}
+\caption{The integral $G_{\rm eccd}$ evaluated as a function of $d/D$, for ${\mit\Delta}\zeta = 0$, $\pi/2,$ and $\pi$, for an  island
+of full width $W=4.0\,D$ and asymmetry parameter $\delta=0.5$. \label{fig9}}
 \end{figure}
 
 \end{document}

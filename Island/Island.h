@@ -74,7 +74,9 @@ private:
   double*         zz;      // Angular grid points
   double*         dTdk;    // dT/dk function
   double*         F;       // Temperature perturbation flux-function
-  double          T0inf;   // Asymptotic value of X - deltaT[0] at large X
+  double          T0pls;   // Asymptotic value of X - deltaT[0] at large positive X
+  double          T0min;   // Asymptotic value of X + deltaT[0] at large negative X
+  double          T0inf;   // Sum of T0pls and T0min
   double*         dTo;     // Temperature perturbation versus X at zeta = pi
   double*         dTx;     // Temperature perturbation versus X at zeta = 0
   double*         ximx;    // Maximum value of xi
@@ -109,19 +111,32 @@ private:
   double*            Flux0;       // Flux-surface average of 1
   double*            Flux1;       // Flux-surface average of cos(zeta)
   double*            Flux2;       // k <cos(zeta)> /<1>
+  double*            Flux3;       // Flux surface average of cos(xi)
+  double*            Flux4;       // Flux surface average of sin(xi)*sin(zeta)
+  double*            Flux5;       // Flux surface average of Y^2
+  double*            Flux6;       // k (<cos xi> + delta^2 <sin xi sin zeta>) <cos zeta> /<1>
+  double*            Flux7;       // k <cos zeta> /<1> /<Y^2>
   double*            WW;          // Island width grid
   double*            DD;          // Radial offset grid
   Array<double,2>    JO;          // Flux-surface average of eccd when aimed at O-point
   Array<double,2>    JX;          // Flux-surface average of eccd when aimed at X-point
   Array<double,2>    IO;          // Integrand for Delta_eccd calculation when eccd aimed at O-point
   Array<double,2>    IX;          // Integrand for Delta_eccd calculation when eccd aimed at X-point
+  double*            G1;          // Integrand for Delta_ruth calculation
+  double*            G2;          // Integrand for Delta_boot calculation
 
   gsl_spline**       IO_spline;   // Interpolated IO functions
   gsl_spline**       IX_spline;   // Interpolated IX functions
+  gsl_spline*        G1_spline;   // Interpolated G1 function
+  gsl_spline*        G2_spline;   // Interpolated G2 function
  
   gsl_interp_accel** IO_acc;      // Accelerator for interpolated IO functions
   gsl_interp_accel** IX_acc;      // Accelerator for interpolated IX functions
+  gsl_interp_accel*  G1_acc;      // Accelerator for interpolated G1 function
+  gsl_interp_accel*  G2_acc;      // Accelerator for interpolated G2 function
 
+  double  DeltaR;                 // Delta_ruth value
+  double  DeltaB;                 // Delta_boot value
   double* DeltaO;                 // Delta_eccd values when eccd aimed at O-point
   double* DeltaX;                 // Delta_eccd values when eccd aimed at X-point
 
