@@ -7,7 +7,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4 as nc
-ReBu = plt.get_cmap ('rainbow') #plt.get_cmap ('seismic')
+ReBu = plt.get_cmap ('seismic') #= plt.get_cmap ('rainbow')
 
 ncont = 360
 

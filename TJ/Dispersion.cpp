@@ -2,6 +2,8 @@
 
 #include "TJ.h"
 
+#define ISLAND_MIN 1.e-3
+
 // ######################################################################################
 // Function to find tearing mode dispersion relation and construct tearing eigenfunctions
 // ######################################################################################
@@ -49,7 +51,8 @@ void TJ::FindDispersion ()
   Psnm  = new complex<double>[nres];
   dnp   = new double[nres];
   dnm   = new double[nres];
-  delta = new double[nres];  
+  delta = new double[nres];
+  width = new double[nres]; 
 
   neu .resize(J+1, nres, NDIAG);
   Teu .resize(J+1, nres, NDIAG);
@@ -278,6 +281,15 @@ void TJ::FindDispersion ()
       }
   printf ("E-matrix Hermitian test residual: %10.3e\n", Eerr);
 
+  // .......................
+  // Calculate island widths
+  // .......................
+  for (int k = 0; k < nres; k++)
+    if (k > ISLAND.size () - 1)
+      width[k] = ISLAND_MIN;
+    else
+      width[k] = ISLAND[k];
+  
   // ..............................................
   // Calculate unreconnected tearing eigenfunctions
   // ..............................................
@@ -290,11 +302,7 @@ void TJ::FindDispersion ()
       for (int j = 0; j < J; j++)
 	for (int k = 0; k < nres; k++)
 	  {
-	    double island;
-	    if (k > ISLAND.size () - 1)
-	      island = 0.;
-	    else
-	      island = ISLAND[k];
+	    double island = width[k];
 	    
 	    Psiu(j, k, i) = complex<double> (0., 0.);
 
@@ -306,20 +314,20 @@ void TJ::FindDispersion ()
 	    for (int kp = 0; kp < nres; kp++)
 	      Zu(j, k, i) += Zf(j, kp, i) * Emat(kp, k);
 
-	    double PSI, delta, mnq, imnq;
+	    double PSI, xelta, mnq, imnq;
 	    if (mres[k] == 1)
 	      {
 		PSI   = epsa * (rres[k] * gres[k] * sres[k] /qres[k]) * island /abs (Emat(k, k));
-		delta = double (mres[k]) * sres[k] * island /2. /rres[k];
+		xelta = double (mres[k]) * sres[k] * island /2. /rres[k];
 		mnq   = double (mres[k]) - ntor * q;
-		imnq  = mnq / (delta*delta + mnq*mnq);
+		imnq  = mnq / (xelta*xelta + mnq*mnq);
 	      }
 	    else
 	      {
 		PSI   = epsa * (island*island /16.) *  (gres[k] * sres[k] /qres[k]);
-		delta = double (mres[k]) * sres[k] * island /sqrt(8.) /rres[k];
+		xelta = double (mres[k]) * sres[k] * island /sqrt(8.) /rres[k];
 		mnq   = double (mres[k]) - ntor * q;
-		imnq  = mnq*mnq*mnq / (0.75*delta*delta*delta*delta - 1.25*delta*delta*mnq*mnq + mnq*mnq*mnq*mnq);
+		imnq  = mnq*mnq*mnq / (0.75*xelta*xelta*xelta*xelta - 1.25*xelta*xelta*mnq*mnq + mnq*mnq*mnq*mnq);
 	      }
 
 	    psiu(j, k, i) = PSI * Psiu(j, k, i);
@@ -352,26 +360,22 @@ void TJ::FindDispersion ()
       for (int j = 0; j < J; j++)
 	for (int k = 0; k < nres; k++)
 	  {
-	    double island;
-	    if (k > ISLAND.size () - 1)
-	      island = 0.;
-	    else
-	      island = ISLAND[k];
+	    double island = width[k];
 	    
-	    double PSI, delta, mnq, imnq;
+	    double PSI, xelta, mnq, imnq;
 	    if (mres[k] == 1)
 	      {
 		PSI   = epsa * (rres[k] * gres[k] * sres[k] /qres[k]) * island /abs (Emat(k, k));
-		delta = double (mres[k]) * sres[k] * island /2. /rres[k];
+		xelta = double (mres[k]) * sres[k] * island /2. /rres[k];
 		mnq   = double (mres[k]) - ntor * q;
-		imnq  = mnq / (delta*delta + mnq*mnq);
+		imnq  = mnq / (xelta*xelta + mnq*mnq);
 	      }
 	    else
 	      {
 		PSI   = epsa * (island*island /16.) *  (gres[k] * sres[k] /qres[k]);
-		delta = double (mres[k]) * sres[k] * island /sqrt(8.) /rres[k];
+		xelta = double (mres[k]) * sres[k] * island /sqrt(8.) /rres[k];
 		mnq   = double (mres[k]) - ntor * q;
-		imnq  = mnq*mnq*mnq / (0.75*delta*delta*delta*delta - 1.25*delta*delta*mnq*mnq + mnq*mnq*mnq*mnq);
+		imnq  = mnq*mnq*mnq / (0.75*xelta*xelta*xelta*xelta - 1.25*xelta*xelta*mnq*mnq + mnq*mnq*mnq*mnq);
 	      }
 	    
 	    if (MPOL[j] == 0)
@@ -427,11 +431,7 @@ void TJ::FindDispersion ()
       // .....................................
       for (int k = 0; k < nres; k++)
 	{
-	  double island;
-	  if (k > ISLAND.size () - 1)
-	    island = 0.;
-	  else
-	    island = ISLAND[k];
+	  double island = width[k];
 	    
 	  if (mres[k] == 1)
 	    {
@@ -499,11 +499,7 @@ void TJ::FindDispersion ()
       // ......................................................................................................
       for (int k = 0; k < nres; k++)
 	{
-	  double island;
-	  if (k > ISLAND.size () - 1)
-	    island = 0.;
-	  else
-	    island = ISLAND[k];
+	  double island = width[k];
 
 	  if (mres[k] == 1)
 	    {
@@ -583,16 +579,10 @@ void TJ::FindDispersion ()
       printf ("Electron temperature matching data:\n");
       double zero = 0.;
       for (int k = 0; k < nres; k++)
-	if (k > ISLAND.size () - 1)
-	  {
-	    printf ("m = %3d W = %10.3e Psi = %10.3e Psip = (%10.3e, %10.3e) Psim = (%10.3e, %10.3e) dTp = %10.3e dTm = %10.3e\n",
-		    mres[k], zero, Psik[k], real(PsTp[k]), imag(PsTp[k]), real(PsTm[k]), imag(PsTm[k]), dTp[k], dTm[k]);
-	  }
-	else
-	  {
-	    printf ("m = %3d W = %10.3e Psi = %10.3e Psip = (%10.3e, %10.3e) Psim = (%10.3e, %10.3e) dTp = %10.3e dTm = %10.3e\n",
-		    mres[k], ISLAND[k], Psik[k], real(PsTp[k]), imag(PsTp[k]), real(PsTm[k]), imag(PsTm[k]), dTp[k], dTm[k]);
-	  }
+	{
+	  printf ("m = %3d W = %10.3e Psi = %10.3e Psip = (%10.3e, %10.3e) Psim = (%10.3e, %10.3e) dTp = %10.3e dTm = %10.3e\n",
+		  mres[k], width[k], Psik[k], real(PsTp[k]), imag(PsTp[k]), real(PsTm[k]), imag(PsTm[k]), dTp[k], dTm[k]);
+	}
   
       // .......................................................................................................
       // Calculate electron temperature and number density profiles associated with unreconnected eigenfunctions
@@ -609,11 +599,7 @@ void TJ::FindDispersion ()
 	  
 	  for (int k = 0; k < nres; k++)
 	    {
-	      double island;
-	      if (k > ISLAND.size () - 1)
-		island = 0.;
-	      else
-		island = ISLAND[k];
+	      double island = width[k];
 	      
 	      double x  = r - rres[k];
 	      
@@ -656,11 +642,7 @@ void TJ::FindDispersion ()
 	  for (int j = 0; j < J; j++)
 	    for (int k = 0; k < nres; k++)
 	      {
-		double island;
-		if (k > ISLAND.size () - 1)
-		  island = 0.;
-		else
-		  island = ISLAND[k];
+		double island = width[k];
 		
 		double mnq = double (mres[k]) - ntor * q;
 		double x   = r - rres[k];

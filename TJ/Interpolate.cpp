@@ -22,6 +22,14 @@ double TJ::Getf (double r)
     return gsl_spline_eval (fspline, r, facc);
 }
 
+double TJ::Getp (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (p2spline, 1., ppacc);
+  else
+    return gsl_spline_eval (p2spline, r, ppacc);
+}
+
 double TJ::Getpp (double r)
 {
   if (r >= 1.)
@@ -271,3 +279,60 @@ double TJ::GetFsmall (double r, int m)
 
   return pow (rho, nuS - 1.) * sqrt ((nuS - nuL) /Lmm) * s * mm * F * dPNdP;
 }
+
+double TJ::GetLs (double r)
+{
+  double s = Gets (r);
+  double q = Getq (r);
+
+  return q /s;
+}
+
+double TJ::GetLT (double r)
+{
+  double p  = Getp (r);
+  double pp = Getpp (r);
+
+  return - epsa * p /pp;
+}
+
+double TJ::GetLc (double r)
+{
+  double H1p = GetHnp (1, r);
+  double q   = Getq (r);
+  double s   = Gets (r);
+
+  return 1. /(r * (1. - 1./q/q) - s * H1p) /epsa;
+}
+
+double TJ::Getbetah (double r)
+{
+  double e   = 1.602176634e-19;
+  double mu0 = 4.*M_PI*1.e-7;
+
+  double Te  = GetTe (r);
+  double ne  = Getne (r);
+  double Ls  = GetLs (r);
+  double LT  = GetLT (r);
+
+  return (Ls / LT) * ne*Te*e /(B0*B0/mu0);
+}
+
+double TJ::Getalphab (double r)
+{
+ double beta11 = 1.641;
+ double beta12 = 1.225;
+ double ft     = 1.46 * sqrt (epsa*r);
+ double q      = Getq (r);
+
+ return (beta11 - beta12) * ft * q /r/epsa;
+}
+
+double TJ::Getalphac (double r)
+{
+  double Ls = GetLs (r);
+  double Lc = GetLc (r); 
+
+  return 2. * Ls /Lc;
+}
+ 

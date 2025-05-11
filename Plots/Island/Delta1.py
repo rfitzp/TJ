@@ -39,5 +39,5 @@ plt.legend (fontsize = fontsize);
 
 plt.tight_layout ()
 
-#plt.show () 
-plt.savefig("W40.pdf")
+plt.show () 
+#plt.savefig("W40.pdf")

@@ -362,6 +362,12 @@ class TJ : private Utility
   double* nepres;  // Radial gradients of electron number densities at rational surfaces
   double* Teres;   // Electron temperatures at rational surfaces
   double* Tepres;  // Radial gradients of electron temperatures at rational surfaces
+  double* Ls;      // Magnetic shear-lengths at rational surfaces
+  double* LT;      // Pressure gradient scale-lengths at rational surfaces
+  double* Lc;      // Average magnetic field-line curvature scale-lengths at rational surfaces
+  double* betah;   // Normalized electron pressure at rational surfaces
+  double* alphab;  // Bootstrap parameters at rational surfaces
+  double* alphac;  // Curvature parameters at rational surfaces
  
   // ----------------
   // Mode number data
@@ -426,11 +432,12 @@ class TJ : private Utility
   complex<double>*         PsTm;  // Reconnected fluxes for temperature calculation inside rational surfaces
   double*                  dTp;   // Temperature adjustments outside rational surfaces
   double*                  dTm;   // Temperature adjustments inside rational surfaces
-  complex<double>*         Psnp;  // Reconnected fluxes for electron number density  calculation outside rational surfaces
+  complex<double>*         Psnp;  // Reconnected fluxes for electron number density calculation outside rational surfaces
   complex<double>*         Psnm;  // Reconnected fluxes for electron number density calculation inside rational surfaces
   double*                  dnp;   // Electron number density adjustments outside rational surfaces
   double*                  dnm;   // Electron number density  adjustments inside rational surfaces
   double*                  delta; // Island asymmetry parameters at rational surfaces
+  double*                  width; // Island widths at rational surfaces
   
   Array<complex<double>,3> neu;   // n_e components of unreconnected tearing eigenfunctions
   Array<complex<double>,3> Teu;   // T_e components of unreconnected tearing eigenfunctions
@@ -535,6 +542,10 @@ class TJ : private Utility
   gsl_interp_accel** dTeeqcacc;    // Accelerator for interpolated perturbed T_e values on central chord
   Array<double,3>    Teeqd;        // Total T_e values on central chord modified by relativistic ece broadening
   Array<double,3>    dTeeqd;       // Perturbed T_e values on central chord modified by relativistic ece broadening
+  Array<double,3>    Tee1;         // Total Te convolution integral
+  Array<double,3>    Tee2;         // Total Te normalization integral
+  Array<double,3>    dTee1;        // Perturbed Te convolution integral
+  Array<double,3>    dTee2;        // Perturbed Te normalization integral
 
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response
@@ -810,6 +821,8 @@ class TJ : private Utility
   double GetPsiN (double r);
   // Return value of f
   double Getf (double r);
+  // Return value of p
+  double Getp (double r);
   // Return value of pp
   double Getpp (double r);
   // Return value of ppp
@@ -864,6 +877,18 @@ class TJ : private Utility
   double GetFlarge (double r, int m);
   // Return value of Fsmall
   double GetFsmall (double r, int m);
+  // Return value of Ls
+  double GetLs (double r);
+  // Return value of LT
+  double GetLT (double r);
+  // Return value of Lc
+  double GetLc (double r);
+  // Return value of betae
+  double Getbetah (double r);
+  // Return value of alphab
+  double Getalphab (double r);
+  // Return value of alphac
+  double Getalphac (double r);
 
   // ................
   // In Armadillo.cpp

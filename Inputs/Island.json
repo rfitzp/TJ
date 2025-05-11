@@ -4,7 +4,7 @@
     "Nz":     1000,   // Number of angular grid points
     "NX":     1000,   // Number of radial grid points 
     "Xmax":   2.0,    // Maximum value of radial variable (in island widths)
-    "delta":  0.5,    // Island asymmetry parameter
+    "delta":  1.0e-6,    // Island asymmetry parameter
 
     "ECCD":   -1,     // Flag for eccd calculation (0/+1/-1 no calcualation/W scan/D scan)
     "Nk":     400,    // Number of k grid points

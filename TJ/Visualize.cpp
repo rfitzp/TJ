@@ -51,6 +51,10 @@ void TJ::VisualizeEigenfunctions ()
   dTeeqc.resize(nres, 2*Nf, NPHI);
   Teeqd .resize(nres, 2*Nf, NPHI);
   dTeeqd.resize(nres, 2*Nf, NPHI);
+  Tee1  .resize(nres, 2*Nf, NPHI);
+  Tee2  .resize(nres, 2*Nf, NPHI);
+  dTee1 .resize(nres, 2*Nf, NPHI);
+  dTee2 .resize(nres, 2*Nf, NPHI);
 
   Leq  = new double[2*Nf]; 
   Lres = new double[nres];
@@ -782,8 +786,19 @@ void TJ::VisualizeEigenfunctions ()
       int    rept, count;
 
       double  R;
-      double* Y    = new double[2*nres*NPHI];
-      double* err  = new double[2*nres*NPHI];
+      double* Y   = new double[2*nres*NPHI];
+      double* err = new double[2*nres*NPHI];
+
+      for (int k = 0; k < nres; k++)
+	for (int np = 0; np < NPHI; np++)
+	  {
+	    dTeeqd(k, 0, np) = 0.;
+	    dTee1 (k, 0, np) = 0.;
+	    dTee2 (k, 0, np) = 0.;
+	    Teeqd (k, 0, np) = 0.;
+	    Tee1  (k, 0, np) = 0.;
+	    Tee2  (k, 0, np) = 0.;
+	  }
 
       for (int i = 1; i < 2*Nf; i++)
 	{
@@ -793,12 +808,6 @@ void TJ::VisualizeEigenfunctions ()
 	      fflush (stdout);
 	    }
 	  iomega = i;
-
-	  for (int k = 0; k < nres; k++)
-	    for (int np = 0; np < NPHI; np++)
-	      {
-		dTeeqd(k, 0, np);
-	      }
 	  
 	  rhs_chooser = 0;
 	  count       = 0;
@@ -821,15 +830,11 @@ void TJ::VisualizeEigenfunctions ()
 	  for (int k = 0; k < nres; k++)
 	    for (int np = 0; np < NPHI; np++)
 	      {
+		dTee1 (k, i, np) = Y[            k*NPHI + np];
+		dTee2 (k, i, np) = Y[nres*NPHI + k*NPHI + np];
 		dTeeqd(k, i, np) = Y[k*NPHI + np] /Y[nres*NPHI + k*NPHI + np];
 	      }
 
-	  for (int k = 0; k < nres; k++)
-	    for (int np = 0; np < NPHI; np++)
-	      {
-		Teeqd(k, 0, np);
-	      }
-	  
 	  rhs_chooser = 1;
 	  count       = 0;
 	  h           = h0;
@@ -851,6 +856,8 @@ void TJ::VisualizeEigenfunctions ()
 	  for (int k = 0; k < nres; k++)
 	    for (int np = 0; np < NPHI; np++)
 	      {
+		Tee1 (k, i, np) = Y[            k*NPHI + np];
+		Tee2 (k, i, np) = Y[nres*NPHI + k*NPHI + np];
 		Teeqd(k, i, np) = Y[k*NPHI + np] /Y[nres*NPHI + k*NPHI + np];
 	      }
 	}
@@ -997,8 +1004,8 @@ void TJ::CashKarp45Rhs (double R, double* Y, double* dYdR)
 		  dTe = gsl_spline_eval (Teeqcspline [k*NPHI + np], R, Teeqcacc [k*NPHI + np]);
 	      }
 	    
-	    dYdR[            k*NPHI + np] =  dTe * (1. - R*R /Romega*Romega) * exp (- ith * (Romega /R - 1.));
-	    dYdR[nres*NPHI + k*NPHI + np] =        (1. - R*R /Romega*Romega) * exp (- ith * (Romega /R - 1.));
+	    dYdR[            k*NPHI + np] =  dTe * fabs (1. - R*R /Romega/Romega) * exp (- ith * (Romega /R - 1.));
+	    dYdR[nres*NPHI + k*NPHI + np] =        fabs (1. - R*R /Romega/Romega) * exp (- ith * (Romega /R - 1.));
 	  }
       }
 }

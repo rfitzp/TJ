@@ -24,7 +24,7 @@ k    = int(m) - 1
 mm   = input ("offset ? ")
 off  = int(mm)
 
-ignore = 1300
+ignore = 1000
 
 ber = []
 for i in range (ignore):

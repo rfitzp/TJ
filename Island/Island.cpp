@@ -2,6 +2,7 @@
 
 #define NINPUT 14
 #define NPARA 3
+#define DELTAMIN 1.e-4
 
 // ###########
 // Constructor
@@ -304,7 +305,7 @@ void Island::Solve (int FLAG)
        gsl_spline_init (Enspline[n], kk, data, NX);
     }
   delete[] data;
-
+  
   // ..............
   // Calculate dTdk
   // ..............
@@ -320,14 +321,14 @@ void Island::Solve (int FLAG)
   dTdkacc    = gsl_interp_accel_alloc ();
 
   gsl_spline_init (dTdkspline, kk, dTdk, NX);
-
+ 
   // ..................
   // Set up radial grid
   // ..................
   XX = new double[NX];
   for (int i = 0; i < NX; i++)
     XX[i] = - Xmax + 2.*Xmax * double (i) /double (NX-1);
-
+  
   // .....................................................
   // Calculate perturbed temperature flux-surface function
   // .....................................................
@@ -938,7 +939,7 @@ double Island::GetCosZeta (double xi)
 // #############################
 double Island::GetSinZeta (double xi)
 {
-  if (fabs (delta) < 1.e-15)
+  if (fabs (delta) < DELTAMIN)
     return sin (xi);
   else
     {
@@ -960,20 +961,27 @@ double Island::GetSinZeta (double xi)
 // ###############################
 double Island::GetCosnZeta (int n, double xi)
 {
-  double nn  = double (n);
-  double sum = 0.;
-
-  for (int j = 1; j < Nb; j++)
+  if (fabs(delta) < DELTAMIN)
     {
-      double jj = double (j);
-
-      if (j - n >= 0)
-	sum += nn * cos (jj * xi) * (gsl_sf_bessel_Jn (j-n, jj*delta*delta) - gsl_sf_bessel_Jn (j+n, jj*delta*delta)) /jj;
-      else
-	sum += nn * cos (jj * xi) * (cos (M_PI * double (j-n)) * gsl_sf_bessel_Jn (n-j, jj*delta*delta) - gsl_sf_bessel_Jn (j+n, jj*delta*delta)) /jj;
+      return cos (double (n) * xi);
     }
-
-  return sum;
+  else
+    {
+      double nn  = double (n);
+      double sum = 0.;
+      
+      for (int j = 1; j < Nb; j++)
+	{
+	  double jj = double (j);
+	  
+	  if (j - n >= 0)
+	    sum += nn * cos (jj * xi) * (gsl_sf_bessel_Jn (j-n, jj*delta*delta) - gsl_sf_bessel_Jn (j+n, jj*delta*delta)) /jj;
+	  else
+	    sum += nn * cos (jj * xi) * (cos (M_PI * double (j-n)) * gsl_sf_bessel_Jn (n-j, jj*delta*delta) - gsl_sf_bessel_Jn (j+n, jj*delta*delta)) /jj;
+	}
+      
+      return sum;
+    }
 }
 
 // ##############################
@@ -981,20 +989,27 @@ double Island::GetCosnZeta (int n, double xi)
 // ##############################
 double Island::GetSinnZeta (int n, double xi)
 {
-  double nn  = double (n);
-  double sum = 0.;
-
-  for (int j = 1; j < Nb; j++)
+  if (fabs(delta) < DELTAMIN)
     {
-      double jj = double (j);
-
-      if (j - n >= 0)
-	sum += nn * sin (jj * xi) * (gsl_sf_bessel_Jn (j-n, jj*delta*delta) + gsl_sf_bessel_Jn (j+n, jj*delta*delta)) /jj;
-      else
-	sum += nn * sin (jj * xi) * (cos (M_PI * double (j-n)) * gsl_sf_bessel_Jn (n-j, jj*delta*delta) + gsl_sf_bessel_Jn (j+n, jj*delta*delta)) /jj;
+      return sin (double (n) * xi);
     }
-
-  return sum;
+  else
+    {
+      double nn  = double (n);
+      double sum = 0.;
+      
+      for (int j = 1; j < Nb; j++)
+	{
+	  double jj = double (j);
+	  
+	  if (j - n >= 0)
+	    sum += nn * sin (jj * xi) * (gsl_sf_bessel_Jn (j-n, jj*delta*delta) + gsl_sf_bessel_Jn (j+n, jj*delta*delta)) /jj;
+	  else
+	    sum += nn * sin (jj * xi) * (cos (M_PI * double (j-n)) * gsl_sf_bessel_Jn (n-j, jj*delta*delta) + gsl_sf_bessel_Jn (j+n, jj*delta*delta)) /jj;
+	}
+      
+      return sum;
+    }
 }
 
 // ###############################
@@ -1181,6 +1196,7 @@ void Island::CashKarp45Rhs (double z, double* Y, double* dYdz)
       
       for (int nu = 1; nu < Nh; nu++)
 	{
+	  
 	  double sinnu;
 	  if (nu == 1)
 	    sinnu = GetSinZeta (z);
@@ -1192,7 +1208,7 @@ void Island::CashKarp45Rhs (double z, double* Y, double* dYdz)
 	  else
 	    dYdz[nu] = - sinnu * kappa * sigma /k /G /8. /double (nu);
 	}
-    }
+      }
   else if (rhs_chooser == 3)
     {
       double sint = sin (z);
@@ -1259,7 +1275,6 @@ void Island::CashKarp45Rhs (double z, double* Y, double* dYdz)
 		  Wval = W;
 		  Dval = DD[j];
 		}
-	      
 	      dYdz[5         + j] = GetJOplus (kval, xi, Wval, Dval) * sigma /sqrt (kval*kval - sint*sint) /M_PI;
 	      dYdz[5 + Nscan + j] = GetJXplus (kval, xi, Wval, Dval) * sigma /sqrt (kval*kval - sint*sint) /M_PI;
 	    }

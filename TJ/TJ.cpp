@@ -467,17 +467,18 @@ void TJ::CleanUp ()
   delete[] Pres;  delete[] gres;   delete[] neres;  delete[] nepres;
   delete[] Teres; delete[] Tepres; delete[] hres;
 
-  delete[] S13res; delete[] taures; delete[] ieres; delete[] QEres;
-  delete[] Qeres;  delete[] Qires;  delete[] Dres;  delete[] Pmres;
-  delete[] Peres;  delete[] Dcres;
+  delete[] S13res; delete[] taures; delete[] ieres;  delete[] QEres;
+  delete[] Qeres;  delete[] Qires;  delete[] Dres;   delete[] Pmres;
+  delete[] Peres;  delete[] Dcres;  delete[] Ls;     delete[] LT;
+  delete[] Lc;     delete[] alphab; delete[] alphac; delete[] betah;
 
   delete[] MPOL; delete[] mpol;
      
   delete[] Rgrid; delete[] hode; delete[] eode; delete[] Pgrid;
 
-  delete[] Fval; delete[] Psik; delete[] PsTp; delete[] PsTm;
-  delete[] dTp;  delete[] dTm;  delete[] Psnp; delete[] Psnm;
-  delete[] dnp;  delete[] dnm;  delete[] delta;
+  delete[] Fval; delete[] Psik; delete[] PsTp;  delete[] PsTm;
+  delete[] dTp;  delete[] dTm;  delete[] Psnp;  delete[] Psnm;
+  delete[] dnp;  delete[] dnm;  delete[] delta; delete[] width;
 
   if (IDEAL)
     {
