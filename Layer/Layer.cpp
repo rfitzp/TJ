@@ -30,7 +30,7 @@ Layer::Layer ()
   string JSONFilename = "../Inputs/TJ.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  RMP   = JSONData["RMP"]  .get<int> ();
+  RMP = JSONData["RMP"].get<int> ();
 
   // ......................................
   // Read control parameters from JSON file
@@ -38,12 +38,12 @@ Layer::Layer ()
   string JSONFilename1 = "../Inputs/Layer.json";
   json   JSONData1     = ReadJSONFile (JSONFilename1);
 
-  MARG    = JSONData1["MARG"]  .get<int>    ();
+  MARG   = JSONData1["MARG"]  .get<int>    ();
 
-  pstart  = JSONData1["pstart"].get<double> ();
-  pend    = JSONData1["pend"]  .get<double> ();
-  P3max   = JSONData1["P3max"] .get<double> ();
-  Nscan   = JSONData1["Nscan"] .get<int>    ();
+  pstart = JSONData1["pstart"].get<double> ();
+  pend   = JSONData1["pend"]  .get<double> ();
+  P3max  = JSONData1["P3max"] .get<double> ();
+  Nscan  = JSONData1["Nscan"] .get<int>    ();
 
   acc  = JSONData1["acc"] .get<double> ();
   h0   = JSONData1["h0"]  .get<double> ();
@@ -280,6 +280,8 @@ void Layer::ReadNetcdf ()
 
       if (RMP)
 	Chia_x.getVar (Chi_res);
+
+      dataFile.close ();
     }
   catch (NcException& e)
      {

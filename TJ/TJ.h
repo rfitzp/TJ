@@ -16,7 +16,6 @@
 // Inputs:
 //  Inputs/Equilibrium.json  - JSON file
 //  Inputs/TJ.json           - JSON file
-//  Inputs/Layer.json        - JSON file
 //  Inputs/Island.json       - JSON file
 
 // Outputs:
@@ -53,6 +52,7 @@
 #include <blitz/array.h>
 #include <gsl/gsl_spline.h>
 #include <gsl/gsl_sf_gamma.h>
+#include <gsl/gsl_sf_bessel.h>
 #include <netcdf>
 #include <armadillo>
 
@@ -90,23 +90,38 @@ class TJ : private Utility
   int INTR;    // Flag for internal ideal stability calculation (read from TJ JSON file)
   int RWM;     // Flag for resistive wall mode calculation (read from TJ JSON file)
   int LAYER;   // Flag for layer calculation (read from TJ JSON file)
+  int TEMP;    // Flag for perturbed temperature calculation (read from TJ JSON file)
 
   // ----------------------
   // Calculation parameters
   // ----------------------
-  int    NTOR;    // Toroidal mode number (read from TJ JSON file)
-  int    MMIN;    // Minimum poloidal mode number included in calculation (read from TJ JSON file)
-  int    MMAX;    // Maximum poloidal mode number included in calculation (read from TJ JSON file)
-  double ISLAND;  // Island width/displacement (divided by minor radius) used to regularize perturbed magnetic field (read from TJ JSON file)
+  int            NTOR;    // Toroidal mode number (read from TJ JSON file)
+  int            MMIN;    // Minimum poloidal mode number included in calculation (read from TJ JSON file)
+  int            MMAX;    // Maximum poloidal mode number included in calculation (read from TJ JSON file)
+  vector<double> ISLAND;  // Island widths/displacements (divided by minor radius) used to regularize perturbed magnetic field (read from TJ JSON file)
 
-  double EPS;     // Solutions launched from magnetic axis at r = EPS (read from TJ JSON file)
-  double DEL;     // Distance of closest approach to rational surface is DEL (read from TJ JSON file)
-  int    NFIX;    // Number of fixups (read from TJ JSON file)
-  int    NDIAG;   // Number of radial grid-points for diagnostics (read from TJ JSON file)
-  double NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from TJ JSON file)
-  int    ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from TJ JSON file)
+  double         EPS;     // Solutions launched from magnetic axis at r = EPS (read from TJ JSON file)
+  double         DEL;     // Distance of closest approach to rational surface is DEL (read from TJ JSON file)
+  int            NFIX;    // Number of fixups (read from TJ JSON file)
+  int            NDIAG;   // Number of radial grid-points for diagnostics (read from TJ JSON file)
+  double         NULC;    // Use zero pressure jump conditions when |nu_L| < NULC (read from TJ JSON file)
+  int            ITERMAX; // Maximum number of iterations used to determine quantities at rational surface (read from TJ JSON file)
 
-  double EPSF;    // Step-length for finite difference determination of derivatives
+  double         EPSF;    // Step-length for finite difference determination of derivatives
+
+  // ------------------
+  // Machine parameters
+  // ------------------
+  double B0;      // On-axis toroidal magnetic field-strength (T) (read from Equilibrium JSON file)
+  double R0;      // On-axis plasma major radius (m) (read from  Equilibrium JSON file)
+  double n0;      // On-axis electron number density (m^-3) (read from  Equilibrium JSON file)
+  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from Equilibrium JSON file)
+  double Zeff;    // Effective ion charge number (read from Equilibrium JSON file)
+  double Mion;    // Ion mass number (read from Equilibrium JSON file)
+  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from Equilibrium JSON file)
+  double Teped;   // Electron temperature at edge of plasma (eV) (read from Equilibrium JSON file)
+  double neped;   // Electron number density at edge of plasma (m^-3) (read from Equilibrium JSON file)
+  double apol;    // Plasma minor radius (m)
 
   // ---------------------------------------------------------------
   // Equilibrium data (read from Outputs/Equilibrium/Equilibrium.nc)
@@ -130,6 +145,7 @@ class TJ : private Utility
   double*            S1;        // First shaping function
   double*            S2;        // Second shaping function
   double*            S3;        // Third shaping function
+  double*            S4;        // Fourth shaping function
   double*            P1;        // First profile function: (2-s)/q
   double*            P2;        // Second profile function: r dP1/dr
   double*            P3;        // Third profile function
@@ -156,6 +172,7 @@ class TJ : private Utility
   gsl_spline*        S1spline;  // Interpolated S1 function
   gsl_spline*        S2spline;  // Interpolated S2 function
   gsl_spline*        S3spline;  // Interpolated S3 function
+  gsl_spline*        S4spline;  // Interpolated S4 function
   gsl_spline*        P1spline;  // Interpolated P1 function
   gsl_spline*        P2spline;  // Interpolated P2 function
   gsl_spline*        P3spline;  // Interpolated P3 function
@@ -177,6 +194,7 @@ class TJ : private Utility
   gsl_interp_accel*  S1acc;     // Accelerator for interpolated S1 function
   gsl_interp_accel*  S2acc;     // Accelerator for interpolated S2 function
   gsl_interp_accel*  S3acc;     // Accelerator for interpolated S3 function
+  gsl_interp_accel*  S4acc;     // Accelerator for interpolated S4 function
   gsl_interp_accel*  P1acc;     // Accelerator for interpolated P1 function
   gsl_interp_accel*  P2acc;     // Accelerator for interpolated P2 function
   gsl_interp_accel*  P3acc;     // Accelerator for interpolated P3 function
@@ -217,9 +235,9 @@ class TJ : private Utility
   // -----------
   int                Nh;         // Number of harmonics in island calculation (read from ISLAND JSON file)
   int                NX;         // Number radial grid-points in island calculation (read from ISLAND JSON file)
-  double             Finf;       // Asymptotic value of X - deltaT[0] (read from Outputs/Island/Island.nc)
+  double*            T0inf;      // Asymptotic value of X - deltaT[0] at given rational surface (read from Outputs/Island/Island.nc)
   double*            XX;         // Island solution radial grid (read from Outputs/Island/Island.nc)
-  Array<double,2>    deltaTh;    // Harmonics of perturbed electron temperature in vicinity of island (read from Outputs/Island/Island.nc)
+  Array<double,3>    deltaTh;    // Harmonics of perturbed electron temperature in vicinity of island at given rational surface (read from Outputs/Island/Island.nc)
 
   gsl_spline**       dThspline;  // Interpolated island harmonic functions
   gsl_interp_accel** dThacc;     // Accelerator for interpolated island harmonic functions
@@ -332,6 +350,7 @@ class TJ : private Utility
   double* qerr;    // Residual in determination of rational surface
   double* sres;    // Magnetic shears at rational surfaces
   double* gres;    // g values at rational surfaces
+  double* hres;    // h values at rational surfaces
   double* DIres;   // DI values at rational surfaces
   double* DRres;   // DR values at rational surfaces
   double* nuLres;  // Ideal Mercier indices of large solution at rational surfaces
@@ -343,7 +362,13 @@ class TJ : private Utility
   double* nepres;  // Radial gradients of electron number densities at rational surfaces
   double* Teres;   // Electron temperatures at rational surfaces
   double* Tepres;  // Radial gradients of electron temperatures at rational surfaces
-
+  double* Ls;      // Magnetic shear-lengths at rational surfaces
+  double* LT;      // Pressure gradient scale-lengths at rational surfaces
+  double* Lc;      // Average magnetic field-line curvature scale-lengths at rational surfaces
+  double* betah;   // Normalized electron pressure at rational surfaces
+  double* alphab;  // Bootstrap parameters at rational surfaces
+  double* alphac;  // Curvature parameters at rational surfaces
+ 
   // ----------------
   // Mode number data
   // ----------------
@@ -407,10 +432,12 @@ class TJ : private Utility
   complex<double>*         PsTm;  // Reconnected fluxes for temperature calculation inside rational surfaces
   double*                  dTp;   // Temperature adjustments outside rational surfaces
   double*                  dTm;   // Temperature adjustments inside rational surfaces
-  complex<double>*         Psnp;  // Reconnected fluxes for electron number density  calculation outside rational surfaces
+  complex<double>*         Psnp;  // Reconnected fluxes for electron number density calculation outside rational surfaces
   complex<double>*         Psnm;  // Reconnected fluxes for electron number density calculation inside rational surfaces
   double*                  dnp;   // Electron number density adjustments outside rational surfaces
   double*                  dnm;   // Electron number density  adjustments inside rational surfaces
+  double*                  delta; // Island asymmetry parameters at rational surfaces
+  double*                  width; // Island widths at rational surfaces
   
   Array<complex<double>,3> neu;   // n_e components of unreconnected tearing eigenfunctions
   Array<complex<double>,3> Teu;   // T_e components of unreconnected tearing eigenfunctions
@@ -444,6 +471,9 @@ class TJ : private Utility
   Array<double,2>          dZdt;   // dZ/dtheta values at visualization grid-points (from Equilibrium.nc)
   Array<double,2>          rvals;  // r values of visualization grid-points (from Equilibrium.nc)
   Array<double,2>          thvals; // theta values of visualization grid-points (from Equilibrium.nc)
+  Array<double,2>          Bmod;   // |B| on visulalization grid
+  Array<double,2>          Btor;   // |B_toroidal| on visualization grid
+  Array<double,2>          Bpol;   // |B_poloidal| on visualization grid
   Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 
   Array<complex<double>,3> Zuf;    // Z components of Fourier-transformed unreconnected tearing eigenfunctions
   Array<complex<double>,3> psiuf;  // Scaled psi components of Fourier-transformed unreconnected tearing eigenfunctions 
@@ -486,20 +516,36 @@ class TJ : private Utility
   double* teq;            // theta values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* Req;            // R values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* Zeq;            // Z values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* BReq;           // B_parallel values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* neeq;           // n_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* Teeq;           // T_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* BReq;           // Equilibrium B_parallel values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* neeq;           // Equilibrium n_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
+  double* Teeq;           // Equilibrium T_e values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* dRdreq;         // dR/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* dRdteq;         // (dR/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* dZdreq;         // dZ/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* dZdteq;         // (dZ/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* Leq;            // Length along central chord
+  double* Lres;           // Positions of rational surfaces on central chord
+  double* Rres;           // Positions of rational surfaces on central chord
+  double* Ores;           // Positions of island O-points on central chord
+  double* Xres;           // Positions of island X-points on central chord
 
-  Array<double,3> bReqc;  // delta B_parallel values on central chord
-  Array<double,3> neeqc;  // n_e values on central chord
-  Array<double,3> Teeqc;  // T_e values on central chord
-  Array<double,3> dneeqc; // delta n_e values on central chord
-  Array<double,3> dTeeqc; // delta T_e values on central chord
+  Array<double,3> bReqc;  // Perturbed B_parallel values on central chord
+  Array<double,3> neeqc;  // Total n_e values on central chord
+  Array<double,3> Teeqc;  // Total T_e values on central chord
+  Array<double,3> dneeqc; // Perturbed n_e values on central chord
+  Array<double,3> dTeeqc; // Perturbed T_e values on central chord
+
+  double*            itheta;       // m_e c^2 /Te on central chord
+  gsl_spline**       Teeqcspline;  // Interpolated total T_e values on central chord
+  gsl_spline**       dTeeqcspline; // Interpolated perturbed T_e values on central chord
+  gsl_interp_accel** Teeqcacc;     // Accelerator for interpolated total T_e values on central chord
+  gsl_interp_accel** dTeeqcacc;    // Accelerator for interpolated perturbed T_e values on central chord
+  Array<double,3>    Teeqd;        // Total T_e values on central chord modified by relativistic ece broadening
+  Array<double,3>    dTeeqd;       // Perturbed T_e values on central chord modified by relativistic ece broadening
+  Array<double,3>    Tee1;         // Total Te convolution integral
+  Array<double,3>    Tee2;         // Total Te normalization integral
+  Array<double,3>    dTee1;        // Perturbed Te convolution integral
+  Array<double,3>    dTee2;        // Perturbed Te normalization integral
 
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response
@@ -571,20 +617,6 @@ class TJ : private Utility
   Array<complex<double>,2> Psir;    // Psi components of resistive wall mode eigenfunctions on boundary
   Array<complex<double>,2> Xir;     // Xi components of resistive wall mode  eigenfunctions on boundary
   
-  // ----------------------------
-  // Layer calculation parameters
-  // ----------------------------
-  double B0;      // On-axis toroidal magnetic field-strength (T) (read from Layer JSON file)
-  double R0;      // On-axis plasma major radius (m) (read from  Layer JSON file)
-  double n0;      // On-axis electron number density (m^-3) (read from  Layer JSON file)
-  double alpha;   // Assumed electron number density profile: n0 (1 - r^2)^alpha (read from Layer JSON file)
-  double Zeff;    // Effective ion charge number (read from Layer JSON file)
-  double Mion;    // Ion mass number (read from Layer JSON file)
-  double Chip;    // Perpendicular momentum/energy diffusivity (m^2/s) (read from Layer JSON file)
-  double Teped;   // Electron temperature at edge of plasma (eV) (read from Layer JSON file)
-  double neped;   // Electron number density at edge of plasma (m^-3) (read from Layer JSON file)
-  double apol;    // Plasma minor radius (m)
-
   // -------------------
   // Resonant layer data
   // -------------------
@@ -602,7 +634,7 @@ class TJ : private Utility
   // ----
   // Misc
   // ----
-  int    rhs_chooser;
+  int    rhs_chooser, iomega;
   double qval;
   
  public:
@@ -680,11 +712,13 @@ class TJ : private Utility
   void GetMatrices (double r, int m, int mp,
 		    complex<double>& Lmmp, complex<double>& Mmmp,
 		    complex<double>& Nmmp, complex<double>& Pmmp);
-  // Get values of kmp 
+  // Get value of kmp 
   double Getkmp (double r, int m);
-  // Get values of km 
+  // Get value of km 
   double Getkm (double r, int m);
-
+  // Get value of Lmm
+  double GetLmm (double r, int m);
+  
   // ...............
   // In Resonant.cpp
   // ...............
@@ -762,6 +796,8 @@ class TJ : private Utility
   void VisualizeEigenfunctions ();
   // Calculate resonant magnetic response visualization data
   void VisualizeRMP ();
+  // Evaluate right-hand sides of ece odes
+  void CashKarp45Rhs (double R, double* Y, double* dYdr) override;
 
   // ............
   // In Ideal.cpp
@@ -785,6 +821,8 @@ class TJ : private Utility
   double GetPsiN (double r);
   // Return value of f
   double Getf (double r);
+  // Return value of p
+  double Getp (double r);
   // Return value of pp
   double Getpp (double r);
   // Return value of ppp
@@ -807,6 +845,8 @@ class TJ : private Utility
   double GetS2 (double r);
   // Return value of S3
   double GetS3 (double r);
+  // Return value of S4
+  double GetS4 (double r);
   // Return value of P1
   double GetP1 (double r);
   // Return value of P2
@@ -837,6 +877,18 @@ class TJ : private Utility
   double GetFlarge (double r, int m);
   // Return value of Fsmall
   double GetFsmall (double r, int m);
+  // Return value of Ls
+  double GetLs (double r);
+  // Return value of LT
+  double GetLT (double r);
+  // Return value of Lc
+  double GetLc (double r);
+  // Return value of betae
+  double Getbetah (double r);
+  // Return value of alphab
+  double Getalphab (double r);
+  // Return value of alphac
+  double Getalphac (double r);
 
   // ................
   // In Armadillo.cpp
@@ -898,7 +950,7 @@ class TJ : private Utility
   // Read equilibrium data from netcdf file
   void ReadEquilibriumNetcdf ();
   // Read island data from netcdf file
-  void ReadIslandNetcdf ();
+  void ReadIslandNetcdf (int k);
   // Write stability data to netcdf file
   void WriteNetcdf ();
 };

@@ -25,7 +25,7 @@ Equilibrium::Equilibrium ()
   // --------------------------------------
   string JSONFilename = "../Inputs/Equilibrium.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
-  
+
   SRC  = JSONData["SRC"] .get<int>    ();
   qc   = JSONData["qc"]  .get<double> ();
   qa   = JSONData["qa"]  .get<double> ();
@@ -51,9 +51,6 @@ Equilibrium::Equilibrium ()
     {
       Vna.push_back (number.get<double> ());
     }
-
-  JSONFilename = "../Inputs/Layer.json";
-  JSONData     = ReadJSONFile (JSONFilename);
 
   B0    = JSONData["B0"]   .get<double> ();
   R0    = JSONData["R0"]   .get<double> ();
@@ -187,8 +184,10 @@ void Equilibrium::Solve ()
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
   printf ("Calculation parameters:\n");
-  printf ("qc = %10.3e qa = %10.3e epsa = %10.3e pc = %10.3e mu = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d SRC = %1d tilt = %10.3e\n",
-	  qc, qa, epsa, pc, mu, Ns, Nr, Nf, Nw, SRC, tilt);
+  printf ("qc  = %10.3e qa   = %10.3e epsa = %10.3e pc = %10.3e mu = %10.3e Ns = %3d Nr = %3d Nf = %3d Nw = %3d\n",
+	  qc, qa, epsa, pc, mu, Ns, Nr, Nf, Nw);
+  printf ("SRC =  %1d         tilt = %10.3e\n",
+	  SRC, tilt);
 
   // ....................
   // Read in profile data
@@ -265,6 +264,7 @@ void Equilibrium::Solve ()
   S1    = new double[Nr+1];
   S2    = new double[Nr+1];
   S3    = new double[Nr+1];
+  S4    = new double[Nr+1];
   P1    = new double[Nr+1];
   P1a   = new double[Nr+1];
   P2    = new double[Nr+1];
@@ -785,6 +785,7 @@ void Equilibrium::Solve ()
       double sum1 = 1.5 * HPfunc(1, i) * HPfunc(1, i);
       double sum2 = 1.5 * rr[i]*rr[i] - 2. * rr[i] * HPfunc(1, i) + HPfunc(1, i)*HPfunc(1, i);
       double sum3 = - 0.75 * rr[i]*rr[i] + rr[i]*rr[i] /q2[i]/q2[i] + HHfunc(1, i) + 1.5 * HPfunc(1, i)*HPfunc(1, i);
+      double sum4 = 0.75 * rr[i]*rr[i] - HHfunc(1, i) + HPfunc(1, i) * HPfunc(1, i) /2.;
  
       for (int n = 2; n <= Ns; n++)
 	{
@@ -795,15 +796,19 @@ void Equilibrium::Solve ()
 	          -      double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i];
 	  sum3 += (                    3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
 		       - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i]) /2.;
+	  sum4 +=                           (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)) /2.
+	               + double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i] /2.;
 	}
 
       S1[i] = sum1;
       S2[i] = sum2;
       S3[i] = sum3;
+      S4[i] = sum4;
     }
   S1[0] = 0.;
   S2[0] = S2[1];
   S3[0] = 0.;
+  S4[0] = S4[1];
 
   // ...........................
   // Calculate profile functions
@@ -1145,7 +1150,7 @@ void Equilibrium::Solve ()
   delete[] s;   delete[] s2;  delete[] S1;  delete[] S2;  delete[] P1;
   delete[] P2;  delete[] P3;  delete[] P3a; delete[] ff;  delete[] ggr2;
   delete[] RR2; delete[] IR2; delete[] S3;  delete[] P1a; delete[] P2a;
-  delete[] s0;
+  delete[] s0;  delete[] S4;
 
   delete[] req;    delete[] weq;    delete[] teq;    delete[] Req; 
   delete[] Zeq;    delete[] BReq;   delete[] neeq;   delete[] Teeq;

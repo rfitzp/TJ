@@ -12,9 +12,12 @@ ds  = nc.Dataset(fn)
 x   = ds['X']
 dTo = ds['delta_T_o']
 dTx = ds['delta_T_x']
+p   = np.asarray(ds['InputParameters'])
+
+delta = p[5];
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Temperature Perturbation across O- and X-Points')
+fig.canvas.manager.set_window_title (r'Island Code: Temperature Perturbation across O- and X-Points')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 
@@ -22,10 +25,13 @@ plt.subplot (1, 1, 1)
 
 plt.xlim (x[0], x[-1])
 
-plt.plot    (x, dTo, color = 'blue',  linewidth = 2,   linestyle = 'solid', label = 'O-point')
-plt.plot    (x, dTx, color = 'red',   linewidth = 2,   linestyle = 'solid', label = 'X-point')
-plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (0.5,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.plot    (x, dTo,               color = 'blue',  linewidth = 2,   linestyle = 'solid', label = 'O-point')
+plt.plot    (x, dTx,               color = 'red',   linewidth = 2,   linestyle = 'solid', label = 'X-point')
+plt.axhline ( 0.,                  color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline ( 0.5 - delta/8.**0.5, color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline ( 0.0 + delta/8.**0.5, color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (-0.5 - delta/8.**0.5, color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
 
 plt.xlabel (r'$x/W$', fontsize = "15")
 plt.legend (fontsize = "15");

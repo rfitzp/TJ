@@ -28,6 +28,7 @@ void TJ::ReadEquilibrium ()
   S1spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   S2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   S3spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  S4spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P1spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P3spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
@@ -49,6 +50,7 @@ void TJ::ReadEquilibrium ()
   S1acc     = gsl_interp_accel_alloc ();
   S2acc     = gsl_interp_accel_alloc ();
   S3acc     = gsl_interp_accel_alloc ();
+  S4acc     = gsl_interp_accel_alloc ();
   P1acc     = gsl_interp_accel_alloc ();
   P2acc     = gsl_interp_accel_alloc ();
   P3acc     = gsl_interp_accel_alloc ();
@@ -96,6 +98,7 @@ void TJ::ReadEquilibrium ()
   gsl_spline_init (S1spline,  rr, S1,   Nr+1);
   gsl_spline_init (S2spline,  rr, S2,   Nr+1);
   gsl_spline_init (S3spline,  rr, S3,   Nr+1);
+  gsl_spline_init (S4spline,  rr, S4,   Nr+1);
   gsl_spline_init (P1spline,  rr, P1,   Nr+1);
   gsl_spline_init (P2spline,  rr, P2,   Nr+1);
   gsl_spline_init (P3spline,  rr, P3,   Nr+1);
@@ -210,39 +213,59 @@ void TJ::CalculateMetricBoundary ()
   gsl_spline_init (Rrespline, tbound, R2grge, Nw+1);
 }
 
-// ##########################################################
-// Function to read island data from Outputs/Island/Island.nc
-// ##########################################################
+// ##############################################################
+// Function to read island data from Outputs/Island/Islandxxxx.nc
+// ##############################################################
 void TJ::ReadIsland ()
 {
-  // ......................................
-  // Read equilibrium data from netcdf file
-  // ......................................
-  ReadIslandNetcdf ();
+  // ...............
+  // Allocate memory
+  // ...............
+  deltaTh.resize (nres, Nh, NX);
+  T0inf     = new double           [nres];
+  XX        = new double           [NX];
+  dThspline = new gsl_spline*      [nres*Nh];
+  dThacc    = new gsl_interp_accel*[nres*Nh];
 
-  // .....................................................
-  // Allocate memory for interpolation of island harmonics
-  // .....................................................
-  dThspline = new gsl_spline*      [Nh];
-  dThacc    = new gsl_interp_accel*[Nh];
+  for (int k = 0; k < nres; k++)
+    for (int n = 0; n < Nh; n++)
+      {
+	dThspline[k*Nh + n] = gsl_spline_alloc (gsl_interp_cspline, NX);
+	dThacc   [k*Nh + n] = gsl_interp_accel_alloc ();
+      }
 
-  for (int n = 0; n < Nh; n++)
+  // ....................................
+  // Run Island for each rational surface
+  // ....................................
+  for (int k = 0; k < nres; k++)
     {
-      dThspline[n] = gsl_spline_alloc (gsl_interp_cspline, NX);
-      dThacc   [n] = gsl_interp_accel_alloc ();
+	Island island (k, delta[k]);
+
+	island.Solve (0);
     }
 
+  // ...........................................................................
+  // Read island harmonic data for each rational surface from Island netcdf file
+  // ...........................................................................
+  for (int k = 0; k < nres; k++)
+    ReadIslandNetcdf (k);
+  
   // ................................
   // Interpolate island harmonic data
   // ................................
   double* data = new double[NX];
   
-  for (int n = 0; n < Nh; n++)
+  for (int k = 0; k < nres; k++)
     {
-      for (int i = 0; i < NX; i++)
-	data[i] = deltaTh(n, i);
-      gsl_spline_init (dThspline[n], XX, data, NX);
+      for (int n = 0; n < Nh; n++)
+	{
+ 	  for (int i = 0; i < NX; i++)
+	    data[i] = deltaTh (k, n, i);
+
+	  gsl_spline_init (dThspline[k*Nh + n], XX, data, NX);
+	}
     }
+
   delete[] data;
 }
   

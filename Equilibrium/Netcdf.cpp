@@ -143,6 +143,8 @@ void Equilibrium::WriteNetcdf (double sa)
       S2_x.putVar (S2);
       NcVar S3_x  = dataFile.addVar ("S3",   ncDouble, r_d);
       S3_x.putVar (S3);
+      NcVar S4_x  = dataFile.addVar ("S4",   ncDouble, r_d);
+      S4_x.putVar (S4);
       NcVar P1_x  = dataFile.addVar ("P1",   ncDouble, r_d);
       P1_x.putVar (P1);
       NcVar P1a_x = dataFile.addVar ("P1a",  ncDouble, r_d);
@@ -273,6 +275,8 @@ void Equilibrium::WriteNetcdf (double sa)
       Zcoil_x.putVar (Zcoil);
       NcVar Icoil_x = dataFile.addVar ("Icoil", ncDouble, c_d);
       Icoil_x.putVar (Icoil);
+
+      dataFile.close ();
     }
   catch (NcException& e)
     {

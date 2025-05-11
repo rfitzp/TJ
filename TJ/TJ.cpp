@@ -42,8 +42,12 @@ TJ::TJ ()
   NTOR    = JSONData["NTOR"]  .get<int>();
   MMIN    = JSONData["MMIN"]  .get<int>();
   MMAX    = JSONData["MMAX"]  .get<int>();
-  ISLAND  = JSONData["ISLAND"].get<double>();
   NPHI    = JSONData["NPHI"]  .get<int>();
+
+  for (const auto& number : JSONData["ISLAND"])
+    {
+      ISLAND.push_back (number.get<double> ());
+    }
 
   EQLB    = JSONData["EQLB"] .get<int>();
   FREE    = JSONData["FREE"] .get<int>();
@@ -55,6 +59,7 @@ TJ::TJ ()
   INTR    = JSONData["INTR"] .get<int>();
   RWM     = JSONData["RWM"]  .get<int>();
   LAYER   = JSONData["LAYER"].get<int>();
+  TEMP    = JSONData["TEMP"] .get<int>();
 
   EPS     = JSONData["EPS"]  .get<double>();
   DEL     = JSONData["DEL"]  .get<double>();
@@ -73,12 +78,8 @@ TJ::TJ ()
 
   JSONFilename = "../Inputs/Equilibrium.json";
   JSONData     = ReadJSONFile (JSONFilename);
-
-  SRC  = JSONData["SRC"].get<int>();
-
-  JSONFilename = "../Inputs/Layer.json";
-  JSONData     = ReadJSONFile (JSONFilename);
   
+  SRC   = JSONData["SRC"]  .get<int>   ();
   B0    = JSONData["B0"]   .get<double>();
   R0    = JSONData["R0"]   .get<double>();
   n0    = JSONData["n0"]   .get<double>();
@@ -88,7 +89,7 @@ TJ::TJ ()
   Chip  = JSONData["Chip"] .get<double>();
   Teped = JSONData["Teped"].get<double>();
   neped = JSONData["neped"].get<double>();
-
+  
   JSONFilename = "../Inputs/Island.json";
   JSONData     = ReadJSONFile (JSONFilename);
 
@@ -213,12 +214,13 @@ TJ::TJ ()
       printf ("TJ: Error - neped must be positive\n");
       exit (1);
     }
-  if (ISLAND <= 0.)
-    {
-      printf ("TJ: Error - ISLAND must be positive\n");
-      exit (1);
-    }
-
+  for (int k = 0; k < ISLAND.size(); k++)
+    if (ISLAND[k] <= 0.)
+      {
+	printf ("TJ: Error - ISLAND must be positive\n");
+	exit (1);
+      }
+  
   // No resonant magnetic perturbation calculation for fixed boundary
   if (FREE < 0)
     RMP = 0;
@@ -248,16 +250,6 @@ void TJ::Solve ()
     equilibrium.Solve ();
   }
 
-  // ...................................................................................
-  // Call class Island to determine perturbed temperature in vicinity of magnetic island
-  // ...................................................................................
-  if (!EQLB)
-    {
-      Island island;
-
-      island.Solve ();
-    }
-
   if (!EQLB)
     {
       // -----------------------------
@@ -268,11 +260,11 @@ void TJ::Solve ()
       printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
       printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
       printf ("Calculation flags:\n");
-      printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d\n",
-	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER);
+      printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d TEMP = %1d\n",
+	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER, TEMP);
       printf ("Calculation parameters:\n");
       printf ("ntor = %3d        mmin  = %3d        mmax  = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e NPHI = %3d\n",
-	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND, NPHI);
+	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND[0], NPHI);
       printf ("nfix = %3d        ndiag = %3d       nulc  = %10.3e itermax = %3d\n",
 	      NFIX, NDIAG, NULC, ITERMAX);
       printf ("acc  = %10.3e h0    = %10.3e hmin  = %10.3e hmax    = %10.3e epsf = %10.3e\n",
@@ -287,9 +279,6 @@ void TJ::Solve ()
       
       // Read equilibrium data
       ReadEquilibrium ();
-
-      // Read island data
-      ReadIsland ();
       
       // Calculate metric data at plasma boundary
       CalculateMetricBoundary ();
@@ -388,7 +377,7 @@ void TJ::CleanUp ()
   delete[] P2;   delete[] P3;  delete[] g2;  delete[] p2;
   delete[] PsiN; delete[] S2;  delete[] S3;  delete[] s0;
   delete[] f;    delete[] Psi; delete[] nep; delete[] Tep;
-  delete[] ne;   delete[] Te;
+  delete[] ne;   delete[] Te;  delete[] S4;
 
   gsl_spline_free (Pspline);
   gsl_spline_free (fspline);
@@ -476,19 +465,20 @@ void TJ::CleanUp ()
   delete[] sres;  delete[] DIres;  delete[] nuLres; delete[] nuSres;
   delete[] Jres;  delete[] DRres;  delete[] Flarge; delete[] Fsmall;
   delete[] Pres;  delete[] gres;   delete[] neres;  delete[] nepres;
-  delete[] Teres; delete[] Tepres;
+  delete[] Teres; delete[] Tepres; delete[] hres;
 
-  delete[] S13res; delete[] taures; delete[] ieres; delete[] QEres;
-  delete[] Qeres;  delete[] Qires;  delete[] Dres;  delete[] Pmres;
-  delete[] Peres;  delete[] Dcres;
+  delete[] S13res; delete[] taures; delete[] ieres;  delete[] QEres;
+  delete[] Qeres;  delete[] Qires;  delete[] Dres;   delete[] Pmres;
+  delete[] Peres;  delete[] Dcres;  delete[] Ls;     delete[] LT;
+  delete[] Lc;     delete[] alphab; delete[] alphac; delete[] betah;
 
   delete[] MPOL; delete[] mpol;
      
   delete[] Rgrid; delete[] hode; delete[] eode; delete[] Pgrid;
 
-  delete[] Fval; delete[] Psik; delete[] PsTp; delete[] PsTm;
-  delete[] dTp;  delete[] dTm;  delete[] Psnp; delete[] Psnm;
-  delete[] dnp;  delete[] dnm;
+  delete[] Fval; delete[] Psik; delete[] PsTp;  delete[] PsTm;
+  delete[] dTp;  delete[] dTm;  delete[] Psnp;  delete[] Psnm;
+  delete[] dnp;  delete[] dnm;  delete[] delta; delete[] width;
 
   if (IDEAL)
     {
@@ -502,23 +492,38 @@ void TJ::CleanUp ()
       delete[] FFvl; delete[] fw;
     }
 
-  for (int i = 0; i < Nh; i++)
+  if (TEMP)
     {
-      gsl_spline_free (dThspline[i]);
+      for (int k = 0; k < nres; k++)
+	for (int n = 0; n < Nh; n++)
+	  {
+	    gsl_spline_free (dThspline[k*Nh + n]);
+	    
+	    gsl_interp_accel_free (dThacc[k*Nh + n]);
+	  }
+      delete[] dThspline; delete[] dThacc;
       
-      gsl_interp_accel_free (dThacc[i]);
+      delete[] XX; delete[] T0inf;
     }
-  delete[] dThspline; delete[] dThacc;
-
-  delete[] XX;
       
  if (VIZ)
     {
       delete[] rf;     delete[] req;    delete[] teq;    delete[] Req; 
       delete[] Zeq;    delete[] BReq;   delete[] neeq;   delete[] Teeq;
       delete[] dRdreq; delete[] dRdteq; delete[] dZdreq; delete[] dZdteq;
-      delete[] Leq;    delete[] PP;
+      delete[] Leq;    delete[] PP;     delete[] Lres;   delete[] itheta;
+      delete[] Rres;   delete[] Ores;   delete[] Xres;
+
+      for (int k = 0; k < nres; k++)
+	for (int np = 0; np < NPHI; np++)
+	  {
+	    gsl_spline_free (dTeeqcspline[k*NPHI + np]);
+	    
+	    gsl_interp_accel_free (dTeeqcacc[k*NPHI + np]);
+	  }
+      delete[] dTeeqcspline; delete[] dTeeqcacc;
     }
+ 
   delete[] rho;
 }
 

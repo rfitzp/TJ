@@ -778,7 +778,7 @@ double Utility::RootFindF (double x)
 // ##################################################################
 double Utility::RootFind (double x1, double x2)
 {
-  double F1, F2 = 0., root;
+  double F1, F2 = 0., root = -1.e15;
 
   // Chop search interval into Nint segments  
   for (int i = 0; i < Nint; i++)

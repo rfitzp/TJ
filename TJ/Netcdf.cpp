@@ -2,7 +2,7 @@
 
 #include "TJ.h"
 
-#define NINPUT 26
+#define NINPUT 27
 
 // ##################################################
 // Function to read equilibrium data from netcdf file
@@ -41,6 +41,7 @@ void TJ::ReadEquilibriumNetcdf ()
       NcVar S1_x  = dataFile.getVar ("S1");
       NcVar S2_x  = dataFile.getVar ("S2");
       NcVar S3_x  = dataFile.getVar ("S3");
+      NcVar S4_x  = dataFile.getVar ("S4");
       NcVar P1_x  = dataFile.getVar ("P1");
       NcVar P2_x  = dataFile.getVar ("P2");
       NcVar P3_x  = dataFile.getVar ("P3");
@@ -67,6 +68,7 @@ void TJ::ReadEquilibriumNetcdf ()
       S1   = new double[Nr+1];
       S2   = new double[Nr+1];
       S3   = new double[Nr+1];
+      S4   = new double[Nr+1];
       P1   = new double[Nr+1];
       P2   = new double[Nr+1];
       P3   = new double[Nr+1];
@@ -90,6 +92,7 @@ void TJ::ReadEquilibriumNetcdf ()
       S1_x .getVar (S1);
       S2_x .getVar (S2);
       S3_x .getVar (S3);
+      S4_x .getVar (S4);
       P1_x .getVar (P1);
       P2_x .getVar (P2);
       P3_x .getVar (P3);
@@ -210,7 +213,7 @@ void TJ::ReadEquilibriumNetcdf ()
 	  double* dRdrdata = new double[Nf*(Nw+1)];
 	  double* dRdtdata = new double[Nf*(Nw+1)];
 	  double* dZdrdata = new double[Nf*(Nw+1)];
-	  double* dZdtdata = new double[Nf*(Nw+1)];
+	  double* dZdtdata = new double[Nf*(Nw+1)];	  
 	  
 	  RR_x.getVar (RRdata);
 	  ZZ_x.getVar (ZZdata);
@@ -278,6 +281,8 @@ void TJ::ReadEquilibriumNetcdf ()
 	  dRdteq_x.getVar (dRdteq);
 	  dZdreq_x.getVar (dZdreq);
 	  dZdteq_x.getVar (dZdteq);
+
+	  dataFile.close ();
 	}
       else
 	Nf = 0;
@@ -296,14 +301,17 @@ void TJ::ReadEquilibriumNetcdf ()
 // #############################################
 // Function to read island data from netcdf file
 // #############################################
-void TJ::ReadIslandNetcdf ()
+void TJ::ReadIslandNetcdf (int k)
 {
-  printf ("Reading data from netcdf file Outputs/Island/Island.nc:\n");
+  char buffer[100];
+  sprintf (buffer, "../Outputs/Island/Island%04d.nc", k);
   
+  printf ("Reading data from netcdf file %s:\n", buffer);
+   
   try
     {
-      NcFile dataFile ("../Outputs/Island/Island.nc", NcFile::read);
-      
+      NcFile dataFile (buffer, NcFile::read);
+
       NcVar p_x = dataFile.getVar ("para");
       NcDim p_d = p_x.getDim (0);
       
@@ -312,15 +320,12 @@ void TJ::ReadIslandNetcdf ()
       
       p_x.getVar (para);
       
-      Finf = para[0];
+      T0inf[k] = para[0];
       
       NcVar XX_x  = dataFile.getVar ("X");
       NcVar dTh_x = dataFile.getVar ("delta_T_h");
-      
-      XX              = new double[NX];
+        
       double* dThdata = new double[Nh*NX];
-      
-      deltaTh.resize (Nh, NX);
       
       XX_x .getVar (XX);
       dTh_x.getVar (dThdata);
@@ -329,11 +334,13 @@ void TJ::ReadIslandNetcdf ()
       for (int n = 0; n < Nh; n++)
 	for (int i = 0; i < NX; i++)
 	  {
-	    deltaTh(n, i) = dThdata[cnt];
+	    deltaTh(k, n, i) = dThdata[cnt];
 	    cnt++;
 	  }
       
       delete[] para; delete[] dThdata;
+
+      dataFile.close ();
     }
   catch (NcException& e)
     {
@@ -468,6 +475,10 @@ void TJ::WriteNetcdf ()
   double* xi_c    = new double[nres*Nf*(Nw+1)];
   double* xi_s    = new double[nres*Nf*(Nw+1)];
 
+  double* Btor_r  = new double[Nf*(Nw+1)];
+  double* Bpol_r  = new double[Nf*(Nw+1)];
+  double* Bmod_r  = new double[Nf*(Nw+1)];
+
   double* ne_c    = new double[nres*Nf*(Nw+1)*NPHI];
   double* Te_c    = new double[nres*Nf*(Nw+1)*NPHI];
   double* dne_c   = new double[nres*Nf*(Nw+1)*NPHI];
@@ -478,6 +489,12 @@ void TJ::WriteNetcdf ()
   double* Teeq_c  = new double[nres*2*Nf*NPHI];
   double* dneeq_c = new double[nres*2*Nf*NPHI];
   double* dTeeq_c = new double[nres*2*Nf*NPHI];
+  double* Teeq_d  = new double[nres*2*Nf*NPHI];
+  double* Tee1_d  = new double[nres*2*Nf*NPHI];
+  double* Tee2_d  = new double[nres*2*Nf*NPHI];
+  double* dTeeq_d = new double[nres*2*Nf*NPHI];
+  double* dTee1_d = new double[nres*2*Nf*NPHI];
+  double* dTee2_d = new double[nres*2*Nf*NPHI];
   
   double* Fmat_r  = new double[nres*nres];
   double* Fmat_i  = new double[nres*nres];
@@ -593,8 +610,9 @@ void TJ::WriteNetcdf ()
   Input[21] = Chip;
   Input[22] = Teped;
   Input[23] = double (XI);
-  Input[24] = ISLAND;
+  Input[24] = ISLAND[0];
   Input[25] = double (NPHI);
+  Input[26] = double (TEMP);
   
   int cnt = 0;
   for (int i = 0; i <= Nr; i++)
@@ -735,21 +753,24 @@ void TJ::WriteNetcdf ()
 	  cnt++;
 	}
 
-  cnt = 0;
-  for (int j = 0; j < J+1; j++)
-    for (int jp = 0; jp < nres; jp++)
-      for (int i = 0; i < NDIAG; i++)
-	{
-	  dnU_r[cnt] = real (dneu (j, jp, i));
-	  dnU_i[cnt] = imag (dneu (j, jp, i));
-	  dTU_r[cnt] = real (dTeu (j, jp, i));
-	  dTU_i[cnt] = imag (dTeu (j, jp, i));
-	  nU_r [cnt] = real (neu  (j, jp, i));
-	  nU_i [cnt] = imag (neu  (j, jp, i));
-	  TU_r [cnt] = real (Teu  (j, jp, i));
-	  TU_i [cnt] = imag (Teu  (j, jp, i));
-	  cnt++;
-	}
+  if (TEMP)
+    {
+      cnt = 0;
+      for (int j = 0; j < J+1; j++)
+	for (int jp = 0; jp < nres; jp++)
+	  for (int i = 0; i < NDIAG; i++)
+	    {
+	      dnU_r[cnt] = real (dneu (j, jp, i));
+	      dnU_i[cnt] = imag (dneu (j, jp, i));
+	      dTU_r[cnt] = real (dTeu (j, jp, i));
+	      dTU_i[cnt] = imag (dTeu (j, jp, i));
+	      nU_r [cnt] = real (neu  (j, jp, i));
+	      nU_i [cnt] = imag (neu  (j, jp, i));
+	      TU_r [cnt] = real (Teu  (j, jp, i));
+	      TU_i [cnt] = imag (Teu  (j, jp, i));
+	      cnt++;
+	    }
+    }
 
   if (VIZ)
     {
@@ -779,30 +800,49 @@ void TJ::WriteNetcdf ()
 	    }
 
       cnt = 0;
-      for (int k = 0; k < nres; k++)
-	for (int i = 0; i < Nf; i++)
+      	for (int i = 0; i < Nf; i++)
 	  for (int l = 0; l <= Nw; l++)
-	    for (int np = 0; np < NPHI; np++)
-	      {
-		ne_c [cnt] = nec (k, i, l, np);
-		Te_c [cnt] = Tec (k, i, l, np);
-		dne_c[cnt] = dnec(k, i, l, np);
-		dTe_c[cnt] = dTec(k, i, l, np);
-		cnt++;
-	      }
+	    {
+	      Btor_r[cnt] = Btor (i, l);
+	      Bpol_r[cnt] = Bpol (i, l);
+	      Bmod_r[cnt] = Bmod (i, l);
+	      cnt++;
+	    }
 
-      cnt = 0;
-      for (int k = 0; k < nres; k++)
-	for (int i = 0; i < 2*Nf; i++)
-	  for (int np = 0; np < NPHI; np++)
-	  {
-	    bReq_c [cnt] = bReqc (k, i, np);
-	    neeq_c [cnt] = neeqc (k, i, np);
-	    Teeq_c [cnt] = Teeqc (k, i, np);
-	    dneeq_c[cnt] = dneeqc(k, i, np);
-	    dTeeq_c[cnt] = dTeeqc(k, i, np);
-	    cnt++;
-	  }
+      if (TEMP)
+	{
+	  cnt = 0;
+	  for (int k = 0; k < nres; k++)
+	    for (int i = 0; i < Nf; i++)
+	      for (int l = 0; l <= Nw; l++)
+		for (int np = 0; np < NPHI; np++)
+		  {
+		    ne_c [cnt] = nec (k, i, l, np);
+		    Te_c [cnt] = Tec (k, i, l, np);
+		    dne_c[cnt] = dnec(k, i, l, np);
+		    dTe_c[cnt] = dTec(k, i, l, np);
+		    cnt++;
+		  }
+	  
+	  cnt = 0;
+	  for (int k = 0; k < nres; k++)
+	    for (int i = 0; i < 2*Nf; i++)
+	      for (int np = 0; np < NPHI; np++)
+		{
+		  bReq_c [cnt] = bReqc (k, i, np);
+		  neeq_c [cnt] = neeqc (k, i, np);
+		  Teeq_c [cnt] = Teeqc (k, i, np);
+		  dneeq_c[cnt] = dneeqc(k, i, np);
+		  dTeeq_c[cnt] = dTeeqc(k, i, np);
+		  Teeq_d [cnt] = Teeqd (k, i, np);
+		  Tee1_d [cnt] = Tee1  (k, i, np);
+		  Tee2_d [cnt] = Tee2  (k, i, np);
+		  dTeeq_d[cnt] = dTeeqd(k, i, np);
+		  dTee1_d[cnt] = dTee1 (k, i, np);
+		  dTee2_d[cnt] = dTee2 (k, i, np);
+		  cnt++;
+		}
+	}
     }
   
   cnt = 0;
@@ -1340,40 +1380,65 @@ void TJ::WriteNetcdf ()
       NcVar xii_x  = dataFile.addVar ("xi_unrc_i",       ncDouble, full_d);
       xii_x.putVar (xiU_i);
 
-      NcVar dnur_x = dataFile.addVar ("delta_ne_unrc_r", ncDouble, full1_d);
-      dnur_x.putVar (dnU_r);
-      NcVar dnui_x = dataFile.addVar ("delta_ne_unrc_i", ncDouble, full1_d);
-      dnui_x.putVar (dnU_i);
-      NcVar dTur_x = dataFile.addVar ("delta_Te_unrc_r", ncDouble, full1_d);
-      dTur_x.putVar (dTU_r);
-      NcVar dTui_x = dataFile.addVar ("delta_Te_unrc_i", ncDouble, full1_d);
-      dTui_x.putVar (dTU_i);
-      NcVar nur_x = dataFile.addVar  ("ne_unrc_r",       ncDouble, full1_d);
-      nur_x.putVar (nU_r);
-      NcVar nui_x  = dataFile.addVar ("ne_unrc_i",       ncDouble, full1_d);
-      nui_x.putVar (nU_i);
-      NcVar Tur_x  = dataFile.addVar ("Te_unrc_r",       ncDouble, full1_d);
-      Tur_x.putVar (TU_r);
-      NcVar Tui_x  = dataFile.addVar ("Te_unrc_i",       ncDouble, full1_d);
-      Tui_x.putVar (TU_i);
+      if (TEMP)
+	{
+	  NcVar dnur_x = dataFile.addVar ("delta_ne_unrc_r", ncDouble, full1_d);
+	  dnur_x.putVar (dnU_r);
+	  NcVar dnui_x = dataFile.addVar ("delta_ne_unrc_i", ncDouble, full1_d);
+	  dnui_x.putVar (dnU_i);
+	  NcVar dTur_x = dataFile.addVar ("delta_Te_unrc_r", ncDouble, full1_d);
+	  dTur_x.putVar (dTU_r);
+	  NcVar dTui_x = dataFile.addVar ("delta_Te_unrc_i", ncDouble, full1_d);
+	  dTui_x.putVar (dTU_i);
+	  NcVar nur_x = dataFile.addVar  ("ne_unrc_r",       ncDouble, full1_d);
+	  nur_x.putVar (nU_r);
+	  NcVar nui_x  = dataFile.addVar ("ne_unrc_i",       ncDouble, full1_d);
+	  nui_x.putVar (nU_i);
+	  NcVar Tur_x  = dataFile.addVar ("Te_unrc_r",       ncDouble, full1_d);
+	  Tur_x.putVar (TU_r);
+	  NcVar Tui_x  = dataFile.addVar ("Te_unrc_i",       ncDouble, full1_d);
+	  Tui_x.putVar (TU_i);
+	}
 
-      NcVar mres_x   = dataFile.addVar ("m_res",    ncInt,    x_d);
+      NcVar mres_x   = dataFile.addVar ("m_res",      ncInt,    x_d);
       mres_x.putVar (mres);
-      NcVar rres_x   = dataFile.addVar ("r_res",    ncDouble, x_d);
+      NcVar rres_x   = dataFile.addVar ("r_res",      ncDouble, x_d);
       rres_x.putVar (rres);
-      NcVar sres_x   = dataFile.addVar ("s_res",    ncDouble, x_d);
+      NcVar sres_x   = dataFile.addVar ("s_res",      ncDouble, x_d);
       sres_x.putVar (sres);
-      NcVar dires_x  = dataFile.addVar ("DI_res",   ncDouble, x_d);
+      NcVar dires_x  = dataFile.addVar ("DI_res",     ncDouble, x_d);
       dires_x.putVar (DIres);
-      NcVar drres_x  = dataFile.addVar ("DR_res",   ncDouble, x_d);
+      NcVar drres_x  = dataFile.addVar ("DR_res",     ncDouble, x_d);
       drres_x.putVar (DRres);
-      NcVar flarge_x = dataFile.addVar ("Flarge",   ncDouble, x_d);
+      NcVar flarge_x = dataFile.addVar ("Flarge",     ncDouble, x_d);
       flarge_x.putVar (Flarge);
-      NcVar fsmall_x = dataFile.addVar ("Fsmall",   ncDouble, x_d);
+      NcVar fsmall_x = dataFile.addVar ("Fsmall",     ncDouble, x_d);
       fsmall_x.putVar (Fsmall);
-      NcVar Pn_x     = dataFile.addVar ("PsiN_res", ncDouble, x_d);
+      NcVar Pn_x     = dataFile.addVar ("PsiN_res",   ncDouble, x_d);
       Pn_x.putVar (Pres);
-
+      NcVar Ls_x     = dataFile.addVar ("Ls_res",     ncDouble, x_d);
+      Ls_x.putVar (Ls);
+      NcVar LT_x     = dataFile.addVar ("LT_res",     ncDouble, x_d);
+      LT_x.putVar (LT);
+      NcVar Lc_x     = dataFile.addVar ("Lc_res",     ncDouble, x_d);
+      Lc_x.putVar (Lc);
+      NcVar bh_x     = dataFile.addVar ("betah_res",  ncDouble, x_d);
+      bh_x.putVar (betah);
+      NcVar ab_x     = dataFile.addVar ("alphab_res", ncDouble, x_d);
+      ab_x.putVar (alphab);
+      NcVar ac_x     = dataFile.addVar ("alphac_res", ncDouble, x_d);
+      ac_x.putVar (alphac);
+      NcVar pr_x     = dataFile.addVar ("Psi_res",    ncDouble, x_d);
+      pr_x.putVar (Psik);
+      NcVar dTp_x    = dataFile.addVar ("dTp_res",    ncDouble, x_d);
+      dTp_x.putVar (dTp);
+      NcVar dTm_x    = dataFile.addVar ("dTm_res",    ncDouble, x_d);
+      dTm_x.putVar (dTm);
+      NcVar del_x    = dataFile.addVar ("delta_res",  ncDouble, x_d);
+      del_x.putVar (delta);
+      NcVar wid_x    = dataFile.addVar ("width_res",  ncDouble, x_d);
+      wid_x.putVar (width);
+  
       NcVar tf_x = dataFile.addVar ("Torque_full", ncDouble, t_d);
       tf_x.putVar (Tf.data());
       NcVar tu_x = dataFile.addVar ("Torque_unrc", ncDouble, t_d);
@@ -1418,29 +1483,62 @@ void TJ::WriteNetcdf ()
 	  xic_x.putVar (xi_c);
 	  NcVar xis_x  = dataFile.addVar ("xi_sin",         ncDouble, v_d);
 	  xis_x.putVar (xi_s);
+	  NcVar Btor_x = dataFile.addVar ("B_toroidal",     ncDouble, vr_d);
+	  Btor_x.putVar (Btor_r);
+	  NcVar Bpol_x = dataFile.addVar ("B_poloidal",     ncDouble, vr_d);
+	  Bpol_x.putVar (Bpol_r);
+	  NcVar Bmod_x = dataFile.addVar ("B_modulus",      ncDouble, vr_d);
+	  Bmod_x.putVar (Bmod_r);
 
-	  NcVar nec_x  = dataFile.addVar ("ne",             ncDouble, vx_d);
-	  nec_x.putVar (ne_c);
-	  NcVar Tec_x  = dataFile.addVar ("Te",             ncDouble, vx_d);
-	  Tec_x.putVar (Te_c);
-	  NcVar dnec_x = dataFile.addVar ("delta_ne",       ncDouble, vx_d);
-	  dnec_x.putVar (dne_c);
-	  NcVar dTec_x = dataFile.addVar ("delta_Te",       ncDouble, vx_d);
-	  dTec_x.putVar (dTe_c);
+	  if (TEMP)
+	    {
+	      NcVar nec_x  = dataFile.addVar ("ne",       ncDouble, vx_d);
+	      nec_x.putVar (ne_c);
+	      NcVar Tec_x  = dataFile.addVar ("Te",       ncDouble, vx_d);
+	      Tec_x.putVar (Te_c);
+	      NcVar dnec_x = dataFile.addVar ("delta_ne", ncDouble, vx_d);
+	      dnec_x.putVar (dne_c);
+	      NcVar dTec_x = dataFile.addVar ("delta_Te", ncDouble, vx_d);
+	      dTec_x.putVar (dTe_c);
+	      
+	      NcVar bReqc_x  = dataFile.addVar ("b_R_eq",   ncDouble, vv_d);
+	      bReqc_x.putVar (bReq_c);
+	      NcVar neeqc_x  = dataFile.addVar ("ne_eq",    ncDouble, vv_d);
+	      neeqc_x.putVar (neeq_c);
+	      NcVar Teeqc_x  = dataFile.addVar ("Te_eq",    ncDouble, vv_d);
+	      Teeqc_x.putVar (Teeq_c);
+	      NcVar dneeqc_x = dataFile.addVar ("dne_eq",   ncDouble, vv_d);
+	      dneeqc_x.putVar (dneeq_c);
+	      NcVar dTeeqc_x = dataFile.addVar ("dTe_eq",   ncDouble, vv_d);
+	      dTeeqc_x.putVar (dTeeq_c);
+	      NcVar Teeqd_x  = dataFile.addVar ("Te_ece",   ncDouble, vv_d);
+	      Teeqd_x.putVar (Teeq_d);
+	      NcVar Tee1_x   = dataFile.addVar ("Te1_ece",  ncDouble, vv_d);
+	      Tee1_x.putVar (Tee1_d);
+	      NcVar Tee2_x   = dataFile.addVar ("Te2_ece",  ncDouble, vv_d);
+	      Tee2_x.putVar (Tee2_d);
+	      NcVar dTeeqd_x = dataFile.addVar ("dTe_ece",  ncDouble, vv_d);
+	      dTeeqd_x.putVar (dTeeq_d);
+	      NcVar dTee1_x  = dataFile.addVar ("dTe1_ece", ncDouble, vv_d);
+	      dTee1_x.putVar (dTee1_d);
+	      NcVar dTee2_x  = dataFile.addVar ("dTe2_ece", ncDouble, vv_d);
+	      dTee2_x.putVar (dTee2_d);
 
-	  NcVar bReqc_x  = dataFile.addVar ("b_R_eq", ncDouble, vv_d);
-	  bReqc_x.putVar (bReq_c);
-	  NcVar neeqc_x  = dataFile.addVar ("ne_eq",  ncDouble, vv_d);
-	  neeqc_x.putVar (neeq_c);
-	  NcVar Teeqc_x  = dataFile.addVar ("Te_eq",  ncDouble, vv_d);
-	  Teeqc_x.putVar (Teeq_c);
-	  NcVar dneeqc_x = dataFile.addVar ("dne_eq", ncDouble, vv_d);
-	  dneeqc_x.putVar (dneeq_c);
-	  NcVar dTeeqc_x = dataFile.addVar ("dTe_eq", ncDouble, vv_d);
-	  dTeeqc_x.putVar (dTeeq_c);
-
-	  NcVar Leq_x = dataFile.addVar ("L_eq", ncDouble, q_d);
-	  Leq_x.putVar (Leq);
+	      NcVar Req_x  = dataFile.addVar ("R_eq",      ncDouble, q_d);
+	      Req_x.putVar (Req); 
+	      NcVar Leq_x  = dataFile.addVar ("L_eq",      ncDouble, q_d);
+	      Leq_x.putVar (Leq);
+	      NcVar ith_x  = dataFile.addVar ("itheta_eq", ncDouble, q_d);
+	      ith_x.putVar (itheta);
+	      NcVar Lres_x = dataFile.addVar ("L_res",     ncDouble, x_d);
+	      Lres_x.putVar (Lres);
+	      NcVar Rres_x = dataFile.addVar ("R_res",     ncDouble, x_d);
+	      Rres_x.putVar (Rres); 
+	      NcVar Ores_x = dataFile.addVar ("O_res",     ncDouble, x_d);
+	      Ores_x.putVar (Ores);
+	      NcVar Xres_x = dataFile.addVar ("X_res",     ncDouble, x_d);
+	      Xres_x.putVar (Xres);
+	    }
 	}
 
       NcVar fmatr_x = dataFile.addVar ("Fmat_r", ncDouble, e_d);
@@ -1663,33 +1761,32 @@ void TJ::WriteNetcdf ()
 	    }
 	}
 
-      if (LAYER)
-	{
-	  NcVar Te_r  = dataFile.addVar ("Te",         ncDouble, x_d);
-	  Te_r.putVar (Teres);
-	  NcVar S13_r = dataFile.addVar ("S13",        ncDouble, x_d);
-	  S13_r.putVar (S13res);
-	  NcVar tau_r = dataFile.addVar ("tau",        ncDouble, x_d);
-	  tau_r.putVar (taures);
-	  NcVar ie_r  = dataFile.addVar ("iota_e",     ncDouble, x_d);
-	  ie_r.putVar (ieres);
-	  NcVar Qe_r  = dataFile.addVar ("Qe",         ncDouble, x_d);
-	  Qe_r.putVar (Qeres);
-	  NcVar Qi_r  = dataFile.addVar ("Qi",         ncDouble, x_d);
-	  Qi_r.putVar (Qires);
-	  NcVar QE_r  = dataFile.addVar ("QE",         ncDouble, x_d);
-	  QE_r.putVar (QEres);
-	  NcVar D_r   = dataFile.addVar ("D",          ncDouble, x_d);
-	  D_r.putVar (Dres);
-	  NcVar Pm_r  = dataFile.addVar ("Pphi",       ncDouble, x_d);
-	  Pm_r.putVar (Pmres);
-	  NcVar Pe_r  = dataFile.addVar ("Pperp",      ncDouble, x_d);
-	  Pe_r.putVar (Peres);
-	  NcVar Dc_r  = dataFile.addVar ("Delta_crit", ncDouble, x_d);
-	  Dc_r.putVar (Dcres);
-	  NcVar De_r  = dataFile.addVar ("Delta",      ncDouble, x_d);
-	  De_r.putVar (Delta_r);
-	}  
+      NcVar Te_r  = dataFile.addVar ("Te_res",     ncDouble, x_d);
+      Te_r.putVar (Teres);
+      NcVar S13_r = dataFile.addVar ("S13",        ncDouble, x_d);
+      S13_r.putVar (S13res);
+      NcVar tau_r = dataFile.addVar ("tau",        ncDouble, x_d);
+      tau_r.putVar (taures);
+      NcVar ie_r  = dataFile.addVar ("iota_e",     ncDouble, x_d);
+      ie_r.putVar (ieres);
+      NcVar Qe_r  = dataFile.addVar ("Qe",         ncDouble, x_d);
+      Qe_r.putVar (Qeres);
+      NcVar Qi_r  = dataFile.addVar ("Qi",         ncDouble, x_d);
+      Qi_r.putVar (Qires);
+      NcVar QE_r  = dataFile.addVar ("QE",         ncDouble, x_d);
+      QE_r.putVar (QEres);
+      NcVar D_r   = dataFile.addVar ("D",          ncDouble, x_d);
+      D_r.putVar (Dres);
+      NcVar Pm_r  = dataFile.addVar ("Pphi",       ncDouble, x_d);
+      Pm_r.putVar (Pmres);
+      NcVar Pe_r  = dataFile.addVar ("Pperp",      ncDouble, x_d);
+      Pe_r.putVar (Peres);
+      NcVar Dc_r  = dataFile.addVar ("Delta_crit", ncDouble, x_d);
+      Dc_r.putVar (Dcres);
+      NcVar De_r  = dataFile.addVar ("Delta",      ncDouble, x_d);
+      De_r.putVar (Delta_r);
+
+      dataFile.close ();
     }
   catch (NcException& e)
     {
@@ -1721,10 +1818,13 @@ void TJ::WriteNetcdf ()
   delete[] PPF_r;   delete[] PPF_i;   delete[] ZZF_r; delete[] ZZF_i;
   delete[] PPU_r;   delete[] PPU_i;   delete[] ZZU_r; delete[] ZZU_i;
   delete[] zzU_r;   delete[] zzU_i;   delete[] ccU_r; delete[] ccU_i;
-  delete[] xiU_r;   delete[] xiU_i;   delete[] dnU_r; delete[] dnU_i;
-  delete[] dTU_r;   delete[] dTU_i;   delete[] nU_r;  delete[] nU_i;
-  delete[] TU_r;    delete[] TU_i;
+  delete[] xiU_r;   delete[] xiU_i;
 
+  delete[] Btor_r; delete[] Bpol_r; delete[] Bmod_r;
+
+  delete[] dnU_r; delete[] dnU_i; delete[] dTU_r; delete[] dTU_i;
+  delete[] nU_r;  delete[] nU_i;  delete[] TU_r;  delete[] TU_i;
+  
   delete[] PPV_r;   delete[] PPV_i;  delete[] ZZV_r;  delete[] ZZV_i;
   delete[] zzV_r;   delete[] zzV_i;  delete[] ccV_r;  delete[] ccV_i;
   delete[] Emat_r;  delete[] Emat_i; delete[] Eant_r; delete[] Eant_i;
@@ -1737,10 +1837,12 @@ void TJ::WriteNetcdf ()
   delete[] PPRV_r;  delete[] PPRV_i;  delete[] ZZRV_r;  delete[] ZZRV_i;
   delete[] bR_c;    delete[] bR_s;    delete[] bZ_c;    delete[] bZ_s;
   delete[] bP_c;    delete[] bP_s;    delete[] xi_c;    delete[] xi_s;
+
   delete[] ne_c;    delete[] Te_c;    delete[] dne_c;   delete[] dTe_c;  
   delete[] bReq_c;  delete[] dneeq_c; delete[] dTeeq_c; delete[] neeq_c;
-  delete[] Teeq_c;
-   
+  delete[] Teeq_c;  delete[] dTeeq_d; delete[] Teeq_d;  delete[] Tee1_d;
+  delete[] Tee2_d;  delete[] dTee1_d; delete[] dTee2_d;
+     
   delete[] Psii_r;   delete[] Psii_i;   delete[] Zi_r;    delete[] Zi_i;
   delete[] Xii_r;    delete[] Xii_i;    delete[] Uvec_r;  delete[] Uvec_i;
   delete[] Umat_r;   delete[] Umat_i;   delete[] Uant_r;  delete[] Uant_i;

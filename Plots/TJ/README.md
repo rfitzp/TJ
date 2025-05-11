@@ -41,8 +41,6 @@
 - *Bunr1.py*:        Plots kth poloidal harmonics of unreconnected perturbed magnetic fields versus r
 - *xiunr.py*:        Plots poloidal harmonics of unreconnected psi and radial plasma displacement versus r
 - *xiunr1.py*:       Plots kth poloidal harmonics of unreconnected psi and radial plasma displacement versus r
-- *dTunr.py*:        Plots poloidal harmonics of unreconnected delta n_e and delta T_e versus r
-- *dTunr1.py*:       Plots kth poloidal harmonics of unreconnected delta n_e amd delta T_e versus r
 
 ## Electromagnetic torques:
 
@@ -55,16 +53,20 @@
 
 ## Visualization:
 
-- *Psi.py*:          Plots psi components of unreconnected solution vector in R, Z plane  
+- *Psi.py*:          Plots psi components of unreconnected solution vector in R, Z plane 
 - *PsiZ.py*:         Plots psi and Z components of unreconnected solution vector in R, Z plane
 - *zchi.py*:         Plots z and chi components of unreconnected solution vector in R, Z plane
 - *bR.py*:           Plots b_R components of unreconnected solution vector in R, Z plane
 - *bZ.py*:           Plots b_Z components of unreconnected solution vector in R, Z plane
 - *bphi.py*:         Plots R b_phi components of unreconnected solution vector in R, Z plane
 - *disp.py*:         Plots xi_r components of unreconnected solution vector in R, Z plane
+- *Btoroidal.py*:    Plots B_toroidal and B_modulus in R, Z plane
+- *Bpoloidal.py*:    Plots B_poloidal and B_toroidal in R, Z plane
 
 ## Electron temperature and number density profiles:
 
+- *dTunr.py*:        Plots poloidal harmonics of unreconnected delta n_e and delta T_e versus r
+- *dTunr1.py*:       Plots kth poloidal harmonics of unreconnected delta n_e amd delta T_e versus r
 - *dne.py*:          Plots delta n_e components of unreconnected solution vector in R, Z plane
 - *dTe.py*:          Plots delta T_e components of unreconnected solution vector in R, Z plane
 - *ne.py*:           Plots n_e components of unreconnected solution vector in R, Z plane
@@ -73,7 +75,8 @@
 ## Synthetic diagnostics:
 
 - *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field versus theta at given radial gridpoint
-- *Chord.py*:        Plots quantities along tilted central chord
+- *Chord.py*:        Plots quantities along central chord
+- *Berrino.py*:      Implements Berrino algorithm for island detection
 
 ## RMP coils:
 
@@ -88,22 +91,22 @@
 
 ## Ideal stability:
 
-- *Ideal.py*:		Plots poloidal harmonics of ideal solutions launched from magnetic axis versus r
-- *Ideal1.py*:		Plots kth poloidal harmomic of ideal solutions launched from magnetic axis versus r
+- *Ideal.py*:		    Plots poloidal harmonics of ideal solutions launched from magnetic axis versus r
+- *Ideal1.py*:		    Plots kth poloidal harmomic of ideal solutions launched from magnetic axis versus r
 - *Internal.py*:        Plots poloidal harmonics of internal ideal solutions launched from magnetic axis versus r
-- *Umat.py*:		Visualizes total ideal energy matrix
+- *Umat.py*:		    Visualizes total ideal energy matrix
 - *Ideale.py*:      	Plots poloidal harmonics of ideal eigenfunctions versus r
 - *Ideale1.py*:     	Plots kth poloidal harmonic of ideal eigenfunctions versus r
 - *xIdeale.py*:      	Plots poloidal harmonics of ideal eigenfunctions versus r (plots xi instead of Xi)
 - *xideale1.py*:     	Plots kth poloidal harmonic of ideal eigenfunctions versus r (plots xi instead of Xi)
-- *Evals.py*:	 	Plots eigenvalues of W, V, U matrices 
-- *deltaW.py*:	 	Plots delta W values versus eigenfunction number
-- *deltaW1.py*:	 	Plots select number of delta W values versus eigenfunction number
-- *deltaW2.py*:	 	Plots delta W values versus eigenfunction number in range of y
+- *Evals.py*:	 	    Plots eigenvalues of W, V, U matrices 
+- *deltaW.py*:	 	    Plots delta W values versus eigenfunction number
+- *deltaW1.py*:	 	    Plots select number of delta W values versus eigenfunction number
+- *deltaW2.py*:	 	    Plots delta W values versus eigenfunction number in range of y
 - *Xi.py*:              Plots Xi Fourier harmonics of ideal eigenfunctions on plasma boundary
 - *PsiJSurface.py*: 	Plots psi and J on plasma boundary associated with ideal eigenfunctions
 - *lambda.py*:          Plots eigenvalues of plasma energy matrix versus r
-- *crit.py*:		Plots smallest eigenvalue of plasma energy matrix versus r
+- *crit.py*:		    Plots smallest eigenvalue of plasma energy matrix versus r
 
 ## Resistive wall mode stability:
 

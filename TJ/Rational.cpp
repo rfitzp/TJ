@@ -44,6 +44,7 @@ void TJ::FindRational ()
   qerr   = new double[nres];
   sres   = new double[nres];
   gres   = new double[nres];
+  hres   = new double[nres];
   DIres  = new double[nres];
   DRres  = new double[nres];
   nuLres = new double[nres];
@@ -55,7 +56,14 @@ void TJ::FindRational ()
   nepres = new double[nres];
   Teres  = new double[nres];
   Tepres = new double[nres];
-  
+  Ls     = new double[nres];
+  LT     = new double[nres];
+  Lc     = new double[nres];
+  betah  = new double[nres];
+  alphab = new double[nres];
+  alphac = new double[nres];
+
+ 
   for (int i = 0; i < nres; i++)
     {
       mres[i]  = mmin + i;
@@ -67,6 +75,7 @@ void TJ::FindRational ()
       qerr  [i] = fabs (Getq (rres[i]) - qres[i]);
       sres  [i] = Gets (rres[i]);
       gres  [i] = 1. + epsa*epsa * Getg2 (rres[i]);
+      hres  [i] = sqrt (GetLmm (rres[i], mres[i])) /double (mres[i]);
       DIres [i] = GetDI (rres[i]);
       DRres [i] = GetDR (rres[i]);
       Pres  [i] = GetPsiN (rres[i]);
@@ -74,6 +83,12 @@ void TJ::FindRational ()
       nepres[i] = Getnep (rres[i]);
       Teres [i] = GetTe (rres[i]);
       Tepres[i] = GetTep (rres[i]);
+      Ls    [i] = GetLs (rres[i]);
+      LT    [i] = GetLT (rres[i]);
+      Lc    [i] = GetLc (rres[i]);
+      betah [i] = Getbetah (rres[i]);
+      alphab[i] = Getalphab (rres[i]);
+      alphac[i] = Getalphac (rres[i]);
 
       if (DIres[i] > 0.)
 	{
@@ -95,9 +110,14 @@ void TJ::FindRational ()
 
   printf ("Rational surface data:\n");
   for (int i = 0; i < nres; i++)
-    printf ("m = %3d PsiN = %10.3e, r = %10.3e s = %10.3e DI = %10.3e DR = %10.3e nuL = %10.3e nuS = %10.3e |q-qs| = %10.3e Tep = %10.3e nep = %10.3e\n",
-	    mres[i], Pres[i], rres[i], sres[i], DIres[i], DRres[i], nuLres[i], nuSres[i], qerr[i], Tepres[i], nepres[i]);
-
+    {
+    printf ("m = %3d PsiN = %10.3e, r   = %10.3e s  = %10.3e DI = %10.3e DR = %10.3e nuL = %10.3e nuS = %10.3e |q-qs| = %10.3e\n",
+	    mres[i], Pres[i], rres[i], sres[i], DIres[i], DRres[i], nuLres[i], nuSres[i], qerr[i]);
+    if (TEMP)
+      printf ("        Tep  = %10.3e  nep = %10.3e bh = %10.3e ab = %10.3e ac = %10.3e\n",
+	      Tepres[i], nepres[i], betah[i], alphab[i], alphac[i]);
+    }
+  
   // Abort calculation if resonant mode numbers outside range of included poloidal harmonics
   if (mres[0] < MMIN || mres[nres-1] > MMAX)
     {

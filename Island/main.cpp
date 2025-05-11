@@ -13,7 +13,7 @@ int main (int argc, char** argv)
   // Call program Island
   // ...................
   Island island;
-  island.Solve ();
+  island.Solve (1);
 
-  return 0;
+    return 0;
 }
