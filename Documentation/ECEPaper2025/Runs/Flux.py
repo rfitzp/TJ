@@ -42,7 +42,7 @@ plt.rc ('ytick', labelsize = 17)
 
 plt.subplot(1, 1, 1)
 
-scale = 1.5*epsa
+scale = 1.3*epsa
 plt.xlim (1.-scale, 1.+scale)
 plt.ylim (-scale, scale)
 
@@ -64,6 +64,8 @@ for n in range (0, nt-1, 10):
 plt.contour (RR, ZZ, rr, levels=[rre2[0], rres[0]], colors = 'red', linewidths = 1.)
 
 plt.plot ([1.], [0.], marker = 'o', markersize = 2, color = "black")
+
+plt.plot (Req, Zeq, color = 'red', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$R/R_0$', fontsize = "20")
 plt.ylabel (r'$Z/R_0$', fontsize = "20")

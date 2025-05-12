@@ -320,7 +320,7 @@ void TJ::ReadIslandNetcdf (int k)
       
       p_x.getVar (para);
       
-      T0inf[k] = para[0];
+      T0inf[k] = para[1];
       
       NcVar XX_x  = dataFile.getVar ("X");
       NcVar dTh_x = dataFile.getVar ("delta_T_h");

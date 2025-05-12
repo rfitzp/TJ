@@ -12,6 +12,6 @@
 - *Flux.py*:    Plots flux-functions versus k
 - *JOX.py*:     Plots JO and JX versus k
 - *IOX.py*:     Plots IO and IX versus k
-- *Delta.py*:   Plots DeltaO and DeltaX versus W
-- *Delta1.py*:  Plots DeltaO and DeltaX versus D
+- *Delta.py*:   Plots Geecd versus W
+- *Delta1.py*:  Plots Geccd versus D
 

@@ -1,6 +1,6 @@
-# Delta.py
+# Delta1.py
 
-# Plots DeltaO and DeltaX versus D
+# Plots Geccd versus D
 
 import math
 import numpy as np
@@ -17,8 +17,10 @@ dxx = do + dx
 
 fontsize = 17
 
+print (np.max(do))
+
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Island Code: DeltaO and DeltaX')
+fig.canvas.manager.set_window_title (r'Island Code: G_eccd')
 plt.rc ('xtick', labelsize = fontsize) 
 plt.rc ('ytick', labelsize = fontsize)
 

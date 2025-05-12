@@ -74,8 +74,8 @@ private:
   double*         zz;      // Angular grid points
   double*         dTdk;    // dT/dk function
   double*         F;       // Temperature perturbation flux-function
-  double          T0pls;   // Asymptotic value of X - deltaT[0] at large positive X
-  double          T0min;   // Asymptotic value of X + deltaT[0] at large negative X
+  double          T0pls;   // Asymptotic value of    X - deltaT[0]  at large positive X
+  double          T0min;   // Asymptotic value of - (X - deltaT[0]) at large negative X
   double          T0inf;   // Sum of T0pls and T0min
   double*         dTo;     // Temperature perturbation versus X at zeta = pi
   double*         dTx;     // Temperature perturbation versus X at zeta = 0

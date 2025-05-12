@@ -1,6 +1,6 @@
 # Delta.py
 
-# Plots DeltaO and DeltaX versus W
+# Plots Geccd versus W
 
 import math
 import numpy as np
@@ -15,7 +15,7 @@ dx  = np.asarray(ds['DeltaX'])
 dox = (do + dx)/2.
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Island Code: DeltaO and DeltaX')
+fig.canvas.manager.set_window_title (r'Island Code: G_eccd')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 
