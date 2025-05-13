@@ -12,9 +12,12 @@ fn   = 'TJ1.nc'
 ds   = nc.Dataset(fn)
 Ted  = np.asarray(ds['Te_ece'])
 Rres = np.asarray(ds['R_res'])
-R    = ds['R_eq']
+th   = np.asarray(ds['itheta_eq'])
+R    = np.asarray(ds['R_eq'])
 ix   = Ted.shape[1] 
 pn   = Ted.shape[2]
+
+RR = R - R/th
 
 fn3   = 'TJ3.nc'
 ds3   = nc.Dataset(fn3)
@@ -133,12 +136,12 @@ plt.gca().ticklabel_format (axis='y', style='sci', scilimits=(0, 0))
 for xx in Rres:
     plt.axvline (xx, color = 'black',  linewidth = 1.5, linestyle = 'dashed')
 
-plt.plot    (R, ber,  color = 'blue',  linewidth = 2,   linestyle = 'solid', label = "$W/a=0.10$")
-plt.plot    (R, ber3, color = 'red',   linewidth = 2,   linestyle = 'solid', label = "$W/a=0.05$")
-plt.plot    (R, ber5, color = 'green', linewidth = 2,   linestyle = 'solid', label = "$W/a=0.01$")
-plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.plot    (RR, ber,  color = 'blue',  linewidth = 2,   linestyle = 'solid', label = "$W/a=0.10$")
+plt.plot    (RR, ber3, color = 'red',   linewidth = 2,   linestyle = 'solid', label = "$W/a=0.05$")
+plt.plot    (RR, ber5, color = 'green', linewidth = 2,   linestyle = 'solid', label = "$W/a=0.01$")
+plt.axhline (0.,       color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$R_\omega/R_0$', fontsize = "17")
+plt.xlabel (r'$R_\omega\,(1-\theta_w)/R_0$', fontsize = "17")
 plt.legend (fontsize = "15")
 
 plt.subplot (1, 2, 1)
@@ -150,15 +153,15 @@ plt.gca().ticklabel_format (axis='y', style='sci', scilimits=(0, 0))
 for xx in Rres2:
     plt.axvline (xx, color = 'black',  linewidth = 1.5, linestyle = 'dashed')
 
-plt.plot    (R, ber2, color = 'blue',  linewidth = 2,   linestyle = 'solid', label = "$W/a=0.10$")
-plt.plot    (R, ber4, color = 'red',   linewidth = 2,   linestyle = 'solid', label = "$W/a=0.05$")
-plt.plot    (R, ber6, color = 'green', linewidth = 2,   linestyle = 'solid', label = "$W/a=0.01$")
+plt.plot    (RR, ber2, color = 'blue',  linewidth = 2,   linestyle = 'solid', label = "$W/a=0.10$")
+plt.plot    (RR, ber4, color = 'red',   linewidth = 2,   linestyle = 'solid', label = "$W/a=0.05$")
+plt.plot    (RR, ber6, color = 'green', linewidth = 2,   linestyle = 'solid', label = "$W/a=0.01$")
 plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$R_\omega/R_0$', fontsize = "17")
+plt.xlabel (r'$R_\omega\,(1-\theta_w)/R_0$', fontsize = "17")
 plt.legend (fontsize = "15")
                         
 plt.tight_layout ()
 
 #plt.show ()    
-plt.savefig ("Berrino.pdf")
+plt.savefig ("Berrino1.pdf")

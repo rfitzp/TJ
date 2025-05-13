@@ -20,9 +20,9 @@ tearing mode (NTM) in a tokamak plasma. In the outer region, which comprises the
 harmonics of the magnetic field with the same toroidal mode number as the NTM, but different poloidal mode numbers, are coupled together by the Shafranov shifts and
 shaping of the equilibrium magnetic flux-surfaces. In the inner region, which is localized in the vicinity of the NTM rational surface, helical harmonics whose
 poloidal and toroidal mode numbers are in the same ratio as those of the NTM are coupled together nonlinearly to produce a radially asymmetric magnetic
-island chain. (See Sect.~\ref{s4}.)  The solutions in the inner and outer regions must be asymptotically matched to one another. The asymptotic matching process determines both the
-magnetic structure of the NTM and the perturbation to the electron temperature caused by the NTM. A simulated ECE diagnostic is developed that accounts for the
-relativistic downshifting and broadening in frequency of the signal due to the relativistic mass increase of the emitting electrons. 
+island chain. (See Sect.~\ref{s4}.)  The solutions in the inner and outer regions are asymptotically matched to one another. The asymptotic matching process determines the
+overall magnetic structure of the NTM, as well as the global  perturbation to the electron temperature caused by the NTM. A simulated ECE diagnostic is developed that accounts for the
+ downshifting and broadening in frequency of the signal due to the relativistic mass increase of the emitting electrons. 
 
 \end{abstract}
 \maketitle
@@ -37,7 +37,7 @@ the mean electron number density below  critical values that are either easily c
 A tearing mode\,\cite{tear1} of finite amplitude generates a helical magnetic island chain\,\cite{ntm1} in the vicinity of the rational surface\,\cite{ideal3} at which it reconnects magnetic flux.
 If the radial width of the island chain exceeds a relatively small threshold value then rapid  heat transport parallel to magnetic field-lines causes a local flattering of the  electron temperature profile
  within the chain's magnetic separatrix.\cite{ntm2} The associated loss of the pressure-gradient-driven non-inductive neoclassical bootstrap current\,\cite{ntm3} within the separatrix
-has a destabilizing effect that can render a linearly-stable tearing mode unstable at finite amplitude. This type of instability is known as a ``neoclassical tearing mode"  (NTM).  All reactor-relevant tokamak
+has a destabilizing effect that can render a linearly-stable tearing mode unstable at finite amplitude. This type of instability is known as a ``neoclassical tearing mode"  (NTM).\cite{tftr,ntm4c,ntm4b,ntm4a}  All reactor-relevant tokamak
 discharges are potentially unstable  to 2, 1 and 3, 2 NTMs.\cite{ntm4,ntm5}  (Here, $m, n$ denotes a mode whose resonant harmonic has $m$ periods in the poloidal
 direction, and $n$ periods in the toroidal direction.) It is, therefore, not  surprising that NTMs are, by far, the most common cause of disruptions in high-performance  tokamak
 discharges.\cite{iter,ntm4,ntm5,vries}
@@ -49,7 +49,7 @@ are potentially unstable to multiple NTMs. Moreover, NTM onset is essentially un
 is impossible to determine ahead of time which particular sawtooth crash, fishbone, or ELM is going to trigger a particular NTM.\cite{nstx} Indeed, not all previously documented NTMs possess identifiable
 triggers.\cite{ntm6} 
 
-Neoclassical tearing  modes can be suppressed via electron cyclotron current drive (ECCD).\cite{prater} This technique, which has been
+Neoclassical tearing  modes can be suppressed via electron cyclotron current drive (ECCD).\cite{zohm,prater} This technique, which has been
 successfully implemented on many tokamaks,\cite{eccd1,eccd2,eccd3,eccd3a,eccd3b,eccd4,eccd5} involves
 launching electron cyclotron waves into the plasma in such a manner that they drive a toroidal current (in the same direction as the equilibrium current) that is 
 localized  inside the magnetic separatrix of
@@ -67,7 +67,7 @@ the expected ECE signal, which are based on single-harmonic cylindrical theory, 
 improve such calculations by taking into account the fact that an NTM  in a realistic toroidal tokamak equilibrium consists of multiple coupled poloidal and toroidal harmonics. Harmonics with the same toroidal mode number as the NTM, but different poloidal mode numbers, are linearly coupled by the
 Shafranov shifts, elongations, and triangularities of the equilibrium magnetic flux-surfaces.\cite{tear2,tear3,tear5} Furthermore, harmonics whose poloidal and
 toroidal mode numbers are in the same ratio as those of the NTM are coupled nonlinearly in the immediate vicinity of the island chain.\cite{ntm1,ntm2}
-Previous calculations have taken into account the important fact that an NTM island chain is likely to be radially asymmetric with respect to the rational surface,\cite{ece6} 
+Previous calculations have taken into account the important fact that an NTM island chain is likely to be radially asymmetric with respect to the rational surface,\cite{ece6a,ece6} 
 due to the mean radial plasma displacement at the  surface, but have not necessarily made an accurate
 determination of this asymmetry.\cite{eccd6} Our improved calculation incorporates an accurate assessment of the asymmetry. Finally, the ECE signal 
 is downshifted and broadened in frequency due to the relativistic mass increase of the emitting electrons.\cite{ece1,ece2,ece5}  This process leads to a shift in the inferred location
@@ -152,13 +152,13 @@ where $s(\hat{r}) = \hat{r}\,q'/q$ is the magnetic shear, and $'$ denotes $d/d\h
 flux-surface functions $q(\hat{r})$ and $p_2(\hat{r})$, and the values of $H_2(1)$ and $H_3(1)$. 
 
 \subsection{Example Plasma Equilibrium}
-Figures~\ref{figa} and \ref{fig2} show the magnetic flux-surfaces and profiles of an ITER-like  example plasma equilibrium characterized by 
+Figures~\ref{figa} and \ref{figb} show the magnetic flux-surfaces and profiles of an ITER-like  example plasma equilibrium characterized by 
 $B_0=5.3$ T, $R_0=6.2$ m, $a=0.2$, $H_2(1)=1.0$, and $H_3(1)= 0.5$. The toroidal plasma current is $I_t=2.5$\,MA. The normalized plasma inductance is
 $l_i=1.16$. Finally, the normalized beta is $\beta_N= 1.32$. 
 
 \section{Perturbed Electron Temperature  in Outer Region}\label{s3}
 \subsection{Perturbation in Outer Region}
-Let the positive integer $n$ be the toroidal mode number of the NTM. Let there be $K$ rational surfaces in the plasma, of radius $r_k$ (for $k=1,K$),  at which the resonance condition
+Let the positive integer $n$ be the toroidal mode number of the NTM. Let there be $K$ rational surfaces in the plasma, of minor radius $r_k$ (for $k=1,K$),  at which the resonance condition
 $q(r_k) = m_k/n$ is satisfied, where the positive integer $m_k$ is the resonant poloidal mode number at the $k$th surface. The perturbed magnetic field in the outer region is specified by\,\cite{tear9,tear10}
 \begin{equation}
 b^r(r,\theta,\phi)\equiv {\bf b}\cdot\nabla r = \frac{{\rm i}}{r\,R^{\,2}}\sum_{j=1,J} \psi_{m_j}(r)\,{\rm e}^{\,{\rm i}\,(m_j\,\theta-n\,\phi)}.
@@ -182,7 +182,8 @@ where
 \nu_{S\,k} &= \frac{1}{2}+\sqrt{-D_{I\,k}},\\[0.5ex]
 D_{I\,k}&= - \left[\frac{2\,(1-q^2)}{s^2}\,r\,\frac{dP}{dr}\right]_{r_k} -\frac{1}{4}\label{di}
 \end{align}
-Here,  $A_{L\,k}$ is termed the coefficient of the ``large'' solution, whereas $A_{S\,k}$ is the coefficient of the ``small'' solution. Furthermore, $D_{I\,k}$ is the ideal
+Here,  $A_{L\,k}$ is termed the coefficient of the ``large'' solution, whereas $A_{S\,k}^\pm$ are the coefficients of the ``small'' solution.
+Here, $A_{S\,k}^+$ corresponds to the region $x>0$, whereas  $A_{S\,k}^-$ corresponds to the region $x<0$. Furthermore, $D_{I\,k}$ is the ideal
 Mercier interchange parameter (which needs to be negative to ensure stability to localized interchange modes),\cite{mercier,ggj,ggj1} and $\nu_{L\,k}$ and $\nu_{S\,k}$
 are termed the Mercier indices. 
 
@@ -278,7 +279,8 @@ form
 Thus, as illustrated in Fig.~\ref{fig2}, irrespective of the value of the asymmetry parameter, $\delta$, when
 plotted in $Y$, $\xi$ space, the magnetic flux-surfaces map out a symmetric (with respect to $Y=0$) island
 chain whose O-points lie at $\xi=\pi$, $Y=0$,
-and ${\mit\Omega}=-1$, and whose X-points lie at $\xi=0$, $2\pi$, $Y=0$, and ${\mit\Omega}=+1$.  
+and ${\mit\Omega}=-1$, and whose X-points lie at $\xi=0$, $2\pi$, $Y=0$, and ${\mit\Omega}=+1$.  The fact that the radially asymmetric island flux-surfaces can
+be remapped to a set of radially symmetric surfaces greatly simplifies our calculation. 
 
 The inversion of Eq.~(\ref{ekepler}) is very well known:\,\cite{bc}
 \begin{align}\label{e9a1}
@@ -350,7 +352,7 @@ Equation~(\ref{e46}) gives the relationship between the reconnected magnetic flu
 differs from the conventional one\,\cite{ntm1} because of corrections due to the radial asymmetry of the island chain. However, the corrections are fairly
 minor. In fact, $1\geq J_0(\delta^2)+ J_2(\delta^2)\geq 0.880$ for $0\leq |\delta|\leq 1$. Equation~(\ref{e47}) specifies the relationship between the
 island asymmetry parameter, $\delta$,  and the mean radial plasma displacement at the rational surface. Note that the matching
-between the inner and outer solutions is made at $r=r_{l}\pm W$. 
+between the inner and outer solutions is performed at $r=r_{l}\pm W$. 
 
 \subsection{Flux-Surface Average Operator}
 Now, 
@@ -578,7 +580,7 @@ where $j_{\rm max}$ is the unnormalized peak current density driven by electron 
  destabilizing effect of the loss of the bootstrap current inside the island separatrix consequent on the flattening of the electron temperature profile. \cite{ntm2,car} The term involving $\alpha_c$ represents  the stabilizing effect of  magnetic field-line curvature  consequent on the flattening of the electron temperature profile.\cite{fitz,kot} Finally, the term involving $J_{\rm max}$ represents the effect of current driven in the island region by electron cyclotron waves.\cite{island} In writing the modified
  Rutherford equation, we have adopted various large aspect-ratio approximations,\cite{ggj1,fitz} have assumed that the driven current rapidly equilibrates on
  island flux-surfaces, 
-and have  neglected the contributions to the equation due to incomplete temperature flattening and the ion polarization current (which are only important for
+and have  neglected the contributions to the equation due to incomplete temperature flattening and the ion polarization current\,\cite{polz} (which are only important for
  very narrow islands). We  have also neglected the contribution due to
  plasma heating via electron cyclotron waves (which is similar to, but generally smaller than, that of electron cyclotron current drive).\cite{ntm4,island}
  
@@ -726,7 +728,8 @@ increase of the electron into account,  the angular frequency of a $j$th harmoni
 \begin{equation}
 \omega = \frac{j\,{\mit\Omega}_0\,R_0}{R}\,\left[1-\left(\frac{v}{c}\right)^2\right]^{1/2},
 \end{equation}
-where $v$ is the electron speed, $c$ the speed of light in vacuum, $e$ the magnitude of the electron charge, $m_e$ the electron mass, and  ${\mit\Omega}_0=e\,B_0/m_e$. Here, we are neglecting the equilibrium poloidal magnetic field-strength, and assuming that the toroidal
+where ${\mit\Omega}_0=e\,B_0/m_e$, $v$ is the electron speed, $c$ the speed of light in vacuum, $e$ the magnitude of the electron charge, 
+and $m_e$  the electron rest mass. Here, we are neglecting the equilibrium poloidal magnetic field-strength, and assuming that the toroidal
 field-strength falls off like $1/R$, which is an excellent approximation in our model plasma equilibrium. Let
 \begin{equation}
 R_\omega(\omega) = \frac{j\,{\mit\Omega}_0\,R_0}{\omega}
@@ -739,7 +742,7 @@ which it originates. Making use of the previous two equations, we can write
 0&&R>R_\omega
 \end{array}\right..
 \end{align}
-Now, in thermal equilibrium the distribution of electron speeds is\,\cite{stat}
+Now, in thermal equilibrium, the distribution of electron speeds is\,\cite{stat}
 \begin{equation}
 f(v)= A\,v^2\left(-\frac{1}{\theta_\omega}\left[1-\left(\frac{v}{c}\right)^2\right]^{-1/2}\right),
 \end{equation}
@@ -764,13 +767,14 @@ T_e(R_\omega) = T_e(R_\omega) - 2\,\theta_\omega\left(1-\frac{13}{2}\,\theta_\om
 \frac{d^2 T_e(R_\omega)}{dR^2} + {\cal O}(\theta_\omega^{\,3}).
 \end{equation}
 It can be seen that, to lowest order in $\theta_\omega$, the temperature profile measured by ECE is unaffected by the relativistic mass increase. To first order in $\theta_\omega$, the
-measured temperature profile is $T_e[R_\omega\,(1-2\,\theta_\omega)]$. In other words, the measured profile is shifted outward in major radius. To second order in $\theta_\omega$,
+measured temperature profile is $T_e[R_\omega\,(1-2\,\theta_\omega)]$. In other words, the measured profile is shifted outward in major radius a
+distance $2\,\theta_\omega\,R_\omega$. To second order in $\theta_\omega$,
 the measured profile is smeared out in major radius. 
 
 Figures \ref{fig13} and \ref{fig14} show the perturbed and total electron temperatures along the ECE chord, as well as the corresponding temperatures inferred by the relativistically 
 downshifted and broadened ECE diagnostic, for a
 3, 2 NTM and a 2, 1 NTM of island width $W=0.1\,a$  in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}. The signals are evaluated at two different toroidal angles. However, because the
-NTM temperature perturbation is actually rotating toroidally, different toroidal angles translate to different measurement times. It can be seen that the relativistically downshifted and 
+NTM temperature perturbation is actually rotating toroidally (because the NTM island chain is rotating), different toroidal angles translate to different measurement times. It can be seen that the relativistically downshifted and 
 broadened ECE signal is indeed both shifted outward and  smeared out in major radius. 
 
 The flattening of the electron temperature in the vicinity of an NTM island chain is usually detected in tokamak experiments using the so-called ``Berrino algorithm", which looks for
@@ -780,34 +784,36 @@ calculate the signal at 32 equally-spaced toroidal angles and average the result
 flattening of the electron temperature in the vicinity of an NTM island chain generates a local minimum in a signal that is otherwise monotonically increasing with major radius (except very close to
 the edge of the plasma). It is clear from the figure that the algorithm is quite capable of detecting island chains of widths as small as 1\% of the plasma minor radius. 
 However, if the location of the NTM rational surface is associated with the position of the local minimum of the signal, as is common practice,  then an error is introduced, because the
-local minimum lies outside the rational surface due to the relativistic downshifting of the ECE.  The error clearly becomes worse as the island width
+local minimum lies outside the rational surface due to the relativistic downshifting of the ECE.  The error clearly becomes somewhat worse as the island width
 increases. The fact that the algorithm can detect very narrow NTM island chains means that the stabilizing ECCD can be turned on before the chain causes significant
 degradation of the plasma energy confinement. However, given that the ECCD ideally needs to hit one of the island O-points, which usually lie inside the associated rational 
 surface, the radial location of the O-point inferred from the Berrino algorithm clearly needs to be corrected for both the relativistic downshifting and the fact that the O-point
-is located slightly inside the rational surface. 
+is located slightly inside the rational surface. Figure~\ref{fig16} shows an attempt to correct the Berrino algorithm for relativistic downshifting in which the inferred major
+radius of the signal is taken to be $R_\omega\,(1-\theta_w)$, rather than $R_\omega$. It can be seen that the local minimum of the signal lies far closer to
+the NTM rational surface in Fig.~\ref{fig16} compared to Fig.~\ref{fig15}. 
  
 \section{Summary and Discussion}\label{s7}
-In this paper, we have demonstrated how to use a toroidal tearing mode code in order to make a realistic prediction of  the electron cyclotron emission (ECE) signal generated by a neoclassical
+In this paper, we have demonstrated how a toroidal tearing mode code can be used to make a realistic prediction of  the electron cyclotron emission (ECE) signal generated by a neoclassical
 tearing mode (NTM) in a tokamak plasma. In the outer region, which comprises the bulk of the plasma, helical
 harmonics of the magnetic field with the same toroidal mode number as the NTM, but different poloidal mode numbers, are coupled together by the Shafranov shifts and
 shaping of the equilibrium magnetic flux-surfaces. (See Sect.~\ref{s3}.) In the inner region, which is localized in the vicinity of the NTM rational surface, helical harmonics whose
 poloidal and toroidal mode numbers are in the same ratio as those of the NTM are coupled together nonlinearly to produce a radially asymmetric magnetic
-island chain. (See Sect.~\ref{s4}.)  The solutions in the inner and outer regions must be asymptotically matched to one another. (See Sect.~\ref{s5}.) The asymptotic matching process determines both the
-magnetic structure of the NTM and the perturbation to the electron temperature caused by the NTM. 
+island chain. (See Sect.~\ref{s4}.)  The solutions in the inner and outer regions are asymptotically matched to one another. (See Sect.~\ref{s5}.) The asymptotic matching process determines  the
+overall magnetic structure of the NTM, as well as the global perturbation to the electron temperature caused by the NTM. 
 
 Although an NTM can easily be detected using magnetic
-pickup coils located outside the plasma, such a measurement does not determine the location of the rational surface. This is problematic because the
-cure for NTMs is to launch electron cyclotron  waves into the plasma in such a manner as to drive a localized toroidal current in the vicinity of one of the O-points of the NTM island chain. 
-In order to be effective, the location of the peak electron cyclotron current drive (ECCD) cannot miss the island O-point in major radius by more than two standard deviations of the radial width of the
-ECCD profile. (See Sect.~\ref{s5}.) Fortunately, as demonstrated in this paper, ECE radiometry is capable of measuring the major radius of the island O-point, even when the width of the island chain is
-much less than the minor radius of the plasma. (See Sect.~\ref{s6}.) However, the accuracy of the ECE diagnostic is limited by the fact that the signal is downshifted and
-broadened in frequency due to the relativistic mass increase of the emitting electrons. It is clear, from our calculations, that the radial location of the
-O-point deduced by an ECE diagnostic needs to be corrected for the relativistic downshifting, which causes the inferred location to shift outward in major radius, 
-as well as the fact the the island O-point is shifted inward from the rational surface. 
+pickup coils located outside the plasma, this process is subject to substantial interference from other MHD modes, such
+as sawtooth oscillations and ELMs, and also does not determine the location of the NTM rational surface. This is problematic because the
+cure for NTMs is to launch electron cyclotron  waves into the plasma in such a manner as  to drive a localized toroidal current in the vicinity of one of the O-points of the NTM island chain. 
+In order to be effective, the location of the peak of the electron cyclotron current drive (ECCD) profile cannot miss the island O-point in major radius by more than two standard deviations of the radial width of the profile. (See Sect.~\ref{s5}.) Fortunately, as is confirmed  in this paper, ECE radiometry is capable of measuring the major radius of the island O-point, even when the width of the island chain is
+very much less than the minor radius of the plasma. (See Sect.~\ref{s6}.) However, the accuracy of the ECE diagnostic is limited by the fact that the signal is downshifted and
+broadened in frequency due to the relativistic mass increase of the emitting electrons. It is clear, from the calculations in this paper, that the radial location of the
+O-point deduced by an ECE diagnostic needs to be corrected for the relativistic downshifting, which causes the inferred location to shift outward in major radius from the rational surface, 
+as well as the fact that the island O-point is shifted inward from the rational surface. An example of such a correction is shown in Fig.~\ref{fig16}. 
 
 The type of calculation described in this paper can be performed sufficiently rapidly that it would be possible to generate a large synthetic ECE data-set
-that could be used as the input to a machine-learning algorithm. In this manner, it might be possible to train a neural network to both detect an NTM magnetic
-island chain using experimental ECE data when the chain is still relatively narrow, and to accurately determine the location of one of the island O-points. 
+that could be used as the input to a machine-learning algorithm. In this manner, it would be possible to train a neural network to  detect an NTM magnetic
+island chain using experimental ECE data when the chain is still relatively narrow, as well as to accurately determine the location of one of the island O-points. 
 
 \section*{Acknowledgements}
 This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
@@ -838,6 +844,15 @@ P.R.~Thomas, B.J.D.~Tubbing, M.F.~Turner and A.~Weller, Nucl.\ Fusion {\bf 29} 6
 
 \bibitem{ntm3} R.J.~Bickerton, J.W.~Connor and J.B.~Taylor, Nat.\ Phys.\ Sci.\ {\bf 229}, 110 (1971). 
 
+\bibitem{tftr} Z.~Chang,  E.D.~Fredrickson, S.H.~Batha,  M.G.~Bell,  R.V.~Budny,  F.M.~Levinton, K.M.~McGuire, G.~Taylor,  M.C.~Zarnstorff and the  TFTR Group, Phys.\ Plasmas {\bf 5}, 1076  (1998).
+
+\bibitem{ntm4b} C.C.~Hegna, Phys.\ Plasmas {\bf 5}, 1767 (1998).
+
+\bibitem{ntm4a} R.J.~Buttery, S.~G\"{u}nter, G.~Giruzzi, T.C.~Hender, D.~Howell, G.~Huysmans, R.J.~La Haye, M.~Maraschek, H.~Reimerdes, O.~Sauter,
+ C.D.~Warrick, H.R.~Wilson and H.~Zohm, Plasma Phys.\ Control.\ Fusion {\bf 42}, B61 (2000).
+ 
+\bibitem{ntm4c} H.R.~Wilson, Fusion Science and Technology {\bf 61},  113 (2012). 
+ 
 \bibitem{ntm4} R.J.~La Haye, Phys.\ Plasmas {\bf 13}, 055501 (2006).
 
 \bibitem{ntm5} M.~Maraschek, Nucl.\ Fusion {\bf 52}, 074007 (2007). 
@@ -854,6 +869,8 @@ Phys.\ Rev.\ Lett.\ {\bf 88}, 105001 (2002).
 
 \bibitem{ntm6} E.D.~Fredrickson, Phys.\ Plasmas {\bf 9}, 548 (2002).
 
+\bibitem{zohm} H.~Zohm, Phys.\ Plasmas {\bf 4}, 3433 (1997). 
+
 \bibitem{prater} R.~Prater, Phys.\ Plasmas {\bf 13}, 055501 (2006).
 
 \bibitem{eccd1} G.~Gantenbein, H.~Zohm, G.~Giruzzi, S.~G\"{u}nter, F.~Leuterer, M.~Maraschek, J.~Meskat, Q.~Yu,  ASDEX Upgrade Team and ECRH-Group (AUG), 
@@ -866,7 +883,7 @@ Plasma Phys.\  Control.\ Fusion {\bf 42}, L37 (2000).
  Phys.\ Plasmas {\bf 9}, 2051 (2002).
  
  \bibitem{eccd3a} M.~Kong, T.C.~Blanken, F.~Felici, C.~Galperti, E.~Maljaars,
-O.~Sauter, T.~Vu, F.~Carpanese, A.~Merle, J.-M.~Moret, F.~Pesamosca, E.~Poli, M.~Reich, A.A.~Teplukhina, the TCV Team and the EUROfusion MST1 team,
+O.~Sauter, T.~Vu, F.~Carpanese, A.~Merle, J.-M.~Moret, F.~Pesamosca, E.~Poli, M.~Reich, A.A.~Teplukhina, the TCV Team and the EUROfusion MST Team,
 Nucl.\ Fusion {\bf 59}, 076035 (2019).
 
 \bibitem{eccd3b} J.-C.~Li, J.-Q. Dong, X.-Q. Ji and Y.-J. Hu,  Chinese Phys.\ B {\bf 30}, 075203 (2021).
@@ -892,6 +909,8 @@ X.D.~Zhang, Q.~Yu, J.P.~Qian, X.Z.~Gong, J.S.~Hu, K.~Lu, Y.T.~Song and the EAST 
 \bibitem{tear3} J.W.~Connor,  S.C.~Cowley, R.J.~Hastie,  T.C.~Hender,  A.~Hood  and T.J.~Martin,  Phys.\ Fluids {\bf 31}, 577 (1988).
 
 \bibitem{tear5} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin and C.M.~Roach, Nucl.\ Fusion {\bf 33}, 1533 (1993).
+
+\bibitem{ece6a} J.P.~Meskat, H.~Zohm, G.~Gantenbein, S.~G\"{u}nter, M.~Maraschek, W.~Suttrop, Q.~Yu and ASDEX Upgrade Team, Plasma Phys.\ Control.\ Fusion {\bf 43} , 1325 (2001).
 
 \bibitem{ece6} D.~De Lazzari and F.~Westerhof, Plasma Phys.\ Control.\ Fusion {\bf 53}, 035020 (2011).
 
@@ -933,6 +952,8 @@ to Physics of Plasmas (2025).
 \bibitem{boot} M.N.~Rosenbluth, R.D.~Hazeltine and F.L.~Hinton, Phys.\ Fluids {\bf 15}, 116 (1972).
 
 \bibitem{fitz} R.~Fitzpatrick, {\em Tearing Mode Dynamics in Tokamak Plasmas}, (IOP Publishing, Bristol UK, 2023).
+
+\bibitem{polz} J.W.Connor,  F.L.Waelbroeck and  H.R.~Wilson, Phys.\ Plasmas {\bf 8}, 2835 (2001). 
 
 \bibitem{car} R.~Carrera, R.D.~Hazeltine and M.~Kotschenreuther, Phys.\ Fluids {\bf 29}, 899 (1986). 
 
@@ -1026,19 +1047,19 @@ island O-point.\label{fig5}}
 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{W01.pdf}}
-\caption{The integral $G_{\rm eccd}$ evaluated as a function of $d/D$, for ${\mit\Delta}\zeta = 0$, $\pi/2,$ and $\pi$, for an  island
+\caption{The integral $G_{\rm eccd}({\mit\Delta}\zeta)$ evaluated as a function of $d/D$, for ${\mit\Delta}\zeta = 0$, $\pi/2,$ and $\pi$, for an  island
 of full width $W=0.1\,D$ and asymmetry parameter $\delta=0.5$. The dotted curve shows the integral when the driven current profile is independent of $\zeta$. \label{fig7}}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{W20.pdf}}
-\caption{The integral $G_{\rm eccd}$ evaluated as a function of $d/D$, for ${\mit\Delta}\zeta = 0$, $\pi/2,$ and $\pi$, for an  island
+\caption{The integral $G_{\rm eccd}({\mit\Delta}\zeta)$ evaluated as a function of $d/D$, for ${\mit\Delta}\zeta = 0$, $\pi/2,$ and $\pi$, for an  island
 of full width $W=2.0\,D$ and asymmetry parameter $\delta=0.5$. The dotted curve shows the integral when the driven current profile is independent of $\zeta$. \label{fig8}}
 \end{figure}
 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{W40.pdf}}
-\caption{The integral $G_{\rm eccd}$ evaluated as a function of $d/D$, for ${\mit\Delta}\zeta = 0$, $\pi/2,$ and $\pi$, for an  island
+\caption{The integral $G_{\rm eccd}({\mit\Delta}\zeta)$ evaluated as a function of $d/D$, for ${\mit\Delta}\zeta = 0$, $\pi/2,$ and $\pi$, for an  island
 of full width $W=4.0\,D$ and asymmetry parameter $\delta=0.5$. The dotted curve shows the integral when the driven current profile is independent of $\zeta$.\label{fig9}}
 \end{figure}
 
@@ -1064,7 +1085,7 @@ and \ref{figb}. The black curves show the locations of the rational surfaces. Th
 \centerline{\includegraphics[width=\textwidth]{Chord.pdf}}
 \caption{Perturbed electron temperature along the ECE chord (blue curves) and the perturbed temperature inferred by the relativistically downshifted and  broadened ECE diagnostic (red curves) for a
 3, 2 NTM (left panels) and a 2, 1 NTM (right panels) of island width $W=0.1\,a$ in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}.
-The perturbed temperatures are calculated  at two different toroidal angles (top and bottom panels). Here, $x=R-R_0$ measures outward displacement along the chord from the magnetic axis. 
+The perturbed temperatures are calculated  at two different toroidal angles (top and bottom panels). 
 The vertical dashed lines show the locations of the rational surfaces. 
 \label{fig13}}
 \end{figure}
@@ -1073,8 +1094,7 @@ The vertical dashed lines show the locations of the rational surfaces.
 \centerline{\includegraphics[width=\textwidth]{Chord1.pdf}}
 \caption{Total electron temperature along the ECE chord (blue curves) and the perturbed temperature inferred by the relativistically downshifted and broadened ECE diagnostic (red curves) for a
 3, 2 NTM (left panels) and a 2, 1 NTM (right panels) of island width $W=0.1\,a$  in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}.
-The total temperatures are calculated  at two different toroidal angles (top and bottom panels). Here, $x=R-R_0$ measures outward displacement along the chord from the
-magnetic axis. The vertical dashed lines show the locations of the rational surfaces. \label{fig14}}
+The total temperatures are calculated  at two different toroidal angles (top and bottom panels).  The vertical dashed lines show the locations of the rational surfaces. \label{fig14}}
 \end{figure}
 
 \begin{figure}
@@ -1082,6 +1102,9 @@ magnetic axis. The vertical dashed lines show the locations of the rational surf
 \caption{Implementation of the Berrino algorithm for detecting electron temperature flattening  in the vicinity of an NTM island chain  for a 3, 2  NTM (left panel) and a 2, 1 NTM (right panel) in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}. The vertical dashed lines show the locations of the rational surfaces. \label{fig15}}
 \end{figure}
 
-
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Berrino1.pdf}}
+\caption{Implementation of a downshift-corrected  Berrino algorithm for detecting electron temperature flattening  in the vicinity of an NTM island chain  for a 3, 2  NTM (left panel) and a 2, 1 NTM (right panel) in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}. The vertical dashed lines show the locations of the rational surfaces. \label{fig16}}
+\end{figure}
 
 \end{document}
