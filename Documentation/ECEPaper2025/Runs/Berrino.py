@@ -139,6 +139,7 @@ plt.plot    (R, ber5, color = 'green', linewidth = 2,   linestyle = 'solid', lab
 plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$R_\omega/R_0$', fontsize = "17")
+plt.ylabel (r'a.u.', fontsize = "17")
 plt.legend (fontsize = "15")
 
 plt.subplot (1, 2, 1)
@@ -156,9 +157,10 @@ plt.plot    (R, ber6, color = 'green', linewidth = 2,   linestyle = 'solid', lab
 plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$R_\omega/R_0$', fontsize = "17")
+plt.ylabel (r'a.u.', fontsize = "17")
 plt.legend (fontsize = "15")
                         
 plt.tight_layout ()
 
 #plt.show ()    
-plt.savefig ("Berrino.pdf")
+plt.savefig ("Fig17.pdf")

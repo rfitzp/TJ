@@ -141,7 +141,8 @@ plt.plot    (RR, ber3, color = 'red',   linewidth = 2,   linestyle = 'solid', la
 plt.plot    (RR, ber5, color = 'green', linewidth = 2,   linestyle = 'solid', label = "$W/a=0.01$")
 plt.axhline (0.,       color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$R_\omega\,(1-\theta_w)/R_0$', fontsize = "17")
+plt.xlabel (r'$R_\omega\,(1-\theta_\omega)/R_0$', fontsize = "17")
+plt.ylabel (r'a.u.', fontsize = "17")
 plt.legend (fontsize = "15")
 
 plt.subplot (1, 2, 1)
@@ -158,10 +159,11 @@ plt.plot    (RR, ber4, color = 'red',   linewidth = 2,   linestyle = 'solid', la
 plt.plot    (RR, ber6, color = 'green', linewidth = 2,   linestyle = 'solid', label = "$W/a=0.01$")
 plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$R_\omega\,(1-\theta_w)/R_0$', fontsize = "17")
+plt.xlabel (r'$R_\omega\,(1-\theta_\omega)/R_0$', fontsize = "17")
+plt.ylabel (r'a.u.', fontsize = "17")
 plt.legend (fontsize = "15")
                         
 plt.tight_layout ()
 
 #plt.show ()    
-plt.savefig ("Berrino1.pdf")
+plt.savefig ("Fig18.pdf")

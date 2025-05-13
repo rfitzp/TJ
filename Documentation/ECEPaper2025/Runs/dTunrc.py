@@ -33,7 +33,7 @@ mres1 = ds1['m_res']
 
 fontsize = 17
 
-fig = plt.figure (figsize = (12.0, 8.0))
+fig = plt.figure (figsize = (12.0, 10.0))
 fig.canvas.manager.set_window_title (r'TJ Code: Unreconnected Eigenfunctions')
 plt.rc ('xtick', labelsize = fontsize) 
 plt.rc ('ytick', labelsize = fontsize)
@@ -59,7 +59,7 @@ for rx in rres1:
 
 plt.xlabel (r'$\hat{r}$', fontsize = fontsize)
 plt.ylabel (r'$T_e(eV)$', fontsize = fontsize) 
-plt.legend (fontsize = 12)
+plt.legend (fontsize = 15)
 
 plt.subplot(2, 1, 2)
 
@@ -80,9 +80,9 @@ for rx in rres:
 
 plt.xlabel (r'$\hat{r}$', fontsize = fontsize)
 plt.ylabel (r'$T_e(eV)$', fontsize = fontsize) 
-plt.legend (fontsize = 12)
+plt.legend (fontsize = 15)
 
 plt.tight_layout ()
 
 #plt.show ()    
-plt.savefig ("dTunrc.pdf")
+plt.savefig ("Fig12.pdf")
