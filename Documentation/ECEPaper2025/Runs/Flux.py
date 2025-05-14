@@ -63,9 +63,10 @@ for n in range (0, nt-1, 10):
 
 plt.contour (RR, ZZ, rr, levels=[rre2[0], rres[0]], colors = 'red', linewidths = 1.)
 
+plt.plot (Req, Zeq, color = 'red', linewidth = 1.5, linestyle = 'dashed')
+
 plt.plot ([1.], [0.], marker = 'o', markersize = 2, color = "black")
 
-plt.plot (Req, Zeq, color = 'red', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$R/R_0$', fontsize = "20")
 plt.ylabel (r'$Z/R_0$', fontsize = "20")
@@ -73,4 +74,4 @@ plt.ylabel (r'$Z/R_0$', fontsize = "20")
 plt.tight_layout ()
 
 #plt.show ()    
-plt.savefig ("Flux.pdf")
+plt.savefig ("Fig1.pdf")
