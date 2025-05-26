@@ -424,9 +424,9 @@ class TJ : private Utility
   Array<double,3>          Tfull; // Torques associated with pairs of fully reconnected eigenfunctions
   Array<double,3>          Tunrc; // Torques associated with pairs of unreconnected eigenfunctions
 
-  // ............................
+  // ----------------------------
   // Temperature and density data
-  // ............................
+  // ----------------------------
   double*                  Psik;  // Reconnected fluxes at rational surfaces
   complex<double>*         PsTp;  // Reconnected fluxes for temperature calculation outside rational surfaces
   complex<double>*         PsTm;  // Reconnected fluxes for temperature calculation inside rational surfaces

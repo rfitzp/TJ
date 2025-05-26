@@ -298,6 +298,10 @@ class Equilibrium : private Utility
   double* dRdteq; // dRdt values on central chord
   double* dZdreq; // dZdr values on central chord
   double* dZdteq; // dZdt values on central chord
+  double* Weeq;   // First harmonic cyclotron frequency on central chord
+  double* wLeq;   // Lower cut-off frequency on central chord
+  double* wUeq;   // Upper cut-off frequency on central chord
+  double* wUHeq;  // Upper-hybrid frequency on central chord
 
   // ---------------
   // EFIT parameters

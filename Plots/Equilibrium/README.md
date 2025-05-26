@@ -14,3 +14,5 @@
 - *Te.py*:            Plots electron number density and temperature profiles
 - *Chord.py*:	      Plots equilibrium quantities on tilted central chord
 - *Chord1.py*:	      Plots metric quantities on tilted central chord
+- *ECE.py*:	          Plots ECE frequencies on tilted central chord
+

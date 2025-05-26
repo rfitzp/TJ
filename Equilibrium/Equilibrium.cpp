@@ -299,6 +299,10 @@ void Equilibrium::Solve ()
   dRdteq = new double[2*Nf];
   dZdreq = new double[2*Nf];
   dZdteq = new double[2*Nf];
+  Weeq   = new double[2*Nf];
+  wLeq   = new double[2*Nf];
+  wUeq   = new double[2*Nf];
+  wUHeq  = new double[2*Nf];
 
   HHfunc.resize (Ns+1, Nr+1);
   VVfunc.resize (Ns+1, Nr+1);
@@ -897,6 +901,10 @@ void Equilibrium::Solve ()
       // ...................................
       // Calculate synthetic diagnostic data
       // ...................................
+      double m_e       = 9.1093837015e-31;
+      double e         = 1.602176634e-19;
+      double epsilon_0 = 8.8541878128e-12;
+      
       for (int i = 0; i < Nf; i++)
 	{
 	  double rf = 1. - double (i) /double (Nf);
@@ -940,6 +948,15 @@ void Equilibrium::Solve ()
 	  BReq[i] = epsa * B0 * (1. + epsa*epsa*g2) * (Rw * cos(wt) - Zw * sin(wt)) /q /Req[i]/Req[i] /dtdw;
 	  neeq[i] = Getne (rf);
 	  Teeq[i] = GetTe (rf);
+
+	  double BT = B0 /Req[i];
+	  double We = e * BT /m_e;
+	  double wp = sqrt (neeq[i] * e*e /epsilon_0/m_e);
+
+	  Weeq [i] = We;
+	  wUeq [i] =   0.5 * We + sqrt (0.25*We*We + wp*wp);
+	  wLeq [i] = - 0.5 * We + sqrt (0.25*We*We + wp*wp);
+	  wUHeq[i] = sqrt (We*We + wp*wp);
 	}
       neeq[0] = 2.*neeq[1] - neeq[2];
       Teeq[0] = 2.*Teeq[1] - Teeq[2];
@@ -984,9 +1001,18 @@ void Equilibrium::Solve ()
 	  dZdreq[i+Nf] = Zr;
 	  dZdteq[i+Nf] = Zw /dtdw /rf;
 
-	  BReq[i+Nf] = epsa * B0 * (1. + epsa*epsa*g2) * (Rw * cos(wt) - Zw * sin(wt)) /q /Req[i]/Req[i] /dtdw;
+	  BReq[i+Nf] = epsa * B0 * (1. + epsa*epsa*g2) * (Rw * cos(wt) - Zw * sin(wt)) /q /Req[i+Nf]/Req[i+Nf] /dtdw;
 	  neeq[i+Nf] = Getne (rf);
 	  Teeq[i+Nf] = GetTe (rf);
+
+	  double BT = B0 /Req[i+Nf];
+	  double We = e * BT /m_e;
+	  double wp = sqrt (neeq[i+Nf] * e*e /epsilon_0/m_e);
+
+	  Weeq [i+Nf] = We;
+	  wUeq [i+Nf] =   0.5 * We + sqrt (0.25*We*We + wp*wp);
+	  wLeq [i+Nf] = - 0.5 * We + sqrt (0.25*We*We + wp*wp);
+	  wUHeq[i+Nf] = sqrt (We*We + wp*wp);
 	}
       neeq[2*Nf-1] = 2.*neeq[2*Nf-2] - neeq[2*Nf-3];
       Teeq[2*Nf-1] = 2.*Teeq[2*Nf-2] - Teeq[2*Nf-3];
@@ -1155,6 +1181,7 @@ void Equilibrium::Solve ()
   delete[] req;    delete[] weq;    delete[] teq;    delete[] Req; 
   delete[] Zeq;    delete[] BReq;   delete[] neeq;   delete[] Teeq;
   delete[] dRdreq; delete[] dRdteq; delete[] dZdreq; delete[] dZdteq;
+  delete[] Weeq;   delete[] wUeq;   delete[] wLeq;   delete[] wUHeq;
  
   gsl_spline_free (Itspline);
   gsl_spline_free (Ipspline);
