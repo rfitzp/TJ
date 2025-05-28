@@ -543,7 +543,6 @@ void Layer::WriteNetcdf ()
        torq_d.push_back (x_d);
        torq_d.push_back (z_d);
 
-       
        NcVar i_x         = dataFile.addVar ("InputParameters", ncDouble, i_d);
        i_x.putVar (Input);
        NcVar rres_x      = dataFile.addVar ("r_res",           ncDouble, x_d);

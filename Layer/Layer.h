@@ -15,6 +15,7 @@
 //  Plots/Layer/*.py
 
 // Class uses following external libraries:
+//  nclohmann JSON library (https://github.com/nlohmann/json)
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
 //  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
 

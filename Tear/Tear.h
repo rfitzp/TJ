@@ -18,6 +18,11 @@
 // q0 is safety-factor on magnetic axis.
 // qa = nu * q0 is safety-factor at plasma/vacuum interface.
 
+// Class uses following external libraries:
+//  nclohmann JSON library (https://github.com/nlohmann/json)
+//  Blitz++ library        (https://github.com/blitzpp/blitz)
+//  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
+
 // Inputs:
 //  Inputs/Tear.json - JSON file
 

@@ -29,6 +29,7 @@
 //  Plots/Equilibrium/*.py
 
 // Class uses following external libraries:
+//  nclohmann JSON library (https://github.com/nlohmann/json)
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
 //  GNU scientific library (https://www.gnu.org/software/gsl)
 //  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)

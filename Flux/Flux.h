@@ -1,8 +1,8 @@
 // Flux.h
 
 // #####################################################################################
-// Class to read EFIT file and generate TJ coordinate system in order to
-// check accuracy of EFIT data
+// Class to read EFIT file and generate TJ coordinate system in order to check accuracy
+// of EFIT data
 
 // .................
 // Calculation grid:
@@ -33,6 +33,12 @@
 
 // EFIT file in Outputs/WriteEFIT/EFIT.txt
 // Data written to Outputs/Flux
+
+// Class uses following external libraries:
+//  nclohmann JSON library (https://github.com/nlohmann/json)
+//  Blitz++ library        (https://github.com/blitzpp/blitz)
+//  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
+
 // #####################################################################################
 
 #pragma once
@@ -62,9 +68,9 @@ class Flux : private Utility
 {
  private:
 
-  // ............................................
-  // Control parameters read from Inputs/Flux.nml
-  // ............................................
+  // .............................................
+  // Control parameters read from Inputs/Flux.json
+  // .............................................
   
   int    NPSI;    // Number of points in PsiN grid
   double PACK;    // Packing index for PsiN grid
