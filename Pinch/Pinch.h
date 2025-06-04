@@ -80,12 +80,21 @@ class Pinch : private Utility
   double* PP;       // Pressure profile 
   double* BBphi;    // Toroidal magnetic field 
   double* BBtheta;  // Poloidal magnetic field 
-  double* qq;       // Safety-factor profile 
+  double* qq;       // Safety-factor profile
+
+  double* qqc;      // Mercier-stable safety-factor profile
+  double* PPc;      // Mercier-stable pressure profile
+  double* BBphic;   // Mercier-stable toroidal magnetic field 
+  double* BBthetac; // Mercier-stable poloidal magnetic field
+
+  double* PPp;      // Pressure gradient profile
+  double* PPpc;     // Critical pressure gradient profile
+  double* PPpm;     // Mercier-stable pressure gradient profile
 
   // ----
   // Misc
   // ----
-  int count;
+  int count, rhs_chooser;
   
 public:
 
@@ -118,6 +127,10 @@ private:
   double GetP (double r);
   // Get equilibrium pressure gradient
   double GetPp (double r);
+  // Get magnetic shear
+  double Gets (double r, double q);
+  // Get critical pressure gradient
+  double GetPpcrit (double r, double q, double Bphi);
 
   // Evaluate right-hand sides of differential equations
   void CashKarp45Rhs (double x, double*  y, double*  dydx) override;

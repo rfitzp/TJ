@@ -1,14 +1,14 @@
 {
-    "NTOR":   2,           // Toroidal mode number
-    "MMIN":  -10,          // Minimum poloidal mode number included in calculation
-    "MMAX":   20,          // Maximum poloidal mode number included in calculation
-    "ISLAND": [0.01, 0.01],// Island widths/displacements (divided by minor radius) used to regularize perturbed magnetic field
-    "NPHI":   32,          // Number of toroidal grid-points on extended visualization grid
+    "NTOR":   1,            // Toroidal mode number
+    "MMIN":   0,           // Minimum poloidal mode number included in calculation
+    "MMAX":   10,           // Maximum poloidal mode number included in calculation
+    "ISLAND": [0.01, 0.01], // Island widths/displacements (divided by minor radius) used to regularize perturbed magnetic field
+    "NPHI":   32,           // Number of toroidal grid-points on extended visualization grid
 
-    "EQLB":   1,           // Flag for equilibrium calculation only
+    "EQLB":   0,           // Flag for equilibrium calculation only
     "FREE":   1,           // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary calculations
     "FVAL":   0,           // Flag for calculating eigenvalues and eigenvectors of F-matrix
-    "VIZ":    1,           // Flag for generating unreconnected eigenfunction visualization data
+    "VIZ":    0,           // Flag for generating unreconnected eigenfunction visualization data
     "IDEAL":  0,           // Flag for ideal calculation
     "XI":     1,           // Flag for using Xi, rather than Psi, as ideal eigenfunction basis
     "INTR":   0,           // Flag for internal ideal stability calculation
