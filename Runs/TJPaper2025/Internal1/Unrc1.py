@@ -85,20 +85,22 @@ plt.xlabel (r'$r/a$',    fontsize = "15")
 plt.ylabel (r"$\psi_m$", fontsize = "14")
 plt.legend (fontsize = '14')
 
-inset_ax = inset_axes(ax1, width="20%", height="30%", bbox_to_anchor=(-0.05, 0.1, 1., 1.),
-                      bbox_transform=ax1.transAxes,loc='lower right')
+inset_ax = inset_axes(ax1, width="20%", height="30%", bbox_to_anchor=(-0.2, 0.1, 1., 1.), bbox_transform=ax1.transAxes,loc='lower right')
+
 inset_ax.set_xlim (0.4, 0.45)
 inset_ax.set_ylim (-10., 10.)
+
 inset_ax.plot (r, Psi_r[12,j,:], color = 'red',     linewidth = 2, linestyle = 'solid')
 inset_ax.plot (r, Psi_r[13,j,:], color = 'green',   linewidth = 1, linestyle = 'solid')
 inset_ax.plot (r, Psi_r[14,j,:], color = 'blue',    linewidth = 1, linestyle = 'solid')
 inset_ax.plot (r, Psi_r[15,j,:], color = 'cyan',    linewidth = 1, linestyle = 'solid')
 inset_ax.plot (r, Psi_r[11,j,:], color = 'black',   linewidth = 2, linestyle = 'solid')
+
 inset_ax.axvline (rres[0], color = 'black', linewidth = 1.5, linestyle = 'dashed')
 inset_ax.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 inset_ax.tick_params(axis='both', labelsize=10)
 
-#plt.tight_layout ()
+plt.tight_layout ()
 
 #plt.show ()    
 plt.savefig("Unrc1a.pdf")

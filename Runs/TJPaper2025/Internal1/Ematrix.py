@@ -1,6 +1,7 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 infile = open("Ematrix.out", "r")
 
@@ -100,40 +101,77 @@ fig = plt.figure (figsize = (8.0, 8.0))
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 
-plt.subplot (3, 1, 1)
+ax = plt.subplot (3, 1, 1)
 
 plt.xlim (pmin, pmax)
 plt.ylim (-10., 20000.)
 
 plt.plot    (b0, e11r, color = 'blue',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
+
 plt.axvline (0.0886*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\beta_0$',        fontsize = "15")
-plt.ylabel (r"$E_{11}$", fontsize = "15")
+plt.xlabel (r'$\beta_0$', fontsize = "15")
+plt.ylabel (r"$E_{11}$",  fontsize = "15")
 
-plt.subplot (3, 1, 2)
+inset_ax = inset_axes(ax, width = "50%", height = "30%", bbox_to_anchor = (0.1, 0., 1., 1.), bbox_transform = ax.transAxes, loc = 'upper center')
+
+inset_ax.tick_params(axis='both', labelsize=10)
+
+inset_ax.set_xlim (0.001, 0.005)
+inset_ax.set_ylim (-0.5, 1500.)
+
+inset_ax.plot (b0, e11r, color = 'blue',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
+
+inset_ax.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
+ax = plt.subplot (3, 1, 2)
 
 plt.xlim (pmin, pmax)
 plt.ylim (10., -3000.)
 
 plt.plot (b0, e12r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$E_{12}$')
 plt.plot (b0, e21r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 'x', fillstyle = 'none', markersize = 5, label = '$E_{21}$')
+
 plt.axvline (0.088519*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\beta_0$',                fontsize = "15")
+plt.xlabel (r'$\beta_0$',        fontsize = "15")
 plt.ylabel (r"$E_{12}, E_{21}$", fontsize = "15")
 plt.legend (fontsize = "15");
 
-plt.subplot (3, 1, 3)
+inset_ax = inset_axes(ax, width = "50%", height = "30%", bbox_to_anchor = (0.1, 0., 1., 1.), bbox_transform = ax.transAxes, loc = 'upper center')
+
+inset_ax.tick_params(axis='both', labelsize=10)
+
+inset_ax.set_xlim (0.001, 0.005)
+inset_ax.set_ylim (0.5, -200.)
+
+inset_ax.plot (b0, e12r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$E_{12}$')
+inset_ax.plot (b0, e21r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 'x', fillstyle = 'none', markersize = 5, label = '$E_{21}$')
+
+inset_ax.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
+ax = plt.subplot (3, 1, 3)
 
 plt.xlim (pmin, pmax)
 plt.ylim (-10., 500.)
 
 plt.plot (b0, e22r, color = 'blue',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
+
 plt.axvline (0.088519*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\beta_0$',        fontsize = "15")
-plt.ylabel (r"$E_{22}$", fontsize = "15")
+plt.xlabel (r'$\beta_0$', fontsize = "15")
+plt.ylabel (r"$E_{22}$",  fontsize = "15")
+
+inset_ax = inset_axes(ax, width = "50%", height = "30%", bbox_to_anchor = (0.1, 0., 1., 1.), bbox_transform = ax.transAxes, loc = 'upper center')
+
+inset_ax.tick_params(axis='both', labelsize=10)
+
+inset_ax.set_xlim (0.001, 0.005)
+inset_ax.set_ylim (0.5, 20)
+
+inset_ax.plot (b0, e22r, color = 'blue',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
+
+inset_ax.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.tight_layout ()
 

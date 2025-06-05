@@ -67,33 +67,37 @@ ax = plt.subplot (3, 1, 1)
 
 plt.xlim (pmin, pmax)
 
-plt.plot    (b0, g1, color = 'blue',  linewidth = 1,  linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$\gamma_1$')
-plt.plot    (b0, g2, color = 'red',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$\gamma_2$')
+plt.plot    (b0, g1, color = 'blue', linewidth = 1,  linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$\gamma_1$')
+plt.plot    (b0, g2, color = 'red',  linewidth = 1,  linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$\gamma_2$')
+
 plt.axvline (0.1674*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axhline (0.,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0.,            color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\beta_0$',        fontsize = "15")
 plt.ylabel (r"$\gamma_1, \gamma_2$ (kHz)", fontsize = "15")
 plt.legend (fontsize = '15')
 
-inset_ax = inset_axes(ax, width="50%", height="30%", bbox_to_anchor=(0.1, 0., 1., 1.),
-                      bbox_transform=ax.transAxes, loc='upper center')
-inset_ax.plot    (b0, g1, color = 'blue',  linewidth = 1,  linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
-inset_ax.plot    (b0, g2, color = 'red',   linewidth = 1,  linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
-inset_ax.set_xlim (0.00, 0.014)
-inset_ax.set_ylim (-0.5, 0.5)
-inset_ax.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
+inset_ax = inset_axes(ax, width="50%", height="30%", bbox_to_anchor=(0.1, 0., 1., 1.), bbox_transform=ax.transAxes, loc='upper center')
+
 inset_ax.tick_params(axis='both', labelsize=10)
 
+inset_ax.set_xlim (0.00, 0.014)
+inset_ax.set_ylim (-0.5, 120.)
+
+inset_ax.plot    (b0, g1, color = 'blue', linewidth = 1,  linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
+inset_ax.plot    (b0, g2, color = 'red',  linewidth = 1,  linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
+
+inset_ax.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.subplot (3, 1, 2)
 
 plt.xlim (pmin, pmax)
 
 plt.plot    (b0, w1, color = 'blue',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$\omega_1$')
-plt.plot    (b0, w2, color = 'red',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$\omega_2$')
+plt.plot    (b0, w2, color = 'red',   linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$\omega_2$')
+
 plt.axvline (0.1674*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axhline (0.,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0.,            color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\beta_0$',        fontsize = "15")
 plt.ylabel (r"$\omega_1, \omega_2$ (kHz)", fontsize = "15")
@@ -103,17 +107,17 @@ plt.subplot (3, 1, 3)
 
 plt.xlim (pmin, pmax)
 
-plt.plot    (b0, f1, color = 'blue',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$f_1$')
-plt.plot    (b0, f2, color = 'red',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$f_2$')
+plt.plot    (b0, f1, color = 'blue', linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$f_1$')
+plt.plot    (b0, f2, color = 'red',  linewidth = 1, linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = '$f_2$')
+
 plt.axvline (0.1674*0.08,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axhline (0.,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0.,            color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\beta_0$',        fontsize = "15")
 plt.ylabel (r"$f_1, f_2$", fontsize = "15")
 plt.legend (fontsize = '15')
 
-
-#plt.tight_layout ()
+plt.tight_layout ()
 
 #plt.show ()    
 plt.savefig("gamma.pdf")

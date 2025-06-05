@@ -1,0 +1,62 @@
+\documentclass{article}[12pt]
+\usepackage{fullpage}
+\usepackage{amsmath}
+
+\begin{document}
+\begin{center}
+{\em  Investigation of  Tearing Mode Stability Near Ideal Stability Boundaries Via Asymptotic Matching Techniques}\\[1ex]
+by R.~Fitzpatrick\\[1ex]
+{\bf Reply to Referees' Comments}\\[1ex]
+~
+\end{center}
+Let me thank the  referees for their helpful and insightful comments on my paper. Here are my responses to
+their comments.
+
+\begin{description}
+
+\item \underline{Introduction, 4th paragraph.} I have clarified what I mean by a ``fixed-boundary'' and a ``free-boundary'' calculation. 
+
+\item \underline{Introduction, last paragraph.} I have deleted a sentence that mentions ``internal'' and ``external'' modes, because these
+terms will be defined later in the paper. 
+
+\item \underline{Sect.~II.B, penultimate paragraph.}  I have deleted the redundant term ``free boundary''. 
+
+\item \underline{Sect.~II.B, last paragraph.} I have explained why the particular choice of the range of poloidal mode numbers in the TJ code was made.
+I have also added Table~I, which shows that the particular choice is sufficient to obtain convergence. 
+
+\item \underline{Sect.~II.C.1.} I have explained that the TEAR code is part of the TJ package. Unfortunately, there is no reference for this code. But, any
+interested party can access the code on github. 
+
+\item \underline{Sect.~II.C.2.} I have deleted ``external'', because this term is yet to be defined. 
+
+\item \underline{Sect.~II.E.} I have deleted a repeated ``that''. 
+
+\item \underline{Sect.~III.A, after paragraph 3.} I have added a paragraph that explains more exactly the criterion that has to be satisfied in order for
+the linear decoupling of the tearing mode dispersion relation by sheared plasma rotation to be effective. 
+
+\item \underline{Sect.~III.C.}  I have explained that TJ actually performs two tests for ideal stability. The first, which I forgot to mention previously,
+is a test for Mercier stability. The second involves a calculation of the eigenvalues of the sum of the plasma and vacuum perturbed energy matrices. I mention that
+the second test is a necessary and sufficient test for ideal stability. This implies that if the test is viable then no other test is required. 
+It turns out that, in a toroidal plasma, the second test is always viable, because there is no such thing as a truly internal mode. 
+I have deleted the reference to the first stability test performed by DCON---here, and in the rest of the paper---because I am now not sure what sort of mode would be
+detected by this test. The DCON test does not include the vacuum, so it seems that it could only apply to a mode that was truly fixed boundary. However,
+in practice, there is no such mode. 
+
+\item \underline{Sect.~III.D.} I have added two paragraphs to clarify what I mean by an ``external'' and an ``internal'' mode. 
+
+\item \underline{Sect.~III.E.4.} I have tried to explain more clearly how $f_1$ and $f_2$ are defined.
+
+\item \underline{Sect.~III.E.5, paragraph 1.}  I have clarified that you can only see that the 2/1 mode has $\psi_{m=2}\neq 0$ at the $q=2$ surface, and $\psi_{m=3}=0$ at the $q=3$ surface, in Fig.~8. 
+Figure 9 plots the sum of all poloidal harmonics, which obscures the fact that the 2/1 mode has  $\psi_{m=3}=0$ at the $q=3$ surface because the non-resonant harmonics are
+non-zero at this surface. 
+
+\item \underline{Sect.~III.E.5, paragraph 2.}  I have clarified that, as the ideal stability boundary is approached, the various tearing mode eigenfunctions only
+morph into the ideal eigenfunction in the outer region. I have also tried to explain why this morphing occurs. 
+
+\item \underline{Figures 6, 7, 15, 16, and 17.} I have improved many of the figures by adding inserts that show, for instance, that $\gamma_2$ becomes negative in a particular range of $\beta_0$ values in Fig.~7, and that
+$\psi_{m=1}$ is non-zero at the $q=1$ surface in the top panel of Fig.~17, but is zero in the bottom panel. 
+
+
+\end{description}
+
+\end{document}
