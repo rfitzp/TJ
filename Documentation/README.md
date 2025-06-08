@@ -13,5 +13,6 @@
 - *IdealStability.pdf*:		      Document specifying how TJ caclulates ideal stability
 - *RWM.pdf*:			          Document specifying how TJ deals with ideal/resisitive wall
 - *Perturbation.pdf*:             Document specifying how TJ calculates magnetic perturbations associated with tearing modes
-- *Island.pdf*:                   Document speciying how TJ calculates temperature perturbation associated with magnetic island
-- *AsymmetricIsland.pdf*:         Document speciying how TJ calculates temperature perturbation associated with asymmetric magnetic island
+- *Island.pdf*:                   Document specifying how TJ calculates temperature perturbation associated with magnetic island
+- *AsymmetricIsland.pdf*:         Document specifying how TJ calculates temperature perturbation associated with asymmetric magnetic island
+- *Twisting.pdf*:                 Document specifying how TJ deals with twisting parity modes

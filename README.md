@@ -65,27 +65,32 @@ Program to calculate the stability indices of tearing modes in a cylindrical tok
 
 # Program Island
 
-Program to calculate temperarature in vicinity of magnetic island
+Program to calculate temperarature in vicinity of magnetic island.
+
+# Program Pinch
+
+Program to perform various calulations for general cylindrical pinch.
 
 # Directories
 
   - *Benchmark*:        Benchmark tests
-  - *Bibliography*:	Papers containing background material
+  - *Bibliography*:	    Papers containing background material
   - *Documentation*: 	Documentation for codes
-  - *Equilibrium*:	Source for class Equilibrium
-  - *Flux*:		Source for class Flux
-  - *Inputs*:		JSON files controlling behaviors of codes
+  - *Equilibrium*:	    Source for class Equilibrium
+  - *Flux*:		        Source for class Flux
+  - *Inputs*:		    JSON files controlling behaviors of codes
   - *Island*:           Source code for program Island
-  - *Layer*:		Source for class Layer
-  - *Outputs*:		Outputs from codes
-  - *Plots*:		Python plotting scripts for codes
+  - *Layer*:		    Source for class Layer
+  - *Outputs*:		    Outputs from codes
+  - *Plots*:		    Python plotting scripts for codes
   - *Python*:           Useful python scripts
-  - *Reduce*:		REDUCE programs that perform analysis for TJ code
+  - *Reduce*:		    REDUCE programs that perform analysis for TJ code
   - *Runs*:             Data from running TJ code
-  - *TJ*:		Source for code TJ
-  - *Tear*:		Source for code Tear
+  - *Pinch*:            Source for code Pinch 
+  - *TJ*:		        Source for code TJ
+  - *Tear*:		        Source for code Tear
   - *Utility*:          Source for class Utility
-  - *WriteEFIT*:	Source for code WriteEFIT
-  - *bin*:		Binaries for codes
-  - *lib*:		Libraries
-  - *include*:		Library header files
+  - *WriteEFIT*:	    Source for code WriteEFIT
+  - *bin*:		        Binaries for codes
+  - *lib*:		        Libraries
+  - *include*:		    Library header files

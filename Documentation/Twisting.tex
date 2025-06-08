@@ -1,0 +1,507 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage {amsmath}
+\usepackage{amssymb}
+\pdfoutput = 1 
+\usepackage {graphicx}
+\newcommand{\bomega}{\mbox{\boldmath$\omega$}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\title{Incorporation of Twisting Parity Response}
+\author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies,  Department of Physics,  University of Texas at Austin,  Austin TX 78712, USA}\begin{abstract}
+\end{abstract}
+\maketitle
+
+\section{Outer Region}
+\subsection{Behavior in Vicinity of Rational Surface}
+In the vicinity of the $k$th rational surface
+\begin{equation}
+\psi_k(r_k+x)= A_{L\,k}^\pm\,|x|^{\,\nu_{L\,k}} + {\rm sgn}(x)\,A_{S\,k}^{\pm}\,|x|^{\,\nu_{S\,k}},
+\end{equation}
+where $+/-$ corresponds to $x>0$ and $x<0$ respectively, and 
+\begin{align}
+\nu_{L\,k} &= \frac{1}{2}-\sqrt{-D_{I\,k}},\\[0.5ex]
+\nu_{S\,k}&= \frac{1}{2}+\sqrt{-D_{I\,k}}.
+\end{align}
+Let
+\begin{align}
+{\mit\Psi}_k^{\,e} &= r_k^{\,\nu_{L\,k}}\left(\frac{\nu_{S\,k} - \nu_{L\,k}}{L_k^k}\right)^{1/2}\frac{1}{2}\,(A_{L\,k}^+  + A_{L\,k}^-),\\[0.5ex]
+{\mit\Delta\Psi}_k^{\,e} &= r_k^{\,\nu_{S\,k}}\left(\frac{\nu_{S\,k} - \nu_{L\,k}}{L_k^k}\right)^{1/2}(A_{S\,k}^+  - A_{S\,k}^-),\\[0.5ex]
+{\mit\Psi}_k^{\,o} &= r_k^{\,\nu_{L\,k}}\left(\frac{\nu_{S\,k} - \nu_{L\,k}}{L_k^k}\right)^{1/2}\frac{1}{2}\,(A_{L\,k}^+  - A_{L\,k}^-),\\[0.5ex]
+{\mit\Delta\Psi}_k^{\,o} &= r_k^{\,\nu_{S\,k}}\left(\frac{\nu_{S\,k} - \nu_{L\,k}}{L_k^k}\right)^{1/2}(A_{S\,k}^+  + A_{S\,k}^-).
+\end{align}
+
+\subsection{Tearing Parity Solution}
+Let $J$ be the number of poloidal harmonics included in the calculation. 
+Let us launch $J$ independent solution vectors from the magnetic axis.
+Let the  solution vectors be denoted $\underline{\underline{\psi}}^{\,a\,e}(r)$ and $\underline{\underline{Z}}^{\,a\,e}(r)$. Here, the elements of $\underline{\underline{\psi}}^{\,a\,e}(r)$ are denoted $\psi_{j'j}(r)$, and the elements of  
+$\underline{\underline{Z}}^{\,a\,e}(r)$ are denoted $Z_{j'j}(r)$, for $j',j = 1, J$.  Furthermore, $j'$ indexes the poloidal
+harmonic, whereas $j$ indexes the solution vector launched from the axis. Let  $K$ be the number of rational surfaces in the plasma.
+The jump conditions imposed at the rational surfaces are
+\begin{align}
+{\mit\Psi}_k^{\,o} &= 0,\\[0.5ex]
+{\mit\Delta\Psi}_k^{\,e} &= 0,
+\end{align}
+for $k=1,K$, which implies that
+\begin{align}
+A_{L\,k}^{\,+} = A_{L\,k}^{\,-},\\[0.5ex]
+A_{S\,k}^{\,+} = A_{S\,k}^{\,-}.
+\end{align}
+Let ${\mit\Pi}_{kj}^{\,a\,e}$ be the value of ${\mit\Psi}_{k}^{\,e}$ at the $k$th rational surface associated with the $j$th solution launched from the axis. Likewise, let ${\mit\Delta\Pi}_{kj}^{\,a\,e}$ be the value of ${\mit\Delta\Psi}_{k}^{\,o}$
+at the $k$th rational surface  associated with the $j$th solution launched from the axis. 
+
+Let us launch $K$ small solution vectors from each of the  rational surfaces in the plasma. Let the solution vectors  be denoted  $\underline{\underline{\psi}}^{\,s\,e}(r)$ and $\underline{\underline{Z}}^{\,s\,e}(r)$. 
+Here, the elements of $\underline{\underline{\psi}}^{\,s\,e}(r)$ are  denoted $\psi_{jk}(r)$, and the elements of  
+$\underline{\underline{Z}}^{\,a\,e}(r)$ are denoted $Z_{jk}(r)$, for $j = 1, J$ and $k=1,K$. Furthermore, $j$ indexes the poloidal
+harmonic, whereas $k$ indexes the rational surface from which the solution is launched. The launch conditions are
+\begin{align}
+{\mit\Psi}_k^{\,e} &= {\mit\Psi}_k^{\,o} = 0,\\[0.5ex]
+{\mit\Delta\Psi}_k^{\,e}& = 1.
+\end{align}
+The jump conditions  imposed at the other rational surfaces are
+\begin{align}
+{\mit\Psi}_{k'}^{\,o} &= 0,\\[0.5ex]
+{\mit\Delta\Psi}_{k'}^{\,e} &= 0
+\end{align}
+where $k'\neq k$. 
+Let ${\mit\Pi}_{k'k}^{\,s\,e}$ be the value of ${\mit\Psi}_{k'}^{\,e}$ at the $k'$th rational surface associated with the small solution vector launched from the $k$th rational
+surface. Likewise, let ${\mit\Delta\Pi}_{k'k}^{\,s\,e}$ be the value of ${\mit\Delta\Psi}_{k'}^{\,o}$
+at the $k'$th rational surface  associated with the small solution vector launched from the $k$th rational
+surface. Here, $k$ and $k'$ run from $1$ to $K$
+
+The general tearing parity solution vectors are written
+\begin{align}
+\underline{\psi}^{\,e}(r) &= \underline{\underline{\psi}}^{\,a\,e}(r)\,\underline{\alpha}^e+  \underline{\underline{\psi}}^{\,s\,e}(r)\,\underline{\beta}^{\,e},\\[0.5ex]
+\underline{Z}^{\,e}(r) &= \underline{\underline{Z}}^{\,a\,e}(r)\,\underline{\alpha}^e+  \underline{\underline{Z}}^{\,s\,e}(r)\,\underline{\beta}^{\,e}.
+\end{align}
+Here, $\underline{\alpha}^e$ is a $1\times J$ vector of arbitrary coefficients, whereas $\underline{\beta}^{\,e}$ is a $1\times K$ vector of arbitrary coefficients. 
+However, the boundary condition at the plasma-vacuum interface is 
+\begin{equation}
+\underline{\underline{I}}(a)\,\underline{Z}^{\,e}(a) = \underline{\underline{H}}\,\,[\underline{\psi}^{\,e}(a)-\underline{\psi}^{\,x}(a)],
+\end{equation}
+where $\underline{\underline{H}}$ is the vacuum matrix,  $\underline{\psi}^{\,x}(r)$ is the RMP field, and 
+\begin{equation}
+\underline{\underline{I}}_{jj'}(r) =\frac{\delta_{jj'}}{ m_j-n\,q(r)}, 
+\end{equation}
+for $j,j'= 1,J$. 
+It follows that
+\begin{equation}
+\underline{\underline{X}}^e\,\underline{\alpha}^e = \underline{\underline{Y}}^e\,\underline{\beta}^{\,e} -\underline{\mit\Xi},
+\end{equation}
+where
+\begin{align}
+\underline{\underline{X}}^e &= \underline{\underline{I}}(a)\,\underline{\underline{Z}}^{\,a\,e}(a)- \underline{\underline{H}}\,\,\underline{\underline{\psi}}^{\,a\,e}(a),\\[0.5ex]
+\underline{\underline{Y}}^e &= \underline{\underline{H}}\,\,\underline{\underline{\psi}}^{\,s\,e}(a)- \underline{\underline{I}}(a)\,\underline{\underline{Z}}^{\,s\,e}(a),\\[0.5ex]
+\underline{\mit\Xi} &= \underline{\underline{H}}\,\,\underline{\psi}^{\,x}(a).
+\end{align}
+Thus,
+\begin{equation}
+\underline{\alpha}^e = \underline{\underline{\mit\Omega}}^{\,e}\,\underline{\beta}^{\,e}- \underline{\mit\Upsilon}^{\,e},
+\end{equation}
+where
+\begin{align}
+\underline{\underline{X}}^e\,\underline{\underline{\mit\Omega}}^{\,e}&= \underline{\underline{Y}}^e,\\[0.5ex]
+\underline{\underline{X}}^e\,\underline{\mit\Upsilon}^{\,e}&=\underline{\mit\Xi}.
+\end{align}
+Note that $\underline{\underline{\psi}}^{\,a\,e}(a)$ is a $J\times J$ matrix, $\underline{\underline{I}}(a)\,\underline{\underline{Z}}^{\,a\,e}(a)$  is a $J\times J$ matrix, 
+$\underline{\underline{\psi}}^{\,s\,e}(a)$ is a $J\times K$ matrix, $\underline{\underline{I}}(a)\,\underline{\underline{Z}}^{\,s\,e}(a)$  is a $J\times K$ matrix, 
+$\underline{\underline{H}}$ is a $J\times J$ matrix, $\underline{\alpha}^e$ is
+a $1\times J$ vector,  $\underline{\beta}^{\,e}$ is a $1\times K$ vector, and $\underline{\psi}^{\,x}$ and $\underline{\mit\Xi}$   are all $1\times J$ vectors. Thus, $\underline{\underline{X}}^e$ is a $J\times J$ matrix, $\underline{\underline{Y}}^e$
+is a $J\times K$ matrix, $\underline{\underline{\mit\Omega}}^{\,e}$ is a $J\times K$ matrix, and  $\underline{\mit\Upsilon}^{\,e}$ is a $1\times J$ vector. 
+
+It follows that
+\begin{align}\label{e25}
+\underline{\mit\Psi}^{\,e} &= \underline{\underline{F}}^{\,ee}\,\underline{\beta}^{\,e} - \underline{\mit\Lambda}^{\,e},\\[0.5ex]
+\underline{\mit\Delta\Psi}^{\,e} &= \underline{\beta}^{\,e},\\[0.5ex]
+\underline{\mit\Psi}^{\,o} &= \underline{0},\\[0.5ex]
+\underline{\mit\Delta\Psi}^{\,o} &= \underline{\underline{F}}^{\,oe}\,\underline{\beta}^{\,e} + \underline{\mit\Delta\Lambda}^{\,o},\label{e28}
+\end{align}
+where
+\begin{align}
+\underline{\underline{F}}^{\,ee} &= \underline{\underline{\mit\Pi}}^{\,a\,e}\,\underline{\underline{\mit\Omega}}^{\,e} + \underline{\underline{\mit\Pi}}^{\,s\,e},\\[0.5ex]
+\underline{\underline{F}}^{\,oe} &= \underline{\underline{\mit\Delta\Pi}}^{\,a\,e}\,\underline{\underline{\mit\Omega}}^{\,e} + \underline{\underline{\mit\Delta\Pi}}^{\,s\,e},\\[0.5ex]
+\underline{\mit\Lambda}^{\,e}&= \underline{\underline{\mit\Pi}}^{\,a\,e}\,\underline{\mit\Upsilon}^{\,e},\\[0.5ex]
+\underline{\mit\Delta\Lambda}^{\,o}&= -\underline{\underline{\mit\Delta\Pi}}^{\,a\,e}\,\underline{\mit\Upsilon}^{\,e}.
+\end{align}
+Note that  $\underline{\underline{\mit\Pi}}^{\,a\,e}$ is a $K\times J$ matrix, $\underline{\underline{\mit\Delta\Pi}}^{\,a\,e}$ is a $K\times J$ matrix, 
+$\underline{\underline{\mit\Pi}}^{\,s\,e}$ is a $K\times K$ matrix, $\underline{\underline{\mit\Delta\Pi}}^{\,s\,e}$ is a $K\times K$ matrix, and $\underline{\mit\Lambda}^{\,e}$ is
+a $1\times J$ vector. 
+Thus, $\underline{\underline{F}}^{\,ee}$ is a $K\times K$ matrix, $\underline{\underline{F}}^{\,oe}$ is a $K\times K$ matrix, and $\underline{\mit\Lambda}^{\,e}$ and 
+$\underline{\mit\Delta\Lambda}^{\,o}$ are $1\times K$ vectors. 
+
+In the absence of an RMP, the fully-reconnected tearing parity eigenfunction associated with rational surface $k$ is such that $\beta^{\,e}_{k'} = \delta_{kk'}$. 
+Thus,
+\begin{align}
+\psi^{\,f\,e}_{jk}(r) &= \psi^{\,s\,e}_{jk}(r) + \sum_{j'=1,J} \psi_{jj'}^{\,a\,e}(r)\,{\mit\Omega}^{\,e}_{j'k},\\[0.5ex]
+Z^{\,f\,e}_{jk}(r) &= Z^{\,s\,e}_{jk}(r) + \sum_{j'=1,J} Z_{jj'}^{\,a\,e}(r)\,{\mit\Omega}^{\,e}_{j'k}.
+\end{align}
+This eigenfunction is such that
+\begin{align}
+{\mit\Psi}^{\,e}_{k'} &= F^{\,ee}_{k'k},\\[0.5ex]
+{\mit\Delta\Psi}^{\,e}_{kk'} &= \delta_{k'k},\\[0.5ex]
+{\mit\Psi}^{\,o}_{k'} &= 0,\\[0.5ex]
+{\mit\Delta\Psi}^{\,o}_{k'} &= F^{\,oe}_{k'k}.
+\end{align}
+
+\subsection{Twisting Parity Solution}
+Let us launch $J$ independent solution vectors from the magnetic axis.
+Let the $j$th solution vectors be denoted $\underline{\underline{\psi}}^{\,a\,o}(r)$ and $\underline{\underline{Z}}^{\,a\,o}(r)$.
+The jump conditions imposed at the rational surfaces are
+\begin{align}
+{\mit\Psi}_k^{\,e} &= 0,\\[0.5ex]
+{\mit\Delta\Psi}_k^{\,o} &= 0,
+\end{align}
+for $k=1,K$, 
+which implies that
+\begin{align}
+A_{L\,k}^{\,+} = -A_{L\,k}^{\,-},\\[0.5ex]
+A_{S\,k}^{\,+} = -A_{S\,k}^{\,-}.
+\end{align}
+Let ${\mit\Pi}_{kj}^{\,a\,o}$ be the value of ${\mit\Psi}_{k}^{\,o}$ at the $k$th rational surface associated with the $j$th solution vector launched from the magnetic axis. Likewise, let ${\mit\Delta\Pi}_{kj}^{\,a\,o}$ be the value of ${\mit\Delta\Psi}_{k}^{\,e}$
+at the $k$th rational surface associated with the $j$th solution vector launched from the magnetic axis. 
+
+Let us launch $K$ small solution vectors from each of the rational surfaces in the plasma. Let the solution vectors 
+be denoted  $\underline{\underline{\psi}}^{\,s\,o}(r)$ and $\underline{\underline{Z}}^{\,s\,o}(r)$. The launch conditions are
+\begin{align}
+{\mit\Psi}_k^{\,e} &= {\mit\Psi}_k^{\,o} = 0,\\[0.5ex]
+{\mit\Delta\Psi}_k^{\,o}& = 1.
+\end{align}
+The jump conditions imposed at the other rational surfaces are
+\begin{align}
+{\mit\Psi}_{k'}^{\,e} &= 0,\\[0.5ex]
+{\mit\Delta\Psi}_{k'}^{\,o} &= 0,
+\end{align}
+where $k'\neq k$. 
+Let ${\mit\Pi}_{k'k}^{\,s\,o}$ be the value of ${\mit\Psi}_{k'}^{\,o}$ at the $k'$th rational surface associated with the small solution vector launched from the $k$th rational surface. Likewise, let ${\mit\Delta\Pi}_{k'k}^{\,s\,o}$ be the value of ${\mit\Delta\Psi}_{k'}^{\,e}$
+at the $k'$th rational surface associated with the small solution vector launched from the $k$th rational surface. 
+
+The general twisting parity solution vectors are written
+\begin{align}
+\underline{\psi}^{\,o}(r) &= \underline{\underline{\psi}}^{\,a\,o}(r)\,\underline{\alpha}^o+  \underline{\underline{\psi}}^{\,s\,o}(r)\,\underline{\beta}^{\,o},\\[0.5ex]
+\underline{Z}^{\,o}(r) &= \underline{\underline{Z}}^{\,a\,o}(r)\,\underline{\alpha}^o+  \underline{\underline{Z}}^{\,s\,o}(r)\,\underline{\beta}^{\,o},
+\end{align}
+Here, $\underline{\alpha}^o$ is a $1\times J$ vector of arbitrary coefficients, whereas $\underline{\beta}^{\,o}$ is a $1\times K$ vector of arbitrary coefficients. 
+However, the boundary condition at the plasma-vacuum interface is again 
+\begin{equation}
+\underline{\underline{I}}(a)\,\underline{Z}^{\,o}(a) = \underline{\underline{H}}\,\,[\underline{\psi}^{\,o}(a)-\underline{\psi}^{\,x}(a)].
+\end{equation}
+It follows that
+\begin{equation}
+\underline{\underline{X}}^o\,\underline{\alpha}^o = \underline{\underline{Y}}^o\,\underline{\beta}^{\,o}- \underline{\mit\Xi},
+\end{equation}
+where
+\begin{align}
+\underline{\underline{X}}^o = \underline{\underline{I}}(a)\,\underline{\underline{Z}}^{\,a\,o}(a)- \underline{\underline{H}}\,\,\underline{\underline{\psi}}^{\,a\,o}(a),\\[0.5ex]
+\underline{\underline{Y}}^o = \underline{\underline{H}}\,\,\underline{\underline{\psi}}^{\,s\,o}(a)- \underline{\underline{I}}(a)\,\underline{\underline{Z}}^{\,s\,o}(a).
+\end{align}
+Thus,
+\begin{equation}
+\underline{\alpha}^o = \underline{\underline{\mit\Omega}}^{\,o}\,\underline{\beta}^{\,o} - \underline{\mit\Upsilon}^{\,o},
+\end{equation}
+where
+\begin{align}
+\underline{\underline{X}}^o\,\underline{\underline{\mit\Omega}}^{\,o}&= \underline{\underline{Y}}^o,\\[0.5ex]
+\underline{\underline{X}}^o\,\underline{\mit\Upsilon}^{\,o}&= \underline{\mit\Xi}.
+\end{align}
+Note that $\underline{\underline{\psi}}^{\,a\,o}(a)$ is a $J\times J$ matrix, $\underline{\underline{I}}(a)\,\underline{\underline{Z}}^{\,a\,o}(a)$  is a $J\times J$ matrix, 
+$\underline{\underline{\psi}}^{\,s\,o}(a)$ is a $J\times K$ matrix, $\underline{\underline{I}}(a)\,\underline{\underline{Z}}^{\,s\,o}(a)$  is a $J\times K$ matrix, 
+$\underline{\underline{H}}$ is a $J\times J$ matrix, $\underline{\alpha}^o$ is
+a $J$ vector, and $\underline{\beta}^{\,o}$ is a $K$ vector. Thus, $\underline{\underline{X}}^o$ is a $J\times J$ matrix, $\underline{\underline{Y}}^o$
+is a $J\times K$ matrix, and $\underline{\underline{\mit\Omega}}^{\,o}$ is a $J\times K$ matrix, and $\underline{\mit\Upsilon}^{\,o}$ is a $1\times J$ vector. 
+
+It follows that
+\begin{align}\label{e49}
+\underline{\mit\Psi}^{\,e} &= \underline{0},\\[0.5ex]
+\underline{\mit\Delta\Psi}^{\,e} &= \underline{\underline{F}}^{\,eo}\,\underline{\beta}^{\,o} + \underline{\mit\Delta\Lambda}^{\,e},\\[0.5ex]
+\underline{\mit\Psi}^{\,o} &= \underline{\underline{F}}^{\,oo}\,\underline{\beta}^{\,o} - \underline{\mit\Lambda}^{\,o},\\[0.5ex]
+\underline{\mit\Delta\Psi}^{\,o} &= \underline{\beta}^{\,o},\label{e52}
+\end{align}
+where
+\begin{align}
+\underline{\underline{F}}^{\,oo} &= \underline{\underline{\mit\Pi}}^{\,a\,o}\,\underline{\underline{\mit\Omega}}^{\,o} + \underline{\underline{\mit\Pi}}^{\,s\,o},\\[0.5ex]
+\underline{\underline{F}}^{\,eo} &= \underline{\underline{\mit\Delta\Pi}}^{\,a\,o}\,\underline{\underline{\mit\Omega}}^{\,o} + \underline{\underline{\mit\Delta\Pi}}^{\,s\,o},\\[0.5ex]
+\underline{\mit\Lambda}^{\,o}&= \underline{\underline{\mit\Pi}}^{\,a\,o}\,\underline{\mit\Upsilon}^{\,o},\\[0.5ex]
+\underline{\mit\Delta\Lambda}^{\,e}&= -\underline{\underline{\mit\Delta\Pi}}^{\,a\,o}\,\underline{\mit\Upsilon}^{\,o}.
+\end{align}
+Note that  $\underline{\underline{\mit\Pi}}^{\,a\,o}$ is a $K\times J$ matrix, $\underline{\underline{\mit\Delta\Pi}}^{\,a\,o}$ is a $K\times J$ matrix, 
+$\underline{\underline{\mit\Pi}}^{\,s\,o}$ is a $K\times K$ matrix, and $\underline{\underline{\mit\Delta\Pi}}^{\,s\,o}$ is a $K\times K$ matrix. 
+Thus, $\underline{\underline{F}}^{\,oo}$ is a $K\times K$ matrix,  $\underline{\underline{F}}^{\,eo}$ is a $K\times K$ matrix, and $\underline{\mit\Lambda}^{\,o}$ and 
+$\underline{\mit\Delta\Lambda}^{\,e}$ are $1\times K$ vectors. 
+
+In the absence of an RMP, the fully-reconnected twisting parity eigenfunction associated with rational surface $k$ is such that $\beta^{\,o}_{k'} = \delta_{kk'}$. 
+Thus,
+\begin{align}
+\psi^{\,f\,o}_{jk}(r) &= \psi^{\,s\,o}_{jk}(r) + \sum_{j'=1,J} \psi_{jj'}^{\,a\,o}(r)\,{\mit\Omega}^{\,o}_{j'k},\\[0.5ex]
+Z^{\,f\,o}_{jk}(r) &= Z^{\,s\,o}_{jk}(r) + \sum_{j'=1,J} Z_{jj'}^{\,a\,o}(r)\,{\mit\Omega}^{\,o}_{j'k}.
+\end{align}
+This eigenfunction is such that
+\begin{align}
+{\mit\Psi}^{\,e}_{k'} &=0 ,\\[0.5ex]
+{\mit\Delta\Psi}^{\,e}_{kk'} &= F^{\,eo}_{k'k},\\[0.5ex]
+{\mit\Psi}^{\,o}_{k'} &= F^{\,oo}_{k'k},\\[0.5ex]
+{\mit\Delta\Psi}^{\,o}_{k'} &=\delta_{k'k}.
+\end{align}
+
+\subsection{General  Dispersion Relation}
+The general  dispersion relation is obtained by combining the tearing parity dispersion relation, (\ref{e25})--(\ref{e28}), with the
+twisting parity dispersion relation, (\ref{e49})--(\ref{e52}). We get 
+\begin{align}
+\underline{\mit\Psi}^{\,e} &=\underline{\underline{F}}^{\,ee}\,\underline{\beta}^{\,e} - \underline{\mit\Lambda}^{\,e},\\[0.5ex]
+\underline{\mit\Delta\Psi}^{\,e} &= \underline{\beta}^{\,e}+\underline{\underline{F}}^{\,eo}\,\underline{\beta}^{\,o} + \underline{\mit\Delta\Lambda}^{\,e},\\[0.5ex]
+\underline{\mit\Psi}^{\,o} &= \underline{\underline{F}}^{\,oo}\,\underline{\beta}^{\,o}- \underline{\mit\Lambda}^{\,o},\\[0.5ex]
+\underline{\mit\Delta\Psi}^{\,o} &= \underline{\beta}^{\,o} +\underline{\underline{F}}^{\,oe}\,\underline{\beta}^{\,e}+ \underline{\mit\Delta\Lambda}^{\,o}.
+\end{align}
+Hence, we obtain the general  dispersion relation
+\begin{equation}
+\left(\begin{array}{c}\underline{\mit\Delta\Psi}^{\,e}\\[0.5ex]\underline{\mit\Delta\Psi}^{\,o}\end{array}\right)
+= \left(\begin{array}{cc} \underline{\underline{E}}^{\,ee} &\underline{\underline{E}}^{\,eo}\\[0.5ex]
+\underline{\underline{E}}^{\,oe} &\underline{\underline{E}}^{\,oo}\end{array}\right)\left(\begin{array}{c}\underline{\mit\Psi}^{\,e}\\[0.5ex]\underline{\mit\Psi}^{\,o}\end{array}\right)
++\left(\begin{array}{c}\underline{\chi}^{\,e}\\[0.5ex]\underline{\chi}^{\,o}\end{array}\right)
+\end{equation}
+where
+\begin{align}
+\underline{\underline{E}}^{\,ee} &= (\underline{\underline{F}}^{\,ee})^{-1},\\[0.5ex]
+\underline{\underline{E}}^{\,eo} &=\underline{\underline{F}}^{\,eo}\,\underline{\underline{E}}^{\,oo},\\[0.5ex]
+\underline{\underline{E}}^{\,oe} &=\underline{\underline{F}}^{\,oe}\,\underline{\underline{E}}^{\,ee},\\[0.5ex]
+\underline{\underline{E}}^{\,oo} &= (\underline{\underline{F}}^{\,oo})^{-1},\\[0.5ex]
+\underline{\chi}^{\,e} &= \underline{\underline{E}}^{\,ee}\,\underline{\mit\Lambda}^{\,e} + \underline{\underline{E}}^{\,eo}\,\underline{\mit\Lambda}^{\,o} + \underline{\mit\Delta\Lambda}^{\,e},\\[0.5ex]
+\underline{\chi}^{\,o} &= \underline{\underline{E}}^{\,oe}\,\underline{\mit\Lambda}^{\,e} + \underline{\underline{E}}^{\,oo}\,\underline{\mit\Lambda}^{\,o} + \underline{\mit\Delta\Lambda}^{\,o}.
+\end{align}
+
+In the absence of an RMP, the tearing parity unreconnected eigenfunction associated with the $k$th rational surface is such that
+\begin{align}
+{\mit\Psi}^{\,e}_{k'} &=\delta_{k'k} ,\\[0.5ex]
+{\mit\Delta\Psi}^{\,e}_{kk'} &= E^{\,ee}_{k'k},\\[0.5ex]
+{\mit\Psi}^{\,o}_{k'} &= 0,\\[0.5ex]
+{\mit\Delta\Psi}^{\,o}_{k'} &=E^{\,oe}_{k'k}.
+\end{align}
+Thus, 
+\begin{align}
+\psi^{\,u\,e}_{jk}(r) &=\sum_{k'=1,k} \psi^{\,f\,e}_{jk'}(r)\,E^{\,ee}_{k'k} +\sum_{k'=1,k} \psi^{\,f\,o}_{jk'}(r)\,E^{\,oe}_{k'k},\\[0.5ex]
+Z^{\,u\,e}_{jk}(r) & =\sum_{k'=1,k} Z^{\,f\,e}_{jk'}(r)\,E^{\,ee}_{k'k} +\sum_{k'=1,k} Z^{\,f\,o}_{jk'}(r)\,E^{\,oe}_{k'k}.
+\end{align}
+
+In the absence of an RMP, the twisting parity unreconnected eigenfunction associated with the $k$th rational surface is such that
+\begin{align}
+{\mit\Psi}^{\,e}_{k'} &=0,\\[0.5ex]
+{\mit\Delta\Psi}^{\,e}_{kk'} &= E^{\,eo}_{k'k},\\[0.5ex]
+{\mit\Psi}^{\,o}_{k'} &= \delta_{k'k} ,\\[0.5ex]
+{\mit\Delta\Psi}^{\,o}_{k'} &=E^{\,oo}_{k'k}.
+\end{align}
+Thus, 
+\begin{align}
+\psi^{\,u\,o}_{jk}(r) &=\sum_{k'=1,k} \psi^{\,f\,o}_{jk'}(r)\,E^{\,oo}_{k'k} +\sum_{k'=1,k} \psi^{\,f\,e}_{jk'}(r)\,E^{\,eo}_{k'k},\\[0.5ex]
+Z^{\,u\,o}_{jk}(r) & =\sum_{k'=1,k} Z^{\,f\,o}_{jk'}(r)\,E^{\,oo}_{k'k} +\sum_{k'=1,k} Z^{\,f\,e}_{jk'}(r)\,E^{\,eo}_{k'k}.
+\end{align}
+
+\section{Angular Momentum Conservation}
+In the absence of an RMP, the total toroidal electromagnetic torque acting on the plasma
+is
+\begin{equation}
+T_\varphi = 2\,n\,\pi^2\,{\rm Im}\left(\underline{\mit\Psi}^{\,e\,\dag} \,\underline{\mit\Delta\Psi}^{\,e} +\underline{\mit\Psi}^{\,o\,\dag} \,\underline{\mit\Delta\Psi}^{\,o}\right),
+\end{equation}
+which gives
+\begin{equation}
+T_\varphi = 2\,n\,\pi^2\,{\rm Im}\left(\underline{\mit\Psi}^{\,e\,\dag}\,\underline{\underline{E}}^{\,ee}  \,\underline{\mit\Psi}^{\,e}+\underline{\mit\Psi}^{\,e\,\dag}\,\underline{\underline{E}}^{\,eo}  \,\underline{\mit\Psi}^{\,o}
++ \underline{\mit\Psi}^{\,o\,\dag}\,\underline{\underline{E}}^{\,oe}  \,\underline{\mit\Psi}^{\,e}+\underline{\mit\Psi}^{\,o\,\dag}\,\underline{\underline{E}}^{\,oo}  \,\underline{\mit\Psi}^{\,o}\right),
+\end{equation}
+or
+\begin{align}
+T_\varphi &= n\,\pi^2\,\left[\underline{\mit\Psi}^{\,e\,\dag}\,(\underline{\underline{E}}^{\,ee}-  \underline{\underline{E}}^{\,ee\,\dag})\,\underline{\mit\Psi}^{\,e}+\underline{\mit\Psi}^{\,e\,\dag}\,(\underline{\underline{E}}^{\,eo}-  \underline{\underline{E}}^{\,oe\,\dag})\,\underline{\mit\Psi}^{\,o}\right.\nonumber\\[0.5ex]
+&\left.\phantom{=}+\underline{\mit\Psi}^{\,o\,\dag}\,(\underline{\underline{E}}^{\,oe}-  \underline{\underline{E}}^{\,eo\,\dag})\,\underline{\mit\Psi}^{\,e}+ \underline{\mit\Psi}^{\,o\,\dag}\,(\underline{\underline{E}}^{\,oo}-  \underline{\underline{E}}^{\,oo\,\dag})\,\underline{\mit\Psi}^{\,o}\right].
+\end{align}
+However, $T_\varphi$ must be zero, irrespective of the values of the $\underline{\mit\Psi}^{\,e}$ and the $\underline{\mit\Psi}^{\,o}$. This is only possible if
+\begin{align}
+\underline{\underline{E}}^{\,ee\,\dag} &=\underline{\underline{E}}^{\,ee},\\[0.5ex]
+\underline{\underline{E}}^{\,eo\,\dag} &=\underline{\underline{E}}^{\,oe},\\[0.5ex]
+\underline{\underline{E}}^{\,oo\,\dag} &=\underline{\underline{E}}^{\,oo}.
+\end{align}
+
+\section{Inner Layer Equations}
+In the vicinity of the $k$th rational surface, the inner layer equations are
+\begin{align}\label{e80y}
+(\hat{\gamma}_k+{\rm i}\,Q_{E\,k}+{\rm i}\,Q_{e\,k})\,\psi&= - {\rm i}\,X\left(\phi-N\right) + \frac{d^{\,2}\psi}{d X^2},\\[0.5ex]
+(\hat{\gamma}_k+{\rm i}\,Q_{E\,k})\,N&= - {\rm i}\,Q_{e\,k}\,\phi -{\rm i}\,c_{\beta\,k}^{\,2}\,X\,V- {\rm i} \,D_k^{\,2}\,X\,\frac{d^{\,2}\psi}{d X^{2}}
++ P_{\perp\,k}\,\frac{d^{\,2} N}{d X^{2}},\label{e82y}\\[0.5ex]
+(\hat{\gamma}_k+{\rm i}\,Q_{E\,k}+{\rm i}\,Q_{i\,k})\,\frac{d^{\,2}\phi}{d X^2}&= - {\rm i}\,X\,\frac{d^{\,2}\psi}{d X^2}+ P_{\varphi\,k}\,\frac{d^{\,4}}{d X^4}\!\left(\phi + \frac{N}{\iota_k}\right),\\[0.5ex]
+(\hat{\gamma}_k+ {\rm i}\,Q_{E\,k})\, V&= {\rm i}\,Q_{e\,k}\,\psi - {\rm i}\,X\,N + P_{\varphi\,k}\,\frac{d^{\,2}V}{dX^{\,2}},\label{e4}
+\end{align}
+where $X=S_k^{\,1/3}\,(r-r_k)/r_k$. All quantities are as defined in TJ2025, except that 
+\begin{align}
+c_{\beta\,k} &= \left(\frac{\beta_k}{1+\beta_k}\right)^{1/2},\\[0.5ex]
+\iota_k &= -\frac{\omega_{\ast\,e\,k}}{\omega_{\ast\,i\,k}},\\[0.5ex]
+Q_{e\,k} &= -\left(\frac{\iota_{k}}{1+\iota_k}\right)\tau_k\,\omega_{\ast\,k},\\[0.5ex]
+Q_{i\,k} &= \left(\frac{1}{1+\iota_k}\right)\tau_k\,\omega_{\ast\,k},\\[0.5ex]
+D_k &= \left(\frac{\iota_k}{1+\iota_k}\right)^{1/2}S_k^{\,1/3}\,\hat{d}_{\beta\,k}.
+\end{align}
+
+Equations~(\ref{e80y})--(\ref{e4}) possess the trivial twisting parity solution:
+\begin{align}
+\psi(X) &= A\,X,\\[0.5ex]
+N(X) &= A\,Q_{e\,k},\\[0.5ex]
+\phi(X) &= A\,({\rm i}\,\gamma_k - Q_{E\,k}),\\[0.5ex]
+V(X) & =0.
+\end{align}
+
+\section{Intermediate Layer Equations}
+The intermediate layer equation is
+\begin{equation}
+(1+Y^2)\,\frac{d^{\,2}\psi}{dY^{2}}= \nu_k\,(1+\nu_k)\,\psi,
+\end{equation}
+where $Y= (r-r_k)/\delta_k$, and
+\begin{equation}
+\nu_k = -\frac{1}{2} + \sqrt{-D_{I\,k}}\simeq -\frac{1}{4}-D_{I\,k}.
+\end{equation}
+The general asymptotic behavior is
+\begin{equation}
+\psi(Y) = \hat{B}_{L\,k}+ \hat{B}_{S\,k}\,|Y|
+\end{equation}
+for $|Y|\ll 1$, and
+\begin{equation}
+\psi(Y)= \hat{A}_{L\,k} \,|Y|^{-\nu_k}+\hat{A}_{S\,k}\,|Y|^{1+\nu_k}
+\end{equation}
+for $|Y|\gg 1$. 
+
+The tearing parity solution is such that 
+\begin{equation}
+\psi(Y) = \hat{B}_{L\,k}^{\,e}+ \hat{B}_{S\,k}^{\,e}\,|Y|
+\end{equation}
+for $|Y|\ll 1$, and
+\begin{equation}
+\psi(Y)= \hat{A}_{L\,k}^{\,e} \,|Y|^{-\nu_k}+\hat{A}_{S\,k}^{\,e}\,|Y|^{1+\nu_k}
+\end{equation}
+for $|Y|\gg 1$. Furthermore,
+\begin{equation}
+S_k^{\,1/3}\,\hat{\mit\Delta}_k^e = \left(\frac{r_k}{\delta_k}\right)\,\frac{2\,\hat{B}_{S\,k}^{\,e}}{\hat{B}_{L\,k}^{\,e}},
+\end{equation}
+where $\hat{\mit\Delta}_k^{\,e}$ is the tearing parity layer response function, and
+\begin{equation}
+{\mit\Delta}_k^{\,e} \equiv \frac{{\mit\Delta\Psi}_k^{\,e}}{{\mit\Delta\Psi}_k^{\,e}} = \left(\frac{r_k}{\delta_k}\right)^{1+2\,\nu_k}\frac{2\,\hat{A}_{S\,k}^{\,e}}{\hat{A}_{L\,k}^{\,e}}
+\end{equation}
+
+The twisting parity solution is such that 
+\begin{equation}
+\psi(Y) =  \hat{B}_{S\,k}^{\,o}\,Y
+\end{equation}
+for $|Y|\ll 1$, and
+\begin{equation}
+\psi(Y)= {\rm sgn}(Y)\left(\hat{A}_{L\,k}^{\,o} \,|Y|^{-\nu_k}+\hat{A}_{S\,k}^{\,o}\,|Y|^{1+\nu_k}\right)
+\end{equation}
+for $|Y|\gg 1$. 
+Furthermore, 
+\begin{equation}
+{\mit\Delta}_k^{\,o} \equiv \frac{{\mit\Delta\Psi}_k^{\,o}}{{\mit\Delta\Psi}_k^{\,o}} = \left(\frac{r_k}{\delta_k}\right)^{1+2\,\nu_k}\frac{2\,\hat{A}_{S\,k}^{\,o}}{\hat{A}_{L\,k}^{\,o}}. 
+\end{equation}
+
+The connection formulae are 
+\begin{align}\label{bin}
+\hat{B}_{L\,k}^{\,e,o} &= a_{LL}\,\hat{A}_{L\,k}^{\,e,o} + a_{LS}\,\hat{A}_{S\,k}^{\,e,o},\\[0.5ex]
+\hat{B}_{S\,k}^{\,e,o}&= a_{SL}\,\hat{A}_{L\,k}^{\,e,o} + a_{SS}\,\hat{A}_{S\,k}^{\,e,o}.\label{bout}
+\end{align}
+It follows that
+\begin{align}\label{ee20}
+\left(\frac{\delta_k}{r_k}\right)\frac{S_k^{\,1/3}\,\hat{\mit\Delta}_k^{\,e}}{2}&= \frac{a_{SL} +a_{SS}\,(\delta_k/r_k)^{1+2\,\nu_k}\,({\mit\Delta}_{k}^{\,e}/2)}
+{a_{LL}  +a_{LS}\,(\delta_k/r_k)^{1+2\,\nu_k}\,({\mit\Delta}_{k}^{\,e}/2)},\\[0.5ex]
+\left(\frac{\delta_k}{r_k}\right)^{1+2\,\nu_k}\,\frac{{\mit\Delta}_k^{\,o}}{2} &= - \frac{a_{LL}}{a_{LS}}.
+\end{align}
+
+But, in the limit $|\nu_k|\rightarrow 0$, we find that $a_{LL}\rightarrow 1$, $a_{SL}\rightarrow -\nu_k\,\pi/2$, $a_{LS}\rightarrow -\nu_k\,\pi/2$,
+and $a_{SS}\rightarrow 1$. Thus, we obtain
+\begin{align}
+{\mit\Delta}_k^{\,e} &\simeq S_{k}^{\,1/3}\,\hat{\mit\Delta}_k^{\,e} + \frac{\pi\,\nu_k\,r_k}{\delta_k},\\[0.5ex]
+{\mit\Delta}_k^{\,o} &\simeq \frac{4\,r_k}{\pi\,\nu_k\,\delta_k}.
+\end{align}
+
+Let $\delta_k =\delta_{d\,k}/(2\sqrt{\pi})$, and let us identify $\nu_k$ with $-D_{R\,k}$. It follows that
+\begin{align}
+{\mit\Delta}_k^{\,e} &= S_k^{\,1/3}\,\hat{\mit\Delta}_k^{\,e} + {\mit\Delta}_{k\,{\rm crit}}^{\,e},\\[0.5ex]
+{\mit\Delta}_k^{\,o} &=  {\mit\Delta}_{k\,{\rm crit}}^{\,o},
+\end{align}
+where
+\begin{align}
+{\mit\Delta}_{k\,{\rm crit}}^{\,e} &=  \sqrt{2}\,\pi^{3/2}\,(-D_{R\,k})\,\frac{r_k}{\delta_{d\,k}},\\[0.5ex]
+{\mit\Delta}_{k\,{\rm crit}}^{\,o} &=\frac{8}{\sqrt{\pi}}\,(-D_{R\,k})^{-1}\,\frac{r_k}{\delta_{d\,k}}.
+\end{align}
+
+\section{Homogenous Dispersion Relation}
+The homogeneous dispersion relation can be written
+\begin{align}
+(S_k^{\,1/3}\,\hat{\mit\Delta}_k^{\,e}+ {\mit\Delta}_{k\,{\rm crit}}^{\,e})\,{\mit\Psi}_k^{\,e} &= \sum_{k'}(E_{kk'}^{\,ee}\,{\mit\Psi}_{k'}^{\,e}+E_{kk'}^{\,eo}\,{\mit\Psi}_{k'}^{\,o}),\\[0.5ex]
+0&= \sum_{k'}(\tilde{E}_{kk'}^{\,oo}\,{\mit\Psi}_{k'}^{\,o}+E_{kk'}^{\,oe}\,{\mit\Psi}_{k'}^{\,e}),\label{e127}
+\end{align}
+where 
+\begin{align}
+\tilde{E}^{\,oo}_{kk'} &= E_{kk'}^{\,oo}- {\mit\Delta}_{k\,{\rm crit}}^{\,o}\,\delta_{kk'}.
+\end{align}
+Hence,
+\begin{equation}
+{\mit\Psi}_{k}^{\,o} = - \sum_{k',k''}(\tilde{E}^{\,oo}_{kk'})^{-1}\,E^{\,oe}_{k'k''}\,{\mit\Psi}_{k''}^{\,e},
+\end{equation}
+and
+\begin{equation}
+(S_k^{\,1/3}\,\hat{\mit\Delta}_k^{\,e}+ {\mit\Delta}_{k\,{\rm crit}}^{\,e})\,{\mit\Psi}_k^{\,e} =\sum_{k'} E^{\,e}_{kk'}\,{\mit\Psi}^{\,e}_{k'}
+\end{equation}
+where 
+\begin{equation}
+E^{\,e}_{kk'} = E_{kk'}^{\,ee}- \sum_{k'', k'''} E_{kk''}^{\,eo}\,(\tilde{E}_{k''k'''}^{\,oo})^{-1}\,E_{k'''k'}^{\,oe}.
+\end{equation}
+Note that $\underline{\underline{E}}^{\,e}$ is Hermitian.
+
+Suppose that $\hat{\mit\Delta}_k$ is small, but  $\hat{\mit\Delta}_{k'\neq k}$ is order unity. In this case, 
+\begin{equation}
+{\mit\Psi}_{k'}^{\,e} \simeq \delta_{kk'}\,{\mit\Psi}_k^{\,e}.
+\end{equation} 
+ It follows that the growth rate of the mode that reconnects magnetic flux at the $k$th rational surface is
+governed by 
+\begin{equation}
+S_k^{\,1/3}\,\hat{\mit\Delta}_k^{\,e}\simeq  E^{\,e}_{kk}- {\mit\Delta}_{k\,{\rm crit}}^{\,e}.
+\end{equation}
+The corresponding eigenfunction is 
+\begin{align}
+\psi_{jk}^{\,u}(r) &= \psi_{jk}^{\,u\,e}(r)- \sum_{k',k''}\psi_{jk'}^{\,u\,o}(r)\,(\tilde{E}^{\,oo}_{k'k''})^{-1}\,E^{\,oe}_{k''k}, \\[0.5ex]
+Z_{jk}^{\,u}(r) &= Z_{jk}^{\,u\,e}(r)- \sum_{k',k''}Z_{jk'}^{\,u\,o}(r)\,(\tilde{E}^{\,oo}_{k'k''})^{-1}\,E^{\,oe}_{k''k},
+\end{align}
+and has the properties that 
+\begin{align}
+{\mit\Psi}^{\,e}_{k'}& = \delta_{kk'},\\[0.5ex]
+{\mit\Delta\Psi}^{\,e}_{k'} &= E^{\,e}_{k'k},\\[0.5ex]
+{\mit\Psi}^{\,o}_{k'} &= - \sum_{k',k''}(\tilde{E}^{\,oo}_{k'k''})^{-1}\,E^{\,oe}_{k''k},\\[0.5ex]
+{\mit\Delta\Psi}^{\,o}_{k'} &= {\mit\Delta}_{k'\,{\rm crit}}^{\,o}\,{\mit\Psi}_{k'}^{\,o}. 
+\end{align}
+
+Suppose that ${\mit\Psi}_k^{\,e}$ and ${\mit\Psi}_{k'}^{\,e}$ are both non-zero, but that ${\mit\Psi}^{\,e}_{k''}=0$ for $k''\neq k, k'$. 
+The toroidal electromagnetic torque at the $k$th rational surface is
+\begin{equation}
+\delta T_k =  2\,n\,\pi^2\,{\rm Im}\left({\mit\Psi}^{\,e\,\ast}_k \,{\mit\Delta\Psi}^{\,e}_k +{\mit\Psi}^{\,o\,\ast}_k \,{\mit\Delta\Psi}^{\,o}_k\right).
+\end{equation}
+Hence, we deduce that
+\begin{equation}
+\delta T_k = 2\,n\,\pi^2\,{\rm Im}({\mit\Psi}_k^{\,e\,\ast}\,E^{\,e}_{kk'}\,{\mit\Psi}_{k'}^{\,e}),
+\end{equation}
+and
+\begin{align}
+\delta T_{k'} &= 2\,n\,\pi^2\,{\rm Im}({\mit\Psi}_{k'}^{\,e\,\ast}\,E^{\,e}_{k'k}\,{\mit\Psi}_{k}^{\,e}) = -  2\,n\,\pi^2\,{\rm Im}({\mit\Psi}_{k}^{\,e\,\ast}\,E^{\,e\,\ast}_{k'k}\,{\mit\Psi}_{'k}^{\,e}) 
+\nonumber\\[0.5ex]
+&= -  2\,n\,\pi^2\,{\rm Im}({\mit\Psi}_{k}^{\,e\,\ast}\,E^{\,e}_{kk'}\,{\mit\Psi}_{'k}^{\,e}) = -\delta T_{k'},
+\end{align}
+with $\delta T_{k''}=0$ for $k''\neq k, k'$. 
+
+\section{Inhomogenous Dispersion Relation}
+The inhomogeneous dispersion relation can be written
+\begin{align}
+(S_k^{\,1/3}\,\hat{\mit\Delta}_k^{\,e}+ {\mit\Delta}_{k\,{\rm crit}}^{\,e})\,{\mit\Psi}_k^{\,e} &= \sum_{k'}(E_{kk'}^{\,ee}\,{\mit\Psi}_{k'}^{\,e}+E_{kk'}^{\,eo}\,{\mit\Psi}_{k'}^{\,o}) + \chi^{\,e}_k,\\[0.5ex]
+0&= \sum_{k'}(\tilde{E}_{kk'}^{\,oo}\,{\mit\Psi}_{k'}^{\,o}+E_{kk'}^{\,oe}\,{\mit\Psi}_{k'}^{\,e})+\chi_{k}^{\,o}.
+\end{align}
+It follows that
+\begin{equation}
+(S_k^{\,1/3}\,\hat{\mit\Delta}_k^{\,e}+ {\mit\Delta}_{k\,{\rm crit}}^{\,e})\,{\mit\Psi}_k^{\,e} =\sum_{k'} E^{\,e}_{kk'}\,{\mit\Psi}^{\,e}_{k'}+ \chi_k,
+\end{equation}
+where
+\begin{equation}
+\chi_k = \chi^{\,e}_k - \sum E^{\,eo}_{k',k''}\,(\tilde{E}^{\,oo}_{k'k''})^{-1}\,\chi^{\,o}_{k''}.
+\end{equation}
+
+
+\end{document}
