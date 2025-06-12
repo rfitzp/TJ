@@ -108,7 +108,7 @@ where
 Note that $\underline{\underline{\psi}}^{\,a\,e}(a)$ is a $J\times J$ matrix, $\underline{\underline{I}}(a)\,\underline{\underline{Z}}^{\,a\,e}(a)$  is a $J\times J$ matrix, 
 $\underline{\underline{\psi}}^{\,s\,e}(a)$ is a $J\times K$ matrix, $\underline{\underline{I}}(a)\,\underline{\underline{Z}}^{\,s\,e}(a)$  is a $J\times K$ matrix, 
 $\underline{\underline{H}}$ is a $J\times J$ matrix, $\underline{\alpha}^e$ is
-a $1\times J$ vector,  $\underline{\beta}^{\,e}$ is a $1\times K$ vector, and $\underline{\psi}^{\,x}$ and $\underline{\mit\Xi}$   are all $1\times J$ vectors. Thus, $\underline{\underline{X}}^e$ is a $J\times J$ matrix, $\underline{\underline{Y}}^e$
+a $1\times J$ vector,  $\underline{\beta}^{\,e}$ is a $1\times K$ vector, and $\underline{\psi}^{\,x}$ and $\underline{\mit\Xi}$   are $1\times J$ vectors. Thus, $\underline{\underline{X}}^e$ is a $J\times J$ matrix, $\underline{\underline{Y}}^e$
 is a $J\times K$ matrix, $\underline{\underline{\mit\Omega}}^{\,e}$ is a $J\times K$ matrix, and  $\underline{\mit\Upsilon}^{\,e}$ is a $1\times J$ vector. 
 
 It follows that
@@ -297,12 +297,12 @@ Z^{\,u\,o}_{jk}(r) & =\sum_{k'=1,k} Z^{\,f\,o}_{jk'}(r)\,E^{\,oo}_{k'k} +\sum_{k
 \end{align}
 
 \section{Angular Momentum Conservation}
-In the absence of an RMP, the total toroidal electromagnetic torque acting on the plasma
+The total toroidal electromagnetic torque acting on the plasma
 is
 \begin{equation}
 T_\varphi = 2\,n\,\pi^2\,{\rm Im}\left(\underline{\mit\Psi}^{\,e\,\dag} \,\underline{\mit\Delta\Psi}^{\,e} +\underline{\mit\Psi}^{\,o\,\dag} \,\underline{\mit\Delta\Psi}^{\,o}\right),
 \end{equation}
-which gives
+which, in the absence of an RMP, gives
 \begin{equation}
 T_\varphi = 2\,n\,\pi^2\,{\rm Im}\left(\underline{\mit\Psi}^{\,e\,\dag}\,\underline{\underline{E}}^{\,ee}  \,\underline{\mit\Psi}^{\,e}+\underline{\mit\Psi}^{\,e\,\dag}\,\underline{\underline{E}}^{\,eo}  \,\underline{\mit\Psi}^{\,o}
 + \underline{\mit\Psi}^{\,o\,\dag}\,\underline{\underline{E}}^{\,oe}  \,\underline{\mit\Psi}^{\,e}+\underline{\mit\Psi}^{\,o\,\dag}\,\underline{\underline{E}}^{\,oo}  \,\underline{\mit\Psi}^{\,o}\right),
@@ -312,7 +312,7 @@ or
 T_\varphi &= n\,\pi^2\,\left[\underline{\mit\Psi}^{\,e\,\dag}\,(\underline{\underline{E}}^{\,ee}-  \underline{\underline{E}}^{\,ee\,\dag})\,\underline{\mit\Psi}^{\,e}+\underline{\mit\Psi}^{\,e\,\dag}\,(\underline{\underline{E}}^{\,eo}-  \underline{\underline{E}}^{\,oe\,\dag})\,\underline{\mit\Psi}^{\,o}\right.\nonumber\\[0.5ex]
 &\left.\phantom{=}+\underline{\mit\Psi}^{\,o\,\dag}\,(\underline{\underline{E}}^{\,oe}-  \underline{\underline{E}}^{\,eo\,\dag})\,\underline{\mit\Psi}^{\,e}+ \underline{\mit\Psi}^{\,o\,\dag}\,(\underline{\underline{E}}^{\,oo}-  \underline{\underline{E}}^{\,oo\,\dag})\,\underline{\mit\Psi}^{\,o}\right].
 \end{align}
-However, $T_\varphi$ must be zero, irrespective of the values of the $\underline{\mit\Psi}^{\,e}$ and the $\underline{\mit\Psi}^{\,o}$. This is only possible if
+However, in the absence of an RMP,  $T_\varphi$ must be zero, irrespective of the values of the $\underline{\mit\Psi}^{\,e}$ and the $\underline{\mit\Psi}^{\,o}$. This is only possible if
 \begin{align}
 \underline{\underline{E}}^{\,ee\,\dag} &=\underline{\underline{E}}^{\,ee},\\[0.5ex]
 \underline{\underline{E}}^{\,eo\,\dag} &=\underline{\underline{E}}^{\,oe},\\[0.5ex]
@@ -472,15 +472,15 @@ and has the properties that
 \end{align}
 
 Suppose that ${\mit\Psi}_k^{\,e}$ and ${\mit\Psi}_{k'}^{\,e}$ are both non-zero, but that ${\mit\Psi}^{\,e}_{k''}=0$ for $k''\neq k, k'$. 
-The toroidal electromagnetic torque at the $k$th rational surface is
+The toroidal electromagnetic torque at a general rational surface labeled  $j$ is
 \begin{equation}
-\delta T_k =  2\,n\,\pi^2\,{\rm Im}\left({\mit\Psi}^{\,e\,\ast}_k \,{\mit\Delta\Psi}^{\,e}_k +{\mit\Psi}^{\,o\,\ast}_k \,{\mit\Delta\Psi}^{\,o}_k\right).
+\delta T_j =  2\,n\,\pi^2\,{\rm Im}\left({\mit\Psi}^{\,e\,\ast}_j \,{\mit\Delta\Psi}^{\,e}_j +{\mit\Psi}^{\,o\,\ast}_j \,{\mit\Delta\Psi}^{\,o}_j\right).
 \end{equation}
-Hence, we deduce that
+Hence, we deduce that at the $k$th rational surface,
 \begin{equation}
 \delta T_k = 2\,n\,\pi^2\,{\rm Im}({\mit\Psi}_k^{\,e\,\ast}\,E^{\,e}_{kk'}\,{\mit\Psi}_{k'}^{\,e}),
 \end{equation}
-and
+while, at the 
 \begin{align}
 \delta T_{k'} &= 2\,n\,\pi^2\,{\rm Im}({\mit\Psi}_{k'}^{\,e\,\ast}\,E^{\,e}_{k'k}\,{\mit\Psi}_{k}^{\,e}) = -  2\,n\,\pi^2\,{\rm Im}({\mit\Psi}_{k}^{\,e\,\ast}\,E^{\,e\,\ast}_{k'k}\,{\mit\Psi}_{'k}^{\,e}) 
 \nonumber\\[0.5ex]
