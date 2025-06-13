@@ -16,46 +16,49 @@
 \maketitle
 
 \section{Fourier-Transformed Four-Field Equations}
-The fundamental Fourier-transformed four-field equations take the form:
+In real space, the four-field resonant layer equations can be reduced to a set of ten coupled first-order differential equations.
+As we shall demonstrate, the equations can be reduced to a set of four coupled first-order differential
+equations in Fourier space. Clearly, it is advantageous to solve the equations in Fourier space.
+
+The  Fourier-transformed four-field layer equations take the form:
 \begin{align}
 (g+{\rm i}\,Q_e)\,\bar{\psi} &= \frac{d(\bar{\phi}-\bar{N})}{dp} - p^2\,\bar{\psi},\\[0.5ex]
 g\,\bar{N} &= -{\rm i}\,Q_e\,\bar{\phi} - D^{\,2}\,\frac{d(p^2\,\bar{\psi})}{dp} + c_\beta^{\,2}\,\frac{d\bar{V}}{dp} - P_\perp\,p^2\,\bar{N},\\[0.5ex]
 (g+ {\rm i}\,Q_i)\,p^2\,\bar{\phi} &= \frac{d(p^2\,\bar{\psi})}{dp} - P_\varphi\,p^4\left(\bar{\phi}+ \frac{\bar{N}}{\iota}\right),\\[0.5ex]
-g\,\bar{V} &= {\rm i}\,Q_e\,\bar{\psi} + \frac{d\bar{N}}{dp} - P_\varphi\,p^2\,\bar{V}.
+g\,\bar{V} &= {\rm i}\,Q_e\,\bar{\psi} + \frac{d\bar{N}}{dp} - P_\varphi\,p^2\,\bar{V}.\label{eq4}
 \end{align}
 It follows that
 \begin{equation}
-\bar{\psi} = \frac{1}{g+{\rm i}\,Q_e+p^2}\,\frac{d(\bar{\phi}-\bar{N})}{dp}.
+\bar{\psi} = \frac{1}{g+{\rm i}\,Q_e+p^2}\,\frac{d(\bar{\phi}-\bar{N})}{dp},
 \end{equation}
-Now,
+and
 \begin{equation}
 \frac{d(p^2\,\bar{\psi})}{dp} = [(g+{\rm i}\,Q_i)\,p^2 + P_\varphi\,p^4]\,\bar{\phi} + \frac{P_\varphi}{\iota}\,p^4\,\bar{N},
 \end{equation}
-so
+and
 \begin{equation}
 c_\beta^{\,2}\,\frac{d\bar{V}}{dp} = (g + P_\perp\,p^2+ \iota^{-1}\,D^{\,2}\,P_\varphi\,p^4)\,\bar{N}+ [
-{\rm i}\,Q_e + D^{\,2}\,(g+{\rm i}\,Q_i)\,p^2 + D^{\,2}\,P_\varphi\,p^4]\,\bar{\phi}.
+{\rm i}\,Q_e + D^{\,2}\,(g+{\rm i}\,Q_i)\,p^2 + D^{\,2}\,P_\varphi\,p^4]\,\bar{\phi}.\label{eq7}
 \end{equation}
-
-Let
+If we define 
 \begin{align}
 \bar{J}&= p^2\,\bar{\psi},\\[0.5ex]
-\bar{Y} &= \bar{\phi}-\bar{N}.
+\bar{Y} &= \bar{\phi}-\bar{N},
 \end{align}
-Hence, we obtain our final set of Fourier-transformed four-field equations:
+then we can transform Eqs.~(\ref{eq4})--(\ref{eq7}) into the  the following set of four coupled first-order differential equations:
 \begin{align}\label{e1}
 \frac{d\bar{Y}}{dp} &= \left(\frac{g+{\rm i}\,Q_e+p^2}{p^2}\right)\bar{J},\\[0.5ex]
 \frac{d\bar{N}}{dp} &= \left(\frac{-{\rm i}\,Q_e}{p^2}\right)\bar{J} + (g + P_\varphi\,p^2)\,\bar{V},\\[0.5ex]
 \frac{d\bar{J}}{dp} &= [(g+{\rm i}\,Q_i)\,p^2 + P_\varphi\,p^4]\,\bar{Y}
-+ [(g+{\rm i}\,Q_i)\,p^2 + \iota_e^{-1}\,P_\varphi\,p^4]\,\bar{N},\\[0.5ex]
++ [(g+{\rm i}\,Q_i)\,p^2 + \iota_e^{\,-1}\,P_\varphi\,p^4]\,\bar{N},\\[0.5ex]
 c_\beta^{\,2}\,\frac{d\bar{V}}{dp} &= [{\rm i}\,Q_e+ D^{\,2}\,(g+{\rm i}\,Q_i)\,p^2 + D^{\,2}\,P_\varphi\,p^4]\,\bar{Y}
-\nonumber\\[0.5ex]&\phantom{=} +\{g+{\rm i}\,Q_e + [P_\perp+ D^{\,2}\,(g + {\rm i}\,Q_i)]\,p^2 + \iota_e^{-1}\,D^{\,2}\,P_\varphi\,p^4\}\,\bar{N},\label{e4}
+\nonumber\\[0.5ex]&\phantom{=} +(g+{\rm i}\,Q_e + [P_\perp+ D^{\,2}\,(g + {\rm i}\,Q_i)]\,p^2 + \iota_e^{\,-1}\,D^{\,2}\,P_\varphi\,p^4)\,\bar{N},\label{e4}
 \end{align}
 where $\iota_e=\iota/(1+\iota)$. 
 
 \section{Small-$p$ Behavior of Fourier-Transformed Four-Field Equations}
 \subsection{Introduction}
-Let us search for power-law solutions of Eqs.~(\ref{e1})--(\ref{e4}) at small-$p$. Given that we have four coupled first-order equations,
+Let us search for power-law solutions of Eqs.~(\ref{e1})--(\ref{e4}) at small values of $p$. Given that we have four coupled first-order differential equations,
 we expect to find four independent power-law solutions.
 
 \subsection{First Solution}
@@ -122,7 +125,7 @@ It follows that
 3\,c_\beta^{\,2}\,v_3 &= {\rm i}\,Q_e\,y_2 + (g+{\rm i}\,Q_e)\,n_2 \nonumber\\[0.5ex]
 &\phantom{=}+D^{\,2}\,(g+{\rm i}\,Q_e)\,n_0 + [P_\perp + D^{\,2}\,(g+{\rm i}\,Q_i)]\,n_0.
 \end{align}
-We get
+which gives
 \begin{align}
 y_0 &= (g+{\rm i}\,Q_e)\,a_0,\\[0.5ex]
 y_2 &= \frac{1}{6}\,g\,(g+{\rm i}\,Q_e)\,(g+{\rm i}\,Q_i)\,a_0,\\[0.5ex]
@@ -183,7 +186,7 @@ v_2 &= \frac{g\,(g+{\rm i}\,Q_e)}{2\,c_\beta^{\,2}}\,a_3,
 where $a_3$ is an arbitrary constant. 
 
 \subsection{General Solution}
-We conclude that, at small-$p$, the most general solution for $\bar{Y}(p)$ and $\bar{N}(p)$ takes the form 
+We conclude that, at small values of $p$, the most general solution for $\bar{Y}(p)$ and $\bar{N}(p)$ takes the form 
 \begin{align}\label{yy}
 \bar{Y}(p) &= (g+{\rm i}\,Q_e)\,p^{-1}\,a_{-1} +(g+{\rm i}\,Q_e) \,a_0+ {\cal O}(p),\\[0.5ex]
 \bar{N}(p) &= (-{\rm i}\,Q_e)\,p^{-1}\,a_{-1} + (-{\rm i}\,Q_e)\,a_0 + a_2 + {\cal O}(p).\label{nn}
@@ -206,9 +209,9 @@ A_{11} &=  \frac{g+{\rm i}\,Q_e+p^2}{p^2},\\[0.5ex]
 A_{21} &= \frac{-{\rm i}\,Q_e}{p^2},\\[0.5ex]
 A_{22} &= \frac{g + P_\varphi\,p^2}{c_\beta^{\,2}},\\[0.5ex]
 B_{11} &= (g+{\rm i}\,Q_i)\,p^2 + P_\varphi\,p^4,\\[0.5ex]
-B_{12} &= (g+{\rm i}\,Q_i)\,p^2 + \iota_e^{-1}\,P_\varphi\,p^4,\\[0.5ex]
+B_{12} &= (g+{\rm i}\,Q_i)\,p^2 + \iota_e^{\,-1}\,P_\varphi\,p^4,\\[0.5ex]
 B_{21}&= {\rm i}\,Q_e+ D^{\,2}\,(g+{\rm i}\,Q_i)\,p^2 + D^{\,2}\,P_\varphi\,p^4,\\[0.5ex]
-B_{22} & =g+{\rm i}\,Q_e + [P_\perp + D^{\,2}\,(g + {\rm i}\,Q_i)]\,p^2 + \iota_e^{-1}\,D^{\,2}\,P_\varphi\,p^4.
+B_{22} & =g+{\rm i}\,Q_e + [P_\perp + D^{\,2}\,(g + {\rm i}\,Q_i)]\,p^2 + \iota_e^{\,-1}\,D^{\,2}\,P_\varphi\,p^4.
 \end{align}
 Thus, we obtain the following matrix differential equation: 
 \begin{equation}\label{mat}
@@ -226,7 +229,7 @@ The previous equation can be combined with Eq.~(\ref{mat}) to give
 + \underline{\underline{W}}\,\underline{\underline{W}} + \underline{\underline{A}}\,p\,\frac{d\underline{\underline{A}}^{-1}}{dp}\,\underline{\underline{W}}- p^2\,\underline{\underline{A}}\,\underline{\underline{B}}\right)\underline{u} = \underline{0},
 \end{equation}
 which implies that 
-\begin{equation}
+\begin{equation}\label{eq96}
 p\,\frac{d\underline{\underline{W}}}{dp} = \underline{\underline{W}} - \underline{\underline{W}}\,\underline{\underline{W}} - \underline{\underline{A}}\,p\,\frac{d\underline{\underline{A}}^{-1}}{dp}\,\underline{\underline{W}}
 + p^2\,\underline{\underline{A}}\,\underline{\underline{B}}.
 \end{equation}
@@ -268,15 +271,14 @@ p^2\,\underline{\underline{A}}\,\underline{\underline{B}}= \left(\begin{array}{c
 then
 \begin{align}\label{f1}
 F_{11} &= p^2\,(g+{\rm i}\,Q_e+p^2)\,(g+{\rm i}\,Q_i + P_\varphi\,p^2),\\[0.5ex]
-F_{12} &= p^2\,(g+{\rm i}\,Q_e+p^2)\,(g+{\rm i}\,Q_i + \iota_e^{-1}\,P_\varphi\,p^2),\\[0.5ex]
+F_{12} &= p^2\,(g+{\rm i}\,Q_e+p^2)\,(g+{\rm i}\,Q_i + \iota_e^{\,-1}\,P_\varphi\,p^2),\\[0.5ex]
 F_{21} &=-{\rm i}\,Q_e\,p^2\,(g+{\rm i}\,Q_i+P_\varphi\,p^2)\nonumber\\[0.5ex]
-&\phantom{=} + c_\beta^{-2}\,p^2\,(g+P_\varphi\,p^2)\,[\,{\rm i}\,Q_e+ D^{\,2}\,(g+{\rm i}\,Q_i)\,p^2 + D^{\,2}\,P_\varphi\,p^4],\\[0.5ex]
-F_{22} &=-{\rm i}\,Q_e\,p^2\,(g+{\rm i}\,Q_i+\iota_e^{-1}\,P_\varphi\,p^2)\nonumber\\[0.5ex] 
-&\phantom{=}+c_\beta^{-2}\,p^2\,(g+P_\varphi\,p^2)\,[g+{\rm i}\,Q_e + [P_\perp + \textcolor{red}{\iota_e^{-1}}\,D^{\,2}\,(g + {\rm i}\,Q_i)]\,p^2 + \iota_e^{-1}\,D^{\,2}\,P_\varphi\,p^4].\label{f4}
+&\phantom{=} + c_\beta^{\,-2}\,p^2\,(g+P_\varphi\,p^2)\,[\,{\rm i}\,Q_e+ D^{\,2}\,(g+{\rm i}\,Q_i)\,p^2 + D^{\,2}\,P_\varphi\,p^4],\\[0.5ex]
+F_{22} &=-{\rm i}\,Q_e\,p^2\,(g+{\rm i}\,Q_i+\iota_e^{\,-1}\,P_\varphi\,p^2)\nonumber\\[0.5ex] 
+&\phantom{=}+c_\beta^{\,-2}\,p^2\,(g+P_\varphi\,p^2)\,[g+{\rm i}\,Q_e + [P_\perp +D^{\,2}\,(g + {\rm i}\,Q_i)]\,p^2 + \iota_e^{\,-1}\,D^{\,2}\,P_\varphi\,p^4].\label{f4}
 \end{align}
-Here, we have modified the expression for $F_{22}$ in order to make the layer equations more stable. 
 
-Hence, we obtain the following Riccati matrix differential equation:  
+Hence, Eq.~(\ref{eq96}) can be written as the  following Riccati matrix differential equation:  
 \begin{equation}\label{ricc}
 p\,\frac{d\underline{\underline{W}}}{dp} = \underline{\underline{W}} - \underline{\underline{W}}\,\underline{\underline{W}} - \underline{\underline{E}}\,\underline{\underline{W}}
 +\underline{\underline{F}}.
@@ -294,8 +296,7 @@ p\,\frac{dW_{22}}{dp} &= W_{22} -W_{21}\,W_{12}- W_{22}\,W_{22}- E_{21}\,W_{12} 
 \end{align}
 
 \section{Small-$p$ Behavior of Riccati Matrix Differential Equation}
-At $p=0$, let $\underline{\underline{E}} = \underline{\underline{E}}^{\,(0)}$,
-where the elements of  $\underline{\underline{E}}^{\,(0)}$ are constants.
+Let $\underline{\underline{E}} = \underline{\underline{E}}^{\,(0)}$ at $p=0$.
 It follows from Eqs.~(\ref{ee1})--(\ref{ee4})  that
 \begin{align}
 E_{11}^{\,(0)} &= 2,\\[0.5ex]
@@ -303,17 +304,16 @@ E_{12}^{\,(0)}&=0,\\[0.5ex]
 E_{21}^{\,(0)} &= - \frac{2\,{\rm i}\,Q_e}{g+{\rm i}\,Q_e},\label{e210}\\[0.5ex]
 E_{22}^{\,(0)}&= 0.
 \end{align}
-Likewise, at small $p$, we can write $\underline{\underline{F}} =p^2\, \underline{\underline{F}}^{\,(2)}$,
-where the elements of  $\underline{\underline{F}}^{\,(2)}$ are constants, where use has been made of Eqs.~(\ref{f1})--(\ref{f4}). 
+Likewise, at small values of $p$, we can write $\underline{\underline{F}} =p^2\, \underline{\underline{F}}^{\,(2)}$,
+where the elements of  $\underline{\underline{F}}^{\,(2)}$ are constants, and where use has been made of Eqs.~(\ref{f1})--(\ref{f4}). 
 
-Suppose that  $\underline{\underline{W}}= \underline{\underline{W}}^{\,(0)}$ at $p=0$, 
-where all of the elements of $\underline{\underline{W}}^{\,(0)}$ are constants.
-To lowest-order in $p$, Eq.~(\ref{ricc}) gives
+Suppose that  $\underline{\underline{W}}= \underline{\underline{W}}^{\,(0)}$ at $p=0$.
+Equation~(\ref{ricc}) gives
 \begin{equation}
 \underline{\underline{0}}= \underline{\underline{W}}^{\,(0)}-\underline{\underline{W}}^{\,(0)}\,\underline{\underline{W}}^{\,(0)}- 
 \underline{\underline{E}}^{\,(0)}\,\underline{\underline{W}}^{\,(0)},
 \end{equation}
-or
+at $p=0$, which yields
 \begin{align}
 ( \underline{\underline{1}}-\underline{\underline{W}}^{\,(0)}-\underline{\underline{E}}^{\,(0)})\,\underline{\underline{W}}^{\,(0)} = \underline{\underline{0}}.
 \end{align}
@@ -322,12 +322,13 @@ Hence, we deduce that
 \underline{\underline{W}}^{\,(0)} =  \underline{\underline{1}}-\underline{\underline{E}}^{\,(0)} =  \left(\begin{array}{cc} -1&0\\-E_{21}^{\,(0)}&1\end{array}\right).
 \end{equation}
 
-At small-$p$, let
+At small values of $p$, let
 \begin{align}
 \underline{u}(p) &= \underline{u}_{-1}\,p^{-1} + \underline{u}_0,\\[0.5ex]
-\underline{\underline{W}}(p) &= \underline{\underline{W}}^{\,(0)} + \underline{\underline{W}}^{\,(1)} \,p,
+\underline{\underline{W}}(p) &= \underline{\underline{W}}^{\,(0)} + p\,\underline{\underline{W}}^{\,(1)},
 \end{align}
-where the elements of  $\underline{u}_{-1}$, $\underline{u}_0$, and $\underline{\underline{W}}^{\,(1)}$ are constants.
+where the elements of  $\underline{u}_{-1}$ (which are $y_{-1}$ and $n_{-1}$, respectively), the elements of $\underline{u}_{0}$ (which are $y_0$ 
+and $n_0$, respectively), and the elements of $\underline{\underline{W}}^{\,(1)}$, are all constants.
 Equation~(\ref{wdef}) gives 
 \begin{align}
 \underline{\underline{W}}^{\,(0)}\,\underline{u}_{-1} &= - \underline{u}_{-1},\\[0.5ex]
@@ -351,11 +352,16 @@ n_0 &= -{\rm i}\,Q_e\,a_0 + a_2,
 \end{align}
 in accordance with Eqs.~(\ref{yy}) and (\ref{nn}), then we deduce from Eqs.~(\ref{w0def}) and (\ref{w1def}) that 
 \begin{equation}
-\frac{\pi}{\hat{\mit\Delta}_s}\equiv \frac{a_0}{a_{-1}} = W_{11}^{\,(1)} - W_{12}^{\,(1)}\,\frac{(\,{\rm i}\,Q_e)}{g+{\rm i}\, Q_e}.
+\frac{\pi}{\hat{\mit\Delta}_s}\equiv \frac{a_0}{a_{-1}} = W_{11}^{\,(1)} - W_{12}^{\,(1)}\,\frac{(\,{\rm i}\,Q_e)}{g+{\rm i}\, Q_e},
+\end{equation}
+and
+\begin{equation} 
+\frac{a_2}{a_{-1}} = {\rm i}\,Q_e\left[W_{22}^{\,(1)}-W_{11}^{(1)}\right] + \frac{({\rm i}\,Q_e)^2}{g+{\rm i}\,Q_e}\,W_{12}^{\,(1)} - 
+(g+{\rm i}\,Q_e)\,W_{21}^{\,(1)}.
 \end{equation}
 
 \section{Large-$p$ Behavior of Riccati Matrix Differential Equation}
-In the large-$p$ limit, it is clear from Eqs.~(\ref{f1})--(\ref{f4}) that  $\underline{\underline{F}}(p)=p^6\,\underline{\underline{F}}^{\,(6)}+ p^8\,\underline{\underline{F}}^{\,(8)}$, where the elements of $\underline{\underline{F}}^{\,(6)}$ and $\underline{\underline{F}}^{\,(8)}$ are constants.
+At large values of $p$, it is clear from Eqs.~(\ref{f1})--(\ref{f4}) that  $\underline{\underline{F}}(p)=p^6\,\underline{\underline{F}}^{\,(6)}+ p^8\,\underline{\underline{F}}^{\,(8)}$, where the elements of $\underline{\underline{F}}^{\,(6)}$ and $\underline{\underline{F}}^{\,(8)}$ are constants.
 On the other hand, Eqs.~(\ref{ee1})--(\ref{ee4}) imply that $\underline{\underline{E}}(p)=\underline{\underline{E}}^{\,(0)}$, 
 where the elements of $\underline{\underline{E}}^{\,(0)}$ are constants. 
 Thus, if we write $\underline{\underline{W}}(p) = p^2\,\underline{\underline{W}}^{\,(2)}+p^4\,\underline{\underline{W}}^{\,(4)}$,
@@ -369,52 +375,57 @@ Now, according to Eqs.~(\ref{f1})--(\ref{f4}),
 \begin{align}
 F^{\,(8)}_{11} &=0,\\[0.5ex]
 F^{\,(8)}_{12} &= 0,\\[0.5ex]
-F^{\,(8)}_{21} &= c_\beta^{-2}\,D^{\,2}\,P_\varphi^{\,2},\\[0.5ex]
-F^{\,(8)}_{22} &=\iota_e^{-1}\, c_\beta^{-2}\,D^{\,2}\,P_\varphi^{\,2},
+F^{\,(8)}_{21} &= c_\beta^{\,-2}\,D^{\,2}\,P_\varphi^{\,2},\\[0.5ex]
+F^{\,(8)}_{22} &= c_\beta^{\,-2}\,\iota_e^{\,-1}\,D^{\,2}\,P_\varphi^{\,2},
 \end{align}
 so Eq.~(\ref{e138}) yields 
 \begin{align}
 W^{\,(4)}_{11} &=0,\\[0.5ex]
 W^{\,(4)}_{12} &= 0,\\[0.5ex]
-W^{\,(4)}_{21} &= -\iota_e^{\,1/2}\,c_\beta^{-1}\,D\,P_\varphi,\\[0.5ex]
-W^{\,(4)}_{22} &=-\iota_e^{-1/2}\, c_\beta^{-1}\,D\,P_\varphi,
+W^{\,(4)}_{21} &= -c_\beta^{\,-1}\,\iota_e^{\,1/2}\,D\,P_\varphi,\\[0.5ex]
+W^{\,(4)}_{22} &=-c_\beta^{\,-1}\,\iota_e^{\,-1/2}\, D\,P_\varphi,
 \end{align}
-where we have chosen the sign of the square root that is associated with well-behaved solutions at large-$p$. We are also assuming at $\iota_e>0$. 
+where we have chosen the sign of the square root that is associated with well-behaved solutions at large values of $p$. Here, we are  assuming that $\iota_e>0$. 
 Equations~(\ref{f1})--(\ref{f4}) also give 
 \begin{align}
 F^{\,(6)}_{11} &=P_\varphi,\\[0.5ex]
-F^{\,(6)}_{12} &= \iota_e^{-1}\,P_\varphi,\\[0.5ex]
-F^{\,(6)}_{21} &=c_\beta^{-2}\,D^{\,2}\,g\,P_\varphi + c_\beta^{-2}\,D^{\,2}\,(g+{\rm i}\,Q_i)\,P_\varphi,\\[0.5ex]
-F^{\,(6)}_{22} &=c_\beta^{-2}\,\iota_e^{-1}\,D^{\,2}\,g\,P_\varphi + c_\beta^{-2}\,[P_\perp+\textcolor{red}{\iota_e^{-1}}\,D^{\,2}\,(g+{\rm i}\,Q_i)]\,P_\varphi.
+F^{\,(6)}_{12} &= \iota_e^{\,-1}\,P_\varphi,\\[0.5ex]
+F^{\,(6)}_{21} &=c_\beta^{\,-2}\,D^{\,2}\,g\,P_\varphi + c_\beta^{\,-2}\,D^{\,2}\,(g+{\rm i}\,Q_i)\,P_\varphi,\\[0.5ex]
+F^{\,(6)}_{22} &=c_\beta^{\,-2}\,\iota_e^{\,-1}\,D^{\,2}\,g\,P_\varphi + c_\beta^{\,-2}\,[P_\perp+D^{\,2}\,(g+{\rm i}\,Q_i)]\,P_\varphi.
 \end{align}
-Thus, Eq.~(\ref{e139}) gives 
+Thus, Eq.~(\ref{e139}) yields
 \begin{align}
 W_{12}^{\,(2)}\,W_{21}^{\,(4)} &= F_{11}^{\,(6)},\\[0.5ex]
-W_{12}^{\,(2)}\,W_{22}^{\,(4)} &= F_{12}^{\,(6)}.
+W_{12}^{\,(2)}\,W_{22}^{\,(4)} &= F_{12}^{\,(6)},
 \end{align}
-Thus, we obtain
+which gives 
 \begin{align}
-W_{12}^{\,(2)} &= - \iota_e^{-1/2}\,c_\beta\,D^{-1}.
+W_{12}^{\,(2)} &= - c_\beta\,\iota_e^{\,-1/2}\,D^{-1}.
 \end{align}
 
 Now, if
-\begin{equation}
-\underline{\underline{W}}\,\underline{u}= \lambda\,\underline{u}
+\begin{equation}\label{e155}
+\underline{\underline{W}}\,\underline{u}= \lambda(p)\,\underline{u}
 \end{equation}
-then Eq.~(\ref{wdef}) gives
+then Eq.~(\ref{wdef}) yields
 \begin{equation}
-p\,\frac{d\underline{u}}{dp} = \lambda\,\underline{u}.
+p\,\frac{d\underline{u}}{dp} = \lambda\,\underline{u},
 \end{equation}
-Of course, for a well behaved solution, $\lambda$ must be negative at large-$p$. As we have seen, the large-$p$ limit of
+which implies that
+\begin{equation}
+\underline{u}(p) = \underline{u}(p_0)\,\exp\left[\int_{p_0}^p\frac{\lambda_r(p')}{p'}\,dp'\right]\exp\left[{\rm i}\int_{p_0}^p\frac{\lambda_i(p')}{p'}\,dp'\right], 
+\end{equation}
+where $\lambda_r$  and $\lambda_i$ are the real and imaginary parts of $\lambda$, respectively. 
+Of course, a solution that is well behaved at large values of $p$ is such that $\lambda_r$ is negative. As we have seen, the large-$p$ limit of
 Eq.~(\ref{ricc}) is
 \begin{equation}
 \underline{\underline{W}}\,\underline{\underline{W}} = \underline{\underline{F}}.
 \end{equation}
 Hence, if
-\begin{equation}
+\begin{equation}\label{e158}
  \underline{\underline{F}}\,\underline{u} = {\mit\Lambda}\,\underline{u}
  \end{equation}
- then 
+ then Eqs.~(\ref{e155}) and (\ref{e158}) imply that 
  \begin{equation}
  \lambda^2 = {\mit\Lambda}.
  \end{equation}
@@ -424,38 +435,44 @@ Hence, if
  \end{equation}
  Now,
  \begin{align}
- F_{11}+F_{22}&\simeq  F_{22}^{\,(8)}\,p^8 = \iota_e^{-1}\, c_\beta^{-2}\,D^{\,2}\,P_\varphi^{\,2}\,p^8,\\[0.5ex]
- F_{11}\,F_{22} - F_{12}\,F_{21}&  \simeq [F_{11}^{\,(6)}\,F_{22}^{\,(6)} - F_{12}^{\,(6)}\,F_{21}^{\,(6)}]\,p^{12}=c_\beta^{-2}\,P_\perp \,P_\varphi^{\,2}\,p^{12},
+ F_{11}+F_{22}&\simeq  F_{22}^{\,(8)}\,p^8 =c_\beta^{\,-2}\, \iota_e^{\,-1}\,D^{\,2}\,P_\varphi^{\,2}\,p^8,\\[0.5ex]
+ F_{11}\,F_{22} - F_{12}\,F_{21}&  \simeq \left[F_{11}^{\,(6)}\,F_{22}^{\,(8)} - F_{12}^{\,(6)}\,F_{21}^{\,(8)}\right]p^{14}\nonumber\\[0.5ex]&\phantom{=}+\left[F_{11}^{\,(6)}\,F_{22}^{\,(6)} - F_{12}^{\,(6)}\,F_{21}^{\,(6)}\right]p^{12}
+=c_\beta^{\,-2}\,R\,P_\varphi^{\,2}\,p^{12},
  \end{align}
- so
+  where 
+ \begin{equation}
+ R= P_\perp + (1-\iota_e^{\,-1})\,D^{\,2}\,(g+{\rm i}\,Q_i),
+ \end{equation}
+Hence, the two eigenvalues of the $F$-matrix are
  \begin{align}
- {\mit\Lambda}_1&= \iota_e^{-1}\,c_\beta^{-2}\,D^2\,P_\varphi^{\,2}\,p^8,\\[0.5ex]
- {\mit\Lambda}_2 &= \iota_e\,P_\perp\,D^{-2} \,p^4.
+ {\mit\Lambda}_1&\simeq F_{22}^{\,(8)}\,p^8=  c_\beta^{\,-2}\,\iota_e^{\,-1}\,D^2\,P_\varphi^{\,2}\,p^8,\\[0.5ex]
+ {\mit\Lambda}_2 &\simeq \frac{[F_{11}^{\,(6)}\,F_{22}^{\,(6)} - F_{12}^{\,(6)}\,F_{21}^{\,(6)}]}{F_{22}^{\,(8)}}\,p^4= \iota_e\,D^{-2}\,R\,p^4.
  \end{align}
- Assuming that $\iota_e>0$, we deduce that
+ Thus, we deduce that the two eigenvalues of the $W$-matrix are 
  \begin{align}
- \lambda_1&= -\iota_e^{-1}\,c_\beta^{-1}\,D\,P_\varphi\,p^4,\\[0.5ex]
- \lambda_2&=-\iota_e^{1/2}\,P_\perp^{1/2}\,D^{-1}\,p^2.
+ \lambda_1&=-{\mit\Lambda}_1^{\,1/2}= -c_\beta^{\,-1}\,\iota_e^{\,-1/2}\,D\,P_\varphi\,p^4,\\[0.5ex]
+ \lambda_2&=-{\mit\Lambda}_2^{\,1/2}=-\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}\,p^2,
  \end{align}
+ Here, the square root of $R$ is taken such that the real part of $\lambda_2$ is negative. 
   Now, the eigenvalue problem for the $W$-matrix reduces to 
  \begin{equation}
- \lambda^{\,2} - W_{22}^{\,(4)}\,p^4\,\lambda + (W_{11}^{\,(2)}\,W_{22}^{\,(4)} - W_{12}^{\,(2)}\,W_{21}^{\,(4)})\,p^6 = 0.
+ \lambda^{2} - W_{22}^{\,(4)}\,p^4\,\lambda + \left[W_{11}^{\,(2)}\,W_{22}^{\,(4)} - W_{12}^{\,(2)}\,W_{21}^{\,(4)}\right]p^6 = 0.
  \end{equation}
-So, we need
+which yields
 \begin{equation}
-\lambda_1=W_{22}^{\,(4)}\,p^4,
+\lambda_1\simeq W_{22}^{\,(4)}\,p^4,
 \end{equation}
 which is satisfied, and
 \begin{equation}
-\lambda_2 = \left[W_{11}^{\,(2)} - \frac{W_{12}^{\,(2)}\,W_{21}^{\,(4)}}{W_{22}^{\,(4)}}\right]p^2,
+\lambda_2 \simeq \left[W_{11}^{\,(2)} - \frac{W_{12}^{\,(2)}\,W_{21}^{\,(4)}}{W_{22}^{\,(4)}}\right]p^2,
 \end{equation}
  which implies that
  \begin{equation}
- W_{11}^{\,(2)} = -\iota_e^{1/2}\,P_\perp^{1/2}\,D^{-1}-\iota_e^{-1/2}\,c_\beta\,D^{-1}.
+ W_{11}^{\,(2)} = -\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}-c_\beta\,\iota_e^{\,1/2}\,D^{-1}.
  \end{equation}
  Hence, the large-$p$ boundary condition for the $W$-matrix
  is
  \begin{equation}
- \underline{\underline{W}}(p) =  \left(\begin{array}{cc} -\iota_e^{1/2}\,P_\perp^{1/2}\,D^{-1}\,p^2-\iota_e^{-1/2}\,c_\beta\,D^{-1}\,p^2,& - \iota_e^{-1/2}\,c_\beta\,D^{-1}\,p^2\\-\iota_e^{\,1/2}\,c_\beta^{-1}\,D\,P_\varphi\,p^4,&-\iota_e^{-1/2}\, c_\beta^{-1}\,D\,P_\varphi\,p^4\end{array}\right).
+ \underline{\underline{W}}(p) =  \left(\begin{array}{cc} -\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}\,p^2-c_\beta\,\iota_e^{\,1/2}\,D^{-1}\,p^2,& - c_\beta\,\iota_e^{\,-1/2}\,D^{-1}\,p^2\\-c_\beta^{\,-1}\,\iota_e^{\,1/2}\,D\,P_\varphi\,p^4,&-c_\beta^{\,-1}\,\iota_e^{\,-1/2}\,D\,P_\varphi\,p^4\end{array}\right).
  \end{equation}
 \end{document}
