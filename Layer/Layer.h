@@ -62,7 +62,7 @@ private:
   double* QE_res;     // Normalized ExB frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* Qe_res;     // Normalized electron diamagnetic frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* Qi_res;     // Normalized ion diamagnetic frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
-  double* iotae_res;  // Ratio of electron diamagnetic frequencies to total diamagnetic frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* iotae_res;  // Ratio of minus electron diamagnetic frequencies to total diamagnetic frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* D_res;      // Normalized ion sound radii at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* Pphi_res;   // Normalized momentum diffusivities at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* Pperp_res;  // Normalized energy diffusivities at rational surfaces (read from Outputs/TJ/TJ.nc
@@ -79,7 +79,7 @@ private:
   double          D;      // Normalized ion sound radius 
   double          Pphi;   // Normalized momentum diffusivity 
   double          Pperp;  // Normalized energy diffusivity 
-  double          iotae;  // Ratio of electron diamagnetic frequency to total diamagnetic frequency
+  double          iotae;  // Ratio of minus electron diamagnetic frequency to total diamagnetic frequency
 
   double          g_r;    // Real part of normalized growth-rate in MHD frame
   double          g_i;    // Imaginary part of normalized growth-rate in MHD frame

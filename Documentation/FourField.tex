@@ -54,7 +54,7 @@ then we can transform Eqs.~(\ref{eq4})--(\ref{eq7}) into the  the following set 
 c_\beta^{\,2}\,\frac{d\bar{V}}{dp} &= [{\rm i}\,Q_e+ D^{\,2}\,(g+{\rm i}\,Q_i)\,p^2 + D^{\,2}\,P_\varphi\,p^4]\,\bar{Y}
 \nonumber\\[0.5ex]&\phantom{=} +(g+{\rm i}\,Q_e + [P_\perp+ D^{\,2}\,(g + {\rm i}\,Q_i)]\,p^2 + \iota_e^{\,-1}\,D^{\,2}\,P_\varphi\,p^4)\,\bar{N},\label{e4}
 \end{align}
-where $\iota_e=\iota/(1+\iota)$. 
+where $\iota_e=\iota/(1+\iota)$. Note that $\iota = -Q_e/Q_i$ and $\iota_e= -Q_e/(Q_i-Q_e)$. 
 
 \section{Small-$p$ Behavior of Fourier-Transformed Four-Field Equations}
 \subsection{Introduction}
@@ -474,5 +474,21 @@ which is satisfied, and
  is
  \begin{equation}
  \underline{\underline{W}}(p) =  \left(\begin{array}{cc} -\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}\,p^2-c_\beta\,\iota_e^{\,1/2}\,D^{-1}\,p^2,& - c_\beta\,\iota_e^{\,-1/2}\,D^{-1}\,p^2\\-c_\beta^{\,-1}\,\iota_e^{\,1/2}\,D\,P_\varphi\,p^4,&-c_\beta^{\,-1}\,\iota_e^{\,-1/2}\,D\,P_\varphi\,p^4\end{array}\right).
+ \end{equation}
+ 
+ \section{Determination of Pmax}
+ At large values of $p$, we have
+ \begin{align}
+ F_{11}^{\,(4)} &= g + {\rm i}\,Q_i + P_\varphi\,(g+{\rm i}\,Q_e),\\[0.5ex]
+ F_{12}^{\,(4)} &= g+{\rm i}\,Q_i + \iota_e^{-1}\,P_\varphi\,(g+{\rm i}\,Q_e),\\[0.5ex]
+ F_{21}^{\,(4)} &= - {\rm i}\,Q_e\,P_\varphi + c_\beta^{-2}\left[g\,D^{\,2}\,(g+{\rm i}\,Q_i) + P_\varphi\,{\rm i}\,Q_e\right],\\[0.5ex]
+ F_{22}^{\,(4)} &= -{\rm i}\,Q_e\,\iota_e^{-1}\,P_\varphi + c_\beta^{-2}\left\{g\left[P_\perp + D^{\,2}\,(g+{\rm i}\,Q_i)\,p^2\right]
+ + P_\varphi\,(g+{\rm i}\,Q_e)\right\}.
+ \end{align}
+ We require
+ \begin{equation}
+ p\gg \left|\frac{F_{21}^{\,(6)}}{F_{21}^{\,(8)}}\right|^{1/2}, \left|\frac{F_{22}^{\,(6)}}{F_{22}^{\,(8)}}\right|^{1/2}, 
+ \left|\frac{F_{11}^{\,(4)}}{F_{11}^{\,(6)}}\right|^{1/2},\left|\frac{F_{12}^{\,(4)}}{F_{12}^{\,(6)}}\right|^{1/2},\left|\frac{F_{21}^{\,(4)}}{F_{21}^{\,(6)}}\right|^{1/2},
+ \left|\frac{F_{22}^{\,(4)}}{F_{22}^{\,(6)}}\right|^{1/2}.
  \end{equation}
 \end{document}

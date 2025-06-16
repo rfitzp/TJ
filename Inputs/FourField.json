@@ -1,0 +1,21 @@
+{
+    "g_r":   0.0,         // Real part of normalized growth-rate in MHD frame 
+    "g_i":  -0.1,         // Imaginary part of normalized growth-rate in MHD frame
+    "Qe":    1.0,         // Normalized electron diamagnetic frequency
+    "Qi":   -1.0,         // Normalized ion diamagnetic frequency
+    "D":     1.0,         // Normalized ion sound radius
+    "Pphi":  1.0,         // Normalized momentum diffusivity
+    "Pperp": 1.0,         // Normalized energy diffusivity
+    "cbeta": 0.1,         // Normalized plasma pressure
+    
+    "pstart": 6.0,        // Layer equations integrated from p = pstart to p = pend 
+    "pend":   1.0e-8,     // Layer equations integrated from p = pstart to p = pend 
+    "P3max":  20.0,       // Value of Pmax[3] above which switch to low-D layer equations made 
+    
+    "acc":  1.0e-12,      // Integration accuracy
+    "h0":   1.0e-2,       // Initial integration step-length
+    "hmin": 1.0e-10,      // Minimum integration step-length 
+    "hmax": 1.0e-1        // Maximum integration step-length
+}
+
+
