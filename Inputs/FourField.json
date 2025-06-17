@@ -1,21 +1,25 @@
 {
-    "g_r":   0.0,         // Real part of normalized growth-rate in MHD frame 
-    "g_i":  -0.1,         // Imaginary part of normalized growth-rate in MHD frame
+    "g_r":   0.01,         // Real part of normalized growth-rate in MHD frame 
+    "g_i":  -0.9,         // Imaginary part of normalized growth-rate in MHD frame
     "Qe":    1.0,         // Normalized electron diamagnetic frequency
     "Qi":   -1.0,         // Normalized ion diamagnetic frequency
     "D":     1.0,         // Normalized ion sound radius
     "Pphi":  1.0,         // Normalized momentum diffusivity
     "Pperp": 1.0,         // Normalized energy diffusivity
-    "cbeta": 0.1,         // Normalized plasma pressure
+    "cbeta": 0.5,         // Normalized plasma pressure
     
-    "pstart": 6.0,        // Layer equations integrated from p = pstart to p = pend 
-    "pend":   1.0e-8,     // Layer equations integrated from p = pstart to p = pend 
-    "P3max":  20.0,       // Value of Pmax[3] above which switch to low-D layer equations made 
+    "pstart": 8.0,        // Layer equations integrated from p = pstart to p = pend 
+    "pend":   1.0e-6,     // Layer equations integrated from p = pstart to p = pend 
+    "P3max":  20.0,       // Value of Pmax[3] above which switch to low-D layer equations made
+
+    "Scan":   1,          // Flag for performing frequency scan
+    "Fscan":  1.0,        // Scan from g_r = - Fmax * (Qe - Qi) to g_r = Fmax * (Qe - Qi)
+    "Nscan":  500,        // Number of points in scan
     
-    "acc":  1.0e-12,      // Integration accuracy
-    "h0":   1.0e-2,       // Initial integration step-length
+    "acc":  1.0e-14,      // Integration accuracy
+    "h0":   1.0e-3,       // Initial integration step-length
     "hmin": 1.0e-10,      // Minimum integration step-length 
-    "hmax": 1.0e-1        // Maximum integration step-length
+    "hmax": 1.0e-2        // Maximum integration step-length
 }
 
 

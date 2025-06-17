@@ -50,7 +50,7 @@ class FourField : private Utility
 private:
 
   // ..............................
-  // Four field equation parameters
+  // Four-field equation parameters
   // ..............................
   double          g_r;     // Real part of normalized growth-rate in MHD frame (read from JSON file)
   double          g_i;     // Imaginary part of normalized growth-rate in MHD frame (read from JSON file)
@@ -67,12 +67,25 @@ private:
   complex<double> Deltas4; // Normalized four-field complex layer response index
   complex<double> Deltas5; // Normalized four-field complex layer response index
 
-  // ..........................................
-  // Four field  calculation control parameters
-  // ..........................................
+  // .........................................
+  // Four-field calculation control parameters
+  // .........................................
   double pstart;  // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double pend;    // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double P3max;   // Value of Pmax[3] above which switch to low-D three-field layer equations made (read from JSON file)
+
+  // ....................................
+  // Four-field frequency scan parameters
+  // ....................................
+  int    Scan;    // Flag for performing frequency scan (read from JSON file)
+  double Fscan;   // Scan from g_i = - Fmax * (Qe - Qi) to g_i = Fmax * (Qe - Qi) (read from JSON file)
+  int    Nscan;   // Number of points in scan (read from JSON file)
+
+  double* givals;  // g_i values in frequency scan
+  double* D3rvals; // Re(Delta3) values in frequency scan
+  double* D3ivals; // Im(Delta3) values in frequency scan
+  double* D4rvals; // Re(Delta4) values in frequency scan
+  double* D4ivals; // Im(Delta4) values in frequency scan
 
   // ....
   // Misc

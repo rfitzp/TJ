@@ -206,6 +206,7 @@ Equations~(\ref{e1})--(\ref{e4}) can be written in the form
 where
 \begin{align}
 A_{11} &=  \frac{g+{\rm i}\,Q_e+p^2}{p^2},\\[0.5ex]
+A_{12}&=0,\\[0.5ex]
 A_{21} &= \frac{-{\rm i}\,Q_e}{p^2},\\[0.5ex]
 A_{22} &= \frac{g + P_\varphi\,p^2}{c_\beta^{\,2}},\\[0.5ex]
 B_{11} &= (g+{\rm i}\,Q_i)\,p^2 + P_\varphi\,p^4,\\[0.5ex]
@@ -218,7 +219,7 @@ Thus, we obtain the following matrix differential equation:
 \frac{d}{dp}\!\left(\underline{\underline{A}}^{-1}\,\frac{d\underline{u}}{dp}\right) = \underline{\underline{B}}\,\underline{u}.
 \end{equation}
 
-\section{Riccati Matrix Differential Equation}
+\section{Ricatti Matrix Differential Equation}
 Let
 \begin{equation}\label{wdef}
  p\,\frac{d\underline{u}}{dp}=\underline{\underline{W}}\,\underline{u}.
@@ -296,39 +297,38 @@ p\,\frac{dW_{22}}{dp} &= W_{22} -W_{21}\,W_{12}- W_{22}\,W_{22}- E_{21}\,W_{12} 
 \end{align}
 
 \section{Small-$p$ Behavior of Riccati Matrix Differential Equation}
-Let $\underline{\underline{E}} = \underline{\underline{E}}^{\,(0)}$ at $p=0$.
-It follows from Eqs.~(\ref{ee1})--(\ref{ee4})  that
+It follows from Eqs.~(\ref{ee1})--(\ref{ee4})  that  $\underline{\underline{E}} = \underline{\underline{E}}^{\,(0)} + {\cal O}(p^2)$ at small values of $p$,
+where 
 \begin{align}
 E_{11}^{\,(0)} &= 2,\\[0.5ex]
 E_{12}^{\,(0)}&=0,\\[0.5ex]
 E_{21}^{\,(0)} &= - \frac{2\,{\rm i}\,Q_e}{g+{\rm i}\,Q_e},\label{e210}\\[0.5ex]
 E_{22}^{\,(0)}&= 0.
 \end{align}
-Likewise, at small values of $p$, we can write $\underline{\underline{F}} =p^2\, \underline{\underline{F}}^{\,(2)}$,
-where the elements of  $\underline{\underline{F}}^{\,(2)}$ are constants, and where use has been made of Eqs.~(\ref{f1})--(\ref{f4}). 
+Likewise,  Eqs.~(\ref{f1})--(\ref{f4}) imply that $\underline{\underline{F}} ={\cal O}(p^2)$.
 
-Suppose that  $\underline{\underline{W}}= \underline{\underline{W}}^{\,(0)}$ at $p=0$.
+Suppose that  $\underline{\underline{W}}= \underline{\underline{W}}^{\,(0)}+ p\,\underline{\underline{W}}^{\,(1)}$ at small values of $p$,
+where the elements of  $\underline{\underline{W}}^{\,(0)}$ and $\underline{\underline{W}}^{\,(1)}$ are independent of $p$. 
 Equation~(\ref{ricc}) gives
-\begin{equation}
-\underline{\underline{0}}= \underline{\underline{W}}^{\,(0)}-\underline{\underline{W}}^{\,(0)}\,\underline{\underline{W}}^{\,(0)}- 
-\underline{\underline{E}}^{\,(0)}\,\underline{\underline{W}}^{\,(0)},
-\end{equation}
-at $p=0$, which yields
 \begin{align}
-( \underline{\underline{1}}-\underline{\underline{W}}^{\,(0)}-\underline{\underline{E}}^{\,(0)})\,\underline{\underline{W}}^{\,(0)} = \underline{\underline{0}}.
+\underline{\underline{0}}&= \underline{\underline{W}}^{\,(0)}-\underline{\underline{W}}^{\,(0)}\,\underline{\underline{W}}^{\,(0)}- 
+\underline{\underline{E}}^{\,(0)}\,\underline{\underline{W}}^{\,(0)},\\[0.5ex]
+\underline{\underline{0}}&= -\underline{\underline{W}}^{\,(1)}\,\underline{\underline{W}}^{\,(0)}-\underline{\underline{W}}^{\,(0)}\,\underline{\underline{W}}^{\,(1)}- 
+\underline{\underline{E}}^{\,(0)}\,\underline{\underline{W}}^{\,(1)}.
 \end{align}
-Hence, we deduce that 
-\begin{equation}\label{w0def}
-\underline{\underline{W}}^{\,(0)} =  \underline{\underline{1}}-\underline{\underline{E}}^{\,(0)} =  \left(\begin{array}{cc} -1&0\\-E_{21}^{\,(0)}&1\end{array}\right).
-\end{equation}
+Suitable solutions are
+\begin{align}\label{w0def}
+\underline{\underline{W}}^{\,(0)} &=  \left(\begin{array}{cc} -1,&0\\-E_{21}^{\,(0)}/2,&0\end{array}\right),\\[0.5ex]
+W_{12}^{\,(1)} &= 0,\\[0.5ex]
+W_{21}^{\,(1)}& = -\frac{E_{21}^{\,(0)}}{2}\left[W_{11}^{\,(1)}- W_{22}^{\,(1)}\right].\label{w21def}
+\end{align}
 
 At small values of $p$, let
 \begin{align}
-\underline{u}(p) &= \underline{u}_{-1}\,p^{-1} + \underline{u}_0,\\[0.5ex]
-\underline{\underline{W}}(p) &= \underline{\underline{W}}^{\,(0)} + p\,\underline{\underline{W}}^{\,(1)},
+\underline{u}(p) &= \underline{u}_{-1}\,p^{-1} + \underline{u}_0,
 \end{align}
-where the elements of  $\underline{u}_{-1}$ (which are $y_{-1}$ and $n_{-1}$, respectively), the elements of $\underline{u}_{0}$ (which are $y_0$ 
-and $n_0$, respectively), and the elements of $\underline{\underline{W}}^{\,(1)}$, are all constants.
+where the elements of  $\underline{u}_{-1}$ (which are $y_{-1}$ and $n_{-1}$, respectively) and the elements of $\underline{u}_{0}$ (which are $y_0$ 
+and $n_0$, respectively) are all constants.
 Equation~(\ref{wdef}) gives 
 \begin{align}
 \underline{\underline{W}}^{\,(0)}\,\underline{u}_{-1} &= - \underline{u}_{-1},\\[0.5ex]
@@ -336,11 +336,11 @@ Equation~(\ref{wdef}) gives
 \end{align}
 Thus, making use of Eq.~(\ref{w0def}), we get
 \begin{equation}
-\left(\begin{array}{cc} -1&0\\ -E_{21}^{\,(0)}&1\end{array}\right) \left(\begin{array}{c}y_{-1}\\ n_{-1}\end{array}\right)= -\left(\begin{array}{c}y_{-1}\\ n_{-1}\end{array}\right),
+\left(\begin{array}{cc} -1,&0\\ -E_{21}^{\,(0)}/2,&0\end{array}\right) \left(\begin{array}{c}y_{-1}\\ n_{-1}\end{array}\right)= -\left(\begin{array}{c}y_{-1}\\ n_{-1}\end{array}\right),
 \end{equation}
 which implies that
 \begin{equation}
-E_{21}^{\,(0)}\,y_{-1}= - \frac{2\,{\rm i}\,Q_e}{g+{\rm i}\,Q_e}\,y_{-1} = 2\,n_{-1},
+\frac{E_{21}^{\,(0)}}{2}\,y_{-1}= - \frac{{\rm i}\,Q_e}{g+{\rm i}\,Q_e}\,y_{-1} = n_{-1},
 \end{equation}
 in accordance with Eqs.~(\ref{ym1}) and (\ref{nm1}), where use has been made of Eq.~(\ref{e210}). 
 Thus, if we write
@@ -350,14 +350,9 @@ n_{-1}&= -{\rm i}\,Q_e\,a_{-1},\\[0.5ex]
 y_0 &= (g+{\rm i}\,Q_e)\,a_0,\\[0.5ex]
 n_0 &= -{\rm i}\,Q_e\,a_0 + a_2,
 \end{align}
-in accordance with Eqs.~(\ref{yy}) and (\ref{nn}), then we deduce from Eqs.~(\ref{w0def}) and (\ref{w1def}) that 
+in accordance with Eqs.~(\ref{yy}) and (\ref{nn}), then we deduce from Eqs.~(\ref{w0def}), (\ref{w21def}),  and (\ref{w1def}) that 
 \begin{equation}
-\frac{\pi}{\hat{\mit\Delta}_s}\equiv \frac{a_0}{a_{-1}} = W_{11}^{\,(1)} - W_{12}^{\,(1)}\,\frac{(\,{\rm i}\,Q_e)}{g+{\rm i}\, Q_e},
-\end{equation}
-and
-\begin{equation} 
-\frac{a_2}{a_{-1}} = {\rm i}\,Q_e\left[W_{22}^{\,(1)}-W_{11}^{(1)}\right] + \frac{({\rm i}\,Q_e)^2}{g+{\rm i}\,Q_e}\,W_{12}^{\,(1)} - 
-(g+{\rm i}\,Q_e)\,W_{21}^{\,(1)}.
+\frac{\pi}{\hat{\mit\Delta}_s}\equiv \frac{a_0}{a_{-1}} = W_{11}^{\,(1)}.
 \end{equation}
 
 \section{Large-$p$ Behavior of Riccati Matrix Differential Equation}
@@ -482,7 +477,7 @@ which is satisfied, and
  F_{11}^{\,(4)} &= g + {\rm i}\,Q_i + P_\varphi\,(g+{\rm i}\,Q_e),\\[0.5ex]
  F_{12}^{\,(4)} &= g+{\rm i}\,Q_i + \iota_e^{-1}\,P_\varphi\,(g+{\rm i}\,Q_e),\\[0.5ex]
  F_{21}^{\,(4)} &= - {\rm i}\,Q_e\,P_\varphi + c_\beta^{-2}\left[g\,D^{\,2}\,(g+{\rm i}\,Q_i) + P_\varphi\,{\rm i}\,Q_e\right],\\[0.5ex]
- F_{22}^{\,(4)} &= -{\rm i}\,Q_e\,\iota_e^{-1}\,P_\varphi + c_\beta^{-2}\left\{g\left[P_\perp + D^{\,2}\,(g+{\rm i}\,Q_i)\,p^2\right]
+ F_{22}^{\,(4)} &= -{\rm i}\,Q_e\,\iota_e^{-1}\,P_\varphi + c_\beta^{-2}\left\{g\left[P_\perp + D^{\,2}\,(g+{\rm i}\,Q_i)\right]
  + P_\varphi\,(g+{\rm i}\,Q_e)\right\}.
  \end{align}
  We require

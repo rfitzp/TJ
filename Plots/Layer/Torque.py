@@ -1,4 +1,4 @@
-# Solutions.py
+# Torque.py
 
 # Plots torque and shielding curves associated with kth rational surface in plasma
 # User prompted for k.

@@ -1,6 +1,6 @@
 #include "FourField.h"
 
-#define NINPUT 14
+#define NINPUT 15
 
 // ###########
 // Constructor
@@ -44,6 +44,10 @@ FourField::FourField ()
   pstart = JSONData["pstart"].get<double> ();
   pend   = JSONData["pend"]  .get<double> ();
   P3max  = JSONData["P3max"] .get<double> ();
+
+  Scan  = JSONData["Scan"] .get<int>    ();
+  Fscan = JSONData["Fscan"].get<double> ();
+  Nscan = JSONData["Nscan"].get<int>    ();
 
   acc  = JSONData["acc"] .get<double> ();
   h0   = JSONData["h0"]  .get<double> ();
@@ -140,6 +144,44 @@ void FourField::Solve ()
   // ................................
   SolveFourFieldLayerEquations ();
   printf ("Deltas4 = (%10.3e, %10.3e)\n", real(Deltas4), imag(Deltas4));
+
+  // ......................
+  // Perform frequency scan
+  // ......................
+  if (Scan)
+    {
+      printf ("\n");
+      
+      givals  = new double[Nscan+1];
+      D3rvals = new double[Nscan+1];
+      D3ivals = new double[Nscan+1];
+      D4rvals = new double[Nscan+1];
+      D4ivals = new double[Nscan+1];
+
+      double gi_save = g_i;
+      double gi_beg  = - Fscan * (Qe - Qi);
+      double gi_end  = + Fscan * (Qe - Qi);
+
+      for (int i = 0; i <= Nscan; i++)
+	{
+	  g_i = gi_beg + double (i) * (gi_end - gi_beg) /double (Nscan);
+
+	  SolveThreeFieldLayerEquations ();
+	  SolveFourFieldLayerEquations ();
+
+	  givals[i]  = g_i;
+	  D3rvals[i] = real(Deltas3);
+	  D3ivals[i] = imag(Deltas3);
+	  D4rvals[i] = real(Deltas4);
+	  D4ivals[i] = imag(Deltas4);
+
+	  if (i % 10 == 0)
+	    printf ("%4d g = (%10.3e, %10.3e) Delta3 = (%10.3e, %10.3e) Delta4 = (%10.3e, %10.3e)\n",
+		  i, g_r, givals[i], D3rvals[i], D3ivals[i], D4rvals[i], D4ivals[i]);
+	}
+
+      g_i = gi_save;
+    }
      
   // .....................................
   // Write calculation date to netcdf file
@@ -159,6 +201,54 @@ void FourField::WriteNetcdf ()
 {
    printf ("Writing data to netcdf file Outputs/FourField/FourField.nc:\n");
 
+   double Input[NINPUT];
+   
+   Input[0]  = g_r;
+   Input[1]  = g_i;
+   Input[2]  = Qe;
+   Input[3]  = Qi;
+   Input[4]  = D;
+   Input[5]  = Pphi;
+   Input[6]  = Pperp;
+   Input[7]  = cbeta;
+   Input[8]  = pstart;
+   Input[9]  = pend;
+   Input[10] = P3max;
+   Input[11] = acc;
+   Input[12] = h0;
+   Input[13] = hmin;
+   Input[14] = hmax;
+
+   try
+     {
+       NcFile dataFile ("../Outputs/FourField/FourField.nc", NcFile::replace);
+
+       dataFile.putAtt ("Git_Hash",     GIT_HASH);
+       dataFile.putAtt ("Compile_Time", COMPILE_TIME);
+       dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
+
+       NcDim i_d = dataFile.addDim ("Ni",    NINPUT);
+       NcDim x_d = dataFile.addDim ("Nscan", Nscan+1);
+
+       NcVar i_x       = dataFile.addVar ("InputParameters", ncDouble, i_d);
+       i_x.putVar (Input);
+       NcVar givals_x  = dataFile.addVar ("g_i",             ncDouble, x_d);
+       givals_x.putVar (givals);
+       NcVar D3rvals_x = dataFile.addVar ("Delta3_r",        ncDouble, x_d);
+       D3rvals_x.putVar (D3rvals);
+       NcVar D3ivals_x = dataFile.addVar ("Delta3_i",        ncDouble, x_d);
+       D3ivals_x.putVar (D3ivals);
+       NcVar D4rvals_x = dataFile.addVar ("Delta4_r",        ncDouble, x_d);
+       D4rvals_x.putVar (D4rvals);
+       NcVar D4ivals_x = dataFile.addVar ("Delta4_i",        ncDouble, x_d);
+       D4ivals_x.putVar (D4ivals);
+     }
+   catch (NcException& e)
+     {
+       printf ("Error writing data to netcdf file Outputs/FourField/FourField.nc\n");
+       printf ("%s\n", e.what ());
+       exit (1);
+     }
 }
 
 // #############################
@@ -168,6 +258,10 @@ void FourField::CleanUp ()
 {
   printf ("Cleaning up\n");
 
+  if (Scan)
+    {
+      delete[] givals; delete[] D3rvals; delete[] D3ivals; delete[] D4rvals; delete[] D4ivals; 
+    }
 }
 
 // #############################################
@@ -291,17 +385,17 @@ void FourField::SolveFourFieldLayerEquations ()
 
   complex<double> F21_8 = cbm2 * D*D * Pphi*Pphi;
   complex<double> F22_8 = cbm2 * D*D * Pphi*Pphi /iotae;
-  
-  double Pmax[6];
+
+  double Pmax[4];
   Pmax[0] = pow (abs (F21_6/F21_8), 0.5);
   Pmax[1] = pow (abs (F22_6/F22_8), 0.5);
   Pmax[2] = pow (abs (F11_4/F11_6), 0.5);
   Pmax[3] = pow (abs (F12_4/F12_6), 0.5);
-  Pmax[4] = pow (abs (F21_4/F21_6), 0.5);
-  Pmax[5] = pow (abs (F22_4/F22_6), 0.5);
+  //Pmax[4] = pow (abs (F21_4/F21_6), 0.5);
+  //Pmax[5] = pow (abs (F22_4/F22_6), 0.5);
 
   double PMAX = 1.;
-  for (int i = 0; i < 6; i++)
+  for (int i = 0; i < 4; i++)
     if (Pmax[i] > PMAX)
       PMAX = Pmax[i];
 
@@ -331,7 +425,16 @@ void FourField::SolveFourFieldLayerEquations ()
  
   CashKarp45Rhs (p, y, dydp);
   Deltas4 = M_PI /(dydp[0] - dydp[1] * Im * Qe /gEe);
- 
+
+  /*
+  complex<double> E12 = - 2. * Im * Qe /(complex<double> (g_r, g_i) + Im * Qe);
+  printf ("W_11 = (%10.3e, %10.3e) W_21 = (%10.3e, %10.3e)\n",
+	  real (y[0]), imag(y[0]), real (2.*y[2]/E12), imag (2.*y[2]/E12));
+  complex<double> W21 = 0.5 * E12 * (dydp[0] - dydp[3]);
+  printf ("W_21 = (%10.3e, %10.3e) W_21 = (%10.3e, %10.3e)\n",
+	  real (dydp[2]), imag(dydp[2]), real (W21), imag (W21));
+  */
+
   // ........
   // Clean up
   // ........
