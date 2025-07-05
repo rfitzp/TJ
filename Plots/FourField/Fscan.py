@@ -57,3 +57,4 @@ plt.legend (fontsize = "15");
 plt.tight_layout ()
 
 plt.show () 
+#plt.savefig ("Fscan.pdf")

@@ -55,8 +55,8 @@ is the safety-factor. Note that ${\bf B}\cdot\nabla r=0$, which implies that $r$
 We require $g=1$ on the magnetic axis in order to ensure that the normalized toroidal magnetic field-strength at the  axis is unity.  
 Note that 
 \begin{align}
-B^\theta&= \frac{f}{\cal J},\\[0.5ex]
-B^\phi &=\frac{f\,q}{\cal J}.
+B^{\,\theta}&= \frac{f}{\cal J},\\[0.5ex]
+B^{\,\phi} &=\frac{f\,q}{\cal J}.
 \end{align}
 
 Equilibrium force balance requires that
@@ -74,11 +74,11 @@ where $\bxi$ is the plasma displacement. All perturbed quantities are assumed to
 where $n$ is a positive integer. According to Eqs.~(2), (25), (26), and
 (101) of TJ, 
 \begin{align}\label{e9}
-{\cal J}\,b^r&=\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y = {\rm i}\,\psi(r,\theta),
+{\cal J}\,b^{\,r}&=\left(\frac{\partial}{\partial\theta}-{\rm i}\,n\,q\right)y = {\rm i}\,\psi(r,\theta),
 \end{align}
 where
 \begin{align}\label{e10}
-y(r,\theta)&= f\,\xi^r.
+y(r,\theta)&= f\,\xi^{\,r}.
 \end{align}
 Furthermore, if
 \begin{align}
@@ -96,7 +96,7 @@ where
 Here, $'$ denotes $d/dr$. 
 Thus,
 \begin{equation}\label{e15}
-{\bf B}\cdot{\bf b} -\xi^r\,P' = B^\theta\,b_\theta+B^\phi\,b_\phi - \xi^r\,P'=
+{\bf B}\cdot{\bf b} -\xi^{\,r}\,P' = B^{\,\theta}\,b_\theta+B^{\,\phi}\,b_\phi - \xi^{\,r}\,P'=
 \frac{{\rm i}\,f}{\cal J}\,\left(\frac{\partial}{\partial\theta}- {\rm i}\,n\,q\right)\left(\frac{\alpha_g}{n}\,y+z\right).
 \end{equation}
 
@@ -131,7 +131,7 @@ which yields
 \end{align}
 or
 \begin{align}
-\delta W_{12} &= \frac{1}{2}\left[\oint\oint{\cal J}\,\xi^{r\,\ast}\,({\mit\Gamma}\,P\,\nabla\cdot\bxi -{\bf B}\cdot{\bf b} + \xi^r\,P')\,d\theta\,d\phi\right]_{r_1}^{r_2}\nonumber\\[0.5ex]&\phantom{=}-\frac{1}{2}\int_{r_1}^{r_2}\oint\oint\bxi^\ast\cdot{\bf F}(\bxi)\,{\cal J}\,dr\,d\theta\,d\phi,
+\delta W_{12} &= \frac{1}{2}\left[\oint\oint{\cal J}\,\xi^{r\,\ast}\,({\mit\Gamma}\,P\,\nabla\cdot\bxi -{\bf B}\cdot{\bf b} + \xi^{\,r}\,P')\,d\theta\,d\phi\right]_{r_1}^{r_2}\nonumber\\[0.5ex]&\phantom{=}-\frac{1}{2}\int_{r_1}^{r_2}\oint\oint\bxi^\ast\cdot{\bf F}(\bxi)\,{\cal J}\,dr\,d\theta\,d\phi,
 \end{align}
 where use has been made of the fact that ${\bf B}\cdot\nabla r = 0$.  However, the TJ magnetic perturbation in the plasma is calculated assuming that ${\bf F}(\bxi)={\bf 0}$ and
 $\nabla\cdot\bxi=0$.   Thus, making use of Eqs.~(\ref{e10}) and (\ref{e15}), we get
@@ -355,9 +355,9 @@ eigenvalues of $\underline{\underline{W}}_{\,p}$ become infinite in the region $
 \subsection{Plasma Displacement}
 From Eqs.~(\ref{e10}) and (\ref{epsi}) imply that
 \begin{equation}
-\xi^r_m = \frac{\psi_m}{f\,(m-n\,q)}.
+\xi^{\,r}_m = \frac{\psi_m}{f\,(m-n\,q)}.
 \end{equation}
-Likewise, if ${\mit\Psi}(r)$ is the poloidal magnetic flux then $f(r)=d{\mit\Psi}/dr$ and ${\mit\Xi}(r,\theta)\equiv \bxi\cdot\nabla{\mit\Psi}= f\,\xi^r$, so
+Likewise, if ${\mit\Psi}(r)$ is the poloidal magnetic flux then $f(r)=d{\mit\Psi}/dr$ and ${\mit\Xi}(r,\theta)\equiv \bxi\cdot\nabla{\mit\Psi}= f\,\xi^{\,r}$, so
 \begin{equation}
 {\mit\Xi}_m = \frac{\psi_m}{m-n\,q},
 \end{equation}
@@ -480,13 +480,13 @@ Let us write
 \end{equation}
 where $J(\theta,\phi)=J(\theta)\,\exp(-{\rm i}\,n\,\phi)$, which ensures that $\nabla\cdot{\bf K}=0$. It follows from (A8) and (A9) of TJ that
 \begin{align}
-{\cal J}\,K^\theta&= {\rm i}\,\frac{\partial J}{\partial \phi},\\[0.5ex]
-{\cal J}\,K^\phi &=-{\rm i}\,\frac{\partial J}{\partial\theta}.
+{\cal J}\,K^{\,\theta}&= {\rm i}\,\frac{\partial J}{\partial \phi},\\[0.5ex]
+{\cal J}\,K^{\,\phi} &=-{\rm i}\,\frac{\partial J}{\partial\theta}.
 \end{align}
 Hence, we deduce that 
 \begin{align}
-{\cal J}\,K^\theta_m&= n\,J_m,\\[0.5ex]
-{\cal J}\,K^\phi_m &=m\,J_m.
+{\cal J}\,K^{\,\theta}_m&= n\,J_m,\\[0.5ex]
+{\cal J}\,K^{\,\phi}_m &=m\,J_m.
 \end{align}
 Thus, it is clear that the $J_m$ are the Fourier components of the $J(\theta)$ function introduced in Eq.~(\ref{e94}). 
 
@@ -702,5 +702,84 @@ k_0' &= - \frac{q\,p_2'}{n\,\hat{r}} - \frac{(2-s)}{n\,q}
 \end{align}
 Note that both $k_m'$ and $k_0'$ are zero at the plasma boundary. 
 
+\section{Ideal Growth-Rate}
+\subsection{Kinetic Energy Virial}
+The kinetic energy virial is 
+\begin{equation}
+K = \frac{1}{2}\int_0^a\oint\oint \rho(r)\,|\bxi|^2\,{\cal J}\,dr\,d\theta\,d\phi,
+\end{equation}
+where $\rho(r)$ is the equilibrium plasma mass density. 
+Hence, we obtain
+\begin{equation}
+K= \frac{\pi}{2}\int_0^a\oint \rho(r)\,(\xi_r^{\,\ast}\,\xi^{\,r}+\xi_\theta^{\,\ast}\,\xi^{\,\theta}+\xi_\phi^{\,\ast}\,\xi^{\,\phi})\,r\,R^{\,2}\,d\theta\,dr.
+\end{equation}
+But,
+\begin{align}
+\xi_r&= \frac{1}{|\nabla r|^2}\,\xi^{\,r} - \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\xi_\theta,\\[0.5ex]
+\xi^{\,\theta} & = \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\xi^{\,r} + \frac{1}{r^2\,R^{\,2}\,|\nabla r|^2}\,\xi_\theta.
+\end{align}
+Thus,
+\begin{align}
+\xi_r^{\,\ast}\,\xi^{\,r}  + \xi_\theta^{\,\ast}\,\xi^{\,\theta} +\xi_\phi^\ast\,\xi^{\,\phi}&= \frac{1}{|\nabla r|^2}\,|\xi^{\,r}|^2 - \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\xi_\theta^{\,\ast}\,\xi^{\,r}
++\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\xi^{\,r}\,\xi_\theta^{\,\ast}+ \frac{1}{r^2\,R^{\,2}\,|\nabla r|^2}\,|\xi_\theta|^2+R^{\,2}\,|\xi^{\,\phi}|^2\nonumber\\[0.5ex]
+&=  \frac{1}{|\nabla r|^2}\,|\xi^{\,r}|^2 + \frac{1}{r^2\,R^{\,2}\,|\nabla r|^2}\,|\xi_\theta|^2+R^{\,2}\,|\xi^{\,\phi}|^2\nonumber\\[0.5ex]
+&= \frac{1 + r^2\,R^{\,2}\,(\nabla r\cdot\nabla\theta)^2}{|\nabla r|^2}\,|\xi^{\,r}|^2-r^2\,R^{\,2}\,\nabla r\cdot\nabla\theta\,(\xi^{r\,\ast}\,\xi^{\,\theta}+
+\xi^{\theta\,\ast}\,\xi^{\,r})\nonumber\\[0.5ex]
+&\phantom{=} + r^2\,R^{\,2}\,|\nabla r|^2\,|\xi^{\,\theta}|^2+R^{\,2}\,|\xi^{\,\phi}|^2.
+\end{align}
+
+Now, if ${\bf C} = \bxi\times {\bf B}$ then 
+\begin{align}
+C_r &= {\cal J}\,(\xi^{\,\theta}\,B^{\,\phi} - \xi^{\,\phi}\,B^{\,\theta})= f\,(q\,\xi^{\,\theta}-\xi^{\,\phi}),\\[0.5ex]
+C_\theta&= - {\cal J}\,B^{\,\phi}\,\xi^{\,r}=-q\,f\,\xi^{\,r},\\[0.5ex]
+C_\phi&= {\cal J}\,B^{\,\theta}\,\xi^{\,r} =f\,\xi^{\,r}.
+\end{align}
+So, given that ${\bf b}=\nabla\times {\bf C}$, we get
+\begin{equation}
+{\cal J}\,b^{\,\phi} = \frac{\partial C_\theta}{\partial r} - \frac{\partial C_r}{\partial\theta}.
+\end{equation}
+But, ${\cal J}\,b^{\,\phi} = n\,r\,z$,  so
+\begin{equation}
+n\,r\,z =- \frac{\partial}{\partial r} (q\,f\,\xi^{\,r})- f\,\frac{\partial}{\partial\theta}(q\,\xi^{\,\theta}-\xi^{\,\phi}).
+\end{equation}
+Finally,
+\begin{equation}
+\frac{\partial}{\partial r}({\cal J}\,\xi^{\,r})+\frac{\partial}{\partial\theta}({\cal J}\,\xi^{\,\theta})- {\rm i}\,n\,{\cal J}\,\xi^{\,\phi} = 0,
+\end{equation}
+or
+\begin{equation}
+\frac{\partial}{\partial r}(r\,R^{\,2}\,\xi^{\,r})+\frac{\partial}{\partial\theta}(r\,R^{\,2}\,\xi^{\,\theta})- {\rm i}\,n\,r\,R^{\,2}\,\xi^{\,\phi} = 0.
+\end{equation}
+Now, $q=r\,g/f$, $y = f\,\xi^{\,r}$, $\alpha_g= g'/f$ and $\alpha_f = r\,d\ln(f/r)/dr$. Let ${\mit\Xi}^{\,\theta} ={\rm i}\, f\,\xi^{\,\theta}$ and ${\mit\Xi}^{\,\phi} ={\rm i}\, f\,\Xi^{\,\phi}$. 
+It follows that 
+\begin{align}
+-{\rm i}\,q\,\frac{\partial{\mit\Xi}^{\,\theta}}{\partial \theta} + {\rm i}\,\frac{\partial{\mit\Xi}^{\,\phi}}{\partial\theta}&=-q\left(y' -\frac{\alpha_f}{r}\,y\right) -\alpha_g\,r\,y-n\,r\,z,\\[0.5ex]
+-{\rm i}\,\frac{\partial{\mit\Xi}^{\,\theta}}{\partial\theta}-{\rm i}\,\frac{\partial\ln R^{\,2}}{\partial\theta}\,{\mit\Xi}^{\,\theta} - n\,{\mit\Xi}^{\,\phi}&=
+-\left(y' -\frac{\alpha_f}{r}\,y\right)-\frac{\partial\ln R^{\,2}}{\partial r}\,y.
+\end{align}
+Thus,
+\begin{align}
+m\,q\,{\mit\Xi}_m^{\,\theta}-m\,{\mit\Xi}^{\,\phi}_m&= -q\left(y_m' -\frac{\alpha_f}{r} \,y_m\right)-r\,(\alpha_g\,y_m+n\,z_m),\\[0.5ex]
+m\,{\mit\Xi}_m^{\,\theta}  + \sum_{m'}m\,R_{mm'}\,{\mit\Xi}_{m'}^{\,\theta}-n\,{\mit\Xi}^{\,\phi}_m&= -\left(y_m' - \frac{\alpha_f}{r}\,y_m\right) - \sum_{m'}R_{mm'}'\,y_{m'},
+\end{align}
+where
+\begin{equation}
+R_{mm'} = \oint \ln R^{\,2}\,{\rm e}^{-{\rm i}\,(m-m')\,\theta}\,\frac{d\theta}{2\pi}.
+\end{equation}
+Hence,
+\begin{align}
+m\,(m-n\,q)\,r\,{\mit\Xi}_m^{\,\theta} + \sum_{m'}m^2\,R_{mm'}\,r\,{\mit\Xi}_{m'}^{\,\theta}&= -(m-n\,q)\left(r\,y_m' -\alpha_f\,y_m\right)+n\,r^2\,(\alpha_g\,y_m+n\,z_m)\nonumber\\[0.5ex]&\phantom{=}-
+\sum_{m'}m\,r\,R_{mm'}'\,y_{m'} ,\\[0.5ex]
+m\,r\,{\mit\Xi}_m^{\,\phi} &= m\,q\,r\,{\mit\Xi}_m^{\,\theta} +q\left(r\,y_m' -\alpha_f \,y_m\right)+r^2\,(\alpha_g\,y_m+n\,z_m).
+\end{align}
+Without loss of generality, we set ${\mit\Xi}_0^{\,\theta}= {\mit\Xi}_0^{\,\phi}=0$, provided that
+\begin{equation}
+q\left(y_0'-\frac{\alpha_f}{r}\,y_0\right) +r\,(\alpha_g\,y_0+n\,z_0) = 0,
+\end{equation}
+But, $s=-\alpha_f+r^2\,\alpha_g/q$, so the condition becomes
+\begin{equation}
+q\,r\,y_0' + q\,s\,y_0= r\,(q\,y_0)' = -n\,r^2\,z_0,
+\end{equation}
+which is satisfied. 
 
 \end{document}
