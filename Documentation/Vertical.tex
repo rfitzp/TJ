@@ -1,0 +1,328 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage{amsmath}           		          	
+\usepackage{graphicx,epstopdf}					
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{esint}
+\pdfoutput = 1 
+\newcommand {\bxi}{\mbox{\boldmath$\xi$}}
+\allowdisplaybreaks
+
+\begin{document}
+\title{Calculation of Vertical Stability in an Inverse Aspect-Ratio Expanded Tokamak Plasma Equilibrium}
+\author{Richard Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin, TX 78712}
+\maketitle
+
+\section{Plasma Equilibrium}\label{geq}
+All lengths  are normalized to  the major radius of the plasma magnetic axis, $R_0$. All magnetic field-strengths
+are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All current densities are normalized to $B_0/(\mu_0\,R_0)$.  All plasma pressures are normalized to $B_0^{\,2}/\mu_0$.
+
+Let $R$, $\phi$, $Z$ be right-handed cylindrical coordinates whose Jacobian 
+is
+\begin{equation}
+(\nabla R\times \nabla\phi\cdot\nabla Z)^{-1} = R.
+\end{equation}
+Note that $|\nabla\phi|=1/R$. 
+
+Let $r$, $\theta$, $\phi$ be right-handed flux-coordinates whose
+Jacobian is
+\begin{equation}\label{jac}
+{\cal J}(r,\theta)\equiv (\nabla r\times \nabla\theta\cdot\nabla\phi)^{-1} \equiv R\left(\frac{\partial R}{\partial\theta}\,\frac{\partial Z}{\partial r} -\frac{\partial R}{\partial r}\,\frac{\partial Z}{\partial \theta}\right)= r\,R^{\,2}.
+\end{equation}
+Note that $r=r(R,Z)$ and $\theta=\theta(R,Z)$. 
+The magnetic axis corresponds to $r=0$. The inboard mid-plane corresponds to $\theta=0$. 
+
+Consider an axisymmetric tokamak equilibrium whose magnetic field takes the form
+\begin{equation}
+{\bf B}(r,\theta) = f(r)\,\nabla\phi\times \nabla r + g(r)\,\nabla\phi = f\,\nabla(\phi-q\,\theta)\times \nabla r,
+\end{equation}
+where
+\begin{equation}\label{q}
+q(r) = \frac{r\,g}{f}
+\end{equation}
+is the safety-factor (i.e., the inverse of the rotational transform). Note that ${\bf B}\cdot\nabla r=0$, which implies that $r$ is a magnetic flux-surface label.
+We require $g=1$ on the magnetic axis in order to ensure that the normalized toroidal magnetic field-strength at the  axis is unity.  
+
+It is easily demonstrated that
+\begin{align}
+B^{\,r}&={\bf B}\cdot\nabla r= 0,\label{bup1}\\[0.5ex]
+B^{\,\theta} &={\bf B}\cdot\nabla \theta= \frac{f}{r\,R^{\,2}},\label{bup2}\\[0.5ex]
+B^{\,\phi} &={\bf B}\cdot\nabla \phi= \frac{g}{R^{\,2}},\label{bup3}\\[0.5ex]
+B_r &={\cal J}\,\nabla\theta\times\nabla\phi\cdot{\bf B}= -r\,f\,\nabla r\cdot\nabla\theta,\label{bdown1}\\[0.5ex]
+B_\theta &={\cal J}\,\nabla\phi\times\nabla r\cdot{\bf B}= r\,f\,|\nabla r|^2,\\[0.5ex]
+B_\phi &={\cal J}\,\nabla r\times\nabla \theta \cdot{\bf B}= g.\label{bdown3}
+\end{align}
+
+The Maxwell equation (neglecting the displacement current, because axisymmetric modes are comparatively low-frequency phenomena)
+${\bf J}= \nabla\times{\bf B}$
+yields
+\begin{align}
+{\cal J}\,J^{\,r} &= \frac{\partial B_\phi}{\partial \theta} =0,\label{jup1}\\[0.5ex]
+{\cal J}\,J^{\,\theta} &= -\frac{\partial B_\phi}{\partial r} = - g',\label{jup2}\\[0.5ex]
+{\cal J}\,J^{\,\phi}&= \frac{\partial B_\theta}{\partial r} -\frac{\partial B_r}{\partial\theta}=\frac{\partial}{\partial r}\!\left(r\,f\,|\nabla r|^2\right)+ \frac{\partial}{\partial\theta}\!\left(r\,f\,\nabla r\cdot\nabla\theta\right),\label{jup3}
+\end{align}
+where ${\bf J}$ is the equilibrium current density, $'\equiv d/dr$, and use has been made of  Eqs.~(\ref{bdown1})--(\ref{bdown3}).
+
+Equilibrium force balance requires that
+\begin{equation}\label{e15c}
+ \nabla P={\bf J}\times {\bf B},
+\end{equation}
+where $P(r)$ is the equilibrium scalar plasma pressure. Here, for the sake of simplicity, we have neglected the small centrifugal modifications to force balance due to subsonic plasma
+rotation.
+It follows that 
+\begin{align}\label{eg1}
+P'&= {\cal J}(J^{\,\theta}\,B^{\,\phi}-J^{\,\phi}\,B^{\,\theta})= -g'\,\frac{g}{R^{\,2}} - \frac{f}{r\,R^{\,2}}\left[\frac{\partial}{\partial r}\!\left(r\,f\,|\nabla r|^2\right)+ \frac{\partial}{\partial\theta}\!\left(r\,f\,\nabla r\cdot\nabla\theta\right)\right],
+\end{align}
+where use has been made of Eqs.~(\ref{bup1})--(\ref{bup3}), and  (\ref{jup1})--(\ref{jup3}). The
+other two components of Eq.~(\ref{e15c}) are identically zero. 
+
+Equation~(\ref{eg1}) yields the {\em Grad-Shafranov equation},
+\begin{equation}\label{gs}
+\frac{f}{r}\,\frac{\partial}{\partial r}\!\left(r\,f\,|\nabla r|^2\right) +\frac{f}{r}\,\frac{\partial}{\partial\theta}\!\left(r\,f\,\nabla r\cdot\nabla\theta\right)+g\,g' + R^{\,2}\,P'=0.
+\end{equation}
+It follows from Eqs.~(\ref{q}), (\ref{jup3}), and (\ref{gs}) that
+\begin{equation}\label{jup3a}
+{\cal J}\,J^{\,\phi} = -q\,g' - \frac{r\,R^{\,2}\,P'}{f}.
+\end{equation}
+It is clear from Eqs.~(\ref{jup2}) and (\ref{jup3a}) that $g'=P'=0$ in the  current-free ``vacuum'' region surrounding the plasma.
+We shall also assume that $g'=P'=0$ at the plasma-vacuum interface, so as to ensure that the equilibrium plasma
+current density is zero at the interface. 
+
+\section{Axisymmetric Plasma Perturbation}\label{opde}
+Let us assume that all perturbed quantities are independent of the toroidal angle, $\phi$. 
+The perturbed plasma equilibrium satisfies the  marginally-stable ideal-MHD equations
+\begin{align}
+{\bf b} &= \nabla\times (\bxi\times {\bf B}),\label{e21}\\[0.5ex]
+\nabla p &={\bf j}\times {\bf B}  +{\bf J}\times {\bf b},\label{e22}\\[0.5ex]
+{\bf j} &= \nabla\times {\bf b},\label{e23}\\[0.5ex]
+p&= -\bxi\cdot\nabla P,\label{e24}
+\end{align}
+where $\bxi(r,\theta)$ is the plasma displacement, ${\bf b}(r,\theta)$ the perturbed magnetic field,
+${\bf j}(r,\theta)$ the perturbed current density, and $p(r,\theta)$ the perturbed scalar pressure. 
+
+Now, 
+\begin{align}
+(\bxi\times {\bf B})_\theta&= {\cal J}\,(\xi^{\,\phi}\,B^{\,r} - \xi^{\,r}\,B^{\,\phi}) = -{\cal J}\,B^{\,\phi}\,\xi^{\,r},\\[0.5ex]
+(\bxi\times {\bf B})_\phi &= {\cal J}\,(\xi^{\,r}\,B^{\,\theta} - \xi^{\,\theta}\,B^{\,r})= {\cal J}\,B^{\,\theta}\,\xi^{\,r},\label{e23x}
+\end{align}
+where use has been made of  the fact that $B^{\,r}=J^{\,r}=0$. [See Eqs.~(\ref{bup1}) and (\ref{jup1}).]
+ Combining Eqs.~(\ref{e21}) and (\ref{e23x}), we obtain
+\begin{align}
+{\cal J}\,b^{\,r} &= \frac{\partial}{\partial\theta}\left({\cal J}\,B^{\,\theta}\,\xi^{\,r}\right).
+\end{align}
+Thus, Eqs.~(\ref{jac}), (\ref{q}), (\ref{bup2}), and (\ref{bup3}) give
+\begin{align}\label{e41}
+r\,R^{\,2}\,b^{\,r}& = \frac{\partial y}{\partial\theta},
+\end{align}
+where 
+\begin{align}\label{e42}
+y(r,\theta) &=f\,\xi^{\,r}.
+\end{align}
+The constraint $\nabla\cdot{\bf b} =0$, which follows from Eq.~(\ref{e21}),  immediately yields
+\begin{equation}\label{e43y}
+r\,R^{\,2}\,b^{\,\theta} = - \frac{\partial y}{\partial r}.
+\end{equation}
+
+According to Eq.~(\ref{e24}), 
+\begin{equation}
+p =-P'\,\nabla r\cdot\bxi=- P'\,\xi^{\,r}.
+\end{equation}
+So, the perturbed force balance equation, (\ref{e22}), yields
+\begin{align}
+-\frac{\partial\, (P'\,\xi^{\,r})}{\partial r} &= ({\bf j}\times {\bf B})_r+({\bf J}\times {\bf b})_r,\\[0.5ex]
+-\frac{\partial\,(P'\,\xi^{\,r})}{\partial \theta}&= ({\bf j}\times {\bf B})_\theta+({\bf J}\times {\bf b})_\theta,\\[0.5ex]
+0&= ({\bf j}\times {\bf B})_\phi+({\bf J}\times {\bf b})_\phi,
+\end{align}
+giving
+\begin{align}
+-\frac{\partial\, (P'\,\xi^{\,r})}{\partial r} &=r\,R^{\,2}\,(j^{\,\theta}\,B^{\,\phi}-j^{\,\phi}\,B^{\,\theta}) + r\,R^{\,2}\,(J^{\,\theta}\,b^{\,\phi}-J^{\,\phi}\,b^{\,\theta}),\\[0.5ex]
+-\frac{\partial\,(P'\,\xi^{\,r})}{\partial \theta}&=r\,R^{\,2}\,(j^{\,\phi}\,B^{\,r}-j^{\,r}\,B^{\,\phi}) + r\,R^{\,2}\,(J^{\,\phi}\,b^{\,r}-J^{\,r}\,b^{\,\phi}),\\[0.5ex]
+0&=r\,R^{\,2}\,(j^{\,r}\,B^{\,\theta}-j^{\,\theta}\,B^{\,r}) + r\,R^{\,2}\,(J^{\,r}\,b^{\,\theta}-J^{\,\theta}\,b^{\,r}),
+\end{align}
+where use has been made of Eq.~(\ref{jac}). 
+Thus, according to Eqs.~(\ref{bup1})--(\ref{bup3}), (\ref{jup1}), (\ref{jup2}), and (\ref{jup3a}), 
+\begin{align}
+-\frac{\partial\, (P'\,\xi^{\,r})}{\partial r} &= f\,(q\,j^{\,\theta} -j^{\,\phi}) - g'\,b^{\,\phi} + \left(q\,g'+\frac{r\,R^{\,2}\,P'}{f}\right)b^{\,\theta},\label{e51}\\[0.5ex]
+-\frac{\partial\,(P'\,\xi^{\,r})}{\partial \theta}&=-r\,g\,j^{\,r} - \left(q\,g'+\frac{r\,R^{\,2}\,P'}{f}\right)b^{\,r},\label{e44}\\[0.5ex]
+0&= f\,j^{\,r}+g'\,b^{\,r}.\label{e53}
+\end{align}
+It follows from Eqs.~(\ref{e41}) and (\ref{e53}) that 
+\begin{equation}\label{e54}
+r\,R^{\,2}\,j^{\,r} = -\alpha_g\,\frac{\partial y}{\partial\theta},
+\end{equation}
+where
+\begin{align}
+\alpha_g (r)&= \frac{g'}{f}.\label{ag}
+\end{align}
+Note that Eq.~(\ref{e44}) is trivially satisfied. Hence, of the three components of the perturbed force balance equation, only Eq.~(\ref{e51}) remains to be solved. 
+
+Equation~(\ref{e23}) yields 
+\begin{align}
+r\,R^{\,2}\,j^{\,r} &= \frac{\partial b_\phi}{\partial\theta},\label{e57}\\[0.5ex]
+r\,R^{\,2}\,j^{\,\theta} &= -\frac{\partial b_\phi}{\partial r},\label{e58}\\[0.5ex]
+r\,R^{\,2}\,j^{\,\phi}&= \frac{\partial b_\theta}{\partial r} -\frac{\partial b_r}{\partial \theta},\label{e59}
+\end{align}
+where use has been made of Eq.~(\ref{jac}). It follows from Eqs.~(\ref{e54}), (\ref{e57}), and (\ref{e58}) that
+\begin{align}\label{e43yy}
+b_\phi &=-\alpha_g\,y,\\[0.5ex]
+r\,R^{\,2}\,j^{\,\theta}&=  \frac{\partial (\alpha_g\,y)}{\partial r}.\label{e44yy}
+\end{align}
+
+Now, 
+\begin{equation}
+{\bf b} = b_r\,\nabla r + b_\theta\,\nabla\theta+b_\phi\,\nabla\phi,
+\end{equation}
+so
+\begin{align}
+b^{\,r} &= {\bf b}\cdot\nabla r = |\nabla r|^2\,b_r + (\nabla r\cdot\nabla\theta)\,b_\theta,\label{e61}\\[0.5ex]
+b^{\,\theta} &= {\bf b}\cdot\nabla \theta = (\nabla r\cdot\nabla\theta)\,b_r + |\nabla\theta|^2\,b_\theta,\label{e62}\\[0.5ex]
+b^{\,\phi}&={\bf b}\cdot\nabla\phi =\frac{b_\phi}{R^{\,2}}.\label{e63}
+\end{align}
+
+Equations~(\ref{e61}) and (\ref{e62}) can be rearranged to give
+\begin{align}
+b_r &= \left(\frac{1}{|\nabla r|^2}\right)b^{\,r}- \left(\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\right)b_\theta,\label{e69}\\[0.5ex]
+b^{\,\theta} &= \left(\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\right)b^{\,r} +\left[|\nabla\theta|^2 -\frac{(\nabla r\cdot\nabla\theta)^2}{|\nabla r|^2}\right]b_\theta.\label{e70}
+\end{align}
+But, from Eq.~(\ref{jac}), 
+\begin{equation}
+|\nabla r|^2\,|\nabla\theta|^2-(\nabla r \cdot\nabla\theta)^2 = \frac{1}{r^2\,R^{\,2}}.
+\end{equation}
+Thus, Eq.~(\ref{e70}) reduces to 
+\begin{equation}\label{e58x}
+b^{\,\theta} = \left(\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\right)b^{\,r} + \left(\frac{1}{r^2\,R^{\,2}\,|\nabla r|^2}\right) b_\theta.
+\end{equation}
+Let 
+\begin{equation}\label{zdef}
+z= |\nabla r|^2\,r\,\frac{\partial y}{\partial r} + r\,\nabla r\cdot\nabla\theta\,\frac{\partial y}{\partial\theta}.
+\end{equation}
+Equations~(\ref{e41}), (\ref{e43y}), (\ref{e43yy}), (\ref{e69}) and (\ref{e58x}) yield 
+\begin{align}\label{e53y}
+b_r &=\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z,\\[0.5ex]
+b_\theta &= -z,\label{e54y}\\[0.5ex]
+b^{\,\phi} &= -\frac{\alpha_g}{R^{\,2}}\,y.\label{e55yy}
+\end{align}
+Equations~(\ref{e59}), (\ref{e53y}), and (\ref{e54y}) give
+\begin{align}\label{e56yy}
+r\,R^{\,2}\,j^{\,\phi} &=-\frac{\partial z}{\partial r}-\frac{\partial}{\partial\theta}\!\left[\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right].
+\end{align}
+
+It follows from Eqs.~(\ref{e42}), (\ref{e43y}), (\ref{e51}), (\ref{e44yy}), (\ref{e55yy}), and (\ref{e56yy}) that
+\begin{align}
+-\frac{\partial}{\partial r}\!\left(\frac{P'}{f}\,y\right)&= \frac{f\,q}{r\,R^{\,2}}\,\frac{\partial (\alpha_g\,y)}{\partial r} 
++ \frac{f}{r\,R^{\,2}}\,\frac{\partial z}{\partial r}\nonumber\\[0.5ex]
+&\phantom{=} +\frac{f}{r\,R^{\,2}}\frac{\partial}{\partial\theta}\!\left[\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right]
+\nonumber\\[0.5ex]
+&\phantom{=} + \frac{g'\,\alpha_g}{R^{\,2}}\,y - \left(q\,g'+\frac{r\,R^{\,2}\,P'}{f}\right)\frac{1}{r\,R^{\,2}}\,\frac{\partial y}{\partial r}.
+\end{align}
+Hence,
+\begin{align}\label{e58u}
+-\left[(\alpha_p\,\alpha_f+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]y&= 
+ r\,\frac{\partial z}{\partial r}+\frac{\partial}{\partial\theta}\!\left[\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right],
+\end{align}
+where
+\begin{align}\label{alpp}
+\alpha_p(r)&= \frac{r\,P'}{f^2},\\[0.5ex]
+\alpha_f(r) &= \frac{r^2}{f}\,\frac{d}{dr}\!\left(\frac{f}{r}\right).
+\end{align}
+
+Finally, it follows from Eqs.~(\ref{zdef}) and (\ref{e58u})  that
+\begin{align}\label{e63y}
+r\,\frac{\partial y}{\partial r} &= \frac{z}{|\nabla r|^2} - \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\frac{\partial y}{\partial\theta},\\[0.5ex]
+r\,\frac{\partial z}{\partial r}&= -\left[(\alpha_p\,\alpha_f+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]y-\frac{\partial}{\partial\theta}\!\left(\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial\theta}\right)\nonumber\\[0.5ex]
+&\phantom{=} -\frac{\partial}{\partial\theta}\!\left(\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right).\label{e64y}
+\end{align}
+
+The previous two equations can be combined to give
+\begin{align}
+r\,\frac{\partial (z\,y^\ast)}{\partial r} &= \frac{|z|^2}{|\nabla r|^2} - \frac{\partial y^\ast}{\partial \theta}\left(\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right)
+ -\left[(\alpha_p\,\alpha_f+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]|y|^2\nonumber\\[0.5ex]
+ &\phantom{=} - y^\ast\,\frac{\partial}{\partial\theta}\!\left(\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial\theta}\right)-y^\ast\,\frac{\partial}{\partial\theta}\!\left(\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right).
+\end{align}
+Hence,
+\begin{align}
+r\,\frac{d}{dr}\!\left(\oint z\,y^\ast\,\frac{d\theta}{2\pi}\right)&= \oint\left[\frac{|z|^2}{|\nabla r|^2}- \left[(\alpha_p\,\alpha_f+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]|y|^2\right.\nonumber\\[0.5ex]
+&\phantom{=}\left.
++ \frac{1}{|\nabla r|^2\,R^{\,2}}\,\left|\frac{\partial y}{\partial \theta}\right|^2\right]\frac{d\theta}{2\pi},
+\end{align}
+which implies that $\oint z\,y^\ast\,d\theta/2\pi$ is a real quantity, and also that
+\begin{equation}
+r\,\frac{d}{dr}\!\left[\oint(z\,y^\ast-y^\ast\,z)\,\frac{d\theta}{2\pi}\right] =0. 
+\end{equation}
+
+Let
+\begin{align}
+y(r,\theta)&= \sum_m y_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta},\\[0.5ex]
+z(r,\theta) &= \sum_m z_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta}.
+\end{align}
+Equations~(\ref{e63y}) and (\ref{e64y}) yield
+\begin{align}\label{e69u}
+r\,\frac{dy_m}{dr}&= \sum_{m'}\left(A_{m}^{\,m'}\,z_{m'} + B_{m}^{\,m'}\,y_{m'}\right),\\[0.5ex]
+r\,\frac{dz_m}{dr}&= \sum_{m'}\left(C_{m}^{\,m'}\,z_{m'} + D_{m}^{\,m'}\,y_{m'}\right),\label{e70u}
+\end{align}
+where
+\begin{align}
+A_m^{\,m'} &= c_{m}^{\,m'},\\[0.5ex]
+B_m^{\,m'} &= - m'\,f_m^{\,m'},\\[0.5ex]
+C_{m}^{\,m'} &= -m\,f_m^{\,m'},\\[0.5ex]
+D_{m}^{\,m'}&= -(\alpha_f\,\alpha_p+ r\,\alpha_p')\,a_m^{\,m'} - (q\,r\,\alpha_g' +r^{\,2}\,\alpha_g^{\,2})\,\delta_m^{\,m'}+m\,m'\,b_m^{\,m'},
+\end{align}
+where
+\begin{align}
+a_m^{\,m'}(r)  &=\oint R^{\,2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
+b_m^{\,m'}(r)  &=\oint|\nabla r|^{-2}\, R^{-2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
+c_m^{\,m'}(r)  &=\oint|\nabla r|^{-2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
+f_{m}^{\,m'}(r)&= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi}.
+\end{align}
+Note that
+$a_{m'}^{\,m} =a_{m}^{\,m'\ast}$, 
+$b_{m'}^{\,m} =b_{m}^{\,m'\ast}$, 
+$c_{m'}^{\,m} =c_{m}^{\,m'\ast}$, and 
+$f_{m'}^{\,m} =-f_{m}^{\,m'\ast}$,
+which implies that
+\begin{align}\label{e70u}
+A_{m'}^{\,m} &= A_{m'}^{\,m\,\ast},\\[0.5ex]
+B_{m'}^{\,m} &= -C_{m'}^{\,m\,\ast},\\[0.5ex]
+C_{m'}^{\,m} &= -B_{m'}^{\,m\,\ast},\\[0.5ex]
+D_{m'}^{\,m} &= A_{m'}^{\,m\,\ast}.\label{e82u}
+\end{align}
+It follows from Eqs.~(\ref{e69u}), (\ref{e70u}), and (\ref{e70u})--(\ref{e82u}) that 
+\begin{align}
+r\,\frac{d}{dr}\!\left(\sum_m z_m\,y_m^{\,\ast} \right)&= \sum_{m,m'}\left(z_m^{\,\ast}\,A_{m}^{\,m'}\,z_{m'} + y_m^{\,\ast}\,D_{m}^{\,m'}\,y_{m'}\right),\\[0.5ex]
+r\,\frac{d}{dr}\!\left[\sum_m (z_m\,y_m^{\,\ast}- y_m\,z_m^{\,\ast}) \right]&= 0.
+\end{align}
+
+\section{Toroidal Electromagnetic Torque}
+The net toroidal electromagnetic torque exerted on the plasma lying within the magnetic flux-surface whose label is $r$ is
+\begin{equation}
+T_\phi(r)= \oint\oint r\,R^{\,2}\,b_\phi\,b^r\,d\theta\,d\phi.
+\end{equation}
+It follows from Eqs.~(\ref{e41}) and (\ref{e43yy}) that 
+\begin{equation}
+T_\phi(r) = -\pi\,\alpha_g\oint\left(y^\ast\,\frac{\partial y}{\partial\theta}+y\,\frac{\partial y^\ast}{\partial\theta}\right)d\theta
+= -\pi\,\alpha_g\oint\frac{\partial|y|^2}{\partial\theta}\,d\theta = 0.
+\end{equation}
+We conclude that an axisymmetric perturbation is incapable of exerting a net toroidal electromagnetic torque on the plasma. 
+
+\section{Perturbed Plasma Potential Energy}
+The perturbed plasma potential energy in the region of the plasma lying within the magnetic flux-surface whose label is $r$ is 
+\begin{equation}
+\delta W_p = \frac{1}{2}\oint\oint r\,R^{\,2}\,\xi_r^{\,\ast}(-{\bf B}\cdot{\bf b} + \xi^{\,r}\,P')\,d\theta\,d\phi.
+\end{equation}
+However,
+\begin{equation}
+{\bf B}\cdot{\bf b} -\xi^{\,r}\,P' = B^{\,\theta}\,b_\theta+B^{\,\phi}\,b_\phi - \xi^{\,r}\,P'
+= - \frac{f}{r\,R^{\,2}}\left(z + q\,\alpha_g\,y + \alpha_p\,R^{\,2}\right),
+\end{equation}
+where use has been made of Eqs.~(\ref{q}), (\ref{bup2}), (\ref{bup3}), (\ref{e42}), (\ref{e43yy}), (\ref{e54y}),  and (\ref{alpp}). Hence,
+we obtain
+\begin{align}
+\delta W_p(r) &=\frac{1}{2}\oint\oint y^{\ast}\left[z + (q\,\alpha_g + \alpha_p\,R^{\,2})\,y\right]d\theta\,d\phi= \pi^2\sum_{m}y_m^{\,\ast}\,\chi_m,
+\end{align}
+where 
+\begin{equation}
+\chi_m(r)=z_m + q\,\alpha_g\,y_m + \alpha_p\sum_{m'} a_m^{\,m'}\,y_{m'}.
+\end{equation}
+\end{document}

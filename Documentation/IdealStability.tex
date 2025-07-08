@@ -769,7 +769,7 @@ R_{mm'} = \oint \ln R^{\,2}\,{\rm e}^{-{\rm i}\,(m-m')\,\theta}\,\frac{d\theta}{
 Hence,
 \begin{align}
 m\,(m-n\,q)\,r\,{\mit\Xi}_m^{\,\theta} + \sum_{m'}m^2\,R_{mm'}\,r\,{\mit\Xi}_{m'}^{\,\theta}&= -(m-n\,q)\left(r\,y_m' -\alpha_f\,y_m\right)+n\,r^2\,(\alpha_g\,y_m+n\,z_m)\nonumber\\[0.5ex]&\phantom{=}-
-\sum_{m'}m\,r\,R_{mm'}'\,y_{m'} ,\\[0.5ex]
+\sum_{m'}m\,r\,R_{mm'}'\,y_{m'},\\[0.5ex]
 m\,r\,{\mit\Xi}_m^{\,\phi} &= m\,q\,r\,{\mit\Xi}_m^{\,\theta} +q\left(r\,y_m' -\alpha_f \,y_m\right)+r^2\,(\alpha_g\,y_m+n\,z_m).
 \end{align}
 Without loss of generality, we set ${\mit\Xi}_0^{\,\theta}= {\mit\Xi}_0^{\,\phi}=0$, provided that
@@ -781,5 +781,30 @@ But, $s=-\alpha_f+r^2\,\alpha_g/q$, so the condition becomes
 q\,r\,y_0' + q\,s\,y_0= r\,(q\,y_0)' = -n\,r^2\,z_0,
 \end{equation}
 which is satisfied. 
+
+Let $\hat{r}= r/\epsilon$, $\hat{\mit\Xi}_m^{\,\theta}= \epsilon\,\hat{r}\,{\mit\Xi}_m^{\,\theta}$, and $\hat{\mit\Xi}_m^{\,\phi}= \epsilon\,\hat{r}\,{\mit\Xi}_m^{\,\phi}$.
+Now,
+\begin{equation}
+\ln R^{\,2} =- 2\,\epsilon\,\hat{r}\,\cos\theta -\epsilon^2\left(\frac{3\,\hat{r}^2}{\,2} -\hat{r}\,H_1' -2\,H_1\right),
+\end{equation}
+where $'$ now denotes $d/d\hat{r}$. Thus,
+\begin{align}
+R_{mm'} &= -\epsilon\,\hat{r}\,\delta_{m,m'+1}-\epsilon\,\hat{r}\,\delta_{m,m'-1} - \epsilon^2\left(\frac{3\,\hat{r}^{\,2}}{2} -\hat{r}\,H_1' -2\,H_1\right)\delta_{m,m'},\\[0.5ex]
+\hat{r}\,R_{mm'}' &=  -\epsilon\,\hat{r}\,\delta_{m,m'+1}-\epsilon\,\hat{r}\,\delta_{m,m'-1} - \epsilon^2\,2\left(2\,\hat{r}^{\,2}-s\,\hat{r}\,H_1' -\hat{r}\,p_2'
+\,q^2\right)\delta_{m,m'}.
+\end{align}
+Note that
+\begin{align}
+\alpha_f &= -s -\epsilon^2\left[\hat{r}\,p_2' + \frac{\hat{r}^{\,2}}{q^2}\,(2-s)\right],\\[0.5ex]
+\hat{r}^{\,2}\,\alpha_g &=- q\left[\hat{r}\,p_2' + \frac{\hat{r}^{\,2}}{q^2}\,(2-s)\right]+{\cal O}(r^2).
+\end{align}
+It follows that
+\begin{align}
+m\,(m-n\,q)\,\hat{\mit\Xi}_m^{\,\theta} + m^2\,R_{mm'}\,\hat{\mit\Xi}_{m'}^{\,\theta} &= - (m-n\,q)\,(\hat{r}\,y_m' + s\,y_m)\nonumber\\[0.5ex]
+&\phantom{=}-
+\epsilon^2\,m\left[\hat{r}\,p_2' + \frac{\hat{r}^{\,2}}{q^2}\,(2-s)\right]y_m + \epsilon^{\,2}\,n^2\,\hat{r}^{\,2}\,z_m\nonumber\\[0.5ex]&\phantom{=}-
+\sum_{m'}m\,\hat{r}\,R_{mm'}'\,y_{m'},\\[0.5ex]
+m\,\hat{\mit\Xi}_m^{\,\phi} &= m\,q\,\hat{\mit\Xi}_m^{\,\theta} + q\,(\hat{r}\,y_m' +s\,y_m) + \epsilon^{\,2}\,n\,\hat{r}^{\,2}\,z_m.
+\end{align}
 
 \end{document}
