@@ -3,4 +3,14 @@ dmm1_res := 0
 
 dmm0_res := 0
 
-dmm2_res := 0
+                                   4                      4                      4               2                   2
+dmm2_res := (8*df(h1,r)*df(p2p,r)*q *r + 32*df(h1,r)*p2p*q *s - 24*df(h1,r)*p2p*q  - 4*df(h1,r)*q *r*s + 8*df(h1,r)*q *r
+
+                             2  2                 2                2  3              3         2  2         2
+              - 4*df(p2p,r)*q *r  + 4*df(s,r)*h1*q *r - 3*df(s,r)*q *r  + 4*df(s,r)*r  - 4*h1*q *s  + 8*h1*q *s
+
+                      2  6           4            2               2        2  2  2       2  2         2  2       2  2
+              + 24*p2p *q  - 32*p2p*q *r + 8*p2p*q *r*s - 12*p2p*q *r + 3*q *r *s  - 18*q *r *s + 32*q *r  - 12*r *s
+
+                    2         2      2
+              + 32*r *s - 16*r )/(4*q )

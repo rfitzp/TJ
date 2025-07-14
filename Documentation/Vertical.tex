@@ -78,7 +78,7 @@ P'&= {\cal J}(J^{\,\theta}\,B^{\,\phi}-J^{\,\phi}\,B^{\,\theta})= -g'\,\frac{g}{
 where use has been made of Eqs.~(\ref{bup1})--(\ref{bup3}), and  (\ref{jup1})--(\ref{jup3}). The
 other two components of Eq.~(\ref{e15c}) are identically zero. 
 
-Equation~(\ref{eg1}) yields the {\em inverse Grad-Shafranov equation},
+Equation~(\ref{eg1}) yields the {\em inverse Grad-Shafranov equation}:
 \begin{equation}\label{gs}
 \frac{f}{r}\,\frac{\partial}{\partial r}\!\left(r\,f\,|\nabla r|^2\right) +\frac{f}{r}\,\frac{\partial}{\partial\theta}\!\left(r\,f\,\nabla r\cdot\nabla\theta\right)+g\,g' + R^{\,2}\,P'=0.
 \end{equation}
@@ -231,24 +231,6 @@ r\,\frac{\partial z}{\partial r}&= -\left[(\alpha_p\,\alpha_f+ r\,\alpha_p')R^{\
 &\phantom{=} -\frac{\partial}{\partial\theta}\!\left(\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right).\label{e64y}
 \end{align}
 
-\subsection{Properties of Axisymmetric Ideal-MHD P.D.E.s}
-The previous two equations can be combined to give
-\begin{align}
-r\,\frac{\partial (z\,y^\ast)}{\partial r} &= \frac{|z|^2}{|\nabla r|^2} - \frac{\partial y^\ast}{\partial \theta}\left(\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right)
- -\left[(\alpha_p\,\alpha_f+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]|y|^2\nonumber\\[0.5ex]
- &\phantom{=} - y^\ast\,\frac{\partial}{\partial\theta}\!\left(\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial\theta}\right)-y^\ast\,\frac{\partial}{\partial\theta}\!\left(\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right).
-\end{align}
-Hence,
-\begin{align}
-r\,\frac{d}{dr}\!\left(\oint z\,y^\ast\,\frac{d\theta}{2\pi}\right)&= \oint\left[\frac{|z|^2}{|\nabla r|^2}- \left[(\alpha_p\,\alpha_f+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]|y|^2\right.\nonumber\\[0.5ex]
-&\phantom{=}\left.
-+ \frac{1}{|\nabla r|^2\,R^{\,2}}\,\left|\frac{\partial y}{\partial \theta}\right|^2\right]\frac{d\theta}{2\pi},
-\end{align}
-which implies that $\oint z\,y^\ast\,d\theta/2\pi$ is a real quantity, and also that
-\begin{equation}
-r\,\frac{d}{dr}\!\left[\oint(z\,y^\ast-y^\ast\,z)\,\frac{d\theta}{2\pi}\right] =0. 
-\end{equation}
-
 \subsection{Derivation of the Axisymmetric Ideal-MHD O.D.E.s}
 Let
 \begin{align}
@@ -267,7 +249,7 @@ B_m^{\,m'} &= - m'\,f_m^{\,m'},\\[0.5ex]
 C_{m}^{\,m'} &= -m\,f_m^{\,m'},\\[0.5ex]
 D_{m}^{\,m'}&= -(\alpha_f\,\alpha_p+ r\,\alpha_p')\,a_m^{\,m'} - (q\,r\,\alpha_g' +r^{\,2}\,\alpha_g^{\,2})\,\delta_m^{\,m'}+m\,m'\,b_m^{\,m'},\label{Ddef}
 \end{align}
-where
+and
 \begin{align}\label{e73er}
 a_m^{\,m'}(r)  &=\oint R^{\,2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
 b_m^{\,m'}(r)  &=\oint|\nabla r|^{-2}\, R^{-2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
@@ -290,9 +272,55 @@ D_{m'}^{\,m} &= D_{m'}^{\,m\,\ast}.\label{e82u}
 \end{align}
 It follows from Eqs.~(\ref{e69u}), (\ref{e70uu}), and (\ref{e70u})--(\ref{e82u}) that 
 \begin{align}
-r\,\frac{d}{dr}\!\left(\sum_m z_m\,y_m^{\,\ast} \right)&= \sum_{m,m'}\left(z_m^{\,\ast}\,A_{m}^{\,m'}\,z_{m'} + y_m^{\,\ast}\,D_{m}^{\,m'}\,y_{m'}\right),\\[0.5ex]
 r\,\frac{d}{dr}\!\left[\sum_m (z_m\,y_m^{\,\ast}- y_m\,z_m^{\,\ast}) \right]&= 0.
 \end{align}
+
+\subsection{Perturbed Electric Field}
+Let ${\bf e}$ be the perturbed electric field. It follows that
+\begin{equation}
+\nabla\times {\bf e} = {\rm i}\,\omega\,{\bf b}.
+\end{equation}
+Hence,
+\begin{equation}
+e_\phi = {\rm i}\,\omega\,y,
+\end{equation}
+and 
+\begin{equation}\label{e81op}
+\frac{\partial e_\theta}{\partial r} - \frac{\partial e_r}{\partial\theta} = - {\rm i}\,\omega\,r\,\alpha_g\,y,
+\end{equation}
+where use has been made of Eqs.~(\ref{e41}), (\ref{e43y}), and (\ref{e55yy}).
+We also expect
+\begin{equation}
+\nabla\cdot{\bf e} =0,
+\end{equation}
+which implies that
+\begin{align}
+r\,R^{\,2}\,e^{\,r}&={\rm i}\,\omega\,\frac{\partial u}{\partial\theta},\\[0.5ex]
+r\,R^{\,2}\,e^{\,\theta}&=-{\rm i}\,\omega\,\frac{\partial u}{\partial r},
+\end{align}
+where $u=u(r,\theta)$. Let 
+\begin{equation}
+v = |\nabla r|^2\,r\,\frac{\partial u}{\partial r} + r\,\nabla r\cdot\nabla\theta\,\frac{\partial u}{\partial\theta}.
+\end{equation}
+It follows that
+\begin{align}
+e_r &={\rm i}\,\omega\left[\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial u}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,v\right],\\[0.5ex]
+e_\theta &= -{\rm i}\,\omega\,v.
+\end{align}
+Hence, Eq.~(\ref{e81op}) gives
+\begin{equation}
+r^2\,\alpha_g\,y = r\,\frac{\partial v}{\partial r}+\frac{\partial}{\partial\theta}\!\left[\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial u}{\partial \theta}+ \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,v\right].
+\end{equation}
+Finally, in the vacuum region, in which $\alpha_g=0$, we have $u=v=0$. 
+
+\subsection{Electromagnetic Energy Flux}
+The net electromagnetic energy flux out of the plasma is
+\begin{align}
+{\cal E} &= \left[\oint\oint ({\bf e}\times {\bf b})\cdot\nabla r\,{\cal J}\,d\theta\,d\phi\right]_{r=a}= \left[\oint\oint (e_\theta\,b_\phi-e_\phi\,b_\theta)\,d\theta\,d\phi\right]_{r=a}\nonumber\\[0.5ex]
+&={\rm i}\,2\,\pi\,\omega\left(\oint\left [\alpha_g\,(v\,y^\ast- v^\ast\,y) + (y\,z^\ast-y^\ast\,z)\right]\right)_{r=a},\nonumber\\[0.5ex]
+&={\rm i}\,\pi^2\,\omega \sum_{m}\left(z_m^\ast\,y_m-y_m^\ast\,z_m\right)_{r=a}.
+\end{align}
+Here, use has been made of the fact that $v=0$ for $r\geq a$. 
 
 \subsection{Toroidal Electromagnetic Torque}
 The net toroidal electromagnetic torque exerted on the plasma lying within the magnetic flux-surface whose label is $r$ is
@@ -412,10 +440,10 @@ g_4'&= g_2\left[p_2' - \frac{\hat{r}}{q^2}\,(2-s)\right] - \frac{\hat{r}}{q}\,{\
 +p_2'\left(\frac{\hat{r}^{\,2}}{2}+\frac{\hat{r}^{\,2}}{q^2}-2\,H_1-3\,\hat{r}\,H_1'\right),\label{e31}
 \end{align}
 where $s=\hat{r}\,q'/q$, 
-\begin{align}\label{e109}
-{\mit\Sigma} &=\frac{1}{q}\left(\frac{3\,\hat{r}^{\,2}}{2} -2\,\hat{r}\,H_1'+S_2\right) - \frac{2-s}{q}\left(-\frac{3\,\hat{r}^{\,2}}{4}+\frac{\hat{r}^{\,2}}{q^2} +H_1+S_1\right),\\[0.5ex]
+\begin{align}{\mit\Sigma} &=\frac{1}{q}\left(\frac{3\,\hat{r}^{\,2}}{2} -2\,\hat{r}\,H_1'+S_2\right) - \frac{2-s}{q}\left(-\frac{3\,\hat{r}^{\,2}}{4}+\frac{\hat{r}^{\,2}}{q^2} +H_1+S_1\right),\\[0.5ex]
 S_1(\hat{r})&=\frac{1}{2}\sum_{j>0} \left[3\,H_j'^{\,2} -(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^2}\right]
- +\frac{1}{2}\sum_{j>1} \left[3\,V_j'^{\,2} -(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^2}\right],\\[0.5ex]
+ +\frac{1}{2}\sum_{j>1} \left[3\,V_j'^{\,2} -(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^2}\right],\label{e109}
+\\[0.5ex]
 S_2(\hat{r})&=\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
 &\phantom{===}+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right].
 \end{align}
@@ -423,7 +451,7 @@ Note that the relative horizontal shift of magnetic flux-surfaces, $H_1$, otherw
 the right-hand side of Eq.~(\ref{e27})], and plasma pressure gradients (the third term). All of the other shaping terms (i.e., the $H_j$, for $j>1$, and
 the $V_j$) are driven by axisymmetric currents flowing in external  magnetic field-coils.
 
-Finally, it follows from Eqs.~(\ref{ag}), (\ref{alpp}), (\ref{alpf}), and (\ref{e26v})--(\ref{eq1}) that
+Equations~(\ref{ag}), (\ref{alpp}), (\ref{alpf}), and (\ref{e26v})--(\ref{eq1}) yield
 \begin{align}
 \alpha_p(\hat{r}) &= \frac{p_2'\,q^2}{\hat{r}}\left(1-2\,\epsilon^{\,2}\,g_2\right),\\[0.5ex]
 \alpha_g(\hat{r}) &= \frac{q}{\hat{r}}\left(g_2' -\epsilon^{\,2}\,g_2\,g_2'+\epsilon^{\,2}\,g_4'\right),\\[0.5ex]
@@ -459,8 +487,8 @@ Finally, Eqs.~(\ref{e114}) and (\ref{e115}) give
 \end{align}
 where use has been made of the fact that $V_j'\propto H_j'$ for $j>1$. 
 
-It follows from Eqs.~(\ref{e73er})--(\ref{e76er}), (\ref{e25a}), (\ref{e115}), (\ref{e117}), and (\ref{e118}) that 
-\begin{align}
+Equations~(\ref{e73er})--(\ref{e76er}), (\ref{e25a}), (\ref{e115}), (\ref{e117}), and (\ref{e118}) imply that
+\begin{align}\label{e120}
 a_m^{\,m'} &= \delta_{m}^{\,m'} -\epsilon\,\hat{r}\left(\delta_{m'-m-1}+\delta_{m'-m+1}\right)-\epsilon^2\left(\frac{\hat{r}^{\,2}}{2}-\hat{r}\,H_1'-2\,H_1\right)\delta_m^{\,m'},\\[0.5ex]
 b_m^{\,m'}&= \delta_m^{\,m'}+\epsilon\,\hat{r}\left(\delta_{m'-m-1}+\delta_{m'-m+1}\right)-\epsilon\sum_{j>0}H_j'\left(\delta_{m'-m-j}+\delta_{m'-m+j}\right)\nonumber\\[0.5ex]
 &- \epsilon\sum_{j>1}{\rm i}\,V_j'\left(\delta_{m'-m-j} - \delta_{m'-m+j}\right)+ \epsilon^2\left(\frac{7\,\hat{r}^{\,2}}{4} - H_1 -3\,\hat{r}\,H_1' + S_1\right)\delta_{m}^{\,m'},\\[0.5ex]
@@ -469,7 +497,7 @@ c_m^{\,m'} &= \delta_m^{\,m'}-\epsilon\sum_{j>0}H_j'\left(\delta_{m'-m-j}+\delta
 f_m^{\,m'} &= -\epsilon\left[\hat{r} - p_2'\,q^2+ (1-s)\,H_1'\right]\left(\delta_{m'-m-1}-\delta_{m'-m+1}\right) \nonumber\\[0.5ex]
 &\phantom{=}+ \epsilon\sum_{j>1}\frac{1}{j}\left[-(1-s)\,H_j'+(j^2-1)\,\frac{H_j}{\hat{r}}\right]\left(\delta_{m'-m-j}-\delta_{m'-m+j}\right)\nonumber\\[0.5ex]
 &\phantom{=}+ \epsilon\sum_{j>1}\frac{{\rm i}}{j}\left[-(1-s)\,V_j'+(j^2-1)\,\frac{V_j}{\hat{r}}\right]
-\left(\delta_{m'-m-j}+\delta_{m'-m+j}\right).
+\left(\delta_{m'-m-j}+\delta_{m'-m+j}\right).\label{e123}
 \end{align}
 
 If we write
@@ -479,34 +507,44 @@ If we write
 \alpha_f&= \alpha_f^{\,(0)} + \epsilon^2\,\alpha_f^{\,(2)},\\[0.5ex]
 a_{m}^{m'} &= 1 + \epsilon\,a_m^{\,m'\,(1)} + \epsilon^2\,a_{m}^{\,m'\,(2)},\\[0.5ex]
 b_{m}^{\,m'} &= 1 + \epsilon\,b_m^{\,m'\,(1)} + \epsilon^2\,b_{m}^{\,m'\,(2)},\\[0.5ex]
-D_{m}^{\,m'} &= D_m^{\,m'\,(0)} + \epsilon\,D_m^{\,m'\,(1)} + \epsilon^2\,D_{m}^{\,m'\,(2)}
+D_{m}^{\,m'} &= D_m^{\,m'\,(0)} + \epsilon\,D_m^{\,m'\,(1)} + \epsilon^2\,D_{m}^{\,m'\,(2)},
 \end{align}
+where $\alpha_g^{\,(0)}$, $\alpha_g^{\,(2)}$, et cetera, are $\cal {O}(1)$, 
 then it follows from Eq.~(\ref{Ddef}) that
-\begin{align}
+\begin{align}\label{e130}
 D_m^{\,m\,(0)} &= -\alpha_f^{\,(0)}\,\alpha_p^{\,(0)} - \hat{r}\,\alpha_p^{\prime\,(0)} - q\,\hat{r}\,\alpha_g^{\prime\,(0)} + m^2,\\[0.5ex]
 D_{m}^{\,m'\,(1)}&=   - \left[\alpha_f^{\,(0)}\,\alpha_p^{\,(0)} + \hat{r}\,\alpha_p^{\prime\,(0)}\right]a_m^{\,m'\,(1)} + m\,m'\,b_m^{\,m'\,(1)},\\[0.5ex]
 D_{m}^{\,m\,(2)}&=  -\left[\alpha_f^{\,(0)}\,\alpha_p^{\,(0)} + \hat{r}\,\alpha_p^{\prime\,(0)}\right]a_m^{\,m'\,(2)} 
 -\alpha_f^{\,(0)}\,\alpha_p^{\,(2)}-\alpha_f^{\,(2)}\,\alpha_p^{\,(0)}-\hat{r}\,\alpha_p^{\prime\,(2)} - q\,\hat{r}\,\alpha_g^{\prime\,(2)}\nonumber\\[0.5ex]&\phantom{=}
--\hat{r}^{\,2}\,[\alpha_g^{\,(0)}]^2+m^2\,b_m^{\,m\,(2)}.
+-\hat{r}^{\,2}\left[\alpha_g^{\,(0)}\right]^2+m^2\,b_m^{\,m\,(2)}.\label{e132}
 \end{align}
 
-It follows that
+Finally, Eqs.~(\ref{e73er})--(\ref{e76er}), (\ref{e120})--(\ref{e123}), and (\ref{e130})--(\ref{e132}) give 
 \begin{align}
 A_m^{\,m}(\hat{r}) &= 1 + \epsilon^2\left(-\frac{3\,\hat{r}^{\,2}}{4} + H_1+S_1\right),\\[0.5ex]
 A_m^{\,m\pm 1}(\hat{r}) &= - \epsilon\,H_1',\\[0.5ex]
-A_m^{\,m\pm j}(\hat{r}) &= -\epsilon\,(H_j'\pm {\rm i}\, V_j'),\\[0.5ex]
+A_m^{\,m\pm j}(\hat{r}) &= -\epsilon\,(H_j'\pm {\rm i}\, V_j')~~~~~\mbox{for $j>1$},\\[0.5ex]
 B_m^{\,m}(\hat{r}) &= 0,\\[0.5ex]
 B_m^{\,m\pm 1}(\hat{r}) &= \pm \epsilon\,(m\pm 1)\left[\hat{r}-p_2'\,q^2+(1-s)\,H_1'\right],\\[0.5ex]
-B_m^{\,m\pm j}(\hat{r}) &= \pm\epsilon\,\frac{m\pm j}{j}\,\left[(1-s)\,(H_j'\pm {\rm i}\,V_j')- (j^2-1)\,\frac{H_j\pm {\rm i}\,V_j}{\hat{r}}\right],\\[0.5ex]
+B_m^{\,m\pm j}(\hat{r}) &= \pm\epsilon\,\frac{m\pm j}{j}\,\left[(1-s)\,(H_j'\pm {\rm i}\,V_j')- (j^2-1)\,\frac{H_j\pm {\rm i}\,V_j}{\hat{r}}\right]~~~~~\mbox{for $j>1$},\\[0.5ex]
 C_m^{\,m}(\hat{r}) &= 0,\\[0.5ex]
 C_m^{\,m\pm 1}(\hat{r}) &= \pm \epsilon\,m\left[\hat{r}-p_2'\,q^2+(1-s)\,H_1'\right],\\[0.5ex]
-C_m^{\,m\pm j}(\hat{r}) &= \pm\epsilon\,\frac{m}{j}\,\left[(1-s)\,(H_j'\pm {\rm i}\,V_j')- (j^2-1)\,\frac{H_j\pm {\rm i}\,V_j}{\hat{r}}\right],\\[0.5ex]
+C_m^{\,m\pm j}(\hat{r}) &= \pm\epsilon\,\frac{m}{j}\,\left[(1-s)\,(H_j'\pm {\rm i}\,V_j')- (j^2-1)\,\frac{H_j\pm {\rm i}\,V_j}{\hat{r}}\right]~~~~~\mbox{for $j>1$},\\[0.5ex]
 D_m^{\,m}(\hat{r}) &= m^2 + q\,\hat{r}\,\frac{d}{d\hat{r}}\!\left(\frac{2-s}{q}\right) +\epsilon^2\,m^2\left(\frac{7\,\hat{r}^{\,2}}{4} - H_1 -3\,\hat{r}\,H_1' + S_1\right)\nonumber\\[0.5ex]
-&\phantom{=}+\epsilon^2\left\{-\hat{r}^{\,2}\,\frac{(2-s)^2}{q^2}- \hat{r}\,\frac{d}{d\hat{r}}(\hat{r}\,p_2') -2\,\hat{r}\,p'\,(2-s)+q\,\hat{r}\,\frac{d{\mit\Sigma}}{d\hat{r}}
-+2\,\hat{r}\,p_2'\,(1-q^2)\right.\nonumber\\[0.5ex]
-&\phantom{=}\left.+2\,\hat{r}\,p_2'\left(-1 + \frac{3\,p_2'\,q^2}{\hat{r}}\right) + 2\,H_1'\,q^2\left[\frac{d}{d\hat{r}}(\hat{r}\,p_2')+4\,(s-1)\,p_2'\right]\right\},\\[0.5ex]
-D_m^{\,m\pm 1}(\hat{r}) &=\epsilon\left[(\hat{r}\,p_2')' - (2-s)\,p_2'\right]q^2 + \epsilon\,m\,(m\pm 1)\,(\hat{r}-H_1'),\\[0.5ex]
-D_m^{\,m\pm j}(\hat{r}) &= -\epsilon\,m\,(m\pm j)\,(H_j'\pm {\rm i}\,V_j').
+&\phantom{=}+\epsilon^2\left\{-\hat{r}^{\,2}\,\frac{(2-s)^2}{q^2}+q\,\hat{r}\,\frac{d{\mit\Sigma}}{d\hat{r}}- \hat{r}\,\frac{d}{d\hat{r}}(\hat{r}\,p_2') -2\,(1-s)\,\hat{r}\,p_2'
+\right.\nonumber\\[0.5ex]
+&\phantom{=}\left.+2\,\hat{r}\,p_2'\,q^2\left(-2 + \frac{3\,p_2'\,q^2}{\hat{r}}\right) + 2\,H_1'\,q^2\left[\frac{d}{d\hat{r}}(\hat{r}\,p_2')-4\,(1-s)\,p_2'\right]\right\},\\[0.5ex]
+D_m^{\,m\pm 1}(\hat{r}) &=\epsilon\left[\frac{d}{d\hat{r}}(\hat{r}\,p_2') - (2-s)\,p_2'\right]q^2 + \epsilon\,m\,(m\pm 1)\,(\hat{r}-H_1'),\\[0.5ex]
+D_m^{\,m\pm j}(\hat{r}) &= -\epsilon\,m\,(m\pm j)\,(H_j'\pm {\rm i}\,V_j')~~~~~\mbox{for $j>1$}.
 \end{align}
+
+\subsection{Behavior Close to Magnetic Axis}
+When $\hat{r}\ll 1$, the well-behaved solution of the axisymmetric ideal-MHD o.d.e.s, (\ref{e69u}) and (\ref{e70uu}), that is dominated by the poloidal harmonic whose poloidal mode number is
+$m$ is such that
+\begin{align}
+y_m(\hat{r}) &= \hat{r}^{\,|m|},\\[0.5ex]
+z_m(\hat{r}) &= |m|\,\hat{r}^{\,|m|},
+\end{align}
+with $y_{m'}(\hat{r})=z_{m'}(\hat{r})=0$ for $m'\neq 0$. 
 
 \end{document}

@@ -1,0 +1,366 @@
+\documentclass{beamer}
+
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand {\bmu} {\mbox{\boldmath$\mu$}}
+
+\setbeamertemplate{frametitle}[default][center]
+
+\begin{document}
+
+\begin{frame}
+\begin{center}
+\blue{\Large\bf Investigation of Neoclassical Tearing Mode}\\[1ex]
+ \blue{\Large\bf Detection by ECE Radiometry in Tokamaks}\\[1ex]
+ \blue{\Large\bf via Asymptotic Matching}\\[1ex]
+ \blue{\Large\bf Techniques}\,\footnote{arXiv:2506.05553}\\[4ex]
+Richard Fitzpatrick\\[2ex]
+{\em Institute of Fusion Studies, Department of Physics},\\[0.5ex] {\em University of Texas at Austin}
+\vspace{4cm}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Disruption Avoidance}
+ 
+\begin{itemize}
+\item Next generation tokamaks, such as ITER, need to avoid \textcolor{red}{disruptions} (i.e., sudden catastrophic losses of plasma confinement) which could severely damage devices. 
+
+\item Disruptions can be avoided by keeping net toroidal plasma current, mean plasma pressure, and mean plasma density, below well-known
+limiting values.\footnote{P.C.~de Vries, et al.\ Nucl.\ Fusion {\bf 51}, 053018 (2011).}
+
+\item However, there is one type of disruption (i.e., that associated with neoclassical tearing modes) that cannot be passively avoided during normal operation. 
+
+\item  Instead, active measures are needed to prevent NTM-triggered disruptions. 
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Neoclassical Tearing Modes}
+ 
+\begin{itemize}
+\item Nor surprisingly, \textcolor{red}{neoclassical tearing modes} (NTMs) are observed to be main cause of disruptions in ITER-relevant discharges in present-day 
+tokamaks.\footnote{R.J.~La\,Haye, Phys.\ Plasmas {\bf 13}, 055501 (2006).} 
+\item NTMs are linearly stable, but are destabilized nonlinearly by loss of non-inductive \textcolor{red}{bootstrap current}, due to flattening of pressure profile within magnetic separatrix of
+associated island chain.
+
+\item NTMs are triggered in fairly random fashion by otherwise benign plasma instabilities such as sawtooth crashes. 
+\item Once triggered, NTMs in ITER predicted to  grow as rotating modes on timescale of about \textcolor{blue}{3 s}, eventually lock to vacuum vessel when \textcolor{blue}{$W/a\sim 0.08$}, and then trigger disruption.\footnote{R. Fitzpatrick. Phys.\ Plasmas {\bf 30}, 042514 (2023).} 
+
+\item Remedial action must be taken prior to locking!
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Electron Cyclotron Current Drive}
+ 
+\begin{itemize}
+\item NTMs can be stabilized by means of localized \textcolor{red}{electron cyclotron current drive} (ECCD) that is targeted at one of  O-points of  NTM
+island chain.\footnote{G.~Gantenbien, et al.\ Phys.\ Rev.\ Lett.\ {\bf 85}, 1242 (2000).} Idea is to replace missing bootstrap current.
+
+\item ECCD driven by suitably phased and directed electron cyclotron waves injected into plasma.\footnote{R.~Prater, Phys.\ Plasmas {\bf 13}, 055501 (2006).}
+
+\item \textcolor{red}{Early detection} of NTM island chain, together with \textcolor{red}{accurate location} of island O-points,  is key to successful disruption avoidance by means of ECCD. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Electron Cyclotron Emission}
+ 
+\begin{itemize}
+\item Tokamak plasma spontaneously emit electron cyclotron waves.\footnote{ M.~Bornatici, et al.\ Nucl.\ Fusion {\bf 23}, 1153 (1983).}
+
+\item Intensity of  \textcolor{red}{electron cyclotron emission} (ECE) (almost exactly) proportion to electron temperature of emitting region.
+
+\item Frequency of \textcolor{red}{electron cyclotron emission} (ECE) depends mostly on magnetic field-strength, which is (almost exactly) inversely
+proportion to major radius of emitting region. 
+
+\item Hence, ECE emission can be used to simultaneously  detect local flattening of electron temperature due NTM island chain, and 
+accurately determine major radius of  chain. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthetic ECE Diagnostics}
+\begin{itemize}
+\item  Accurate modeling of expected ECE signal due to NTM is important component of design of ECCD suppression  system. 
+\item In existing synthetic ECE diagnostics,  a single-harmonic, radially-symmetric, NTM island chain, centered on 
+rational surface, is
+crudely inserted into plasma equilibrium.\footnote{J.P.~Ziegel, et al., Nucl.\ Fusion {\bf 64}, 126032 (2024).} 
+\item In reality, an NTM consists of \textcolor{red}{multiple} helical harmonics. 
+\item Harmonics with  same toroidal mode number as  NTM, but different poloidal mode numbers, are
+coupled \textcolor{red}{linearly} via toroidicity and flux-surface shaping throughout  plasma. 
+\item Harmonics whose poloidal and toroidal mode numbers are in  same ratio as those of  NTM are coupled \textcolor{red}{nonlinearly} in  immediate vicinity of island chain. 
+\item NTM island chains are \textcolor{red}{radially asymmetric} due to mean gradient in tearing eigenfunction at rational surface. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Determining Magnetic Structure of NTM}
+ 
+\begin{itemize}
+\item By far,  most efficient method of determining stability and structure of NTM is via \textcolor{red}{asymptotic matching}.\footnote{H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).}
+\item  In this approach, plasma divided into \textcolor{red}{outer region}, that comprises most of plasma, and \textcolor{red}{inner region} that is localized in vicinity of NTM rational surface. 
+\item Tearing perturbation in outer region determined by solving linearized, marginally-stable,  ideal-MHD  equations in full toroidal geometry (e.g. using \textcolor{blue}{TJ} code.\footnote{R. Fitzpatrick, Phys. Plasmas {\bf 31}, 102507 (2024).})
+\item Tearing perturbation in inner region consists of nonlinear, radially-asymmetric, island equilibrium.
+\item Solutions in inner and outer regions asymptotically matched to one another at boundary between two regions to determine properties of island chain (e.g., radial asymmetry) in terms of
+tearing eigenfunction in outer region. 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Determining Electron Temperature Perturbation}
+ 
+\begin{itemize}
+\item No change in topology of magnetic flux-surfaces in outer region. Electron temperature assumed to be passively convected by plasma. Hence,
+perturbed temperature is minus product of radial plasma displacement and equilibrium temperature gradient.
+\item In inner region, electron temperature assumed to be constant on island magnetic flux-surfaces. Temperature profile determined by solution of \textcolor{blue}{$\langle \nabla^2 T_e\rangle=0$}, where
+\textcolor{blue}{$\langle\cdots\rangle$} denotes island  flux-surface average.
+\item Global temperature profile determined by asymptotically matching temperatures in inner and outer region at boundary between two regions. Determines reduction in core temperature due to island chain.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Asymmetric Magnetic Island - I}
+ 
+\begin{itemize}
+\item Let \textcolor{blue}{$x=r-r_s$}, \textcolor{blue}{$X=x/W$}, and \textcolor{blue}{$\zeta=m\,\theta-n\,\phi$}, where \textcolor{blue}{$W$} is full width  of NTM island chain's magnetic separatrix. 
+
+\item If island magnetic flux-surfaces are contours of \textcolor{blue}{${\mit\Omega}(X,\zeta)$} then equilibrium force-balance yields
+$$
+\textcolor{blue}{\left[\left.\frac{\partial^2{\mit\Omega}}{\partial X^2}\right|_\zeta,{\mit\Omega}\right]=0},
+$$
+where
+$$
+\textcolor{blue}{[A,B] \equiv \left.\frac{\partial A}{\partial X}\right|_\zeta \left.\frac{\partial B}{\partial\zeta}\right|_X- \left.\frac{\partial B}{\partial X}\right|_\zeta \left.\frac{\partial A}{\partial\zeta}\right|_X}.
+$$
+\item This requirement stipulates that the current density in the island region must be constant on magnetic flux-surfaces. 
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Asymmetric Magnetic Island - II}
+ 
+\begin{center}
+\includegraphics[width=0.7\textwidth]{../Fig3.pdf}
+\end{center} 
+
+\begin{itemize}
+\item Suitable solution is 
+$$
+\textcolor{blue}{{\mit\Omega}(X,\zeta) = 8\,X^2 + \cos(\zeta-\delta^2\,\sin\zeta) - 2\sqrt{8}\,\delta\,X\,\cos\zeta+\delta^2\,\cos^2\zeta}. 
+$$
+\item Free parameter \textcolor{blue}{$\delta$} determines degree of radial asymmetry. 
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Asymmetric Magnetic Island - III}
+ 
+\begin{center}
+\includegraphics[width=0.7\textwidth]{../Fig6.pdf}
+\end{center} 
+
+\begin{itemize}
+\item Perturbed electron temperature in island region written
+$$
+\textcolor{blue}{\delta T_e(X,\zeta) = \delta T_0(x)+\sum_{\nu>0} \delta T_\nu(X)\,\cos(\nu\,\zeta)}.
+$$
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Asymmetric Magnetic Island - IV}
+ 
+\begin{center}
+\includegraphics[width=0.7\textwidth]{../Fig7.png}
+\end{center}
+\begin{itemize}
+\item Thick curve: island separatrix. Dot: island O-point. Dashed line: 
+rational surface. Contours show \textcolor{blue}{$T_e(X,\zeta)$}.
+\item Note that island O-point, which is true ECCD target, is shifted radially inward from rational surface. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Perturbed Electron Temperature}
+ 
+\begin{center}
+\includegraphics[width=0.85\textwidth]{../Fig13.png}
+\end{center}
+\begin{itemize}
+\item Left/right panels: \textcolor{blue}{$3,2$}/\textcolor{blue}{$2,1$} NTMs. Black curves: toroidally coupled rational surfaces. Black dot: magnetic axis. 
+\item Realistic temperature perturbation associated with NTM is surprisingly complicated.   
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Total Electron Temperature}
+ 
+\begin{center}
+\includegraphics[width=0.85\textwidth]{../Fig14.png}
+\end{center}
+\begin{itemize}
+\item Nevertheless, when perturbed electron temperature added to equilibrium temperature, result is appropriate helical flat-spot at NTM rational surface. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{ECE Signal - I}
+ 
+ \begin{itemize}
+ \item In optically thick plasma, intensity of ECE emission directly proportional to electron temperature.
+ \item Angular frequency of \textcolor{blue}{$j$}th harmonic ECE signal is
+ $$
+ \textcolor{blue}{\omega = \frac{j\,{\mit\Omega}_0\,R_0}{R}\left[1-\left(\frac{v}{c}\right)^2\right]^{1/2}},
+ $$
+ where $\textcolor{blue}{{\mit\Omega}_0=e\,B_0/m_e}$, $\textcolor{blue}{B_0}$ is on-axis toroidal magnetic field-strength,  \textcolor{blue}{$R_0$} is major radius of magnetic axis, and \textcolor{blue}{$v$}
+ is electron speed. 
+ \item Let 
+ $$
+ \textcolor{blue}{R_\omega(\omega) = \frac{j\,{\mit\Omega}_0\,R_0}{\omega}}
+ $$
+be the major radius from which ECE of frequency \textcolor{blue}{$\omega$} is emitted  in  absence of relativistic mass increase. \textcolor{blue}{$R$}
+is actual major radius from which signal emitted. 
+\end{itemize}
+ \end{frame}
+ 
+\begin{frame}
+\frametitle{ECE Signal - II}
+ 
+\begin{itemize}
+
+\item It follows that
+\begin{align*}
+\textcolor{blue}{\frac{v}{c} =\left\{\begin{array}{ccc}\left[1-\left(\frac{R}{R_\omega}\right)^2\right]^{1/2}&~~~~~&R\leq R_\omega\\[1ex]
+0&&R>R_\omega
+\end{array}\right.}.
+\end{align*}
+
+ \item Distribution of electron speeds is
+$$
+\textcolor{blue}{f(v)= A\,v^2\,{\rm exp}\left(-\frac{1}{\theta_\omega}\left[1-\left(\frac{v}{c}\right)^2\right]^{-1/2}\right)},
+$$
+where
+\textcolor{blue}{$\theta_\omega(\omega) = T_e(R_\omega)/(m_e\,c^{\,2})\ll 1$}. 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{ECE Signal - III}
+ 
+\begin{itemize}
+\item Previous two equations allow us to define 
+$$
+\textcolor{blue}{F(R,R_\omega) = \left[1-\left(\frac{R}{R_\omega}\right)^2\right]\exp\!\left(-\frac{1}{\theta_\omega}\,\frac{R_\omega}{R}\right)}.
+$$
+
+\item Electron temperature measured by  ECE diagnostic is  convolution of actual signal, \textcolor{blue}{$T_e(R)$},  and function \textcolor{blue}{$F(R,R_\omega)$}:
+$$
+\textcolor{blue}{T_e(R_\omega) = \frac{\int_{R_{\rm min}}^{R_\omega} T_e(R)\,F(R,R_\omega)\,dR}  {\int_{R_{\rm min}}^{R_\omega} F(R,R_\omega)\,dR}}.
+$$
+ \end{itemize}
+ \end{frame}
+ 
+ \begin{frame}
+\frametitle{ECE Signal - IV}
+ 
+\begin{itemize}
+\item Convolution specifies distortion of ECE signal due to relativistic mass increase. 
+\item Taylor expanding: 
+\begin{align*}
+\textcolor{blue}{T_e(R_\omega)}&\textcolor{blue}{~= T_e(R_\omega) - 2\,\theta_\omega\left(1-\frac{13}{2}\,\theta_\omega\right) R_\omega\,\frac{d T_e(R_\omega)}{dR}}\\[0.5ex]
+&\phantom{=}\textcolor{blue}{+ 3\,\theta_\omega^{\,2}\,R_\omega^{\,2}\,
+\frac{d^2 T_e(R_\omega)}{dR^2} + {\cal O}(\theta_\omega^{\,3})}.
+\end{align*}
+\item To first order  in \textcolor{blue}{$\theta_\omega$}, 
+measured temperature profile is \textcolor{blue}{$T_e[R_\omega\,(1-2\,\theta_\omega)]$}: i.e.,  measured profile shifted outward in major radius 
+distance \textcolor{blue}{$2\,\theta_\omega\,R_\omega$}. 
+\item To second order,  measured profile  smeared out in major radius. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthetic ECE Diagnostic - I}
+ 
+ \begin{center}
+\includegraphics[width=0.65\textwidth]{../Fig15.pdf}
+\end{center}
+
+\begin{itemize}
+\item Left/right-panels: \textcolor{blue}{3,2}/\textcolor{blue}{2,1} NTMs. Top/bottom panels: two different toroidal angles. Red/blue curves: distorted/ undistorted \textcolor{blue}{$\delta T_e$} ECE signals. Dashed lines: rational surfaces. 
+\item Relativistic mass increase shifts inferred location of ECE signal outward in major radius, and also smears out signal. 
+\end{itemize}
+ \end{frame}
+
+
+\begin{frame}
+\frametitle{Synthetic ECE Diagnostic - II}
+ 
+ \begin{center}
+\includegraphics[width=0.65\textwidth]{../Fig16.pdf}
+\end{center}
+
+\begin{itemize}
+\item Left/right-panels: \textcolor{blue}{3,2}/\textcolor{blue}{2,1} NTMs. Top/bottom panels: two different toroidal angles. Red/blue curves: distorted /undistorted \textcolor{blue}{$T_e$} ECE signals. Dashed lines: rational surfaces. 
+\item Relativistic mass increase shifts inferred location of ECE signal outward in major radius, and also smears out signal. 
+\end{itemize}
+ \end{frame}
+ 
+\begin{frame}
+\frametitle{Synthetic Berrino Algorithm - I}
+ 
+\begin{center}
+\includegraphics[width=0.65\textwidth]{../Fig17.pdf}
+\end{center}
+
+\begin{itemize}
+\item Synthetic Berrino algorithm\footnote{J.~Berrino, et al, Nucl.\ Fusion {\bf 45}, 1350 (2005).} (radial gradient of ECE signal averaged over toroidal angle) gives clear signal for NTM islands whose widths are as small as \textcolor{blue}{1\%} of minor radius. 
+\item Minimum of Berrino signal (which is usually taken as target radius for ECCD) shifted outward in major radius due to relativistic mass increase. 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthetic Berrino Algorithm - II}
+ 
+\begin{center}
+\includegraphics[width=0.65\textwidth]{../Fig18.pdf}
+\end{center}
+
+\begin{itemize}
+\item If inferred major radius of signal taken to be $\textcolor{blue}{R_\omega\,(1-\theta_\omega)}$, instead of $\textcolor{blue}{R_\omega}$,
+then minimum in Berrino signal gives much better indication of location of rational surface. 
+\item However, signal still need to be corrected for inward shift of island O-points. 
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Conclusions}
+ 
+\begin{itemize}
+\item Asymptotic matching techniques permit rapid and realistic calculation of ECE signal generated by an NTM. 
+
+\item Asymptotic matching techniques can calculate magnetic, temperature, and density perturbations associated with tearing mode in
+both linear and nonlinear regimes. 
+
+\item As such, asymptotic matching techniques could be used to simulate any diagnostic used to study tearing modes. 
+\end{itemize}
+\end{frame}
+
+
+
+\end{document}
