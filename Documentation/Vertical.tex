@@ -32,7 +32,7 @@ Jacobian is
 {\cal J}(r,\theta)\equiv (\nabla r\times \nabla\theta\cdot\nabla\phi)^{-1} \equiv R\left(\frac{\partial R}{\partial\theta}\,\frac{\partial Z}{\partial r} -\frac{\partial R}{\partial r}\,\frac{\partial Z}{\partial \theta}\right)= r\,R^{\,2}.
 \end{equation}
 Note that $r=r(R,Z)$ and $\theta=\theta(R,Z)$. 
-The magnetic axis corresponds to $r=0$. The inboard mid-plane corresponds to $\theta=0$. 
+The magnetic axis corresponds to $r=0$. The plasma-vacuum interface corresponds to $r=a$. The inboard mid-plane corresponds to $\theta=0$. 
 
 Consider an axisymmetric tokamak equilibrium whose magnetic field takes the form
 \begin{equation}
@@ -86,15 +86,15 @@ It follows from Eqs.~(\ref{q}), (\ref{jup3}), and (\ref{gs}) that
 \begin{equation}\label{jup3a}
 {\cal J}\,J^{\,\phi} = -q\,g' - \frac{r\,R^{\,2}\,P'}{f}.
 \end{equation}
-It is clear from Eqs.~(\ref{jup2}) and (\ref{jup3a}) that $g'=P'=0$ in the  current-free ``vacuum'' region surrounding the plasma.
+It is clear from Eqs.~(\ref{jup2}) and (\ref{jup3a}) that $g'=P'=0$ in the  current-free ``vacuum'' region surrounding the plasma, $r>a$. 
 We shall also assume that $g'=P'=0$ at the plasma-vacuum interface, so as to ensure that the equilibrium plasma
-current density is zero at the interface. 
+current density is zero at the interface, $r=a$. 
 
 \section{Axisymmetric Plasma Perturbation}\label{opde}
 
 \subsection{Derivation of Axisymmetric Ideal-MHD P.D.E.s}
 Let us assume that all perturbed quantities are independent of the toroidal angle, $\phi$. 
-The perturbed plasma equilibrium satisfies the  marginally-stable ideal-MHD equations
+The perturbed plasma equilibrium satisfies the  linearized, marginally-stable, ideal-MHD equations
 \begin{align}
 {\bf b} &= \nabla\times (\bxi\times {\bf B}),\label{e21}\\[0.5ex]
 \nabla p &={\bf j}\times {\bf B}  +{\bf J}\times {\bf b},\label{e22}\\[0.5ex]
@@ -114,7 +114,7 @@ where use has been made of  the fact that $B^{\,r}=J^{\,r}=0$. [See Eqs.~(\ref{b
 \begin{align}
 {\cal J}\,b^{\,r} &= \frac{\partial}{\partial\theta}\left({\cal J}\,B^{\,\theta}\,\xi^{\,r}\right).
 \end{align}
-Thus, Eqs.~(\ref{jac}), (\ref{q}), (\ref{bup2}), and (\ref{bup3}) give
+Thus, Eqs.~(\ref{jac}), (\ref{q}),  and (\ref{bup2}) give
 \begin{align}\label{e41}
 r\,R^{\,2}\,b^{\,r}& = \frac{\partial y}{\partial\theta},
 \end{align}
@@ -192,31 +192,32 @@ b^{\,\theta}& = \left(\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\right)b^{\,
 \end{align}
 Let 
 \begin{equation}\label{zdef}
-z= |\nabla r|^2\,r\,\frac{\partial y}{\partial r} + r\,\nabla r\cdot\nabla\theta\,\frac{\partial y}{\partial\theta}.
+Z(r,\theta)= |\nabla r|^2\,r\,\frac{\partial y}{\partial r} + r\,\nabla r\cdot\nabla\theta\,\frac{\partial y}{\partial\theta}.
 \end{equation}
+[Note that the perturbed magnetic field component $Z(r,\theta)$ should not be confused with the Cartesian coordinate of the same name.]
 Equations~(\ref{e41}), (\ref{e43y}), (\ref{e43yy}), (\ref{e69}) and (\ref{e58x}) yield 
 \begin{align}\label{e53y}
 b_r &=\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z,\\[0.5ex]
-b_\theta &= -z,\label{e54y}\\[0.5ex]
+b_\theta &= -Z,\label{e54y}\\[0.5ex]
 b^{\,\phi} &= -\frac{\alpha_g}{R^{\,2}}\,y.\label{e55yy}
 \end{align}
 Equations~(\ref{e59}), (\ref{e53y}), and (\ref{e54y}) give
 \begin{align}\label{e56yy}
-r\,R^{\,2}\,j^{\,\phi} &=-\frac{\partial z}{\partial r}-\frac{\partial}{\partial\theta}\!\left[\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right].
+r\,R^{\,2}\,j^{\,\phi} &=-\frac{\partial Z}{\partial r}-\frac{\partial}{\partial\theta}\!\left[\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,Z\right].
 \end{align}
 
 It follows from Eqs.~(\ref{e42}), (\ref{e43y}), (\ref{e51}), (\ref{e44yy}), (\ref{e55yy}), and (\ref{e56yy}) that
 \begin{align}
 -\frac{\partial}{\partial r}\!\left(\frac{P'}{f}\,y\right)&= \frac{f\,q}{r\,R^{\,2}}\,\frac{\partial (\alpha_g\,y)}{\partial r} 
-+ \frac{f}{r\,R^{\,2}}\,\frac{\partial z}{\partial r}\nonumber\\[0.5ex]
-&\phantom{=} +\frac{f}{r\,R^{\,2}}\frac{\partial}{\partial\theta}\!\left[\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right]
++ \frac{f}{r\,R^{\,2}}\,\frac{\partial Z}{\partial r}\nonumber\\[0.5ex]
+&\phantom{=} +\frac{f}{r\,R^{\,2}}\frac{\partial}{\partial\theta}\!\left[\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,Z\right]
 \nonumber\\[0.5ex]
 &\phantom{=} + \frac{g'\,\alpha_g}{R^{\,2}}\,y - \left(q\,g'+\frac{r\,R^{\,2}\,P'}{f}\right)\frac{1}{r\,R^{\,2}}\,\frac{\partial y}{\partial r}.
 \end{align}
 Hence,
 \begin{align}\label{e58u}
--\left[(\alpha_p\,\alpha_f+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]y&= 
- r\,\frac{\partial z}{\partial r}+\frac{\partial}{\partial\theta}\!\left[\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right],
+-\left[(\alpha_f\,\alpha_p+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]y&= 
+ r\,\frac{\partial Z}{\partial r}+\frac{\partial}{\partial\theta}\!\left[\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,Z\right],
 \end{align}
 where
 \begin{align}\label{alpp}
@@ -226,21 +227,21 @@ where
 
 Finally, Eqs.~(\ref{zdef}) and (\ref{e58u})  yield the {\em axisymmetric ideal-MHD p.d.e.s}:
 \begin{align}\label{e63y}
-r\,\frac{\partial y}{\partial r} &= \frac{z}{|\nabla r|^2} - \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\frac{\partial y}{\partial\theta},\\[0.5ex]
-r\,\frac{\partial z}{\partial r}&= -\left[(\alpha_p\,\alpha_f+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]y-\frac{\partial}{\partial\theta}\!\left(\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial\theta}\right)\nonumber\\[0.5ex]
-&\phantom{=} -\frac{\partial}{\partial\theta}\!\left(\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z\right).\label{e64y}
+r\,\frac{\partial y}{\partial r} &= \frac{Z}{|\nabla r|^2} - \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\frac{\partial y}{\partial\theta},\\[0.5ex]
+r\,\frac{\partial Z}{\partial r}&= -\left[(\alpha_f\,\alpha_p+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]y-\frac{\partial}{\partial\theta}\!\left(\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial\theta}\right)\nonumber\\[0.5ex]
+&\phantom{=} -\frac{\partial}{\partial\theta}\!\left(\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,Z\right).\label{e64y}
 \end{align}
 
 \subsection{Derivation of the Axisymmetric Ideal-MHD O.D.E.s}
 Let
 \begin{align}
 y(r,\theta)&= \sum_m y_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta},\\[0.5ex]
-z(r,\theta) &= \sum_m z_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta}.
+Z(r,\theta) &= \sum_m Z_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta}.
 \end{align}
 Equations~(\ref{e63y}) and (\ref{e64y}) yield the {\em axisymmetric ideal-MHD o.d.e.s}:
 \begin{align}\label{e69u}
-r\,\frac{dy_m}{dr}&= \sum_{m'}\left(A_{m}^{\,m'}\,z_{m'} + B_{m}^{\,m'}\,y_{m'}\right),\\[0.5ex]
-r\,\frac{dz_m}{dr}&= \sum_{m'}\left(C_{m}^{\,m'}\,z_{m'} + D_{m}^{\,m'}\,y_{m'}\right),\label{e70uu}
+r\,\frac{dy_m}{dr}&= \sum_{m'}\left(A_{m}^{\,m'}\,Z_{m'} + B_{m}^{\,m'}\,y_{m'}\right),\\[0.5ex]
+r\,\frac{dZ_m}{dr}&= \sum_{m'}\left(C_{m}^{\,m'}\,Z_{m'} + D_{m}^{\,m'}\,y_{m'}\right),\label{e70uu}
 \end{align}
 where
 \begin{align}
@@ -258,7 +259,9 @@ f_{m}^{\,m'}(r)&= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^
 \end{align}
 
 \subsection{Properties of Axisymmetric Ideal-MHD O.D.E.s}
-Note that
+Note, from Eq.~(\ref{e41}) that $\oint {\cal J}\,{\bf b}\cdot\nabla r \,d\theta=0$. 
+Note, from Eqs.~(\ref{e69u})--(\ref{Ddef}),  that $dZ_0/dr=0$ in the vacuum region surrounding the plasma. 
+Note also  that
 $a_{m'}^{\,m} =a_{m}^{\,m'\ast}$, 
 $b_{m'}^{\,m} =b_{m}^{\,m'\ast}$, 
 $c_{m'}^{\,m} =c_{m}^{\,m'\ast}$, and 
@@ -272,16 +275,16 @@ D_{m'}^{\,m} &= D_{m'}^{\,m\,\ast}.\label{e82u}
 \end{align}
 It follows from Eqs.~(\ref{e69u}), (\ref{e70uu}), and (\ref{e70u})--(\ref{e82u}) that 
 \begin{align}
-r\,\frac{d}{dr}\!\left[\sum_m (z_m\,y_m^{\,\ast}- y_m\,z_m^{\,\ast}) \right]&= 0.
+r\,\frac{d}{dr}\!\left[\sum_m (Z_m\,y_m^{\,\ast}- y_m\,Z_m^{\,\ast}) \right]&= 0.
 \end{align}
 
 \subsection{Perturbed Electric Field}
-Let ${\bf e}$ be the perturbed electric field. It follows that
+Let ${\bf e}$ be the perturbed electric field, which satisfies 
 \begin{equation}
 \nabla\times {\bf e} = {\rm i}\,\omega\,{\bf b}.
 \end{equation}
 Hence,
-\begin{equation}
+\begin{equation}\label{ephi}
 e_\phi = {\rm i}\,\omega\,y,
 \end{equation}
 and 
@@ -289,40 +292,10 @@ and
 \frac{\partial e_\theta}{\partial r} - \frac{\partial e_r}{\partial\theta} = - {\rm i}\,\omega\,r\,\alpha_g\,y,
 \end{equation}
 where use has been made of Eqs.~(\ref{e41}), (\ref{e43y}), and (\ref{e55yy}).
-We also expect
-\begin{equation}
-\nabla\cdot{\bf e} =0,
-\end{equation}
-which implies that
-\begin{align}
-r\,R^{\,2}\,e^{\,r}&={\rm i}\,\omega\,\frac{\partial u}{\partial\theta},\\[0.5ex]
-r\,R^{\,2}\,e^{\,\theta}&=-{\rm i}\,\omega\,\frac{\partial u}{\partial r},
-\end{align}
-where $u=u(r,\theta)$. Let 
-\begin{equation}
-v = |\nabla r|^2\,r\,\frac{\partial u}{\partial r} + r\,\nabla r\cdot\nabla\theta\,\frac{\partial u}{\partial\theta}.
-\end{equation}
-It follows that
-\begin{align}
-e_r &={\rm i}\,\omega\left[\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial u}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,v\right],\\[0.5ex]
-e_\theta &= -{\rm i}\,\omega\,v.
-\end{align}
-Hence, Eq.~(\ref{e81op}) gives
-\begin{equation}
-r^2\,\alpha_g\,y = r\,\frac{\partial v}{\partial r}+\frac{\partial}{\partial\theta}\!\left[\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial u}{\partial \theta}+ \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,v\right].
-\end{equation}
-Finally, in the vacuum region, in which $\alpha_g=0$, we have $u=v=0$. 
+We also expect $\nabla\cdot{\bf e} =0$, which implies that 
+$e_r=e_\theta=0$ in the vacuum region, $r\geq a$, in which $\alpha_g=0$. 
 
-\subsection{Electromagnetic Energy Flux}
-The net electromagnetic energy flux out of the plasma is
-\begin{align}
-{\cal E} &= \left[\oint\oint ({\bf e}\times {\bf b})\cdot\nabla r\,{\cal J}\,d\theta\,d\phi\right]_{r=a}= \left[\oint\oint (e_\theta\,b_\phi-e_\phi\,b_\theta)\,d\theta\,d\phi\right]_{r=a}\nonumber\\[0.5ex]
-&={\rm i}\,2\,\pi\,\omega\left(\oint\left [\alpha_g\,(v\,y^\ast- v^\ast\,y) + (y\,z^\ast-y^\ast\,z)\right]\right)_{r=a},\nonumber\\[0.5ex]
-&={\rm i}\,\pi^2\,\omega \sum_{m}\left(z_m^\ast\,y_m-y_m^\ast\,z_m\right)_{r=a}.
-\end{align}
-Here, use has been made of the fact that $v=0$ for $r\geq a$. 
-
-\subsection{Toroidal Electromagnetic Torque}
+\subsection{Toroidal Electromagnetic Torque}\label{storque}
 The net toroidal electromagnetic torque exerted on the plasma lying within the magnetic flux-surface whose label is $r$ is
 \begin{equation}
 T_\phi(r)= \oint\oint r\,R^{\,2}\,b_\phi\,b^{\,r}\,d\theta\,d\phi.
@@ -334,6 +307,15 @@ T_\phi(r) = -\pi\,\alpha_g\oint\left(y^\ast\,\frac{\partial y}{\partial\theta}+y
 \end{equation}
 We conclude that an axisymmetric perturbation is incapable of exerting a net toroidal electromagnetic torque on the plasma. 
 
+\subsection{Electromagnetic Energy Flux}
+The net electromagnetic energy flux across the plasma-vacuum interface is 
+\begin{align}\label{eflux}
+{\cal E} &= \left[\oint\oint ({\bf e}\times {\bf b})\cdot\nabla r\,{\cal J}\,d\theta\,d\phi\right]_{r=a}= \left[\oint\oint (e_\theta\,b_\phi-e_\phi\,b_\theta)\,d\theta\,d\phi\right]_{r=a}\nonumber\\[0.5ex]
+&={\rm i}\,\pi\,\omega\oint (y\,Z^{\,\ast}-y^\ast \,Z)_{r=a}\,d\theta,\nonumber\\[0.5ex]
+&={\rm i}\,\pi^2\,\omega \sum_{m}\left(Z_m^{\,\ast}\,y_m-y_m^\ast\,Z_m\right)_{r=a}.
+\end{align}
+Here, use has been made of Eqs.~(\ref{e54y} and  (\ref{ephi}), as well as  the fact that $e_\theta=0$ for $r\geq a$. 
+
 \subsection{Perturbed Plasma Potential Energy}
 The perturbed plasma potential energy in the region of the plasma lying within the magnetic flux-surface whose label is $r$ is 
 \begin{equation}
@@ -342,22 +324,22 @@ The perturbed plasma potential energy in the region of the plasma lying within t
 However,
 \begin{equation}
 {\bf B}\cdot{\bf b} -\xi^{\,r}\,P' = B^{\,\theta}\,b_\theta+B^{\,\phi}\,b_\phi - \xi^{\,r}\,P'
-= - \frac{f}{r\,R^{\,2}}\left(z + q\,\alpha_g\,y + \alpha_p\,R^{\,2}\right),
+= - \frac{f}{r\,R^{\,2}}\left(Z + q\,\alpha_g\,y + \alpha_p\,R^{\,2}\right),
 \end{equation}
 where use has been made of Eqs.~(\ref{q})--(\ref{bup3}), (\ref{e42}), (\ref{e43yy}), (\ref{e54y}),  and (\ref{alpp}). Hence,
 we obtain
 \begin{align}
-\delta W_p(r) &=\frac{1}{2}\oint\oint y^{\ast}\left[z + (q\,\alpha_g + \alpha_p\,R^{\,2})\,y\right]d\theta\,d\phi= \pi^2\sum_{m}y_m^{\,\ast}\,\chi_m,
+\delta W_p(r) &=\frac{1}{2}\oint\oint y^{\ast}\left[Z + (q\,\alpha_g + \alpha_p\,R^{\,2})\,y\right]d\theta\,d\phi= \pi^2\sum_{m}y_m^{\,\ast}\,\chi_m,
 \end{align}
 where 
 \begin{equation}
-\chi_m(r)=z_m + q\,\alpha_g\,y_m + \alpha_p\sum_{m'} a_m^{\,m'}\,y_{m'}.
+\chi_m(r)=Z_m + q\,\alpha_g\,y_m + \alpha_p\sum_{m'} a_m^{\,m'}\,y_{m'}.
 \end{equation}
 
 \section{Inverse Aspect-Ratio Expanded Tokamak Equilibrium}\label{large}
 
 \subsection{Equilibrium Magnetic Flux-Surfaces}\label{flux}
-Let us assume that the inverse aspect-ratio of the plasma, $\epsilon$, is such that $0<\epsilon\ll 1$.  
+Let us assume that the inverse aspect-ratio of the plasma, $\epsilon=a/R_0=a$ (since $R_0$ is normalized to unity), is such that $0<\epsilon\ll 1$.  
 Let $r=\epsilon\,\hat{r}$, $\nabla =\epsilon^{\,-1}\,\hat{\nabla}$, and $'\rightarrow \epsilon^{\,-1}\,'$. 
 Suppose that the loci of the equilibrium magnetic flux-surfaces can be written in the parametric form:
 \begin{align}
@@ -418,7 +400,7 @@ R^{\,2}&= 1-2\,\epsilon\,\hat{r}\,\cos\theta -\epsilon^{\,2}\left(\frac{\hat{r}^
 Here, $'\equiv d/d\hat{r}$. Moreover, we have made use of the fact that $V_j\propto H_j$, for $j>1$, because
 $V_j$ and $H_j$ satisfy the identical differential equations, (\ref{e33x}) and (\ref{e28}). 
 
-\subsection{Expansion of Grad-Shafranov Equation}\label{exp}
+\subsection{Expansion of Inverse Grad-Shafranov Equation}\label{exp}
 Let us write
 \begin{align}\label{e26v}
 f(\hat{r})&= \epsilon\,\frac{\hat{r}\,g}{q},\\[0.5ex]
@@ -428,7 +410,7 @@ P'(\hat{r}) &= \epsilon^{\,2}\,p_2'(\hat{r}),\label{eq1}
 where $q$,  $g_2$, $g_4$, and $p_2$ are all ${\cal O}(1)$. Here, the safety-factor, $q(\hat{r})$, and the second-order plasma
 pressure gradient, $p_2'(\hat{r})$, are the two free flux-surface functions that characterize the plasma equilibrium.
 
-Expanding the Grad-Shafranov equation, (\ref{gs}), order by order in the
+Expanding the inverse Grad-Shafranov equation, (\ref{gs}), order by order in the
 small parameter $\epsilon$, making use of Eqs.~(\ref{e19})--(\ref{eq1}), we obtain
 \begin{align}
 g_2'&=- p_2' - \frac{\hat{r}}{q^2}\,(2-s),\label{e26}\\[0.5ex]
@@ -439,7 +421,7 @@ V_j''&= -(3-2\,s)\,\frac{V_j'}{\hat{r}}+(j^2-1)\,\frac{V_j}{\hat{r}^{\,2}}~~~~~~
 g_4'&= g_2\left[p_2' - \frac{\hat{r}}{q^2}\,(2-s)\right] - \frac{\hat{r}}{q}\,{\mit\Sigma}
 +p_2'\left(\frac{\hat{r}^{\,2}}{2}+\frac{\hat{r}^{\,2}}{q^2}-2\,H_1-3\,\hat{r}\,H_1'\right),\label{e31}
 \end{align}
-where $s=\hat{r}\,q'/q$, 
+where $s=\hat{r}\,q'/q$ is the magnetic shear, and  
 \begin{align}{\mit\Sigma} &=\frac{1}{q}\left(\frac{3\,\hat{r}^{\,2}}{2} -2\,\hat{r}\,H_1'+S_2\right) - \frac{2-s}{q}\left(-\frac{3\,\hat{r}^{\,2}}{4}+\frac{\hat{r}^{\,2}}{q^2} +H_1+S_1\right),\\[0.5ex]
 S_1(\hat{r})&=\frac{1}{2}\sum_{j>0} \left[3\,H_j'^{\,2} -(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^2}\right]
  +\frac{1}{2}\sum_{j>1} \left[3\,V_j'^{\,2} -(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^2}\right],\label{e109}
@@ -447,7 +429,7 @@ S_1(\hat{r})&=\frac{1}{2}\sum_{j>0} \left[3\,H_j'^{\,2} -(j^2-1)\,\frac{H_j^{\,2
 S_2(\hat{r})&=\sum_{j>0}\left[H_j'^{\,2}+2\,(j^2-1)\,\frac{H_j'\,H_j}{\hat{r}}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]\nonumber\\[0.5ex]
 &\phantom{===}+\sum_{j>1}\left[V_j'^{\,2}+2\,(j^2-1)\,\frac{V_j'\,V_j}{\hat{r}}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right].
 \end{align}
-Note that the relative horizontal shift of magnetic flux-surfaces, $H_1$, otherwise known as the {\em Shafranov shift}, is driven by toroidicity [the second term on
+Note that the relative horizontal shift of magnetic flux-surfaces, $-H_1$, otherwise known as the {\em Shafranov shift}, is driven by toroidicity [the second term on
 the right-hand side of Eq.~(\ref{e27})], and plasma pressure gradients (the third term). All of the other shaping terms (i.e., the $H_j$, for $j>1$, and
 the $V_j$) are driven by axisymmetric currents flowing in external  magnetic field-coils.
 
@@ -509,7 +491,7 @@ a_{m}^{m'} &= 1 + \epsilon\,a_m^{\,m'\,(1)} + \epsilon^2\,a_{m}^{\,m'\,(2)},\\[0
 b_{m}^{\,m'} &= 1 + \epsilon\,b_m^{\,m'\,(1)} + \epsilon^2\,b_{m}^{\,m'\,(2)},\\[0.5ex]
 D_{m}^{\,m'} &= D_m^{\,m'\,(0)} + \epsilon\,D_m^{\,m'\,(1)} + \epsilon^2\,D_{m}^{\,m'\,(2)},
 \end{align}
-where $\alpha_g^{\,(0)}$, $\alpha_g^{\,(2)}$, et cetera, are $\cal {O}(1)$, 
+where $\alpha_g^{\,(0)}$, $\alpha_g^{\,(2)}$, et cetera, are ${\cal O}(1)$, 
 then it follows from Eq.~(\ref{Ddef}) that
 \begin{align}\label{e130}
 D_m^{\,m\,(0)} &= -\alpha_f^{\,(0)}\,\alpha_p^{\,(0)} - \hat{r}\,\alpha_p^{\prime\,(0)} - q\,\hat{r}\,\alpha_g^{\prime\,(0)} + m^2,\\[0.5ex]
@@ -546,5 +528,206 @@ y_m(\hat{r}) &= \hat{r}^{\,|m|},\\[0.5ex]
 z_m(\hat{r}) &= |m|\,\hat{r}^{\,|m|},
 \end{align}
 with $y_{m'}(\hat{r})=z_{m'}(\hat{r})=0$ for $m'\neq 0$. 
+
+\section{Vacuum Solution}\label{vacuum}
+\subsection{Toroidal Coordinates}
+Let $\mu$, $\eta$, $\phi$ be right-handed toroidal coordinates defined such that 
+\begin{align}
+R &= \frac{\sinh\mu}{\cosh\mu-\cos\eta},\\[0.5ex]
+Z&=\frac{\sin\eta}{\cosh\mu-\cos\eta}.
+\end{align}
+The scale-factors of the toroidal coordinate system are
+\begin{align}
+h_\mu&=h_\eta= \frac{1}{\cosh\mu-\cos\eta}\equiv h,\\[0.5ex]
+h_\phi &= \frac{\sinh\mu}{\cosh\mu-\cos\eta} = h\,\sinh\mu.
+\end{align}
+Moreover, 
+\begin{equation}
+{\cal J}' \equiv (\nabla\mu\times\nabla\eta\cdot\nabla\phi)^{-1}= h^3\,\sinh\mu.
+\end{equation}
+
+\subsection{Perturbed Magnetic Field}
+The curl-free perturbed magnetic field in the vacuum region is written ${\bf b} = {\rm i}\,\nabla V$,
+where
+$\nabla^2 V =0$.
+The most general axisymmetric  solution to Laplace's equation is
+\begin{align}
+V(z,\eta)&= \sum_m (z-\cos\eta)^{1/2}\,U_m(z)\,{\rm e}^{-{\rm i}\,m\,\eta}, \\[0.5ex]
+U_m(z) &= p_m\,\hat{P}_{|m|-1/2}(z)+q_m\,\hat{Q}_{m-1/2}(z),
+\end{align}
+where  $z=\cosh\mu$, the $p_m$ and $q_m$ are arbitrary complex coefficients, and 
+\begin{align}\label{e21dd}
+\hat{P}_{|m|-1/2}(z) &= \cos(|m|\,\pi)\,\frac{\sqrt{\pi}\,\Gamma(|m|+1/2)\,a^{\,|m|}}{2^{\,|m|-1/2}\,|m|!}\,P_{|m|-1/2}(z),\\[0.5ex]
+\hat{Q}_{|m|-1/2}(z)&= \cos(|m|\,\pi)\,\frac{2^{\,|m|-1/2}\,|m|!}{\sqrt{\pi}\,\Gamma(|m|+1/2)\,a^{\,|m|}}\,Q_{|m|-1/2}(z).\label{e22dd}
+\end{align}
+Here,  the $P_{|m|-1/2}(z)$  and $Q_{|m|-1/2}(z)$ are toroidal functions, and $\Gamma(z)$ is a
+gamma function.
+
+\subsection{Toroidal Electromagnetic Angular Momentum Flux}
+The outward flux of toroidal angular momentum across a constant-$z$ surface is
+\begin{align}
+T_\phi(z) &= -\oint\oint {\cal J}' \,b_\phi\,b^{\,\mu}\,d\eta\,d\phi = 0,
+\end{align}
+because $b_\phi = {\rm i}\,\partial V/\partial\phi = 0$. Of course, this has to be the case because the flux of angular momentum across the plasma-vacuum
+interface is zero. (See Sect.~\ref{storque}.)
+
+\subsection{Electromagnetic Energy Flux}
+The outward flux of electromagnetic energy flux across a constant-$z$ surface is
+\begin{align}
+{\cal E}(z) = -\oint\oint {\cal J}'\,{\bf e}\times {\bf b}\cdot\nabla \mu\,d\eta\,d\phi= -{\rm i}\,\pi\oint\left(e_\phi\,\frac{\partial V^\ast}{\partial\eta}
+- e_\phi^{\,\ast}\,\frac{\partial V}{\partial\eta}\right)d\eta,
+\end{align}
+given that $e_\mu=e_\eta=0$ in the vacuum. 
+However, $\nabla\times{\bf e}= {\rm i}\,\omega\,{\bf b}$ implies that
+\begin{equation}
+\frac{\partial e_\phi}{\partial\eta} = - \omega\,h\,\sinh\mu\,\frac{\partial V}{\partial \mu}= - \omega\,h\,\sinh^2\mu\,\frac{\partial V}{\partial z}. 
+\end{equation}
+Thus,
+\begin{align}
+{\cal E}(z) &= {\rm i}\,\pi\oint\left(\frac{\partial e_\phi}{\partial\eta}\,V^\ast - \frac{\partial e_\phi^{\,\ast}}{\partial\eta}\,V\right)d\eta= 
+-{\rm i}\,\pi\,\omega\oint h\,\sinh^2\mu\left(\frac{\partial V}{\partial z}\,V^\ast - \frac{\partial V^\ast}{\partial z}\,V\right) d\eta\nonumber\\[0.5ex]
+&= {\rm i}\,\pi^2\,\omega\sum_m(p_m\,q_m^{\,\ast}-q_m\,p_m^{\,\ast})\,(z^2-1)\,{\cal W}(P_{|m|-1/2},Q_{|m|-1/2}),
+ \end{align}
+ where ${\cal W}(f,g)= f\,dg/dz-g\,df/dz$. However,
+ \begin{equation}
+ {\cal W}(P_{|m|-1/2},Q_{|m|-1/2}) = \frac{1}{1-z^2},
+ \end{equation}
+ so
+ \begin{equation}\label{e168g}
+ {\cal E}(z)=- {\rm i}\,\pi^2\,\omega\sum_m(p_m\,q_m^{\,\ast}-q_m\,p_m^{\,\ast}).
+ \end{equation}
+ Note that ${\cal E}$ is independent of $z$, as must be the case because there are no energy sources in the vacuum region. 
+
+\subsection{Solution in Vacuum Region}
+In the large-aspect ratio limit, $r\ll 1$, it can be demonstrated that
+\begin{align}
+z&\simeq \frac{1}{r},\label{e25t}\\[0.5ex]
+z^{\,1/2}\,\hat{P}_{-1/2}(z) &\simeq \frac{1}{2}\ln(8\,z),\\[0.5ex]
+z^{1/2}\,\hat{P}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(a\,z)^{|m|}}{|m|},\label{ety}\\[0.5ex]
+z^{1/2}\,\hat{Q}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(a\,z)^{-|m|}}{2}.\label{e29t}
+\end{align}
+Note that Eq.~(\ref{ety}) only applies to $|m|>0$.
+
+Now, according to Eqs.~(\ref{e41}) and (\ref{e54})
+\begin{align}\label{e30ay}
+\frac{\partial y}{\partial \theta}&= {\cal J}\,{\bf b}\cdot\nabla r = {\rm i}\,{\cal J}\,\nabla V\cdot\nabla r,\\[0.5ex]
+Z&= -{\cal J}\,\nabla\phi\times\nabla r \cdot{\bf b} = - {\rm i}\,\frac{\partial V}{\partial\theta}.\label{e31ay}
+\end{align}
+Thus, 
+\begin{align}\label{e32ay}
+\underline{V}(r)&= \underline{\underline{{\cal P}}}(r)\,\underline{p}+ \underline{\underline{{\cal Q}}}(r)\,\underline{q},\\[0.5ex]
+\underline{\psi}(r)&= \underline{\underline{{\cal R}}}(r)\,\underline{p}+ \underline{\underline{{\cal S}}}(r)\,\underline{q},\label{e33ay}
+\end{align}
+where $Z_m(r)=m\,V_m(r)$, $\psi_m(r)=m\,y_m(r)$, 
+ $\underline{V}(r)$ is the vector of the $V_m(r)$ values, $\underline{\psi}(r)$ is the vector of the $\psi_m(r)$ values, $\underline{\underline{{\cal P}}}(r)$ is the
+matrix of the
+\begin{equation}
+{\cal P}_{mm'}(r)=\oint_{r}(z-\cos\eta)^{1/2}\,\hat{P}_{|m'|-1/2}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+\end{equation}
+values, 
+$\underline{\underline{{\cal Q}}}(r)$ is the
+matrix of the
+\begin{equation}
+{\cal Q}_{mm'}(r)=\oint_{r}(z-\cos\eta)^{1/2}\,\hat{Q}_{|m'|-1/2}(z)\,\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+\end{equation}
+values, $\underline{\underline{{\cal R}}}(r)$ is the matrix of the 
+\begin{align}\label{e354}
+{\cal R}_{mm'}(r) &=\oint_{r}
+\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\hat{P}_{|m'|-1/2}(z)+(z-\cos\eta)^{1/2}\,\frac{d\hat{P}_{|m'|-1/2}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
+\right.\nonumber\\[0.5ex]&
+\left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]\hat{P}_{|m'|-1/2}z)\,{\cal J}\,\nabla r\cdot \nabla \eta
+\right\}\nonumber\\[0.5ex] &
+\phantom{=}\times\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+\end{align}
+values, 
+$\underline{\underline{{\cal S}}}(r)$ is the matrix of the 
+\begin{align}\label{e355}
+{\cal S}_{mm'}(r) &=\oint_{r}
+\left\{\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\hat{Q}_{|m'|-1/2}(z)+(z-\cos\eta)^{1/2}\,\frac{d\hat{Q}_{|m'|-1/2}}{dz}\right]{\cal J}\,\nabla r\cdot \nabla z
+\right.\nonumber\\[0.5ex]&
+\left.\phantom{=}+\left[\frac{1}{2}\,(z-\cos\eta)^{-1/2}\,\sin\eta-{\rm i}\,m'\,(z-\cos\eta)^{1/2}\right]\hat{Q}_{|m'|-1/2}(z)\,{\cal J}\,\nabla r\cdot \nabla \eta
+\right\}\nonumber\\[0.5ex] &
+\phantom{=}\times\exp[-{\rm i}\,(m\,\theta+m'\,\eta)]\,\frac{d\theta}{2\pi}
+\end{align}
+values, $\underline{p}$ is the vector of the $p_m$ coefficients, and  $\underline{q}$ is the vector of the $q_m$ coefficients. Here, the
+subscript $r$ on the integrals indicates that they are taken at constant $r$. 
+Note from Eqs.~(\ref{e30ay}) and (\ref{e31ay}), $\oint {\cal J}\,\nabla V\cdot\nabla r\,d\theta=Z_0=0$. 
+
+\subsection{Energy Conservation}
+According to Eq.~(\ref{eflux}), the net flux of electromagnetic energy across the plasma-vacuum interface  is
+\begin{equation}
+{\cal E} = {\rm i}\,\pi^2\,\omega\, (\underline{V}^\dag\,\underline{\psi}- \underline{\psi}^\dag\,\underline{V}).
+\end{equation}
+However, this flux must be equal the energy flux through the vacuum region, so Eq.~(\ref{e168g}) gives
+\begin{equation}\label{e39x}
+{\cal E} =-  {\rm i}\,\pi^2\,\omega\,(\underline{q}^\dag\,\underline{p}-\underline{p}^\dag\,\underline{q}).
+\end{equation}
+Equations~(\ref{e32ay}), (\ref{e33ay}), and the previous two equations, yield 
+\begin{align}\label{e41zx}
+\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal R}}&= \underline{\underline{\cal R}}^\dag\,\underline{\underline{\cal P}},\\[0.5ex]
+\underline{\underline{\cal Q}}^\dag\,\underline{\underline{\cal S}}&= \underline{\underline{\cal S}}^\dag\,\underline{\underline{\cal Q}},\label{e42zx}\\[0.5ex]
+\underline{\underline{\cal P}}^\dag\,\underline{\underline{\cal S}}- \underline{\underline{\cal R}}^\dag\,\underline{\underline{\cal Q}}&=\underline{\underline{1}}.\label{e43zx}
+\end{align}
+ It can also be demonstrated that 
+\begin{align}\label{e46}
+\underline{\underline{\cal Q}}\,\underline{\underline{\cal P}}^\dag&= \underline{\underline{\cal P}}\,\underline{\underline{\cal Q}}^\dag,\\[0.5ex]
+\underline{\underline{\cal R}}\,\underline{\underline{\cal S}}^\dag&= \underline{\underline{\cal S}}\,\underline{\underline{\cal R}}^\dag.\label{e47x}
+\end{align}
+The previous five equations hold throughout the vacuum region. 
+
+\subsection{Ideal-Wall Matching Condition}
+Suppose that the plasma is surrounded by a wall that  lies at $r=b_w\,a$, where $b_w\geq 1$. 
+If the wall is perfectly conducting then  $\underline{\psi}(b_w\,a)=0$. 
+It follows from Eq.~(\ref{e33ay}) that
+\begin{equation}
+\underline{q} = \underline{\underline{I}}_b\,\underline{p},
+\end{equation}
+where
+\begin{equation}
+ \underline{\underline{I}}_b=- \underline{\underline{\cal S}}_{\,b}^{-1}\,\underline{\underline{\cal R}}_{\,b}
+ \end{equation}
+ is termed the ``wall matrix''.
+ Here, $\underline{\underline{\cal S}}_{\,b}= \underline{\underline{\cal S}}(r=b_w\,a)$, et cetera. Equation~(\ref{e47x}) ensures that $ \underline{\underline{I}}_b$
+ is Hermitian. It immediately follows from Eq.~(\ref{e39x}) that ${\cal E}=0$. In other words, there is zero net electromagnetic energy flux out of  a plasma
+ surrounded by a perfectly conducting wall. 
+ 
+  Making use of Eqs.~(\ref{e32ay}) and (\ref{e33ay}),  the matching condition at the plasma-vacuum interface  for a perfectly-conducting wall becomes 
+ \begin{equation}
+ \underline{V}(r=a_+)= \underline{\underline{H}}\,\underline{\psi}(r=a),
+ \end{equation}
+ where 
+ \begin{equation}
+ \underline{\underline{H}}= (\underline{\underline{\cal P}}_{\,a}+\underline{\underline{\cal Q}}_{\,a}\,\underline{\underline{I}}_{\,b})\,(\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}
+ \end{equation}
+ is termed the ``vacuum matrix.'' 
+  Here, $\underline{\underline{\cal P}}_{\,a}= \underline{\underline{\cal P}}(r=a_+)$, et cetera. 
+Making use of Eqs.~(\ref{e41zx})--(\ref{e43zx}), it is easily demonstrated that
+ \begin{equation}\label{e53xx}
+ \underline{\underline{H}}-\underline{\underline{H}}^\dag =- [(\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}]^{\dag}\,(\underline{\underline{I}}_{\,b} -\underline{\underline{I}}^\dag_{\,b})\,  (\underline{\underline{\cal R}}_{\,a}+\underline{\underline{\cal S}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}.
+\end{equation}
+Thus,  the vacuum matrix, $\underline{\underline{H}}$, is Hermitian because  the wall matrix, $\underline{\underline{I}}_{\,b}$, is Hermitian. 
+ 
+\subsection{Model Wall Matrix}
+ Equations~(\ref{e25t})--(\ref{e29t}), (\ref{e354}), and (\ref{e355}) suggest that
+ \begin{align}
+ \underline{\underline{{\cal R}}}_{\,b}& = \underline{\underline{{\cal R}}}_{\,a} \,\underline{\underline{\rho}}^{\,-1},\\[0.5ex]
+ \underline{\underline{{\cal S}}}_{\,b} &= \underline{\underline{{\cal S}}}_{\,a} \,\underline{\underline{\rho}},
+ \end{align}
+ where
+ \begin{align}
+ \rho_{mm'} &= \delta_{mm'}\,\rho_m,\\[0.5ex]
+ \rho_0 &= 1+\ln b_w,\\[0.5ex]
+ \rho_{m\neq 0} &= b_w^{\,|m|}.
+ \end{align}
+ Hence,
+ \begin{equation}
+ \underline{\underline{I}}_{\,b}= - \underline{\underline{\rho}}^{\,-1\,\dag}\,\underline{\underline{\cal S}}_{\,a}^{-1}\,\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{\rho}}^{\,-1}.
+ \end{equation}
+ Note that our model wall matrix, $\underline{\underline{I}}_b$, is Hermitian given that $\underline{\underline{\cal S}}_{\,a}^{-1}\,\underline{\underline{\cal R}}_{\,a}$
+ is Hermitian. [See Eq.~(\ref{e47x}).] Our model wall matrix allows us to smoothly interpolate between a plasma with no wall
+ (which corresponds to $b_w\rightarrow\infty$ and $\underline{\underline{H}}= \underline{\underline{\cal P}}_{\,a}\,\underline{\underline{\cal R}}_{\,a}^{-1}$), 
+ and a fixed boundary plasma (which corresponds to $b_w=1$ and $\underline{\underline{H}}^{-1}= \underline{\underline{0}}$). 
+ 
+
 
 \end{document}

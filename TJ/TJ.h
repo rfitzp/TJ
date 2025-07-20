@@ -472,7 +472,7 @@ class TJ : private Utility
   Array<double,2>          dZdt;   // dZ/dtheta values at visualization grid-points (from Equilibrium.nc)
   Array<double,2>          rvals;  // r values of visualization grid-points (from Equilibrium.nc)
   Array<double,2>          thvals; // theta values of visualization grid-points (from Equilibrium.nc)
-  Array<double,2>          Bmod;   // |B| on visulalization grid
+  Array<double,2>          Bmod;   // |B| on visualization grid
   Array<double,2>          Btor;   // |B_toroidal| on visualization grid
   Array<double,2>          Bpol;   // |B_poloidal| on visualization grid
   Array<complex<double>,3> Psiuf;  // Psi components of Fourier-transformed unreconnected tearing eigenfunctions 

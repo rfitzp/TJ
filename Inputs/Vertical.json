@@ -1,0 +1,18 @@
+{
+    "MMIN":  -10,          // Minimum poloidal mode number included in calculation
+    "MMAX":   30,          // Maximum poloidal mode number included in calculation
+
+    "EQLB":   0,           // Flag for equilibrium calculation only
+    "VIZ":    0,           // Flag for generating eigenfunction visualization data
+
+    "EPS":   1.0e-4,       // Solutions launched from magnetic axis at r = EPS 
+    "NFIX":  160,          // Number of fixups 
+    "NDIAG": 1024,         // Number of radial grid-points for diagnostics
+    
+    "acc":  1.0e-12,       // Adaptive integration accuracy
+    "h0":   1.0e-4,        // Initial integration step-length 
+    "hmin": 1.0e-10,       // Minimum integration step-length 
+    "hmax": 1.0e-2,        // Maximum integration step-length
+    
+    "EPSF": 1.0e-4         // Step-length for finite difference determination of derivatives
+}

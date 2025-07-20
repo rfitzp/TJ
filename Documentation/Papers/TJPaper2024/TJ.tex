@@ -1718,6 +1718,27 @@ Furthermore,
 \end{align}
 where ${\bf C}({\bf r})$ is a general vector field.
 
+\section{Profile Functions in TJ Code}
+\begin{align}
+S_1(\hat{r}) &= \frac{3}{2}\,H_1^{\prime\,2}+ \frac{1}{2}\sum_{j>1}\left[3\,H_j^{\prime\,2}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]
++ \frac{1}{2}\sum_{j>1}\left[3\,V_j^{\prime\,2}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right],\\[0.5ex]
+S_2(\hat{r})&= \frac{3\,\hat{r}^{\,2}}{2}-2\,\hat{r}\,H_1'+ H_1^{\prime\,2} + \sum_{j>1}\left[H_j^{\prime\,2} + 2\,(j^2-1)\,\frac{H_j^{\prime}\,H_j}{\hat{r}}
+-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^2}\right]\nonumber\\[0.5ex]
+&\phantom{=} + \sum_{j>1}\left[V_j^{\prime\,2} + 2\,(j^2-1)\,\frac{V_j^{\prime}\,V_j}{\hat{r}}
+-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^2}\right],\\[0.5ex]
+S_3(\hat{r})&= -\frac{3\,\hat{r}^{\,2}}{4} + \frac{\hat{r}^{\,2}}{q_2^{\,2}} +H_1+\frac{3}{2}\,H_1^{\prime\,2}\nonumber\\[0.5ex]
+&\phantom{=}+ \frac{1}{2}\sum_{j>1}\left[3\,H_j^{\prime\,2}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]
++ \frac{1}{2}\sum_{j>1}\left[3\,V_j^{\prime\,2}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right],\\[0.5ex]
+S_4(\hat{r})&= \frac{3\,\hat{r}^2}{4} -H_1+\frac{H_1^{\prime\,2}}{2}\nonumber\\[0.5ex]
+&\phantom{=}+ \sum_{j>1}\left[H_j^{\prime\,2}-(j^2-1)\,\frac{H_j^{\,2}}{\hat{r}^{\,2}}\right]
++ \frac{1}{2}\sum_{j>1}\left[V_j^{\prime\,2}-(j^2-1)\,\frac{V_j^{\,2}}{\hat{r}^{\,2}}\right],\\[0.5ex]
+s_2(\hat{r}) &= \frac{\hat{r}^{\,2}\,q''}{q},\\[0.5ex]
+P_1(\hat{r}) &= \frac{2-s}{q_2},\\[0.5ex]
+P_{1a}(\hat{r}) &= \frac{2-s_0}{q_0},\\[0.5ex]
+P_2(\hat{r})&= \hat{r}\,\frac{d}{d\hat{r}}\!\left(\frac{2-s}{q_2}\right)= \frac{-3\,s-s_2+2\,s^2}{q_2},\\[0.5ex]
+P_{3a}(\hat{r}) &= - \left(\frac{2-s}{q_2}\right)S_3 + \frac{S_2}{q_2}.
+\end{align}
+
 \begin{thebibliography}{99}\baselineskip 5ex
 
 \bibitem{fkr} H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).

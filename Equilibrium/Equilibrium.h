@@ -118,7 +118,7 @@ class Equilibrium : private Utility
 
   // ------------------
   // Machine parameters
-  // =-----------------
+  // ------------------
   double         R0;    // Major radius of magnetic axis (read from JSON file)
   double         B0;    // Toroidal magnetic field-strength on magnetic axis (read from JSON file)
   double         n0;    // Electron number density on magnetic axis (read from JSON file)
