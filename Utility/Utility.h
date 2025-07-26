@@ -12,7 +12,12 @@
 //  rfitzp@utexas.edu
 
 // Class uses following external libraries:
-//  nclohmann JSON library (https://github.com/nlohmann/json)
+//  nclohmann JSON library             (https://github.com/nlohmann/json)
+//  Blitz++ library                    (https://github.com/blitzpp/blitz)
+//  GNU scientific library             (https://www.gnu.org/software/gsl)
+//  netcdf-c++ library                 (https://github.com/Unidata/netcdf-cxx4)
+//  Armadillo library                  (https://arma.sourceforge.net)
+//  Steven Johsnson's Faddeeva pacakge (http://ab-initio.mit.edu/faddeeva)
 
 // Source: https://github.com/rfitzp/TJ
 
@@ -22,11 +27,13 @@
 
 #define _CRT_SECURE_NO_DEPRECATE
 #define _USE_MATH_DEFINES
+#define ARMA_WARN_LEVEL 0
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include <time.h>
 
 #include <complex>
 #include <vector>
@@ -43,9 +50,27 @@
 #endif
 
 #include <nlohmann/json.hpp>
+#include <blitz/array.h>
+#include <gsl/gsl_const_mksa.h>
+#include <gsl/gsl_spline.h>
+#include <gsl/gsl_sf_ellint.h>
+#include <gsl/gsl_sf_bessel.h>
+#include <gsl/gsl_sf_gamma.h>
+#include <gsl/gsl_cdf.h>
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_odeiv2.h>
+#include <netcdf>
+#include <armadillo>
+
+#include "Faddeeva.h"
 
 using namespace std;
 using           json = nlohmann::json;
+using namespace blitz;
+using namespace netCDF;
+using namespace netCDF::exceptions;
+using namespace arma;
+//using namespace Faddeeva;
 
 // ############
 // Class header
@@ -89,12 +114,32 @@ public:
   double Smin;    // Minimum step-size
   double Eps;     // Minimum magnitude of (F1^2+F2^2)^1/2 at root F1(x1,x2) = F2(x1,x2) = 0
   double alpha;   // Ensures sufficient decrease in function value
-  int    MaxIter; // Maximum number of iterations 
+  int    MaxIter; // Maximum number of iterations
+
+  // ------------------
+  // Physical constants
+  // ------------------
+  double pc_e;         // Magnitude of electron charge (C)
+  double pc_c;         // Velocity of light in vacuum (m/s)
+  double pc_m_e;       // Electron rest mass (kg)
+  double pc_m_p;       // Proton rest mass (kg)
+  double pc_epsilon_0; // Vacuum permittivity (F/m)
+  double pc_mu_0;      // Vacuum permeability (F/m)
+
+  // ----------------------
+  // Mathematical constants
+  // ----------------------
+  complex<double> mc_i;    // Square root of minus one
+  double          mc_spi;  // Square root of pi
+  double          mc_sp2;  // Square root of 2 pi
   
   // Constructor
   Utility ();
   // Destructor
   ~Utility ();
+
+  // Evaluate plasma dispersion function
+  complex<double> ZPlasma (complex<double> xi);
 
   // Evaluate right-hand sides of differential equations for RK4/RK5 integration routines
   virtual void CashKarp45Rhs (double x, double* y, double* dydx);

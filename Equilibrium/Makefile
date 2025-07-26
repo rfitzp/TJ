@@ -14,7 +14,7 @@ UTILITY_DIR = ../Utility
 C_HEADER = LightEquilibrium.h Equilibrium.h 
 C_SOURCE = LightEquilibrium.cpp Equilibrium.cpp Netcdf.cpp EFIT.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o) 
-U_OBJECT = ../Utility/Utility.o
+U_OBJECT = ../Utility/Utility.o ../Utility/Faddeeva.o
 
 EXECUTABLE = ../lib/libEquilibrium.a
 

@@ -1,6 +1,6 @@
 // Flux.h
 
-// #####################################################################################
+// ####################################################################################
 // Class to read EFIT file and generate TJ coordinate system in order to check accuracy
 // of EFIT data
 
@@ -43,15 +43,7 @@
 
 #pragma once
 
-#include <blitz/array.h>
-#include <gsl/gsl_matrix.h>
-#include <gsl/gsl_odeiv2.h>
-#include <netcdf>
 #include "Utility.h"
-
-using namespace blitz;
-using namespace netCDF;
-using namespace netCDF::exceptions;
 
 // Pointers to right-hand side function for adaptive integration
 extern "C" int pRhs1 (double, const double[], double[], void*);

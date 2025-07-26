@@ -19,11 +19,6 @@ Layer::Layer ()
       exit (1);
     }
   
-  // ............................
-  // Set miscellaneous parameters
-  // ............................
-  Im = complex<double> (0., 1.);
-
   // .........................................
   // Read control parameters from TJ JSON file
   // .........................................
@@ -648,9 +643,9 @@ void Layer::SolveLayerEquations ()
   // ..............
   // Determine Pmax
   // ..............
-  complex<double> gEe = g + Im * Qe;
-  complex<double> gEi = g + Im * Qi;
-  complex<double> gPD = Pperp + (g + Im * Qi) * D*D;
+  complex<double> gEe = g + mc_i * Qe;
+  complex<double> gEi = g + mc_i * Qi;
+  complex<double> gPD = Pperp + (g + mc_i * Qi) * D*D;
   double          PS  = Pphi + Pperp;
   double          PP  = Pphi * Pperp;
   double          PD  = Pphi * D*D /iotae;
@@ -701,7 +696,7 @@ void Layer::SolveLayerEquations ()
   else
     {
       beta  = Pphi;
-      gamma = - Im * (Qe - Qi) * Pphi /Pperp + gEi;
+      gamma = - mc_i * (Qe - Qi) * Pphi /Pperp + gEi;
       X     = (alpha * beta - gamma) /2./ sqrt(beta);
 
       y[0] = - 1. + X * p - sqrt(beta) * p*p*p;
@@ -743,9 +738,9 @@ void Layer::CashKarp45Rhs (double x, complex<double>* y, complex<double>* dydx)
   // ............................................................
   complex<double> W   = y[0];
   complex<double> V   = y[1];
-  complex<double> gEe = g + Im * Qe;
-  complex<double> gEi = g + Im * Qi;
-  complex<double> gPD = Pperp + (g + Im * Qi) * D*D;
+  complex<double> gEe = g + mc_i * Qe;
+  complex<double> gEi = g + mc_i * Qi;
+  complex<double> gPD = Pperp + (g + mc_i * Qi) * D*D;
   double          PS  = Pphi + Pperp;
   double          PP  = Pphi * Pperp;
   double          PD  = Pphi * D*D /iotae;

@@ -38,34 +38,19 @@
 //  University of Texas at Austin,
 //  rfitzp@utexas.edu
 
-// Source: https://github.com/rfitzp/TJ/
+// Source: https://github.com/rfitzp/TJ
 
-// Documentation: ../Documentation/TJPaper/TJ.pdf
+// Documentation: ../Documentation/
 
 // ###################################################################################
 
 #pragma once
 
-#define ARMA_WARN_LEVEL 0
-
-#include <time.h>
-
-#include <blitz/array.h>
-#include <gsl/gsl_spline.h>
-#include <gsl/gsl_sf_gamma.h>
-#include <gsl/gsl_sf_bessel.h>
-#include <netcdf>
-#include <armadillo>
-
 #include "Utility.h"
 #include "Equilibrium.h"
 #include "Layer.h"
 #include "Island.h"
-
-using namespace blitz;
-using namespace netCDF;
-using namespace netCDF::exceptions;
-using namespace arma;
+#include "ECE.h"
 
 // ############
 // Class header
@@ -524,11 +509,11 @@ class TJ : private Utility
   double* dRdteq;         // (dR/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* dZdreq;         // dZ/dr values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
   double* dZdteq;         // (dZ/dt)/r values on central chord (read from Outputs/Equilibrium/Equilibrium.nc)
-  double* Leq;            // Length along central chord
-  double* Lres;           // Positions of rational surfaces on central chord
-  double* Rres;           // Positions of rational surfaces on central chord
-  double* Ores;           // Positions of island O-points on central chord
-  double* Xres;           // Positions of island X-points on central chord
+  double* Leq;            // Length along central chord, L
+  double* Lres;           // L values of rational surfaces on central chord
+  double* Rres;           // R values of rational surfaces on central chord 
+  double* Ores;           // R values of island O-points on central chord
+  double* Xres;           // R values of island X-points on central chord
 
   Array<double,3> bReqc;  // Perturbed B_parallel values on central chord
   Array<double,3> neeqc;  // Total n_e values on central chord
@@ -536,17 +521,21 @@ class TJ : private Utility
   Array<double,3> dneeqc; // Perturbed n_e values on central chord
   Array<double,3> dTeeqc; // Perturbed T_e values on central chord
 
-  double*            itheta;       // m_e c^2 /Te on central chord
+  double* DeltaO;  // Inward radial shift of 1st harmonic O-mode convolution function on central chord
+  double* sigmaO;  // Standard deviation of 1st harmonic O-mode convolution function on central chord
+  double* tauO;    // Optical depth of 1st harmonic O-mode convolution function on central chord
+  double* DeltaX;  // Inward radial shift of 2nd harmonic X-mode convolution function on central chord
+  double* sigmaX;  // Standard deviation of 2nd harmonic X-mode convolution function on central chord
+  double* tauX;    // Optical depth of 2nd harmonic X-mode convolution function on central chord
+
   gsl_spline**       Teeqcspline;  // Interpolated total T_e values on central chord
   gsl_spline**       dTeeqcspline; // Interpolated perturbed T_e values on central chord
   gsl_interp_accel** Teeqcacc;     // Accelerator for interpolated total T_e values on central chord
   gsl_interp_accel** dTeeqcacc;    // Accelerator for interpolated perturbed T_e values on central chord
-  Array<double,3>    Teeqd;        // Total T_e values on central chord modified by relativistic ece broadening
-  Array<double,3>    dTeeqd;       // Perturbed T_e values on central chord modified by relativistic ece broadening
-  Array<double,3>    Tee1;         // Total Te convolution integral
-  Array<double,3>    Tee2;         // Total Te normalization integral
-  Array<double,3>    dTee1;        // Perturbed Te convolution integral
-  Array<double,3>    dTee2;        // Perturbed Te normalization integral
+  Array<double,3>    TeeqdO;       // Total T_e values on central chord modified by relativistic 1st harmonic O-mode ece broadening
+  Array<double,3>    dTeeqdO;      // Perturbed T_e values on central chord modified by relativistic 1st harmonic O-mode ece broadening
+  Array<double,3>    TeeqdX;       // Total T_e values on central chord modified by relativistic 2nd harmonic X-mode ece broadening
+  Array<double,3>    dTeeqdX;      // Perturbed T_e values on central chord modified by relativistic 2nd harmonic X-mode ece broadening
 
   // --------------------------------------------------------
   // Visualization of resonant magnetic perturbation response

@@ -8,6 +8,7 @@ all:
 	(cd Flux;        make)
 	(cd Tear;        make)
 	(cd Island;      make)
+	(cd ECE;      	 make)
 	(cd TJ;        	 make)
 
 clean:
@@ -19,4 +20,5 @@ clean:
 	(cd Flux;        make clean)
 	(cd Tear;        make clean)
 	(cd Island;      make clean)
+	(cd ECE;      	 make clean)
 	(cd TJ;          make clean)

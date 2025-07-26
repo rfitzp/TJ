@@ -901,10 +901,6 @@ void Equilibrium::Solve ()
       // ...................................
       // Calculate synthetic diagnostic data
       // ...................................
-      double m_e       = 9.1093837015e-31;
-      double e         = 1.602176634e-19;
-      double epsilon_0 = 8.8541878128e-12;
-      
       for (int i = 0; i < Nf; i++)
 	{
 	  double rf = 1. - double (i) /double (Nf);
@@ -950,8 +946,8 @@ void Equilibrium::Solve ()
 	  Teeq[i] = GetTe (rf);
 
 	  double BT = B0 /Req[i];
-	  double We = e * BT /m_e;
-	  double wp = sqrt (neeq[i] * e*e /epsilon_0/m_e);
+	  double We = pc_e * BT /pc_m_e;
+	  double wp = sqrt (neeq[i] * pc_e*pc_e /pc_epsilon_0/pc_m_e);
 
 	  Weeq [i] = We;
 	  wUeq [i] =   0.5 * We + sqrt (0.25*We*We + wp*wp);
@@ -1006,8 +1002,8 @@ void Equilibrium::Solve ()
 	  Teeq[i+Nf] = GetTe (rf);
 
 	  double BT = B0 /Req[i+Nf];
-	  double We = e * BT /m_e;
-	  double wp = sqrt (neeq[i+Nf] * e*e /epsilon_0/m_e);
+	  double We = pc_e * BT /pc_m_e;
+	  double wp = sqrt (neeq[i+Nf] * pc_e*pc_e /pc_epsilon_0/pc_m_e);
 
 	  Weeq [i+Nf] = We;
 	  wUeq [i+Nf] =   0.5 * We + sqrt (0.25*We*We + wp*wp);

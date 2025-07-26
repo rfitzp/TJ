@@ -75,6 +75,7 @@
 ## Synthetic diagnostics:
 
 - *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field versus theta at given radial gridpoint
+- *Ece.py*:          Plots properties of ECE convolution functions along central chord
 - *Chord.py*:        Plots quantities along central chord
 - *Berrino.py*:      Implements Berrino algorithm for island detection
 

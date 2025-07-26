@@ -34,14 +34,7 @@
 
 #pragma once
 
-#include <blitz/array.h>
-#include <netcdf>
 #include "Utility.h"
-
-using namespace blitz;
-using namespace netCDF;
-using namespace netCDF::exceptions;
-using namespace std;
 
 // ############
 // Class header

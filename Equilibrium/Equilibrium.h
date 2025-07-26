@@ -49,15 +49,8 @@
 
 #pragma once
 
-#include <blitz/array.h>
-#include <gsl/gsl_spline.h>
-#include <netcdf>
 #include "Utility.h"
 
-using namespace blitz;
-using namespace netCDF;
-using namespace netCDF::exceptions;
-    
 // ############
 // Class header
 // ############

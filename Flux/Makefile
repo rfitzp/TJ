@@ -16,7 +16,7 @@ F_OBJECT = $(F_SOURCE:%.f90=%.o)
 C_HEADER = Flux.h
 C_SOURCE = main.cpp Flux.cpp Stage2.cpp Interpolate.cpp Integrate.cpp Plasma.cpp 
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
-U_OBJECT = ../Utility/Utility.o
+U_OBJECT = ../Utility/Utility.o ../Utility/Faddeeva.o
 
 EXECUTABLE = ../bin/flux
 

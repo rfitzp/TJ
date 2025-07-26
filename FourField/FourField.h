@@ -33,14 +33,7 @@
 
 #pragma once
 
-#include <blitz/array.h>
-#include <netcdf>
 #include "Utility.h"
-
-using namespace blitz;
-using namespace netCDF;
-using namespace netCDF::exceptions;
-using namespace std;
 
 // ############
 // Class header
@@ -91,7 +84,6 @@ private:
   // Misc
   // ....
   int lowD, rhs_chooser;
-  complex<double> Im; // Square-root of -1: Im = complex<double> (0., 1.)
   
 public:
 

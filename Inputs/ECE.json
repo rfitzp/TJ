@@ -1,0 +1,18 @@
+{
+    "Te": 10.0e3,  // Electron temperature at cyclotron resonance (eV)
+    "ne": 0.25e20, // Electron number density at cyclotron resonance (m^-3)
+    "B0": 5.3,     // Toroidal magnetic field-strength on magnetic axis (T)
+    "R0": 6.2,     // Major radius of magnetic axis (m)
+    "Rw": 6.21,    // Major radius of cyclotron resonance (m)
+
+    "zmax" : 20.0,   // Maximum value of z in z-array
+    "znum" : 1001,   // Number of points in z-array 
+    "wcmin": 0.98,   // Minumum value of wc/w1 in wc-array 
+    "wcmax": 1.5,    // Maximum value of wc/w1 in wc-array
+    "wcnum": 1001,   // Number of points in wc-array
+      
+    "acc":  1.0e-12, // Integration accuracy
+    "h0":   1.0e-3,  // Initial integration step-length
+    "hmin": 1.0e-10, // Minimum integration step-length 
+    "hmax": 1.0e-2   // Maximum integration step-length
+}

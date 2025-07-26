@@ -74,6 +74,23 @@ Utility::Utility ()
   Eps     = 1.e-12;
   alpha   = 1.e-4;
   MaxIter = 50;
+
+  // ----------------------
+  // Set physical constants
+  // ----------------------
+  pc_e         = GSL_CONST_MKSA_ELECTRON_CHARGE;
+  pc_c         = GSL_CONST_MKSA_SPEED_OF_LIGHT;
+  pc_m_e       = GSL_CONST_MKSA_MASS_ELECTRON;
+  pc_m_p       = GSL_CONST_MKSA_MASS_PROTON;
+  pc_epsilon_0 = GSL_CONST_MKSA_VACUUM_PERMITTIVITY;
+  pc_mu_0      = GSL_CONST_MKSA_VACUUM_PERMEABILITY;
+
+  // --------------------------
+  // Set mathematical constants
+  // --------------------------
+  mc_i   = complex<double> (0., 1.);
+  mc_spi = sqrt (M_PI);
+  mc_sp2 = sqrt (2. * M_PI);
 };
 
 // ##########
@@ -81,6 +98,27 @@ Utility::Utility ()
 // ##########
 Utility::~Utility ()
 {
+}
+
+// ###############################################
+// Function to evaluate plasma dispersion function
+// ###############################################
+complex<double> Utility::ZPlasma (complex<double> xi)
+{
+  complex<double> fad = Faddeeva::w (xi);
+  complex<double> Z   = mc_i * mc_spi * fad;
+
+  // if (imag (xi) < 0.)
+  //  Z -= 2. * mc_i * mc_spi * exp (-xi*xi);
+  
+  if (isnan (real (Z)) || isnan (imag (Z)) || isinf (real (Z)) || isinf (imag (Z)))
+    {
+      printf ("ZPlasma: Error: xi = (%11.4e, %11.4e)  w = (%11.4e, %11.4e)  Z = (%11.4e, %11.4e)\n",
+	      real(xi), imag(xi), real(fad), imag(fad), real(Z), imag(Z));
+      exit (1); 
+    }
+  else
+    return Z;
 }
 
 // ###############################################################

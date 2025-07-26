@@ -69,7 +69,11 @@ Program to calculate temperarature in vicinity of magnetic island.
 
 # Program Pinch
 
-Program to perform various calulations for general cylindrical pinch.
+Program to perform various calulations for general cylindrical pinch.\
+
+# Program ECE
+
+Program to calculate spatial convolution functions for electron cyclotron emission 
 
 # Directories
 

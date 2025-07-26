@@ -49,12 +49,18 @@ void TJ::VisualizeEigenfunctions ()
   Teeqc .resize(nres, 2*Nf, NPHI);
   dneeqc.resize(nres, 2*Nf, NPHI);
   dTeeqc.resize(nres, 2*Nf, NPHI);
-  Teeqd .resize(nres, 2*Nf, NPHI);
-  dTeeqd.resize(nres, 2*Nf, NPHI);
-  Tee1  .resize(nres, 2*Nf, NPHI);
-  Tee2  .resize(nres, 2*Nf, NPHI);
-  dTee1 .resize(nres, 2*Nf, NPHI);
-  dTee2 .resize(nres, 2*Nf, NPHI);
+
+  DeltaO = new double[2*Nf];
+  sigmaO = new double[2*Nf];
+  tauO   = new double[2*Nf];
+  DeltaX = new double[2*Nf];
+  sigmaX = new double[2*Nf];
+  tauX   = new double[2*Nf];
+
+  TeeqdO .resize(nres, 2*Nf, NPHI);
+  dTeeqdO.resize(nres, 2*Nf, NPHI);
+  TeeqdX .resize(nres, 2*Nf, NPHI);
+  dTeeqdX.resize(nres, 2*Nf, NPHI);
 
   Leq  = new double[2*Nf]; 
   Lres = new double[nres];
@@ -66,7 +72,6 @@ void TJ::VisualizeEigenfunctions ()
   for (int i = 0; i < NPHI; i++)
     PP[i] = double (i) * 2.*M_PI /double (NPHI);
 
-  itheta       = new double           [2*Nf];
   Teeqcspline  = new gsl_spline*      [nres*NPHI];
   dTeeqcspline = new gsl_spline*      [nres*NPHI];
   Teeqcacc     = new gsl_interp_accel*[nres*NPHI];
@@ -754,16 +759,29 @@ void TJ::VisualizeEigenfunctions ()
 	      dTeeqc(k, Nf+i, np) = dTe_c;
 	    }
 
+      // ##################################################################
+      // Calculate parameters of ECE convolution functions on central chord
+      // ##################################################################
+      ECE ece;
+
+      for (int i = 0; i < 2*Nf; i++)
+	{
+	  double sigma, Delta, tau;
+
+	  ece.GetOmodeFit (Teeq[i], neeq[i], B0, R0, R0*Req[i], sigma, Delta, tau);
+	  sigmaO[i] = sigma /R0;
+	  DeltaO[i] = Delta /R0;
+	  tauO  [i] = tau;
+
+	  ece.GetXmodeFit (Teeq[i], neeq[i], B0, R0, R0*Req[i], sigma, Delta, tau);
+	  sigmaX[i] = sigma /R0;
+	  DeltaX[i] = Delta /R0;
+	  tauX  [i] = tau;
+	}
+
       // ###########################################################
       // Correct temperature signals for relativistic ece broadening
       // ###########################################################
-      double m_e = 9.1093837015e-31;
-      double c   = 2.997924580e8;
-      double e   = 1.602176634e-19;
-
-      for (int i = 0; i < 2*Nf; i++)
-	itheta[i] = m_e*c*c /e /Teeq[i];
-
       for (int k = 0; k < nres; k++)
 	for (int np = 0; np < NPHI; np++)
 	  {
@@ -792,13 +810,12 @@ void TJ::VisualizeEigenfunctions ()
       for (int k = 0; k < nres; k++)
 	for (int np = 0; np < NPHI; np++)
 	  {
-	    dTeeqd(k, 0, np) = 0.;
-	    dTee1 (k, 0, np) = 0.;
-	    dTee2 (k, 0, np) = 0.;
-	    Teeqd (k, 0, np) = 0.;
-	    Tee1  (k, 0, np) = 0.;
-	    Tee2  (k, 0, np) = 0.;
+	    dTeeqdO(k, 0, np) = 0.;
+	    TeeqdO (k, 0, np) = 0.;
+	    dTeeqdX(k, 0, np) = 0.;
+	    TeeqdX (k, 0, np) = 0.;
 	  }
+      
 
       for (int i = 1; i < 2*Nf; i++)
 	{
@@ -830,9 +847,8 @@ void TJ::VisualizeEigenfunctions ()
 	  for (int k = 0; k < nres; k++)
 	    for (int np = 0; np < NPHI; np++)
 	      {
-		dTee1 (k, i, np) = Y[            k*NPHI + np];
-		dTee2 (k, i, np) = Y[nres*NPHI + k*NPHI + np];
-		dTeeqd(k, i, np) = Y[k*NPHI + np] /Y[nres*NPHI + k*NPHI + np];
+		dTeeqdO (k, i, np) = Y[            k*NPHI + np];
+		dTeeqdX (k, i, np) = Y[nres*NPHI + k*NPHI + np];
 	      }
 
 	  rhs_chooser = 1;
@@ -856,16 +872,15 @@ void TJ::VisualizeEigenfunctions ()
 	  for (int k = 0; k < nres; k++)
 	    for (int np = 0; np < NPHI; np++)
 	      {
-		Tee1 (k, i, np) = Y[            k*NPHI + np];
-		Tee2 (k, i, np) = Y[nres*NPHI + k*NPHI + np];
-		Teeqd(k, i, np) = Y[k*NPHI + np] /Y[nres*NPHI + k*NPHI + np];
+		TeeqdO (k, i, np) = Y[            k*NPHI + np];
+		TeeqdX (k, i, np) = Y[nres*NPHI + k*NPHI + np];
 	      }
 	}
       printf ("\n");
 
       delete[] Y; delete[] err;
     }
-}
+ }
 
 // #################################################################################
 // Function to output visualization data for resonant magnetic perturbation response
@@ -975,14 +990,17 @@ void TJ::VisualizeRMP ()
 // #####################################
 void TJ::CashKarp45Rhs (double R, double* Y, double* dYdR)
 {
-  double Romega = Req   [iomega];
-  double ith    = itheta[iomega];
+  double Romega  = Req   [iomega];
+  double _DeltaO = DeltaO[iomega];
+  double _sigmaO = sigmaO[iomega];
+  double _DeltaX = DeltaX[iomega];
+  double _sigmaX = sigmaX[iomega];
   
   for (int k = 0; k < nres; k++)
     for (int np = 0; np < NPHI; np++)
       {
 	if (R > Romega)
-	  {
+	  { 
 	    dYdR[            k*NPHI + np] = 0.;
 	    dYdR[nres*NPHI + k*NPHI + np] = 0.;
 	  }
@@ -1003,9 +1021,15 @@ void TJ::CashKarp45Rhs (double R, double* Y, double* dYdR)
 		else
 		  dTe = gsl_spline_eval (Teeqcspline [k*NPHI + np], R, Teeqcacc [k*NPHI + np]);
 	      }
+
+	    double yO = (R - Romega + _DeltaO) /_sigmaO;
+	    double yX = (R - Romega + _DeltaX) /_sigmaX;
+
+	    double GaussianO = exp (- yO*yO /2.) /mc_sp2 /_sigmaO /gsl_cdf_gaussian_P (_DeltaO/_sigmaO, 1.);
+	    double GaussianX = exp (- yX*yX /2.) /mc_sp2 /_sigmaX /gsl_cdf_gaussian_P (_DeltaX/_sigmaX, 1.);
 	    
-	    dYdR[            k*NPHI + np] =  dTe * fabs (1. - R*R /Romega/Romega) * exp (- ith * (Romega /R - 1.));
-	    dYdR[nres*NPHI + k*NPHI + np] =        fabs (1. - R*R /Romega/Romega) * exp (- ith * (Romega /R - 1.));
+	    dYdR[            k*NPHI + np] = dTe * GaussianO;
+	    dYdR[nres*NPHI + k*NPHI + np] = dTe * GaussianX;      
 	  }
       }
 }

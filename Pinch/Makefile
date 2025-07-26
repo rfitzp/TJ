@@ -14,7 +14,7 @@ UTILITY_DIR = ../Utility
 C_HEADER = Pinch.h
 C_SOURCE = main.cpp Pinch.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o) 
-U_OBJECT = ../Utility/Utility.o
+U_OBJECT = ../Utility/Utility.o ../Utility/Faddeeva.o
 
 EXECUTABLE = ../bin/pinch
 

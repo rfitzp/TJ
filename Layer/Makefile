@@ -15,7 +15,7 @@ C_SOURCE = Layer.cpp
 M_SOURCE = main.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
 M_OBJECT = $(M_SOURCE:%.cpp=%.o)
-U_OBJECT = ../Utility/Utility.o
+U_OBJECT = ../Utility/Utility.o ../Utility/Faddeeva.o
 
 LIBRARY    = ../lib/libLayer.a
 EXECUTABLE = ../bin/layer
@@ -36,7 +36,6 @@ $(C_OBJECT):		$(C_SOURCE) $(C_HEADER)
 
 $(M_OBJECT):		$(M_SOURCE) $(C_HEADER)
 			$(C_COMPILER) $(C_FLAGS) -o $*.o -c $(C_INCLUDE) -I../include $(M_SOURCE)
-
 
 $(U_OBJECT):
 			$(MAKE) -C $(UTILITY_DIR)

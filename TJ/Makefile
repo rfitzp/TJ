@@ -27,7 +27,7 @@ U_OBJECT = ../Utility/Utility.o
 EXECUTABLE = ../bin/tj
 
 $(EXECUTABLE):	 	$(C_OBJECT) $(BUILD_DIR) $(EQUILIBRIUM_LIB) $(LAYER_LIB) $(ISLAND_LIB)
-			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(U_OBJECT) $(C_LIBS) -L../lib -lEquilibrium -lLayer -lIsland
+			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(U_OBJECT) $(C_LIBS) -L../lib -lEquilibrium -lLayer -lIsland -lEce
 
 $(BUILD_DIR):
 			@mkdir -p $(BUILD_DIR)

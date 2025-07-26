@@ -37,14 +37,8 @@
 
 #pragma once
 
-#include <gsl/gsl_sf_bessel.h>
-#include <gsl/gsl_spline.h>
-#include <netcdf>
 #include "Utility.h"
 
-using namespace netCDF;
-using namespace netCDF::exceptions;
-    
 // ############
 // Class header
 // ############

@@ -13,7 +13,7 @@ UTILITY_DIR = ../Utility
 C_HEADER = Tear.h
 C_SOURCE = main.cpp Tear.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
-U_OBJECT = ../Utility/Utility.o
+U_OBJECT = ../Utility/Utility.o ../Utility/Faddeeva.o
 
 EXECUTABLE = ../bin/tear
 

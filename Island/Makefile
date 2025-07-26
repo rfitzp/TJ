@@ -15,7 +15,7 @@ C_SOURCE = Island.cpp
 M_SOURCE = main.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
 M_OBJECT = $(M_SOURCE:%.cpp=%.o)
-U_OBJECT = ../Utility/Utility.o
+U_OBJECT = ../Utility/Utility.o ../Utility/Faddeeva.o
 
 LIBRARY    = ../lib/libIsland.a
 EXECUTABLE = ../bin/island

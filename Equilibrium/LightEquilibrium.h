@@ -55,11 +55,7 @@
 
 #pragma once
 
-#include <blitz/array.h>
-#include <gsl/gsl_spline.h>
 #include "Utility.h"
-
-using namespace blitz;
     
 // ############
 // Class header

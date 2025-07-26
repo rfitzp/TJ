@@ -511,8 +511,10 @@ void TJ::CleanUp ()
       delete[] rf;     delete[] req;    delete[] teq;    delete[] Req; 
       delete[] Zeq;    delete[] BReq;   delete[] neeq;   delete[] Teeq;
       delete[] dRdreq; delete[] dRdteq; delete[] dZdreq; delete[] dZdteq;
-      delete[] Leq;    delete[] PP;     delete[] Lres;   delete[] itheta;
+      delete[] Leq;    delete[] PP;     delete[] Lres;   
       delete[] Rres;   delete[] Ores;   delete[] Xres;
+      delete[] DeltaO; delete[] sigmaO; delete[] tauO;
+      delete[] DeltaX; delete[] sigmaX; delete[] tauX;
 
       for (int k = 0; k < nres; k++)
 	for (int np = 0; np < NPHI; np++)

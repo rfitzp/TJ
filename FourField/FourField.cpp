@@ -19,11 +19,6 @@ FourField::FourField ()
       exit (1);
     }
 
-  // ............................
-  // Set miscellaneous parameters
-  // ............................
-  Im = complex<double> (0., 1.);
-
   // ......................................
   // Read control parameters from JSON file
   // ......................................
@@ -277,9 +272,9 @@ void FourField::SolveThreeFieldLayerEquations ()
   // ..............
   // Determine Pmax
   // ..............
-  complex<double> gEe = g + Im * Qe;
-  complex<double> gEi = g + Im * Qi;
-  complex<double> gPD = Pperp + (g + Im * Qi) * D*D;
+  complex<double> gEe = g + mc_i * Qe;
+  complex<double> gEi = g + mc_i * Qi;
+  complex<double> gPD = Pperp + (g + mc_i * Qi) * D*D;
   double          PS  = Pphi + Pperp;
   double          PP  = Pphi * Pperp;
   double          PD  = Pphi * D*D /iotae;
@@ -331,7 +326,7 @@ void FourField::SolveThreeFieldLayerEquations ()
   else
     {
       beta  = Pphi;
-      gamma = - Im * (Qe - Qi) * Pphi /Pperp + gEi;
+      gamma = - mc_i * (Qe - Qi) * Pphi /Pperp + gEi;
       X     = (alpha * beta - gamma) /2./ sqrt(beta);
 
       y[0] = - 1. + X * p - sqrt(beta) * p*p*p;
@@ -366,17 +361,17 @@ void FourField::SolveFourFieldLayerEquations ()
   // ..............
   // Determine Pmax
   // ..............
-  complex<double> gEe  = g + Im * Qe;
-  complex<double> gEi  = g + Im * Qi;
-  complex<double> gPD  = Pperp + (g + Im * Qi) * D*D;
+  complex<double> gEe  = g + mc_i * Qe;
+  complex<double> gEi  = g + mc_i * Qi;
+  complex<double> gPD  = Pperp + (g + mc_i * Qi) * D*D;
   complex<double> R    = Pperp + (1. - 1./iotae) * D*D * gEi;
   double          PD   = Pphi * D*D /iotae;
   double          cbm2 = 1./cbeta/cbeta;
 
   complex<double> F11_4 = gEi + Pphi * gEe;
   complex<double> F12_4 = gEi + Pphi * gEe /iotae;
-  complex<double> F21_4 = - Im * Qe * Pphi        + cbm2 * (g * D*D * gEi + Pphi * Im * Qe);
-  complex<double> F22_4 = - Im * Qe * Pphi /iotae + cbm2 * (g * gPD       + Pphi * gEe);
+  complex<double> F21_4 = - mc_i * Qe * Pphi        + cbm2 * (g * D*D * gEi + Pphi * mc_i * Qe);
+  complex<double> F22_4 = - mc_i * Qe * Pphi /iotae + cbm2 * (g * gPD       + Pphi * gEe);
 
   complex<double> F11_6 = Pphi;
   complex<double> F12_6 = Pphi /iotae;
@@ -424,10 +419,10 @@ void FourField::SolveFourFieldLayerEquations ()
   CashKarp45Fixed (4, p, y, err, pend - p);
  
   CashKarp45Rhs (p, y, dydp);
-  Deltas4 = M_PI /(dydp[0] - dydp[1] * Im * Qe /gEe);
+  Deltas4 = M_PI /(dydp[0] - dydp[1] * mc_i * Qe /gEe);
 
   /*
-  complex<double> E12 = - 2. * Im * Qe /(complex<double> (g_r, g_i) + Im * Qe);
+  complex<double> E12 = - 2. * mc_i * Qe /(complex<double> (g_r, g_i) + mc_i * Qe);
   printf ("W_11 = (%10.3e, %10.3e) W_21 = (%10.3e, %10.3e)\n",
 	  real (y[0]), imag(y[0]), real (2.*y[2]/E12), imag (2.*y[2]/E12));
   complex<double> W21 = 0.5 * E12 * (dydp[0] - dydp[3]);
@@ -464,9 +459,9 @@ void FourField::CashKarp45Rhs (double x, complex<double>* y, complex<double>* dy
       // ........................................................................
       complex<double> W   = y[0];
       complex<double> V   = y[1];
-      complex<double> gEe = g + Im * Qe;
-      complex<double> gEi = g + Im * Qi;
-      complex<double> gPD = Pperp + (g + Im * Qi) * D*D;
+      complex<double> gEe = g + mc_i * Qe;
+      complex<double> gEi = g + mc_i * Qi;
+      complex<double> gPD = Pperp + (g + mc_i * Qi) * D*D;
       double          PS  = Pphi + Pperp;
       double          PP  = Pphi * Pperp;
       double          PD  = Pphi * D*D /iotae;
@@ -500,20 +495,20 @@ void FourField::CashKarp45Rhs (double x, complex<double>* y, complex<double>* dy
       double D2 = D*D;
       double cm = 1./cbeta/cbeta;
 
-      complex<double> gEe = g + Im * Qe;
-      complex<double> gEi = g + Im * Qi;
-      complex<double> gPD = Pperp + (g + Im * Qi) * D*D;
+      complex<double> gEe = g + mc_i * Qe;
+      complex<double> gEi = g + mc_i * Qi;
+      complex<double> gPD = Pperp + (g + mc_i * Qi) * D*D;
       complex<double> gP2 = g + Pphi * p2;
 
       complex<double> E11 = 2. * gEe /(gEe + p2);
-      complex<double> E21 = - 2. * Im * Qe * (g + 2. * Pphi * p2) /(gEe + p2) /gP2;
+      complex<double> E21 = - 2. * mc_i * Qe * (g + 2. * Pphi * p2) /(gEe + p2) /gP2;
       complex<double> E22 = - 2. * Pphi * p2 /gP2;
 
       complex<double> F11 = p2 * (gEe + p2) * (gEi + Pphi * p2);
       complex<double> F12 = p2 * (gEe + p2) * (gEi + Pphi * p2 /iotae);
-      complex<double> F21 = - Im * Qe * p2 * (gEi + Pphi * p2)
-	+ cm * p2 * gP2 * (Im * Qe + D2 * gEi * p2 + D2 * Pphi * p4);
-      complex<double> F22 = - Im * Qe * p2 * (gEi + Pphi * p2 /iotae)
+      complex<double> F21 = - mc_i * Qe * p2 * (gEi + Pphi * p2)
+	+ cm * p2 * gP2 * (mc_i * Qe + D2 * gEi * p2 + D2 * Pphi * p4);
+      complex<double> F22 = - mc_i * Qe * p2 * (gEi + Pphi * p2 /iotae)
 	+ cm * p2 * gP2 * (gEe + gPD * p2 + D2 * Pphi * p4 /iotae);
 
       complex<double> W11 = y[0];
