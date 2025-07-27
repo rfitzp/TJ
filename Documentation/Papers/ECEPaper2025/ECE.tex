@@ -30,11 +30,11 @@ overall magnetic structure of the NTM, as well as the global  perturbation to th
 \section{Introduction}
 The transient heat fluxes and electromagnetic stresses that the plasma facing components would experience during a disruption in
 a next-generation tokamak, such as ITER,   that is large enough to produce substantial amounts of fusion energy, are unacceptably large.\cite{iter,wesson}  Consequently, such a tokamak must be capable of  operating reliably in an essentially disruption-free manner. 
-Disruptions in tokamaks are triggered by macroscopic magnetohydrodynamical (MHD) instabilities.\cite{jet} Fortunately, disruptions associated with both ideal instabilities   and
+Virtually all disruptions in tokamaks are triggered by macroscopic magnetohydrodynamical (MHD) instabilities.\cite{jet,vries} Fortunately, disruptions associated with both ideal instabilities   and
 ``classical'' tearing instabilities can   be readily avoided  by keeping the toroidal plasma current, the  mean plasma pressure, and
-the mean electron number density below  critical values that are either easily calculable or well-known empirically.\cite{iter}  
+the mean electron number density below  critical values that are either easily calculable or well-known empirically.\cite{iter,decaf}  
 
-A tearing mode\,\cite{tear1} of finite amplitude generates a helical magnetic island chain\,\cite{ntm1} in the vicinity of the rational surface\,\cite{ideal3} at which it reconnects magnetic flux.
+A tearing mode\,\cite{tear1} of finite amplitude generates a helical magnetic island chain\,\cite{ntm1} in the vicinity of the ``rational''  magnetic flux-surface\,\cite{ideal3} at which it reconnects magnetic flux.
 If the radial width of the island chain exceeds a relatively small threshold value then rapid  heat transport parallel to magnetic field-lines causes a flattening of the  electron temperature profile
 that is localized within the chain's magnetic separatrix.\cite{ntm2} The associated loss of the pressure-gradient-driven non-inductive neoclassical bootstrap current\,\cite{ntm3} within the separatrix
 has a destabilizing effect that can render a linearly-stable tearing mode unstable at finite amplitude. This type of instability is known as a {\em neoclassical tearing mode}\/  (NTM).\cite{tftr,ntm4c,ntm4b,ntm4a}  A large proportion of fusion-relevant tokamak
@@ -53,14 +53,13 @@ Fortunately, NTMs can be reliably suppressed via electron cyclotron current driv
 successfully implemented on many tokamaks,\cite{eccd1,eccd2,eccd3,eccd3a,eccd3b,eccd4,eccd5} involves
 launching electron cyclotron waves into the plasma in such a manner that they drive a toroidal current (in the same direction as the equilibrium current) that is 
 localized  inside the magnetic separatrix of
-the NTM island chain. The idea is to compensate for the loss of the bootstrap current inside the separatrix consequent on the local flattening
+the NTM island chain. The idea is to compensate for the loss of the bootstrap current within the separatrix consequent on the local flattening
 of the electron temperature profile.\cite{ntm4,ntm5} 
 
 The successful suppression of an NTM via ECCD depends crucially on the {\em early detection}\/ of the mode, combined with an {\em accurate}\/ measurement   of 
 the instantaneous location of, at least, one of the O-points  of the associated island chain.\cite{eccd6} In fact, because the island chain is radially thin, 
 but relatively extended in poloidal and toroidal angle, the measurement  of the radial location of the O-point is, by far,  the most difficult aspect of
-this process. The most accurate method of determining the radial location of the O-point is to measure the temperature fluctuations associated with the island
-chain by means of electron cyclotron emission (ECE) radiometry.\cite{ece1,ece2,ntm2,ece4}
+this process. The most convenient method of  detecting an NTM, and simultaneously determining the radial location of an associated island O-point, is to measure the temperature perturbation associated with the mode by means of electron cyclotron emission (ECE) radiometry.\cite{ece1,ece2,ntm2,ece4}
 
 Given the crucial importance of early and accurate detection of NTMs via ECE radiometry to the success of next-generation tokamaks, existing theoretical calculations of
 the expected ECE signal are surprisingly primitive.\cite{eccd6,ece4,ece4a} The aim of this paper is to
@@ -87,13 +86,13 @@ electron temperature perturbation associated with the NTM in the inner and outer
 
 In this paper, the asymptotic matching is performed using the TJ toroidal tearing mode code,\cite{tear9,tear10}  which employs an aspect-ratio
 expanded toroidal magnetic equilibrium.\cite{exp} The TJ code is used for the sake of convenience. However, the calculations described in this paper
-could just as well be implemented in a toroidal tearing mode code, such as STRIDE,\cite{tear7,tear8} that employs a general toroidal magnetic 
+could just as well be implemented using a toroidal tearing mode code, such as STRIDE,\cite{tear7,tear8} that employs a general toroidal magnetic 
 equilibrium. 
 
 This paper is organized as follows. The adopted plasma equilibrium is described in Sect.~\ref{s2}.  In Sect.~\ref{s3}, the perturbed electron temperature associated with  an NTM is calculated in the outer region. The corresponding perturbed electron temperature  in the inner region is calculated in Sect.~\ref{s4}. The
 global perturbed electron temperature, obtained by asymptotically matching the perturbed temperatures  in  the inner and outer regions, is
 described in Sect.~\ref{s5}. 
-%The ECE signal due to the NTM is calculated in Sect.~\ref{s6}.
+The ECE signal due to the NTM is calculated in Sect.~\ref{s6}.
  Finally, the paper is summarized, and conclusions are drawn, in Sect.~\ref{s7}. 
 
 \section{Plasma Equilibrium}\label{s2}
@@ -139,7 +138,7 @@ R(\hat{r},\omega) &= 1 -a\,\hat{r}\,\cos\omega + a^{2}\left[H_1(\hat{r})\,\cos \
 Z(\hat{r},\omega)&= a\,\hat{r}\,\sin\omega +a^{2}\left[H_2(\hat{r})\,\sin 2\,\omega+H_3(\hat{r})\,\sin 3\,\omega\right], \label{e20x}
 \end{align}
 where  $r=a\,\hat{r}$. 
-Here, the dimensionless functions $H_1(\hat{r})$, $H_2(\hat{r})$, and $H_3(\hat{r})$ control the Shafranov shifts, vertical elongations, and  triangularities of
+Here, the dimensionless functions $H_1(\hat{r})$, $H_2(\hat{r})$, and $H_3(\hat{r})$ control the Shafranov shift, vertical elongation, and  triangularity of
 the flux-surfaces, respectively. 
 Moreover,\cite{exp}
 \begin{align}
@@ -150,13 +149,20 @@ H_j''&= -(3-2\,s)\,\frac{H_j'}{\hat{r}}+(j^2-1)\,\frac{H_j}{\hat{r}^{\,2}}~~~~~\
 \theta &= \omega+a\,\hat{r}\,\sin\omega - a\sum_{j=1,3}\frac{1}{j}\left[H_j'-(j-1)\,\frac{H_j}{\hat{r}}\right]\sin j\,\omega,
 \end{align}
 where $s(\hat{r}) = \hat{r}\,q'/q$ is the magnetic shear, and $'$ denotes $d/d\hat{r}$. The plasma equilibrium is fully specified by the value of $a$, the two free
-flux-surface functions $q(\hat{r})$ and $p_2(\hat{r})$, and the values of $H_2(1)$ and $H_3(1)$. 
+flux-surface functions $q(\hat{r})$ and $p_2(\hat{r})$, the values of $H_2(1)$ and $H_3(1)$, and the electron number density profile, $n_e(\hat{r})$. 
 
 \subsection{Example Plasma Equilibrium}
 Figures~\ref{figa} and \ref{figb} show the magnetic flux-surfaces and profiles of an ITER-like  example plasma equilibrium characterized by 
-$B_0=5.3$ T, $R_0=6.2$ m, $a=0.2$, $H_2(1)=1.0$,  $H_3(1)= 0.5$, $q(0)=1.01$, and  $q(a)=3.6$.  The toroidal plasma current is $I_t=2.5$\,MA. (This rather low value
-is symptomatic of the fact that the true ITER inverse aspect-ratio is  $0.32$ rather than $0.20$.) The normalized plasma inductance is
-$l_i=1.16$. Finally, the normalized beta is $\beta_N= 1.32$. 
+$B_0=5.3$ T, $R_0=6.2$ m, $a=0.2$, $H_2(1)=1.0$,  $H_3(1)= 0.5$, $q(0)=1.01$, and  $q(a)=3.6$.  The normalized plasma inductance is
+$l_i=1.16$, and the normalized beta is $\beta_N= 1.32$.
+The toroidal plasma current is $I_t=2.44$\,MA. This rather low value
+is symptomatic of the fact that the true ITER inverse aspect-ratio is  $0.32$ rather than $0.20$. Unfortunately, the TJ code, which is based on
+an expansion in the inverse aspect-ratio,  does not give accurate results for inverse aspect-ratios
+in excess of 0.2. 
+Note that the normalized central pressure, $p_2(0)$---and, hence, the product of the central electron number density and the electron temperature---is  limited by the requirement that the classical
+ 2,\,1 and 3, 2 tearing modes remain stable. 
+Thus,  a rather small value of the central electron number density, $n_{e\,0}=2.5\times 10^{19}\,{\rm m}^{-3}$, 
+must be adopted  in order to permit a realistic central electron number density of $T_{e\,0}\sim 20\,{\rm keV}$. 
 
 \section{Perturbed Electron Temperature  in Outer Region}\label{s3}
 \subsection{Perturbation in Outer Region}
@@ -184,10 +190,10 @@ where
 \nu_{S\,k} &= \frac{1}{2}+\sqrt{-D_{I\,k}},\\[0.5ex]
 D_{I\,k}&= - \left[\frac{2\,(1-q^2)}{s^2}\,r\,\frac{dP}{dr}\right]_{r_k} -\frac{1}{4}\label{di}
 \end{align}
-Here,  $A_{L\,k}$ is termed the coefficient of the ``large'' solution, whereas $A_{S\,k}^\pm$ are the coefficients of the ``small'' solution.
+Here,  $A_{L\,k}$ is termed the coefficient of the {\em large}\, solution, whereas $A_{S\,k}^\pm$ are the coefficients of the {\em small}\/ solution.
 Here, $A_{S\,k}^+$ corresponds to the region $x>0$, whereas  $A_{S\,k}^-$ corresponds to the region $x<0$. Furthermore, $D_{I\,k}$ is the ideal
 Mercier interchange parameter (which needs to be negative to ensure stability to localized interchange modes),\cite{mercier,ggj,ggj1} and $\nu_{L\,k}$ and $\nu_{S\,k}$
-are termed the Mercier indices. 
+are termed the {\em Mercier indices}. 
 
 It is helpful to define the quantities\,\cite{tear9}
 \begin{align}\label{Psidef}
@@ -245,7 +251,7 @@ where
 \begin{equation}\label{poisson}
 [A,B] \equiv \left.\frac{\partial A}{\partial X}\right|_\zeta \left.\frac{\partial B}{\partial\zeta}\right|_X- \left.\frac{\partial B}{\partial X}\right|_\zeta \left.\frac{\partial A}{\partial\zeta}\right|_X.
 \end{equation}
-This requirement stipulates that the current density in the island region must be constant on magnetic flux-surfaces. 
+This requirement stipulates that the current density in the island region must be constant on magnetic flux-surfaces.\cite{ntm1}
 
 \subsection{Island Magnetic Flux-Surfaces}
 A suitable solution of Eq.~(\ref{e26}) that connects to the ideal-MHD solution in the outer region is\,\cite{island}
@@ -282,7 +288,7 @@ Thus, as illustrated in Fig.~\ref{fig2}, irrespective of the value of the asymme
 plotted in $Y$, $\xi$ space, the magnetic flux-surfaces map out a symmetric (with respect to $Y=0$) island
 chain whose O-points lie at $\xi=\pi$, $Y=0$,
 and ${\mit\Omega}=-1$, and whose X-points lie at $\xi=0$, $2\pi$, $Y=0$, and ${\mit\Omega}=+1$.  The fact that the radially asymmetric island flux-surfaces can
-be remapped to a set of radially symmetric surfaces greatly simplifies our calculation. 
+be remapped to a set of radially symmetric surfaces greatly simplifies our analysis. 
 
 The inversion of Eq.~(\ref{ekepler}) is very well known:\,\cite{bc}
 \begin{align}\label{e9a1}
@@ -394,7 +400,7 @@ A_+({\mit\Omega},\xi)= \frac{1}{2}\left[A(+1,{\mit\Omega},\xi) + A(-1,{\mit\Omeg
 \end{equation}
 
 \subsection{Wide Island Limit}
-In the so-called ``wide island limit'', in which parallel electron heat transport dominates perpendicular heat transport,\cite{ntm2,island}
+In the so-called {\em wide island limit}, in which parallel electron heat transport dominates perpendicular heat transport,\cite{ntm2,island}
 the electron temperature in the vicinity of the island chain can be written
 \begin{equation}
 T_e(X,\zeta) = T_{e\,l} + \varsigma\,W\,T_{e\,l}'\,\tilde{T}({\mit\Omega}),
@@ -559,7 +565,7 @@ G_{\rm eccd} &= - 16\int_{-1}^\infty \frac{\langle J_+\rangle\,\langle \cos\zeta
 Here,  $J_+(x,\zeta)$ is the component of the normalized  (such that the peak value is unity) current density profile driven by electron cyclotron waves that is even in $Y$. 
 Moreover, 
 \begin{align}
-\tau_R &= \left(\frac{\mu_0\,r^2}{\eta_\parallel}\right)_{r_l},\\[0.5ex]
+\tau_R &= \left(\frac{\mu_0\,r^2\,R_0^{\,2}}{\eta_\parallel}\right)_{r_l},\\[0.5ex]
 \hat{\beta} &= \left(\frac{\mu_0\,n_e\,T_{e\,0}}{B_0^{\,2}}\right)_{r_l}\frac{L_s}{L_T}\,\\[0.5ex]
 L_s&=\left(\frac{q}{s}\right)_{r_l},\\[0.5ex]
 L_T &= -\left(\frac{T_{e\,0}}{dT_{e\,0}/dr}\right)_{r_l},\\[0.5ex]
@@ -569,8 +575,8 @@ f_t&= 1.46\,r^{1/2},\\[0.5ex]
 L_c &= \left[\frac{1}{r\,(1-1/q^2) -a\,s\,H_1'}\right]_{r_l}.
 \end{align}
 Here, $E_{ll}$ is the  normalized linear tearing stability index of an $m_l$, $n$ tearing mode
- that only reconnects magnetic flux at the $l$th rational surface,\cite{tear5} $\tau_R$ is the resistive diffusion timescale, $\eta_\parallel(r)$  the plasma parallel electrical resistivity, $\hat{\beta}$ the normalized electron pressure, $L_s$  the magnetic shear-length, 
-$L_T$ the electron temperature gradient scale-length, $L_c$ the average magnetic field-line curvature scale-length, and $f_t$  the fraction of trapped particles. Moreover, for a plasma with an effective charge
+ that only reconnects magnetic flux at the $l$th rational surface,\cite{tear5} $\tau_R$ is the resistive diffusion timescale, $\eta_\parallel(r)$  the plasma parallel electrical resistivity, $\hat{\beta}$ the normalized electron pressure, $L_s$  the (normalized) magnetic shear-length, 
+$L_T$ the (normalized) electron temperature gradient scale-length, $L_c$ the (normalized) average magnetic field-line curvature scale-length, and $f_t$  the fraction of trapped particles. Moreover, for a plasma with an effective charge
 number of unity, $\beta_{11}=1.641$ and $\beta_{12}= 1.225$.\cite{fitz}
 Finally,
 \begin{equation}\label{ecur}
@@ -651,9 +657,9 @@ $\zeta$ (which, in practice, is achieved by not modulating the source).\cite{ece
 Note that if the ECCD is optimal
 (i.e., $d=0$ and ${\mit\Delta}\zeta=0$) then $G_{\rm eccd}$ attains a maximum value of $1.433$ for an island whose asymmetry parameter is $\delta=0.2$. 
 Making use of Eqs.~(\ref{eruth}) and (\ref{ecur}),  as well as the information in Table~\ref{t1} and Fig.~\ref{fig6}, 
-we deduce that the critical normalized peak driven current density at the $q=3/2$ surface needed to stabilize a 3, 2 NTM with an asymmetry parameter of $\delta = 0.2$ is $J_{\rm max\,crit}= 0.49$, which corresponds
-to an unnormalized peak current density of $j_{\rm max\,crit}= 1.9\times 10^5\,{\rm A/m^2}$. Likewise, the critical normalized peak driven current density at the $q=2$ surface needed to stabilize a 2, 1 NTM with an asymmetry parameter of $\delta = 0.2$ is $J_{\rm max\,crit}= 0.28$, which corresponds
-to an unnormalized peak current density of $j_{\rm max\,crit}= 1.6\times 10^5\,{\rm A/m^2}$
+we deduce that the critical normalized peak driven current density at the $q=3/2$ surface needed to stabilize a 3, 2 NTM with an asymmetry parameter of $\delta = 0.2$ is $J_{\rm max\,crit}= 0.48$, which corresponds
+to an unnormalized peak current density of $j_{\rm max\,crit}= 1.9\times 10^5\,{\rm A/m^2}$. Likewise, the critical normalized peak driven current density at the $q=2$ surface needed to stabilize a 2, 1 NTM with an asymmetry parameter of $\delta = 0.2$ is $J_{\rm max\,crit}= 0.27$, which corresponds
+to an unnormalized peak current density of $j_{\rm max\,crit}= 1.5\times 10^5\,{\rm A/m^2}$
 
 Figures~\ref{fig8} and \ref{fig9} show the integral $G_{\rm eccd}$ evaluated  as a function of $d/D$ for wide islands of width $W=2\,D$ and $4\,D$, respectively, and asymmetry parameter
 $\delta=0.5$. It can be seen that, as the island increases in width, the optimum radial location of the ECCD profile shifts inward from the rational
@@ -702,7 +708,7 @@ $\phi=\pi/(2\,n)$. However, the presence of the overtone harmonics spoils this s
 well as different poloidal mode numbers). Hence, it is necessary to separately calculate the temperature perturbation at a large number of equally-spaced values of $\phi$. 
 
 Table~\ref{t2} shows various parameters derived from the asymptotic matching process for a 3, 2 and a 2, 1 NTM in the example plasma equilibrium pictured in Figs.~\ref{figa} and
-\ref{figb}. In both cases, we have chosen rather wide islands of width $W=0.1\,a$ for ease of visualization. The asymmetry parameter for the 3, 2 mode is $\delta=0.271$,
+\ref{figb}. In both cases, we have chosen rather wide islands of width $W=0.1\,a$ for ease of visualization. The asymmetry parameter for the 3, 2 mode is $\delta=0.272$,
 whereas that for the 2, 1 mode is $\delta=0.150$. This implies that both modes are characterized by radial asymmetric island chains in which the island O-points are
 shifted radially inward from the rational surfaces. Both modes are also (by design) characterized by rather small reductions in the equilibrium electron temperature outside the
 rational surface, and quite substantial reductions inside the rational surfaces.
@@ -717,93 +723,105 @@ outer region have poloidal mode numbers in the range $m=-10$ to $m=+20$. The all
 $\nu$ lies in the range $0$ to 15.) It can be seen that the temperature perturbations have quite complicated structures. Nevertheless, when the temperature perturbations are
 added to the equilibrium electron temperature profile then flat spots are clearly visible in the vicinity of the NTM rational surfaces, as shown in Fig.~\ref{fig12}. 
 
-\iffalse
 \section{Synthetic ECE Diagnostic}\label{s6}
-The ECE signal generated by an NTM is  measured on a horizontal chord that passes through the magnetic axis of the plasma. See Fig.~\ref{figa}. This chord
-is such that $Z$ and $\phi$ are constant on it, whereas $R$ varies. Such a chord corresponds to a possible  path of ECE because 
-the perpendicular gradient of the plasma refractive index is zero along the chord due to the up-down symmetric nature of the plasma equilibrium. The fact that $\phi$
-is constant along the chord means that Doppler
-broadening of the ECE signal is minimized.\cite{ece4a,ece5} 
+The ECE signal generated by an NTM is  usually measured on a horizontal chord that passes through the magnetic axis of the plasma. See Fig.~\ref{figa}.  Such a chord corresponds to a possible  path of ECE because 
+the perpendicular gradient of the plasma refractive index is zero along the chord due to the up-down symmetric nature of the plasma equilibrium. The fact that the
+chord path is normal to the equilibrium magnetic field means that Doppler
+broadening of the ECE signal is eliminated.\cite{ece4a,ece5,bornatici} 
 
-In thermal equilibrium, assuming that the electron temperature is sufficiently large to make the plasma optically thick in the interior of the plasma, the intensity of ECE emission is directly proportional to the electron temperature, $T_e$,  of the region of the plasma from which it originates.\cite{ece1,ece2} Moreover, the frequency of the emission can be used to infer the major radius, $R$,  of the
-emitting region. In other words, an ECE diagnostic is capable of measuring the function $T_e(R)$. However, the resolution of the diagnostic is limited by relativistic downshifting and 
-broadening in frequency.   
+Gyrating electrons emit electron cyclotron radiation at frequencies that satisfy\,\cite{bornatici}
+\begin{equation}
+\omega= j\,\omega_c,
+\end{equation}
+where the positive integer $j$ is the harmonic number, and $\omega_c$ is the local cyclotron frequency. The radiation propagates parallel to the
+measurement chord in a direction perpendicular to the equilibrium magnetic field. There are two independent polarizations. O-mode radiation is
+polarized such that the electric component of the wave is parallel to the equilibrium magnetic field, whereas X-mode radiation is polarized such that the
+electric component of the wave is perpendicular to the field.\cite{plasma}
 
-The complete theory of the relativistic downshifting and broadening of an ECE signal  is extremely complicated.\cite{ece1,ece2} In this
-paper, we adopt a simplified model that captures the essence of the process. Neglecting Doppler broadening, but taking the relativistic mass
-increase of the electron into account,  the angular frequency of a $j$th harmonic ECE signal is\,\cite{plasma}
+Neglecting the relativistic mass increase of electrons, the {\em cyclotron frequency}\/ takes the form\,\cite{plasma}
 \begin{equation}
-\omega = \frac{j\,{\mit\Omega}_0\,R_0}{R}\,\left[1-\left(\frac{v}{c}\right)^2\right]^{1/2},
+\omega_c = \frac{e\,B}{m_e},
 \end{equation}
-where ${\mit\Omega}_0=e\,B_0/m_e$, $v$ is the electron speed, $c$ the speed of light in vacuum, $e$ the magnitude of the electron charge, 
-and $m_e$  the electron rest mass. Here, we are neglecting the equilibrium poloidal magnetic field-strength, and assuming that the toroidal
-field-strength falls off like $1/R$, which is an excellent approximation in our model plasma equilibrium. Let
+where $B$ is the local magnetic field-strength, $e$ the magnitude of the electron charge, and $m_e$ the electron rest mass.
+Now, in ITER-like plasmas, it is an excellent approximation to write
 \begin{equation}
-R_\omega(\omega) = \frac{j\,{\mit\Omega}_0\,R_0}{\omega}
+B(R)= \frac{B_0\,R_0}{R}.
 \end{equation}
-be the major radius from which the ECE of frequency $\omega$ is emitted  in the absence of relativistic downshifting and broadening. 
-Note that the function $R_\omega(\omega)$ specifies the relationship between the frequency of the ECE signal and the inferred major radius from
-which it originates. Making use of the previous two equations, we can write
+It is convenient to define
+\begin{equation}\label{romega}
+R_\omega(\omega) = \frac{j\,\omega_{c\,0}\,R_0}{\omega},
+\end{equation}
+as the major radius from which $j$th harmonic ECE of frequency $\omega$ would originate in the absence of the relativistic mass increase. Here, $\omega_0=e\,B_0/R_0$. 
+
+In thermal equilibrium, assuming that the electron number density is sufficiently large to render the plasma optically thick (see Fig.~\ref{fece}), the intensity of ECE  is directly proportional to the electron temperature, $T_e$,  of the region of the plasma from which it originates.\cite{bornatici} 
+ Moreover, the frequency of the emission, $\omega$, can be used to infer the major radius, $R_\omega(\omega)$,  of the
+emitting region by means of Eq.~(\ref{romega}). In other words, an ECE diagnostic is capable of measuring the function $T_e(R_\omega)$. Unfortunately, this simple scheme is spoiled by the
+fact that, due to the relativistic mass increase of gyrating electrons,  the true cyclotron frequency is
+\begin{equation}
+\omega_c = \frac{e\,B\,\sqrt{1-v^2/c^2}}{m_e},
+\end{equation}
+where $v$ is the electron speed, and $c$ the velocity of light in vacuum. Given that the gyrating electrons have a range of different speeds, they emit
+cyclotron radiation in a range of frequencies that lies below the non-relativistic cyclotron frequency. This implies that radiation of a given frequency
+actually emanates from a range of major radii that lie slightly inside $R_\omega$. The relativistic downshifting and broadening
+in frequency of ECE  causes the measured temperature profile to be both shifted outward and smeared out in major radius. 
+
+Now, gyrating electrons that emit electron cyclotron radiation of a given frequency are also capable of absorbing such radiation. 
+ The reabsorption of the electron cyclotron radiation, as it propagates out of the plasma, reduces the  downshifting and broadening
+in frequency, and, therefore, increases the spatial resolution of an ECE diagnostic. The two ECE modes that are most strongly
+absorbed by the plasma are 1st harmonic (i.e., $j=1$) O-mode, and 2nd harmonic (i.e., $j=2$) X-mode.\cite{bornatici}
+Not surprisingly, the ITER ECE diagnostic intends to detect NTMs by means of these two modes.\cite{ece4a,ece5}
+
+The theory of the emission and reabsorption of electron cyclotron radiation is quite complicated, and is summarized in Appendix~\ref{sece}. 
+The net result of this theory is that the radiation temperature, $T_{\rm rad}(R_\omega)$, measured by the ECE diagnostic, is related
+to the actual electron temperature along the measurement chord, $T_e(R)$, according to
+\begin{equation}
+T_{\rm rad}(R_\omega)  = \int^{R_{\rm lfs}}_{R_{\rm hfs}} T_e(R)\,F(R_\omega, R)\,dR.
+\end{equation}
+Here, $R_{\rm hfs}$ is the radius
+of the plasma boundary on the high-field side (i.e., the inner side) of the chord, whereas $R_{\rm lfs}$ is the corresponding radius 
+on the low-field side (i.e., the outer side). The {\em spatial convolution function}, $F(R_\omega,R)$, is well approximated as
 \begin{align}
-\frac{v}{c} =\left\{\begin{array}{ccc}\left[1-\left(\frac{R}{R_\omega}\right)^2\right]^{1/2} &~~~~~&R\leq R_\omega\\[0.5ex]
-0&&R>R_\omega
-\end{array}\right..
+F(R_\omega,R)&= \frac{1}{\sqrt{2\pi}\,\sigma \,P({\mit\Delta}/\sigma)}\,
+\exp\left[-\frac {(R-R_\omega+{\mit\Delta})^2}{2\,\sigma^2}\right]&R\leq R_\omega,\\[0.5ex]
+&= 0& R>R_\omega.
 \end{align}
-Now, in thermal equilibrium, the distribution of electron speeds is\,\cite{stat}
-\begin{equation}
-f(v)= A\,v^2\,{\rm exp}\left(-\frac{1}{\theta_\omega}\left[1-\left(\frac{v}{c}\right)^2\right]^{-1/2}\right),
-\end{equation}
-where
-\begin{equation}
-\theta_\omega(\omega) = \frac{T_e(R_\omega)}{m_e\,c^{\,2}} = 1.96\times 10^{-3}\,T_e(R_\omega)({\rm keV}),
-\end{equation}
-and $A$ is a constant. 
-Thus, we can define
-\begin{equation}
-F(R,R_\omega) = \left[1-\left(\frac{R}{R_\omega}\right)^2\right]\exp\!\left(-\frac{1}{\theta_\omega}\,\frac{R_\omega}{R}\right).
-\end{equation}
-The electron temperature measured by the ECE diagnostic is the convolution of the actual signal, $T_e(R)$,  and the function $F(R,R_\omega)$: that is, 
-\begin{equation}
-T_e(R_\omega) = \frac{\int_{R_{\rm min}}^{R_\omega} T_e(R)\,F(R,R_\omega)\,dR}  {\int_{R_{\rm min}}^{R_\omega} F(R,R_\omega)\,dR}.
-\end{equation}
-Here, $R_{\rm min}$ is the $R$ coordinate of the inner boundary of the measurement chord.
+Here, $P(x)$ is defined in Eq.~(\ref{Pxdef}). Note that the convolution function is characterized by by just two parameters: the standard deviation, $\sigma$, and the inward shift
+of the function peak from the non-relativistic cyclotron resonance, ${\mit\Delta}$. 
 
- If we expand $T_e(R)$ as a Taylor series, and assume that $\theta_\omega \ll 1$, then the previous equation yields 
-\begin{equation}
-T_e(R_\omega) = T_e(R_\omega) - 2\,\theta_\omega\left(1-\frac{13}{2}\,\theta_\omega\right) R_\omega\,\frac{d T_e(R_\omega)}{dR} + 3\,\theta_\omega^{\,2}\,R_\omega^{\,2}\,
-\frac{d^2 T_e(R_\omega)}{dR^2} + {\cal O}(\theta_\omega^{\,3}).
-\end{equation}
-It can be seen that, to lowest order in $\theta_\omega$, the temperature profile measured by ECE is unaffected by the relativistic mass increase. To first order in $\theta_\omega$, the
-measured temperature profile is $T_e[R_\omega\,(1-2\,\theta_\omega)]$. In other words, the measured profile is shifted outward in major radius a
-distance $2\,\theta_\omega\,R_\omega$. To second order in $\theta_\omega$,
-the measured profile is smeared out in major radius. 
+The analysis of Appendix~\ref{sece} allows us to calculate ${\mit\sigma}$ and ${\mit\Delta}$ for 1st harmonic O-mode and 2nd harmonic X-mode ECE along the
+measurement chord of our example plasma equilibrium. The results of this calculation are shown in Fig.~\ref{fece}. Also shown are the saturated optical
+depths, $\tau_\infty$, of the two modes. [See Eq.~(\ref{tinf}).] It can be seen that the plasma is optically thick (i.e., $\tau_\infty\gg 1$) to both
+1st harmonic O-mode and second harmonic X-mode electron cyclotron radiation at the 3, 2 and the 2, 1 rational surfaces. However, the optical thickness of X-mode
+radiation exceeds that of O-mode. Consequently, the standard deviation of the X-mode convolution function is less than that of the O-mode
+function, indicating that the spatial resolution of an ECE diagnostic that employs the former mode is greater than that of one that employs the latter. 
+It can be seen that ${\mit\Delta}\simeq 3\,\sigma$ for both modes. This indicates that the outward radial shift in the inferred location of
+ECE emission, due to the relativistic mass increase, is a stronger effect than the radial smearing out of the emission. 
 
-Figures \ref{fig13} and \ref{fig14} show the perturbed and total electron temperatures along the ECE chord, as well as the corresponding temperatures inferred by the relativistically 
-downshifted and broadened ECE diagnostic, for a
-3, 2 NTM and a 2, 1 NTM of island width $W=0.1\,a$  in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}. The signals are evaluated at two different toroidal angles. However, because the
-NTM temperature perturbation is actually rotating toroidally (because the NTM island chain is rotating), different toroidal angles translate to different measurement times. It can be seen that the relativistically downshifted and 
-broadened ECE signal is indeed both shifted outward and  smeared out in major radius. 
+Figures \ref{fig16} and \ref{fig17} show the perturbed and total electron temperatures along the ECE measurement chord, as well as the corresponding temperatures inferred by a relativistically 
+downshifted and broadened 1st harmonic O-mode and 2nd harmonic X-mode synthetic ECE diagnostic, for a
+3, 2 NTM and a 2, 1 NTM of island width $W=0.1\,a$  in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}. 
+The signals are evaluated at two different toroidal angles. However, because the
+NTM temperature perturbation is actually rotating toroidally (because the NTM island chain is rotating), different toroidal angles translate to different measurement times. It can be seen that the temperature profile measured by the relativistically downshifted and 
+broadened ECE signal is indeed both shifted outward and  smeared out in major radius. This effect is slightly more marked for O-mode compared to X-mode radiation. 
 
 The flattening of the electron temperature in the vicinity of an NTM island chain is usually detected in tokamak experiments using the so-called ``Berrino algorithm", which looks for
-a time-averaged anti-correlation between the ECE signal seen in neighboring channels.\cite{ece4}  We can crudely reproduce this algorithm  by calculating the radial gradient of
-the relativistically downshifted and broadened ECE signals shown in Fig.~\ref{fig14}, via finite differencing,  and then averaging over toroidal angle. (In practice, we
-calculate the signal at 32 equally-spaced toroidal angles and average the results.) Figure~\ref{fig15} shows our simulated Berrino algorithm. It can be seen that the
+a time-averaged anti-correlation between the ECE signal seen in neighboring channels.\cite{ece4}  We can  reproduce this algorithm  by calculating the radial gradient of
+the relativistically downshifted and broadened ECE signals shown in Fig.~\ref{fig16}, via finite differencing,  and then averaging over toroidal angle. (In practice, we
+calculate the signal at 32 equally-spaced toroidal angles and average the results.) Figure~\ref{fig17} shows our simulated Berrino algorithm. It can be seen that the
 flattening of the electron temperature in the vicinity of an NTM island chain generates a local minimum in a signal that is otherwise monotonically increasing with major radius (except very close to
 the edge of the plasma). It is clear from the figure that the algorithm is quite capable of detecting island chains of widths as small as 1\% of the plasma minor radius. 
 However, if the location of the NTM rational surface is associated with the position of the local minimum of the signal, as is common practice,\cite{ece4}  then an error is introduced, because the
-local minimum lies outside the rational surface due to the relativistic downshifting of the ECE.  The error clearly becomes somewhat worse as the island width
-increases. The fact that the algorithm can detect very narrow NTM island chains means that the stabilizing ECCD can be turned on before the chain causes significant
+local minimum lies outside the rational surface due to the relativistic downshifting of the ECE. The fact that the algorithm can detect very narrow NTM island chains means that the stabilizing ECCD can be turned on before the chain causes significant
 degradation of the plasma energy confinement. However, given that the ECCD ideally needs to hit one of the island O-points, which usually lie inside the associated rational 
 surface, the radial location of the O-point inferred from the Berrino algorithm clearly needs to be corrected for both the relativistic downshifting and the fact that the O-point
-is located slightly inside the rational surface. Figure~\ref{fig16} shows an attempt to correct the Berrino algorithm for relativistic downshifting in which the inferred major
-radius of the signal is taken to be $R_\omega\,(1-\theta_\omega)$, rather than $R_\omega$. It can be seen that the local minima of the signals lie far closer to
-the NTM rational surfaces in Fig.~\ref{fig16} than in Fig.~\ref{fig15}. 
-\fi
+is located slightly inside the rational surface. Figure~\ref{fig16} shows a corrected Berrino algorithm  in which the inferred major
+radius of the signal is taken to be $R_\omega-{\mit\Delta}_w-\delta\,W/\sqrt{8}$, rather than $R_\omega$. In this case, the  local minima of the signals lie almost exactly
+at the island O-points. 
  
 \section{Summary and Discussion}\label{s7}
-In this paper, we have demonstrated how the TJ toroidal tearing mode code can be used to make realistic predictions of  the electron cyclotron emission (ECE) signals generated by  neoclassical
+In this paper, we have demonstrated how a toroidal tearing mode code can be used to make realistic predictions of  the electron cyclotron emission (ECE) signals generated by  neoclassical
 tearing modes (NTMs) in an ITER-like tokamak plasma equilibrium. (See Sect.~\ref{s2}.) In the outer region, which comprises the bulk of the plasma, helical
-harmonics of the magnetic field with the same toroidal mode number as the NTM, but different poloidal mode numbers, are coupled together by the Shafranov shifts and
+harmonics of the magnetic field with the same toroidal mode number as the NTM, but different poloidal mode numbers, are coupled together linearly by the Shafranov shift and
 shaping of the equilibrium magnetic flux-surfaces. (See Sect.~\ref{s3}.) In the inner region, which is localized in the vicinity of the NTM rational surface, helical harmonics whose
 poloidal and toroidal mode numbers are in the same ratio as those of the NTM are coupled together nonlinearly to produce a radially asymmetric magnetic
 island chain. (See Sect.~\ref{s4}.)  The solutions in the inner and outer regions are asymptotically matched to one another. (See Sect.~\ref{s5}.) The asymptotic matching process determines  the
@@ -838,10 +856,6 @@ available at {\tt https://github.com/rfitzp/TJ}.
 \subsection{Introduction}
 This appendix reviews the theory of electron cyclotron emission (ECE) from ITER-like tokamak plasmas, and is based on the analysis of Bornatici et al.,\cite{bornatici}
 which is ultimately based on the work of Bekefi.\cite{bekefi}
-It is  currently planned to use 1st harmonic O-mode  and 2nd harmonic X-mode ECE  to detect NTMs in ITER.\cite{ece4a} Here, O-mode and
-X-mode refer to electromagnetic waves that propagate perpendicular to the equilibrium magnetic field, with the former mode polarized such that the electric component of
-the wave is parallel to the field, and the latter such that it is perpendicular.\cite{plasma} First harmonic refers to emission whose frequency matches the local
-cyclotron frequency at the emission site, whereas 2nd harmonic corresponds to emission at twice the cyclotron frequency.\cite{plasma}
 
 \subsection{Orderings}
 Our analysis premised on three main assumptions. 
@@ -868,7 +882,7 @@ where
 \begin{equation}
 \omega_c = \frac{e\,B}{m_e}.
 \end{equation}
-Here, $\omega$ is the angular frequency of the emitted radiation, $e$ the magnitude of the electron charge, $B$ the equilibrium magnetic field-strength at the emission site, and $\omega_c$  the local cyclotron frequency. 
+Here, $\omega$ is the angular frequency of the emitted radiation, $e$ the magnitude of the electron charge, $B$ the equilibrium magnetic field-strength at the emission site, and $\omega_c$  the local (non-relativistic) cyclotron frequency. 
 Moreover, $j=1$ for 1st harmonic emission, whereas $j=2$ for 2nd harmonic emission. The constraint (\ref{a1}) is easily satisfied because we are assuming that
 $\vartheta=\pi/2$. 
 
@@ -892,13 +906,6 @@ easily satisfied in the ITER-like tokamak plasma equilibrium considered in this 
 
 \subsection{ECE Signal}
 The ECE signal generated by an NTM in ITER will be  measured on a horizontal chord that passes through the magnetic axis of the plasma. See Fig.~\ref{figa}. 
-The major radius, $R$, varies along the chord, whereas 
-the vertical height, $Z$, and the toroidal angle, $\phi$, are constant. Such a chord corresponds to a possible  path of ECE because 
-the perpendicular gradient of the plasma refractive index is zero along the chord due to the assumed up-down symmetric nature of the plasma equilibrium. 
-The fact that $\phi$
-is constant along the chord implies that $\vartheta\simeq \pi/2$, so that Doppler
-broadening of the ECE signal is eliminated.\cite{ece4a,ece5} 
-
 In thermal equilibrium, assuming that the plasma is optically thick to ECE radiation (see Figs.~\ref{Omode} and \ref{Xmode}), the so-called {\em radiation temperature}\/ measured by the ECE diagnostic is related to the {\em radiance}, $I(\omega)$, of the ECE signal as follows:\,\cite{bornatici}
 \begin{equation}\label{a8}
 T_{\rm rad}(\omega)=\frac{8\pi^3\,c^{\,2}\, I(\omega)}{\omega^{\,2}}.
@@ -935,7 +942,7 @@ where
 \begin{equation}
 \omega_{c\,0} = \frac{e\,B_0}{m_e}
 \end{equation}
-is the cyclotron frequency on the magnetic axis. Thus, we can use the local cyclotron frequency, $\omega_c(R)$, as a proxy for major radius, $R$,  along the measurement chord. 
+is the (non-relativistic) cyclotron frequency on the magnetic axis. Thus, we can use the local (non-relativistic) cyclotron frequency, $\omega_c(R)$, as a proxy for major radius, $R$,  along the measurement chord. 
 
 Equations~(\ref{a8})--(\ref{a11}) and (\ref{a13}) can be combined to give
 \begin{equation}\label{a15}
@@ -964,13 +971,13 @@ R_\omega(\omega) = \frac{j\,\omega_{c\,0}\,R_0}{\omega},
 as the major radius from which $j$th harmonic ECE would originate in the absence of the aforementioned downshifting and broadening of the signal. 
 Thus, we can also write
 \begin{equation}\label{a20}
-T_{\rm rad}(R_\omega) = \int_{R_{\rm lfs}}^{R_{\rm hfs}}T_e(R)\,F(R_\omega,R)\,dR,
+T_{\rm rad}(R_\omega) = \int^{R_{\rm lfs}}_{R_{\rm hfs}}T_e(R)\,F(R_\omega,R)\,dR,
 \end{equation}
 where
 \begin{align}\label{a21}
 F(R_\omega,R) &= \frac{1}{1-\exp[-\tau_\infty(R_\omega)]}\,\tau_0\,\frac{\hat{\alpha}(R_\omega,R)}{R}\,\exp[-\tau(R_\omega, R)],\\[0.5ex]
 \tau(R_\omega,R) &= \tau_0\int_R^{R_\omega}\frac{\hat{\alpha}(R_\omega,R')}{R'}\,dR,\\[0.5ex]
-\tau_\infty(R_\omega) &= \tau_0\int_0^{R_\omega}\frac{\hat{\alpha}(R_\omega,R')}{R'}\,dR.
+\tau_\infty(R_\omega) &= \tau_{R_{\rm hfs}}\int_0^{R_\omega}\frac{\hat{\alpha}(R_\omega,R')}{R'}\,dR.\label{tinf}
 \end{align}
 According to Eq.~(\ref{a20}), the electron temperature profile along the measurement chord that is inferred from the ECE diagnostic, $T_{\rm rad}(R_\omega)$,
 is the convolution of the true temperature profile, $T_e(R)$, with the {\em spatial convolution function}, $F(R_\omega,R)$. The first term on the right-hand side of
@@ -1007,8 +1014,8 @@ Z(\xi)= {\rm i}\,\pi^{1/2}\,w(\xi).
 \end{equation}
 
  Figure~\ref{f72} shows the real and imaginary parts of the function $F_{7/2}(z)$. It is clear from Eq.~(\ref{a22}),
-(\ref{a24}), and the figure, that 1st harmonic O-mode  ECE is absorbed by the plasma in a range of frequencies that lie slightly above the local cyclotron frequency,
-$\omega_c$. This corresponds to a range of major radii that lies just inside the location of the 1st harmonic cyclotron resonance. 
+(\ref{a24}), and the figure, that 1st harmonic O-mode  ECE is absorbed by the plasma in a range of frequencies that lie slightly above the local (non-relativistic) cyclotron frequency,
+$\omega_c$. This corresponds to a range of major radii that lies just inside the location of the 1st harmonic (non-relativistic) cyclotron resonance. 
 
 Figure~\ref{Omode} shows the normalized absorption coefficient, optical depth, spectral convolution function, and spatial convolution function for
 1st harmonic O-mode ECE in a typical ITER-like plasma. It can be seen that the saturated optical depth is quite large (about 50), and that the full 
@@ -1020,14 +1027,14 @@ F_1^{\,(O)}(R_\omega,R)&= \frac{1}{\sqrt{2\pi}\,\sigma_1^{\,(O)} \,P({\mit\Delta
 &= 0& R>R_\omega,
 \end{align}
 where 
-\begin{equation}
+\begin{equation}\label{Pxdef}
 P(x) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^x{\rm e}^{-y^2}\,dy.
 \end{equation}
 Note that the fitting function ensures that $F_1^{\,(O)}(R_\omega,R)= 0$ for $R>R_\omega$, in accordance with Eq.~(\ref{a21}). Moreover, the area under the
 fitting function is unity. 
 The fit is excellent, indicating that the convolution function 
  is characterized by just two parameters: the standard deviation, $\sigma_1^{\,(O)}$, and the inward shift
-of function peak from the cyclotron resonance, ${\mit\Delta}_1^{\,(O)}$. 
+of the function peak from the non-relativistic cyclotron resonance, ${\mit\Delta}_1^{\,(O)}$. 
 
 \subsection{Second Harmonic X-Mode  Absorption Coefficient}
 The dimensionless absorption coefficient for 2nd harmonic X-mode ECE is\,\cite{bornatici}
@@ -1048,7 +1055,7 @@ z_2 &= \left(\frac{c}{v_t}\right)^2\left(1-\frac{2\,\omega_c}{\omega}\right).\la
 Here, $v_t$ and $\omega_p$ are evaluated at $z_2=0$. Moreover, the parameters $a$, $b$, and $N_c$ have been calculated assuming that $\omega=2\,\omega_c$. 
 
  It is clear from Eq.~(\ref{a28}),
-(\ref{a29}), and Fig.~\ref{f72}, that 2nd harmonic X-mode  ECE is absorbed by the plasma in a range of frequencies that lie slightly above twice the local cyclotron frequency. This corresponds to a range of major radii that lies just inside the location of the 2nd harmonic cyclotron resonance. 
+(\ref{a29}), and Fig.~\ref{f72}, that 2nd harmonic X-mode  ECE is absorbed by the plasma in a range of frequencies that lie slightly above twice the local (non-relativistic) cyclotron frequency. This corresponds to a range of major radii that lies just inside the location of the 2nd harmonic (non-relativistic) cyclotron resonance. 
 
 Figure~\ref{Xmode} shows the normalized absorption coefficient, optical depth, spectral convolution function, and spatial convolution function for
 2nd harmonic O-mode ECE in a typical ITER-like plasma. It can be seen that the saturated optical depth is very  large (about 100), and that the full 
@@ -1063,7 +1070,7 @@ F_2^{\,(X)}(R_\omega,R)&= \frac{1}{\sqrt{2\pi}\,\sigma_2^{\,(X)} \,P({\mit\Delta
 \end{align}
   The fit is very good, indicating that the convolution function 
 is characterized by just two parameters: the standard deviation, $\sigma_2^{\,(X)}$, and the inward shift
-of function peak from the cyclotron resonance, ${\mit\Delta}_2^{\,(X)}$. 
+of the function peak from the non-relativistic cyclotron resonance, ${\mit\Delta}_2^{\,(X)}$. 
 
 \begin{thebibliography}{99}\baselineskip 5ex
 
@@ -1075,6 +1082,11 @@ M.~Gryaznevich, et al., Nucl.\  Fusion {\bf 47}, S128 (2007).
 \bibitem{jet} J.A.~Wesson, R.D.~Gill, M.~Hugon, F.C.~Sch\"{u}ller, J.A.~Snipes, D.J.~Ward, D.V.~Bartlett, D.J.~Campbell, P.A.~Duperrex, A.W.~Edwards, 
 R.S.~Granetz, N.A.O.~Gottardi, T.C~ Hender, E.~Lazzaro, P.J..~Lomas, N.~Lopes Cardozo, K.F.~Mast, M.F.F.~Nave, N.A.~Salmon, P.~Smeulders, 
 P.R.~Thomas, B.J.D.~Tubbing, M.F.~Turner and A.~Weller, Nucl.\ Fusion {\bf 29} 641 (1989). 
+
+\bibitem{vries} P.C.~de Vries, M.F.~Johnson, B.~Alper, P.~Buratti, T.C.~Hender, H.R.~Koslowski, V.~Riccardo and JET-EFDA Contributors,  Nucl.\ Fusion {\bf 51},  053018 (2011).
+
+\bibitem{decaf} S.A.~Sabbagh, J.W.~Berkery  Y.S.~Park, J.~Butt. J.D.~Riquezes, J.G.~Bak. R.E.~Bell, L.~Delgado-Aparicio, S.P.~Gerhardt, C.J.~Ham,
+et al., Phys.\ Plasmas {\bf 30}, 032506 (2023).
 
 \bibitem{tear1} H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).
 
@@ -1098,8 +1110,6 @@ P.R.~Thomas, B.J.D.~Tubbing, M.F.~Turner and A.~Weller, Nucl.\ Fusion {\bf 29} 6
 \bibitem{ntm4} R.J.~La Haye, Phys.\ Plasmas {\bf 13}, 055501 (2006).
 
 \bibitem{ntm5} M.~Maraschek, Nucl.\ Fusion {\bf 52}, 074007 (2007). 
-
-\bibitem{vries} P.C.~de Vries, M.F.~Johnson, B.~Alper, P.~Buratti, T.C.~Hender, H.R.~Koslowski, V.~Riccardo and JET-EFDA Contributors,  Nucl.\ Fusion {\bf 51},  053018 (2011).
 
 \bibitem{sawtooth} O.~Sauter, E.~Westerhof, M.L.~Mayoral, B.~Alper, P.A.~Belo, R.J.~Buttery, A.~Gondhalekar, T.~Hellsten, T.C.~Hender, 
 D.F.~Howell, T.~Johnson, P.~Lamalle, M.J.~Mantsinen, F.~Milani, M.F.F.~Nave, F.~Nguyen, A.L.~Pecquet, S.D.~Pinches, S.~Podda and J.~Rapp,
@@ -1195,17 +1205,17 @@ to Physics of Plasmas (2025).
 
 \bibitem{fitz} R.~Fitzpatrick, {\em Tearing Mode Dynamics in Tokamak Plasmas}, (IOP Publishing, Bristol UK, 2023).
 
-\bibitem{polz} J.W.Connor,  F.L.Waelbroeck and  H.R.~Wilson, Phys.\ Plasmas {\bf 8}, 2835 (2001). 
-
 \bibitem{car} R.~Carrera, R.D.~Hazeltine and M.~Kotschenreuther, Phys.\ Fluids {\bf 29}, 899 (1986). 
 
 \bibitem{kot} R.D.~Hazeltine, M.~Kotschenreuther and P.G.~Morrison, Phys.\ Fluids {\bf 28}, 294 (1985). 
 
+\bibitem{polz} J.W.Connor,  F.L.Waelbroeck and  H.R.~Wilson, Phys.\ Plasmas {\bf 8}, 2835 (2001). 
+
+\bibitem{bornatici} M.~Bornatici, R.~Cano, O.\ De Barbieri and F.~Engelmann, Nucl.\ Fusion {\bf 23}, 1153 (1983).
+
 \bibitem{plasma} R.~Fitzpatrick, {\em Plasma Physics: An Introduction}, 2nd Ed., (CRC Press, Boca Raton FL, 2023).
 
 \bibitem{stat} R.~Fitzpatrick, {\em Thermodynamics and Statistical Mechanics}, (World Scientific, Singapore,  2020).
-
-\bibitem{bornatici} M.~Bornatici, R.~Cano, O.\ De Barbieri and F.~Engelmann, Nucl.\ Fusion {\bf 23}, 1153 (1983).
 
 \bibitem{bekefi} G.~Bekefi, {\em Radiation Processes in Plasmas}, (John Wiley \& Sons, New York NY, 1966).
 
@@ -1220,8 +1230,8 @@ to Physics of Plasmas (2025).
 \begin{tabular}{ccccccccc}
 \hline
 $m$ & $n$ & $\hat{r}_l$ & $L_s$ & $E_{ll}$ & ${\mit\Delta}_{l\,{\rm crit}}$ & $\hat{\beta}$ & $\alpha_b$ & $\alpha_c$\\[0.5ex]\hline
-~3~&~2~ & ~$0.6195$~ & ~$1.756$~ & ~$1.709$~ & ~$17.56$~ & ~$0.05521$~ & ~$2.588$~ & ~$0.5816$~\\[0.5ex]
-2& 1& $0.7874$  & ~$1.201$~&$ 13.66$ & $36.45$ & $0.03034$ & $3.061$ & $1.000$\\\hline
+~3~&~2~ & ~$0.6195$~ & ~$1.756$~ & ~$1.709$~ & ~$17.56$~ & ~$0.0540$~ & ~$2.588$~ & ~$0.5816$~\\[0.5ex]
+2& 1& $0.7874$  & ~$1.209$~&$ 13.66$ & $47.96$ & $0.0293$ & $3.061$ & $1.000$\\\hline
 \end{tabular}
 \caption{The poloidal mode number, toroidal mode number, normalized minor radius, normalized magnetic shear-length, linear tearing stability index, critical linear tearing stability index, normalized
 electron pressure, bootstrap parameter, and curvature parameter, respectively, at the $3$, $2$ and the $2$, $1$ rational surfaces of the example
@@ -1232,8 +1242,8 @@ plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}. \label{t1} }
 \begin{tabular}{ccccccc}
 \hline
 $m$ & $n$ & $W/a$ & ${\mit\Psi}$ & $\delta$ & ~$\delta T_{e\,+}({\rm eV})$~ & $\delta T_{e\,-}({\rm eV})$ \\[0.5ex]\hline
-3& 2& $0.1$  & ~$3.48\times 10^{-4}$~&$0.150$ & $-0.069$ & $-476$\\[0.5ex]
-~1~&~2~ & ~$0.1$~ & ~$4.89\times 10^{-4}$~ & ~$0.271$~ & ~$-0.977$~ & ~$-597$~\\\hline
+3& 2& $0.1$  & ~$3.48\times 10^{-4}$~&$0.150$ & $-0.276$ & $-1.90\times 10^{3}$\\[0.5ex]
+~1~&~2~ & ~$0.1$~ & ~$4.89\times 10^{-4}$~ & ~$0.272$~ & ~$-3.91$~ & ~$-2.39\times 10^{3}$~\\\hline
 \end{tabular}
 \caption{The poloidal mode number, toroidal mode number, island width, normalized reconnected flux, island asymmetry parameter, equilibrium electron temperature reduction
 outside the rational surface,  and equilibrium electron temperature reduction
@@ -1332,12 +1342,50 @@ and \ref{figb}. The black curves show the locations of the rational surfaces. Th
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=\textwidth]{F72.pdf}}
+\centerline{\includegraphics[width=0.7\textwidth]{Fig15.pdf}}
+\caption{Standard deviation, $\sigma$, and inward radial shift, ${\mit\Delta}$, of the ECE spatial convolution function,  calculated as
+a function of position on the measurement chord, for 1st harmonic O-mode and 2nd harmonic X-mode emission. Also, shown are the
+saturated optical depths, $\tau_\infty$, of the two modes. The vertical dashed lines show the locations of the 3, 2 and the 2, 1 rational surfaces.}\label{fece}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Fig16.pdf}}
+\caption{Perturbed electron temperature along the ECE chord (green curves) and the perturbed temperature inferred by the relativistically downshifted and  broadened 1st harmonic
+O-mode (blue curves) and 2nd harmonic X-mode (red curves) ECE diagnostic for a
+3, 2 NTM (left panels) and a 2, 1 NTM (right panels) of island width $W=0.1\,a$ in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}.
+The perturbed temperatures are calculated  at two different toroidal angles (top and bottom panels). 
+The vertical dashed lines show the locations of the rational surfaces. 
+\label{fig16}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Fig17.pdf}}
+\caption{Total electron temperature along the ECE chord (green curves) and the perturbed temperature inferred by the relativistically downshifted and broadened 
+ 1st harmonic
+O-mode (blue curves) and 2nd harmonic X-mode (red curves) ECE diagnostic  for a
+3, 2 NTM (left panels) and a 2, 1 NTM (right panels) of island width $W=0.1\,a$  in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}.
+The total temperatures are calculated  at two different toroidal angles (top and bottom panels).  The vertical dashed lines show the locations of the rational surfaces. \label{fig17}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Fig18.pdf}}
+\caption{Implementation of the Berrino algorithm for detecting electron temperature flattening  in the vicinity of an NTM island chain  for a 3, 2  NTM (left panels) and a 2, 1 NTM (right panels) in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}. The top panels show the 1st harmonic O-mode signals,
+whereas the bottom panels show the 2nd harmonic O-mode signals. The vertical dashed lines show the locations of the rational surfaces. \label{fig15}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Fig19.pdf}}
+\caption{Implementation of a corrected  Berrino algorithm for detecting electron temperature flattening  in the vicinity of an NTM island chain  for a 3, 2  NTM (left panels) and a 2, 1 NTM (right panels) in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}. The top panels show the 1st harmonic O-mode signals,
+whereas the bottom panels show the 2nd harmonic O-mode signals.The vertical dashed lines show the locations of the rational surfaces. \label{fig16}}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=\textwidth]{Fig20.pdf}}
 \caption{The real and imaginary parts of the function $F_{7/2}(z)$.\label{f72}}
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=\textwidth]{O.pdf}}
+\centerline{\includegraphics[width=\textwidth]{Fig21.pdf}}
 \caption{The normalized  absorption coefficient (top left), optical depth (top right), normalized
 spectral convolution function (bottom left), and spatial convolution function (bottom right), for 1st harmonic O-mode ECE from an
 ITER-like plasma characterized by  $T_e=10\,{\rm keV}$, $n_e=2.5\times 10^{19}\,{\rm m}^{-3}$ (at the 1st harmonic cyclotron resonance), $B_0=5.3\,{\rm T}$, $R_0=6.2\,{\rm m}$, and $R_\omega= 6.8\,{\rm m}$.
@@ -1346,7 +1394,7 @@ The dotted red curve in the bottom right panel is a  fit to the true spatial con
 \end{figure}
 
 \begin{figure}
-\centerline{\includegraphics[width=\textwidth]{X.pdf}}
+\centerline{\includegraphics[width=\textwidth]{Fig22.pdf}}
 \caption{The normalized  absorption coefficient (top left), optical depth (top right), normalized
 spectral convolution function (bottom left), and spatial convolution function (bottom right), for 2nd  harmonic X-mode ECE from an 
 ITER-like plasma characterized by  $T_e=10\,{\rm keV}$, $n_e=2.5\times  10^{19}\,{\rm m}^{-3}$ (at the 2nd harmonic cyclotron resonance), $B_0=5.3\,{\rm T}$, $R_0=6.2\,{\rm m}$, and $R_\omega= 6.8\,{\rm m}$.
@@ -1354,33 +1402,5 @@ The vertical dashed lines show the location of the 2nd harmonic cyclotron resona
 The dotted red curve in the bottom right panel is a  fit to the true spatial convolution function (shown in blue).
 \label{Xmode}}
 \end{figure}
-
-\iffalse
-\begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Fig15.pdf}}
-\caption{Perturbed electron temperature along the ECE chord (blue curves) and the perturbed temperature inferred by the relativistically downshifted and  broadened ECE diagnostic (red curves) for a
-3, 2 NTM (left panels) and a 2, 1 NTM (right panels) of island width $W=0.1\,a$ in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}.
-The perturbed temperatures are calculated  at two different toroidal angles (top and bottom panels). 
-The vertical dashed lines show the locations of the rational surfaces. 
-\label{fig13}}
-\end{figure}
-
-\begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Fig16.pdf}}
-\caption{Total electron temperature along the ECE chord (blue curves) and the perturbed temperature inferred by the relativistically downshifted and broadened ECE diagnostic (red curves) for a
-3, 2 NTM (left panels) and a 2, 1 NTM (right panels) of island width $W=0.1\,a$  in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}.
-The total temperatures are calculated  at two different toroidal angles (top and bottom panels).  The vertical dashed lines show the locations of the rational surfaces. \label{fig14}}
-\end{figure}
-
-\begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Fig17.pdf}}
-\caption{Implementation of the Berrino algorithm for detecting electron temperature flattening  in the vicinity of an NTM island chain  for a 3, 2  NTM (left panel) and a 2, 1 NTM (right panel) in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}. The vertical dashed lines show the locations of the rational surfaces. \label{fig15}}
-\end{figure}
-
-\begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Fig18.pdf}}
-\caption{Implementation of a downshift-corrected  Berrino algorithm for detecting electron temperature flattening  in the vicinity of an NTM island chain  for a 3, 2  NTM (left panel) and a 2, 1 NTM (right panel) in the model plasma equilibrium pictured in Figs.~\ref{figa} and \ref{figb}. The vertical dashed lines show the locations of the rational surfaces. \label{fig16}}
-\end{figure}
-\fi
 
 \end{document}

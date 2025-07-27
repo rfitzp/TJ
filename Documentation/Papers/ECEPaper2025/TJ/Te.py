@@ -91,4 +91,4 @@ plt.ylabel (r'$Z/R_0$', fontsize = "20")
 plt.tight_layout ()
 
 #plt.show ()
-plt.savefig("Te.png", dpi=300)
+plt.savefig("Fig14.png", dpi=300)
