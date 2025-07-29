@@ -1,0 +1,91 @@
+%This is a template file for use of iopjournal.cls
+
+\documentclass{iopjournal}
+
+% Options
+% 	[anonymous]	Provides output without author names, affiliations or acknowledgments to facilitate double-anonymous peer-review
+
+\begin{document}
+
+\articletype{Article type} %	 e.g. Paper, Letter, Topical Review...
+
+\title{Replace this text with the article title}
+
+\author{Author Name$^1$\orcid{0000-0000-0000-0000}, Author Name$^2$\orcid{0000-0000-0000-0000} and Author Name$^{1,*}$\orcid{0000-0000-0000-0000}}
+
+\affil{$^1$Department, Institution, City, Country}
+
+\affil{$^2$Department, Institution, City, Country}
+
+\affil{$^*$Author to whom any correspondence should be addressed.}
+
+\email{name@institution.org}
+
+\keywords{sample term, sample term, sample term}
+
+\begin{abstract}
+Sample text inserted for demonstration. Replace with abstract text. Your abstract must give readers a brief summary of your article. Concisely describe the contents of your article and include key terms. It should be informative and accessible: indicate the general scope of the article and state the main results obtained and conclusions drawn. The abstract must be complete in itself: it must not contain undefined abbreviations and must not refer to any table, figure, reference or equation numbers. Normally the abstract text is not more than 300 words.
+\end{abstract}
+
+\section{Section title}
+Sample text inserted for demonstration. Organize the main text of your article using section headings, and include any equations, figures, tables, lists etc using your preferred \LaTeX\ packages and commands. Example code for a figure and a table is given below, but you do not have to use this format. For general guidance on using \LaTeX , including information on figures, tables, equations and references, please refer to documents such as the \LaTeX\ WikiBook: \href{https://en.wikibooks.org/wiki/LaTeX}{https://en.wikibooks.org/wiki/LaTeX}.
+
+Note that clarity of presentation is the most important consideration when preparing your article for submission. It is not necessary to format your article in the style used for published articles in the journal.
+
+\subsection{Subsection title}
+Sample text inserted for demonstration, including links to figure \ref{fig1} and table \ref{tab1}.
+
+\subsubsection{Subsubsection heading}
+Sample text inserted for demonstration.
+
+\begin{figure}
+ \centering
+        \includegraphics[width=0.5\textwidth]{figure1}
+ \caption{Text describing the figure and the main conclusions drawn from it. To make your figures accessible to as many readers as possible, try to avoid using colour as the only means of conveying information. For example, in charts and graphs use different line styles and symbols. Further information is available in the online guide: \href{https://publishingsupport.iopscience.iop.org/publishing-support/authors/authoring-for-journals/writing-journal-article/\#figures}{https://publishingsupport.iopscience.iop.org/publishing-support/authors/authoring-for-journals/writing-journal-article/\#figures}}
+\label{fig1}
+\end{figure}
+
+
+\begin{table}
+\caption{Caption text describing the table. Adapt the template table below or replace with a new table. To add more tables, copy and paste the whole {\tt \textbackslash begin\{table\}...\textbackslash end\{table\}} block.}
+\centering
+\begin{tabular}{l c c c}
+\hline
+Column heading & Column heading & Column heading & Column heading \\
+\hline
+Data row 1 & 1.0 & 1.5 & 2.0 \\
+Data row 2 & 2.0 & 2.5 & 3.0 \\
+Data row 3 & 3.0 & 3.5 & 4.0 \\
+\hline
+\end{tabular}
+\label{tab1}
+\end{table}
+
+%
+% Each of the commands below will create an unnumbered section with the appropriate heading.
+% Remove any sections that are not relevant for your article.
+% All sections except suppdata will be removed if the [anonymous] option is used.
+% See iopjournal-guidelines.pdf for more information.
+%
+
+\ack{Sample text inserted for demonstration.}
+
+\funding{Sample text inserted for demonstration.}
+% This section is a list of funder names and grant numbers
+
+\roles{Sample text inserted for demonstration.}
+% List author names and the contributions made to the article, using terms from the NISO Contributor Roles Taxonomy (CRediT) https://credit.niso.org
+
+\data{Sample text inserted for demonstration.}
+% For more information on IOP Publishing's research data policy see: https://publishingsupport.iopscience.iop.org/questions/research-data/
+
+\suppdata{Sample text inserted for demonstration.}
+
+
+\section*{References}
+
+
+
+\end{document}
+
+

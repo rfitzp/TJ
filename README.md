@@ -86,6 +86,7 @@ Program to calculate spatial convolution functions for electron cyclotron emissi
   - *Island*:           Source code for program Island
   - *Layer*:		    Source for class Layer
   - *Outputs*:		    Outputs from codes
+  = *Papers*:           Papers associated with TJ code
   - *Plots*:		    Python plotting scripts for codes
   - *Python*:           Useful python scripts
   - *Reduce*:		    REDUCE programs that perform analysis for TJ code

@@ -3,7 +3,7 @@
     
     "qc":   1.01,             // Safety-factor on magnetic axis
     "qa":   3.60,             // Safety-factor at plasma boundary
-    "pc":   0.2,              // Normalized plasma pressure on magnetic axis 
+    "pc":   0.25,              // Normalized plasma pressure on magnetic axis 
     "mu":   2.0,              // Pressure peaking parameter
     "epsa": 0.2,              // Inverse aspect-ratio of plasma
 
@@ -14,7 +14,7 @@
 
     "B0":    5.3,             // On-axis toroidal magnetic field-strength (T)
     "R0":    6.2,             // On-axis plasma major radius (m) 
-    "n0":    0.25e20,         // On-axis electron number density (m^-3)
+    "n0":    0.3125e20,         // On-axis electron number density (m^-3)
     "alpha": 1.0,             // Assumed electron number density profile: n0 (1 - r^2)^alpha
     "Zeff":  2.0,             // Effective ion charge number
     "Mion":  2.0,             // Ion mass number

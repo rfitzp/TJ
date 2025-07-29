@@ -1,8 +1,8 @@
 {
-    "NTOR":   2,            // Toroidal mode number
+    "NTOR":   1,            // Toroidal mode number
     "MMIN":  -10,           // Minimum poloidal mode number included in calculation
     "MMAX":   20,           // Maximum poloidal mode number included in calculation
-    "ISLAND": [0.01, 0.01], // Island widths/displacements (divided by minor radius) used to regularize perturbed magnetic field
+    "ISLAND": [0.1, 0.01],  // Island widths/displacements (divided by minor radius) used to regularize perturbed magnetic field
     "NPHI":   32,           // Number of toroidal grid-points on extended visualization grid
 
     "EQLB":   0,           // Flag for equilibrium calculation only
