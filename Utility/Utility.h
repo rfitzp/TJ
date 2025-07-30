@@ -103,7 +103,7 @@ public:
   // One-dimensional root finding parameters
   // ---------------------------------------
   int    Nint;    // Number of search intervals
-  double Eta;     // Min. magnitude of F at root F(x) = 0
+  double Eta;     // Minimum magnitude of F at root F(x) = 0
   int    Maxiter; // Maximum number of iterations
 
   // ---------------------------------------

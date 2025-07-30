@@ -102,7 +102,7 @@ void ECE::Solve ()
   // -----------------------------
   // Output calculation parameters
   // -----------------------------
-   printf ("Calculation Parameters:\n");
+  printf ("Calculation Parameters:\n");
   printf ("Te  = %11.4e ne   = %11.4e B0   = %11.4e R0   = %11.4e Rw  = %11.4e\n",
 	  Te, ne, B0, R0, Rw);
   printf ("wc0 = %11.4e tau0 = %11.4e vtc2 = %11.4e w12  = %11.4e w22 = %11.4e tw = %11.4e\n",
