@@ -1,0 +1,20 @@
+{
+    "alpha":   0.0,     // Diffusivity profile parameter
+      
+    "acc":     1.0e-12, // Integration accuracy
+    "h0":      1.0e-3,  // Initial integration step-length
+    "hmin":    1.0e-10, // Minimum integration step-length 
+    "hmax":    1.0e-2,  // Maximum integration step-length
+
+    "eps":     1.0e-4,  // Solutions launched from x=eps
+    "Nx":      1001,    // Number of radial grid points
+    "lmin":    4.0,     // Miniumum value of lambda in search interval
+    "lmax":    8.0,     // Maximum value of lambda in search interval
+    "xmax":    20.0,    // Maximum allowed value of x
+    "amax":    4.0,     // Maximum value of alpha in alpha scan
+    "Na":      1001,    // Number of values in alpha scan
+
+    "Nint":    10,      // Number of search intervals
+    "Eta":     1.0e-12, // Minimum magnitude of F at root F(x) = 0
+    "Maxiter": 50       // Maximum number of iterations
+}

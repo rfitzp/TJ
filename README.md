@@ -75,6 +75,10 @@ Program to perform various calulations for general cylindrical pinch.\
 
 Program to calculate spatial convolution functions for electron cyclotron emission 
 
+# Program StartUp
+
+Program to simulate tokamak current ramp
+
 # Directories
 
   - *Benchmark*:        Benchmark tests
@@ -86,12 +90,13 @@ Program to calculate spatial convolution functions for electron cyclotron emissi
   - *Island*:           Source code for program Island
   - *Layer*:		    Source for class Layer
   - *Outputs*:		    Outputs from codes
-  = *Papers*:           Papers associated with TJ code
+  - *Papers*:           Papers associated with TJ code
   - *Plots*:		    Python plotting scripts for codes
   - *Python*:           Useful python scripts
+  - *Pinch*:            Source for code Pinch 
   - *Reduce*:		    REDUCE programs that perform analysis for TJ code
   - *Runs*:             Data from running TJ code
-  - *Pinch*:            Source for code Pinch 
+  - *StartUp*:          Source for code StartUp
   - *TJ*:		        Source for code TJ
   - *Tear*:		        Source for code Tear
   - *Utility*:          Source for class Utility

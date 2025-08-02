@@ -1,0 +1,64 @@
+# Machine dependent part of Makefiles
+
+UNAME := $(shell uname)
+NNAME := $(shell uname -n) 
+
+$(info $$UNAME is [${UNAME}])
+$(info $$NNAME is [${NNAME}])
+
+ifeq ($(UNAME), Darwin)
+
+     # ###############################
+     # Machine is one of rfitzp's Macs
+     # ###############################
+
+     L_COMPILER = /Library/Tex/texbin/pdflatex
+     
+     F_COMPILER = gfortran
+     F_FLAGS    = -O3
+     F_INCLUDE  = -I/opt/local/include
+     F_LIBS     = -L/opt/local/lib -lnetcdff
+
+     C_ARCHIVER = ar -r -cs
+     C_COMPILER = clang++ 
+     C_FLAGS    = -w -O3 -std=c++11 $(VERSION_FLAGS)
+     C_INCLUDE  = -I/opt/local/include
+     C_LIBS     = -L/opt/local/lib -L/opt/local/lib/libgcc -lgsl -lgslcblas -lnetcdf_c++4 -larmadillo -llapack -lgfortran -lblitz
+
+else ifeq ($(NNAME), archimedes.ph.utexas.edu )
+
+     #####################################
+     # Machine is archimedes.ph.utexas.edu
+     #####################################
+
+     L_COMPILER = pdflatex
+
+     F_COMPILER = gfortran
+     F_FLAGS    = -O3
+     F_INCLUDE  = -I/usr/include -I/usr/lib64/gfortran/modules
+     F_LIBS     = -lnetcdff
+
+     C_COMPILER = clang++ 
+     C_FLAGS    = -w -O3 -std=c++11
+     C_INCLUDE  = -I/usr/include 
+     C_LIBS     = -L/usr/lib -L/usr/lib/libgcc -lgsl -lgslcblas -lnetcdf_c++4 -larmadillo -llapack -lgfortran -lblitz
+
+else
+
+     #########
+     # Default
+     #########
+
+     L_COMPILER = pdflatex
+
+     F_COMPILER = gfortran
+     F_FLAGS    = -O3
+     F_INCLUDE  = -I/usr/include
+     F_LIBS     = -lnetcdff
+     
+     C_COMPILER = clang++ 
+     C_FLAGS    = -w -O3 -std=c++11
+     C_INCLUDE  = -I/usr/include 
+     C_LIBS     = -L/usr/lib -L/usr/lib/libgcc -lgsl -lgslcblas -lnetcdf_c++4 -larmadillo -llapack -lgfortran -lblitz
+     
+endif
