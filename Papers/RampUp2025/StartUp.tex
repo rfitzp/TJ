@@ -15,6 +15,15 @@
 \affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin TX 78712}
 
 \begin{abstract}
+A simple model of the ramp-up and ramp-down of the toroidal current in an ohmic tokamak plasma is developed. Faraday's law of electric induction
+is found to limit how rapidly the current can be safety ramped up or down. It is estimated that the minimum safe ramp-up/down times for the JET, SPARC, and
+ITER tokamaks are 4.2, 2.0, and 14.7 seconds, respectively. The JET ramp rate is in accordance with operational experience. The SPARC
+and ITER minimum safe ramp rates are less than the ramp rates in the respective designs. Hence, there is no indication that the design ramp rates are infeasible, as was recently 
+suggested  in arXiv:2507.05456 (2025).
+The typical ratios of the inductive electric field
+to the Connor-Hastie field in SPARC and ITER are found to be less than those in JET. Thus, the fact that the JET tokamak was able to operate successfully
+without encountering runaway electron problems during the current ramp suggests that the future SPARC and ITER tokamaks should certainly be able to
+avoid such problems. 
 \end{abstract}
 \maketitle
 
@@ -22,7 +31,7 @@
 In a recent paper, Boozer\,\cite{boozer} argues  that Faraday's law of electric induction places strong constraints on the operation of a future  tokamak fusion power plant.
 In particular, Boozer takes issue with the claim by de Vries et alia\,\cite{deVries} that a fully controlled current ramp-down in the future ITER tokamak, starting from a toroidal plasma current of $15$ MA,
 can be effected in 60 seconds. (Indeed, in an earlier study Boozer\,\cite{boozer1} seems to argue that the true ramp time is 1000 seconds.)  Boozer also takes issue with the claim by Creely et alia\,\cite{creely} that the plasma current in the future SPARC tokamak can be ramped up in
-7 seconds, and ramped down in 12 seconds, and seems to imply that the true ramp time, in fact, 1157 seconds. The claim by de Vries et alia is
+7 seconds, and ramped down in 12 seconds, and seems to imply that the true ramp time is, in fact, 1157 seconds. The claim by de Vries et alia is
 made in Sect.~2 of Ref.~\onlinecite{deVries}, and is based on simulations performed using  the CORSICA\,\cite{corsica,corsica1}  code. The claim by Creely et alia is deduced from 
 in Fig.~3 of Ref.~\onlinecite{creely}, and is based on simulations made with the TSC\,\cite{tsc}   code. While it is the case that the  CORSICA and TSC codes both have a proven 
 track records, we can certainly agree with Boozer that neither de Vries et alia or Creely et alia provide sufficient information to validate their claims. 
@@ -82,9 +91,9 @@ q(r,t) = \frac{r\,B_0}{R_0\,B_\theta},
 \end{equation}
 while the electric field in the plasma is written ${\bf E}= E_z\,{\bf e}_z$. Faraday's law yields
 \begin{equation}
-\frac{\partial E_z}{\partial r} = \frac{\partial B_\theta}{\partial t}.
+\frac{\partial E_z}{\partial r} = \frac{\partial B_\theta}{\partial t},
 \end{equation}
-Ohm's law gives
+while Ohm's law gives
 \begin{equation}
 E_z = \eta\,j_z,
 \end{equation}
@@ -145,17 +154,17 @@ The electron energy balance equation takes the form\,\cite{fitz}
  in an ohmic plasma. 
  The typical plasma current is
  \begin{equation}
- I_0= \frac{2\pi\,\kappa\,a\,B_{\theta\,a}}{\mu_0} = 5.00\,\kappa\,a\,B_{\theta\,a}\,\,{\rm MA}.
+ I_0= \frac{2\pi\,\kappa\,a\,B_{\theta\,a}}{\mu_0} = 5.00\,\kappa\,a\,B_{\theta\,a}\,\,{\rm MA},
  \end{equation}
- The typical electric field-strength in the plasma takes the form
+ whereas typical electric field-strength in the plasma takes the form
  \begin{equation}
- E_0 =\frac{\beta_p\,\chi_0\,B_{\theta\,a}}{a} = 2.00\times 10^{-2}\,a^{-1}\,Z^{\,2/5}\,{\mit\Lambda}_{15}^{\,2/5}\,n_{20}^{3/5}\,\chi_0^{\,3/5}\,B_{\theta\,a}^{-1/5}\,\,{\rm V\,m}^{-1}.
+ E_0 =\frac{\beta_p\,\chi_0\,B_{\theta\,a}}{a} = 2.00\times 10^{-2}\,a^{-1}\,Z^{\,2/5}\,{\mit\Lambda}_{15}^{\,2/5}\,n_{20}^{3/5}\,\chi_0^{\,3/5}\,B_{\theta\,a}^{-1/5}\,\,{\rm V\,m}^{-1},
  \end{equation}
- The typical ohmic heating power is
+ and the typical ohmic heating power is written
  \begin{equation}
  P_0 = 4\pi^2\,\kappa\,R_0\,n_e\,\chi_0\,T_0 = 6.29\times 10^{-1}\,\kappa\,R_0\,Z^{\,2/5}\,{\mit\Lambda}_{15}^{\,2/5}\,n_{20}^{3/5}\,\chi_0^{\,3/5}\,B_{\theta\,a}^{\,4/5}\,\,{\rm MW}.
  \end{equation}
- Finally, the typical poloidal flux takes the form 
+ Finally, the typical poloidal magnetic flux takes the form 
  \begin{equation}
  \psi_0= 6.28\,R_0\,a\,B_{\theta\,a}\,{\rm V\,s}.
  \end{equation}
@@ -172,7 +181,7 @@ The electron energy balance equation takes the form\,\cite{fitz}
  \end{equation}
  Here, $\epsilon_0$ is the vacuum permittivity. 
  However, the criterion $E>E_c$ does not,  by itself, guarantee the generation of dangerous quantities of runaway electrons, because, before this
- can happen, there needs to be a source of suprathermal electrons. On obvious source is from the high-energy tail of the thermal electrons. However,
+ can happen, there needs to be a source of suprathermal electrons. One obvious source is from the high-energy tail of the thermal electrons. However,
  it is well-known that this source does not become effective until the electric field approaches the so-called {\em Driecer}\/ value,\cite{dreicer}
  \begin{equation}
  E_D = E_c\,\frac{m_e\,c^{\,2}}{T_e}= E_{D\,0}\,\frac{T_e}{T_0},
@@ -224,11 +233,10 @@ The electron energy balance equation takes the form\,\cite{fitz}
  \end{align}
  
 \subsection{Approximations}
-
-In order to facilitate our analysis, we make two approximations. 
+In order to facilitate our analysis, we shall make two approximations. 
 Our first approximation is to neglect the term involving $\beta_p$ in Eq.~(\ref{e25}).
 This approximation is warranted because, as is clear from Eq.~(\ref{e16}), $\beta_p$ is much less than unity in  conventional ohmic
-tokamak plasmas. As is apparent from Eq.~(\ref{e17}), this is the case because the energy confinement time is much less than
+tokamak plasmas. (See also Table~\ref{t2}.) As is apparent from Eq.~(\ref{e17}), this is the case because the energy confinement time is much less than
 the resistive diffusion time in such plasmas. The neglect of the term in question implies that, during the current ramp,  the temperature profile remains in a quasi-equilibrium state in which
 the energy per unit time that flows across the plasma boundary, and is presumably absorbed by the limiter, matches the ohmic heating power. Under these
 circumstances, the normalized ohmic heating power is written
@@ -237,8 +245,8 @@ circumstances, the normalized ohmic heating power is written
 \end{equation}
 
 Our second approximation is to neglect the second term on the extreme right-hand side of Eq.~(\ref{e31}). The neglect of the term in question implies that
-the inductive electric field is uniform within the plasma. Of course, this is the usual situation during the current flat-top phase of a tokamak
-discharge. However, it is possible for the electric field to be spatially constant during a current ramp as long as the current is not ramped up or down too
+the inductive electric field is {\em uniform}\/ within the plasma. Of course, this is the usual situation during the current flat-top phase of a tokamak
+discharge. However, it is possible for the electric field to be spatially uniform during a current ramp, provided that the current is not ramped up or down too
 rapidly. Indeed, the criterion that must be satisfied is
 \begin{equation}\label{e35}
 {\cal E} >\left| \int_0^{1}\,\frac{\partial\hat{B}_\theta}{\partial\hat{t}}\,d\hat{r}'\right|.
@@ -259,7 +267,9 @@ Our two approximations lead to the following equations:
  + \frac{{\cal E}^{\,2}\,\hat{T}^{\,3/2}}{\hat{\chi}}&=0,\\[0.5ex]
  \frac{\partial\hat{B}_\theta}{\partial \hat{r}} + \frac{\hat{B}_\theta}{\hat{r}}&= {\cal E}\,\hat{T}^{\,3/2}.\label{e39}
 \end{align}
-Note that ${\cal E}(\hat{t})$ can be adjusted by adjusting the rate at which the current in the central solenoid is ramped. 
+Note that ${\cal E}(t)$ can be adjusted by changing the time derivative of the  current flowing in the central solenoid.  Furthermore, tokamaks
+invariably  possess a feedback system that automatically alters the instantaneous value of ${\cal E}(t)$ in such a manner as to give a prescribed plasma
+current waveform, $I_p(t)$. 
 
 \subsection{Rescaling}
 Suppose that the instantaneous minor radius of the plasma is $\delta(\hat{t})\,a$. In other words, suppose that the limiter
@@ -309,7 +319,7 @@ Note that
 \end{equation}
 According to Eq.~(\ref{e29}), the net normalized toroidal current flowing in the plasma is
 \begin{equation}
-\hat{I}_p(\hat{t}) = \frac{\lambda^3\,\delta}{(\delta\,{\cal E})^5}\,\bar{B}_\theta(1).
+\hat{I}_p(\hat{t}) =\hat{I}_p(\delta,\hat{t})= \frac{\lambda^3\,\delta}{(\delta\,{\cal E})^5}\,\bar{B}_\theta(1).
 \end{equation}
 Equation~(\ref{e36}) implies that the normalized ohmic heating power is
 \begin{equation}
@@ -333,20 +343,20 @@ Note that we have imposed the criterion at $r=\delta\,a$, rather than $r=a$, bec
 within the plasma. 
 
 \section{Current Ramp Scenarios}
-\subsection{Ramp-Up}
-\subsubsection{Introduction}
-Suppose that the current ramp-up lasts from $t=0$ to $t=t_{\rm ramp}$. Suppose that, during the ramp-up, the current in the central solenoid is adjusted such that
-the normalized plasma current increases linearly in time:
+\subsection{Current Ramp-Up}
+\subsubsection{Current Waveform}
+Suppose that the current ramp-up lasts from $t=0$ to $t=t_{\rm ramp}$. Suppose that, during the ramp-up, the current flowing in the central solenoid is adjusted such that
+the normalized plasma current increases {\em linearly}\/ in time:
 \begin{equation}\label{e56}
 \hat{I}_p(\hat{t}) = \frac{\hat{t}}{\hat{t}_{\rm ramp}},
 \end{equation}
-where $\hat{t}_{\rm ramp} =t_{\rm ramp}/\tau_R$. 
+where $\hat{t}_{\rm ramp} =t_{\rm ramp}/\tau_R$. For the sake of simplicity, we shall assume that the plasma elongation is constant in time. 
 
-\subsubsection{Initial Stage}
-Suppose that, in the initial stage of the ramp-up, which lasts from $t=0$ to $t=t_{\rm pre}$, where $t_{\rm pre}\ll t_{\rm ramp}$, 
+\subsubsection{Initial Stage}\label{init}
+Suppose that, during the initial stage of the ramp-up, which lasts from $t=0$ to $t=t_{\rm pre}$, where $t_{\rm pre}\ll t_{\rm ramp}$, 
 the safety-factor at the plasma boundary is allowed to decrease from an initial very large value to its final value, $q_a$, in such a manner that
 \begin{equation}\label{e57}
-q(x,\hat{t}) = q_a\left(\frac{\hat{t}_{\rm pre}}{\hat{t}}\right)\bar{q}(x),
+q(x,\hat{t}) = q_a\left(\frac{\hat{t}_{\rm pre}}{\hat{t}}\right)\frac{\bar{q}(x)}{\bar{q}(1)},
 \end{equation}
 where $\hat{t}_{\rm pre}= t_{\rm pre}/\tau_R$. Here, $q_a$ is chosen such that $q(0)=1$ at the end of the initial stage. We make this choice because the
 sawtooth oscillation effectively prevents the central safety-factor from falling significantly below unity.\cite{book} It follows that
@@ -354,7 +364,7 @@ sawtooth oscillation effectively prevents the central safety-factor from falling
 q_a = \frac{1}{2\,\bar{B}_\theta(1)}.
 \end{equation}
 Equations~(\ref{e56}) and (\ref{e57}) allow us to determine all other quantities in the initial
-stage of the ramp-up. We get
+stage of the ramp-up. We obtain
 \begin{equation}
 \delta = \left(\frac{\hat{t}_{\rm pre}}{\hat{t}_{\rm ramp}}\right)^{1/2},
 \end{equation}
@@ -374,13 +384,141 @@ T_{\rm ramp}&= \lambda^{-2/5}\,[\bar{B}_\theta(1)]^{-4/5},\\[0.5ex]
 P_{\rm ramp} &= \zeta\,T_{\rm ramp}.
 \end{align}
 Finally, the criterion (\ref{e55}) yields
-\begin{equation}
+\begin{equation}\label{e55d}
 \hat{t}_{\rm ramp} > \left(\frac{\hat{t}_{\rm pre}}{\hat{t}_{\rm ramp}}\right)^{3/5}\left(\frac{\hat{t}}{\hat{t}_{\rm pre}}\right)^{1/5}{\cal E}_{\rm ramp}^{-1}\int_0^1\frac{\bar{B}_{\theta}(x)}{\bar{B}_\theta(1)}\,dx,
 \end{equation}
 which does indeed constitute a limitation on the maximum current ramp rate.
 
+\subsubsection{Main Stage}\label{main}
+In the main stage of the current ramp-up, the plasma current still increases linearly in time according to Eq.~(\ref{e56}), but the edge safety-factor value
+is held constant in such a manner that 
+\begin{equation}\label{e57a}
+q(x,\hat{t}) = q_a\,\frac{\bar{q}(x)}{\bar{q}(1)}.
+\end{equation}
+As before, Eqs.~(\ref{e56}) and (\ref{e57a}) allow us to determine all other quantities in the main 
+stage of the ramp-up. We find that 
+\begin{align}
+\delta &= \left(\frac{\hat{t}}{\hat{t}_{\rm ramp}}\right)^{1/2},\label{e70}\\[0.5ex]
+\hat{T}(x,\hat{t}) &= T_{\rm ramp}\left(\frac{\hat{t}}{\hat{t}_{\rm ramp}}\right)^{2/5}\bar{T}(x),\\[0.5ex]
+\hat{B}_\theta(x,\hat{t})&= \left(\frac{\hat{t}}{\hat{t}_{\rm ramp}}\right)^{1/2}\frac{\bar{B}_\theta(x)}{\bar{B}_\theta(1)},\\[0.5ex]
+{\cal E}(\hat{t}) &= {\cal E}_{\rm ramp}\left(\frac{\hat{t}}{\hat{t}_{\rm ramp}}\right)^{-3/5},\\[0.5ex]
+\hat{P}(\hat{t}) &= P_{\rm ramp}\left(\frac{\hat{t}}{\hat{t}_{\rm ramp}}\right)^{2/5},\\[0.5ex]
+\hat{\psi}_{\rm tot}(\hat{t})&= \left(\frac{\hat{t}}{\hat{t}_{\rm ramp}}\right)\int_0^1\frac{\bar{B}_{\theta}(x)}{\bar{B}_\theta(1)}\,dx.
+\end{align}
+It is clear from Eq.~(\ref{e70}) that, in order to keep the edge safety-factor constant, while the plasma current increases in time, it
+is necessary for the minor radius of the plasma to also increase in time. 
+
+The criterion (\ref{e55}) yields
+\begin{equation}
+\hat{t}_{\rm ramp} > \left(\frac{\hat{t}}{\hat{t}_{\rm ramp}}\right)^{3/5}\frac{1}{2\,{\cal E}_{\rm ramp}}\int_0^1\frac{\bar{B}_{\theta}(x)}{\bar{B}_\theta(1)}\,dx,
+\end{equation}
+Now, if this criterion is satisfied at the end of the current ramp then it is satisfied at all times in the main current ramp, and the criterion (\ref{e55d})
+is also satisfied at all times in the initial stage of the current ramp. Thus, we deduce that
+\begin{equation}
+t_{\rm ramp} > \tau_{\rm min},
+\end{equation}
+where \begin{equation}\label{taum}
+\tau_{\rm min}= \frac{\tau_R}{2\,{\cal E}_{\rm ramp}}\int_0^1\frac{\bar{B}_{\theta}(x)}{\bar{B}_\theta(1)}\,dx,
+\end{equation}
+Thus, $\tau_{\rm min}$ represents the minimum possible safe current ramp-up timescale. 
+
+\subsection{Current Ramp-Down}
+Suppose that the current ramp-down lasts from $t=0$ to $t=t_{\rm ramp}$. Suppose that, during the ramp-down, 
+the normalized plasma current decreases linearly in time:
+\begin{equation}
+\hat{I}_p(\hat{t}) = \frac{\hat{t}_{\rm ramp}-\hat{t}}{\hat{t}_{\rm ramp}}.
+\end{equation}
+In the main stage of the ramp-down, the edge safety-factor is held constant, so that Eq.~(\ref{e57a}) is valid.
+In the final stage of the ramp-down, which lasts from $t=t_{\rm ramp}-t_{\rm pre}$ to $t=t_{\rm ramp}$,
+the edge safety-factor increases in such a manner that 
+\begin{equation}
+q(x,\hat{t}) = q_a\left(\frac{\hat{t}_{\rm pre}}{\hat{t}_{\rm ramp}-\hat{t}}\right)\frac{\bar{q}(x)}{\bar{q}(1)}.
+\end{equation}
+The time variation of other quantities during the main stage of ramp-down can be obtained by making the transformation
+$\hat{t}\rightarrow \hat{t}_{\rm ramp} - \hat{t}$ in the relevant formulae  given in Sect.~\ref{main}. Likewise,
+the time variation of other quantities during the final stage of the ramp down are obtained be making the
+same transformation in the relevant formulae given in Sect.~\ref{init}. In particular, the minimum safe current
+ramp-down timescale, $\tau_{\rm min}$, is specified in Eq.~(\ref{taum}). 
+
+\section{Results}
+\subsection{Plasma Equilibrium}
+Let our normalized perpendicular energy diffusivity profile take the form
+\begin{equation}
+\hat{\chi}(x) = f(\alpha)\,(1+x^2)^\alpha,
+\end{equation}
+where
+\begin{equation}
+f(\alpha) = \frac{1+\alpha}{2^{\,1+\alpha}-1}.
+\end{equation}
+Note that $\int_0^1\,\hat{\chi}(x)\,dx/\int_0^1x\,dx=1$, which ensures that $\chi_0$ is the volume averaged perpendicular diffusivity, in accordance with our earlier assumption. 
+
+Figure~\ref{fig2} shows various equilibrium quantities plotted as a function of $\alpha$. As $\alpha$ increases, which implies that the diffusivity at the plasma
+boundary becomes larger than that at the core, the equilibrium current profile becomes more peaked. This is clear from the figure because both the edge safety-factor
+value, $q_a$, and the normalized internal plasma inductance,\cite{cheng}
+\begin{equation}
+l_i= \frac{2}{\bar{B}_\theta^{\,2}(1)}\int_0^1\bar{B}_\theta^{\,2}(x)\,x\,dx,
+\end{equation}
+increase with increasing $\alpha$. (A peaked current profile is associated with a large $l_i$ value, and vice versa.) The peaking of the current profile also causes a decrease in the normalized central electric field, ${\cal E}_{\rm ramp}$,  with increasing $\alpha$. 
+Note that $P_{\rm ramp}= {\cal E}_{\rm ramp}$ for the set of equilibria in question. Finally, the minimum safe current ramp timescale, $\tau_{\rm min}$,  is an increasing function of $\alpha$. 
+
+For the sake of simplicity, let us consider the case $\alpha=0$, in which the perpendicular diffusivity is uniform within the plasma. In this situation,
+we find that 
+$\lambda =  7.01$,  $q_a    =  3.30$,   $l_i   =  1.25$, 
+$T_{\rm ramp} =  2.08$,  ${\cal E}_{\rm ramp}=P_{\rm ramp}  =  2.21$, and $\tau_{\rm min}/\tau_R =  0.214$. 
+Figure~\ref{fig3} shows the corresponding normalized electron temperature and current profiles, as well as the safety-factor profile. 
+It can be seen that the current profile is fairly broad. Nevertheless, the equilibrium lies in the stable region of the
+conventional $q_a$--$l_i$ diagram. (See Fig.~4 of Ref.~\onlinecite{cheng}.) Note that, due to profile effects,  the minimum ramp timescale,
+$\tau_{\rm min}$,  is about one fifth of the conventional
+resistive diffusion timescale, $\tau_R$. 
+
+\subsection{Simulated Current Ramp-Up}
+In this section, we shall describe simulated current ramp-ups made using our model for the JET, SPARC, and ITER tokamaks. The
+machine parameters for these tokamaks are given in Table~\ref{t1}. The simulations are made assuming that $\chi_0=1\,{\rm m\,s}^{-1}$,
+$\ln{\mit\Lambda} = 15$, $Z=2$, $t_{\rm pre}= 0.05\,t_{\rm ramp}$, and $t_{\rm ramp} =\tau_{\rm min}$. Note that the current ramp time in these simulations takes its
+minimum safe value, according to our model. 
+
+Figure~\ref{fig4} shows a simulated current ramp for JET. Some of the characteristic  parameters for this ramp are listed in Table~\ref{t2}. 
+It can be seen that the toroidal plasma current in JET can be safely ramped up to about 2.9 MA in about 4.2 seconds. This prediction accords well
+with operational experience in JET. (See Fig.~1 of Ref.~\onlinecite{jet}.)
+Note that, as reported by de Vries et alia,\cite{run} the inductive electric field exceeds the Connor-Hastie field during the current ramp. However,
+the electric field only exceeds de Vries et alia's empirical runaway electron generation threshold, which is ten times the Connor-Hastie field,\cite{run} in
+the very early stages of the current ramp. Note that the threshold is exceeded, not because the current ramp is too fast, but rather because the
+plasma is very cold and resistive in the early stages of the ramp. One obvious solution to runaway electron problems in the early
+stages of a current ramp is to apply small amounts of electron cyclotron wave heating in order to slightly raise the electron temperature. 
+The inductive electric field is slightly above the Connor-Hastie value at the end of the current ramp, but we would expect the field to
+fall as soon as the main external heating is applied. Hence, the inductive electric field should be well below the Connor-Hastie
+value throughout most of the current flattop. Note that the inductive electric field is much less than the Dreicer field throughout the current ramp, as is also
+the case for our SPARC and ITER simulations. 
+
+Figure~\ref{fig5} shows a simulated current ramp for SPARC. Some of the characteristic  parameters for this ramp are listed in Table~\ref{t2}. 
+It can be seen that the toroidal plasma current in SPARC can be safely ramped up to about 6.4 MA in about 2.0 seconds. This safe ramp-rate is 
+actually less than the ramp-rate in the SPARC design.\cite{creely} 
+Note that the inductive electric field, ${\cal E}$,  exceeds the Connor-Hastie field, $E_c$,  during the current ramp. However, the ratio ${\cal E}/E_c$ for SPARC,
+shown  in Fig.~\ref{fig5}, is less than that the corresponding ratio for JET,  shown in Fig.~\ref{fig4}. In other words, if JET was capable of
+operating without dangerous levels of runaway electron generation during the current ramp, as reported by  Vries et alia,\cite{run} then SPARC
+should certainly also be capable of operating without runaway electron problems. 
+
+Finally, Fig.~\ref{fig6} shows a simulated current ramp for ITER. Some of the characteristic  parameters for this ramp are listed in Table~\ref{t2}. 
+It can be seen that the toroidal plasma current in ITER can be safely ramped up to about 9.6 MA in about 14.7 seconds. This safe ramp-rate is 
+consistent with the series of equilibria shown in Fig.~1 of Ref.~\onlinecite{federici}, and is much less than the 15 MA in 60 s ramp-down rate envisioned by de Vries et alia.\cite{deVries}
+Note that the inductive electric field, ${\cal E}$,  exceeds the Connor-Hastie field, $E_c$,  during the first third of the current ramp. However,  the ratio ${\cal E}/E_c$ for ITER, 
+shown  in Fig.~\ref{fig6}, is very much less than that the corresponding ratio for JET,  shown in Fig.~\ref{fig4}. As before, we conclude that if JET was capable of
+operating without dangerous levels of runaway electron generation during the current ramp, then ITER
+should certainly also be capable operating without runaway electron problems.  
+
+\section{Summary}
+A simple model of the ramp-up and ramp-down of the toroidal current in an ohmic tokamak plasma is developed. Faraday's law of electric induction is found to 
+limit how rapidly the current can be safety ramped up or down. We estimate that the minimum safe ramp-up/down times for the JET, SPARC, and
+ITER tokamaks are 4.2, 2.0, and 14.7 seconds, respectively. The JET ramp rate is in accordance with operational experience. The SPARC
+and ITER minimum safe ramp rates are less than the ramp rates in the respective designs. Hence, there is no indication that the design ramp rates are infeasible, as was recently 
+suggested by Boozer.\cite{boozer}
+We also find that the typical ratios of the inductive electric field
+to the Connor-Hastie field in SPARC and ITER are less than those in JET. Thus, the fact that the JET tokamak was able to operate successfully
+without encountering runaway electron problems during the current ramp suggests that the future SPARC and ITER tokamaks should certainly be able to
+avoid such problems. 
+
 \section*{Acknowledgements}
-This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences, under  contract DE-SC0021156. 
+This research was funded by the T U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences.
 
 \section*{Data Availability Statement}
 The digital data used in the figures in this paper can be obtained from the author upon reasonable request. 
@@ -442,14 +580,77 @@ and L.~Zheng, Phys.\ Plasmas {\bf 21}, 072506 (2014).
 \bibitem{pop} Z.~Popovic, B.~Esposito, J.R.~Martin-Solis, W.~Bin,  P.~Buratti, D.~Carnevale, F.~Causa, M.~Gospodarczyk,
 D.~Marocco, G.~Ramogida and M.~Riva, Phys.\ Plasmas {\bf 23}, 122501 (2016). 
 
+\bibitem{jet} I.~Voitsekhovitch, A.C.C.~Sips, B.~Alper, M.~Beurskens, I.~Coffey,
+J.~Conboy, T.~Gerbaud, C.~Giroud1, T.~Johnson, F.~K\"{o}ch, et al, Plasma Phys.\ Control. Fusion {\bf 52}  105011 (2010). 
+
+\bibitem{jet} Z.S.~Hartwig and Y.A.~Podpaly, {\em Magnetic Fusion Energy Formulary}, (MIT, Cambridge MA, 2011).
+ 
+\bibitem{iter} ITER Physics Basis Editors, et al., Nucl.\ Fusion {\bf 39} 2137 (1999). 
+ 
 \end{thebibliography}
+
+\newpage 
+\begin{table}
+\begin{tabular}{cccccc}\hline
+Machine & ~$R_0({\rm m})$~ & ~$a({\rm m})$~ & ~$B_0({\rm T})$~ & ~$n_e(10^{20}\,{\rm m}^{-3})$~ & ~$\kappa$\\ \hline
+JET & 2.96 & 0.96 & 3.45 & 0.3& 1.7\\[0.5ex]
+SPARC & 1.85 & 0.57 & 12.2 & 2.0 & 1.97\\[0.5ex]
+ITER & 6.2 & 2.0 & 5.3 & 1.0 & 1.85
+\end{tabular}
+\caption{Machine parameters for the JET, SPARC, and ITER tokamaks. 
+The JET parameters come from Ref.~\onlinecite{jet}. 
+The SPARC and ITER parameters are taken from Tables 1 and 2 of Ref.~\onlinecite{creely}, as well as Table~1 of Ref.~\onlinecite{iter}. }\label{t1}
+\end{table}
+
+\begin{table}
+\begin{tabular}{ccccccccc}\hline
+Machine & ~$I_p({\rm MA})$~ & ~$P({\rm MW})$~ & ~$T_c({\rm keV})$~ &~$\beta_p$~& ~${\cal E}({\rm V\,m}^{-1})$~ & ~$E_c({\rm V\,m}^{-1})$~ & ~$E_D({\rm V\,m}^{-1})$~& ~$\tau_{\rm min}({\rm s)}$\\ \hline
+JET & 2.93 & 1.99 & 1.86  &0.0470& 0.0336&0.0229&13.1 & 4.19\\[0.5ex]
+SPARC & 6.39& 11.2 & 2.29  &0.0343& 0.151&0.153&70.9& 2.02\\[0.5ex]
+ITER & 9.57 & 12.4 & 1.61  &0.0583& 0.0332&0.0765& 50.4&14.7
+\end{tabular}
+\caption{Plasma parameters at end of current ramp for the JET, SPARC, and ITER tokamaks. Here, $I_p$ is the toroidal plasma current, $P$ the
+ohmic heating power, $T_c$ the central electron temperature, $\beta_p$ the central poloidal beta, ${\cal E}$ the inductive
+electric field, $E_c$ the Connor-Hastie field, and $E_D$ the central Dreicer field. Finally, $\tau_{\rm min}$ is the minimum safe current ramp timescale.  }\label{t2}
+\end{table}
 
 \begin{figure}
 \centerline{\includegraphics[width=0.85\textwidth]{Figure1.pdf}}
 \caption{A cartoon showing the poloidal cross-section of a conventional tokamak during a current ramp-up. The black curve represents the first wall. The
 red, green, blue, magenta, and cyan curves show, in order of increasing time, the plasma boundary at various stages of the current ramp.
-Here, $R$, $\phi$, $Z$ are conventional cylindrical coordinates that are co-axial with the plasma torus. \label{fig1}}
+Here, $R$, $\phi$, $Z$ are conventional cylindrical coordinates that are co-axial with the plasma torus. }\label{fig1}
 \end{figure}
 
+\begin{figure}
+\centerline{\includegraphics[width=0.85\textwidth]{Figure2.pdf}}
+\caption{Various equilibrium quantities calculated as functions of the diffusivity profile parameter, $\alpha$.
+The top panel shows the eigenvalue, $\lambda$, and the edge safety-factor value, $q_a$. 
+The middle panel shows the normalized plasma self-inductance, $l_i$, the normalized central electron temperature, $T_{\rm ramp}$,
+and the normalized electric field, ${\cal E}_{\rm ramp}$. The lower panel shows the ratio of the minimum safe current ramp
+timescale, $\tau_{\rm min}$, to the resistive diffusion timescale, $\tau_R$. }\label{fig2}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.7\textwidth]{Figure3.pdf}}
+\caption{Equilibrium profiles calculated as functions of the normalized minor radius, $x$, for $\alpha=0$.  The top panel shows the normalized electron temperature profile, $\bar{T}$, and the
+normalized current profile, $\bar{j}= \bar{T}^{\,3/2}$.  The bottom panel shows the safety-factor profile, $q(x)= q_a\,\bar{q}(x)$. }\label{fig3}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Figure4.pdf}}
+\caption{Simulated current ramp-up for the JET tokamak. Here, $a$ is the minor radius of the plasma, $I_p$ the toroidal plasma
+current, $P$ the ohmic power, $q_a$ the edge safety-factor, $T_c$ the central electron temperature, ${\cal E}$ the
+inductive electric field, $E_c$ the Connor-Hastie field, and $E_D$ the central Dreicer field. }\label{fig4}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Figure5.pdf}}
+\caption{Simulated current ramp-up for the SPARC tokamak. See caption to Fig.~\ref{fig4}.}\label{fig5}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[width=0.9\textwidth]{Figure6.pdf}}
+\caption{Simulated current ramp-up for the ITER tokamak. See caption to Fig.~\ref{fig4}.}\label{fig6}
+\end{figure}
 
 \end{document}

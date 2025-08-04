@@ -40,13 +40,16 @@ class StartUp : private Utility
 
   // Physics parameters
   double alpha;  // Parameter that determines normalized perpendicular diffusivity profile (read from JSON file)
+                 // chi(x) = f(alpha) (1 + x^2)^alpha
+                 // f(alpha) = (1 + alpha) /(2^(1 + alpha) - 1)
   double lambda; // Temperature profile eigenvalue
   double Bt1;    // Bt(1)
   double qa;     // Edge safety-factor profile
   double li;     // Normalized plasma self-inductance
   double Tramp;  // Maximium normalized central electron temperature
   double tramp;  // Minimum normalized ramp time
-  double Eramp;  // Minimum normalized electric field
+  double Eramp;  // Normalized electric field
+  double Pramp;  // Normalized ohmic heating power
 
   // Calculation parameters
   double eps;    // Solutions launch from x = eps (read from JSON file)
@@ -69,6 +72,7 @@ class StartUp : private Utility
   double* TTr;    // Tramp values
   double* ttr;    // tramp values
   double* EEr;    // Eramp values
+  double* PPr;    // Pramp values
 
   // ----
   // Misc

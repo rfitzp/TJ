@@ -70,7 +70,7 @@ StartUp::~StartUp ()
 {
   delete[] xx;  delete[] T;   delete[] Bt;  delete[] q;
   delete[] aa;  delete[] qqa; delete[] lli; delete[] TTr;
-  delete[] ttr; delete[] EEr; delete[] ll;
+  delete[] ttr; delete[] EEr; delete[] ll;  delete[] PPr;
 }
 
 // #########################
@@ -128,10 +128,11 @@ void StartUp::Solve ()
 
   Bt1   = y[2];
   qa    = 1. /2. /Bt1;
-  li    = 2. * y[4] /Bt1/Bt1;
+  li    = 2. * y[4] /Bt1/Bt1; 
   Tramp = 1. /pow (lambda, 0.4) /pow (Bt1, 0.8);
-  Eramp = pow (lambda*lambda*lambda * Bt1, 0.2);
-  tramp = y[3] /Bt1 /2. /pow (lambda*lambda*lambda * Bt1, 0.2);
+  Eramp = pow (lambda, 0.6) * pow (Bt1, 0.2);
+  tramp = y[3] /Bt1 /2. /Eramp;
+  Pramp  = - Tramp * y[1] * (1. + alpha) * pow (2., alpha) /(pow (2., 1. + alpha) - 1.);
 
   q[0] = 1.;
   for (int i = 0; i < Nx; i++)
@@ -141,10 +142,10 @@ void StartUp::Solve ()
   
   delete[] y; delete[] err;
   
-  printf ("\nalpha = %11.4e lambda = %11.4e Bt1   = %11.4e qa = %11.4e  li   = %11.4e\n",
+  printf ("\nalpha = %11.4e lambda = %11.4e Bt1   = %11.4e qa    = %11.4e  li   = %11.4e\n",
 	  alpha, _lambda, Bt1, qa, li);
-  printf ("Tramp = %11.4e Eramp  = %11.4e tramp = %11.4e\n\n",
-	  Tramp, Eramp, tramp);
+  printf ("Tramp = %11.4e Eramp  = %11.4e tramp = %11.4e Pramp = %11.4e\n\n",
+	  Tramp, Eramp, tramp, Pramp);
 
   // ------------------
   // Perform alpha scan
@@ -156,6 +157,7 @@ void StartUp::Solve ()
   TTr = new double[Na];
   ttr = new double[Na];
   EEr = new double[Na];
+  PPr = new double[Na];
 
   for (int i = 0; i < Na; i++)
     {
@@ -173,6 +175,7 @@ void StartUp::Solve ()
       TTr[i] = Tramp;
       ttr[i] = tramp;
       EEr[i] = Eramp;
+      PPr[i] = Pramp;
     }
   printf ("\n");
    
@@ -214,9 +217,10 @@ void StartUp::SolveScan ()
   qa    = 1. /2. /Bt1;
   li    = 2. * y[4] /Bt1/Bt1;
   Tramp = 1. /pow (lambda, 0.4) /pow (Bt1, 0.8);
-  Eramp = pow (lambda*lambda*lambda * Bt1, 0.2);
-  tramp = y[3] /Bt1 /2. /pow (lambda*lambda*lambda * Bt1, 0.2);
-
+  Eramp = pow (lambda, 0.6) * pow (Bt1, 0.2);
+  tramp = y[3] /Bt1 /2. /Eramp;
+  Pramp = - Tramp * y[1] * (1. + alpha) * pow (2., alpha) /(pow (2., 1. + alpha) - 1.);
+  
   delete[] y; delete[] err;
 } 
 
@@ -230,7 +234,7 @@ void StartUp::CashKarp45Rhs (double x, double* y, double* dydx)
       // y[0] = T
       // y[1] = dT/dx
 
-      double fa = (1. + alpha) /(pow (2., alpha + 1.) - 1.);
+      double fa = (1. + alpha) /(pow (2., 1. + alpha) - 1.);
       double f1 = 2. * alpha * x /(1. + x*x);
       double f2 = fa * pow (1. + x*x, alpha);
 
@@ -251,7 +255,7 @@ void StartUp::CashKarp45Rhs (double x, double* y, double* dydx)
       // y[3] = int Bt
       // y[4] = int x Bt^2
 
-      double fa = (1. + alpha) /(pow (2., alpha + 1.) - 1.);
+      double fa = (1. + alpha) /(pow (2., 1. + alpha) - 1.);
       double f1 = 2. * alpha * x /(1. + x*x);
       double f2 = fa * pow (1. + x*x, alpha);
 
@@ -314,7 +318,7 @@ double StartUp::RootFindF (double _lambda)
 // #############################
 void StartUp::Write_netcdf ()
 {
-  printf ("Writing data to netcdf file Outputs/StartUp.nc:\n");
+  printf ("Writing data to netcdf file Outputs/StartUp/StartUp.nc:\n");
 
    double Input[NINPUT];
    
@@ -322,7 +326,7 @@ void StartUp::Write_netcdf ()
    
    try
      {
-       NcFile dataFile ("../Outputs/StartUp.nc", NcFile::replace);
+       NcFile dataFile ("../Outputs/StartUp/StartUp.nc", NcFile::replace);
 
        dataFile.putAtt ("Git_Hash",     GIT_HASH);
        dataFile.putAtt ("Compile_Time", COMPILE_TIME);
@@ -354,10 +358,12 @@ void StartUp::Write_netcdf ()
        t_x.putVar (ttr);
        NcVar E_x = dataFile.addVar ("E_ramp",          ncDouble, a_d);
        E_x.putVar (EEr);
+       NcVar o_x = dataFile.addVar ("P_ramp",          ncDouble, a_d);
+       o_x.putVar (PPr);
      }
    catch (NcException& e)
      {
-       printf ("Error writing data to netcdf file Outputs/ECE/ECE.nc\n");
+       printf ("Error writing data to netcdf file Outputs/StartUp/StartUp.nc\n");
        printf ("%s\n", e.what ());
        exit (1);
      }

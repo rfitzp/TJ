@@ -8,8 +8,8 @@ plt.rc ('ytick', labelsize = font)
 
 theta = np.linspace(0, 2*np.pi, 400)
 
-a = 0.32
-b = 0.32*1.8
+a = 0.321
+b = 0.321*1.8
 x = 1. + a * np.cos(theta)
 y = b * np.sin(theta)
 

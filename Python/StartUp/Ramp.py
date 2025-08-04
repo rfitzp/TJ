@@ -28,11 +28,6 @@ print ("\nT_0 = %11.4e keV beta_p = %11.4e t_0 = %11.4e s I_0 = %11.4e kappa MA 
 print ("\nE_c = %11.4e V/m E_D = %11.4e V/m E_c_hat = %11.4e E_D_hat = %11.4e"
        % (E_c, E_D, E_c/E_0, E_D/E_0))
 
-exit ()
-# ####
-# ITER
-# ####
-
 # .........
 # alpha = 0
 # .........
@@ -41,27 +36,33 @@ Tramp = 2.078
 Eramp = 2.205
 tramp = 0.2137
 
+chi   = 1.0
+Z     = 2.0
+
+# ####
+# ITER
+# ####
 B0    = 5.3
 R0    = 6.2
 a     = 2.0
 n20   = 1.0
-chi   = 1.0
-Z     = 2.0
-kappa = 1.8
+kappa = 1.85
 
 Bt = (a/R0) * B0 /qa
 
+bp = beta_p            * Z**(+0.4) * n20**(0.6)  * chi**(-0.4) * Bt**(-1.2)
 T0 = T_0               * Z**(+0.4) * n20**(-0.4) * chi**(-0.4) * Bt**(+0.8)
 t0 = t_0     * a*a     * Z**(-0.4) * n20**(-0.6) * chi**(-0.6) * Bt**(+1.2)
 I0 = 5.00    * a                                               * Bt        * kappa
+P0 = P_0     * R0      * Z**(+0.4) * n20**(+0.6) * chi**(+0.6) * Bt**(+0.8)* kappa
 E0 = beta_p  * a**(-1) * Z**(+0.4) * n20**(+0.6) * chi**(+0.6) * Bt**(-0.2)
 Ec = E_c     *                       n20
 ED = E_D               * Z**(-0.4) * n20**(+1.4) * chi**(0.4)  * Bt**(-0.8)
 
 print ("\nITER: T0 = %11.4e keV t0 = %11.4e s I0 = %11.4e MA E0 = %11.4e V/m Ec = %11.4e V/m ED = %11.4e V/m"
        % (T0, t0, I0, E0, Ec, ED))
-print ("\nITER: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m"
-       % (T0*Tramp, t0*tramp, E0*Eramp))
+print ("\nITER: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m P = %11.4e (MW) beta_p = %11.4e"
+       % (T0*Tramp, t0*tramp, E0*Eramp, P0*Eramp, bp))
 
 # ##########
 # Simulation
@@ -75,6 +76,7 @@ dd  = []
 IIp = []
 qqa = []
 TTc = []
+PPc = []
 EE  = []
 EEc = []
 EED = []
@@ -88,6 +90,7 @@ for t in tt:
         IIp.append (t * I0)
         qqa.append (qa*tpre/t)
         TTc.append (T0*Tramp * tpre**0.4    * (t/tpre)**0.8)
+        PPc.append (P0*Eramp * tpre**0.4    * (t/tpre)**0.8)
         EE .append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2))
         EEc.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /Ec)
         EED.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /ED /(T0*Tramp * tpre**0.4 * (t/tpre)**0.8))
@@ -96,6 +99,7 @@ for t in tt:
         IIp.append (t * I0)
         qqa.append (qa)
         TTc.append (T0*Tramp * t**0.4)
+        PPc.append (P0*Eramp * t**0.4)
         EE .append (E0*Eramp * t**(-0.6))
         EEc.append (E0*Eramp * t**(-0.6) /Ec)
         EED.append (E0*Eramp * t**(-0.6) /ED /(T0*Tramp * t**0.4))
@@ -121,13 +125,14 @@ plt.subplot (3, 2, 2)
 
 plt.xlim (0., xx[-1])
  
-plt.plot    (xx, IIp, color = 'blue',  linewidth = 2, linestyle = 'solid')
+plt.plot    (xx, IIp, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = "$I_p(MA)$")
+plt.plot    (xx, PPc, color = 'red',   linewidth = 2, linestyle = 'solid',  label = "$P(MW)$")
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.axvline (tpre*t0*tramp, color = 'black', linewidth = 1, linestyle = 'dotted')
 
-plt.xlabel (r'$t (s)$',    fontsize = font)
-plt.ylabel (r'$I_p (MA)$', fontsize = font)
+plt.xlabel (r'$t (s)$', fontsize = font)
+plt.legend (fontsize = font)
 
 plt.subplot (3, 2, 3)
 
@@ -181,49 +186,34 @@ plt.legend (fontsize = font)
 
 plt.tight_layout ()
 
-plt.show () 
+#plt.show () 
+plt.savefig("Figure6.pdf")
 
 # #####
 # SPARC
 # #####
 
-# .........
-# alpha = 0
-# .........
-qa    = 3.304
-Tramp = 2.078
-Eramp = 2.205
-tramp = 0.2137
-
-# .........
-# alpha = 2
-# .........
-#qa    = 5.573
-#Tramp = 3.178
-#Eramp = 1.975
-#tramp = 0.2906
-
 B0    = 12.2
 R0    = 1.85
 a     = 0.57
 n20   = 2.0
-chi   = 1.0
-Z     = 2.0
-kappa = 1.8
+kappa = 1.97
 
 Bt = (a/R0) * B0 /qa
 
+bp = beta_p            * Z**(+0.4) * n20**(0.6)  * chi**(-0.4) * Bt**(-1.2)
 T0 = T_0               * Z**(+0.4) * n20**(-0.4) * chi**(-0.4) * Bt**(+0.8)
 t0 = t_0     * a*a     * Z**(-0.4) * n20**(-0.6) * chi**(-0.6) * Bt**(+1.2)
 I0 = 5.00    * a                                               * Bt        * kappa
+P0 = P_0     * R0      * Z**(+0.4) * n20**(+0.6) * chi**(+0.6) * Bt**(+0.8)* kappa
 E0 = beta_p  * a**(-1) * Z**(+0.4) * n20**(+0.6) * chi**(+0.6) * Bt**(-0.2)
 Ec = E_c     *                       n20
 ED = E_D               * Z**(-0.4) * n20**(+1.4) * chi**(0.4)  * Bt**(-0.8)
 
 print ("\nSPARC: T0 = %11.4e keV t0 = %11.4e s I0 = %11.4e MA E0 = %11.4e V/m Ec = %11.4e V/m ED = %11.4e V/m"
        % (T0, t0, I0, E0, Ec, ED))
-print ("\nSPARC: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m"
-       % (T0*Tramp, t0*tramp, E0*Eramp))
+print ("\nSPARC: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m P = %11.4e MW beta_p = %11.4e"
+       % (T0*Tramp, t0*tramp, E0*Eramp, P0*Eramp, bp))
 
 # ##########
 # Simulation
@@ -237,6 +227,7 @@ dd  = []
 IIp = []
 qqa = []
 TTc = []
+PPc = []
 EE  = []
 EEc = []
 EED = []
@@ -250,6 +241,7 @@ for t in tt:
         IIp.append (t * I0)
         qqa.append (qa*tpre/t)
         TTc.append (T0*Tramp * tpre**0.4    * (t/tpre)**0.8)
+        PPc.append (P0*Eramp * tpre**0.4    * (t/tpre)**0.8)
         EE .append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2))
         EEc.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /Ec)
         EED.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /ED /(T0*Tramp * tpre**0.4 * (t/tpre)**0.8))
@@ -258,6 +250,7 @@ for t in tt:
         IIp.append (t * I0)
         qqa.append (qa)
         TTc.append (T0*Tramp * t**0.4)
+        PPc.append (P0*Eramp * t**0.4)
         EE .append (E0*Eramp * t**(-0.6))
         EEc.append (E0*Eramp * t**(-0.6) /Ec)
         EED.append (E0*Eramp * t**(-0.6) /ED /(T0*Tramp * t**0.4))
@@ -283,13 +276,14 @@ plt.subplot (3, 2, 2)
 
 plt.xlim (0., xx[-1])
  
-plt.plot    (xx, IIp, color = 'blue',  linewidth = 2, linestyle = 'solid')
+plt.plot    (xx, IIp, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = "$I_p(MA)$")
+plt.plot    (xx, PPc, color = 'red',   linewidth = 2, linestyle = 'solid',  label = "$P(MW)$")
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.axvline (tpre*t0*tramp, color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.xlabel (r'$t (s)$',    fontsize = font)
-plt.ylabel (r'$I_p (MA)$', fontsize = font)
+plt.legend (fontsize = font)
 
 plt.subplot (3, 2, 3)
 
@@ -343,41 +337,26 @@ plt.legend (fontsize = font)
 
 plt.tight_layout ()
 
-plt.show () 
+#plt.show ()
+plt.savefig("Figure5.pdf")
 
 # ###
 # JET
 # ###
 
-# .........
-# alpha = 0
-# .........
-qa    = 3.304
-Tramp = 2.078
-Eramp = 2.205
-tramp = 0.2137
-
-# .........
-# alpha = 2
-# .........
-#qa    = 5.573
-#Tramp = 3.178
-#Eramp = 1.975
-#tramp = 0.2906
-
 B0    = 3.45
 R0    = 2.96
-a     = 1.25
-n20   = 0.2
-chi   = 1.0
-Z     = 2.0
+a     = 0.96
+n20   = 0.3
 kappa = 1.8
 
 Bt = (a/R0) * B0 /qa
 
+bp = beta_p            * Z**(+0.4) * n20**(0.6)  * chi**(-0.4) * Bt**(-1.2)
 T0 = T_0               * Z**(+0.4) * n20**(-0.4) * chi**(-0.4) * Bt**(+0.8)
 t0 = t_0     * a*a     * Z**(-0.4) * n20**(-0.6) * chi**(-0.6) * Bt**(+1.2)
 I0 = 5.00    * a                                               * Bt        * kappa
+P0 = P_0     * R0      * Z**(+0.4) * n20**(+0.6) * chi**(+0.6) * Bt**(+0.8)* kappa
 E0 = beta_p  * a**(-1) * Z**(+0.4) * n20**(+0.6) * chi**(+0.6) * Bt**(-0.2)
 Ec = E_c     *                       n20
 ED = E_D               * Z**(-0.4) * n20**(+1.4) * chi**(0.4)  * Bt**(-0.8)
@@ -385,8 +364,8 @@ ED = E_D               * Z**(-0.4) * n20**(+1.4) * chi**(0.4)  * Bt**(-0.8)
 print ("\nJET: T0 = %11.4e keV t0 = %11.4e s I0 = %11.4e MA E0 = %11.4e V/m Ec = %11.4e V/m ED = %11.4e V/m"
        % (T0, t0, I0, E0, Ec, ED))
 
-print ("\nJET: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m\n"
-       % (T0*Tramp, t0*tramp, E0*Eramp))
+print ("\nJET: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m P = %11.4e MW beta_p = %11.4e\n"
+       % (T0*Tramp, t0*tramp, E0*Eramp, P0*Eramp, bp))
 
 # ##########
 # Simulation
@@ -400,6 +379,7 @@ dd  = []
 IIp = []
 qqa = []
 TTc = []
+PPc = []
 EE  = []
 EEc = []
 EED = []
@@ -413,6 +393,7 @@ for t in tt:
         IIp.append (t * I0)
         qqa.append (qa*tpre/t)
         TTc.append (T0*Tramp * tpre**0.4    * (t/tpre)**0.8)
+        PPc.append (P0*Eramp * tpre**0.4    * (t/tpre)**0.8)
         EE .append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2))
         EEc.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /Ec)
         EED.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /ED /(T0*Tramp * tpre**0.4 * (t/tpre)**0.8))
@@ -421,6 +402,7 @@ for t in tt:
         IIp.append (t * I0)
         qqa.append (qa)
         TTc.append (T0*Tramp * t**0.4)
+        PPc.append (P0*Eramp * t**0.4)
         EE .append (E0*Eramp * t**(-0.6))
         EEc.append (E0*Eramp * t**(-0.6) /Ec)
         EED.append (E0*Eramp * t**(-0.6) /ED /(T0*Tramp * t**0.4))
@@ -446,13 +428,15 @@ plt.subplot (3, 2, 2)
 
 plt.xlim (0., xx[-1])
  
-plt.plot    (xx, IIp, color = 'blue',  linewidth = 2, linestyle = 'solid')
+plt.plot    (xx, IIp, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = "$I_p(MA)$")
+plt.plot    (xx, PPc, color = 'red',   linewidth = 2, linestyle = 'solid',  label = "$P(MW)$")
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.axvline (tpre*t0*tramp, color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.xlabel (r'$t (s)$',    fontsize = font)
-plt.ylabel (r'$I_p (MA)$', fontsize = font)
+#plt.ylabel (r'$I_p (MA)$', fontsize = font)
+plt.legend (fontsize = font)
 
 plt.subplot (3, 2, 3)
 
@@ -506,4 +490,6 @@ plt.legend (fontsize = font)
 
 plt.tight_layout ()
 
-plt.show () 
+#plt.show ()
+plt.savefig("Figure4.pdf")
+
