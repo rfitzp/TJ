@@ -167,6 +167,7 @@ class Equilibrium : private Utility
   double*            S2;        // Second shaping function
   double*            S3;        // Third shaping function
   double*            S4;        // Fourth shaping function
+  double*            S5;        // Fifth shaping function
   double*            P1;        // First profile function: (2-s) /q2
   double*            P1a;       // Lowest-order first profile function: (2-s0) /q0 
   double*            P2;        // Second profile function: r dP1/dr

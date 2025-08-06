@@ -123,6 +123,22 @@ double Vertical::GetS4 (double r)
     return gsl_spline_eval (S4spline, r, S4acc);
 }
 
+double Vertical::GetS5 (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (S5spline, 1., S5acc);
+  else
+    return gsl_spline_eval (S5spline, r, S5acc);
+}
+
+double Vertical::GetSig (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval (Sigspline, 1., Sigacc);
+  else
+    return gsl_spline_eval (Sigspline, r, Sigacc);
+}
+
 double Vertical::GetP1 (double r)
 {
   if (r >= 1.)

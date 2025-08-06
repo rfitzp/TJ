@@ -9,10 +9,10 @@ all:
 	(cd Tear;        make)
 	(cd Island;      make)
 	(cd ECE;      	 make)
+	(cd StartUp;     make)
 	(cd TJ;        	 make)
 
 clean:
-
 	(cd Utility;     make clean)
 	(cd Equilibrium; make clean)
 	(cd Layer;	 make clean)
@@ -21,4 +21,5 @@ clean:
 	(cd Tear;        make clean)
 	(cd Island;      make clean)
 	(cd ECE;      	 make clean)
+	(cd StartUp;     make clean)
 	(cd TJ;          make clean)

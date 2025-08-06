@@ -35,8 +35,7 @@ Vertical::Vertical ()
   MMAX    = JSONData["MMAX"].get<int>();
 
   EQLB    = JSONData["EQLB"].get<int>();
-  VIZ     = JSONData["VIZ"] .get<int>();
-
+  
   EPS     = JSONData["EPS"]  .get<double>();
   NFIX    = JSONData["NFIX"] .get<int>   ();
   NDIAG   = JSONData["NDIAG"].get<int>   ();
@@ -61,6 +60,10 @@ Vertical::Vertical ()
   Chip  = JSONData["Chip"] .get<double>();
   Teped = JSONData["Teped"].get<double>();
   neped = JSONData["neped"].get<double>();
+
+  JSONFilename = "../Inputs/TJ.json";
+  JSONData     = ReadJSONFile (JSONFilename);
+  VIZ = JSONData["VIZ"].get<int> ();
 
   // ------------
   // Sanity check
@@ -207,6 +210,18 @@ void Vertical::Solve ()
 
       // Set toroidal and poloidal mode numbers
       SetModeNumbers ();
+
+      // Read equilibrium data
+      ReadEquilibrium ();
+
+      // Calculate metric data at plasma boundary
+      CalculateMetricBoundary ();
+
+      // Write program data to Netcdf file
+      WriteNetcdf ();
+      
+      // Clean up
+      CleanUp ();
     }
 }
 
@@ -238,7 +253,8 @@ void Vertical::CleanUp ()
   delete[] P2;   delete[] P3;  delete[] g2;  delete[] p2;
   delete[] PsiN; delete[] S2;  delete[] S3;  delete[] s0;
   delete[] f;    delete[] Psi; delete[] nep; delete[] Tep;
-  delete[] ne;   delete[] Te;  delete[] S4;
+  delete[] ne;   delete[] Te;  delete[] S4;  delete[] S5;
+  delete[] Sig;
 
   gsl_spline_free (Pspline);
   gsl_spline_free (fspline);
@@ -253,6 +269,9 @@ void Vertical::CleanUp ()
   gsl_spline_free (S1spline);
   gsl_spline_free (S2spline);
   gsl_spline_free (S3spline);
+  gsl_spline_free (S4spline);
+  gsl_spline_free (S5spline);
+  gsl_spline_free (Sigspline);
   gsl_spline_free (P1spline);
   gsl_spline_free (P2spline);
   gsl_spline_free (P3spline);
@@ -274,6 +293,9 @@ void Vertical::CleanUp ()
   gsl_interp_accel_free (S1acc);
   gsl_interp_accel_free (S2acc);
   gsl_interp_accel_free (S3acc);
+  gsl_interp_accel_free (S4acc);
+  gsl_interp_accel_free (S5acc);
+  gsl_interp_accel_free (Sigacc);
   gsl_interp_accel_free (P1acc);
   gsl_interp_accel_free (P2acc);
   gsl_interp_accel_free (P3acc);

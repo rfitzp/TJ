@@ -298,7 +298,7 @@ class TJ : private Utility
   // ------------------
   // Wall solution data
   // ------------------
-  double                   bw;     // Relative wall radius
+  double                   bw;     // Relative wall radius (read from Equilibrium JSON file)
   double*                  rho;    // Wall scaling vector
 
   Array<complex<double>,2> Rwal;   // Wall solution matrix

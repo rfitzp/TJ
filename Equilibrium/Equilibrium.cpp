@@ -265,6 +265,7 @@ void Equilibrium::Solve ()
   S2    = new double[Nr+1];
   S3    = new double[Nr+1];
   S4    = new double[Nr+1];
+  S5    = new double[Nr+1];
   P1    = new double[Nr+1];
   P1a   = new double[Nr+1];
   P2    = new double[Nr+1];
@@ -790,6 +791,7 @@ void Equilibrium::Solve ()
       double sum2 = 1.5 * rr[i]*rr[i] - 2. * rr[i] * HPfunc(1, i) + HPfunc(1, i)*HPfunc(1, i);
       double sum3 = - 0.75 * rr[i]*rr[i] + rr[i]*rr[i] /q2[i]/q2[i] + HHfunc(1, i) + 1.5 * HPfunc(1, i)*HPfunc(1, i);
       double sum4 = 0.75 * rr[i]*rr[i] - HHfunc(1, i) + HPfunc(1, i) * HPfunc(1, i) /2.;
+      double sum5 = 1.75 * rr[i]*rr[i] - HHfunc(1, i) - 3. * rr[i] * HPfunc(1, i) + 1.5 * HPfunc(1, i) * HPfunc(1, i) /2.;
  
       for (int n = 2; n <= Ns; n++)
 	{
@@ -802,17 +804,21 @@ void Equilibrium::Solve ()
 		       - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i]) /2.;
 	  sum4 +=                           (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i)) /2.
 	               + double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i] /2.;
+	  sum5 += (                    3. * (HPfunc(n, i) * HPfunc(n, i) + VPfunc(n, i) * VPfunc(n, i))
+		       - double (n*n - 1) * (HHfunc(n, i) * HHfunc(n, i) + VVfunc(n, i) * VVfunc(n, i)) /rr[i]/rr[i]) /2.;
 	}
 
       S1[i] = sum1;
       S2[i] = sum2;
       S3[i] = sum3;
       S4[i] = sum4;
+      S5[i] = sum5;
     }
   S1[0] = 0.;
   S2[0] = S2[1];
   S3[0] = 0.;
   S4[0] = S4[1];
+  S5[0] = 0.;
 
   // ...........................
   // Calculate profile functions
@@ -1172,7 +1178,7 @@ void Equilibrium::Solve ()
   delete[] s;   delete[] s2;  delete[] S1;  delete[] S2;  delete[] P1;
   delete[] P2;  delete[] P3;  delete[] P3a; delete[] ff;  delete[] ggr2;
   delete[] RR2; delete[] IR2; delete[] S3;  delete[] P1a; delete[] P2a;
-  delete[] s0;  delete[] S4;
+  delete[] s0;  delete[] S4;  delete[] S5;
 
   delete[] req;    delete[] weq;    delete[] teq;    delete[] Req; 
   delete[] Zeq;    delete[] BReq;   delete[] neeq;   delete[] Teeq;

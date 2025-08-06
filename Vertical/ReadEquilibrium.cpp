@@ -29,6 +29,8 @@ void Vertical::ReadEquilibrium ()
   S2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   S3spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   S4spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  S5spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
+  Sigspline = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P1spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P2spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
   P3spline  = gsl_spline_alloc (gsl_interp_cspline, Nr+1);
@@ -51,6 +53,8 @@ void Vertical::ReadEquilibrium ()
   S2acc     = gsl_interp_accel_alloc ();
   S3acc     = gsl_interp_accel_alloc ();
   S4acc     = gsl_interp_accel_alloc ();
+  S5acc     = gsl_interp_accel_alloc ();
+  Sigacc    = gsl_interp_accel_alloc ();
   P1acc     = gsl_interp_accel_alloc ();
   P2acc     = gsl_interp_accel_alloc ();
   P3acc     = gsl_interp_accel_alloc ();
@@ -99,6 +103,8 @@ void Vertical::ReadEquilibrium ()
   gsl_spline_init (S2spline,  rr, S2,   Nr+1);
   gsl_spline_init (S3spline,  rr, S3,   Nr+1);
   gsl_spline_init (S4spline,  rr, S4,   Nr+1);
+  gsl_spline_init (S5spline,  rr, S5,   Nr+1);
+  gsl_spline_init (Sigspline, rr, Sig,  Nr+1);
   gsl_spline_init (P1spline,  rr, P1,   Nr+1);
   gsl_spline_init (P2spline,  rr, P2,   Nr+1);
   gsl_spline_init (P3spline,  rr, P3,   Nr+1);

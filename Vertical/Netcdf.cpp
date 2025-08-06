@@ -2,7 +2,7 @@
 
 #include "Vertical.h"
 
-#define NINPUT 27
+#define NINPUT 21
 
 // ##################################################
 // Function to read equilibrium data from netcdf file
@@ -42,6 +42,8 @@ void Vertical::ReadEquilibriumNetcdf ()
       NcVar S2_x  = dataFile.getVar ("S2");
       NcVar S3_x  = dataFile.getVar ("S3");
       NcVar S4_x  = dataFile.getVar ("S4");
+      NcVar S5_x  = dataFile.getVar ("S5");
+      NcVar P4_x  = dataFile.getVar ("P3a");
       NcVar P1_x  = dataFile.getVar ("P1");
       NcVar P2_x  = dataFile.getVar ("P2");
       NcVar P3_x  = dataFile.getVar ("P3");
@@ -69,6 +71,8 @@ void Vertical::ReadEquilibriumNetcdf ()
       S2   = new double[Nr+1];
       S3   = new double[Nr+1];
       S4   = new double[Nr+1];
+      S5   = new double[Nr+1];
+      Sig  = new double[Nr+1];
       P1   = new double[Nr+1];
       P2   = new double[Nr+1];
       P3   = new double[Nr+1];
@@ -93,6 +97,8 @@ void Vertical::ReadEquilibriumNetcdf ()
       S2_x .getVar (S2);
       S3_x .getVar (S3);
       S4_x .getVar (S4);
+      S5_x .getVar (S5);
+      P4_x .getVar (Sig);
       P1_x .getVar (P1);
       P2_x .getVar (P2);
       P3_x .getVar (P3);
@@ -152,33 +158,6 @@ void Vertical::ReadEquilibriumNetcdf ()
       Zbound_x.getVar (Zbound);
       dRdthe_x.getVar (dRdthe);
       dZdthe_x.getVar (dZdthe);
-
-      NcVar wwall_x = dataFile.getVar ("wwall");
-      NcVar Rwall_x = dataFile.getVar ("Rwall");
-      NcVar Zwall_x = dataFile.getVar ("Zwall");
- 
-      wwall = new double[Nw+1];
-      Rwall = new double[Nw+1];
-      Zwall = new double[Nw+1];
-
-      wwall_x.getVar (wwall);
-      Rwall_x.getVar (Rwall);
-      Zwall_x.getVar (Zwall);
-
-      NcVar Rcoil_x = dataFile.getVar ("Rcoil");
-      NcVar Zcoil_x = dataFile.getVar ("Zcoil");
-      NcVar Icoil_x = dataFile.getVar ("Icoil");
-      NcDim c_d     = Rcoil_x.getDim (0);
- 
-      ncoil = c_d.getSize ();
-
-      Rcoil = new double[ncoil];
-      Zcoil = new double[ncoil];
-      Icoil = new double[ncoil];
-
-      Rcoil_x.getVar (Rcoil);
-      Zcoil_x.getVar (Zcoil);
-      Icoil_x.getVar (Icoil);
 
       if (VIZ)
 	{
@@ -246,42 +225,6 @@ void Vertical::ReadEquilibriumNetcdf ()
 	  delete[] RRdata;   delete[] ZZdata;   delete[] rrdata;   delete[] ttdata;
 	  delete[] dRdrdata; delete[] dRdtdata; delete[] dZdrdata; delete[] dZdtdata;
 
-	  NcVar req_x    = dataFile.getVar ("r_eq");
-	  NcVar teq_x    = dataFile.getVar ("theta_eq");
-	  NcVar Req_x    = dataFile.getVar ("R_eq");
-	  NcVar Zeq_x    = dataFile.getVar ("Z_eq");
-	  NcVar BReq_x   = dataFile.getVar ("BR_eq");
-	  NcVar neeq_x   = dataFile.getVar ("ne_eq");
-	  NcVar Teeq_x   = dataFile.getVar ("Te_eq");
-	  NcVar dRdreq_x = dataFile.getVar ("dRdr_eq");
-	  NcVar dRdteq_x = dataFile.getVar ("dRdt_eq");
-	  NcVar dZdreq_x = dataFile.getVar ("dZdr_eq");
-	  NcVar dZdteq_x = dataFile.getVar ("dZdt_eq");
-
-	  req    = new double[2*Nf];
-	  teq    = new double[2*Nf];
-	  Req    = new double[2*Nf];
-	  Zeq    = new double[2*Nf];
-	  BReq   = new double[2*Nf];
-	  neeq   = new double[2*Nf];
-	  Teeq   = new double[2*Nf];
-	  dRdreq = new double[2*Nf];
-	  dRdteq = new double[2*Nf];
-	  dZdreq = new double[2*Nf];
-	  dZdteq = new double[2*Nf];
-
-	  req_x   .getVar (req);
-	  teq_x   .getVar (teq);
-	  Req_x   .getVar (Req);
-	  Zeq_x   .getVar (Zeq);
-	  BReq_x  .getVar (BReq);
-	  neeq_x  .getVar (neeq);
-	  Teeq_x  .getVar (Teeq);
-	  dRdreq_x.getVar (dRdreq);
-	  dRdteq_x.getVar (dRdteq);
-	  dZdreq_x.getVar (dZdreq);
-	  dZdteq_x.getVar (dZdteq);
-
 	  dataFile.close ();
 	}
       else
@@ -298,3 +241,99 @@ void Vertical::ReadEquilibriumNetcdf ()
     }
 }
 
+// ###############################################
+// Function to write stability data to netcdf file
+// ###############################################
+void Vertical::WriteNetcdf ()
+{
+  printf ("Writing stability data to netcdf file Outputs/Vertical/Vertical.nc:\n");
+
+  double Input[NINPUT];
+
+  Input[0]  = double (MMIN);
+  Input[1]  = double (MMAX);
+  Input[2]  = EPS;
+  Input[3]  = double (NFIX);
+  Input[4]  = double (NDIAG);
+  Input[5]  = acc;
+  Input[6]  = h0;
+  Input[7]  = hmin;
+  Input[8]  = hmax;
+  Input[9]  = EPSF;
+  Input[11] = double (SRC);
+  Input[12] = B0;
+  Input[13] = R0;
+  Input[14] = n0;
+  Input[15] = alpha;
+  Input[16] = Zeff;
+  Input[17] = Mion;
+  Input[18] = Chip;
+  Input[19] = Teped;
+  Input[20] = neped;
+  
+  try
+    {
+      NcFile dataFile ("../Outputs/Vertical/Vertical.nc", NcFile::replace);
+
+      dataFile.putAtt ("Git_Hash",     GIT_HASH);
+      dataFile.putAtt ("Compile_Time", COMPILE_TIME);
+      dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
+
+      NcDim i_d = dataFile.addDim ("Ni", NINPUT);
+      NcDim r_d = dataFile.addDim ("Nr", Nr+1);
+      NcDim s_d = dataFile.addDim ("Ns", Ns+1);
+      NcDim j_d = dataFile.addDim ("J",  J);
+
+      vector<NcDim> shape_d;
+      shape_d.push_back (s_d);
+      shape_d.push_back (r_d);
+
+      NcVar i_x = dataFile.addVar ("InputParameters", ncDouble, i_d);
+      i_x.putVar (Input);
+
+      NcVar r_x   = dataFile.addVar ("r",   ncDouble, r_d);
+      r_x.putVar (rr);
+      NcVar pp_x  = dataFile.addVar ("pp",  ncDouble, r_d);
+      pp_x.putVar (pp);
+      NcVar ppp_x = dataFile.addVar ("ppp", ncDouble, r_d);
+      ppp_x.putVar (ppp);
+      NcVar q_x   = dataFile.addVar ("q",   ncDouble, r_d);
+      q_x.putVar (q);
+      NcVar s_x   = dataFile.addVar ("s",   ncDouble, r_d);
+      s_x.putVar (s);
+      NcVar s2_x  = dataFile.addVar ("s2",  ncDouble, r_d);
+      s2_x.putVar (s2);
+      NcVar S1_x  = dataFile.addVar ("S1",  ncDouble, r_d);
+      S1_x.putVar (S1);
+      NcVar S5_x  = dataFile.addVar ("S5",  ncDouble, r_d);
+      S5_x.putVar (S5);
+      NcVar Sig_x = dataFile.addVar ("Sig", ncDouble, r_d);
+      Sig_x.putVar (Sig);
+      NcVar P1_x  = dataFile.addVar ("P1",  ncDouble, r_d);
+      P1_x.putVar (P1);
+      NcVar P2_x  = dataFile.addVar ("P2",  ncDouble, r_d);
+      P2_x.putVar (P2);
+      NcVar P3_x  = dataFile.addVar ("P3",  ncDouble, r_d);
+      P3_x.putVar (P3);
+ 
+      NcVar Hn_x  = dataFile.addVar ("Hn",  ncDouble, shape_d);
+      Hn_x.putVar (HHfunc.data());
+      NcVar Hnp_x = dataFile.addVar ("Hnp", ncDouble, shape_d);
+      Hnp_x.putVar (HPfunc.data());
+      NcVar Vn_x  = dataFile.addVar ("Vn",  ncDouble, shape_d);
+      Vn_x.putVar (VVfunc.data());
+      NcVar Vnp_x = dataFile.addVar ("Vnp", ncDouble, shape_d);
+      Vnp_x.putVar (VPfunc.data());
+
+      NcVar mpol_x = dataFile.addVar ("mpol", ncInt, j_d);
+      mpol_x.putVar (MPOL);
+
+      dataFile.close ();
+    }
+  catch (NcException& e)
+    {
+      printf ("Error writing data to netcdf file Outputs/Vertical/Virtical.nc\n");
+      printf ("%s\n", e.what ());
+      exit (1);
+    }
+}

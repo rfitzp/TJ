@@ -15,6 +15,7 @@
 
 // Inputs:
 //  Inputs/Equilibrium.json  - JSON file
+//  Inputs/TJ.json           - JSON file
 //  Inputs/Vertical.json     - JSON file
 
 // Outputs:
@@ -74,7 +75,7 @@ class Vertical : private Utility
   // -----------------
   int SRC;     // Flag for reading profile data from file (read from Equilibrium JSON file)
   int EQLB;    // Flag for equilibrium calculation only (read from Vertical JSON file)
-  int VIZ;     // Flag for generating eigenfunction visualization data (read from Vertical JSON file)
+  int VIZ;     // Flag for generating eigenfunction visualization data (read from TJ JSON file)
 
   // ----------------------
   // Calculation parameters
@@ -132,6 +133,8 @@ class Vertical : private Utility
   double*            S2;        // Second shaping function
   double*            S3;        // Third shaping function
   double*            S4;        // Fourth shaping function
+  double*            S5;        // Fifth shaping function
+  double*            Sig;       // Sigma shaping function
   double*            P1;        // First profile function: (2-s)/q
   double*            P2;        // Second profile function: r dP1/dr
   double*            P3;        // Third profile function
@@ -159,6 +162,8 @@ class Vertical : private Utility
   gsl_spline*        S2spline;  // Interpolated S2 function
   gsl_spline*        S3spline;  // Interpolated S3 function
   gsl_spline*        S4spline;  // Interpolated S4 function
+  gsl_spline*        S5spline;  // Interpolated S5 function
+  gsl_spline*        Sigspline; // Interpolated Sigma function
   gsl_spline*        P1spline;  // Interpolated P1 function
   gsl_spline*        P2spline;  // Interpolated P2 function
   gsl_spline*        P3spline;  // Interpolated P3 function
@@ -181,6 +186,8 @@ class Vertical : private Utility
   gsl_interp_accel*  S2acc;     // Accelerator for interpolated S2 function
   gsl_interp_accel*  S3acc;     // Accelerator for interpolated S3 function
   gsl_interp_accel*  S4acc;     // Accelerator for interpolated S4 function
+  gsl_interp_accel*  S5acc;     // Accelerator for interpolated S5 function
+  gsl_interp_accel*  Sigacc;    // Accelerator for interpolated Sig function
   gsl_interp_accel*  P1acc;     // Accelerator for interpolated P1 function
   gsl_interp_accel*  P2acc;     // Accelerator for interpolated P2 function
   gsl_interp_accel*  P3acc;     // Accelerator for interpolated P3 function
@@ -216,6 +223,45 @@ class Vertical : private Utility
   gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function on plasma boundary
   gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function on plasma boundary
 
+  // --------------------------
+  // Plasma boundary parameters
+  // --------------------------
+  double* tbound; // theta values on plasma boundary
+  double* Rbound; // R values on plasma boundary
+  double* Zbound; // Z values on plasma boundary
+  double* dRdthe; // dR/dtheta values on plasma boundary
+  double* dZdthe; // dZ/dtheta values on plasma boundary
+
+  // ------------------
+  // Wall solution data
+  // ------------------
+  double                   bw;     // Relative wall radius (read from Equilibrium JSON file)
+  double*                  rho;    // Wall scaling vector
+
+  Array<complex<double>,2> Rwal;   // Wall solution matrix
+  Array<complex<double>,2> Swal;   // Wall solution matrix
+
+  Array<complex<double>,2> iImat;  // Rwal * iImat = Swal
+  Array<complex<double>,2> iIher;  // Hermitian component of iImat
+  Array<complex<double>,2> iIant;  // Anti-Hermitian component of iImat
+
+  Array<complex<double>,2> PImat;  // PImat = Pvac * iImat - Qvac
+  Array<complex<double>,2> RImat;  // RImat = Rvac * iImat - Svac
+  Array<complex<double>,2> IRmat;  // IRmat = Rvac * iImat 
+
+  Array<complex<double>,2> RPImat; // RPImat * RImat = PImat
+  Array<complex<double>,2> RPIdag; // Hermitian conjugate of RPImat
+  Array<complex<double>,2> Gmat;   // Perfect-wall vacuum response matrix: Gmat = (1/2) (RPImat + RPIdag)
+
+  Array<complex<double>,2> iRPImat; // iRPImat * PImat = RImat
+  Array<complex<double>,2> iRPIdag; // Hermitian conjugate of iRPImat
+  Array<complex<double>,2> iGmat;   // Perfect-wall vacuum response matrix: iGmat = (1/2) (iRPImat + iRPIdag)
+
+  Array<complex<double>,2> Bmat;    // Bmat * RImat = IRmat
+  Array<complex<double>,2> Cmat;    // Cmat = (Gmat - Hmat) * Bmat
+  Array<complex<double>,2> Cher;    // Hermitian component of Cmat
+  Array<complex<double>,2> Cant;    // Anti-Hermitian component of Cmat
+   
   // ---------------------------------------
   // Visualization of tearing eigenfunctions
   // ---------------------------------------
@@ -310,6 +356,10 @@ class Vertical : private Utility
   double GetS3 (double r);
   // Return value of S4
   double GetS4 (double r);
+  // Return value of S5
+  double GetS5 (double r);
+  // Return value of Sig
+  double GetSig (double r);
   // Return value of P1
   double GetP1 (double r);
   // Return value of P2
@@ -332,11 +382,38 @@ class Vertical : private Utility
   double GetVn (int n, double r);
   // Return value of Vnp
   double GetVnp (int n, double r);
-  
+
+  // ...............
+  // In Toroidal.cpp
+  // ...............
+
+  // Return associated Legendre function P^m_(n-1/2) (z)
+  double ToroidalP (int m, int n, double z);
+  // Return associated Legendre function Q^m_(n-1/2) (z)
+  double ToroidalQ (int m, int n, double z);
+  // Return derivative of associated Legendre function P^m_(n-1/2) (z)
+  double ToroidaldPdz (int m, int n, double z);
+  // Return derivative of associated Legendre function Q^m_(n-1/2) (z)
+  double ToroidaldQdz (int m, int n, double z);
+  // Return normalized associated Legendre function P^m_(n-1/2) (z)
+  double NormToroidalP (int m, int n, double z);
+  // Return normalized associated Legendre function Q^m_(n-1/2) (z)
+  double NormToroidalQ (int m, int n, double z);
+  // Return normalzied derivative of associated Legendre function P^m_(n-1/2) (z)
+  double NormToroidaldPdz (int m, int n, double z);
+  // Return normalized derivative of associated Legendre function Q^m_(n-1/2) (z)
+  double NormToroidaldQdz (int m, int n, double z);
+  // Return hyperbolic cosine of toroidal coordinate mu
+  double GetCoshMu (double R, double Z);
+  // Return toroidal coordinate eta
+  double GetEta (double R, double Z);
+
   // .............
   // In Netcdf.cpp
   // .............
 
   // Read equilibrium data from netcdf file
   void ReadEquilibriumNetcdf ();
+  // Write stability data to netcdf file
+  void WriteNetcdf ();
 };
