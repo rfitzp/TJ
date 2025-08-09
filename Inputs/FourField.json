@@ -1,12 +1,14 @@
 {
-    "g_r":   0.01,         // Real part of normalized growth-rate in MHD frame 
+    "g_r":   0.001,       // Real part of normalized growth-rate in MHD frame 
     "g_i":  -0.9,         // Imaginary part of normalized growth-rate in MHD frame
-    "Qe":    1.0,         // Normalized electron diamagnetic frequency
-    "Qi":   -1.0,         // Normalized ion diamagnetic frequency
-    "D":     1.0,         // Normalized ion sound radius
-    "Pphi":  1.0,         // Normalized momentum diffusivity
-    "Pperp": 1.0,         // Normalized energy diffusivity
-    "cbeta": 0.5,         // Normalized plasma pressure
+    "Qe":    0.1,         // Normalized electron diamagnetic frequency
+    "Qi":   -0.1,         // Normalized ion diamagnetic frequency
+    "D":     0.1,         // Normalized ion sound radius
+    "Pphi":  0.1,         // Normalized momentum diffusivity
+    "Pperp": 0.1,         // Normalized energy diffusivity
+    "cbeta": 0.04,        // Normalized plasma pressure
+
+    "JK":    1,           // Flag for J.-K. Park calculation
     
     "pstart": 8.0,        // Layer equations integrated from p = pstart to p = pend 
     "pend":   1.0e-6,     // Layer equations integrated from p = pstart to p = pend 

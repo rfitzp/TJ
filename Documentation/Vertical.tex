@@ -327,11 +327,11 @@ However,
 \end{equation}
 where use has been made of Eqs.~(\ref{q})--(\ref{bup3}), (\ref{e42}), (\ref{e43yy}), (\ref{e54y}),  and (\ref{alpp}). Hence,
 we obtain
-\begin{align}
+\begin{align}\label{e87j}
 \delta W_p(r) &=\frac{1}{2}\oint\oint y^{\ast}\left[{\cal Z} + (q\,\alpha_g + \alpha_p\,R^{\,2})\,y\right]d\theta\,d\phi= \pi^2\sum_{m}y_m^{\,\ast}\,\chi_m,
 \end{align}
 where 
-\begin{equation}
+\begin{equation}\label{chidef}
 \chi_m(r)=Z_m + q\,\alpha_g\,y_m + \alpha_p\sum_{m'} a_m^{\,m'}\,y_{m'}.
 \end{equation}
 
@@ -689,11 +689,15 @@ where
  \end{equation}
  is termed the {\em wall matrix}.
  Here, $\underline{\underline{\cal S}}_{\,b}= \underline{\underline{\cal S}}(r=b_w\,a)$, et cetera. Equation~(\ref{e47x}) ensures that $ \underline{\underline{I}}_b$
- is Hermitian. It immediately follows from Eq.~(\ref{e39x}) that ${\cal E}=0$. In other words, there is zero net electromagnetic energy flux out of  a plasma
+ is Hermitian. It immediately follows from Eq.~(\ref{e39x}) that
+ \begin{equation}\label{ezero}
+ {\cal E}=0.
+ \end{equation}
+  In other words, there is zero net electromagnetic energy flux out of  a plasma
  surrounded by a perfectly conducting wall. 
  
   Making use of Eqs.~(\ref{e32ay}) and (\ref{e33ay}),  the matching condition at the plasma-vacuum interface  for a perfectly-conducting wall becomes 
- \begin{equation}
+ \begin{equation}\label{hdef}
  \underline{V}(r=a_+)= \underline{\underline{H}}\,\underline{\psi}(r=a),
  \end{equation}
  where 
@@ -729,6 +733,111 @@ Thus,  the vacuum matrix, $\underline{\underline{H}}$, is Hermitian because  the
  (which corresponds to $b_w\rightarrow\infty$ and $\underline{\underline{H}}= \underline{\underline{\cal P}}_{\,a}\,\underline{\underline{\cal R}}_{\,a}^{-1}$), 
  and a fixed boundary plasma (which corresponds to $b_w=1$ and $\underline{\underline{H}}^{-1}= \underline{\underline{0}}$). 
  
+\subsection{Perturbed Vacuum Potential Energy}
+Equation~(\ref{e41}) implies that 
+\begin{equation}
+{\cal J} \,\nabla r\cdot\nabla V = - {\rm i}\,\frac{\partial y}{\partial \theta}.
+\end{equation}
+The perturbed potential energy in the vacuum region is
+\begin{align}
+\delta W_v &= \frac{1}{2}\int_{a_+}^\infty \oint\oint {\bf b}^\ast\cdot{\bf b}\,{\cal J}\,dr\,d\theta\,d\phi\nonumber\\[0.5ex]
+&=\frac{1}{2}\int_{a_+}^\infty \oint\oint \nabla V^\ast\cdot\nabla V\,{\cal J}\,dr\,d\theta\,d\phi\nonumber\\[0.5ex]
+&= -\frac{1}{2}\left(\oint\oint {\cal J}\,\nabla r\cdot\nabla V^\ast\,V\,d\theta\,d\phi\right)_{a_+}\nonumber\\[0.5ex]
+&=-\frac{1}{2}\left[\oint\oint \left(-{\rm i}\,\frac{\partial y}{\partial \theta}\right)^\ast\,V\,d\theta\,d\phi\right]_{a_+}\nonumber\\[0.5ex]
+&= - \pi^2\left(\sum_m\,m\,y_m^{\,\ast}\,V_m\right)_{a_+},\label{vac}
+\end{align}
+where use has been made of the facts that $\nabla^2 V =0$ and $\nabla r\cdot \nabla V=0$ at the ideal wall. 
 
+\section{Calculation of Perturbed Potential Energy}
+\subsection{Perturbed Plasma Potential Energy}
+Let  the $y_{mm'}(r)$ and the $Z_{mm'}(r)$ be linearly independent solutions of the axisymmetric ideal-MHD o.d.e.s, (\ref{e69u}) and
+(\ref{e70uu}), that are well-behaved at the magnetic axis. Here, $m$ indexes the poloidal harmonic, whereas $m'$ indexes the solution. 
+Let 
+\begin{equation}
+\chi_{mm'}(r)=Z_{mm'} + q\,\alpha_g\,y_{mm'} + \alpha_p\sum_{m''} a_m^{\,m''}\,y_{m''m'}.
+\end{equation}
+The most general solution to the axisymmetric ideal-MHD o.d.e.s is written
+\begin{align}
+y_m(r) &= \sum_{m'} y_{mm'}(r)\,\alpha_{m'},\\[0.5ex]
+\chi_m(r)&= \sum_{m'} \chi_{mm'}(r)\,\alpha_{m'},
+\end{align}
+where the $\alpha_m$ are arbitrary complex coefficients. 
+
+According to Eq.~(\ref{e87j}), the net perturbed plasma potential energy is
+\begin{equation}
+\delta W_p = \pi^2\,\underline{y}^{\dag}\,\underline{\chi},
+\end{equation}
+where $\underline{y}$ is the vector of the $y_m(a)$ values and $\underline{\chi}$  the vector of the $\chi_m(a_-)$ values. It follows that
+\begin{equation}
+\delta W_p = \pi^2\,\underline{\alpha}^\dag \,\underline{\underline{y}}^\dag \,\underline{\underline{\chi}}\,\underline{\alpha},
+\end{equation}
+where $\underline{\alpha}$ is the vector of the $\alpha_m$ values, $\underline{\underline{y}}$ the matrix of the $y_{mm'}(a)$ values,
+and $\underline{\underline{\chi}}$ the matrix of the $\chi_{mm'}(a_-)$ values. 
+If
+\begin{equation}
+\underline{\underline{\chi}} = \underline{\underline{W}}_{\,p}\,\underline{\underline{y}}.
+\end{equation}
+then 
+\begin{equation}
+\delta W_p = \pi^2\,\underline{\alpha}^\dag \,\underline{\underline{y}}^\dag \,\underline{\underline{W}}_{\,p}\,\underline{\underline{y}}\,\underline{\alpha}.
+\end{equation}
+Equations~(\ref{eflux}) and (\ref{ezero}) imply that $\underline{\underline{W}}_{\,p}$ is Hermitian. Here, we have made use of the fact that
+$Z_m(a_-)= \chi_m(a_-)$ because $\alpha_g(a)=\alpha_p(a)=0$. [See Eq.~(\ref{chidef}).]
+
+\subsection{Perturbed Vacuum Potential Energy}
+According to Eq.~(\ref{vac}), the perturbed vacuum potential energy is
+\begin{equation}
+\delta W_v = - \pi^2\sum_m m\,y_m^{\,\ast}(a)\,V_m(a_+).
+\end{equation}
+However, Eq.~(\ref{hdef}) implies that
+\begin{equation}
+V_m(a_+) = \sum_{m'}\,H_{mm'}\,m'\,y_{m'}(a).
+\end{equation}
+Hence, we can write
+\begin{equation}
+\delta W_v = \pi^2\,\underline{y}^\dag\,\underline{\underline{W}}_{\,v}\,\underline{y},
+\end{equation}
+where $\underline{\underline{W}}_{\,v}$ is the matrix of the $-m\,H_{mm'}\,m'$ values. Given that $H_{mm'}$ is Hermitian, we deduce that $\underline{\underline{W}}_{\,v}$ 
+is Hermitian. It follows that
+\begin{equation}
+\delta W_v = \pi^2\,\underline{\alpha}^\dag\,\underline{\underline{y}}^\dag\,\underline{\underline{W}}_{\,v}\,\underline{\underline{y}}\,\underline{\alpha}.
+\end{equation}
+
+\subsection{Total Perturbed Potential Energy}
+The total perturbed potential energy is
+\begin{equation}
+\delta W = \delta W_p + \delta W_v = \pi^2\,\underline{\alpha}^\dag\,\underline{\underline{y}}^\dag\,\underline{\underline{W}}\,\underline{\underline{y}}\,\underline{\alpha},
+\end{equation}
+where 
+\begin{equation}
+\underline{\underline{W}} = \underline{\underline{W}}_{\,p} + \underline{\underline{W}}_{\,v}.
+\end{equation}
+Given that $\underline{\underline{W}}_{\,p}$ and $\underline{\underline{W}}_{\,v}$ are both Hermitian, we deduce that $\underline{\underline{W}}$ is Hermitian.
+
+The fact that $\underline{\underline{W}}$ is Hermitian allows us to write
+\begin{align}
+\underline{\underline{W}}\,\underline{\underline{\beta}} &= \underline{\underline{\beta}}\,\underline{\underline{\mit\Lambda}},\\[0.5ex]
+\underline{\underline{\beta}}^\dag\,\underline{\underline{\beta}} &= \underline{\underline{1}},
+\end{align}
+where $\underline{\underline{\beta}}$ is real, and $\underline{\underline{\mit\Lambda}}$ is the diagonal matrix of the real $\lambda_m$ values. 
+If $\underline{\hat{\alpha}}= \underline{\underline{\beta}}\,\underline{\underline{y}}\,\underline{\alpha}$ then
+\begin{equation}
+\delta W =\pi^2\,\underline{\hat{\alpha}}^\dag\,\underline{\underline{\mit\Lambda}}\,\underline{\hat{\alpha}}=\pi^2\sum_m|\hat{\alpha}_m|^2\,\lambda_m.
+\end{equation}
+Thus, if any of the $\lambda_m$ are negative then solutions exist for which $\delta W$ is negative, and the plasma is consequently unstable to
+an axisymmetric ideal mode. 
+
+Suppose that $\sum_{m}|\hat{\alpha}_m|^2=1$. The ideal energy of the $m$th mode,
+for which $\hat{\alpha}_{m'} = \delta_{mm'}$,  is
+\begin{equation}
+\delta W_m = \pi^2\,\lambda_m.
+\end{equation}
+However,
+\begin{equation}
+\underline{\underline{\mit\Lambda}} = \underline{\underline{\beta}}^\dag\,\underline{\underline{W}}\,\underline{\underline{\beta}},
+\end{equation}
+Thus, the diagonal components of $\underline{\underline{\beta}}^\dag\,\underline{\underline{W}}_{\,p}\,\underline{\underline{\beta}}$ 
+and $\underline{\underline{\beta}}^\dag\,\underline{\underline{W}}_{\,v}\,\underline{\underline{\beta}}$  are the plasma and vacuum
+contributions to the $\lambda_m$, respectively. The eigenfunction of the $m$th mode is such that $y_{m'}(a)= \beta_{mm'}$. 
 
 \end{document}

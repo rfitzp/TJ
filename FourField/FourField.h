@@ -17,6 +17,7 @@
 //  nclohmann JSON library (https://github.com/nlohmann/json)
 //  Blitz++ library        (https://github.com/blitzpp/blitz)
 //  netcdf-c++ library     (https://github.com/Unidata/netcdf-cxx4)
+//  GNU scientific library (https://www.gnu.org/software/gsl)
 
 // Author:
 // Richard Fitzpatrick,
@@ -32,6 +33,8 @@
 // #####################################################################
 
 #pragma once
+
+#include <gsl/gsl_sf_gamma.h>
 
 #include "Utility.h"
 
@@ -53,6 +56,8 @@ private:
   double          Pphi;    // Normalized momentum diffusivity (read from JSON file)
   double          Pperp;   // Normalized energy diffusivity (read from JSON file)
   double          cbeta;   // Normalized plasma pressure (read from JSON file)
+
+  int             JK;      // Flag for J.-K. Park calculation in which Pperp = cbeta^2 (read from JSON file)
   
   double          iotae;   // Ratio of minus electron diamagnetic frequency to total diamagnetic frequency: -Qe /(Qi - Qe)
 
@@ -80,6 +85,11 @@ private:
   double* D4rvals; // Re(Delta4) values in frequency scan
   double* D4ivals; // Im(Delta4) values in frequency scan
 
+  double* J1rvals; // Re(DeltaJ1) values in frequency scan
+  double* J1ivals; // Im(DeltaJ1) values in frequency scan
+  double* J2rvals; // Re(DeltaJ2) values in frequency scan
+  double* J2ivals; // Im(DeltaJ2) values in frequency scan
+
   // ....
   // Misc
   // ....
@@ -104,6 +114,8 @@ private:
   void SolveThreeFieldLayerEquations ();
   // Solve four-field layer equations 
   void SolveFourFieldLayerEquations ();
+  // Calculate Jace Waybright's approximate Deltas
+  void GetJace (complex<double>& _DeltaJ1, complex<double>& _DeltaJ2);
   
   // Evaluate right-hand sides of differential equations
   void CashKarp45Rhs (double x, complex<double>*  y, complex<double>*  dydx) override;

@@ -232,36 +232,6 @@ class Vertical : private Utility
   double* dRdthe; // dR/dtheta values on plasma boundary
   double* dZdthe; // dZ/dtheta values on plasma boundary
 
-  // ------------------
-  // Wall solution data
-  // ------------------
-  double                   bw;     // Relative wall radius (read from Equilibrium JSON file)
-  double*                  rho;    // Wall scaling vector
-
-  Array<complex<double>,2> Rwal;   // Wall solution matrix
-  Array<complex<double>,2> Swal;   // Wall solution matrix
-
-  Array<complex<double>,2> iImat;  // Rwal * iImat = Swal
-  Array<complex<double>,2> iIher;  // Hermitian component of iImat
-  Array<complex<double>,2> iIant;  // Anti-Hermitian component of iImat
-
-  Array<complex<double>,2> PImat;  // PImat = Pvac * iImat - Qvac
-  Array<complex<double>,2> RImat;  // RImat = Rvac * iImat - Svac
-  Array<complex<double>,2> IRmat;  // IRmat = Rvac * iImat 
-
-  Array<complex<double>,2> RPImat; // RPImat * RImat = PImat
-  Array<complex<double>,2> RPIdag; // Hermitian conjugate of RPImat
-  Array<complex<double>,2> Gmat;   // Perfect-wall vacuum response matrix: Gmat = (1/2) (RPImat + RPIdag)
-
-  Array<complex<double>,2> iRPImat; // iRPImat * PImat = RImat
-  Array<complex<double>,2> iRPIdag; // Hermitian conjugate of iRPImat
-  Array<complex<double>,2> iGmat;   // Perfect-wall vacuum response matrix: iGmat = (1/2) (iRPImat + iRPIdag)
-
-  Array<complex<double>,2> Bmat;    // Bmat * RImat = IRmat
-  Array<complex<double>,2> Cmat;    // Cmat = (Gmat - Hmat) * Bmat
-  Array<complex<double>,2> Cher;    // Hermitian component of Cmat
-  Array<complex<double>,2> Cant;    // Anti-Hermitian component of Cmat
-   
   // ---------------------------------------
   // Visualization of tearing eigenfunctions
   // ---------------------------------------
@@ -280,8 +250,76 @@ class Vertical : private Utility
   // --------------------
   // Vacuum solution data
   // --------------------
-  double sa;     // Edge magnetic shear
+  double sa;                       // Edge magnetic shear
 
+  Array<complex<double>,2> Pvac;   // Vacuum solution matrix
+  Array<complex<double>,2> Qvac;   // Vacuum solution matrix
+  Array<complex<double>,2> Rvac;   // Vacuum solution matrix
+  Array<complex<double>,2> Svac;   // Vacuum solution matrix
+
+  Array<complex<double>,2> Pdag;   // Hermitian conjugate of Pvac
+  Array<complex<double>,2> Qdag;   // Hermitian conjugate of Qvac
+  Array<complex<double>,2> Rdag;   // Hermitian conjugate of Rvac
+  Array<complex<double>,2> Sdag;   // Hermitian conjugate of Svac
+
+  Array<complex<double>,2> PRmat;  // Pdag * Rvac
+  Array<complex<double>,2> PRher;  // Hermitian component of PRmat
+  Array<complex<double>,2> PRant;  // Anti-Hermitian component of PRmat
+
+  Array<complex<double>,2> QSmat;  // Qdag * Svac
+  Array<complex<double>,2> QSher;  // Hermitian component of QSmat
+  Array<complex<double>,2> QSant;  // Anti-Hermitian component of QSmat
+
+  Array<complex<double>,2> PSmat;  // Pdag * Svac - Rdag * Qvac
+
+  Array<complex<double>,2> QPmat;  // Qvac * Pdag
+  Array<complex<double>,2> QPher;  // Hermitian component of QPmat
+  Array<complex<double>,2> QPant;  // Anti-Hermitian component of QPmat
+
+  Array<complex<double>,2> RSmat;  // Rvac * Sdag
+  Array<complex<double>,2> RSher;  // Hermitian component of RSmat
+  Array<complex<double>,2> RSant;  // Anti-Hermitian component of RSmat
+
+  Array<complex<double>,2> SPmat;  // Pvac * Sdag - Qvac * Rdag
+
+  Array<complex<double>,2> RPmat;  // RPmat * Rvac = Pvac
+  Array<complex<double>,2> RPdag;  // Hermitian conjugate of RPmat
+  Array<complex<double>,2> Hmat;   // No-wall vacuum response matrix: Hmat = (1/2) (RPmat + RPdag)
+
+  Array<complex<double>,2> iRPmat; // iRPmat * Pvac = Rvac
+  Array<complex<double>,2> iRPdag; // Hermitian conjugate of iRPmat
+  Array<complex<double>,2> iHmat;  // Inverse no-wall vacuum response matrix: iHmat = (1/2) (iRPmat + iRPdag)
+  
+  // ------------------
+  // Wall solution data
+  // ------------------
+  double                   bw;      // Relative wall radius (read from Equilibrium JSON file)
+  double*                  rho;     // Wall scaling vector
+
+  Array<complex<double>,2> Rwal;    // Wall solution matrix
+  Array<complex<double>,2> Swal;    // Wall solution matrix
+
+  Array<complex<double>,2> iImat;   // Rwal * iImat = Swal
+  Array<complex<double>,2> iIher;   // Hermitian component of iImat
+  Array<complex<double>,2> iIant;   // Anti-Hermitian component of iImat
+
+  Array<complex<double>,2> PImat;   // PImat = Pvac * iImat - Qvac
+  Array<complex<double>,2> RImat;   // RImat = Rvac * iImat - Svac
+  Array<complex<double>,2> IRmat;   // IRmat = Rvac * iImat 
+
+  Array<complex<double>,2> RPImat;  // RPImat * RImat = PImat
+  Array<complex<double>,2> RPIdag;  // Hermitian conjugate of RPImat
+  Array<complex<double>,2> Gmat;    // Perfect-wall vacuum response matrix: Gmat = (1/2) (RPImat + RPIdag)
+
+  Array<complex<double>,2> iRPImat; // iRPImat * PImat = RImat
+  Array<complex<double>,2> iRPIdag; // Hermitian conjugate of iRPImat
+  Array<complex<double>,2> iGmat;   // Perfect-wall vacuum response matrix: iGmat = (1/2) (iRPImat + iRPIdag)
+
+  Array<complex<double>,2> Bmat;    // Bmat * RImat = IRmat
+  Array<complex<double>,2> Cmat;    // Cmat = (Gmat - Hmat) * Bmat
+  Array<complex<double>,2> Cher;    // Hermitian component of Cmat
+  Array<complex<double>,2> Cant;    // Anti-Hermitian component of Cmat
+   
   // ----
   // Misc
   // ----
@@ -407,6 +445,45 @@ class Vertical : private Utility
   double GetCoshMu (double R, double Z);
   // Return toroidal coordinate eta
   double GetEta (double R, double Z);
+
+  // .............
+  // In Vacuum.cpp
+  // .............
+
+  // Calculate vacuum boundary matrices
+  void GetVacuumBoundary ();
+  // Calculate vacuum wall matrices
+  void GetVacuumWall ();
+  // Evaluate right-hand sides of vacuum odes
+  void CashKarp45Rhs1 (double r, complex<double>* Y, complex<double>* dYdr) override;
+
+  // ................
+  // In Armadillo.cpp
+  // ................
+
+  // Solve linear system of equations A . X = B, for X, where all quantities are real rectangular matrices
+  void SolveLinearSystem (Array<double,2> A, Array<double,2> X, Array<double,2> B);
+  // Solve linear system of equations X . A = B, for X, where all quantities are real rectangular matrices
+  void SolveLinearSystemTranspose (Array<double,2> A, Array<double,2> X, Array<double,2> B);
+  // Solve linear system of equations A . X = B, for X, where all quantities are complex rectangular matrices
+  void SolveLinearSystem (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B);
+  // Solve linear system of equations X . A = B, for X, where all quantities are complex rectangular matrices
+  void SolveLinearSystemTranspose (Array<complex<double>,2> A, Array<complex<double>,2> X, Array<complex<double>,2> B);
+  // Solve linear system of equations A . X = B, for X, where A is a complex rectangular matrix, and X and B
+  //  are complex vectors
+  void SolveLinearSystem (Array<complex<double>,2> A, complex<double>* X, complex<double>* B);
+  // Invert square complex matrix
+  void InvertMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invA);
+  // Return eigenvalues and eigenvectors of Hermitian matix H
+  void GetEigenvalues (Array<complex<double>,2> H, double* evals, Array<complex<double>,2> evecs);
+  // Return eigenvalues of Hermitian matix H
+  void GetEigenvalues (Array<complex<double>,2> H, double* evals);
+  // Return eigenvalues and eigenvectors of pair of complex matrices
+  void GetEigenvalues (Array<complex<double>,2> A, Array<complex<double>,2> B, complex<double>* evals, Array<complex<double>,2> evecs);
+  // Find square root of Hermitian positive definite matrix
+  void SquareRootMatrix (Array<complex<double>,2> A, Array<complex<double>,2> sqrtA);
+  // Find inverse square root of Hermitian positive definite matrix
+  void InvSquareRootMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invsqrtA);
 
   // .............
   // In Netcdf.cpp

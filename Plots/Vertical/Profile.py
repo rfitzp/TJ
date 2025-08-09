@@ -1,6 +1,6 @@
 # Profile.py
 
-# Plots P1, P1, Sigma, and S5
+# Plots shaping functions P1, P1, Sigma, and S5 versus r
 
 import math
 import numpy as np

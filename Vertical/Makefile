@@ -15,7 +15,8 @@ EQUILIBRIUM_DIR = ../Equilibrium
 EQUILIBRIUM_LIB = $(LIB_DIR)/libEquilibrium.a
 
 C_HEADER = Vertical.h 
-C_SOURCE = main.cpp Vertical.cpp ReadEquilibrium.cpp Interpolate.cpp Netcdf.cpp Toroidal.cpp
+C_SOURCE = main.cpp Vertical.cpp ReadEquilibrium.cpp Interpolate.cpp Netcdf.cpp Toroidal.cpp Vacuum.cpp\
+		Armadillo.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
 U_OBJECT = ../Utility/Utility.o
 

@@ -217,6 +217,12 @@ void Vertical::Solve ()
       // Calculate metric data at plasma boundary
       CalculateMetricBoundary ();
 
+      // Calculate vacuum matrices
+      GetVacuumBoundary ();
+
+      // Calculate wall matrices
+      GetVacuumWall ();
+  
       // Write program data to Netcdf file
       WriteNetcdf ();
       
@@ -319,7 +325,7 @@ void Vertical::CleanUp ()
   delete[] HHspline; delete[] VVspline; delete[] HPspline; delete[] VPspline;
   delete[] HHacc;    delete[] VVacc;    delete[] HPacc;    delete[] VPacc;
 
-  delete[] cmu;  delete[] ceta;  delete[] seta;  delete[] eeta;  delete[] R2grgz;  delete[] R2grge;  
+  delete[] cmu; delete[] ceta; delete[] seta; delete[] eeta; delete[] R2grgz; delete[] R2grge;  
 
   gsl_spline_free (Rrzspline);
   gsl_spline_free (Rrespline);
@@ -330,5 +336,7 @@ void Vertical::CleanUp ()
   gsl_interp_accel_free (Rreacc);
   gsl_interp_accel_free (Rbacc);
   gsl_interp_accel_free (Zbacc);
+  
+  delete[] rho;
 }
 

@@ -250,6 +250,63 @@ void Vertical::WriteNetcdf ()
 
   double Input[NINPUT];
 
+  double* Pvac_r = new double[J*J];
+  double* Pvac_i = new double[J*J];
+  double* Rvac_r = new double[J*J];
+  double* Rvac_i = new double[J*J];
+  double* Qvac_r = new double[J*J];
+  double* Qvac_i = new double[J*J];
+  double* Svac_r = new double[J*J];
+  double* Svac_i = new double[J*J];
+
+  double* PRmat_r = new double[J*J];
+  double* PRmat_i = new double[J*J];
+  double* PRant_r = new double[J*J];
+  double* PRant_i = new double[J*J];
+  double* QSmat_r = new double[J*J];
+  double* QSmat_i = new double[J*J];
+  double* QSant_r = new double[J*J];
+  double* QSant_i = new double[J*J];
+  double* PSmat_r = new double[J*J];
+  double* PSmat_i = new double[J*J];
+
+  double* QPmat_r = new double[J*J];
+  double* QPmat_i = new double[J*J];
+  double* QPant_r = new double[J*J];
+  double* QPant_i = new double[J*J];
+  double* RSmat_r = new double[J*J];
+  double* RSmat_i = new double[J*J];
+  double* RSant_r = new double[J*J];
+  double* RSant_i = new double[J*J];
+  double* SPmat_r = new double[J*J];
+  double* SPmat_i = new double[J*J];
+
+  double* Hmat_r  = new double[J*J];
+  double* Hmat_i  = new double[J*J];
+  double* iHmat_r = new double[J*J];
+  double* iHmat_i = new double[J*J];
+
+  double* Rwal_r  = new double[J*J];
+  double* Rwal_i  = new double[J*J];
+  double* Swal_r  = new double[J*J];
+  double* Swal_i  = new double[J*J];
+  double* Imat_r  = new double[J*J];
+  double* Imat_i  = new double[J*J];
+  double* Iant_r  = new double[J*J];
+  double* Iant_i  = new double[J*J];
+
+  double* Gmat_r  = new double[J*J];
+  double* Gmat_i  = new double[J*J];
+  double* iGmat_r = new double[J*J];
+  double* iGmat_i = new double[J*J];
+
+  double* Bmat_r  = new double[J*J];
+  double* Bmat_i  = new double[J*J];
+  double* Cmat_r  = new double[J*J];
+  double* Cmat_i  = new double[J*J];
+  double* Cant_r  = new double[J*J];
+  double* Cant_i  = new double[J*J];
+
   Input[0]  = double (MMIN);
   Input[1]  = double (MMAX);
   Input[2]  = EPS;
@@ -270,6 +327,70 @@ void Vertical::WriteNetcdf ()
   Input[18] = Chip;
   Input[19] = Teped;
   Input[20] = neped;
+
+  int cnt = 0;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	Pvac_r[cnt] = Pvac(j, jp).real();
+	Pvac_i[cnt] = Pvac(j, jp).imag();
+	Rvac_r[cnt] = Rvac(j, jp).real();
+	Rvac_i[cnt] = Rvac(j, jp).imag();
+	Qvac_r[cnt] = Qvac(j, jp).real();
+	Qvac_i[cnt] = Qvac(j, jp).imag();
+	Svac_r[cnt] = Svac(j, jp).real();
+	Svac_i[cnt] = Svac(j, jp).imag();
+
+	PRmat_r[cnt] = PRmat(j, jp).real();
+	PRmat_i[cnt] = PRmat(j, jp).imag();
+	PRant_r[cnt] = PRant(j, jp).real();
+	PRant_i[cnt] = PRant(j, jp).imag();
+	QSmat_r[cnt] = QSmat(j, jp).real();
+	QSmat_i[cnt] = QSmat(j, jp).imag();
+	QSant_r[cnt] = QSant(j, jp).real();
+	QSant_i[cnt] = QSant(j, jp).imag();
+	PSmat_r[cnt] = PSmat(j, jp).real();
+	PSmat_i[cnt] = PSmat(j, jp).imag();
+
+	QPmat_r[cnt] = QPmat(j, jp).real();
+	QPmat_i[cnt] = QPmat(j, jp).imag();
+	QPant_r[cnt] = QPant(j, jp).real();
+	QPant_i[cnt] = QPant(j, jp).imag();
+	RSmat_r[cnt] = RSmat(j, jp).real();
+	RSmat_i[cnt] = RSmat(j, jp).imag();
+	RSant_r[cnt] = RSant(j, jp).real();
+	RSant_i[cnt] = RSant(j, jp).imag();
+	SPmat_r[cnt] = SPmat(j, jp).real();
+	SPmat_i[cnt] = SPmat(j, jp).imag();
+
+	Hmat_r [cnt] = Hmat (j, jp).real();
+	Hmat_i [cnt] = Hmat (j, jp).imag();
+	iHmat_r[cnt] = iHmat(j, jp).real();
+	iHmat_i[cnt] = iHmat(j, jp).imag();
+	
+	Rwal_r[cnt] = Rwal(j, jp).real();
+	Rwal_i[cnt] = Rwal(j, jp).imag();
+	Swal_r[cnt] = Swal(j, jp).real();
+	Swal_i[cnt] = Swal(j, jp).imag();
+
+	Imat_r [cnt] = iImat(j, jp).real();
+	Imat_i [cnt] = iImat(j, jp).imag();
+	Iant_r [cnt] = iIant(j, jp).real();
+	Iant_i [cnt] = iIant(j, jp).imag();
+	Gmat_r [cnt] = Gmat (j, jp).real();
+	Gmat_i [cnt] = Gmat (j, jp).imag();
+	iGmat_r[cnt] = iGmat(j, jp).real();
+	iGmat_i[cnt] = iGmat(j, jp).imag();
+
+	Bmat_r[cnt]  = Bmat (j, jp).real();
+	Bmat_i[cnt]  = Bmat (j, jp).imag();
+	Cmat_r[cnt]  = Cmat (j, jp).real();
+	Cmat_i[cnt]  = Cmat (j, jp).imag();
+	Cant_r[cnt]  = Cant (j, jp).real();
+	Cant_i[cnt]  = Cant (j, jp).imag();
+
+	cnt++;
+      }
   
   try
     {
@@ -283,10 +404,15 @@ void Vertical::WriteNetcdf ()
       NcDim r_d = dataFile.addDim ("Nr", Nr+1);
       NcDim s_d = dataFile.addDim ("Ns", Ns+1);
       NcDim j_d = dataFile.addDim ("J",  J);
+      NcDim w_d = dataFile.addDim ("Nw", Nw+1);
 
       vector<NcDim> shape_d;
       shape_d.push_back (s_d);
       shape_d.push_back (r_d);
+
+      vector<NcDim> vacuum_d;
+      vacuum_d.push_back (j_d);
+      vacuum_d.push_back (j_d);
 
       NcVar i_x = dataFile.addVar ("InputParameters", ncDouble, i_d);
       i_x.putVar (Input);
@@ -328,6 +454,129 @@ void Vertical::WriteNetcdf ()
       NcVar mpol_x = dataFile.addVar ("mpol", ncInt, j_d);
       mpol_x.putVar (MPOL);
 
+      NcVar t_x      = dataFile.addVar ("theta",  ncDouble, w_d);
+      t_x.putVar (tbound);
+      NcVar cmu_x    = dataFile.addVar ("cosmu",  ncDouble, w_d);
+      cmu_x.putVar (cmu);
+      NcVar e_x      = dataFile.addVar ("eta",    ncDouble, w_d);
+      e_x.putVar (eeta);
+      NcVar ceta_x   = dataFile.addVar ("coseta", ncDouble, w_d);
+      ceta_x.putVar (ceta);
+      NcVar seta_x   = dataFile.addVar ("sineta", ncDouble, w_d);
+      seta_x.putVar (seta);
+      NcVar R2grgz_x = dataFile.addVar ("R2grgz", ncDouble, w_d);
+      R2grgz_x.putVar (R2grgz);
+      NcVar R2grge_x = dataFile.addVar ("R2grge", ncDouble, w_d);
+      R2grge_x.putVar (R2grge);
+
+      NcVar pvacr_x = dataFile.addVar ("Pvac_r", ncDouble, vacuum_d);
+      pvacr_x.putVar (Pvac_r);
+      NcVar pvaci_x = dataFile.addVar ("Pvac_i", ncDouble, vacuum_d);
+      pvaci_x.putVar (Pvac_i);
+      NcVar rvacr_x = dataFile.addVar ("Rvac_r", ncDouble, vacuum_d);
+      rvacr_x.putVar (Rvac_r);
+      NcVar rvaci_x = dataFile.addVar ("Rvac_i", ncDouble, vacuum_d);
+      rvaci_x.putVar (Rvac_i);
+      NcVar qvacr_x = dataFile.addVar ("Qvac_r", ncDouble, vacuum_d);
+      qvacr_x.putVar (Qvac_r);
+      NcVar qvaci_x = dataFile.addVar ("Qvac_i", ncDouble, vacuum_d);
+      qvaci_x.putVar (Qvac_i);
+      NcVar svacr_x = dataFile.addVar ("Svac_r", ncDouble, vacuum_d);
+      svacr_x.putVar (Svac_r);
+      NcVar svaci_x = dataFile.addVar ("Svac_i", ncDouble, vacuum_d);
+      svaci_x.putVar (Svac_i);
+      
+      NcVar prmatr_x = dataFile.addVar ("PRmat_r", ncDouble, vacuum_d);
+      prmatr_x.putVar (PRmat_r);
+      NcVar prmati_x = dataFile.addVar ("PRmat_i", ncDouble, vacuum_d);
+      prmati_x.putVar (PRmat_i);
+      NcVar prantr_x = dataFile.addVar ("PRant_r", ncDouble, vacuum_d);
+      prantr_x.putVar (PRant_r);
+      NcVar pranti_x = dataFile.addVar ("PRant_i", ncDouble, vacuum_d);
+      pranti_x.putVar (PRant_i);
+      NcVar qsvacr_x = dataFile.addVar ("QSmat_r", ncDouble, vacuum_d);
+      qsvacr_x.putVar (QSmat_r);
+      NcVar qsvaci_x = dataFile.addVar ("QSmat_i", ncDouble, vacuum_d);
+      qsvaci_x.putVar (QSmat_i);
+      NcVar qsantr_x = dataFile.addVar ("QSant_r", ncDouble, vacuum_d);
+      qsantr_x.putVar (QSant_r);
+      NcVar qsanti_x = dataFile.addVar ("QSant_i", ncDouble, vacuum_d);
+      qsanti_x.putVar (QSant_i);
+      NcVar psmatr_x = dataFile.addVar ("PSmat_r", ncDouble, vacuum_d);
+      psmatr_x.putVar (PSmat_r);
+      NcVar psmati_x = dataFile.addVar ("PSmat_i", ncDouble, vacuum_d);
+      psmati_x.putVar (PSmat_i);
+
+      NcVar qpmatr_x = dataFile.addVar ("QPmat_r", ncDouble, vacuum_d);
+      qpmatr_x.putVar (QPmat_r);
+      NcVar qpmati_x = dataFile.addVar ("QPmat_i", ncDouble, vacuum_d);
+      qpmati_x.putVar (QPmat_i);
+      NcVar qpantr_x = dataFile.addVar ("QPant_r", ncDouble, vacuum_d);
+      qpantr_x.putVar (QPant_r);
+      NcVar qpanti_x = dataFile.addVar ("QPant_i", ncDouble, vacuum_d);
+      qpanti_x.putVar (QPant_i);
+      NcVar rsvacr_x = dataFile.addVar ("RSmat_r", ncDouble, vacuum_d);
+      rsvacr_x.putVar (RSmat_r);
+      NcVar rsvaci_x = dataFile.addVar ("RSmat_i", ncDouble, vacuum_d);
+      rsvaci_x.putVar (RSmat_i);
+      NcVar rsantr_x = dataFile.addVar ("RSant_r", ncDouble, vacuum_d);
+      rsantr_x.putVar (RSant_r);
+      NcVar rsanti_x = dataFile.addVar ("RSant_i", ncDouble, vacuum_d);
+      rsanti_x.putVar (RSant_i);
+      NcVar spmatr_x = dataFile.addVar ("SPmat_r", ncDouble, vacuum_d);
+      spmatr_x.putVar (SPmat_r);
+      NcVar spmati_x = dataFile.addVar ("SPmat_i", ncDouble, vacuum_d);
+      spmati_x.putVar (SPmat_i);
+
+      NcVar hmatr_x  = dataFile.addVar ("Hmat_r",  ncDouble, vacuum_d);
+      hmatr_x.putVar (Hmat_r);
+      NcVar hmati_x  = dataFile.addVar ("Hmat_i",  ncDouble, vacuum_d);
+      hmati_x.putVar (Hmat_i);
+      NcVar ihmatr_x = dataFile.addVar ("iHmat_r", ncDouble, vacuum_d);
+      ihmatr_x.putVar (iHmat_r);
+      NcVar ihmati_x = dataFile.addVar ("iHmat_i", ncDouble, vacuum_d);
+      ihmati_x.putVar (Hmat_i);
+
+      NcVar rwalr_x = dataFile.addVar ("Rwal_r", ncDouble, vacuum_d);
+      rwalr_x.putVar (Rwal_r);
+      NcVar rwali_x = dataFile.addVar ("Rwal_i", ncDouble, vacuum_d);
+      rwali_x.putVar (Rwal_i);
+      NcVar swalr_x = dataFile.addVar ("Swal_r", ncDouble, vacuum_d);
+      swalr_x.putVar (Swal_r);
+      NcVar swali_x = dataFile.addVar ("Swal_i", ncDouble, vacuum_d);
+      swali_x.putVar (Swal_i);
+
+      NcVar imatr_x = dataFile.addVar ("iImat_r", ncDouble, vacuum_d);
+      imatr_x.putVar (Imat_r);
+      NcVar imati_x = dataFile.addVar ("iImat_i", ncDouble, vacuum_d);
+      imati_x.putVar (Imat_i);
+      NcVar iantr_x = dataFile.addVar ("iIant_r", ncDouble, vacuum_d);
+      iantr_x.putVar (Iant_r);
+      NcVar ianti_x = dataFile.addVar ("iIant_i", ncDouble, vacuum_d);
+      ianti_x.putVar (Iant_i);
+
+      NcVar gmatr_x  = dataFile.addVar ("Gmat_r",  ncDouble, vacuum_d);
+      gmatr_x.putVar (Gmat_r);
+      NcVar gmati_x  = dataFile.addVar ("Gmat_i",  ncDouble, vacuum_d);
+      gmati_x.putVar (Gmat_i);
+      NcVar igmatr_x = dataFile.addVar ("iGmat_r", ncDouble, vacuum_d);
+      igmatr_x.putVar (iGmat_r);
+      NcVar igmati_x = dataFile.addVar ("iGmat_i", ncDouble, vacuum_d);
+      igmati_x.putVar (iGmat_i);
+
+      NcVar bmatr_x  = dataFile.addVar ("Bmat_r",  ncDouble, vacuum_d);
+      bmatr_x.putVar (Bmat_r);
+      NcVar bmati_x  = dataFile.addVar ("Bmat_i",  ncDouble, vacuum_d);
+      bmati_x.putVar (Bmat_i);
+      NcVar cmatr_x  = dataFile.addVar ("Cmat_r",  ncDouble, vacuum_d);
+      cmatr_x.putVar (Cmat_r);
+      NcVar cmati_x  = dataFile.addVar ("Cmat_i",  ncDouble, vacuum_d);
+      cmati_x.putVar (Cmat_i);
+      NcVar cantr_x  = dataFile.addVar ("Cant_r",  ncDouble, vacuum_d);
+      cantr_x.putVar (Cant_r);
+      NcVar canti_x  = dataFile.addVar ("Cant_i",  ncDouble, vacuum_d);
+      canti_x.putVar (Cant_i);
+
       dataFile.close ();
     }
   catch (NcException& e)
@@ -336,4 +585,18 @@ void Vertical::WriteNetcdf ()
       printf ("%s\n", e.what ());
       exit (1);
     }
+
+  delete[] Pvac_r;  delete[] Pvac_i;  delete[] Rvac_r;  delete[] Rvac_i;
+  delete[] PRmat_r; delete[] PRmat_i; delete[] PRant_r; delete[] PRant_i;
+  delete[] QSmat_r; delete[] QSmat_i; delete[] QSant_r; delete[] QSant_i;
+  delete[] Hmat_r;  delete[] Hmat_i;  delete[] Qvac_r;  delete[] Qvac_i;
+  delete[] Svac_r;  delete[] Svac_i;  delete[] PSmat_r; delete[] PSmat_i;
+  delete[] iHmat_r; delete[] iHmat_i; delete[] SPmat_r; delete[] SPmat_i;
+  delete[] QPmat_r; delete[] QPmat_i; delete[] QPant_r; delete[] QPant_i;
+  delete[] RSmat_r; delete[] RSmat_i; delete[] RSant_r; delete[] RSant_i;
+  delete[] Rwal_r;  delete[] Rwal_i;  delete[] Swal_r;  delete[] Swal_i;
+  delete[] Imat_r;  delete[] Imat_i;  delete[] Gmat_r;  delete[] Gmat_i;
+  delete[] iGmat_r; delete[] iGmat_i; delete[] Bmat_r;  delete[] Bmat_i;
+  delete[] Cmat_r;  delete[] Cmat_i;  delete[] Cant_r;  delete[] Cant_i;
+  delete[] Iant_r;  delete[] Iant_i;  
 }

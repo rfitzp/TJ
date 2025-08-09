@@ -34,6 +34,11 @@ FourField::FourField ()
   Pperp = JSONData["Pperp"].get<double> ();
   cbeta = JSONData["cbeta"].get<double> ();
 
+  JK = JSONData["JK"].get<int> ();
+
+  if (JK)
+    Pperp = cbeta*cbeta;
+
   iotae = - Qe /(Qi - Qe);
 
   pstart = JSONData["pstart"].get<double> ();
@@ -113,8 +118,8 @@ FourField::FourField ()
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("g_r    = %10.3e g_i   = %10.3e Qe    = %10.3e Qi    = %10.3e D = %10.3e\n",
-	  g_r, g_i, Qe, Qi, D);
+  printf ("g_r    = %10.3e g_i   = %10.3e Qe    = %10.3e Qi    = %10.3e D = %10.3e JK = %1d\n",
+	  g_r, g_i, Qe, Qi, D, JK);
   printf( "Pphi   = %10.3e Pperp = %10.3e cbeta = %10.3e iotae = %10.3e\n",
 	  Pphi, Pperp, cbeta, iotae);
   printf ("pstart = %10.3e pend  = %10.3e P3max = %10.3e\n",
@@ -152,23 +157,35 @@ void FourField::Solve ()
       D3ivals = new double[Nscan+1];
       D4rvals = new double[Nscan+1];
       D4ivals = new double[Nscan+1];
+      J1rvals = new double[Nscan+1];
+      J1ivals = new double[Nscan+1];
+      J2rvals = new double[Nscan+1];
+      J2ivals = new double[Nscan+1];
 
       double gi_save = g_i;
       double gi_beg  = - Fscan * (Qe - Qi);
       double gi_end  = + Fscan * (Qe - Qi);
+
+      complex<double> _DeltaJ1, _DeltaJ2;
 
       for (int i = 0; i <= Nscan; i++)
 	{
 	  g_i = gi_beg + double (i) * (gi_end - gi_beg) /double (Nscan);
 
 	  SolveThreeFieldLayerEquations ();
-	  SolveFourFieldLayerEquations ();
+	  SolveFourFieldLayerEquations  ();
 
-	  givals[i]  = g_i;
+	  GetJace (_DeltaJ1, _DeltaJ2);
+
+	  givals [i] = g_i;
 	  D3rvals[i] = real(Deltas3);
 	  D3ivals[i] = imag(Deltas3);
 	  D4rvals[i] = real(Deltas4);
 	  D4ivals[i] = imag(Deltas4);
+	  J1rvals[i] = real(_DeltaJ1);
+	  J1ivals[i] = imag(_DeltaJ1);
+	  J2rvals[i] = real(_DeltaJ2);
+	  J2ivals[i] = imag(_DeltaJ2);
 
 	  if (i % 10 == 0)
 	    printf ("%4d g = (%10.3e, %10.3e) Delta3 = (%10.3e, %10.3e) Delta4 = (%10.3e, %10.3e)\n",
@@ -237,6 +254,14 @@ void FourField::WriteNetcdf ()
        D4rvals_x.putVar (D4rvals);
        NcVar D4ivals_x = dataFile.addVar ("Delta4_i",        ncDouble, x_d);
        D4ivals_x.putVar (D4ivals);
+       NcVar J1rvals_x = dataFile.addVar ("DeltaJ1_r",       ncDouble, x_d);
+       J1rvals_x.putVar (J1rvals);
+       NcVar J1ivals_x = dataFile.addVar ("DeltaJ1_i",       ncDouble, x_d);
+       J1ivals_x.putVar (J1ivals);
+       NcVar J2rvals_x = dataFile.addVar ("DeltaJ2_r",       ncDouble, x_d);
+       J2rvals_x.putVar (J2rvals);
+       NcVar J2ivals_x = dataFile.addVar ("DeltaJ2_i",       ncDouble, x_d);
+       J2ivals_x.putVar (J2ivals);
      }
    catch (NcException& e)
      {
@@ -255,7 +280,10 @@ void FourField::CleanUp ()
 
   if (Scan)
     {
-      delete[] givals; delete[] D3rvals; delete[] D3ivals; delete[] D4rvals; delete[] D4ivals; 
+      delete[] givals;
+
+      delete[] D3rvals; delete[] D3ivals; delete[] D4rvals; delete[] D4ivals;
+      delete[] J1rvals; delete[] J1ivals; delete[] J2rvals; delete[] J2ivals;
     }
 }
 
@@ -531,3 +559,35 @@ void FourField::CashKarp45Rhs (double x, complex<double>* y, complex<double>* dy
     }
 }
 
+// #########################################################
+// Function to calculate Jace Waybright's approximate Deltas
+// #########################################################
+void FourField::GetJace (complex<double>& _DeltaJ1, complex<double>& _DeltaJ2)
+{
+  complex<double> g (g_r, g_i);
+  complex<double> ge = g + complex<double> (0., Qe);
+  complex<double> gi = g + complex<double> (0., Qi);
+
+  double G14 = gsl_sf_gamma (0.25);
+  double G34 = gsl_sf_gamma (0.75);
+  double G13 = gsl_sf_gamma (1./3.);
+  double G53 = gsl_sf_gamma (5./3.);
+  double G56 = gsl_sf_gamma (5./6.);
+  double G76 = gsl_sf_gamma (7./6.);
+  
+  complex<double> a1 = - cbeta*cbeta /g /ge;
+  complex<double> a2 = - (2. * G34 /G14) * complex<double> (- 1./sqrt(2.), 1./sqrt(2.)) * pow (g * gi /ge, 0.25);
+  complex<double> a3 = - a2 * (ge /a1 + 6. * a1 * g * gi);
+  complex<double> a4 = 1. - 2. * sqrt (a1) * g * gi /a3;
+  complex<double> a5 = 1. /a2 + 6. * a1 * g * gi /a3;
+
+  _DeltaJ1 = ge * a4 /a5;
+
+  complex<double> b1 = g * g * gi /cbeta/cbeta;
+  complex<double> b2 = pow (b1,  1./24.) * G13 /pow (2., 5./3.) /pow (3., 1./6.) /sqrt (M_PI);
+  complex<double> b3 = pow (b1, -1./8.)  * sqrt (3.) * G13 * G76 /4. /M_PI;
+  complex<double> b4 = pow (b1, -5./8.)  * 9. * sqrt (3.) * G56 * G53 /2. /M_PI;
+  complex<double> b5 = b2 - b4 * g * gi /12. /ge;
+
+  _DeltaJ2 = - M_PI * ge * b5 /b3;
+}
