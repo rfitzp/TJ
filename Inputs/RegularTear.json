@@ -1,0 +1,16 @@
+{
+    "NTOR":  1,        // Toroidal mode number
+    "q0":    1.1,      // Central safety-factor
+    "qa":    2.8,      // Edge safety-factor
+    "Fixed": 0,        // Flag for fixed boundary calculation
+    "sigma": 5.0e-3,   // Regularization parameter
+
+    "eps":   1.0e-4,   // Distance of closest approach to magnetic axis
+    "del":   1.0e-8,   // Distance of closest approach to rational surface
+    "Nr":    10000,    // Number of radial gridpoints in output
+
+    "acc":   1.0e-12,  // Integration accuracy
+    "h0":    1.0e-4,   // Initial integration step-length
+    "hmin":  1.0e-10,  // Minimum integration step-length
+    "hmax":  1.0e-3    // Maximum integration step-length
+}

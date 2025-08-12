@@ -63,7 +63,7 @@ Vertical::Vertical ()
 
   JSONFilename = "../Inputs/TJ.json";
   JSONData     = ReadJSONFile (JSONFilename);
-  VIZ = JSONData["VIZ"].get<int> ();
+  VIZ          = JSONData["VIZ"].get<int> ();
 
   // ------------
   // Sanity check
@@ -222,7 +222,19 @@ void Vertical::Solve ()
 
       // Calculate wall matrices
       GetVacuumWall ();
-  
+        
+      // Solve outer region odes
+      ODESolve ();
+
+      // Calculate ideal stability
+      CalculateIdealStability ();
+      
+      if (VIZ)
+	{
+	  // Calculate ideal eigenfunction visualization data
+	  VisualizeEigenfunctions ();
+	}
+    
       // Write program data to Netcdf file
       WriteNetcdf ();
       

@@ -232,21 +232,22 @@ class Vertical : private Utility
   double* dRdthe; // dR/dtheta values on plasma boundary
   double* dZdthe; // dZ/dtheta values on plasma boundary
 
-  // ---------------------------------------
-  // Visualization of tearing eigenfunctions
-  // ---------------------------------------
+  // -------------------------------------
+  // Visualization of ideal eigenfunctions
+  // -------------------------------------
   int             Nf;     // Number of radial grid-points on visualization grid (from Equilibrium.nc)
   int             Nw;     // Number of poloidal grid-points on visualization grid (from Equilibrium.nc)
   double*         rf;     // Radial grid-points on visualization grid (from Equilibrium.nc)
   Array<double,2> RR;     // R coordinates of visualization grid-points (from Equilibrium.nc)
   Array<double,2> ZZ;     // Z coordinates of visualization grid-points (from Equilibrium.nc)
-  Array<double,2> dRdr;   // dR/dr values at visualization grid-points (from Equilibrium.nc)
-  Array<double,2> dRdt;   // dR/dtheta values at visualization grid-points (from Equilibrium.nc)
-  Array<double,2> dZdr;   // dZ/dr values at visualization grid-points (from Equilibrium.nc)
-  Array<double,2> dZdt;   // dZ/dtheta values at visualization grid-points (from Equilibrium.nc)
   Array<double,2> rvals;  // r values of visualization grid-points (from Equilibrium.nc)
   Array<double,2> thvals; // theta values of visualization grid-points (from Equilibrium.nc)
 
+  Array<complex<double>,3> Psiuf;  // y components of Fourier transformed ideal eigenfunctions
+  Array<complex<double>,3> Zuf;    // Z components of Fourier transformed ideal eigenfunctions
+  Array<complex<double>,3> Psiuv;  // y components of unreconnected tearing eigenfunctions on visualization grid
+  Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
+   
   // --------------------
   // Vacuum solution data
   // --------------------
@@ -319,7 +320,46 @@ class Vertical : private Utility
   Array<complex<double>,2> Cmat;    // Cmat = (Gmat - Hmat) * Bmat
   Array<complex<double>,2> Cher;    // Hermitian component of Cmat
   Array<complex<double>,2> Cant;    // Anti-Hermitian component of Cmat
-   
+
+  // -----------------
+  // ODE solution data
+  // -----------------
+  double*                  Rgrid; // Radial grid-points for diagnostics
+  double*                  Pgrid; // PsiN values for grid-points for diagnostics
+  Array<double,2>          Etest; // Energy test for solution vectors versus radius
+  Array<double,2>          Pnorm; // Norms of y components of solution vectors versus radius
+  Array<double,2>          Znorm; // Norms of Z components of solution vectors versus radius
+  double*                  hode;  // Step-length versus radius
+  double*                  eode;  // Truncation error versus radius
+  Array<complex<double>,3> YYY;   // Solution vectors versus radius
+
+  // -----------------
+  // Ideal energy data
+  // -----------------
+  Array<complex<double>,3> Psii;    // y components of solutions launched from magnetic axis
+  Array<complex<double>,3> Zi;      // Z components of solutions launched from magnetic axis
+  Array<complex<double>,2> Wmat;    // Plasma ideal energy matrix
+  Array<complex<double>,2> Wher;    // Hermitian component of Wmat
+  Array<complex<double>,2> Want;    // Anti-Hermitian component of Wmat
+  double*                  Wval;    // Eigenvalues of symmeterized W-matrix
+  Array<complex<double>,2> Vmat;    // Vacuum ideal energy matrix
+  Array<complex<double>,2> Vher;    // Hermitian component of Vmat
+  Array<complex<double>,2> Vant;    // Anti-Hermitian component of Vmat
+  double*                  Vval;    // Eigenvalues of symmeterized V-matrix
+  Array<complex<double>,2> Umat;    // Total ideal energy matrix
+  Array<complex<double>,2> Uher;    // Hermitian component of Umat
+  Array<complex<double>,2> Uant;    // Anti-Hermitian component of Umat
+  double*                  Uval;    // Eigenvalues of symmeterized U-matrix
+  Array<complex<double>,2> Uvec;    // Eigenvectors of symmeterized U-matrix
+  Array<complex<double>,2> Ures;    // Residuals of Uvec orthonormality matrix
+  Array<complex<double>,3> Psie;    // y components of ideal eigenfunctions
+  Array<complex<double>,3> Ze;      // Z components of ideal eigenfunctions
+  double*                  deltaW;  // Total perturbed ideal potential energy 
+  double*                  deltaWp; // Plasma contribution to perturbed ideal potential energy
+  double*                  deltaWv; // Vacuum contribution to perturbed ideal potential energy
+  Array<complex<double>,2> Psiy;    // y values on plasma boundary associated with ideal eigenfunctions
+  Array<complex<double>,2> Xiy;     // Z values on plasma boundary associated with ideal eigenfunctions
+
   // ----
   // Misc
   // ----
@@ -396,14 +436,16 @@ class Vertical : private Utility
   double GetS4 (double r);
   // Return value of S5
   double GetS5 (double r);
-  // Return value of Sig
-  double GetSig (double r);
+  // Return value of d Sig/dr
+  double GetSigp (double r);
   // Return value of P1
   double GetP1 (double r);
   // Return value of P2
   double GetP2 (double r);
   // Return value of P3
   double GetP3 (double r);
+  // Return value of Sig
+  double GetSig (double r);
   // Return value of ne
   double Getne (double r);
   // Return value of Te
@@ -485,6 +527,68 @@ class Vertical : private Utility
   // Find inverse square root of Hermitian positive definite matrix
   void InvSquareRootMatrix (Array<complex<double>,2> A, Array<complex<double>,2> invsqrtA);
 
+  // .............
+  // In Matrix.cpp
+  // .............
+
+  // Get values of coupling matrices
+  void GetMatrices (double r, 
+		    Array<complex<double>,2> AAmmp, Array<complex<double>,2> BBmmp,
+		    Array<complex<double>,2> NNmmp, Array<complex<double>,2> PPmmp);
+  // Get values of coupling matrix elements
+  void GetMatrices (double r, int m, int mp, 
+		    complex<double>& Ammp, complex<double>& Bmmp,
+		    complex<double>& Cmmp, complex<double>& Dmmp);
+
+  // ...............
+  // In ODESolve.cpp
+  // ...............
+
+  // Function to solve outer region odes
+  void ODESolve ();
+  // Launch solution vectors from magnetic axis
+  void LaunchAxis (double r, Array<complex<double>,2> YY);
+  // Integrate multiple solution vectors from given value of r to r = rx while performing nf fixups
+  void SegmentFixup (double& r, double rx, int nf, Array<complex<double>,2> YY);
+  // Integrate multiple solution vectors from given value of r to to r = rx
+  void Segment (double& r, double rx, Array<complex<double>,2> YY);
+  // Perform fixup of multiple solution vectors lauched from magnetic axis
+  void Fixup (double r, Array<complex<double>,2> YY);
+  // Evaluate right-hand sides of outer region odes
+  void CashKarp45Rhs (double r, complex<double>* Y, complex<double>* dYdr) override;
+  // Pack YY solution vector
+  void PackYY (Array<complex<double>,2> PPsi, Array<complex<double>,2> ZZ, Array<complex<double>,2> YY);
+  // Unpack YY solution vector
+  void UnpackYY (Array<complex<double>,2> YY, Array<complex<double>,2> PPsi, Array<complex<double>,2> ZZ);
+  // Pack YY solution vectors 
+  void PackYY (complex<double>* Y, Array<complex<double>,2> YY);
+  // Unpack YY solution vector
+  void UnpackYY (Array<complex<double>,2> YY, complex<double>* Y);
+  // Pack Y solution vectors
+  void PackY (Array<complex<double>,2> PPsi, Array<complex<double>,2> ZZ, complex<double>* Y);
+  // Unpack Y solution vectors
+  void UnpackY (complex<double>* Y, Array<complex<double>,2> PPsi, Array<complex<double>,2> ZZ);
+  // Function to perform torque test on solution vectors
+  double EnergyTest (double r, Array<complex<double>,2> YY);
+  // Calculate angular momentum flux associated with ith solution vector
+  double GetEnergy (double r, Array<complex<double>,2> YY, int i);
+  // Calculate norms of ith solution vector
+  void GetNorms (Array<complex<double>,2> YY, int i, double& Pnorm, double &Znorm);
+
+  // ............
+  // In Ideal.cpp
+  // ............
+
+  // Calculate ideal stability
+  void CalculateIdealStability ();
+
+  // ................
+  // In Visualize.cpp
+  // ................
+  
+  // Calculate ideal eigenfunction visualization data
+  void VisualizeEigenfunctions ();
+ 
   // .............
   // In Netcdf.cpp
   // .............

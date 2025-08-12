@@ -61,7 +61,7 @@ Equilibrium::Equilibrium ()
   
   JSONFilename = "../Inputs/TJ.json";
   JSONData     = ReadJSONFile (JSONFilename);
-  VIZ = JSONData["VIZ"].get<int> ();
+  VIZ          = JSONData["VIZ"].get<int> ();
 
   // ------------
   // Sanity check
@@ -791,7 +791,7 @@ void Equilibrium::Solve ()
       double sum2 = 1.5 * rr[i]*rr[i] - 2. * rr[i] * HPfunc(1, i) + HPfunc(1, i)*HPfunc(1, i);
       double sum3 = - 0.75 * rr[i]*rr[i] + rr[i]*rr[i] /q2[i]/q2[i] + HHfunc(1, i) + 1.5 * HPfunc(1, i)*HPfunc(1, i);
       double sum4 = 0.75 * rr[i]*rr[i] - HHfunc(1, i) + HPfunc(1, i) * HPfunc(1, i) /2.;
-      double sum5 = 1.75 * rr[i]*rr[i] - HHfunc(1, i) - 3. * rr[i] * HPfunc(1, i) + 1.5 * HPfunc(1, i) * HPfunc(1, i) /2.;
+      double sum5 = 1.75 * rr[i]*rr[i] - HHfunc(1, i) - 3. * rr[i] * HPfunc(1, i) + 1.5 * HPfunc(1, i) * HPfunc(1, i);
  
       for (int n = 2; n <= Ns; n++)
 	{
@@ -825,9 +825,9 @@ void Equilibrium::Solve ()
   // ...........................
   for (int i = 0; i <= Nr; i++)
     {
-      P1[i]  = (2. - s[i]) /q2[i];
+      P1 [i] = (2. - s[i]) /q2[i];
       P1a[i] = (2. - s0[i]) /q0[i];
-      P2[i]  = (- 3. * s[i] + 2. * s[i]*s[i] - s2[i]) /q2[i];
+      P2 [i] = (- 3. * s[i] + 2. * s[i]*s[i] - s2[i]) /q2[i];
       P3a[i] = - (2. - s[i]) * S3[i] /q2[i] + S2[i] /q2[i];
   }
 

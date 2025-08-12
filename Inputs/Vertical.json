@@ -1,12 +1,11 @@
 {
-    "MMIN":  -10,          // Minimum poloidal mode number included in calculation
-    "MMAX":   30,          // Maximum poloidal mode number included in calculation
+    "MMIN":  -20,          // Minimum poloidal mode number included in calculation
+    "MMAX":   20,          // Maximum poloidal mode number included in calculation
 
     "EQLB":   0,           // Flag for equilibrium calculation only
-    "VIZ":    0,           // Flag for generating eigenfunction visualization data
-
+ 
     "EPS":   1.0e-4,       // Solutions launched from magnetic axis at r = EPS 
-    "NFIX":  160,          // Number of fixups 
+    "NFIX":  50,           // Number of fixups 
     "NDIAG": 1024,         // Number of radial grid-points for diagnostics
     
     "acc":  1.0e-12,       // Adaptive integration accuracy

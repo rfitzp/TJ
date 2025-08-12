@@ -28,3 +28,26 @@
 - *iGmat.py*:        Visualizes inverse perfect-wall response matrix, iG_mm'
 - *Bmat.py*:         Visualizes wall response matrix, B_mm'
 - *Cmat.py*:         Visualizes wall response matrix, C_mm' (should be Hermtian)
+
+## ODE Solution:
+
+- *Matrix.py*:      Plots coupling matrices versus r
+- *Solutions.py*:   Plots components of m-dominant solution vector versus r
+- *Solution.py*:    Plots mth harmonic of components of m-dominant solution vector versus r
+- *h.py*:           Plots adaptive ode integration data
+
+## Ideal stability:
+
+- *Umat.py*:		Visualizes total ideal energy matrix
+- *Ideale.py*:      Plots poloidal harmonics of ideal eigenfunctions versus r
+- *Ideale1.py*:     Plots kth poloidal harmonic of ideal eigenfunctions versus r
+- *Evals.py*:	 	Plots eigenvalues of W, V, U matrices 
+- *deltaW.py*:	 	Plots delta W values versus eigenfunction number
+- *deltaW1.py*:	 	Plots select number of delta W values versus eigenfunction number
+- *deltaW2.py*:	 	Plots delta W values versus eigenfunction number in range of y
+- *yZSurface.py*:   Plots y and Z on plasma boundary associated with ideal eigenfunctions
+
+## Visualization:
+
+- *y.py*:           Plots y components of ideal eigenfunction in R, Z plane 
+- *yZ.py*:          Plots y and Z components of ideal eignenfunction in R, Z plane

@@ -139,6 +139,14 @@ double Vertical::GetSig (double r)
     return gsl_spline_eval (Sigspline, r, Sigacc);
 }
 
+double Vertical::GetSigp (double r)
+{
+  if (r >= 1.)
+    return gsl_spline_eval_deriv (Sigspline, 1., Sigacc);
+  else
+    return gsl_spline_eval_deriv (Sigspline, r, Sigacc);
+}
+
 double Vertical::GetP1 (double r)
 {
   if (r >= 1.)
