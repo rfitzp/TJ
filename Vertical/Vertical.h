@@ -80,9 +80,9 @@ class Vertical : private Utility
   // ----------------------
   // Calculation parameters
   // ----------------------
-  int            MMIN;    // Minimum poloidal mode number included in calculation (read from Vertical JSON file)
   int            MMAX;    // Maximum poloidal mode number included in calculation (read from Vertical JSON file)
-
+  int            MMIN;    // Minimum poloidal mode number included in calculation: set to - MMAX
+ 
   double         EPS;     // Solutions launched from magnetic axis at r = EPS (read from Vertical JSON file)
   int            NFIX;    // Number of fixups (read from Vertical JSON file)
   int            NDIAG;   // Number of radial grid-points for diagnostics (read from Vertical JSON file)
@@ -223,6 +223,23 @@ class Vertical : private Utility
   gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function on plasma boundary
   gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function on plasma boundary
 
+  double*            cmuw;       // cosh(mu) on wall
+  double*            eetaw;      // eta on wall
+  double*            cetaw;      // cos(eta) on wall
+  double*            setaw;      // sin(eta) on wall
+  double*            R2grgzw;    // R^2 nabla r . nabla z   on wall
+  double*            R2grgew;    // R^2 nabla r . nabla eta on wall
+
+  gsl_spline*        Rrzwspline; // Interpolated R2grgz function on wall
+  gsl_spline*        Rrewspline; // Interpolated R2grge function on wall
+  gsl_spline*        Rwspline;   // Interpolated R function on wall
+  gsl_spline*        Zwspline;   // Interpolated Z function on wall
+
+  gsl_interp_accel*  Rrzwacc;    // Accelerator for interpolated R2grgz function on wall
+  gsl_interp_accel*  Rrewacc;    // Accelerator for interpolated R2grge function on wall
+  gsl_interp_accel*  Rwacc;      // Accelerator for interpolated R function on wall
+  gsl_interp_accel*  Zwacc;      // Accelerator for interpolated Z function on wall
+
   // --------------------------
   // Plasma boundary parameters
   // --------------------------
@@ -231,6 +248,15 @@ class Vertical : private Utility
   double* Zbound; // Z values on plasma boundary
   double* dRdthe; // dR/dtheta values on plasma boundary
   double* dZdthe; // dZ/dtheta values on plasma boundary
+
+  // --------------
+  // Wall parameters
+  // --------------
+  double* twall;  // theta values on wall
+  double* Rwall;  // R values on wall
+  double* Zwall;  // Z values on wall
+  double* dRdthw; // dR/dtheta values on wall
+  double* dZdthw; // dZ/dtheta values on wall
 
   // -------------------------------------
   // Visualization of ideal eigenfunctions
@@ -243,10 +269,15 @@ class Vertical : private Utility
   Array<double,2> rvals;  // r values of visualization grid-points (from Equilibrium.nc)
   Array<double,2> thvals; // theta values of visualization grid-points (from Equilibrium.nc)
 
-  Array<complex<double>,3> Psiuf;  // y components of Fourier transformed ideal eigenfunctions
-  Array<complex<double>,3> Zuf;    // Z components of Fourier transformed ideal eigenfunctions
-  Array<complex<double>,3> Psiuv;  // y components of unreconnected tearing eigenfunctions on visualization grid
-  Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing eigenfunctions on visualization grid
+  Array<complex<double>,3> Psiuf;  // y components of Fourier transformed no-wall ideal eigenfunctions
+  Array<complex<double>,3> Zuf;    // Z components of Fourier transformed no-wall ideal eigenfunctions
+  Array<complex<double>,3> Psiuv;  // y components of unreconnected tearing no-wall eigenfunctions on visualization grid
+  Array<complex<double>,3> Zuv;    // Z components of unreconnected tearing no-wall eigenfunctions on visualization grid
+  
+  Array<complex<double>,3> pPsiuf;  // y components of Fourier transformed perfect-wall ideal eigenfunctions
+  Array<complex<double>,3> pZuf;    // Z components of Fourier transformed perfect-wall ideal eigenfunctions
+  Array<complex<double>,3> pPsiuv;  // y components of unreconnected tearing perfect-wall eigenfunctions on visualization grid
+  Array<complex<double>,3> pZuv;    // Z components of unreconnected tearing perfect-wall eigenfunctions on visualization grid
    
   // --------------------
   // Vacuum solution data
@@ -295,8 +326,9 @@ class Vertical : private Utility
   // Wall solution data
   // ------------------
   double                   bw;      // Relative wall radius (read from Equilibrium JSON file)
-  double*                  rho;     // Wall scaling vector
 
+  Array<complex<double>,2> Pwal;    // Wall solution matrix
+  Array<complex<double>,2> Qwal;    // Wall solution matrix
   Array<complex<double>,2> Rwal;    // Wall solution matrix
   Array<complex<double>,2> Swal;    // Wall solution matrix
 
@@ -316,11 +348,6 @@ class Vertical : private Utility
   Array<complex<double>,2> iRPIdag; // Hermitian conjugate of iRPImat
   Array<complex<double>,2> iGmat;   // Perfect-wall vacuum response matrix: iGmat = (1/2) (iRPImat + iRPIdag)
 
-  Array<complex<double>,2> Bmat;    // Bmat * RImat = IRmat
-  Array<complex<double>,2> Cmat;    // Cmat = (Gmat - Hmat) * Bmat
-  Array<complex<double>,2> Cher;    // Hermitian component of Cmat
-  Array<complex<double>,2> Cant;    // Anti-Hermitian component of Cmat
-
   // -----------------
   // ODE solution data
   // -----------------
@@ -333,9 +360,9 @@ class Vertical : private Utility
   double*                  eode;  // Truncation error versus radius
   Array<complex<double>,3> YYY;   // Solution vectors versus radius
 
-  // -----------------
-  // Ideal energy data
-  // -----------------
+  // -------------------------
+  // No-wall ideal energy data
+  // -------------------------
   Array<complex<double>,3> Psii;    // y components of solutions launched from magnetic axis
   Array<complex<double>,3> Zi;      // Z components of solutions launched from magnetic axis
   Array<complex<double>,2> Wmat;    // Plasma ideal energy matrix
@@ -360,9 +387,37 @@ class Vertical : private Utility
   Array<complex<double>,2> Psiy;    // y values on plasma boundary associated with ideal eigenfunctions
   Array<complex<double>,2> Xiy;     // Z values on plasma boundary associated with ideal eigenfunctions
 
+  // ------------------------------
+  // Perfect-wall ideal energy data
+  // ------------------------------
+  Array<complex<double>,3> pPsii;    // y components of solutions launched from magnetic axis
+  Array<complex<double>,3> pZi;      // Z components of solutions launched from magnetic axis
+  Array<complex<double>,2> pWmat;    // Plasma ideal energy matrix
+  Array<complex<double>,2> pWher;    // Hermitian component of Wmat
+  Array<complex<double>,2> pWant;    // Anti-Hermitian component of Wmat
+  double*                  pWval;    // Eigenvalues of symmeterized W-matrix
+  Array<complex<double>,2> pVmat;    // Vacuum ideal energy matrix
+  Array<complex<double>,2> pVher;    // Hermitian component of Vmat
+  Array<complex<double>,2> pVant;    // Anti-Hermitian component of Vmat
+  double*                  pVval;    // Eigenvalues of symmeterized V-matrix
+  Array<complex<double>,2> pUmat;    // Total ideal energy matrix
+  Array<complex<double>,2> pUher;    // Hermitian component of Umat
+  Array<complex<double>,2> pUant;    // Anti-Hermitian component of Umat
+  double*                  pUval;    // Eigenvalues of symmeterized U-matrix
+  Array<complex<double>,2> pUvec;    // Eigenvectors of symmeterized U-matrix
+  Array<complex<double>,2> pUres;    // Residuals of Uvec orthonormality matrix
+  Array<complex<double>,3> pPsie;    // y components of ideal eigenfunctions
+  Array<complex<double>,3> pZe;      // Z components of ideal eigenfunctions
+  double*                  pdeltaW;  // Total perturbed ideal potential energy 
+  double*                  pdeltaWp; // Plasma contribution to perturbed ideal potential energy
+  double*                  pdeltaWv; // Vacuum contribution to perturbed ideal potential energy
+  Array<complex<double>,2> pPsiy;    // y values on plasma boundary associated with ideal eigenfunctions
+  Array<complex<double>,2> pXiy;     // Z values on plasma boundary associated with ideal eigenfunctions
+
   // ----
   // Misc
   // ----
+  int rhs_chooser;
    
  public:
 
@@ -579,8 +634,10 @@ class Vertical : private Utility
   // In Ideal.cpp
   // ............
 
-  // Calculate ideal stability
-  void CalculateIdealStability ();
+  // Calculate no-wall ideal stability
+  void CalculateNoWallIdealStability ();
+  // Calculate perfect-wall ideal stability
+  void CalculatePerfectWallIdealStability ();
 
   // ................
   // In Visualize.cpp

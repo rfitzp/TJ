@@ -31,8 +31,8 @@ Vertical::Vertical ()
   string JSONFilename = "../Inputs/Vertical.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  MMIN    = JSONData["MMIN"].get<int>();
   MMAX    = JSONData["MMAX"].get<int>();
+  MMIN    = - MMAX;
 
   EQLB    = JSONData["EQLB"].get<int>();
   
@@ -217,6 +217,9 @@ void Vertical::Solve ()
       // Calculate metric data at plasma boundary
       CalculateMetricBoundary ();
 
+       // Calculate metric data at wall
+      CalculateMetricWall ();
+
       // Calculate vacuum matrices
       GetVacuumBoundary ();
 
@@ -226,8 +229,11 @@ void Vertical::Solve ()
       // Solve outer region odes
       ODESolve ();
 
-      // Calculate ideal stability
-      CalculateIdealStability ();
+      // Calculate no-wall ideal stability
+      CalculateNoWallIdealStability ();
+
+      // Calculate perfect-wall ideal stability
+      CalculatePerfectWallIdealStability ();
       
       if (VIZ)
 	{
@@ -348,7 +354,31 @@ void Vertical::CleanUp ()
   gsl_interp_accel_free (Rreacc);
   gsl_interp_accel_free (Rbacc);
   gsl_interp_accel_free (Zbacc);
-  
-  delete[] rho;
+
+  delete[] cmuw; delete[] cetaw; delete[] setaw; delete[] eetaw; delete[] R2grgzw; delete[] R2grgew;  
+
+  gsl_spline_free (Rrzwspline);
+  gsl_spline_free (Rrewspline);
+  gsl_spline_free (Rwspline);
+  gsl_spline_free (Zwspline);
+
+  gsl_interp_accel_free (Rrzwacc);
+  gsl_interp_accel_free (Rrewacc);
+  gsl_interp_accel_free (Rwacc);
+  gsl_interp_accel_free (Zwacc);
+
+  if (VIZ)
+    delete[] rf;
+
+  delete[] tbound; delete[] Rbound; delete[] Zbound; delete[] dRdthe; delete[] dZdthe;
+
+  delete[] twall; delete[] Rwall; delete[] Zwall; delete[] dRdthw; delete[] dZdthw; 
+
+  delete[] Rgrid; delete[] Pgrid; delete[] hode; delete[] eode; 
+
+  delete[] Uval;    delete[] Wval;     delete[] Vval;
+  delete[] deltaW;  delete[] deltaWv;  delete[] deltaWp;
+  delete[] pUval;   delete[] pWval;    delete[] pVval;
+  delete[] pdeltaW; delete[] pdeltaWv; delete[] pdeltaWp;
 }
 

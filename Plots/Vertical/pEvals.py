@@ -1,6 +1,6 @@
-# Evals.py
+# pEvals.py
 
-# Plots eigenvalues of no-wall W, V, U matrices versus solution number
+# Plots eigenvalues of perfect-wall W, V, U matrices versus solution number
 
 import math
 import numpy as np
@@ -33,7 +33,7 @@ for j in range (J-1):
     vvv.append(vv[j])
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Vertical Code: No-Wall Energy Matrix Eigenvalues')
+fig.canvas.manager.set_window_title (r'Vertical Code: Perfect-Wall Energy Matrix Eigenvalues')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 

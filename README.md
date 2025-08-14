@@ -69,15 +69,19 @@ Program to calculate temperarature in vicinity of magnetic island.
 
 # Program Pinch
 
-Program to perform various calulations for general cylindrical pinch.\
+Program to perform various calulations for general cylindrical pinch.
 
 # Program ECE
 
-Program to calculate spatial convolution functions for electron cyclotron emission 
+Program to calculate spatial convolution functions for electron cyclotron emission.
 
 # Program StartUp
 
-Program to simulate tokamak current ramp
+Program to simulate tokamak current ramp.
+
+# Program Vertical
+
+Program to calculate vertical stability of aspect-ratio expanded tokamak equilibrium.
 
 # Directories
 
@@ -100,6 +104,7 @@ Program to simulate tokamak current ramp
   - *TJ*:		        Source for code TJ
   - *Tear*:		        Source for code Tear
   - *Utility*:          Source for class Utility
+  - *Vertical*:         Source for code Vertical
   - *WriteEFIT*:	    Source for code WriteEFIT
   - *bin*:		        Binaries for codes
   - *lib*:		        Libraries

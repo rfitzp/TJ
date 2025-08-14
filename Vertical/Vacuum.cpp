@@ -2,8 +2,6 @@
 
 #include "Vertical.h"
 
-#define NTOR 0
-
 // ##############################################
 // Function to calculate vacuum boundary matrices
 // ##############################################
@@ -57,7 +55,7 @@ void Vertical::GetVacuumBoundary ()
   // .........................
   int              neqns = 4*J*J;
   double           h, t_err, t;
-  int              rept;
+  int              rept; rhs_chooser = 0;
   complex<double>* Y   = new complex<double>[neqns];
   complex<double>* err = new complex<double>[neqns];
    
@@ -347,6 +345,8 @@ void Vertical::GetVacuumWall ()
   // ...............
   // Allocate memory
   // ...............
+  Pwal.resize(J, J);
+  Qwal.resize(J, J);
   Rwal.resize(J, J);
   Swal.resize(J, J);
 
@@ -366,39 +366,38 @@ void Vertical::GetVacuumWall ()
   iRPIdag.resize(J, J);
   iGmat.resize  (J, J);
 
-  Bmat.resize(J, J);
-  Cmat.resize(J, J);
-  Cher.resize(J, J);
-  Cant.resize(J, J);
-
-  rho = new double[J];
-
-  // .............................
-  // Calculate wall scaling vector
-  // .............................
-  double sum = 0.;
-  for (int j = 0; j <= NTOR; j++)
-    sum += 2. /(2. * double(j) - 1.);
-  double zetan = exp (sum);
-  double fac   = epsa * zetan /8.;
+  // .........................
+  // Calculate vacuum matrices
+  // .........................
+  int              neqns = 4*J*J;
+  double           h, t_err, t;
+  int              rept; rhs_chooser = 1;
+  complex<double>* Y   = new complex<double>[neqns];
+  complex<double>* err = new complex<double>[neqns];
+   
+  for (int i = 0; i < neqns; i++)
+    Y[i] = complex<double> (0., 0.);
   
-  for (int j = 0; j < J; j++)
+  t     = 0.;
+  h     = h0;
+  count = 0;
+  
+  do
     {
-      int    M = MPOL[j];
-      double m = fabs (mpol[j]);
-
-      if (M == 0)
-      	rho[j] = 1. + log (bw);
-      else
-	rho[j] = pow (bw, m);
+      CashKarp45Adaptive1 (neqns, t, Y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
     }
- 
+  while (t < 2.*M_PI - h);
+  CashKarp45Fixed1 (neqns, t, Y, err, 2.*M_PI - t);
+  
+  int index = 0;
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
-    {
-      Rwal(j, jp) = Rvac(j, jp) / rho[jp];
-      Swal(j, jp) = Svac(j, jp) * rho[jp];
-    }
+      {
+	Pwal(j, jp) = Y[index]; index++;
+	Rwal(j, jp) = Y[index]; index++;
+	Qwal(j, jp) = Y[index]; index++;
+	Swal(j, jp) = Y[index]; index++;
+      }
 
   // ..........................
   // Calculate inverse I-matrix
@@ -462,7 +461,7 @@ void Vertical::GetVacuumWall ()
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       Gmat(j, jp) = 0.5 * RPImat(j, jp) + 0.5 * RPIdag(j, jp);
-
+  
   // ...................
   // Calculate iG-matrix
   // ...................
@@ -476,51 +475,7 @@ void Vertical::GetVacuumWall ()
     for (int jp = 0; jp < J; jp++)
       iGmat(j, jp) = 0.5 * iRPImat(j, jp) + 0.5 * iRPIdag(j, jp);
 
-  // ..................
-  // Calculate B-matrix
-  // ..................
-  SolveLinearSystemTranspose (RImat, Bmat, IRmat);
-
-  // ..................
-  // Calculate C-matrix
-  // ..................
-  for (int j = 0; j < J; j++)
-    for (int jp = 0; jp < J; jp++)
-      {
-	complex<double> sum = complex<double> (0., 0.);
-	
-	for (int jpp = 0; jpp < J; jpp++)
-	  {
-	    sum += (Hmat(j, jpp) - Gmat(j, jpp)) * Bmat(jpp, jp);
-	  }
-	
-	Cmat(j, jp) = sum;
-      }
-  
-  for (int j = 0; j < J; j++)
-    for (int jp = 0; jp < J; jp++)
-      {
-	Cher(j, jp) = 0.5 * (Cmat(j, jp) + conj (Cmat(jp, j)));
-	Cant(j, jp) = 0.5 * (Cmat(j, jp) - conj (Cmat(jp, j)));
-      }
-
-  // ...........................
-  // Calculate C-matrix residual
-  // ...........................
-  double Chmax = 0., Camax = 0.;
-  for (int j = 0; j < J; j++)
-    for (int jp = 0; jp < J; jp++)
-      {
-	double chval = abs (Cher(j, jp));
-	double caval = abs (Cant(j, jp));
-
-	if (chval > Chmax)
-	  Chmax = chval;
-	if (caval > Camax)
-	  Camax = caval;	
-      }
-
-  printf ("I and C matrix Hermitian test residuals: %10.4e %10.4e\n", Aamax/Ahmax, Camax/Chmax);
+   printf ("I matrix residual: %10.4e\n", Aamax/Ahmax);
 }
  
 // ####################################################
@@ -528,46 +483,92 @@ void Vertical::GetVacuumWall ()
 // ####################################################
 void Vertical::CashKarp45Rhs1 (double t, complex<double>* Y, complex<double>* dYdt)
 {
-  int index = 0;
-  for (int j = 0; j < J; j++)
-    for (int jp = 0; jp < J; jp++)
-      {
-	int    MP  = MPOL[jp];
-	int    MMP = abs (MP);
-	
-	double m   = mpol[j];
-	double mp  = mpol[jp];
-	
-	double R    = gsl_spline_eval (Rbspline,  t, Rbacc);
-	double Z    = gsl_spline_eval (Zbspline,  t, Zbacc);
-	double R2rz = gsl_spline_eval (Rrzspline, t, Rrzacc);
-	double R2re = gsl_spline_eval (Rrespline, t, Rreacc);
-	
-	double z   = GetCoshMu (R, Z);
-	double eta = GetEta    (R, Z);
-	double cet = cos (eta);
-	double set = sin (eta);
-	
-	double fac = sqrt (z - cet);
-	
-	double Ptor  = NormToroidalP    (NTOR, MMP, z);
-	double Ptorz = NormToroidaldPdz (NTOR, MMP, z);
-	double Qtor  = NormToroidalQ    (NTOR, MMP, z);
-	double Qtorz = NormToroidaldQdz (NTOR, MMP, z);
-	
-	complex<double> eik = complex<double> (cos (m * t + mp * eta), - sin (m * t + mp * eta));
-	
-	complex<double> Prhs = fac * Ptor * eik /2./M_PI;
-	complex<double> Rrhs = (  (Ptor /2./fac + fac * Ptorz) * R2rz
-				  + (set /2./fac - complex<double> (0., 1.) * mp * fac) * Ptor * R2re) * eik /2./M_PI;
-	complex<double> Qrhs = fac * Qtor * eik /2./M_PI;
-	complex<double> Srhs = (  (Qtor /2./fac + fac * Qtorz) * R2rz
-				  + (set /2./fac - complex<double> (0., 1.) * mp * fac) * Qtor * R2re) * eik /2./M_PI;
-	
-	dYdt[index] = Prhs; index++;
-	dYdt[index] = Rrhs; index++;
-	dYdt[index] = Qrhs; index++;
-	dYdt[index] = Srhs; index++;
-      }
-}
- 
+  if (rhs_chooser == 0)
+    {
+      int index = 0, NTOR = 0;
+      for (int j = 0; j < J; j++)
+	for (int jp = 0; jp < J; jp++)
+	  {
+	    int    MP  = MPOL[jp];
+	    int    MMP = abs (MP);
+	    
+	    double m   = mpol[j];
+	    double mp  = mpol[jp];
+	    
+	    double R    = gsl_spline_eval (Rbspline,  t, Rbacc);
+	    double Z    = gsl_spline_eval (Zbspline,  t, Zbacc);
+	    double R2rz = gsl_spline_eval (Rrzspline, t, Rrzacc);
+	    double R2re = gsl_spline_eval (Rrespline, t, Rreacc);
+	    
+	    double z   = GetCoshMu (R, Z);
+	    double eta = GetEta    (R, Z);
+	    double cet = cos (eta);
+	    double set = sin (eta);
+	    
+	    double fac = sqrt (z - cet);
+	    
+	    double Ptor  = NormToroidalP    (NTOR, MMP, z);
+	    double Ptorz = NormToroidaldPdz (NTOR, MMP, z);
+	    double Qtor  = NormToroidalQ    (NTOR, MMP, z);
+	    double Qtorz = NormToroidaldQdz (NTOR, MMP, z);
+	    
+	    complex<double> eik = complex<double> (cos (m * t + mp * eta), - sin (m * t + mp * eta));
+	    
+	    complex<double> Prhs = fac * Ptor * eik /2./M_PI;
+	    complex<double> Rrhs = (  (Ptor /2./fac + fac * Ptorz) * R2rz
+				      + (set /2./fac - complex<double> (0., 1.) * mp * fac) * Ptor * R2re) * eik /2./M_PI;
+	    complex<double> Qrhs = fac * Qtor * eik /2./M_PI;
+	    complex<double> Srhs = (  (Qtor /2./fac + fac * Qtorz) * R2rz
+				      + (set /2./fac - complex<double> (0., 1.) * mp * fac) * Qtor * R2re) * eik /2./M_PI;
+	    
+	    dYdt[index] = Prhs; index++;
+	    dYdt[index] = Rrhs; index++;
+	    dYdt[index] = Qrhs; index++;
+	    dYdt[index] = Srhs; index++;
+	  }
+    }
+  else
+    {
+      int index = 0, NTOR = 0;
+      for (int j = 0; j < J; j++)
+	for (int jp = 0; jp < J; jp++)
+	  {
+	    int    MP  = MPOL[jp];
+	    int    MMP = abs (MP);
+	    
+	    double m   = mpol[j];
+	    double mp  = mpol[jp];
+	    
+	    double R    = gsl_spline_eval (Rwspline,   t, Rwacc);
+	    double Z    = gsl_spline_eval (Zwspline,   t, Zwacc);
+	    double R2rz = gsl_spline_eval (Rrzwspline, t, Rrzwacc);
+	    double R2re = gsl_spline_eval (Rrewspline, t, Rrewacc);
+	    
+	    double z   = GetCoshMu (R, Z);
+	    double eta = GetEta    (R, Z);
+	    double cet = cos (eta);
+	    double set = sin (eta);
+	    
+	    double fac = sqrt (z - cet);
+	    
+	    double Ptor  = NormToroidalP    (NTOR, MMP, z);
+	    double Ptorz = NormToroidaldPdz (NTOR, MMP, z);
+	    double Qtor  = NormToroidalQ    (NTOR, MMP, z);
+	    double Qtorz = NormToroidaldQdz (NTOR, MMP, z);
+	    
+	    complex<double> eik = complex<double> (cos (m * t + mp * eta), - sin (m * t + mp * eta));
+	    
+	    complex<double> Prhs = fac * Ptor * eik /2./M_PI;
+	    complex<double> Rrhs = (  (Ptor /2./fac + fac * Ptorz) * R2rz
+				      + (set /2./fac - complex<double> (0., 1.) * mp * fac) * Ptor * R2re) * eik /2./M_PI;
+	    complex<double> Qrhs = fac * Qtor * eik /2./M_PI;
+	    complex<double> Srhs = (  (Qtor /2./fac + fac * Qtorz) * R2rz
+				      + (set /2./fac - complex<double> (0., 1.) * mp * fac) * Qtor * R2re) * eik /2./M_PI;
+	    
+	    dYdt[index] = Prhs; index++;
+	    dYdt[index] = Rrhs; index++;
+	    dYdt[index] = Qrhs; index++;
+	    dYdt[index] = Srhs; index++;
+	  }
+    }
+} 

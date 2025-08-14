@@ -1,6 +1,6 @@
 # yZ.py
 
-# Plots y, Z components of no-wall ideal eigenfunctions in R, Z plane.
+# Plots y, Z components of perfect-wall ideal eigenfunctions in R, Z plane.
 # User prompted for solution number
 
 import math
@@ -19,6 +19,9 @@ Z    = ds['Z']
 r    = ds['rr']
 t    = ds['theta']
 
+Rw   = ds['Rwall']
+Zw   = ds['Zwall']
+
 epsa = para[0]
 scale = 1.5*epsa
 
@@ -30,16 +33,16 @@ nt = RR.shape[1]
 
 fn1   = '../../Outputs/Vertical/Vertical.nc'
 ds1   = nc.Dataset(fn1)
-psi_r = ds1['y_ideal_eig_r']
-psi_i = ds1['y_ideal_eig_i']
-z_r   = ds1['Z_ideal_eig_r']
-z_i   = ds1['Z_ideal_eig_i']
-w     = ds1['delta_W']
+psi_r = ds1['py_ideal_eig_r']
+psi_i = ds1['py_ideal_eig_i']
+z_r   = ds1['pZ_ideal_eig_r']
+z_i   = ds1['pZ_ideal_eig_i']
+w     = ds1['pdelta_W']
 
 J = len(w)
 
 fig = plt.figure (figsize = (8.5, 8.0))
-fig.canvas.manager.set_window_title (r'Vertical Code: No-Wall y(R, Z), Z(R, Z)')
+fig.canvas.manager.set_window_title (r'Vertical Code: Perfect-Wall y(R, Z), Z(R, Z)')
 plt.rc ('xtick', labelsize = 12) 
 plt.rc ('ytick', labelsize = 12) 
 
@@ -64,6 +67,8 @@ plt.ylim (-scale, scale)
 
 plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
 
+plt.plot (Rw, Zw, color = 'black', linewidth = 4, linestyle = 'solid')  
+
 plt.contourf (RR, ZZ, PPr, ncont, cmap = ReBu)    
 
 plt.plot ([1.], [0.], marker = 'o', markersize = 1, color = "black")
@@ -77,6 +82,8 @@ plt.xlim (1.-scale, 1.+scale)
 plt.ylim (-scale, scale)
 
 plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
+
+plt.plot (Rw, Zw, color = 'black', linewidth = 4, linestyle = 'solid')  
 
 plt.contourf (RR, ZZ, PPi, ncont, cmap=ReBu)    
 
@@ -92,6 +99,8 @@ plt.ylim (-scale, scale)
 
 plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
 
+plt.plot (Rw, Zw, color = 'black', linewidth = 4, linestyle = 'solid')  
+
 plt.contourf (RR, ZZ, ZZr, ncont, cmap = ReBu)    
 
 plt.plot ([1.], [0.], marker = 'o', markersize = 1, color = "black")
@@ -105,6 +114,8 @@ plt.xlim (1.-scale, 1.+scale)
 plt.ylim (-scale, scale)
 
 plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
+
+plt.plot (Rw, Zw, color = 'black', linewidth = 4, linestyle = 'solid')  
 
 plt.contourf (RR, ZZ, ZZi, ncont, cmap = ReBu)
 

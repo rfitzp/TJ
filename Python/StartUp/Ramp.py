@@ -57,6 +57,8 @@ Z0  = gnc * Z
 
 Bt = (a/R0) * B0 /qa
 
+nG = (5./math.pi) * gs * Bt /a
+
 bp = beta_p            * Z0**(+0.4) * n20**(0.6)  * chi**(-0.4) * Bt**(-1.2)
 T0 = T_0               * Z0**(+0.4) * n20**(-0.4) * chi**(-0.4) * Bt**(+0.8)
 t0 = t_0     * a*a     * Z0**(-0.4) * n20**(-0.6) * chi**(-0.6) * Bt**(+1.2)
@@ -69,8 +71,8 @@ ED = E_D               * Z0**(-0.4) * n20**(+1.4) * chi**(0.4)  * Bt**(-0.8)
 print ("\nITER: gs = %11.4e gp = %11.4e gnc = %11.4e" % (gs, gp, gnc))
 print ("\nITER: T0 = %11.4e keV t0 = %11.4e s I0 = %11.4e MA E0 = %11.4e V/m Ec = %11.4e V/m ED = %11.4e V/m"
        % (T0, t0, I0, E0, Ec, ED))
-print ("\nITER: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m P = %11.4e (MW) beta_p = %11.4e"
-       % (T0*Tramp, t0*tramp, E0*Eramp, P0*Eramp, bp))
+print ("\nITER: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m P = %11.4e (MW) beta_p = %11.4e nG = %11.4e 10^20 m^-3"
+       % (T0*Tramp, t0*tramp, E0*Eramp, P0*Eramp, bp, nG))
 
 # ##########
 # Simulation
@@ -88,6 +90,7 @@ PPc = []
 EE  = []
 EEc = []
 EED = []
+nnG = []
 
 for t in tt:
 
@@ -102,6 +105,7 @@ for t in tt:
         EE .append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2))
         EEc.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /Ec)
         EED.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /ED /(T0*Tramp * tpre**0.4 * (t/tpre)**0.8))
+        nnG.append ((n20/nG)  * (t/tpre)**(-1.))
     else:
         dd .append (t**0.5 * a)
         IIp.append (t * I0)
@@ -111,6 +115,7 @@ for t in tt:
         EE .append (E0*Eramp * t**(-0.6))
         EEc.append (E0*Eramp * t**(-0.6) /Ec)
         EED.append (E0*Eramp * t**(-0.6) /ED /(T0*Tramp * t**0.4))
+        nnG.append (n20/nG) 
 
 font = 15
 fig  = plt.figure (figsize = (8.0, 8.0))
@@ -145,14 +150,17 @@ plt.legend (fontsize = font)
 plt.subplot (3, 2, 3)
 
 plt.xlim (0., xx[-1])
- 
-plt.plot    (xx, qqa, color = 'blue',  linewidth = 2, linestyle = 'solid')
-plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
+
+plt.plot    (xx, qqa, color = 'blue',  linewidth = 2, linestyle = 'solid', label = "$q_a$")
+plt.plot    (xx, nnG, color = 'red',   linewidth = 2, linestyle = 'solid', label = "$n_e/n_G$")
+plt.axhline (0.,      color = 'black', linewidth = 0, linestyle = 'dotted')
+plt.axhline (1.,      color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.axvline (tpre*t0*tramp, color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.xlabel (r'$t (s)$',  fontsize = font)
-plt.ylabel (r'$q_a$',    fontsize = font)
+#plt.ylabel (r'$q_a$',    fontsize = font)
+plt.legend (fontsize = font)
 
 plt.subplot (3, 2, 4)
 
@@ -216,6 +224,8 @@ Z0  = gnc * Z
 
 Bt = (a/R0) * B0 /qa
 
+nG = (5./math.pi) * gs * Bt /a
+
 bp = beta_p            * Z0**(+0.4) * n20**(0.6)  * chi**(-0.4) * Bt**(-1.2)
 T0 = T_0               * Z0**(+0.4) * n20**(-0.4) * chi**(-0.4) * Bt**(+0.8)
 t0 = t_0     * a*a     * Z0**(-0.4) * n20**(-0.6) * chi**(-0.6) * Bt**(+1.2)
@@ -228,8 +238,8 @@ ED = E_D               * Z0**(-0.4) * n20**(+1.4) * chi**(0.4)  * Bt**(-0.8)
 print ("\nSPARC: gs = %11.4e gp = %11.4e gnc = %11.4e" % (gs, gp, gnc))
 print ("\nSPARC: T0 = %11.4e keV t0 = %11.4e s I0 = %11.4e MA E0 = %11.4e V/m Ec = %11.4e V/m ED = %11.4e V/m"
        % (T0, t0, I0, E0, Ec, ED))
-print ("\nSPARC: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m P = %11.4e MW beta_p = %11.4e"
-       % (T0*Tramp, t0*tramp, E0*Eramp, P0*Eramp, bp))
+print ("\nSPARC: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m P = %11.4e MW beta_p = %11.4e nG = %11.4e 10^20 m^-3"
+       % (T0*Tramp, t0*tramp, E0*Eramp, P0*Eramp, bp, nG))
 
 # ##########
 # Simulation
@@ -247,6 +257,7 @@ PPc = []
 EE  = []
 EEc = []
 EED = []
+nnG = []
 
 for t in tt:
 
@@ -261,6 +272,7 @@ for t in tt:
         EE .append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2))
         EEc.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /Ec)
         EED.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /ED /(T0*Tramp * tpre**0.4 * (t/tpre)**0.8))
+        nnG.append ((n20/nG)  * (t/tpre)**(-1.))
     else:
         dd .append (t**0.5 * a)
         IIp.append (t * I0)
@@ -270,6 +282,7 @@ for t in tt:
         EE .append (E0*Eramp * t**(-0.6))
         EEc.append (E0*Eramp * t**(-0.6) /Ec)
         EED.append (E0*Eramp * t**(-0.6) /ED /(T0*Tramp * t**0.4))
+        nnG.append (n20/nG) 
 
 font = 15
 fig  = plt.figure (figsize = (8.0, 8.0))
@@ -305,13 +318,16 @@ plt.subplot (3, 2, 3)
 
 plt.xlim (0., xx[-1])
  
-plt.plot    (xx, qqa, color = 'blue',  linewidth = 2, linestyle = 'solid')
-plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.plot    (xx, qqa, color = 'blue',  linewidth = 2, linestyle = 'solid', label = "$q_a$")
+plt.plot    (xx, nnG, color = 'red',   linewidth = 2, linestyle = 'solid', label = "$n_e/n_G$")
+plt.axhline (0.,      color = 'black', linewidth = 0, linestyle = 'dotted')
+plt.axhline (1.,      color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.axvline (tpre*t0*tramp, color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.xlabel (r'$t (s)$',  fontsize = font)
-plt.ylabel (r'$q_a$',    fontsize = font)
+#plt.ylabel (r'$q_a$',    fontsize = font)
+plt.legend (fontsize = font)
 
 plt.subplot (3, 2, 4)
 
@@ -375,6 +391,8 @@ Z0  = gnc * Z
 
 Bt = (a/R0) * B0 /qa
 
+nG = (5./math.pi) * gs * Bt /a
+
 bp = beta_p            * Z0**(+0.4) * n20**(0.6)  * chi**(-0.4) * Bt**(-1.2)
 T0 = T_0               * Z0**(+0.4) * n20**(-0.4) * chi**(-0.4) * Bt**(+0.8)
 t0 = t_0     * a*a     * Z0**(-0.4) * n20**(-0.6) * chi**(-0.6) * Bt**(+1.2)
@@ -388,8 +406,8 @@ print ("\nJET: gs = %11.4e gp = %11.4e gnc = %11.4e" % (gs, gp, gnc))
 print ("\nJET: T0 = %11.4e keV t0 = %11.4e s I0 = %11.4e MA E0 = %11.4e V/m Ec = %11.4e V/m ED = %11.4e V/m"
        % (T0, t0, I0, E0, Ec, ED))
 
-print ("\nJET: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m P = %11.4e MW beta_p = %11.4e\n"
-       % (T0*Tramp, t0*tramp, E0*Eramp, P0*Eramp, bp))
+print ("\nJET: Tc = %11.4e keV t_ramp = %11.4e s E = %11.4e V/m P = %11.4e MW beta_p = %11.4e nG = %11.4e 10^20 m^-3\n"
+       % (T0*Tramp, t0*tramp, E0*Eramp, P0*Eramp, bp, nG))
 
 # ##########
 # Simulation
@@ -407,6 +425,7 @@ PPc = []
 EE  = []
 EEc = []
 EED = []
+nnG = []
 
 for t in tt:
 
@@ -421,6 +440,7 @@ for t in tt:
         EE .append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2))
         EEc.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /Ec)
         EED.append (E0*Eramp * tpre**(-0.6) * (t/tpre)**(-0.2) /ED /(T0*Tramp * tpre**0.4 * (t/tpre)**0.8))
+        nnG.append ((n20/nG)  * (t/tpre)**(-1.))
     else:
         dd .append (t**0.5 * a)
         IIp.append (t * I0)
@@ -430,6 +450,7 @@ for t in tt:
         EE .append (E0*Eramp * t**(-0.6))
         EEc.append (E0*Eramp * t**(-0.6) /Ec)
         EED.append (E0*Eramp * t**(-0.6) /ED /(T0*Tramp * t**0.4))
+        nnG.append (n20/nG) 
 
 font = 15
 fig  = plt.figure (figsize = (8.0, 8.0))
@@ -466,13 +487,16 @@ plt.subplot (3, 2, 3)
 
 plt.xlim (0., xx[-1])
  
-plt.plot    (xx, qqa, color = 'blue',  linewidth = 2, linestyle = 'solid')
-plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.plot    (xx, qqa, color = 'blue',  linewidth = 2, linestyle = 'solid', label = "$q_a$")
+plt.plot    (xx, nnG, color = 'red',   linewidth = 2, linestyle = 'solid', label = "$n_e/n_G$")
+plt.axhline (0.,      color = 'black', linewidth = 0, linestyle = 'dotted')
+plt.axhline (1.,      color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.axvline (tpre*t0*tramp, color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.xlabel (r'$t (s)$',  fontsize = font)
-plt.ylabel (r'$q_a$',    fontsize = font)
+#plt.ylabel (r'$q_a$',    fontsize = font)
+plt.legend (fontsize = font)
 
 plt.subplot (3, 2, 4)
 

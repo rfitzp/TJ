@@ -272,12 +272,22 @@ void Equilibrium::WriteNetcdf (double sa)
       NcVar dZdtheta_x = dataFile.addVar ("dZdtheta",  ncDouble, w_d);
       dZdtheta_x.putVar (dZdtheta);
 
-      NcVar Rwall_x = dataFile.addVar ("Rwall", ncDouble, w_d);
+      NcVar Rwall_x    = dataFile.addVar ("Rwall",         ncDouble, w_d);
       Rwall_x.putVar (Rwall);
-      NcVar Zwall_x = dataFile.addVar ("Zwall", ncDouble, w_d);
+      NcVar Zwall_x    = dataFile.addVar ("Zwall",         ncDouble, w_d);
       Zwall_x.putVar (Zwall);
-      NcVar wwall_x = dataFile.addVar ("wwall", ncDouble, w_d);
+      NcVar wwall_x    = dataFile.addVar ("wwall",         ncDouble, w_d);
       wwall_x.putVar (wwall);
+      NcVar twall_x    = dataFile.addVar ("twall",         ncDouble, w_d);
+      twall_x.putVar (twall);
+      NcVar R2w_x      = dataFile.addVar ("R2wall",        ncDouble, w_d);
+      R2w_x.putVar (R2w);
+      NcVar grr2w_x    = dataFile.addVar ("grr2wall",      ncDouble, w_d);
+      grr2w_x.putVar (grr2w);
+      NcVar dRdthetw_x = dataFile.addVar ("dRdthetawall",  ncDouble, w_d);
+      dRdthetw_x.putVar (dRdthetw);
+      NcVar dZdthetw_x = dataFile.addVar ("dZdthetawall",  ncDouble, w_d);
+      dZdthetw_x.putVar (dZdthetw);
  
       NcVar Rcoil_x = dataFile.addVar ("Rcoil", ncDouble, c_d);
       Rcoil_x.putVar (Rcoil);

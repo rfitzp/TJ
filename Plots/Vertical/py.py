@@ -1,6 +1,6 @@
-# y.py
+# py.py
 
-# Plots y component of no-wall ideal eigenfunction in R, Z plane.
+# Plots y component of perfect-wall ideal eigenfunction in R, Z plane.
 # User prompted for solution number
 
 import math
@@ -19,6 +19,9 @@ Z    = ds['Z']
 r    = ds['rr']
 t    = ds['theta']
 
+Rw   = ds['Rwall']
+Zw   = ds['Zwall']
+
 epsa = para[0]
 scale = 1.5*epsa
 
@@ -30,14 +33,14 @@ nt = RR.shape[1]
 
 fn1   = '../../Outputs/Vertical/Vertical.nc'
 ds1   = nc.Dataset(fn1)
-psi_r = ds1['y_ideal_eig_r']
-psi_i = ds1['y_ideal_eig_i']
-w     = ds1['delta_W']
+psi_r = ds1['py_ideal_eig_r']
+psi_i = ds1['py_ideal_eig_i']
+w     = ds1['pdelta_W']
 
 J = len(w)
 
 fig = plt.figure (figsize = (12.5, 6.0))
-fig.canvas.manager.set_window_title (r'Vertical Code: No-Wall y(R, Z)')
+fig.canvas.manager.set_window_title (r'Vertical Code: Perfect-Wall y(R, Z)')
 plt.rc ('xtick', labelsize=12) 
 plt.rc ('ytick', labelsize=12) 
 
@@ -55,7 +58,9 @@ plt.subplot (1, 2, 1)
 plt.xlim (1.-scale, 1.+scale)
 plt.ylim (-scale, scale)
 
-plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
+plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')
+
+plt.plot (Rw, Zw, color = 'black', linewidth = 4, linestyle = 'solid')  
 
 cp = plt.contourf (RR, ZZ, PPr, ncont, cmap = ReBu)
 
@@ -69,6 +74,8 @@ plt.xlim(1.-scale, 1.+scale)
 plt.ylim(-scale, scale)
 
 plt.plot (R[nf-1], Z[nf-1], color = 'blue', linewidth = 0.5, linestyle = 'solid')    
+
+plt.plot (Rw, Zw, color = 'black', linewidth = 4, linestyle = 'solid')  
 
 ci = plt.contourf (RR, ZZ, PPi, ncont, cmap = ReBu)
 

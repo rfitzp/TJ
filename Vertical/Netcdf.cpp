@@ -159,6 +159,24 @@ void Vertical::ReadEquilibriumNetcdf ()
       dRdthe_x.getVar (dRdthe);
       dZdthe_x.getVar (dZdthe);
 
+      NcVar twall_x  = dataFile.getVar ("twall");
+      NcVar Rwall_x  = dataFile.getVar ("Rwall");
+      NcVar Zwall_x  = dataFile.getVar ("Zwall");
+      NcVar dRdthw_x = dataFile.getVar ("dRdthetawall");
+      NcVar dZdthw_x = dataFile.getVar ("dZdthetawall");
+ 
+      twall  = new double[Nw+1];
+      Rwall  = new double[Nw+1];
+      Zwall  = new double[Nw+1];
+      dRdthw = new double[Nw+1];
+      dZdthw = new double[Nw+1];
+
+      twall_x .getVar (twall);
+      Rwall_x .getVar (Rwall);
+      Zwall_x .getVar (Zwall);
+      dRdthw_x.getVar (dRdthw);
+      dZdthw_x.getVar (dZdthw);
+
       if (VIZ)
 	{
 	  NcVar RR_x = dataFile.getVar ("R");
@@ -274,13 +292,6 @@ void Vertical::WriteNetcdf ()
   double* iGmat_r = new double[J*J];
   double* iGmat_i = new double[J*J];
 
-  double* Bmat_r  = new double[J*J];
-  double* Bmat_i  = new double[J*J];
-  double* Cmat_r  = new double[J*J];
-  double* Cmat_i  = new double[J*J];
-  double* Cant_r  = new double[J*J];
-  double* Cant_i  = new double[J*J];
-
   double* Ammp_r = new double[(Nr+1)*J*J];
   double* Bmmp_r = new double[(Nr+1)*J*J];
   double* Cmmp_r = new double[(Nr+1)*J*J];
@@ -308,17 +319,39 @@ void Vertical::WriteNetcdf ()
   double* Psie_i  = new double[J*J*NDIAG];
   double* Ze_r    = new double[J*J*NDIAG];
   double* Ze_i    = new double[J*J*NDIAG];
-
+  
   double* Psiy_r  = new double[J*(Nw+1)];
   double* Psiy_i  = new double[J*(Nw+1)];
   double* Xiy_r   = new double[J*(Nw+1)];
   double* Xiy_i   = new double[J*(Nw+1)];
+
+  double* pUmat_r  = new double[J*J];
+  double* pUmat_i  = new double[J*J];
+  double* pUant_r  = new double[J*J];
+  double* pUant_i  = new double[J*J];
+  double* pUvec_r  = new double[J*J];
+  double* pUvec_i  = new double[J*J];
+  double* pPsie_r  = new double[J*J*NDIAG];
+  double* pPsie_i  = new double[J*J*NDIAG];
+  double* pZe_r    = new double[J*J*NDIAG];
+  double* pZe_i    = new double[J*J*NDIAG];
+  
+  double* pPsiy_r  = new double[J*(Nw+1)];
+  double* pPsiy_i  = new double[J*(Nw+1)];
+  double* pXiy_r   = new double[J*(Nw+1)];
+  double* pXiy_i   = new double[J*(Nw+1)];
 
   double* PPV_r   = new double[J*Nf*(Nw+1)];
   double* PPV_i   = new double[J*Nf*(Nw+1)];
   double* ZZV_r   = new double[J*Nf*(Nw+1)];
   double* ZZV_i   = new double[J*Nf*(Nw+1)];
 
+  double* pPPV_r   = new double[J*Nf*(Nw+1)];
+  double* pPPV_i   = new double[J*Nf*(Nw+1)];
+  double* pZZV_r   = new double[J*Nf*(Nw+1)];
+  double* pZZV_i   = new double[J*Nf*(Nw+1)];
+
+  
   Input[0]  = double (MMIN);
   Input[1]  = double (MMAX);
   Input[2]  = EPS;
@@ -394,13 +427,6 @@ void Vertical::WriteNetcdf ()
 	iGmat_r[cnt] = iGmat(j, jp).real();
 	iGmat_i[cnt] = iGmat(j, jp).imag();
 
-	Bmat_r[cnt]  = Bmat (j, jp).real();
-	Bmat_i[cnt]  = Bmat (j, jp).imag();
-	Cmat_r[cnt]  = Cmat (j, jp).real();
-	Cmat_i[cnt]  = Cmat (j, jp).imag();
-	Cant_r[cnt]  = Cant (j, jp).real();
-	Cant_i[cnt]  = Cant (j, jp).imag();
-
 	cnt++;
       }
   
@@ -452,6 +478,13 @@ void Vertical::WriteNetcdf ()
 	Uant_i[cnt]  = Uant(j, jp) .imag();
 	Uvec_r[cnt]  = Uvec(j, jp) .real();
 	Uvec_i[cnt]  = Uvec(j, jp) .imag();
+
+	pUmat_r[cnt]  = pUmat(j, jp) .real();
+	pUmat_i[cnt]  = pUmat(j, jp) .imag();
+	pUant_r[cnt]  = pUant(j, jp) .real();
+	pUant_i[cnt]  = pUant(j, jp) .imag();
+	pUvec_r[cnt]  = pUvec(j, jp) .real();
+	pUvec_i[cnt]  = pUvec(j, jp) .imag();
 	cnt++;
       }
   
@@ -464,6 +497,11 @@ void Vertical::WriteNetcdf ()
 	  Psie_i[cnt] = imag (Psie(j, jp, i));
 	  Ze_r  [cnt] = real (Ze  (j, jp, i));
 	  Ze_i  [cnt] = imag (Ze  (j, jp, i));
+
+	  pPsie_r[cnt] = real (pPsie(j, jp, i));
+	  pPsie_i[cnt] = imag (pPsie(j, jp, i));
+	  pZe_r  [cnt] = real (pZe  (j, jp, i));
+	  pZe_i  [cnt] = imag (pZe  (j, jp, i));
 	  cnt++;
 	}
       
@@ -475,6 +513,11 @@ void Vertical::WriteNetcdf ()
 	Psiy_i[cnt] = imag (Psiy(j, i));
 	Xiy_r [cnt] = real (Xiy (j, i));
 	Xiy_i [cnt] = imag (Xiy (j, i));
+
+	pPsiy_r[cnt] = real (pPsiy(j, i));
+	pPsiy_i[cnt] = imag (pPsiy(j, i));
+	pXiy_r [cnt] = real (pXiy (j, i));
+	pXiy_i [cnt] = imag (pXiy (j, i));
 	cnt++;
       }
 
@@ -489,6 +532,11 @@ void Vertical::WriteNetcdf ()
 	      PPV_i[cnt] = imag (Psiuv(k, i, l));
 	      ZZV_r[cnt] = real (Zuv  (k, i, l));
 	      ZZV_i[cnt] = imag (Zuv  (k, i, l));
+
+	      pPPV_r[cnt] = real (pPsiuv(k, i, l));
+	      pPPV_i[cnt] = imag (pPsiuv(k, i, l));
+	      pZZV_r[cnt] = real (pZuv  (k, i, l));
+	      pZZV_i[cnt] = imag (pZuv  (k, i, l));
 	      cnt++;
 	    }
     }
@@ -600,6 +648,19 @@ void Vertical::WriteNetcdf ()
       NcVar R2grge_x = dataFile.addVar ("R2grge", ncDouble, w_d);
       R2grge_x.putVar (R2grge);
 
+      NcVar cmuw_x    = dataFile.addVar ("cosmuwall",  ncDouble, w_d);
+      cmuw_x.putVar (cmuw);
+      NcVar ew_x      = dataFile.addVar ("etawall",    ncDouble, w_d);
+      ew_x.putVar (eetaw);
+      NcVar cetaw_x   = dataFile.addVar ("cosetawall", ncDouble, w_d);
+      cetaw_x.putVar (cetaw);
+      NcVar setaw_x   = dataFile.addVar ("sinetawall", ncDouble, w_d);
+      setaw_x.putVar (setaw);
+      NcVar R2grgzw_x = dataFile.addVar ("R2grgzwall", ncDouble, w_d);
+      R2grgzw_x.putVar (R2grgzw);
+      NcVar R2grgew_x = dataFile.addVar ("R2grgewall", ncDouble, w_d);
+      R2grgew_x.putVar (R2grgew);
+      
       NcVar pvacr_x = dataFile.addVar ("Pvac_r", ncDouble, vacuum_d);
       pvacr_x.putVar (Pvac_r);
       NcVar pvaci_x = dataFile.addVar ("Pvac_i", ncDouble, vacuum_d);
@@ -695,19 +756,6 @@ void Vertical::WriteNetcdf ()
       NcVar igmati_x = dataFile.addVar ("iGmat_i", ncDouble, vacuum_d);
       igmati_x.putVar (iGmat_i);
 
-      NcVar bmatr_x  = dataFile.addVar ("Bmat_r",  ncDouble, vacuum_d);
-      bmatr_x.putVar (Bmat_r);
-      NcVar bmati_x  = dataFile.addVar ("Bmat_i",  ncDouble, vacuum_d);
-      bmati_x.putVar (Bmat_i);
-      NcVar cmatr_x  = dataFile.addVar ("Cmat_r",  ncDouble, vacuum_d);
-      cmatr_x.putVar (Cmat_r);
-      NcVar cmati_x  = dataFile.addVar ("Cmat_i",  ncDouble, vacuum_d);
-      cmati_x.putVar (Cmat_i);
-      NcVar cantr_x  = dataFile.addVar ("Cant_r",  ncDouble, vacuum_d);
-      cantr_x.putVar (Cant_r);
-      NcVar canti_x  = dataFile.addVar ("Cant_i",  ncDouble, vacuum_d);
-      canti_x.putVar (Cant_i);
-      
       NcVar ammpr_x = dataFile.addVar ("Ammp_r", ncDouble, matrix_d);
       ammpr_x.putVar (Ammp_r);
       NcVar ammpi_x = dataFile.addVar ("Ammp_i", ncDouble, matrix_d);
@@ -776,7 +824,24 @@ void Vertical::WriteNetcdf ()
       uval_x.putVar  (Uval);
       NcVar wvecr_x  = dataFile.addVar ("Uvec_r",  ncDouble, vacuum_d);
       wvecr_x.putVar (Uvec_r);
-	  
+
+      NcVar pwvacr_x  = dataFile.addVar ("pUmat_r",  ncDouble, vacuum_d);
+      pwvacr_x.putVar (pUmat_r);
+      NcVar pwvaci_x  = dataFile.addVar ("pUmat_i",  ncDouble, vacuum_d);
+      pwvaci_x.putVar (pUmat_i);
+      NcVar pwantr_x  = dataFile.addVar ("pUant_r",  ncDouble, vacuum_d);
+      pwantr_x.putVar (pUant_r);
+      NcVar pwanti_x  = dataFile.addVar ("pUant_i",  ncDouble, vacuum_d);
+      pwanti_x.putVar (pUant_i);
+      NcVar pwval_x   = dataFile.addVar ("pWval",    ncDouble, j_d);
+      pwval_x.putVar  (pWval);
+      NcVar pvval_x   = dataFile.addVar ("pVval",    ncDouble, j_d);
+      pvval_x.putVar  (pVval);
+      NcVar puval_x   = dataFile.addVar ("pUval",    ncDouble, j_d);
+      puval_x.putVar  (pUval);
+      NcVar pwvecr_x  = dataFile.addVar ("pUvec_r",  ncDouble, vacuum_d);
+      pwvecr_x.putVar (pUvec_r);
+      
       NcVar psier_x = dataFile.addVar ("y_e_r",   ncDouble, ideal_d);
       psier_x.putVar (Psie_r);
       NcVar psiei_x = dataFile.addVar ("y_e_i",   ncDouble, ideal_d);
@@ -785,6 +850,15 @@ void Vertical::WriteNetcdf ()
       zer_x.putVar (Ze_r);
       NcVar zei_x   = dataFile.addVar ("Z_e_i",   ncDouble, ideal_d);
       zei_x.putVar (Ze_i);
+
+      NcVar ppsier_x = dataFile.addVar ("py_e_r",   ncDouble, ideal_d);
+      ppsier_x.putVar (pPsie_r);
+      NcVar ppsiei_x = dataFile.addVar ("py_e_i",   ncDouble, ideal_d);
+      ppsiei_x.putVar (pPsie_i);
+      NcVar pzer_x   = dataFile.addVar ("pZ_e_r",   ncDouble, ideal_d);
+      zer_x.putVar (pZe_r);
+      NcVar pzei_x   = dataFile.addVar ("pZ_e_i",   ncDouble, ideal_d);
+      pzei_x.putVar (pZe_i);
 	  
       NcVar dW_x  = dataFile.addVar ("delta_W",   ncDouble, j_d);
       dW_x.putVar (deltaW);
@@ -792,6 +866,13 @@ void Vertical::WriteNetcdf ()
       dWv_x.putVar (deltaWp);
       NcVar dWp_x = dataFile.addVar ("delta_W_v", ncDouble, j_d);
       dWp_x.putVar (deltaWv);
+
+      NcVar pdW_x  = dataFile.addVar ("pdelta_W",   ncDouble, j_d);
+      pdW_x.putVar (pdeltaW);
+      NcVar pdWv_x = dataFile.addVar ("pdelta_W_p", ncDouble, j_d);
+      pdWv_x.putVar (pdeltaWp);
+      NcVar pdWp_x = dataFile.addVar ("pdelta_W_v", ncDouble, j_d);
+      pdWp_x.putVar (pdeltaWv);
       
       NcVar psiyr_x = dataFile.addVar ("y_surface_r", ncDouble, surface_d);
       psiyr_x.putVar (Psiy_r);
@@ -801,6 +882,15 @@ void Vertical::WriteNetcdf ()
       xyr_x.putVar (Xiy_r);
       NcVar xyi_x   = dataFile.addVar ("Z_surface_i", ncDouble, surface_d);
       xyi_x.putVar (Xiy_i);
+
+      NcVar ppsiyr_x = dataFile.addVar ("py_surface_r", ncDouble, surface_d);
+      ppsiyr_x.putVar (pPsiy_r);
+      NcVar ppsiyi_x = dataFile.addVar ("py_surface_i", ncDouble, surface_d);
+      ppsiyi_x.putVar (pPsiy_i);
+      NcVar pxyr_x   = dataFile.addVar ("pZ_surface_r", ncDouble, surface_d);
+      pxyr_x.putVar (pXiy_r);
+      NcVar pxyi_x   = dataFile.addVar ("pZ_surface_i", ncDouble, surface_d);
+      pxyi_x.putVar (pXiy_i);
 
       if (VIZ)
 	{
@@ -812,6 +902,15 @@ void Vertical::WriteNetcdf ()
 	  zzvr_x.putVar (ZZV_r);
 	  NcVar zzvi_x = dataFile.addVar ("Z_ideal_eig_i", ncDouble, v_d);
 	  zzvi_x.putVar (ZZV_i);
+
+	  NcVar pppvr_x = dataFile.addVar ("py_ideal_eig_r", ncDouble, v_d);
+	  pppvr_x.putVar (pPPV_r);
+	  NcVar pppvi_x = dataFile.addVar ("py_ideal_eig_i", ncDouble, v_d);
+	  pppvi_x.putVar (pPPV_i);
+	  NcVar pzzvr_x = dataFile.addVar ("pZ_ideal_eig_r", ncDouble, v_d);
+	  pzzvr_x.putVar (pZZV_r);
+	  NcVar pzzvi_x = dataFile.addVar ("pZ_ideal_eig_i", ncDouble, v_d);
+	  pzzvi_x.putVar (pZZV_i);
 	}
    
       dataFile.close ();
@@ -833,9 +932,7 @@ void Vertical::WriteNetcdf ()
   delete[] RSmat_r; delete[] RSmat_i; delete[] RSant_r; delete[] RSant_i;
   delete[] Rwal_r;  delete[] Rwal_i;  delete[] Swal_r;  delete[] Swal_i;
   delete[] Imat_r;  delete[] Imat_i;  delete[] Gmat_r;  delete[] Gmat_i;
-  delete[] iGmat_r; delete[] iGmat_i; delete[] Bmat_r;  delete[] Bmat_i;
-  delete[] Cmat_r;  delete[] Cmat_i;  delete[] Cant_r;  delete[] Cant_i;
-  delete[] Iant_r;  delete[] Iant_i;
+  delete[] iGmat_r; delete[] iGmat_i; delete[] Iant_r;  delete[] Iant_i;
 
   delete[] Ammp_r; delete[] Bmmp_r; delete[] Cmmp_r; delete[] Dmmp_r;
   delete[] Ammp_i; delete[] Bmmp_i; delete[] Cmmp_i; delete[] Dmmp_i;
@@ -847,5 +944,11 @@ void Vertical::WriteNetcdf ()
   delete[] Psie_r; delete[] Psie_i; delete[] Ze_r;   delete[] Ze_i;
   delete[] Psiy_r; delete[] Psiy_i; delete[] Xiy_r;  delete[] Xiy_i;
 
+  delete[] pUmat_r; delete[] pUmat_i; delete[] pUant_r; delete[] pUant_i;
+  delete[] pPsie_r; delete[] pPsie_i; delete[] pZe_r;   delete[] pZe_i;
+  delete[] pPsiy_r; delete[] pPsiy_i; delete[] pXiy_r;  delete[] pXiy_i;
+
   delete[] PPV_r; delete[] PPV_i; delete[] ZZV_r; delete ZZV_i;
+
+  delete[] pPPV_r; delete[] pPPV_i; delete[] pZZV_r; delete pZZV_i;
 }

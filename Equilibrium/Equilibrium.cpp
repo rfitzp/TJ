@@ -391,6 +391,11 @@ void Equilibrium::Solve ()
   Rwall    = new double[Nw+1];
   Zwall    = new double[Nw+1];
   wwall    = new double[Nw+1];
+  twall    = new double[Nw+1];
+  R2w      = new double[Nw+1];
+  grr2w    = new double[Nw+1];
+  dRdthetw = new double[Nw+1];
+  dZdthetw = new double[Nw+1];
 
   // ..................
   // Set up radial grid
@@ -1104,6 +1109,7 @@ void Equilibrium::Solve ()
   // ...................
   printf ("Calculating wall data: bw = %10.3e\n", bw);
 
+  /*
   // Set up omega grid
   for (int j = 0; j <= Nw; j++)
     wwall[j] = double (j) * 2.*M_PI /double (Nw);
@@ -1113,6 +1119,68 @@ void Equilibrium::Solve ()
       Rwall[j]  = 1. + bw * (GetR (ra, wwall[j], 1) - 1.);
       Zwall[j]  = bw * GetZ (ra, wwall[j], 1);
     }
+  */
+
+  // Calculate preliminary theta grid
+  tbound0[0] = 0.;
+
+  rhs_chooser  = 4;
+  
+  w     = 0.;
+  h     = h0;
+  count = 0;
+  y3[0] = 0.;
+  
+  for (int j = 1; j <= Nw; j++)
+    {
+      do
+	{
+	  CashKarp45Adaptive (1, w, y3, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+	}
+      while (w < wbound0[j]);
+      CashKarp45Fixed (1, w, y3, err3, wbound0[j] - w);
+      
+      tbound0[j] = y3[0];
+    }
+
+  double raw = tbound0[Nw] /(2.*M_PI);
+  printf ("rw = %10.3e\n", raw);
+  
+  for (int j = 0; j < Nw; j++)
+    tbound0[j] /= raw;
+
+  tbound0[Nw] = 2.*M_PI;
+  
+  // Interpolate preliminary boundary data
+  gsl_spline_init (wspline, tbound0, wbound0, Nw+1);
+  
+  // Calculate final wall data
+  for (int j = 0; j <= Nw; j++)
+    twall[j] = double (j) * 2.*M_PI /double (Nw);
+  
+  double rb = bw;
+  for (int j = 0; j <= Nw; j++)
+    {
+      double t = twall[j];
+      double w = gsl_spline_eval (wspline, t, wacc);
+      
+      wwall [j] = w;
+      Rwall [j] = GetR    (rb, w, 1);
+      Zwall [j] = GetZ    (rb, w, 1);
+      R2w   [j] = GetR2   (rb, t);
+      grr2w [j] = Getgrr2 (rb, t);
+    }
+  
+  gsl_spline_init (Rspline, twall, Rwall, Nw+1);
+  gsl_spline_init (Zspline, twall, Zwall, Nw+1);
+  
+  for (int j = 0; j <= Nw; j++)
+    {
+      dRdthetw[j] = gsl_spline_eval_deriv (Rspline, twall[j], Racc);
+      dZdthetw[j] = gsl_spline_eval_deriv (Zspline, twall[j], Zacc);
+    }
+
+  delete[] y3; delete[] err3;
   
   // .......................
   // Calculate RMP coil data
@@ -1233,7 +1301,8 @@ void Equilibrium::Solve ()
   delete[] Rbound; delete[] Zbound; delete[] tbound; delete[] wbound0;  delete[] tbound0;
   delete[] wbound; delete[] R2b;    delete[] grr2b;  delete[] dRdtheta; delete[] dZdtheta;
 
-  delete[] Rwall; delete[] Zwall; delete[] wwall; 
+  delete[] Rwall; delete[] Zwall; delete[] wwall;    delete[] twall;
+  delete[] R2w;   delete[] grr2w; delete[] dRdthetw; delete[] dZdthetw;
 
   delete[] Psi; delete[] PsiN; delete[] Tf;    delete[] mu0P;
   delete[] DI;  delete[] DR;   delete[] Lfunc; delete[] Te;
@@ -2415,6 +2484,21 @@ void Equilibrium::CashKarp45Rhs (double r, double* y, double* dydr)
       double dRdw  = GetdRdw (rb, r, 1);
       double dZdr  = GetdZdr (rb, r, 1);
       double dZdw  = GetdZdw (rb, r, 1);
+
+      dydr[0] = (dRdw * dZdr - dRdr * dZdw) /R;
+    }
+  else if (rhs_chooser == 4)
+    {
+      // ....................................
+      // Right-hand side for wall calculation
+      // ....................................
+
+      double rw    = bw;
+      double R     = GetR    (rw, r, 1);
+      double dRdr  = GetdRdr (rw, r, 1);
+      double dRdw  = GetdRdw (rw, r, 1);
+      double dZdr  = GetdZdr (rw, r, 1);
+      double dZdw  = GetdZdw (rw, r, 1);
 
       dydr[0] = (dRdw * dZdr - dRdr * dZdw) /R;
     }

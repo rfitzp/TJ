@@ -10,6 +10,7 @@ all:
 	(cd Island;      make)
 	(cd ECE;      	 make)
 	(cd StartUp;     make)
+	(cd Vertical;    make)
 	(cd TJ;        	 make)
 
 clean:
@@ -22,4 +23,5 @@ clean:
 	(cd Island;      make clean)
 	(cd ECE;      	 make clean)
 	(cd StartUp;     make clean)
+	(cd Vertical;    make clean)
 	(cd TJ;          make clean)

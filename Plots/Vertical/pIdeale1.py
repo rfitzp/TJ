@@ -1,6 +1,6 @@
-# Ideale1.py
+# pIdeale1.py
 
-# Plots kth poloidal harmonic of y and Z components of no-wall ideal eigenfunction versus r.
+# Plots kth poloidal harmonic of y and Z components of perfect-wall ideal eigenfunction versus r.
 # User prompted for eigenfunction number and poloidal harmomic mode number.
 
 import math
@@ -12,14 +12,14 @@ fn    = '../../Outputs/Vertical/Vertical.nc'
 ds    = nc.Dataset(fn)
 mpol  = ds['mpol']
 r     = ds['r_grid']
-Psi_r = ds['y_e_r']
-Psi_i = ds['y_e_i']
-Z_r   = ds['Z_e_r']
-Z_i   = ds['Z_e_i']
+Psi_r = ds['py_e_r']
+Psi_i = ds['py_e_i']
+Z_r   = ds['pZ_e_r']
+Z_i   = ds['pZ_e_i']
 
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Vertical Code: No-Wall Ideal Eigenfunction')
+fig.canvas.manager.set_window_title (r'Vertical Code: Perfect-Wall Ideal Eigenfunction')
 plt.rc('xtick', labelsize = 15) 
 plt.rc('ytick', labelsize = 15)
 

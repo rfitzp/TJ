@@ -148,8 +148,8 @@ void Vertical::ReadEquilibrium ()
   // .......................
   apol = epsa * R0;
   printf ("Plasma equilibrium data:\n");
-  printf ("epsa = %10.3e q0 = %10.3e qa = %10.3e sa = %10.3e apol = %10.3e\n",
-	  epsa, Getq (0.), Getq (1.), sa, apol);
+  printf ("epsa = %10.3e q0 = %10.3e qa = %10.3e sa = %10.3e apol = %10.3e bw = %10.3e\n",
+	  epsa, Getq (0.), Getq (1.), sa, apol, bw);
   printf ("n = %3d Hna = %10.3e Vna = %10.3e\n", 1, GetHn (1, 1.), 0.);
   for (int n = 2; n <= Ns; n++)
     if (fabs(GetHn (n, 1.)) > 1.e-15 || fabs(GetVn (n, 1.)) > 1.e-15)
@@ -217,6 +217,69 @@ void Vertical::CalculateMetricBoundary ()
   gsl_spline_init (Zbspline,  tbound, Zbound, Nw+1);
   gsl_spline_init (Rrzspline, tbound, R2grgz, Nw+1);
   gsl_spline_init (Rrespline, tbound, R2grge, Nw+1);
+}
+
+// #########################################
+// Function to calculate metric data on wall
+// #########################################
+void Vertical::CalculateMetricWall ()
+{
+  // ...............
+  // Allocate memory
+  // ...............
+  cmuw    = new double[Nw+1];
+  eetaw   = new double[Nw+1];
+  cetaw   = new double[Nw+1];
+  setaw   = new double[Nw+1];
+  R2grgzw = new double[Nw+1];
+  R2grgew = new double[Nw+1];
+
+  Rwspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Zwspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Rwacc    = gsl_interp_accel_alloc ();
+  Zwacc    = gsl_interp_accel_alloc ();
+ 
+  Rrzwspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Rrewspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Rrzwacc    = gsl_interp_accel_alloc ();
+  Rrewacc    = gsl_interp_accel_alloc ();
+ 
+  // .....................
+  // Calculate metric data
+  // .....................
+  for (int i = 0; i <= Nw; i++)
+    {
+      double R  = Rwall [i];
+      double Z  = Zwall [i];
+      double Rt = dRdthw[i];
+      double Zt = dZdthw[i];
+
+      double z   = GetCoshMu (R, Z);
+      double et  = GetEta    (R, Z);
+      double cet = cos (et);
+      double set = sin (et);
+
+      double muR = 1. - z * cet;
+      double muZ = - sqrt (z*z - 1.) * set;
+      double etR = - sqrt (z*z - 1.) * set;
+      double etZ = z * cet - 1.;
+
+      cmuw [i] = z;
+      eetaw[i] = et /M_PI;
+      cetaw[i] = cet;
+      setaw[i] = set;
+    
+      R2grgzw[i] = R * sqrt (z*z - 1.) * (Rt * muZ - Zt * muR);
+      R2grgew[i] = R                   * (Rt * etZ - Zt * etR);
+    }
+
+  // .......................
+  // Interpolate metric data
+  // .......................
+  gsl_spline_init (Rwspline,   twall, Rwall,   Nw+1);
+  gsl_spline_init (Zwspline,   twall, Zwall,   Nw+1);
+  gsl_spline_init (Rrzwspline, twall, R2grgzw, Nw+1);
+  gsl_spline_init (Rrewspline, twall, R2grgew, Nw+1);
 }
 
 

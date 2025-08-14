@@ -1,6 +1,6 @@
-# deltaW.py
+# pdeltaW.py
 
-# Plots no-wall delta_W versus solution number
+# Plots perfect-wall delta_W versus solution number
 
 import math
 import numpy as np
@@ -10,9 +10,9 @@ from matplotlib.ticker import MaxNLocator
 
 fn = '../../Outputs/Vertical/Vertical.nc'
 ds = nc.Dataset(fn)
-w  = ds['delta_W']
-p  = ds['delta_W_p']
-v  = ds['delta_W_v']
+w  = ds['pdelta_W']
+p  = ds['pdelta_W_p']
+v  = ds['pdelta_W_v']
 
 J = len(w)
 
@@ -33,7 +33,7 @@ for j in range (J):
     vvv.append(vv[j])
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Vertical Code: No-Wall delta W Values')
+fig.canvas.manager.set_window_title (r'Vertical Code: Perfect-Wall delta W Values')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 
