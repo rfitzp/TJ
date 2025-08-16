@@ -283,6 +283,8 @@ class Equilibrium : private Utility
   double*            dZdthetw;  // dZ/dtheta values on wall
   double*            R2w;       // R^2 values on wall
   double*            grr2w;     // |nabla r|^2 values on wall
+  double             H1b;       // H1 at wall
+  double             H1pb;      // H1p at wall
 
   // -------------------------
   // Synthetic diagnostic data

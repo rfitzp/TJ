@@ -3,6 +3,7 @@
 #include "Vertical.h"
 
 #define NINPUT 21
+#define NOUTPUT 2
 
 // ##################################################
 // Function to read equilibrium data from netcdf file
@@ -25,6 +26,8 @@ void Vertical::ReadEquilibriumNetcdf ()
       epsa = para[0];
       sa   = para[1];
       bw   = para[2];
+      H1b  = para[3];
+      H1pb = para[4];
       
       NcVar r_x   = dataFile.getVar ("r");
       NcVar P_x   = dataFile.getVar ("PsiN");
@@ -240,7 +243,8 @@ void Vertical::WriteNetcdf ()
 {
   printf ("Writing stability data to netcdf file Outputs/Vertical/Vertical.nc:\n");
 
-  double Input[NINPUT];
+  double Input [NINPUT];
+  double Output[NOUTPUT];
 
   double* Pvac_r = new double[J*J];
   double* Pvac_i = new double[J*J];
@@ -278,14 +282,14 @@ void Vertical::WriteNetcdf ()
   double* iHmat_r = new double[J*J];
   double* iHmat_i = new double[J*J];
 
-  double* Rwal_r  = new double[J*J];
-  double* Rwal_i  = new double[J*J];
-  double* Swal_r  = new double[J*J];
-  double* Swal_i  = new double[J*J];
-  double* Imat_r  = new double[J*J];
-  double* Imat_i  = new double[J*J];
-  double* Iant_r  = new double[J*J];
-  double* Iant_i  = new double[J*J];
+  double* Rwal_r = new double[J*J];
+  double* Rwal_i = new double[J*J];
+  double* Swal_r = new double[J*J];
+  double* Swal_i = new double[J*J];
+  double* Imat_r = new double[J*J];
+  double* Imat_i = new double[J*J];
+  double* Iant_r = new double[J*J];
+  double* Iant_i = new double[J*J];
 
   double* Gmat_r  = new double[J*J];
   double* Gmat_i  = new double[J*J];
@@ -309,48 +313,52 @@ void Vertical::WriteNetcdf ()
   double* ZZZ_r   = new double[J*J*NDIAG];
   double* ZZZ_i   = new double[J*J*NDIAG];
 
-  double* Umat_r  = new double[J*J];
-  double* Umat_i  = new double[J*J];
-  double* Uant_r  = new double[J*J];
-  double* Uant_i  = new double[J*J];
-  double* Uvec_r  = new double[J*J];
-  double* Uvec_i  = new double[J*J];
-  double* Psie_r  = new double[J*J*NDIAG];
-  double* Psie_i  = new double[J*J*NDIAG];
-  double* Ze_r    = new double[J*J*NDIAG];
-  double* Ze_i    = new double[J*J*NDIAG];
+  double* Umat_r = new double[J*J];
+  double* Umat_i = new double[J*J];
+  double* Uant_r = new double[J*J];
+  double* Uant_i = new double[J*J];
+  double* Uvec_r = new double[J*J];
+  double* Uvec_i = new double[J*J];
+  double* Psie_r = new double[J*J*NDIAG];
+  double* Psie_i = new double[J*J*NDIAG];
+  double* Ze_r   = new double[J*J*NDIAG];
+  double* Ze_i   = new double[J*J*NDIAG];
   
-  double* Psiy_r  = new double[J*(Nw+1)];
-  double* Psiy_i  = new double[J*(Nw+1)];
-  double* Xiy_r   = new double[J*(Nw+1)];
-  double* Xiy_i   = new double[J*(Nw+1)];
+  double* Psiy_r = new double[J*(Nw+1)];
+  double* Psiy_i = new double[J*(Nw+1)];
+  double* Xiy_r  = new double[J*(Nw+1)];
+  double* Xiy_i  = new double[J*(Nw+1)];
 
-  double* pUmat_r  = new double[J*J];
-  double* pUmat_i  = new double[J*J];
-  double* pUant_r  = new double[J*J];
-  double* pUant_i  = new double[J*J];
-  double* pUvec_r  = new double[J*J];
-  double* pUvec_i  = new double[J*J];
-  double* pPsie_r  = new double[J*J*NDIAG];
-  double* pPsie_i  = new double[J*J*NDIAG];
-  double* pZe_r    = new double[J*J*NDIAG];
-  double* pZe_i    = new double[J*J*NDIAG];
+  double* pUmat_r = new double[J*J];
+  double* pUmat_i = new double[J*J];
+  double* pUant_r = new double[J*J];
+  double* pUant_i = new double[J*J];
+  double* pUvec_r = new double[J*J];
+  double* pUvec_i = new double[J*J];
+  double* pPsie_r = new double[J*J*NDIAG];
+  double* pPsie_i = new double[J*J*NDIAG];
+  double* pZe_r   = new double[J*J*NDIAG];
+  double* pZe_i   = new double[J*J*NDIAG];
   
-  double* pPsiy_r  = new double[J*(Nw+1)];
-  double* pPsiy_i  = new double[J*(Nw+1)];
-  double* pXiy_r   = new double[J*(Nw+1)];
-  double* pXiy_i   = new double[J*(Nw+1)];
+  double* pPsiy_r = new double[J*(Nw+1)];
+  double* pPsiy_i = new double[J*(Nw+1)];
+  double* pXiy_r  = new double[J*(Nw+1)];
+  double* pXiy_i  = new double[J*(Nw+1)];
 
-  double* PPV_r   = new double[J*Nf*(Nw+1)];
-  double* PPV_i   = new double[J*Nf*(Nw+1)];
-  double* ZZV_r   = new double[J*Nf*(Nw+1)];
-  double* ZZV_i   = new double[J*Nf*(Nw+1)];
+  double* PPV_r = new double[J*Nf*(Nw+1)];
+  double* PPV_i = new double[J*Nf*(Nw+1)];
+  double* ZZV_r = new double[J*Nf*(Nw+1)];
+  double* ZZV_i = new double[J*Nf*(Nw+1)];
 
-  double* pPPV_r   = new double[J*Nf*(Nw+1)];
-  double* pPPV_i   = new double[J*Nf*(Nw+1)];
-  double* pZZV_r   = new double[J*Nf*(Nw+1)];
-  double* pZZV_i   = new double[J*Nf*(Nw+1)];
+  double* pPPV_r = new double[J*Nf*(Nw+1)];
+  double* pPPV_i = new double[J*Nf*(Nw+1)];
+  double* pZZV_r = new double[J*Nf*(Nw+1)];
+  double* pZZV_i = new double[J*Nf*(Nw+1)];
 
+  double* ya_r = new double[J];
+  double* ya_i = new double[J];
+  double* yb_r = new double[J];
+  double* yb_i = new double[J];
   
   Input[0]  = double (MMIN);
   Input[1]  = double (MMAX);
@@ -372,6 +380,9 @@ void Vertical::WriteNetcdf ()
   Input[18] = Chip;
   Input[19] = Teped;
   Input[20] = neped;
+
+  Output[0] = alphaw;
+  Output[1] = gammaw;
 
   int cnt = 0;
   for (int j = 0; j < J; j++)
@@ -521,6 +532,14 @@ void Vertical::WriteNetcdf ()
 	cnt++;
       }
 
+  for (int j = 0; j < J; j++)
+    {
+      ya_r[j] = real (ya[j]);
+      ya_i[j] = imag (ya[j]);
+      yb_r[j] = real (yb[j]);
+      yb_i[j] = imag (yb[j]);
+    }
+
   if (VIZ)
     {
       int cnt = 0;
@@ -550,6 +569,7 @@ void Vertical::WriteNetcdf ()
       dataFile.putAtt ("Git_Branch",   GIT_BRANCH);
 
       NcDim i_d = dataFile.addDim ("Ni",    NINPUT);
+      NcDim o_d = dataFile.addDim ("No",    NOUTPUT);
       NcDim r_d = dataFile.addDim ("Nr",    Nr+1);
       NcDim s_d = dataFile.addDim ("Ns",    Ns+1);
       NcDim j_d = dataFile.addDim ("J",     J);
@@ -593,8 +613,10 @@ void Vertical::WriteNetcdf ()
       v_d.push_back (f_d);
       v_d.push_back (w_d);
 
-      NcVar i_x = dataFile.addVar ("InputParameters", ncDouble, i_d);
+      NcVar i_x = dataFile.addVar ("InputParameters",  ncDouble, i_d);
       i_x.putVar (Input);
+      NcVar o_x = dataFile.addVar ("OutputParameters", ncDouble, o_d);
+      o_x.putVar (Output);
 
       NcVar r_x   = dataFile.addVar ("r",   ncDouble, r_d);
       r_x.putVar (rr);
@@ -856,7 +878,7 @@ void Vertical::WriteNetcdf ()
       NcVar ppsiei_x = dataFile.addVar ("py_e_i",   ncDouble, ideal_d);
       ppsiei_x.putVar (pPsie_i);
       NcVar pzer_x   = dataFile.addVar ("pZ_e_r",   ncDouble, ideal_d);
-      zer_x.putVar (pZe_r);
+      pzer_x.putVar (pZe_r);
       NcVar pzei_x   = dataFile.addVar ("pZ_e_i",   ncDouble, ideal_d);
       pzei_x.putVar (pZe_i);
 	  
@@ -891,6 +913,15 @@ void Vertical::WriteNetcdf ()
       pxyr_x.putVar (pXiy_r);
       NcVar pxyi_x   = dataFile.addVar ("pZ_surface_i", ncDouble, surface_d);
       pxyi_x.putVar (pXiy_i);
+
+      NcVar yar_x = dataFile.addVar ("ya_r", ncDouble, j_d);
+      yar_x.putVar (ya_r);
+      NcVar yai_x = dataFile.addVar ("ya_i", ncDouble, j_d);
+      yai_x.putVar (ya_i);
+      NcVar ybr_x = dataFile.addVar ("yb_r", ncDouble, j_d);
+      ybr_x.putVar (yb_r);
+      NcVar ybi_x = dataFile.addVar ("yb_i", ncDouble, j_d);
+      ybi_x.putVar (yb_i);
 
       if (VIZ)
 	{
@@ -951,4 +982,6 @@ void Vertical::WriteNetcdf ()
   delete[] PPV_r; delete[] PPV_i; delete[] ZZV_r; delete ZZV_i;
 
   delete[] pPPV_r; delete[] pPPV_i; delete[] pZZV_r; delete pZZV_i;
+
+  delete[] ya_r; delete[] ya_i; delete[] yb_r; delete[] yb_i;
 }

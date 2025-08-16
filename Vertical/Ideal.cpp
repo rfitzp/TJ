@@ -36,6 +36,8 @@ void Vertical::CalculateNoWallIdealStability ()
   Psiy.resize(J, Nw+1);
   Xiy .resize(J, Nw+1);
 
+  ya = new complex<double>[J];
+  
   // -----------------------------------------
   // Get solutions launched from magnetic axis
   // -----------------------------------------
@@ -279,6 +281,12 @@ void Vertical::CalculateNoWallIdealStability ()
 	  Xiy (j, i) = sumx;
 	}
     }
+
+  // -------------------
+  // Calculate ya values
+  // -------------------
+  for (int j = 0; j < J; j++)
+    ya[j] = Psie(j, 0, NDIAG-1);
 }
 
 // ############################################################
@@ -314,6 +322,8 @@ void Vertical::CalculatePerfectWallIdealStability ()
 
   pPsiy.resize(J, Nw+1);
   pXiy .resize(J, Nw+1);
+
+  yb = new complex<double>[J];
 
   // -----------------------------------------
   // Get solutions launched from magnetic axis
@@ -558,4 +568,34 @@ void Vertical::CalculatePerfectWallIdealStability ()
 	  pXiy (j, i) = sumx;
 	}
     }
-}
+
+  // -------------------
+  // Calculate yb values
+  // -------------------
+  for (int j = 0; j < J; j++)
+    {
+      complex<double> sum = complex<double> (0., 0.);
+      
+      for (int jp = 0; jp < J; jp++)
+	{
+	  sum += Rbamat(j, jp) * mpol[jp] * ya[jp];
+	}
+      
+      if (MPOL[j] == 0)
+	yb[j] = complex<double> (0., 0.);
+      else
+	yb[j] = sum /mpol[j];
+    }
+
+  // ---------------------------
+  // Calculate alphaw and gammaw
+  // ---------------------------
+  double sumw = 0.;
+  for (int j = 0; j < J; j++)
+    sumw += real (conj (yb[j]) * yb[j]);
+  
+  alphaw = M_PI*M_PI * sumw /(pdeltaWv[0] - deltaWv[0]);
+  gammaw = - deltaW[0] /alphaw /pdeltaW[0];
+  
+  printf ("alphaw = %10.3e gammaw = %10.3e\n", alphaw, gammaw);
+ }

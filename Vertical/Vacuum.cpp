@@ -366,6 +366,8 @@ void Vertical::GetVacuumWall ()
   iRPIdag.resize(J, J);
   iGmat.resize  (J, J);
 
+  Rbamat.resize (J, J);
+
   // .........................
   // Calculate vacuum matrices
   // .........................
@@ -476,6 +478,11 @@ void Vertical::GetVacuumWall ()
       iGmat(j, jp) = 0.5 * iRPImat(j, jp) + 0.5 * iRPIdag(j, jp);
 
    printf ("I matrix residual: %10.4e\n", Aamax/Ahmax);
+
+   // ................
+   // Calculate Rbamat
+   // ................
+   SolveLinearSystemTranspose (Rvac, Rbamat, Rwal);
 }
  
 // ####################################################

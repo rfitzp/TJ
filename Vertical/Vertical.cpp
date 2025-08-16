@@ -158,7 +158,7 @@ Vertical::Vertical ()
       printf ("Vertical: Error - neped must be positive\n");
       exit (1);
     }
-}
+} 
 
 // ##########
 // Destructor
@@ -380,5 +380,7 @@ void Vertical::CleanUp ()
   delete[] deltaW;  delete[] deltaWv;  delete[] deltaWp;
   delete[] pUval;   delete[] pWval;    delete[] pVval;
   delete[] pdeltaW; delete[] pdeltaWv; delete[] pdeltaWp;
+
+  delete[] ya; delete[] yb;
 }
 

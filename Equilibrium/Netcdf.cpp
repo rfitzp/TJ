@@ -3,7 +3,7 @@
 #include "Equilibrium.h"
 
 #define NINPUT 18
-#define NPARA 3
+#define NPARA 5
 #define NBETA 4
 
 // #################################################
@@ -41,6 +41,8 @@ void Equilibrium::WriteNetcdf (double sa)
   para[0] = epsa;
   para[1] = sa;
   para[2] = bw;
+  para[3] = H1b;
+  para[4] = H1pb;
 
   Beta[0] = li;
   Beta[1] = betat;
@@ -77,6 +79,7 @@ void Equilibrium::WriteNetcdf (double sa)
       NcDim w_d = dataFile.addDim ("Nw",    Nw+1);
       NcDim c_d = dataFile.addDim ("ncoil", ncoil);
       NcDim e_d = dataFile.addDim ("Neq",   2*Nf);
+      NcDim h_d = dataFile.addDim ("NH",    2);
  
       vector<NcDim> shape_d;
       shape_d.push_back (s_d);

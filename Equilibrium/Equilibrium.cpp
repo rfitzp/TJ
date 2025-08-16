@@ -1107,19 +1107,10 @@ void Equilibrium::Solve ()
   // ...................
   // Calculate wall data
   // ...................
-  printf ("Calculating wall data: bw = %10.3e\n", bw);
+  H1b  = GetHHvac (1, bw);
+  H1pb = GetHPvac (1, bw);
 
-  /*
-  // Set up omega grid
-  for (int j = 0; j <= Nw; j++)
-    wwall[j] = double (j) * 2.*M_PI /double (Nw);
-  
-  for (int j = 0; j <= Nw; j++)
-    {
-      Rwall[j]  = 1. + bw * (GetR (ra, wwall[j], 1) - 1.);
-      Zwall[j]  = bw * GetZ (ra, wwall[j], 1);
-    }
-  */
+  printf ("Calculating wall data: bw = %10.3e H1 = %10.3e H1p = %10.3e\n", bw, H1b, H1pb);
 
   // Calculate preliminary theta grid
   tbound0[0] = 0.;

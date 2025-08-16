@@ -257,6 +257,10 @@ class Vertical : private Utility
   double* Zwall;  // Z values on wall
   double* dRdthw; // dR/dtheta values on wall
   double* dZdthw; // dZ/dtheta values on wall
+  double  H1b;    // H1 at wall
+  double  H1pb;   // H1p at wall
+  double  alphaw; // Wall effective radius parameter
+  double  gammaw; // Normalized thin-wall resistive wall mode growth rate
 
   // -------------------------------------
   // Visualization of ideal eigenfunctions
@@ -348,6 +352,8 @@ class Vertical : private Utility
   Array<complex<double>,2> iRPIdag; // Hermitian conjugate of iRPImat
   Array<complex<double>,2> iGmat;   // Perfect-wall vacuum response matrix: iGmat = (1/2) (iRPImat + iRPIdag)
 
+  Array<complex<double>,2> Rbamat;  // Rwal Rvac^-1
+
   // -----------------
   // ODE solution data
   // -----------------
@@ -386,6 +392,7 @@ class Vertical : private Utility
   double*                  deltaWv; // Vacuum contribution to perturbed ideal potential energy
   Array<complex<double>,2> Psiy;    // y values on plasma boundary associated with ideal eigenfunctions
   Array<complex<double>,2> Xiy;     // Z values on plasma boundary associated with ideal eigenfunctions
+  complex<double>*         ya;      // y values of zeroth eigenfunction at plasma boundary
 
   // ------------------------------
   // Perfect-wall ideal energy data
@@ -413,6 +420,7 @@ class Vertical : private Utility
   double*                  pdeltaWv; // Vacuum contribution to perturbed ideal potential energy
   Array<complex<double>,2> pPsiy;    // y values on plasma boundary associated with ideal eigenfunctions
   Array<complex<double>,2> pXiy;     // Z values on plasma boundary associated with ideal eigenfunctions
+  complex<double>*         yb;       // y values of zeroth eigenfunction at wall 
 
   // ----
   // Misc

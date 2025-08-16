@@ -6,7 +6,7 @@
                       and derivate of pressure gradient, p'', versus radius, r
 - *Profile.py*:	     Plots shaping functions P1, P1, Sigma, and S5 versus r				 
 
-## Vacuum matrices:
+## Vacuum Matrices:
 
 - *Metric.py*:       Plots metric data at plasma boundary
 - *Vacuum.py*:       Visualizes vacuum matrices P_m^m' and R_m^m'
@@ -20,7 +20,7 @@
 - *Hmat.py*:         Visualizes no-wall vacuum response matrix, H_mm'
 - *iHmat.py*:        Visualizes inverse no-wall vacuum response matrix, iH_mm'
 
-## Wall matrices:
+## Wall Matrices:
 
 - *Metricw.py*:      Plots metric data at wall
 - *Wall.py*:	     Visualizes wall matrices R_m^m' and S_m^m'
@@ -35,7 +35,7 @@
 - *Solution.py*:     Plots mth harmonic of components of m-dominant solution vector versus r
 - *h.py*:            Plots adaptive ode integration data
 
-## No-Wall Ideal stability:
+## No-Wall Ideal Stability:
 
 - *Umat.py*:		 Visualizes total ideal energy matrix
 - *Ideale.py*:       Plots poloidal harmonics of ideal eigenfunctions versus r
@@ -46,7 +46,7 @@
 - *deltaW2.py*:	 	 Plots delta W values versus eigenfunction number in range of y
 - *yZSurface.py*:    Plots y and Z on plasma boundary associated with ideal eigenfunctions
 
-## Perfect-Wall Ideal stability:
+## Perfect-Wall Ideal Stability:
 
 - *pUmat.py*:		 Visualizes total ideal energy matrix
 - *pIdeale.py*:      Plots poloidal harmonics of ideal eigenfunctions versus r
@@ -54,6 +54,11 @@
 - *pEvals.py*:	 	 Plots eigenvalues of W, V, U matrices 
 - *pdeltaW.py*:	 	 Plots delta W values versus eigenfunction number
 - *pyZSurface.py*:   Plots y and Z on plasma boundary associated with ideal eigenfunctions
+- *yab.py*:          Plots ya and yb versus mode number
+
+## Resistive Wall Stability:
+
+- *gamma.py*:        Plots normalized resistive wall mode growth-rate versus wall thickness parameter
 
 ## Visualization:
 
