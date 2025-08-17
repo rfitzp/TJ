@@ -17,21 +17,22 @@
 
 \section{Introduction}
 It is well known that increasing the net toroidal plasma current in a tokamak leads to an increase in both the maximum stable $\beta$ and the energy confinement time.\cite{troyon,goldston}
-The conventional way of increasing the total plasma current without degrading the  stability of the plasma to non-axisymmetric magnetohydrodynamical (MHD) modes is
-to modify the plasma's poloidal cross-section by increasing its elongation and triangularity.\cite{jet} However, tokamak plasmas with strong cross-section shaping
-are subject to severe axisymmetric instabilities.\cite{v1,v2} Such instabilities involve vertical motion of the plasma on the Alfv\'{e}n timescale, which results in the
-sudden termination of the plasma discharge when it comes into contact with the first wall. It is possible to stabilize axisymmetric modes by placing a conducting wall
-around the plasma. Usually, the vacuum vessel plays the role of this wall. The mode remains unstable if the wall possesses finite electrical conductivity,\cite{rwm} but its
-growth time is increased from the Alfv\'{e}n time to the much longer L/R time of the wall.\cite{rwm1,rwm1a,rwm2} The L/R time is much shorter than the length of the plasma 
-discharge, but is still long enough to allow active feedback stabilization of axisymmetric modes with practical power supplies.\cite{rwm3}
+The conventional method of maximizing the total plasma current, without degrading the  stability of the plasma to non-axisymmetric magnetohydrodynamical (MHD) modes, is
+to modify the plasma's poloidal cross-section such that it is both vertically elongated and triangular.\cite{jet}  Unfortunately, tokamak plasmas possesing strong cross-section shaping
+are subject to severe axisymmetric instabilities.\cite{v1,v2} Such instabilities involve bulk vertical motion of the plasma on an Alfv\'{e}nic timescale (i.e., $10^{-7}$\,s), which results in the
+sudden and violent termination of the plasma discharge when it comes into contact with the first wall. It is possible to stabilize an axisymmetric mode by placing a perfectly conducting wall
+around the plasma. The mode remains unstable if the wall possesses finite electrical conductivity,\cite{rwm} but its
+growth time is increased from an Alfv\'{e}nic timescale to the much longer characteristic L/R time of the wall.\cite{rwm1,rwm1a,rwm2} Usually, the vacuum vessel plays the role of the wall,
+and has an L/R time in excess of  $10^{-3}$\,s. Such a time is much shorter than the length of the plasma 
+discharge, but is still long enough to allow active feedback stabilization of the axisymmetric mode with practical power supplies.\cite{rwm3} 
 
-Ref.~\onlinecite{tj} describes the TJ toroidal tearing mode code. This code calculates the stability of an inverse-aspect ratio expanded  tokamak plasma equilibrium  to {\em non-axisymmetric}\/ tearing modes via
-asymptotic matching techniques. Ref.~\onlinecite{tj1} describes a generalization of the TJ code that allows it to calculate the stability of the plasma to non-axisymmetric
-ideal modes in the presence of a perfectly conducting wall that surrounds the plasma. The aim of this paper is to further generalize the TJ code to allow it to calculate
+Ref.~\onlinecite{tj} describes the TJ toroidal tearing mode code, which calculates the stability of an inverse-aspect ratio expanded  tokamak plasma equilibrium  to {\em non-axisymmetric}\/ tearing modes via
+asymptotic matching techniques. Ref.~\onlinecite{tj1} describes a generalization of the TJ code that permits it to calculate the stability of the plasma to non-axisymmetric
+ideal modes in the presence of a perfectly conducting wall that surrounds the plasma. The aim of this paper is to describe a further generalization the TJ code that  allows it to calculate
 the stability of the plasma to {\em axisymmetric}\/ modes in the presence of a resistive wall that surrounds the plasma. It might be hope that, in order to investigate axisymmetric
 modes,  we could simply take the existing
 TJ code and set the toroidal mode number, $n$, to zero. Unfortunately, this simple scheme does not work, as evidenced by the large number of terms involving
-$n^{-1}$ in the analysis of Ref.~\onlinecite{tj}. Hence, as described in this paper, it is necessary to redo the much of the analysis for the special case $n=0$. 
+$n^{-1}$ in the analysis of Ref.~\onlinecite{tj}. Hence, as described in this paper, it is necessary to redo  much of the TJ analysis for the special case $n=0$. 
 
 \section{General Plasma Equilibrium}\label{geq}
 All lengths  in this paper  are normalized to  the major radius of the plasma magnetic axis, $R_0$. All magnetic field-strengths
@@ -40,11 +41,8 @@ are normalized to the  toroidal field-strength at the magnetic axis, $B_0$. All 
 
 Let $R$, $\phi$, $Z$ be right-handed cylindrical coordinates whose Jacobian 
 is
-\begin{equation}
-(\nabla R\times \nabla\phi\cdot\nabla Z)^{-1} = R.
-\end{equation}
+$(\nabla R\times \nabla\phi\cdot\nabla Z)^{-1} = R$. 
 Note that $|\nabla\phi|=1/R$. 
-
 Let $r$, $\theta$, $\phi$ be right-handed flux-coordinates whose
 Jacobian is\,\cite{bussac,connor}
 \begin{equation}\label{jac}
@@ -97,7 +95,7 @@ P'&= {\cal J}(J^{\,\theta}\,B^{\,\phi}-J^{\,\phi}\,B^{\,\theta})= -g'\,\frac{g}{
 where use has been made of Eqs.~(\ref{bup1})--(\ref{bup3}), and  (\ref{jup1})--(\ref{jup3}). The
 other two components of Eq.~(\ref{e15c}) are identically zero. 
 
-Equation~(\ref{eg1}) yields the {\em inverse Grad-Shafranov equation}:
+Equation~(\ref{eg1}) yields the {\em inverse Grad-Shafranov equation}:\cite{connor}
 \begin{equation}\label{gs}
 \frac{f}{r}\,\frac{\partial}{\partial r}\!\left(r\,f\,|\nabla r|^2\right) +\frac{f}{r}\,\frac{\partial}{\partial\theta}\!\left(r\,f\,\nabla r\cdot\nabla\theta\right)+g\,g' + R^{\,2}\,P'=0.
 \end{equation}
@@ -145,6 +143,8 @@ The constraint $\nabla\cdot{\bf b} =0$, which follows from Eq.~(\ref{e21}),  imm
 \begin{equation}\label{e43y}
 r\,R^{\,2}\,b^{\,\theta} = - \frac{\partial y}{\partial r}.
 \end{equation}
+Note that the preceding expression is radically different from the expression, (54), for $b^{\,\theta}$ given in Ref.~\onlinecite{tj}. Thus, it is at this stage that our analysis
+starts to diverge from that of Ref.~\onlinecite{tj}.
 
 According to Eq.~(\ref{e24}), 
 \begin{equation}
@@ -156,7 +156,7 @@ So, the perturbed force balance equation, (\ref{e22}), yields
 -\frac{\partial\,(P'\,\xi^{\,r})}{\partial \theta}&= ({\bf j}\times {\bf B})_\theta+({\bf J}\times {\bf b})_\theta,\\[0.5ex]
 0&= ({\bf j}\times {\bf B})_\phi+({\bf J}\times {\bf b})_\phi,
 \end{align}
-giving
+giving\,\cite{tj}
 \begin{align}
 -\frac{\partial\, (P'\,\xi^{\,r})}{\partial r} &=r\,R^{\,2}\,(j^{\,\theta}\,B^{\,\phi}-j^{\,\phi}\,B^{\,\theta}) + r\,R^{\,2}\,(J^{\,\theta}\,b^{\,\phi}-J^{\,\phi}\,b^{\,\theta}),\\[0.5ex]
 -\frac{\partial\,(P'\,\xi^{\,r})}{\partial \theta}&=r\,R^{\,2}\,(j^{\,\phi}\,B^{\,r}-j^{\,r}\,B^{\,\phi}) + r\,R^{\,2}\,(J^{\,\phi}\,b^{\,r}-J^{\,r}\,b^{\,\phi}),\\[0.5ex]
@@ -179,7 +179,7 @@ where
 \end{align}
 Note that Eq.~(\ref{e44}) is trivially satisfied. Hence, of the three components of the perturbed force balance equation, only Eq.~(\ref{e51}) remains to be solved. 
 
-Equation~(\ref{e23}) yields 
+Equation~(\ref{e23}) yields\,\cite{tj}
 \begin{align}
 r\,R^{\,2}\,j^{\,r} &= \frac{\partial b_\phi}{\partial\theta},\label{e57}\\[0.5ex]
 r\,R^{\,2}\,j^{\,\theta} &= -\frac{\partial b_\phi}{\partial r},\label{e58}\\[0.5ex]
@@ -203,7 +203,7 @@ b^{\,\theta} &= {\bf b}\cdot\nabla \theta = (\nabla r\cdot\nabla\theta)\,b_r + |
 b^{\,\phi}&={\bf b}\cdot\nabla\phi =\frac{b_\phi}{R^{\,2}}.\label{e63}
 \end{align}
 
-Equations~(\ref{jac}), (\ref{e61}), and (\ref{e62}) can be rearranged to give
+Equations~(\ref{jac}), (\ref{e61}), and (\ref{e62}) can be rearranged to give\,\cite{tj}
 \begin{align}
 b_r &= \left(\frac{1}{|\nabla r|^2}\right)b^{\,r}- \left(\frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\right)b_\theta,\label{e69}\\[0.5ex]
 \label{e58x}
@@ -215,7 +215,7 @@ Let
 \end{equation}
 Equations~(\ref{e41}), (\ref{e43y}), (\ref{e43yy}), (\ref{e69}) and (\ref{e58x}) yield 
 \begin{align}\label{e53y}
-b_r &=\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,z,\\[0.5ex]
+b_r &=\frac{1}{r\,|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial \theta} + \frac{\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,{\cal Z},\\[0.5ex]
 b_\theta &= -{\cal Z},\label{e54y}\\[0.5ex]
 b^{\,\phi} &= -\frac{\alpha_g}{R^{\,2}}\,y.\label{e55yy}
 \end{align}
@@ -275,6 +275,7 @@ b_m^{\,m'}(r)  &=\oint|\nabla r|^{-2}\, R^{-2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,
 c_m^{\,m'}(r)  &=\oint|\nabla r|^{-2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
 f_{m}^{\,m'}(r)&= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi}.\label{e76er}
 \end{align}
+Here, $\delta_m^{\,m'}$ is a Kronecker delta symbol.
 
 The axisymmetric ideal-MHD o.d.e.s play the same role for axisymmetric perturbations that the outer-region o.d.e.s, (102) and (103) of Ref.~\onlinecite{tj}, play for
 non-axisymmetric perturbations. The main difference is that there are no singularities in the axisymmetric ideal-MHD o.d.e.s because an axisymmetric perturbation 
@@ -318,7 +319,7 @@ We also expect $\nabla\cdot{\bf e} =0$, which implies that
 $e_r=e_\theta=0$ in the vacuum region, $r\geq a$, in which $\alpha_g=0$. 
 
 \subsection{Toroidal Electromagnetic Torque}\label{storque}
-The net toroidal electromagnetic torque exerted on the plasma lying within the magnetic flux-surface whose label is $r$ is
+The net toroidal electromagnetic torque exerted on the plasma lying within the magnetic flux-surface whose label is $r$ is\,\cite{tj}
 \begin{equation}
 T_\phi(r)= \oint\oint r\,R^{\,2}\,b_\phi\,b^{\,r}\,d\theta\,d\phi.
 \end{equation}
@@ -457,7 +458,7 @@ Note that the relative horizontal shift of magnetic flux-surfaces, $-H_1$, other
 the right-hand side of Eq.~(\ref{e27})], and plasma pressure gradients (the third term). All of the other shaping terms (i.e., the $H_j$, for $j>1$, and
 the $V_j$) are driven by axisymmetric currents flowing in external  magnetic field-coils.
 
-Equations~(\ref{ag}), (\ref{alpp}), (\ref{alpf}), and (\ref{e26v})--(\ref{eq1}) yield
+Equations~(\ref{ag}), (\ref{alpp}), (\ref{alpf}), and (\ref{e26v})--(\ref{eq1}) yield\,\cite{tj}
 \begin{align}
 \alpha_p(\hat{r}) &= \frac{p_2'\,q^2}{\hat{r}}\left(1-2\,\epsilon^{\,2}\,g_2\right),\\[0.5ex]
 \alpha_g(\hat{r}) &= \frac{q}{\hat{r}}\left(g_2' -\epsilon^{\,2}\,g_2\,g_2'+\epsilon^{\,2}\,g_4'\right),\\[0.5ex]
@@ -491,7 +492,7 @@ Finally, Eqs.~(\ref{e114}) and (\ref{e115}) yield
 &\phantom{=}-2\,\epsilon\sum_{j>1}\frac{1}{j}\left[-(1-s)\,\frac{H_j'}{\hat{r}} + (j^2-1)\,\frac{H_j}{\hat{r}^{\,2}}\right]\sin(j\,\theta)\nonumber\\[0.5ex]
 &\phantom{=}+2\,\epsilon\sum_{j>1}\frac{1}{j}\left[-(1-s)\,\frac{V_j'}{\hat{r}} + (j^2-1)\,\frac{V_j}{\hat{r}^{\,2}}\right]\cos(j\,\theta),
 \end{align}
-where use has been made of the fact that $V_j'\propto H_j'$ for $j>1$. 
+where use has been made of the fact that $V_j(\hat{r})\propto H_j(\hat{r})$ for $j>1$. 
 
 Equations~(\ref{e73er})--(\ref{e76er}), (\ref{e25a}), (\ref{e115}), (\ref{e117}), and (\ref{e118}) imply that
 \begin{align}\label{e120}
@@ -549,13 +550,13 @@ When $\hat{r}\ll 1$, the well-behaved solution of the axisymmetric ideal-MHD o.d
 $m$ is such that
 \begin{align}
 y_m(\hat{r}) &= \hat{r}^{\,|m|},\\[0.5ex]
-z_m(\hat{r}) &= |m|\,\hat{r}^{\,|m|},
+Z_m(\hat{r}) &= |m|\,\hat{r}^{\,|m|},
 \end{align}
-with $y_{m'}(\hat{r})=z_{m'}(\hat{r})=0$ for $m'\neq 0$. 
+with $y_{m'}(\hat{r})=Z_{m'}(\hat{r})=0$ for $m'\neq 0$. 
 
 \section{Vacuum Solution}\label{vacuum}
 \subsection{Toroidal Coordinates}
-Let $\mu$, $\eta$, $\phi$ be right-handed toroidal coordinates defined such that\,\cite{tj,tj1,mf}
+Let $\mu$, $\eta$, $\phi$ be right-handed {\em orthogonal toroidal coordinates}\/ defined such that\,\cite{tj,tj1,mf}
 \begin{align}
 R &= \frac{\sinh\mu}{\cosh\mu-\cos\eta},\\[0.5ex]
 Z&=\frac{\sin\eta}{\cosh\mu-\cos\eta}.
@@ -574,7 +575,7 @@ Moreover,
 The curl-free perturbed magnetic field in the vacuum region is written ${\bf b} = {\rm i}\,\nabla V$,
 where
 $\nabla^2 V =0$.
-The most general axisymmetric  solution to Laplace's equation is\,\cite{mf1}
+The most general axisymmetric  solution to Laplace's equation is\,\cite{tj1,mf1}
 \begin{align}
 V(z,\eta)&= \sum_m (z-\cos\eta)^{1/2}\,U_m(z)\,{\rm e}^{-{\rm i}\,m\,\eta}, \\[0.5ex]
 U_m(z) &= p_m\,\hat{P}_{|m|-1/2}(z)+q_m\,\hat{Q}_{m-1/2}(z),
@@ -588,7 +589,7 @@ Here,  the $P_{|m|-1/2}(z)$  and $Q_{|m|-1/2}(z)$ are toroidal functions,\cite{a
 gamma function.\cite{as2}
 
 \subsection{Toroidal Electromagnetic Angular Momentum Flux}
-The outward flux of toroidal angular momentum across a constant-$z$ surface is
+The outward flux of toroidal angular momentum across a constant-$z$ surface is\,\cite{tj,tj1}
 \begin{align}
 T_\phi(z) &= -\oint\oint {\cal J}' \,b_\phi\,b^{\,\mu}\,d\eta\,d\phi = 0,
 \end{align}
@@ -632,7 +633,7 @@ z^{1/2}\,\hat{Q}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(a\,z)^{-|m|}}{2}.\l
 \end{align}
 Note that Eq.~(\ref{ety}) only applies to $|m|>0$.
 
-According to Eqs.~(\ref{e41}) and (\ref{e54})
+According to Eq.~(\ref{e41}) and (\ref{e54y})
 \begin{align}\label{e30ay}
 \frac{\partial y}{\partial \theta}&= {\cal J}\,{\bf b}\cdot\nabla r = {\rm i}\,{\cal J}\,\nabla V\cdot\nabla r,\\[0.5ex]
 {\cal Z}&= -{\cal J}\,\nabla\phi\times\nabla r \cdot{\bf b} = - {\rm i}\,\frac{\partial V}{\partial\theta}.\label{e31ay}
@@ -642,7 +643,7 @@ Thus,\cite{tj1}
 \underline{V}(r)&= \underline{\underline{{\cal P}}}(r)\,\underline{p}+ \underline{\underline{{\cal Q}}}(r)\,\underline{q},\\[0.5ex]
 \underline{\psi}(r)&= \underline{\underline{{\cal R}}}(r)\,\underline{p}+ \underline{\underline{{\cal S}}}(r)\,\underline{q},\label{e33ay}
 \end{align}
-where $Z_m(r)=m\,V_m(r)$, $\psi_m(r)=m\,y_m(r)$, 
+where $V(r,\theta)= \sum_m V_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta}$, $Z_m(r)=m\,V_m(r)$, $\psi_m(r)=m\,y_m(r)$, 
  $\underline{V}(r)$ is the vector of the $V_m(r)$ values, $\underline{\psi}(r)$ is the vector of the $\psi_m(r)$ values, $\underline{\underline{{\cal P}}}(r)$ is the
 matrix of the
 \begin{equation}
@@ -720,13 +721,14 @@ It also follows from Eqs.~(\ref{e32ay}) and (\ref{e33ay}) that
  \underline{\underline{H}}= \underline{\underline{\cal P}}_{\,a}\,\underline{\underline{\cal R}}_{\,a}^{-1}
  \end{equation}
  is termed the {\em no-wall vacuum matrix}. 
- Equation~(\ref{e41zx}) ensures that  $\underline{\underline{H}}$ is Hermitian. 
+   Here, $\underline{\underline{\cal P}}_{\,a}= \underline{\underline{\cal P}}(r=a)$, et cetera. 
+Equation~(\ref{e41zx}) ensures that  $\underline{\underline{H}}$ is Hermitian. 
 
 \subsection{Perfect-Wall Matching Condition}
-Suppose that the plasma is surrounded by a vacuum region that is bounded by a perfectly conducting wall that lies at $r=b_w\,a$, where $b_w\geq 1$. 
+Suppose that the plasma is surrounded by a vacuum region that is bounded by a perfectly conducting wall whose inner surface lies at $r=b_w\,a$, where $b_w\geq 1$. 
 Because the wall is perfectly conducting, 
-$\underline{\psi}(r=b_w\,a)=0$.
-In other words, the normal component of the perturbed magnetic field is zero at the wall. 
+$\underline{\psi}(r=b_w\,a)=0$.\cite{gs1}
+In other words, the normal component of the perturbed magnetic field is zero at the inner surface of the wall. 
 It follows from Eq.~(\ref{e33ay}) that
 \begin{equation}
 \underline{p} =- \underline{\underline{I}}_b\,\underline{q},
@@ -753,7 +755,6 @@ where
  \underline{\underline{G}}= (\underline{\underline{\cal Q}}_{\,a}-\underline{\underline{\cal P}}_{\,a}\,\underline{\underline{I}}_{\,b})\,(\underline{\underline{\cal S}}_{\,a}-\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}
  \end{equation}
  is termed the {\em perfect-wall vacuum matrix}.
-  Here, $\underline{\underline{\cal Q}}_{\,a}= \underline{\underline{\cal Q}}(r=a_+)$, et cetera. 
 Making use of Eqs.~(\ref{e41zx})--(\ref{e43zx}), it is easily demonstrated that
  \begin{equation}\label{e53xx}
  \underline{\underline{G}}-\underline{\underline{G}}^\dag =- [(\underline{\underline{\cal S}}_{\,a}-\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}]^{\dag}\,(\underline{\underline{I}}_{\,b} -\underline{\underline{I}}^\dag_{\,b})\,  (\underline{\underline{\cal S}}_{\,a}+\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}.
@@ -854,12 +855,12 @@ The fact that $\underline{\underline{W}}$ is Hermitian allows us to write
 \underline{\underline{\beta}}^\dag\,\underline{\underline{\beta}} &= \underline{\underline{1}},
 \end{align}
 where $\underline{\underline{\beta}}$ is real, and $\underline{\underline{\mit\Lambda}}$ is the diagonal matrix of the real $\lambda_m$ values. 
-If $\underline{\hat{\alpha}}= \underline{\underline{\beta}}\,\underline{\underline{y}}\,\underline{\alpha}$ then
+If $\underline{\hat{\alpha}}= \underline{\underline{\beta}}^\dag\,\underline{\underline{y}}\,\underline{\alpha}$ then
 \begin{equation}
 \delta W =\pi^2\,\underline{\hat{\alpha}}^\dag\,\underline{\underline{\mit\Lambda}}\,\underline{\hat{\alpha}}=\pi^2\sum_m|\hat{\alpha}_m|^2\,\lambda_m.
 \end{equation}
 Thus, if any of the $\lambda_m$ are negative then solutions exist for which $\delta W$ is negative, and the plasma is consequently unstable to
-an axisymmetric ideal mode. 
+an axisymmetric ideal mode.\cite{gs1}
 
 Suppose that $\sum_{m}|\hat{\alpha}_m|^2=1$. The ideal energy of the $m$th mode,
 for which $\hat{\alpha}_{m'} = \delta_{mm'}$,  is
@@ -873,12 +874,12 @@ However,
 Thus, the diagonal components of $\underline{\underline{\beta}}^\dag\,\underline{\underline{W}}_{\,p}\,\underline{\underline{\beta}}$ 
 and $\underline{\underline{\beta}}^\dag\,\underline{\underline{W}}_{\,v}\,\underline{\underline{\beta}}$  are the plasma and vacuum
 contributions to the $\lambda_m$, respectively. 
- The eigenfunction of the $m$th mode is conveniently normalized such that $y_{m'}(a)= \beta_{mm'}$. 
+ The eigenfunction of the $m$th mode is conveniently normalized such that $y_{m'}(a)= \beta_{m'm}$. 
  
 \section{Resistive Wall Stability}
 The unnormalized minor radius of the wall is $b=b_w\,\bar{a}$, where $\bar{a}=\epsilon\,R_0$  is the unnormalized minor radius of the plasma. Suppose that the wall is resistive, and possesses an (unnormalized)  electrical conductivity $\sigma_w$, as well as an (unnormalized)  uniform radial thickness $d$. 
 Consider a particular ideal mode for which the total perturbed potential energy in the absence of a wall, 
- $\delta W_{nw}$, is negative,  but the total perturbed potential energy in the presence of a perfectly conducting wall, $\delta W_{pw}$, is positive.  In this case,  the no-wall ideal mode is unstable (because $\delta W_{nw}<0$). In the absence of a the wall, this mode would grow on the Alfv\'{e}n time. On the other
+ $\delta W_{nw}$, is negative,  but the total perturbed potential energy in the presence of a perfectly conducting wall, $\delta W_{pw}$, is positive.  In this case,  the no-wall ideal mode is unstable (because $\delta W_{nw}<0$). In the absence of a the wall, this mode would grow very rapidly on an Alfv\'{e}nic timescale. On the other
  hand, the mode is completely stabilized if the wall is perfectly conducting (because $\delta W_{pw}>0$).  However, because the wall is not perfectly conducting, the unstable ideal mode is
  instead converted into a much more slowly growing resistive wall mode. 
  Let the (unnormalized) 
@@ -962,7 +963,7 @@ The digital data used in the figures in this paper can be obtained from the auth
 
 \bibitem{am1} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin and C.M.~Roach, Nucl.\ Fusion {\bf 33}, 1533 (1993).
 
-\bibitem{gs1} J.P.~Freidberg, {\em Ideal Magnetohydrodynamics}\/ (Plenum, New York NY, 1987).
+\bibitem{gs1} J.P.~Freidberg, {\em Ideal Magnetohydrodynamics}, (Plenum, New York NY, 1987).
 
 \bibitem{mf} P.M.~Morse and H. Feshbach, {\em Methods of Theoretical Physics}, (McGraw-Hill, New York, NY, 1953), p.~1301.
 

@@ -25,7 +25,7 @@ fig.canvas.manager.set_window_title (r"Vertical Code: mth Poloidal Harmonic of m
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15)
 
-print ("solution number = (%d .. %d) or (%d .. %d)" % (mpol[0], mpol[-1], mpol[-1]+1, mpol[-1]))
+print ("solution number = (%d .. %d)" % (mpol[0], mpol[-1]))
 m   = input ("solution number  ? ")
 print ("poloidal mode number = (%d .. %d)" % (mpol[0], mpol[-1]))
 mp  = input ("poloidal mode number ? ")

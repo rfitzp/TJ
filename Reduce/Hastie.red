@@ -364,7 +364,6 @@ xx0 := coeffn(xx,eps,0);
 xx1 := coeffn(xx,eps,1);
 xx2 := coeffn(xx,eps,2);
 
-
 %write "c00 := c000 + eps*c001 + eps**2*c002";
 %c00  := igr2$
 %c000 := coeffn(c00,eps,0);
