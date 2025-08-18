@@ -67,7 +67,7 @@ void Vertical::CalculateNoWallIdealStability ()
 	  }
     }
   
-  // -----------------------------------
+  // ------------------------------------
   // Calculate plasma ideal energy matrix
   // ------------------------------------
   for (int j = 0; j < J; j++)

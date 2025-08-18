@@ -28,13 +28,13 @@ avoid such problems.
 A tokamak fusion reactor has to perform three problematic tasks that a stellarator reactor does not. First, the toroidal plasma current has to be ramped-up from a negligible value to its maximum value in a safe manner. Second, the current
 has to be held steady for a long time interval without the plasma experiencing a current-driven disruption. Finally, the current has to be ramped-down to a negligible value in a safe manner.
 Obviously, a tokamak reactor is only economically viable if the ramp-up and ramp-down times are much shorter than the current flat-top time. 
-An additional problem that is experienced by tokamak reactors, but not stellarator reactors,  is that the inductive electric field that drives the plasma current must be kept sufficiently
+An additional constraint that applies to tokamak reactors, but not stellarator reactors,  is that the inductive electric field that drives the plasma current must be kept sufficiently
 low that it does not generate dangerous amounts of 
 runaway electrons. It is, therefore, legitimate to ask whether the solution of these  additional problems is likely to be prohibitively difficult in a future tokamak fusion reactor.
 
 In a recent paper, Boozer\,\cite{boozer} argues  that Faraday's law of electric induction places strong constraints on the operation of a future  tokamak fusion reactor. 
 In particular, Boozer takes issue with the claim by de Vries et alia (2018)\,\cite{deVries} that a fully controlled current ramp-down in the future ITER tokamak, starting from a toroidal plasma current of $15$ MA,
-can be effected in 60 seconds. (Indeed, in an earlier study Boozer\,\cite{boozer1} seems to argue that the true ramp time is much longer.)  Boozer also takes issue with the claim by Creely et alia\,\cite{creely} that the plasma current in the future SPARC tokamak can be ramped up in
+can be effected in 60 seconds. (Indeed, in an earlier study Boozer\,\cite{boozer1} seems to argue that the true ramp time is much longer.)  Boozer also takes issue with the claim by Creely et alia\,\cite{creely} that the plasma current in the future SPARC tokamak can be ramped up to 8 MA in
 7 seconds, and ramped down in 12 seconds, and seems to imply that the true ramp time is, again, much longer. 
 
 There is some reason for apprehension because if we evaluate the conventional resistive diffusion timescale, $\tau_R$ [see Eq.~(\ref{taur})], which is the nominal
@@ -50,7 +50,7 @@ fact that their ramp times are significantly less than the  corresponding resist
 
 To help clarify the situation, this paper presents a simple model of current ramp-up and ramp-down in tokamak plasmas. 
 The aim of the paper is
-to determine, in a transparent manner, whether the claims by de Vries et alia (2018) and Creely et alia are, at least, plausible, and also to clarify the constraints that Faraday's law
+to determine, in a completely transparent manner, whether the claims by de Vries et alia (2018) and Creely et alia are, at least, plausible, and also to clarify the constraints that Faraday's law
 actually do place on future tokamak operation. Boozer\,\cite{boozer,boozer1}  also highlights the danger
 of runaway electron generation during current ramps, so we shall additionally try to estimate the likelihood of dangerous levels of  runaway electron generation during current ramps
 in  future tokamaks.  
@@ -156,7 +156,7 @@ The electron energy balance equation takes the form\,\cite{fitz}
  T_0&= \left[\frac{\,Z\,\ln{\mit\Lambda}}{1.96\,6\sqrt{2}\,\pi^{3/2}}\,\frac{m_e^{\,1/2}\,e^{\,2}\,c^{\,4}\,B_{\theta\,a}^{\,2}}{n_e\,\chi_0}\right]^{2/5}\\[0.5ex]
  &= 9.95\times 10^{-1}\,Z^{\,2/5}\,{\mit\Lambda}_{15}^{\,2/5}\,n_{20}^{-2/5}\,\chi_0^{-2/5}\,B_{\theta\,a}^{\,4/5}\,\,[{\rm keV}]
  \end{align}
- as the typical electron temperature attained at the end of the current ramp. Here, ${\mit\Lambda}_{15}=\ln{\mit\Lambda}/15$ and $n_{20}=n_e/10^{\,20}$. 
+ as the typical electron temperature attained at the end of the current ramp-up. Here, ${\mit\Lambda}_{15}=\ln{\mit\Lambda}/15$ and $n_{20}=n_e/10^{\,20}$. 
  All other quantities are in SI units. Likewise, 
  \begin{equation}\label{taur}
  \tau_R \equiv \frac{a^2\,\mu_0}{\eta(T_0)}= 4.99\times 10^1\,a^2\,Z^{-2/5}\,{\mit\Lambda}_{15}^{-2/5}\,n_{20}^{-3/5}\,\chi_0^{-3/5}\,B_{\theta\,a}^{\,6/5}\,\,[{\rm s}]
