@@ -16,19 +16,19 @@
 \maketitle
 
 \section{Introduction}
-It is well known an increase in  the net toroidal plasma current flowing around a tokamak plasma leads to an increase in both the maximum stable $\beta$ value and the energy confinement time.\cite{troyon,goldston}
+It is well known that an increase in  the net toroidal plasma current flowing around a tokamak plasma leads to an increase in both the maximum stable $\beta$ value and the energy confinement time.\cite{troyon,goldston}
 The conventional method of maximizing the total plasma current, without degrading the  stability of the plasma to non-axisymmetric magnetohydrodynamical (MHD) modes, is
 to modify the plasma's poloidal cross-section such that it is both vertically elongated and triangular.\cite{jet}  Unfortunately, tokamak plasmas possesing strong cross-section shaping
 are subject to severe axisymmetric instabilities.\cite{v1,v2} Such instabilities involve bulk vertical motion of the plasma on an Alfv\'{e}nic timescale (i.e., $10^{-7}$\,s), which results in the
 sudden and violent termination of the plasma discharge when it comes into contact with the first wall. It is possible to stabilize an axisymmetric mode by placing a perfectly conducting wall
-around the plasma. Unfortunately, the mode remains unstable if the wall possesses finite electrical conductivity,\cite{rwm} but its
-growth time is increased from an Alfv\'{e}nic timescale to the much longer characteristic L/R time of the wall.\cite{rwm1,rwm1a,rwm2} Usually, the vacuum vessel plays the role of the wall,
+around the plasma. In reality, the mode remains unstable because  the wall inevitably possesses finite electrical conductivity.\cite{rwm}  However, 
+growth time of the mode is increased from the Alfv\'{e}n time to the very much longer characteristic L/R time of the wall.\cite{rwm1,rwm1a,rwm2} Usually, the vacuum vessel plays the role of the wall,
 and has an L/R time in excess of  $10^{-3}$\,s. Such a time is much shorter than the length of the plasma 
 discharge, but is still long enough to allow active feedback stabilization of the axisymmetric mode with practical power supplies.\cite{rwm3} 
 
 Ref.~\onlinecite{tj} describes the TJ toroidal tearing mode code, which calculates the stability of an inverse-aspect ratio expanded  tokamak plasma equilibrium  to {\em non-axisymmetric}\/ tearing modes via
 asymptotic matching techniques. Ref.~\onlinecite{tj1} describes a generalization of the TJ code that permits it to calculate the stability of the plasma to non-axisymmetric
-ideal modes in the presence of a perfectly conducting wall that surrounds the plasma. The aim of this paper is to describe a further generalization the TJ code that  allows it to calculate
+ideal modes in the presence of a perfectly conducting wall surrounding the plasma. The aim of this paper is to describe a further generalization the TJ code that  allows it to calculate
 the stability of the plasma to {\em axisymmetric}\/ ideal modes in the presence of a resistive wall that surrounds the plasma. It might be hope that, in order to investigate axisymmetric
 modes,  we could simply take the existing
 TJ code and set the toroidal mode number, $n$, to zero. Unfortunately, this simple scheme does not work, as evidenced by the large number of terms involving
