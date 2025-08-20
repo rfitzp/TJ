@@ -107,13 +107,8 @@ class Vertical : private Utility
   // Mode number data
   // ----------------
   int      J;    // Number of poloidal harmonics included in calculation
-  int      K;    // Number of included poloidal harmonics, excluding m=0
-  int      jm0;  // Index of m=0 harmonic
   int*     MPOL; // Poloidal mode numbers of included poloidal harmonics
   double*  mpol; // Poloidal mode numbers of included poloidal harmonics
-  int*     MPOX; // Poloidal mode numbers of included poloidal harmonics, excluding m=0
-  double*  mpox; // Poloidal mode numbers of included poloidal harmonics, excluding m=0
-  int*     jrnd; // Reindexing array
 
   // ---------------------------------------------------------------
   // Equilibrium data (read from Outputs/Equilibrium/Equilibrium.nc)

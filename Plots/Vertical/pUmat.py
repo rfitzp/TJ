@@ -17,17 +17,17 @@ bvacr = ds['pUant_r']
 bvaci = ds['pUant_i']
 mpol  = ds['mpol']
 
-j0 = 0
-for j in range (len(mpol)):
-    if (mpol[j] == 0):
-        j0 = j
+#j0 = 0
+#for j in range (len(mpol)):
+#    if (mpol[j] == 0):
+#        j0 = j
 
 ar = np.asarray(avacr)
 ai = np.asarray(avaci)
 br = np.asarray(bvacr)
 bi = np.asarray(bvaci)
 
-ar[j0,j0] = 0
+#ar[j0,j0] = 0
 
 arp = np.amax(ar)
 arm = np.amin(ar)

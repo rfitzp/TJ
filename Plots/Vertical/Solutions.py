@@ -53,8 +53,8 @@ for jp in range (J):
 
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\hat{r}$',    fontsize = "15")
-plt.ylabel (r"Re($\psi_m$)", fontsize = "15")
+plt.xlabel (r'$\hat{r}$', fontsize = "15")
+plt.ylabel (r"Re($y_m$)", fontsize = "15")
 
 plt.subplot (3, 2, 2)
 
@@ -78,8 +78,8 @@ for jp in range (J):
 
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\hat{r}$',    fontsize = "15")
-plt.ylabel (r"Im($\psi_m$)", fontsize = "15")
+plt.xlabel (r'$\hat{r}$', fontsize = "15")
+plt.ylabel (r"Im($y_m$)", fontsize = "15")
 
 plt.subplot (3, 2, 3)
 
@@ -140,8 +140,8 @@ plt.plot (r, Zn[j,:], color = 'red',  linewidth = 1, linestyle = 'solid')
 
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\hat{r}$',      fontsize = "15")
-plt.ylabel (r"norm($\psi_m$)", fontsize = "15")
+plt.xlabel (r'$\hat{r}$',   fontsize = "15")
+plt.ylabel (r"norm($y_m$)", fontsize = "15")
 
 plt.subplot (3, 2, 6)
 

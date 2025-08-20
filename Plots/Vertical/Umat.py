@@ -15,19 +15,14 @@ avacr = ds['Umat_r']
 avaci = ds['Umat_i']
 bvacr = ds['Uant_r']
 bvaci = ds['Uant_i']
-mpol  = ds['mpol']
+mpol  = ds['mpox']
 
-j0 = 0
-for j in range (len(mpol)):
-    if (mpol[j] == 0):
-        j0 = j
+print (avacr.shape)
 
 ar = np.asarray(avacr)
 ai = np.asarray(avaci)
 br = np.asarray(bvacr)
 bi = np.asarray(bvaci)
-
-ar[j0,j0] = 0
 
 arp = np.amax(ar)
 arm = np.amin(ar)

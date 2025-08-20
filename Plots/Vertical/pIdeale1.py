@@ -23,7 +23,7 @@ fig.canvas.manager.set_window_title (r'Vertical Code: Perfect-Wall Ideal Eigenfu
 plt.rc('xtick', labelsize = 15) 
 plt.rc('ytick', labelsize = 15)
 
-J = Psi_r.shape[0]
+J = Psi_r.shape[1]
 print ("solution number = (%d .. %d)" % (0, J-1))
 j = input ("solution number ? ")
 

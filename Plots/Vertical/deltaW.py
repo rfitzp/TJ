@@ -39,7 +39,7 @@ plt.rc ('ytick', labelsize = 15)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (-1, J-1)
+plt.xlim (-1, J)
 
 plt.plot    (jj, www, color = 'blue',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 't')
 plt.plot    (jj, ppp, color = 'red',   linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 10, label = 'p')

@@ -10,29 +10,28 @@ void Vertical::CalculateNoWallIdealStability ()
   // ---------------
   // Allocate memory
   // ---------------
-  Psii.resize(J, J, NDIAG);
-  Zi  .resize(J, J, NDIAG);
-  Psie.resize(J, K, NDIAG);
-  Ze  .resize(J, K, NDIAG);
+  Psii .resize(J, J, NDIAG);
+  Zi   .resize(J, J, NDIAG);
+  Wmat .resize(J, J);
+  Wher .resize(J, J);
+  Want .resize(J, J);
+  Vmat .resize(J, J);
+  Vher .resize(J, J);
+  Vant .resize(J, J);
+  Umat .resize(J, J);
+  Uher .resize(J, J);
+  Uant .resize(J, J);
+  Uvec .resize(J, J);
+  Ures .resize(J, J);
+  Psie .resize(J, J, NDIAG);
+  Ze   .resize(J, J, NDIAG);
 
-  Umat.resize(K, K);
-  Vmat.resize(K, K);
-  Wmat.resize(K, K);
-  Wher.resize(K, K);
-  Want.resize(K, K);
-  Vher.resize(K, K);
-  Vant.resize(K, K);
-  Uher.resize(K, K);
-  Uant.resize(K, K);
-  Uvec.resize(K, K);
-  Ures.resize(K, K);
-
-  Wval    = new double[K];
-  Vval    = new double[K];
-  Uval    = new double[K];
-  deltaW  = new double[K];
-  deltaWp = new double[K];
-  deltaWv = new double[K];
+  Wval    = new double[J];
+  Vval    = new double[J];
+  Uval    = new double[J];
+  deltaW  = new double[J];
+  deltaWp = new double[J];
+  deltaWv = new double[J];
 
   Psiy.resize(J, Nw+1);
   Xiy .resize(J, Nw+1);
@@ -53,16 +52,20 @@ void Vertical::CalculateNoWallIdealStability ()
   // -------------------------------------------------------------------
   // Ensure that m != 0 solutions have Z_0 = 0 at plasma-vacuum boundary
   // -------------------------------------------------------------------
+  /*
+  int j0 = J/2; // index of m = 0 solution
+
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       for (int i = 0; i < NDIAG; i++)
 	{
-	  if (jp != jm0)
-	    {
-	      Psii(j, jp, i) = Psii(j, jp, i) - YYY(j,   jm0, i) * YYY(J+jm0, jp, NDIAG-1) /YYY(J+jm0, jm0, NDIAG-1);
-	      Zi  (j, jp, i) = Zi  (j, jp, i) - YYY(J+j, jm0, i) * YYY(J+jm0, jp, NDIAG-1) /YYY(J+jm0, jm0, NDIAG-1);
-	    }
+	  if (jp != j0)
+	  {
+	      Psii(j, jp, i) = Psii(j, jp, i) - YYY(j,   j0, i) * YYY(J+j0, jp, NDIAG-1) /YYY(J+j0, j0, NDIAG-1);
+	      Zi  (j, jp, i) = Zi  (j, jp, i) - YYY(J+j, j0, i) * YYY(J+j0, jp, NDIAG-1) /YYY(J+j0, j0, NDIAG-1);
+	  }
 	}
+  */
   
   // -----------------------------------------------
   // Normalize solutions launched from magnetic axis
@@ -85,30 +88,30 @@ void Vertical::CalculateNoWallIdealStability ()
   // ------------------------------------
   // Calculate plasma ideal energy matrix
   // ------------------------------------
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
-	Umat(j, jp) = Psii(jrnd[j], jrnd[jp], NDIAG-1);
-	Vmat(j, jp) = Zi  (jrnd[j], jrnd[jp], NDIAG-1);
+	Umat(j, jp) = Psii(j, jp, NDIAG-1);
+	Vmat(j, jp) = Zi  (j, jp, NDIAG-1);
       }
   SolveLinearSystemTranspose (Umat, Wmat, Vmat);
 
   // ------------------------------------
   // Calculate vacuum ideal energy matrix
   // ------------------------------------
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
-      Vmat(j, jp) = - mpox[j] * Hmat(jrnd[j], jrnd[jp]) * mpox[jp];
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      Vmat(j, jp) = - mpol[j] * Hmat(j, jp) * mpol[jp];
   
   // -----------------------------------
   // Calculate total ideal energy matrix
   // -----------------------------------
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       Umat(j, jp) = Wmat(j, jp) + Vmat(j, jp);
 
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
  	Wher(j, jp) = 0.5 * (Wmat(j, jp) + conj (Wmat(jp, j)));
 	Want(j, jp) = 0.5 * (Wmat(j, jp) - conj (Wmat(jp, j)));
@@ -124,8 +127,8 @@ void Vertical::CalculateNoWallIdealStability ()
   double Whmax = 0., Wamax = 0.;
   double Vhmax = 0., Vamax = 0.;
   double Uhmax = 0., Uamax = 0.;
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
 	double whval = abs (Wher(j, jp));
 	double waval = abs (Want(j, jp));
@@ -164,12 +167,12 @@ void Vertical::CalculateNoWallIdealStability ()
   // --------------------------------------------------------------------
   // Adjust eigenvectors such that element with largest magnitude is real
   // --------------------------------------------------------------------
-  for (int j = 0; j < K; j++)
+  for (int j = 0; j < J; j++)
     {
       int    jmax = 0;
       double norm = -1.;
 
-      for (int jp = 0; jp < K; jp++)
+      for (int jp = 0; jp < J; jp++)
 	{
 	  if (abs (Uvec(jp, j)) > norm)
 	    {
@@ -180,7 +183,7 @@ void Vertical::CalculateNoWallIdealStability ()
 
       complex<double> Ufac = conj (Uvec(jmax, j)) /abs (Uvec(jmax, j));
 
-      for (int jp = 0; jp < K; jp++)
+      for (int jp = 0; jp < J; jp++)
 	{
 	  Uvec(jp, j) *= Ufac;
 	}
@@ -189,12 +192,12 @@ void Vertical::CalculateNoWallIdealStability ()
   // ------------------------------------
   // Check orthonormality of eigenvectors
   // ------------------------------------
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
 	complex<double> sum = complex<double> (0., 0.);
 
-	for (int jpp = 0; jpp < K; jpp++)
+	for (int jpp = 0; jpp < J; jpp++)
 	  sum += conj (Uvec(jpp, j)) * Uvec(jpp, jp);
 
 	if (j == jp)
@@ -207,8 +210,8 @@ void Vertical::CalculateNoWallIdealStability ()
   // Calculate orthonormality residuals
   // ----------------------------------
   double Umax = 0.;
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
 	double uval = abs (Ures(j, jp));
 
@@ -221,26 +224,26 @@ void Vertical::CalculateNoWallIdealStability ()
   // -----------------------------
   // Calculate ideal eigenfuctions
   // -----------------------------
-  Array<complex<double>,2> Amat(K, K), Bmat(K, K);
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  Array<complex<double>,2> Amat(J, J), Bmat(J, J);
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
-	Amat(j, jp) = Psii(jrnd[j], jrnd[jp], NDIAG-1);
+	Amat(j, jp) = Psii(j, jp, NDIAG-1);
       }
 
   SolveLinearSystem (Amat, Bmat, Uvec);
   
   for (int j = 0; j < J; j++)
-    for (int jp = 0; jp < K; jp++)
+    for (int jp = 0; jp < J; jp++)
       for (int i = 0; i < NDIAG; i++)
 	{
 	  complex<double> sump = complex<double> (0., 0.);
 	  complex<double> sumz = complex<double> (0., 0.);
 	  
-	  for (int jpp = 0; jpp < K; jpp++)
+	  for (int jpp = 0; jpp < J; jpp++)
 	    {
-	      sump += Psii(j, jrnd[jpp], i) * Bmat(jpp, jp);
-	      sumz += Zi  (j, jrnd[jpp], i) * Bmat(jpp, jp);
+	      sump += Psii(j, jpp, i) * Bmat(jpp, jp);
+	      sumz += Zi  (j, jpp, i) * Bmat(jpp, jp);
 	    }
 	  
 	  Psie(j, jp, i) = sump;
@@ -250,12 +253,12 @@ void Vertical::CalculateNoWallIdealStability ()
   // ------------------------
   // Calculate delta-W values
   // ------------------------
-  for (int j = 0; j < K; j++)
+  for (int j = 0; j < J; j++)
     {
       double sum = 0., sum1 = 0.;;
 
-      for (int jp = 0; jp < K; jp++)
-	for (int jpp = 0; jpp < K; jpp++)
+      for (int jp = 0; jp < J; jp++)
+	for (int jpp = 0; jpp < J; jpp++)
 	  {
 	    sum  += real (conj (Uvec(jp, j)) * Wmat(jp, jpp) * Uvec(jpp, j));
 	    sum1 += real (conj (Uvec(jp, j)) * Vmat(jp, jpp) * Uvec(jpp, j));
@@ -267,7 +270,7 @@ void Vertical::CalculateNoWallIdealStability ()
     }
 
   printf ("No-wall ideal eigenvalues:\n");
-  for (int j = 0; j < K; j++)
+  for (int j = 0; j < J; j++)
     printf ("j = %3d  deltaW = %10.3e  deltaW_p = %10.3e  deltaW_v = %10.3e\n",
     	    j, deltaW[j], deltaWp[j], deltaWv[j]);
 
@@ -312,29 +315,28 @@ void Vertical::CalculatePerfectWallIdealStability ()
   // ---------------
   // Allocate memory
   // ---------------
-  pPsii.resize(J, J, NDIAG);
-  pZi  .resize(J, J, NDIAG);
-  pPsie.resize(J, K, NDIAG);
-  pZe  .resize(J, K, NDIAG);
+  pPsii .resize(J, J, NDIAG);
+  pZi   .resize(J, J, NDIAG);
+  pWmat .resize(J, J);
+  pWher .resize(J, J);
+  pWant .resize(J, J);
+  pVmat .resize(J, J);
+  pVher .resize(J, J);
+  pVant .resize(J, J);
+  pUmat .resize(J, J);
+  pUher .resize(J, J);
+  pUant .resize(J, J);
+  pUvec .resize(J, J);
+  pUres .resize(J, J);
+  pPsie .resize(J, J, NDIAG);
+  pZe   .resize(J, J, NDIAG);
 
-  pWmat.resize(K, K);
-  pWher.resize(K, K);
-  pWant.resize(K, K);
-  pVmat.resize(K, K);
-  pVher.resize(K, K);
-  pVant.resize(K, K);
-  pUmat.resize(K, K);
-  pUher.resize(K, K);
-  pUant.resize(K, K);
-  pUvec.resize(K, K);
-  pUres.resize(K, K);
-
-  pWval    = new double[K];
-  pVval    = new double[K];
-  pUval    = new double[K];
-  pdeltaW  = new double[K];
-  pdeltaWp = new double[K];
-  pdeltaWv = new double[K];
+  pWval    = new double[J];
+  pVval    = new double[J];
+  pUval    = new double[J];
+  pdeltaW  = new double[J];
+  pdeltaWp = new double[J];
+  pdeltaWv = new double[J];
 
   pPsiy.resize(J, Nw+1);
   pXiy .resize(J, Nw+1);
@@ -352,20 +354,6 @@ void Vertical::CalculatePerfectWallIdealStability ()
 	  pZi  (j, jp, i) = YYY(J+j, jp, i);
 	}
 
-  // -------------------------------------------------------------------
-  // Ensure that m != 0 solutions have Z_0 = 0 at plasma-vacuum boundary
-  // -------------------------------------------------------------------
-  for (int j = 0; j < J; j++)
-    for (int jp = 0; jp < J; jp++)
-      for (int i = 0; i < NDIAG; i++)
-	{
-	  if (jp != jm0)
-	    {
-	      pPsii(j, jp, i) = pPsii(j, jp, i) - YYY(j,   jm0, i) * YYY(J+jm0, jp, NDIAG-1) /YYY(J+jm0, jm0, NDIAG-1);
-	      pZi  (j, jp, i) = pZi  (j, jp, i) - YYY(J+j, jm0, i) * YYY(J+jm0, jp, NDIAG-1) /YYY(J+jm0, jm0, NDIAG-1);
-	    }
-	}
- 
   // -----------------------------------------------
   // Normalize solutions launched from magnetic axis
   // -----------------------------------------------
@@ -387,30 +375,30 @@ void Vertical::CalculatePerfectWallIdealStability ()
   // -----------------------------------
   // Calculate plasma ideal energy matrix
   // ------------------------------------
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
-	pUmat(j, jp) = pPsii(jrnd[j], jrnd[jp], NDIAG-1);
-	pVmat(j, jp) = pZi  (jrnd[j], jrnd[jp], NDIAG-1);
+	pUmat(j, jp) = pPsii(j, jp, NDIAG-1);
+	pVmat(j, jp) = pZi  (j, jp, NDIAG-1);
       }
   SolveLinearSystemTranspose (pUmat, pWmat, pVmat);
 
   // ------------------------------------
   // Calculate vacuum ideal energy matrix
   // ------------------------------------
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
-      pVmat(j, jp) = - mpox[j] * Gmat(jrnd[j], jrnd[jp]) * mpox[jp];
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      pVmat(j, jp) = - mpol[j] * Gmat(j, jp) * mpol[jp];
   
   // -----------------------------------
   // Calculate total ideal energy matrix
   // -----------------------------------
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       pUmat(j, jp) = pWmat(j, jp) + pVmat(j, jp);
 
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
  	pWher(j, jp) = 0.5 * (pWmat(j, jp) + conj (pWmat(jp, j)));
 	pWant(j, jp) = 0.5 * (pWmat(j, jp) - conj (pWmat(jp, j)));
@@ -426,8 +414,8 @@ void Vertical::CalculatePerfectWallIdealStability ()
   double Whmax = 0., Wamax = 0.;
   double Vhmax = 0., Vamax = 0.;
   double Uhmax = 0., Uamax = 0.;
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
 	double whval = abs (pWher(j, jp));
 	double waval = abs (pWant(j, jp));
@@ -466,12 +454,12 @@ void Vertical::CalculatePerfectWallIdealStability ()
   // --------------------------------------------------------------------
   // Adjust eigenvectors such that element with largest magnitude is real
   // --------------------------------------------------------------------
-  for (int j = 0; j < K; j++)
+  for (int j = 0; j < J; j++)
     {
       int    jmax = 0;
       double norm = -1.;
 
-      for (int jp = 0; jp < K; jp++)
+      for (int jp = 0; jp < J; jp++)
 	{
 	  if (abs (pUvec(jp, j)) > norm)
 	    {
@@ -482,7 +470,7 @@ void Vertical::CalculatePerfectWallIdealStability ()
 
       complex<double> Ufac = conj (pUvec(jmax, j)) /abs (pUvec(jmax, j));
 
-      for (int jp = 0; jp < K; jp++)
+      for (int jp = 0; jp < J; jp++)
 	{
 	  pUvec(jp, j) *= Ufac;
 	}
@@ -491,12 +479,12 @@ void Vertical::CalculatePerfectWallIdealStability ()
   // ------------------------------------
   // Check orthonormality of eigenvectors
   // ------------------------------------
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
 	complex<double> sum = complex<double> (0., 0.);
 
-	for (int jpp = 0; jpp < K; jpp++)
+	for (int jpp = 0; jpp < J; jpp++)
 	  sum += conj (pUvec(jpp, j)) * pUvec(jpp, jp);
 
 	if (j == jp)
@@ -509,8 +497,8 @@ void Vertical::CalculatePerfectWallIdealStability ()
   // Calculate orthonormality residuals
   // ----------------------------------
   double Umax = 0.;
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
 	double uval = abs (pUres(j, jp));
 
@@ -523,17 +511,17 @@ void Vertical::CalculatePerfectWallIdealStability ()
   // -----------------------------
   // Calculate ideal eigenfuctions
   // -----------------------------
-  Array<complex<double>,2> Amat(K, K), Bmat(K, K);
-  for (int j = 0; j < K; j++)
-    for (int jp = 0; jp < K; jp++)
+  Array<complex<double>,2> Amat(J, J), Bmat(J, J);
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
       {
-	Amat(j, jp) = pPsii(jrnd[j], jrnd[jp], NDIAG-1);
+	Amat(j, jp) = pPsii(j, jp, NDIAG-1);
       }
 
   SolveLinearSystem (Amat, Bmat, pUvec);
   
   for (int j = 0; j < J; j++)
-    for (int jp = 0; jp < K; jp++)
+    for (int jp = 0; jp < J; jp++)
       for (int i = 0; i < NDIAG; i++)
 	{
 	  complex<double> sump = complex<double> (0., 0.);
@@ -541,8 +529,8 @@ void Vertical::CalculatePerfectWallIdealStability ()
 	  
 	  for (int jpp = 0; jpp < J; jpp++)
 	    {
-	      sump += pPsii(j, jrnd[jpp], i) * Bmat(jpp, jp);
-	      sumz += pZi  (j, jrnd[jpp], i) * Bmat(jpp, jp);
+	      sump += pPsii(j, jpp, i) * Bmat(jpp, jp);
+	      sumz += pZi  (j, jpp, i) * Bmat(jpp, jp);
 	    }
 	  
 	  pPsie(j, jp, i) = sump;
@@ -552,12 +540,12 @@ void Vertical::CalculatePerfectWallIdealStability ()
   // ------------------------
   // Calculate delta-W values
   // ------------------------
-  for (int j = 0; j < K; j++)
+  for (int j = 0; j < J; j++)
     {
       double sum = 0., sum1 = 0.;;
 
-      for (int jp = 0; jp < K; jp++)
-	for (int jpp = 0; jpp < K; jpp++)
+      for (int jp = 0; jp < J; jp++)
+	for (int jpp = 0; jpp < J; jpp++)
 	  {
 	    sum  += real (conj (pUvec(jp, j)) * pWmat(jp, jpp) * pUvec(jpp, j));
 	    sum1 += real (conj (pUvec(jp, j)) * pVmat(jp, jpp) * pUvec(jpp, j));
@@ -569,7 +557,7 @@ void Vertical::CalculatePerfectWallIdealStability ()
     }
 
   printf ("Perfect-wall ideal eigenvalues:\n");
-  for (int j = 0; j < K; j++)
+  for (int j = 0; j < J; j++)
     printf ("j = %3d  deltaW = %10.3e  deltaW_p = %10.3e  deltaW_v = %10.3e\n",
     	    j, pdeltaW[j], pdeltaWp[j], pdeltaWv[j]);
 

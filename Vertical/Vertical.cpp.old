@@ -254,38 +254,16 @@ void Vertical::Solve ()
 // ##################################################
 void Vertical::SetModeNumbers ()
 {
-  J   = MMAX - MMIN + 1;
-  K   = J  - 1;
-  jm0 = K /2;
-
-  MPOL = new int   [J];
+  J    = MMAX - MMIN + 1;
+  MPOL = new int[J];
   mpol = new double[J];
-  MPOX = new int   [K];
-  mpox = new double[K];
-  jrnd = new int   [K];
 
   for (int j = 0; j < J; j++)
     {
       MPOL[j] = MMIN + j;
-      mpol[j] = double (MPOL[j]);
+      mpol[j] = double (MMIN + j);
     }
-
-  for (int j = 0; j < K; j++)
-    {
-      if (j < jm0)
-	{
-	  MPOX[j] = MPOL[j];
-	  jrnd[j] = j;
-	}
-      else
-	{
-	  MPOX[j] = MPOL[j+1];
-	  jrnd[j] = j + 1;
-	}
-
-      mpox[j] = double (MPOX[j]);
-    }
- }
+}
 
 // #############################
 // Function to deallocate memory
@@ -404,7 +382,5 @@ void Vertical::CleanUp ()
   delete[] pdeltaW; delete[] pdeltaWv; delete[] pdeltaWp;
 
   delete[] ya; delete[] yb;
-
-  delete[] mpol; delete[] MPOL; delete[] mpox; delete[] MPOX; delete[] jrnd;
 }
 
