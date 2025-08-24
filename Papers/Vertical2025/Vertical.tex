@@ -16,17 +16,17 @@
 \maketitle
 
 \section{Introduction}
-It is well known that an increase in  the net toroidal plasma current flowing around a tokamak plasma leads to an increase in both the maximum stable $\beta$ value and the energy confinement time.\cite{troyon,goldston}
-The conventional method of maximizing the total plasma current, without degrading the  stability of the plasma to non-axisymmetric magnetohydrodynamical (MHD) modes, is
-to modify the plasma's poloidal cross-section such that it is both vertically elongated and triangular.\cite{jet}  Unfortunately, tokamak plasmas possesing strong cross-section shaping
+It is well known that an increase in  the net toroidal plasma current flowing around a tokamak  leads to an increase in both the maximum stable $\beta$ value and the energy confinement time.\cite{troyon,goldston}
+The conventional method of maximizing the total plasma current, without degrading the  stability of the system to non-axisymmetric magnetohydrodynamical (MHD) modes, is
+to modify the plasma's poloidal cross-section such that it is both vertically elongated and triangular.\cite{jet}  Unfortunately, tokamak plasmas possessing strong cross-sectional shaping
 are subject to severe axisymmetric instabilities.\cite{v1,v2} Such instabilities involve bulk vertical motion of the plasma on an Alfv\'{e}nic timescale (i.e., $10^{-7}$\,s), which results in the
-sudden and violent termination of the plasma discharge when it comes into contact with the first wall. It is possible to stabilize an axisymmetric mode by placing a perfectly conducting wall
+sudden and violent termination of the  discharge when it comes into contact with the first wall. It is possible to stabilize an axisymmetric mode by placing a perfectly conducting wall
 around the plasma. In reality, the mode remains unstable because  the wall inevitably possesses finite electrical conductivity.\cite{rwm}  However, 
 growth time of the mode is increased from the Alfv\'{e}n time to the very much longer characteristic L/R time of the wall.\cite{rwm1,rwm1a,rwm2} Usually, the vacuum vessel plays the role of the wall,
-and has an L/R time in excess of  $10^{-3}$\,s. Such a time is much shorter than the length of the plasma 
+and has an L/R time that is  well in excess of  $10^{-3}$\,s. Such a time is much shorter than the length of the plasma 
 discharge, but is still long enough to allow active feedback stabilization of the axisymmetric mode with practical power supplies.\cite{rwm3} 
 
-Ref.~\onlinecite{tj} describes the TJ toroidal tearing mode code, which calculates the stability of an inverse-aspect ratio expanded  tokamak plasma equilibrium  to {\em non-axisymmetric}\/ tearing modes via
+Ref.~\onlinecite{tj} describes the TJ toroidal tearing mode code, which calculates the stability of an inverse aspect-ratio expanded  tokamak plasma equilibrium  to {\em non-axisymmetric}\/ tearing modes via
 asymptotic matching techniques. Ref.~\onlinecite{tj1} describes a generalization of the TJ code that permits it to calculate the stability of the plasma to non-axisymmetric
 ideal modes in the presence of a perfectly conducting wall surrounding the plasma. The aim of this paper is to describe a further generalization the TJ code that  allows it to calculate
 the stability of the plasma to {\em axisymmetric}\/ ideal modes in the presence of a resistive wall that surrounds the plasma. It might be hope that, in order to investigate axisymmetric
@@ -59,7 +59,7 @@ where
 \begin{equation}\label{q}
 q(r) = \frac{r\,g}{f}
 \end{equation}
-is the safety-factor (i.e., the inverse of the rotational transform). Note that ${\bf B}\cdot\nabla r=0$, which implies that $r$ is a magnetic flux-surface label.
+is the safety-factor profile. Note that ${\bf B}\cdot\nabla r=0$, which implies that $r$ is a magnetic flux-surface label.
 We require $g=1$ on the magnetic axis in order to ensure that the normalized toroidal magnetic field-strength at the  axis is unity.  
 
 It is easily demonstrated that\,\cite{tj}
@@ -131,7 +131,7 @@ where use has been made of  the fact that $B^{\,r}=J^{\,r}=0$. [See Eqs.~(\ref{b
 \begin{align}
 {\cal J}\,b^{\,r} &= \frac{\partial}{\partial\theta}\left({\cal J}\,B^{\,\theta}\,\xi^{\,r}\right).
 \end{align}
-Thus, Eqs.~(\ref{jac}), (\ref{q}),  and (\ref{bup2}) give
+Thus, Eqs.~(\ref{jac}), (\ref{q}),  and (\ref{bup2}) give\,\cite{tj}
 \begin{align}\label{e41}
 r\,R^{\,2}\,b^{\,r}& = \frac{\partial y}{\partial\theta},
 \end{align}
@@ -243,19 +243,21 @@ where
 \alpha_f(r) &= \frac{r^2}{f}\,\frac{d}{dr}\!\left(\frac{f}{r}\right).\label{alpf}
 \end{align}
 
-Finally, Eqs.~(\ref{zdef}) and (\ref{e58u})  yield the {\em axisymmetric ideal-MHD partial differential equations (p.d.e.s)}:
+Finally, Eqs.~(\ref{zdef}) and (\ref{e58u})  yield the {\em axisymmetric ideal-MHD partial differential equations (p.d.e.s)},
 \begin{align}\label{e63y}
 r\,\frac{\partial y}{\partial r} &= \frac{{\cal Z}}{|\nabla r|^2} - \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\frac{\partial y}{\partial\theta},\\[0.5ex]
 r\,\frac{\partial {\cal Z}}{\partial r}&= -\left[(\alpha_f\,\alpha_p+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]y-\frac{\partial}{\partial\theta}\!\left(\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial\theta}\right)\nonumber\\[0.5ex]
-&\phantom{=} -\frac{\partial}{\partial\theta}\!\left(\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,{\cal Z}\right).\label{e64y}
+&\phantom{=} -\frac{\partial}{\partial\theta}\!\left(\frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,{\cal Z}\right),\label{e64y}
 \end{align}
+which govern the perturbed equilibrium. 
 
-\subsection{Derivation of the Axisymmetric Ideal-MHD O.D.E.s}
+\subsection{Derivation of the Axisymmetric Ideal-MHD O.D.E.s}\label{ode}
 Let
 \begin{align}\label{e62s}
 y(r,\theta)&= \sum_m y_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta},\\[0.5ex]
 {\cal Z}(r,\theta) &= \sum_m Z_m(r)\,{\rm e}^{\,{\rm i}\,m\,\theta}.\label{e63s}
 \end{align}
+Here, the $m$ are the set of (integer, but not necessarily positive) poloidal mode numbers included in the calculation. 
 Equations~(\ref{e63y}) and (\ref{e64y}) yield the {\em axisymmetric ideal-MHD ordinary differential equations (o.d.e.s)}:
 \begin{align}\label{e69u}
 r\,\frac{dy_m}{dr}&= \sum_{m'}\left(A_{m}^{\,m'}\,Z_{m'} + B_{m}^{\,m'}\,y_{m'}\right),\\[0.5ex]
@@ -280,8 +282,8 @@ $\alpha_g=\alpha_p=0$.
 
 The axisymmetric ideal-MHD o.d.e.s play the same role for axisymmetric perturbations that the outer-region o.d.e.s, (102) and (103) of Ref.~\onlinecite{tj}, play for
 non-axisymmetric perturbations. The main difference is that there are no singularities in the axisymmetric ideal-MHD o.d.e.s because an axisymmetric perturbation 
-does not resonate with the plasma (i.e., there are no equilibrium flux-surfaces in the plasma at which ${\bf k}\cdot{\bf B}=0$, where ${\bf k}$ is the
-wavevector of the perturbation.)
+does not resonate with the plasma. In other words, there are no equilibrium flux-surfaces in the plasma at which ${\bf k}\cdot{\bf B}=0$, where ${\bf k}$ is the
+wavevector of the perturbation. This is because $|B^\theta(r)|>0$ throughout a conventional tokamak equilibrium. 
 
 \subsection{Properties of Axisymmetric Ideal-MHD O.D.E.s}
 Note   that
@@ -300,7 +302,8 @@ It follows from Eqs.~(\ref{e69u}), (\ref{e70uu}), and (\ref{e70u})--(\ref{e82u})
 \begin{align}
 r\,\frac{d}{dr}\!\left[\sum_m (Z_m\,y_m^{\,\ast}- y_m\,Z_m^{\,\ast}) \right]&= 0.
 \end{align}
-
+Thus, checking that $\sum_m (Z_m\,y_m^{\,\ast}- y_m\,Z_m^{\,\ast})$ is indeed constant throughout the plasma is a good numerical check on the accuracy of the TJ
+code. 
 
 \subsection{Perturbed Electric Field}
 Suppose that all perturbed quantities vary in time as ${\rm e}^{-{\rm i}\,\omega\,t}$. 
@@ -321,7 +324,7 @@ We also expect $\nabla\cdot{\bf e} =0$, which implies that
 $e_r=e_\theta=0$ in the vacuum region, $r\geq a$, in which $\alpha_g=0$. 
 
 \subsection{Toroidal Electromagnetic Torque}\label{storque}
-The net toroidal electromagnetic torque exerted on the plasma lying within the magnetic flux-surface whose label is $r$ is\,\cite{tj}
+The net toroidal electromagnetic torque exerted on the region of the plasma lying within the magnetic flux-surface whose label is $r$ is\,\cite{tj}
 \begin{equation}
 T_\phi(r)= \oint\oint r\,R^{\,2}\,b_\phi\,b^{\,r}\,d\theta\,d\phi.
 \end{equation}
@@ -332,12 +335,15 @@ T_\phi(r) = -\pi\,\alpha_g\oint\left(y^\ast\,\frac{\partial y}{\partial\theta}+y
 \end{equation}
 We conclude, not surprisingly,  that an axisymmetric perturbation is incapable of exerting a net toroidal electromagnetic torque on the plasma. 
 
+In Ref.~\onlinecite{tj1}, the conservation of toroidal angular momentum is used to prove that the plasma and vacuum perturbed potential energy matrices are Hermitian.
+The fact that the toroidal electromagnetic torque is automatically zero in the axisymmetric case negates this proof. Hence, we need to find a new conserved quantity
+that does not automatically take the value zero. The electromagnetic energy flux is found to play this role. 
+
 \subsection{Electromagnetic Energy Flux}
 The net flux of electromagnetic energy across the plasma-vacuum interface is 
 \begin{align}\label{eflux}
 {\cal E} &= \left[\oint\oint ({\bf e}\times {\bf b})\cdot\nabla r\,{\cal J}\,d\theta\,d\phi\right]_{r=a}= \left[\oint\oint (e_\theta\,b_\phi-e_\phi\,b_\theta)\,d\theta\,d\phi\right]_{r=a}\nonumber\\[0.5ex]
-&={\rm i}\,\pi\,\omega\oint (y\,{\cal Z}^{\,\ast}-y^\ast \,{\cal Z})_{r=a}\,d\theta,\nonumber\\[0.5ex]
-&={\rm i}\,\pi^2\,\omega \sum_{m}\left(Z_m^{\,\ast}\,y_m-y_m^\ast\,Z_m\right)_{r=a}.
+&={\rm i}\,\pi\,\omega\oint (y\,{\cal Z}^{\,\ast}-y^\ast \,{\cal Z})_{r=a}\,d\theta={\rm i}\,\pi^2\,\omega \sum_{m}\left(Z_m^{\,\ast}\,y_m-y_m^\ast\,Z_m\right)_{r=a}.
 \end{align}
 Here, use has been made of Eqs.~(\ref{e54y}), (\ref{e62s}), (\ref{e63s}),  and  (\ref{ephi}), as well as  the fact that $e_\theta=0$ for $r\geq a$. 
 
@@ -547,6 +553,26 @@ D_m^{\,m\pm 1}(\hat{r}) &=\epsilon\,q^2\left[\frac{d}{d\hat{r}}(\hat{r}\,p_2') -
 D_m^{\,m\pm j}(\hat{r}) &= -\epsilon\,m\,(m\pm j)\,(H_j'\pm {\rm i}\,V_j')~~~~~\mbox{for $j>1$}.
 \end{align}
 
+\subsection{Toroidal Plasma Current}
+The net toroidal plasma current flowing in the plasma is given by
+\begin{equation}\label{ipdef}
+I_p = \oint_{r=a}{\cal J}\,\nabla\phi\times\nabla r\cdot{\bf B}\,d\theta = \oint_{r=a}\,B_\theta\,d\theta,
+\end{equation}
+which yields
+\begin{equation}
+I_p =\gamma_{\rm shape}\, I_{p\,{\rm cly}},
+\end{equation}
+where
+\begin{equation}
+I_{p\,{\rm cyl}} = \frac{2\pi\,a^2\,g(a)}{q(a)}
+\end{equation}
+is the plasma current according to cylindrical theory, whereas
+\begin{equation}
+\gamma_{\rm shape} = \oint_{r=a} |\hat{\nabla}\hat{r}|^2\,\frac{d\theta}{2\pi}
+\end{equation}
+is the factor by which the toroidal  current is increased due to the shaping of the plasma's poloidal
+boundary. 
+
 \subsection{Behavior Close to Magnetic Axis}\label{axis}
 When $\hat{r}\ll 1$, the well-behaved solution of the axisymmetric ideal-MHD o.d.e.s, (\ref{e69u}) and (\ref{e70uu}), that is dominated by the poloidal harmonic whose poloidal mode number is
 $m$ is such that
@@ -640,9 +666,11 @@ According to Eq.~(\ref{e41}) and (\ref{e54y}),
 \frac{\partial y}{\partial \theta}&= {\cal J}\,{\bf b}\cdot\nabla r = {\rm i}\,{\cal J}\,\nabla V\cdot\nabla r,\\[0.5ex]
 {\cal Z}&= -{\cal J}\,\nabla\phi\times\nabla r \cdot{\bf b} = - {\rm i}\,\frac{\partial V}{\partial\theta}.\label{e31ay}
 \end{align}
-Note that Eq.~(\ref{e31ay}) mandates that $Z_0\equiv \oint{\cal Z}\,d\theta/(2\,\pi)=0$ in the vacuum region. This constraint implies that the axisymmetric ideal modes to
-which the plasma equilibrium is subject do not change the net toroidal current flowing in the plasma. Note, further, that $y_0\equiv \oint y\,d\theta/(2\,\pi)$ does
-not influence $V$. 
+Now, we have already seen that $Z_0\equiv \oint{\cal Z}\,d\theta/(2\,\pi)=0$ is independent of $r$ in the vacuum region.  (See Sect.~\ref{ode}.) 
+However, it is clear that Eq.~(\ref{e31ay}) mandates that this constant value is zero. This constraint implies that the axisymmetric ideal modes to
+which the plasma equilibrium is subject do not change the net toroidal current flowing in the plasma. [See Eqs.~(\ref{e54y}) and (\ref{ipdef}).]  Note, further, that $y_0\equiv \oint y\,d\theta/(2\,\pi)$ does
+not influence the vacuum potential, $V(r,\theta)$. 
+
 The previous two equations yield\,\cite{tj1}
 \begin{align}\label{e32ay}
 \underline{V}(r)&= \underline{\underline{{\cal P}}}(r)\,\underline{p}+ \underline{\underline{{\cal Q}}}(r)\,\underline{q},\\[0.5ex]
@@ -687,7 +715,7 @@ According to Eq.~(\ref{eflux}), the net flux of electromagnetic energy across th
 \begin{equation}
 {\cal E} = {\rm i}\,\pi^2\,\omega\, (\underline{V}^\dag\,\underline{\psi}- \underline{\psi}^\dag\,\underline{V}).
 \end{equation}
-However, this flux must be equal the energy flux through the vacuum region, so Eq.~(\ref{e168g}) gives
+However, energy conservation requires this flux to be equal  to the energy flux through the vacuum region, so Eq.~(\ref{e168g}) gives
 \begin{equation}\label{e39x}
 {\cal E} =-  {\rm i}\,\pi^2\,\omega\,(\underline{q}^\dag\,\underline{p}-\underline{p}^\dag\,\underline{q}).
 \end{equation}
@@ -717,7 +745,7 @@ It immediately follows from Eq.~(\ref{e39x}) that
  \end{equation}
   In other words, there is zero net flux of electromagnetic energy out of  a plasma
  surrounded by a vacuum region that extends to infinity. 
-It also follows from Eqs.~(\ref{e32ay}) and (\ref{e33ay}) that
+Equations~(\ref{e32ay}) and (\ref{e33ay}) imply that
 \begin{equation}\label{hdef}
  \underline{V}(r=a_+)= \underline{\underline{H}}\,\underline{\psi}(r=a),
  \end{equation}
@@ -760,7 +788,7 @@ where
  \underline{\underline{G}}= (\underline{\underline{\cal Q}}_{\,a}-\underline{\underline{\cal P}}_{\,a}\,\underline{\underline{I}}_{\,b})\,(\underline{\underline{\cal S}}_{\,a}-\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}
  \end{equation}
  is termed the {\em perfect-wall vacuum matrix}.
-Making use of Eqs.~(\ref{e41zx})--(\ref{e43zx}), it is easily demonstrated that
+It is easily demonstrated from  Eqs.~(\ref{e41zx})--(\ref{e43zx})  that
  \begin{equation}\label{e53xx}
  \underline{\underline{G}}-\underline{\underline{G}}^\dag =- [(\underline{\underline{\cal S}}_{\,a}-\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}]^{\dag}\,(\underline{\underline{I}}_{\,b} -\underline{\underline{I}}^\dag_{\,b})\,  (\underline{\underline{\cal S}}_{\,a}+\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}.
 \end{equation}
@@ -773,15 +801,15 @@ Equation~(\ref{e41}) implies that
 \end{equation}
 The perturbed potential energy in the vacuum region is\,\cite{tj1,gs1}
 \begin{align}
-\delta W_v &= \frac{1}{2}\int_{a_+}^\infty \oint\oint {\bf b}^\ast\cdot{\bf b}\,{\cal J}\,dr\,d\theta\,d\phi\nonumber\\[0.5ex]
-&=\frac{1}{2}\int_{a_+}^\infty \oint\oint \nabla V^\ast\cdot\nabla V\,{\cal J}\,dr\,d\theta\,d\phi\nonumber\\[0.5ex]
-&= -\frac{1}{2}\left(\oint\oint {\cal J}\,\nabla r\cdot\nabla V^\ast\,V\,d\theta\,d\phi\right)_{a_+}\nonumber\\[0.5ex]
-&=-\frac{1}{2}\left[\oint\oint \left(-{\rm i}\,\frac{\partial y}{\partial \theta}\right)^\ast\,V\,d\theta\,d\phi\right]_{a_+}\nonumber\\[0.5ex]
+\delta W_v &= \frac{1}{2}\int_{a_+}^\infty \oint\oint {\bf b}^\ast\cdot{\bf b}\,{\cal J}\,dr\,d\theta\,d\phi
+=\frac{1}{2}\int_{a_+}^\infty \oint\oint \nabla V^\ast\cdot\nabla V\,{\cal J}\,dr\,d\theta\,d\phi\nonumber\\[0.5ex]
+&= -\frac{1}{2}\left(\oint\oint {\cal J}\,\nabla r\cdot\nabla V^\ast\,V\,d\theta\,d\phi\right)_{a_+}
+=-\frac{1}{2}\left[\oint\oint \left(-{\rm i}\,\frac{\partial y}{\partial \theta}\right)^\ast\,V\,d\theta\,d\phi\right]_{a_+}\nonumber\\[0.5ex]
 &= - \pi^2\left(\sum_m\,m\,y_m^{\,\ast}\,V_m\right)_{a_+},\label{vac}
 \end{align}
 where use has been made of the facts that $\nabla^2 V =0$ and $\nabla r\cdot \nabla V=0$ at the ideal wall. 
 
-\section{Calculation of Ideal Stability}
+\section{Ideal Stability}
 \subsection{Perturbed Plasma Potential Energy}
 Suppose that the poloidal harmonics included in the calculation range from $m=-m_{\rm max}$ to $m=m_{\rm max}$, where $m_{\rm max} >0$. 
 Let  the $y_{mm'}(r)$ and the $Z_{mm'}(r)$ be linearly independent solutions of the axisymmetric ideal-MHD o.d.e.s, (\ref{e69u}) and
@@ -797,7 +825,8 @@ The most general solution to the axisymmetric ideal-MHD o.d.e.s that satisfied t
 y_m(r) &= \sum_{m'=1,J} y_{mm'}(r)\,\alpha_{m'},\\[0.5ex]
 \chi_m(r)&= \sum_{m'=1,J} \chi_{mm'}(r)\,\alpha_{m'},
 \end{align}
-where the $\alpha_m$ are arbitrary complex coefficients. Note that
+where the $\alpha_m$ are arbitrary complex coefficients. Here, $m$ indexes the poloidal harmonic and $m'$ indexes the solution. 
+ Note that
 $ \chi_m(a_-)=Z_m(a_-)=0$ because $\alpha_g(a)=\alpha_p(a)=0$. [See Eq.~(\ref{chidef}).]
 
 According to Eq.~(\ref{e87j}), the net perturbed plasma potential energy is
@@ -868,7 +897,7 @@ The fact that $\underline{\underline{W}}$ is Hermitian allows us to write
 where $\underline{\underline{\beta}}$ is real, and $\underline{\underline{\mit\Lambda}}$ is the diagonal matrix of the real $\lambda_m$ values. 
 If $\underline{\hat{\alpha}}= \underline{\underline{\beta}}^\dag\,\underline{\underline{y}}\,\underline{\alpha}$ then
 \begin{equation}
-\delta W =\pi^2\,\underline{\hat{\alpha}}^\dag\,\underline{\underline{\mit\Lambda}}\,\underline{\hat{\alpha}}=\pi^2\sum_m|\hat{\alpha}_m|^2\,\lambda_m.
+\delta W =\pi^2\,\underline{\hat{\alpha}}^\dag\,\underline{\underline{\mit\Lambda}}\,\underline{\hat{\alpha}}=\pi^2\sum_{m=1,J}|\hat{\alpha}_m|^2\,\lambda_m.
 \end{equation}
 Thus, if any of the $\lambda_m$ are negative then solutions exist for which $\delta W$ is negative, and the plasma is consequently unstable to
 an axisymmetric ideal mode.\cite{gs1}
@@ -889,7 +918,7 @@ contributions to the $\lambda_m$, respectively.
  
 \section{Resistive Wall Stability}
 The unnormalized minor radius of the wall is $b=b_w\,\bar{a}$, where $\bar{a}=\epsilon\,R_0$  is the unnormalized minor radius of the plasma. Suppose that the wall is resistive, and possesses an (unnormalized)  electrical conductivity $\sigma_w$, as well as an (unnormalized)  uniform radial thickness $d$. 
-Consider a particular ideal mode for which the total perturbed potential energy in the absence of a wall, 
+Consider a particular axisymmetric ideal mode for which the total perturbed potential energy in the absence of a wall, 
  $\delta W_{nw}$, is negative,  but the total perturbed potential energy in the presence of a perfectly conducting wall, $\delta W_{pw}$, is positive.  In this case,  the no-wall ideal mode is unstable (because $\delta W_{nw}<0$). In the absence of  the wall, this mode would grow very rapidly on an Alfv\'{e}nic timescale. On the other
  hand, the mode is completely stabilized if the wall is perfectly conducting (because $\delta W_{pw}>0$).  However, because the wall is not perfectly conducting, the unstable ideal mode is
  instead converted into a much more slowly growing resistive wall mode. 
@@ -944,7 +973,7 @@ The digital data used in the figures in this paper can be obtained from the auth
 
 \bibitem{goldston} R.~Goldston, Plasma Phys.\ Control.\ Fusion {\bf 26}, 87 (1984).
 
-\bibitem{jet} M.~Huguet, K.~Dietz,  J.L.~Hemmerich and J.R.~Last, Fusion Technology, {\bf 11}, 43 (1987).
+\bibitem{jet} M.~Huguet, K.~Dietz,  J.L.~Hemmerich and J.R.~Last, Fusion Technology  {\bf 11}, 43 (1987).
 
 \bibitem{v1} M.~Okabayashi and G.~Sheffield, Nucl.\ Fusion {\bf 14}, 575 (1974). 
 

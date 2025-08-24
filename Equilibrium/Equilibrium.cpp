@@ -655,10 +655,10 @@ void Equilibrium::Solve ()
       double ir2 = 13.*rr[i]*rr[i]/4. - 3.*HHfunc(1, i) + r*HPfunc(1, i) + HPfunc(1, i) * HPfunc(1, i) /2.;
       for (int n = 2; n <= Ns; n++)
 	{
-	  gr2 += (HPfunc(n, i) * HPfunc(n, i) + double (n*n - 1) * HHfunc(n, i) * HHfunc(n, i) /r/r)/2.;
-	  gr2 += (VPfunc(n, i) * VPfunc(n, i) + double (n*n - 1) * VVfunc(n, i) * VVfunc(n, i) /r/r)/2.;
-	  ir2 += (HPfunc(n, i) * HPfunc(n, i) + double (n*n - 1) * HHfunc(n, i) * HHfunc(n, i) /r/r)/2.;
-	  ir2 += (VPfunc(n, i) * VPfunc(n, i) + double (n*n - 1) * VVfunc(n, i) * VVfunc(n, i) /r/r)/2.;
+	  gr2 += (HPfunc(n, i) * HPfunc(n, i) + double (n*n - 1) * HHfunc(n, i) * HHfunc(n, i) /r/r) /2.;
+	  gr2 += (VPfunc(n, i) * VPfunc(n, i) + double (n*n - 1) * VVfunc(n, i) * VVfunc(n, i) /r/r) /2.;
+	  ir2 += (HPfunc(n, i) * HPfunc(n, i) + double (n*n - 1) * HHfunc(n, i) * HHfunc(n, i) /r/r) /2.;
+	  ir2 += (VPfunc(n, i) * VPfunc(n, i) + double (n*n - 1) * VVfunc(n, i) * VVfunc(n, i) /r/r) /2.;
 	}
 
       double R2 = rr[i]*rr[i]/2. - rr[i]*HPfunc(1, i) - 2.*HHfunc(1, i);
@@ -671,6 +671,8 @@ void Equilibrium::Solve ()
       Ip  [i] = - 2.*M_PI * g2[i];
     }
   q2[0] = qc * (1. + epsa*epsa * (H2c*H2c + V2c*V2c));
+
+  gshape = It[Nr] /2./M_PI /f1[Nr];
 
   for (int i = 0; i <= Nr; i++)
     {
@@ -782,8 +784,8 @@ void Equilibrium::Solve ()
 
   delete[] y2; delete[] err2;
 
-  printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It = %10.3e\n",
-	  q2[0], q0[Nr], q2[Nr], Ip[Nr], It[Nr]);
+  printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It = %10.3e gshape = %10.3e\n",
+	  q2[0], q0[Nr], q2[Nr], Ip[Nr], It[Nr], gshape);
   printf ("li = %10.3e betat = %10.3e betap = %10.3e betaN = %10.3e\n",
   	  li, betat, betap, betaN);
 

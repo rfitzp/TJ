@@ -39,10 +39,10 @@ TJ::TJ ()
   string JSONFilename = "../Inputs/TJ.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  NTOR    = JSONData["NTOR"]  .get<int>();
-  MMIN    = JSONData["MMIN"]  .get<int>();
-  MMAX    = JSONData["MMAX"]  .get<int>();
-  NPHI    = JSONData["NPHI"]  .get<int>();
+  NTOR = JSONData["NTOR"]  .get<int>();
+  MMIN = JSONData["MMIN"]  .get<int>();
+  MMAX = JSONData["MMAX"]  .get<int>();
+  NPHI = JSONData["NPHI"]  .get<int>();
 
   for (const auto& number : JSONData["ISLAND"])
     {
@@ -288,7 +288,7 @@ void TJ::Solve ()
       
       // Calculate wall matrices
       GetVacuumWall ();
-      
+
       // Find rational surfaces
       FindRational ();
       

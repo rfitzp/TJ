@@ -34,8 +34,8 @@ void Vertical::CalculateNoWallIdealStability ()
   deltaWp = new double[K];
   deltaWv = new double[K];
 
-  Psiy.resize(J, Nw+1);
-  Xiy .resize(J, Nw+1);
+  Psiy.resize(K, Nw+1);
+  Xiy .resize(K, Nw+1);
 
   ya = new complex<double>[J];
   
@@ -252,7 +252,7 @@ void Vertical::CalculateNoWallIdealStability ()
   // ------------------------
   for (int j = 0; j < K; j++)
     {
-      double sum = 0., sum1 = 0.;;
+      double sum = 0., sum1 = 0.;
 
       for (int jp = 0; jp < K; jp++)
 	for (int jpp = 0; jpp < K; jpp++)
@@ -274,7 +274,7 @@ void Vertical::CalculateNoWallIdealStability ()
   // --------------------------------------------------------------------------------
   // Calculate y and Z values at plasma boundary associated with ideal eigenfunctions
   // --------------------------------------------------------------------------------
-  for (int j = 0; j < J; j++)
+  for (int j = 0; j < K; j++)
     {
       for (int i = 0; i <= Nw; i++)
 	{
@@ -297,11 +297,24 @@ void Vertical::CalculateNoWallIdealStability ()
 	}
     }
 
+  // ---------------
+  // Determine jzero
+  // ---------------
+  for (int jp = 0; jp < K; jp++)
+    {
+      jzero = jp;
+
+      if (deltaWv[jp] > 0.)
+	break;
+    }
+  
   // -------------------
   // Calculate ya values
   // -------------------
   for (int j = 0; j < J; j++)
-    ya[j] = Psie(j, 0, NDIAG-1);
+    {
+      ya[j] = Psie(j, jzero, NDIAG-1);
+    }
 }
 
 // ############################################################
@@ -336,11 +349,11 @@ void Vertical::CalculatePerfectWallIdealStability ()
   pdeltaWp = new double[K];
   pdeltaWv = new double[K];
 
-  pPsiy.resize(J, Nw+1);
-  pXiy .resize(J, Nw+1);
+  pPsiy.resize(K, Nw+1);
+  pXiy .resize(K, Nw+1);
 
   yb = new complex<double>[J];
-
+  
   // -----------------------------------------
   // Get solutions launched from magnetic axis
   // -----------------------------------------
@@ -383,7 +396,7 @@ void Vertical::CalculatePerfectWallIdealStability ()
 	    pZi  (j, jp, i) /= sqrt(norm);
 	  }
     }
-  
+    
   // -----------------------------------
   // Calculate plasma ideal energy matrix
   // ------------------------------------
@@ -487,7 +500,7 @@ void Vertical::CalculatePerfectWallIdealStability ()
 	  pUvec(jp, j) *= Ufac;
 	}
     }
-
+ 
   // ------------------------------------
   // Check orthonormality of eigenvectors
   // ------------------------------------
@@ -539,7 +552,7 @@ void Vertical::CalculatePerfectWallIdealStability ()
 	  complex<double> sump = complex<double> (0., 0.);
 	  complex<double> sumz = complex<double> (0., 0.);
 	  
-	  for (int jpp = 0; jpp < J; jpp++)
+	  for (int jpp = 0; jpp < K; jpp++)
 	    {
 	      sump += pPsii(j, jrnd[jpp], i) * Bmat(jpp, jp);
 	      sumz += pZi  (j, jrnd[jpp], i) * Bmat(jpp, jp);
@@ -548,13 +561,13 @@ void Vertical::CalculatePerfectWallIdealStability ()
 	  pPsie(j, jp, i) = sump;
 	  pZe  (j, jp, i) = sumz;
 	}
-
+ 
   // ------------------------
   // Calculate delta-W values
   // ------------------------
   for (int j = 0; j < K; j++)
     {
-      double sum = 0., sum1 = 0.;;
+      double sum = 0., sum1 = 0.;
 
       for (int jp = 0; jp < K; jp++)
 	for (int jpp = 0; jpp < K; jpp++)
@@ -576,7 +589,7 @@ void Vertical::CalculatePerfectWallIdealStability ()
   // --------------------------------------------------------------------------------
   // Calculate y and Z values at plasma boundary associated with ideal eigenfunctions
   // --------------------------------------------------------------------------------
-  for (int j = 0; j < J; j++)
+  for (int j = 0; j < K; j++)
     {
       for (int i = 0; i <= Nw; i++)
 	{
@@ -598,7 +611,7 @@ void Vertical::CalculatePerfectWallIdealStability ()
 	  pXiy (j, i) = sumx;
 	}
     }
-
+  
   // -------------------
   // Calculate yb values
   // -------------------
@@ -617,15 +630,26 @@ void Vertical::CalculatePerfectWallIdealStability ()
 	yb[j] = sum /mpol[j];
     }
 
+  // ----------------
+  // Determine pjzero
+  // ----------------
+  for (int jp = 0; jp < K; jp++)
+    {
+      pjzero = jp;
+
+      if (pdeltaWv[jp] > 0.)
+	break;
+    }
+  
   // ---------------------------
   // Calculate alphaw and gammaw
   // ---------------------------
   double sumw = 0.;
   for (int j = 0; j < J; j++)
     sumw += real (conj (yb[j]) * yb[j]);
+
+  alphaw = M_PI*M_PI * sumw /(pdeltaWv[pjzero] - deltaWv[jzero]);
+  gammaw = - deltaW[jzero] /alphaw /pdeltaW[pjzero];
   
-  alphaw = M_PI*M_PI * sumw /(pdeltaWv[0] - deltaWv[0]);
-  gammaw = - deltaW[0] /alphaw /pdeltaW[0];
-  
-  printf ("alphaw = %10.3e gammaw = %10.3e\n", alphaw, gammaw);
- }
+  printf ("solution number (%1d, %1d): alphaw = %10.3e gammaw = %10.3e\n", jzero, pjzero, alphaw, gammaw);
+}

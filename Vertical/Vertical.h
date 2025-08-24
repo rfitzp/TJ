@@ -398,6 +398,7 @@ class Vertical : private Utility
   Array<complex<double>,2> Psiy;    // y values on plasma boundary associated with ideal eigenfunctions
   Array<complex<double>,2> Xiy;     // Z values on plasma boundary associated with ideal eigenfunctions
   complex<double>*         ya;      // y values of zeroth eigenfunction at plasma boundary
+  int                      jzero;   // Index of first solution with positive vacuum energy
 
   // ------------------------------
   // Perfect-wall ideal energy data
@@ -425,7 +426,8 @@ class Vertical : private Utility
   double*                  pdeltaWv; // Vacuum contribution to perturbed ideal potential energy
   Array<complex<double>,2> pPsiy;    // y values on plasma boundary associated with ideal eigenfunctions
   Array<complex<double>,2> pXiy;     // Z values on plasma boundary associated with ideal eigenfunctions
-  complex<double>*         yb;       // y values of zeroth eigenfunction at wall 
+  complex<double>*         yb;       // y values of zeroth eigenfunction at wall
+  int                      pjzero;   // Index of first solution with positive vacuum energy
 
   // ----
   // Misc

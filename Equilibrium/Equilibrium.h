@@ -188,6 +188,7 @@ class Equilibrium : private Utility
   double*            ne;        // Electron number density  
   double*            Tep;       // Radial derivative of electron temperature
   double*            nep;       // Radial derivative of electron number density
+  double             gshape;    // Factor by which toroidal current increased due to plasma shaping
    
   Array<double,2>    HHfunc;    // Horizontal shaping functions
   Array<double,2>    VVfunc;    // Vertical shaping functions

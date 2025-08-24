@@ -31,21 +31,21 @@ Vertical::Vertical ()
   string JSONFilename = "../Inputs/Vertical.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  MMAX    = JSONData["MMAX"].get<int>();
-  MMIN    = - MMAX;
+  MMAX = JSONData["MMAX"].get<int>();
+  MMIN = - MMAX;
 
-  EQLB    = JSONData["EQLB"].get<int>();
+  EQLB = JSONData["EQLB"].get<int>();
   
-  EPS     = JSONData["EPS"]  .get<double>();
-  NFIX    = JSONData["NFIX"] .get<int>   ();
-  NDIAG   = JSONData["NDIAG"].get<int>   ();
+  EPS   = JSONData["EPS"]  .get<double>();
+  NFIX  = JSONData["NFIX"] .get<int>   ();
+  NDIAG = JSONData["NDIAG"].get<int>   ();
 
-  acc     = JSONData["acc"] .get<double>();
-  h0      = JSONData["h0"]  .get<double>();
-  hmin    = JSONData["hmin"].get<double>();
-  hmax    = JSONData["hmax"].get<double>();
+  acc  = JSONData["acc"] .get<double>();
+  h0   = JSONData["h0"]  .get<double>();
+  hmin = JSONData["hmin"].get<double>();
+  hmax = JSONData["hmax"].get<double>();
 
-  EPSF    = JSONData["EPSF"].get<double>();
+  EPSF = JSONData["EPSF"].get<double>();
 
   JSONFilename = "../Inputs/Equilibrium.json";
   JSONData     = ReadJSONFile (JSONFilename);

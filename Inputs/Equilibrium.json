@@ -1,16 +1,16 @@
 {
     "SRC":  0,                // Flag for reading safety-factor and pressure profiles from Inputs/Profile.txt
     
-    "qc":   1.01,             // Safety-factor on magnetic axis
+    "qc":   1.5,              // Safety-factor on magnetic axis
     "qa":   3.60,             // Safety-factor at plasma boundary
     "pc":   0.05,             // Normalized plasma pressure on magnetic axis 
     "mu":   2.5,              // Pressure peaking parameter
     "epsa": 0.1,              // Inverse aspect-ratio of plasma
 
-    "Hna": [1.2,  0.5, 0.0],   // Horizontal shaping harmonic values at plasma boundary
-    "Vna": [0.3 , 0.0, 0.0],   // Vertical shaping harmonic values at plasma boundary
+    "Hna": [0.0, 0.0, 0.0],   // Horizontal shaping harmonic values at plasma boundary
+    "Vna": [0.0, 0.0, 0.0],   // Vertical shaping harmonic values at plasma boundary
 
-    "bw": 1.2,                // Relative wall radius
+    "bw": 1.10,                // Relative wall radius
 
     "B0":    5.3,             // On-axis toroidal magnetic field-strength (T)
     "R0":    6.2,             // On-axis plasma major radius (m) 

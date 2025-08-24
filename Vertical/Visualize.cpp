@@ -10,16 +10,16 @@ void Vertical::VisualizeEigenfunctions ()
   // ...............
   // Allocate memory
   // ...............
-  Psiuf.resize(J, J, Nf);
-  Zuf  .resize(J, J, Nf);
-  Psiuv.resize(J, Nf, Nw+1);
-  Zuv  .resize(J, Nf, Nw+1);
+  Psiuf.resize(J, K, Nf);
+  Zuf  .resize(J, K, Nf);
+  Psiuv.resize(K, Nf, Nw+1);
+  Zuv  .resize(K, Nf, Nw+1);
  
   // .........................................................................................
   // Interpolate no-wall ideal eigenfunction data from diagnostic to visualization radial grid
   // .........................................................................................
   for (int j = 0; j < J; j++)
-    for (int k = 0; k < J; k++)
+    for (int k = 0; k < K; k++)
       {
 	// Get data from diagnostic grid
 	double* psi_r = new double[NDIAG];
@@ -84,7 +84,7 @@ void Vertical::VisualizeEigenfunctions ()
   // ......................................................
   complex<double> II = complex<double> (0., 1.);
 
-  for (int k = 0; k < J; k++)
+  for (int k = 0; k < K; k++)
     for (int i = 0; i < Nf; i++)
       for (int l = 0; l <= Nw; l++)
 	{
@@ -111,16 +111,16 @@ void Vertical::VisualizeEigenfunctions ()
   // ...............
   // Allocate memory
   // ...............
-  pPsiuf.resize(J, J, Nf);
-  pZuf  .resize(J, J, Nf);
-  pPsiuv.resize(J, Nf, Nw+1);
-  pZuv  .resize(J, Nf, Nw+1);
+  pPsiuf.resize(J, K, Nf);
+  pZuf  .resize(J, K, Nf);
+  pPsiuv.resize(K, Nf, Nw+1);
+  pZuv  .resize(K, Nf, Nw+1);
  
   // ..............................................................................................
   // Interpolate perfect-wall ideal eigenfunction data from diagnostic to visualization radial grid
   // ..............................................................................................
   for (int j = 0; j < J; j++)
-    for (int k = 0; k < J; k++)
+    for (int k = 0; k < K; k++)
       {
 	// Get data from diagnostic grid
 	double* psi_r = new double[NDIAG];
@@ -183,7 +183,7 @@ void Vertical::VisualizeEigenfunctions ()
   // ...........................................................
   // Calculate perfect-wall eigenfunctions on visualization grid
   // ...........................................................
-  for (int k = 0; k < J; k++)
+  for (int k = 0; k < K; k++)
     for (int i = 0; i < Nf; i++)
       for (int l = 0; l <= Nw; l++)
 	{

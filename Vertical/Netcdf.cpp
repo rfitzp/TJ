@@ -278,7 +278,7 @@ void Vertical::WriteNetcdf ()
   double* SPmat_i = new double[J*J];
 
   double* Hmat_r  = new double[J*J];
-  double* Hmat_i  = new double[J*K];
+  double* Hmat_i  = new double[J*J];
   double* iHmat_r = new double[J*J];
   double* iHmat_i = new double[J*J];
 
@@ -324,10 +324,10 @@ void Vertical::WriteNetcdf ()
   double* Ze_r   = new double[J*K*NDIAG];
   double* Ze_i   = new double[J*K*NDIAG];
   
-  double* Psiy_r = new double[J*(Nw+1)];
-  double* Psiy_i = new double[J*(Nw+1)];
-  double* Xiy_r  = new double[J*(Nw+1)];
-  double* Xiy_i  = new double[J*(Nw+1)];
+  double* Psiy_r = new double[K*(Nw+1)];
+  double* Psiy_i = new double[K*(Nw+1)];
+  double* Xiy_r  = new double[K*(Nw+1)];
+  double* Xiy_i  = new double[K*(Nw+1)];
 
   double* pUmat_r = new double[K*K];
   double* pUmat_i = new double[K*K];
@@ -340,20 +340,20 @@ void Vertical::WriteNetcdf ()
   double* pZe_r   = new double[J*K*NDIAG];
   double* pZe_i   = new double[J*K*NDIAG];
   
-  double* pPsiy_r = new double[J*(Nw+1)];
-  double* pPsiy_i = new double[J*(Nw+1)];
-  double* pXiy_r  = new double[J*(Nw+1)];
-  double* pXiy_i  = new double[J*(Nw+1)];
+  double* pPsiy_r = new double[K*(Nw+1)];
+  double* pPsiy_i = new double[K*(Nw+1)];
+  double* pXiy_r  = new double[K*(Nw+1)];
+  double* pXiy_i  = new double[K*(Nw+1)];
 
-  double* PPV_r = new double[J*Nf*(Nw+1)];
-  double* PPV_i = new double[J*Nf*(Nw+1)];
-  double* ZZV_r = new double[J*Nf*(Nw+1)];
-  double* ZZV_i = new double[J*Nf*(Nw+1)];
+  double* PPV_r = new double[K*Nf*(Nw+1)];
+  double* PPV_i = new double[K*Nf*(Nw+1)];
+  double* ZZV_r = new double[K*Nf*(Nw+1)];
+  double* ZZV_i = new double[K*Nf*(Nw+1)];
 
-  double* pPPV_r = new double[J*Nf*(Nw+1)];
-  double* pPPV_i = new double[J*Nf*(Nw+1)];
-  double* pZZV_r = new double[J*Nf*(Nw+1)];
-  double* pZZV_i = new double[J*Nf*(Nw+1)];
+  double* pPPV_r = new double[K*Nf*(Nw+1)];
+  double* pPPV_i = new double[K*Nf*(Nw+1)];
+  double* pZZV_r = new double[K*Nf*(Nw+1)];
+  double* pZZV_i = new double[K*Nf*(Nw+1)];
 
   double* ya_r = new double[J];
   double* ya_i = new double[J];
@@ -517,7 +517,7 @@ void Vertical::WriteNetcdf ()
 	}
       
   cnt = 0;
-  for (int j = 0; j < J; j++)
+  for (int j = 0; j < K; j++)
     for (int i = 0; i <= Nw; i++)
       {
 	Psiy_r[cnt] = real (Psiy(j, i));
@@ -543,7 +543,7 @@ void Vertical::WriteNetcdf ()
   if (VIZ)
     {
       int cnt = 0;
-      for (int k = 0; k < J; k++)
+      for (int k = 0; k < K; k++)
 	for (int i = 0; i < Nf; i++)
 	  for (int l = 0; l <= Nw; l++)
 	    {
@@ -605,7 +605,7 @@ void Vertical::WriteNetcdf ()
       torque_d.push_back (d_d);
 
       vector<NcDim> surface_d;
-      surface_d.push_back (j_d);
+      surface_d.push_back (k_d);
       surface_d.push_back (w_d);
       
       vector<NcDim> ideal_d;
@@ -614,7 +614,7 @@ void Vertical::WriteNetcdf ()
       ideal_d.push_back (d_d);
       
       vector<NcDim> v_d;
-      v_d.push_back (j_d);
+      v_d.push_back (k_d);
       v_d.push_back (f_d);
       v_d.push_back (w_d);
 
@@ -961,17 +961,22 @@ void Vertical::WriteNetcdf ()
     }
 
   delete[] Pvac_r;  delete[] Pvac_i;  delete[] Rvac_r;  delete[] Rvac_i;
+  delete[] Qvac_r;  delete[] Qvac_i;  delete[] Svac_r;  delete[] Svac_i;
+  
   delete[] PRmat_r; delete[] PRmat_i; delete[] PRant_r; delete[] PRant_i;
   delete[] QSmat_r; delete[] QSmat_i; delete[] QSant_r; delete[] QSant_i;
-  delete[] Hmat_r;  delete[] Hmat_i;  delete[] Qvac_r;  delete[] Qvac_i;
-  delete[] Svac_r;  delete[] Svac_i;  delete[] PSmat_r; delete[] PSmat_i;
-  delete[] iHmat_r; delete[] iHmat_i; delete[] SPmat_r; delete[] SPmat_i;
+  delete[] PSmat_r; delete[] PSmat_i;
+
   delete[] QPmat_r; delete[] QPmat_i; delete[] QPant_r; delete[] QPant_i;
   delete[] RSmat_r; delete[] RSmat_i; delete[] RSant_r; delete[] RSant_i;
-  delete[] Rwal_r;  delete[] Rwal_i;  delete[] Swal_r;  delete[] Swal_i;
-  delete[] Imat_r;  delete[] Imat_i;  delete[] Gmat_r;  delete[] Gmat_i;
-  delete[] iGmat_r; delete[] iGmat_i; delete[] Iant_r;  delete[] Iant_i;
+  delete[] SPmat_r; delete[] SPmat_i;
 
+  delete[] Hmat_r;  delete[] Hmat_i; delete[] iHmat_r; delete[] iHmat_i; 
+  delete[] Rwal_r;  delete[] Rwal_i; delete[] Swal_r;  delete[] Swal_i;
+  delete[] Imat_r;  delete[] Imat_i; delete[] Iant_r;  delete[] Iant_i;
+
+  delete[] iGmat_r; delete[] iGmat_i; delete[] Gmat_r;  delete[] Gmat_i;
+  
   delete[] Ammp_r; delete[] Bmmp_r; delete[] Cmmp_r; delete[] Dmmp_r;
   delete[] Ammp_i; delete[] Bmmp_i; delete[] Cmmp_i; delete[] Dmmp_i;
   delete[] Atest;  delete[] BCtest; delete[] Dtest;
@@ -979,11 +984,15 @@ void Vertical::WriteNetcdf ()
   delete[] PPPsi_r; delete[] PPPsi_i; delete[] ZZZ_r; delete[] ZZZ_i;
 
   delete[] Umat_r; delete[] Umat_i; delete[] Uant_r; delete[] Uant_i;
+  delete[] Uvec_r; delete[] Uvec_i;
   delete[] Psie_r; delete[] Psie_i; delete[] Ze_r;   delete[] Ze_i;
+
   delete[] Psiy_r; delete[] Psiy_i; delete[] Xiy_r;  delete[] Xiy_i;
 
   delete[] pUmat_r; delete[] pUmat_i; delete[] pUant_r; delete[] pUant_i;
+  delete[] pUvec_r; delete[] pUvec_i;
   delete[] pPsie_r; delete[] pPsie_i; delete[] pZe_r;   delete[] pZe_i;
+
   delete[] pPsiy_r; delete[] pPsiy_i; delete[] pXiy_r;  delete[] pXiy_i;
 
   delete[] PPV_r; delete[] PPV_i; delete[] ZZV_r; delete ZZV_i;
