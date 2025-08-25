@@ -62,22 +62,8 @@
 - *disp.py*:         Plots xi_r components of unreconnected solution vector in R, Z plane
 - *Btoroidal.py*:    Plots B_toroidal and B_modulus in R, Z plane
 - *Bpoloidal.py*:    Plots B_poloidal and B_toroidal in R, Z plane
-
-## Electron temperature and number density profiles:
-
-- *dTunr.py*:        Plots poloidal harmonics of unreconnected delta n_e and delta T_e versus r
-- *dTunr1.py*:       Plots kth poloidal harmonics of unreconnected delta n_e amd delta T_e versus r
-- *dne.py*:          Plots delta n_e components of unreconnected solution vector in R, Z plane
-- *dTe.py*:          Plots delta T_e components of unreconnected solution vector in R, Z plane
-- *ne.py*:           Plots n_e components of unreconnected solution vector in R, Z plane
-- *Te.py*:           Plots T_e components of unreconnected solution vector in R, Z plane
-
-## Synthetic diagnostics:
-
-- *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field versus theta at given radial gridpoint
-- *Ece.py*:          Plots properties of ECE convolution functions along central chord
-- *Chord.py*:        Plots quantities along central chord
-- *Berrino.py*:      Implements Berrino algorithm for island detection
+- *Xinw.py*:         Plot no-wall ideal eigenfunctions in R, Z plane
+- *Xipw.py*:         Plot perfect-wall ideal eigenfunctions in R, Z plane
 
 ## RMP coils:
 
@@ -121,3 +107,19 @@
 - *pXi.py*:             Plots Xi Fourier harmonics of ideal eigenfunctions on plasma boundary
 - *pPsiJSurface.py*: 	Plots psi and J on plasma boundary associated with ideal eigenfunctions
 - *psiab.py*:           Plots psi_a and psi_b versus mode number
+
+## Electron temperature and number density profiles:
+
+- *dTunr.py*:        Plots poloidal harmonics of unreconnected delta n_e and delta T_e versus r
+- *dTunr1.py*:       Plots kth poloidal harmonics of unreconnected delta n_e amd delta T_e versus r
+- *dne.py*:          Plots delta n_e components of unreconnected solution vector in R, Z plane
+- *dTe.py*:          Plots delta T_e components of unreconnected solution vector in R, Z plane
+- *ne.py*:           Plots n_e components of unreconnected solution vector in R, Z plane
+- *Te.py*:           Plots T_e components of unreconnected solution vector in R, Z plane
+
+## Synthetic diagnostics:
+
+- *bpert.py*:        Plots R, Z, phi components of perturbed magnetic field versus theta at given radial gridpoint
+- *Ece.py*:          Plots properties of ECE convolution functions along central chord
+- *Chord.py*:        Plots quantities along central chord
+- *Berrino.py*:      Implements Berrino algorithm for island detection

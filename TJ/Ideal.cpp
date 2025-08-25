@@ -509,12 +509,12 @@ void TJ::CalculatePerfectWallIdealStability ()
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {
-	double whval = abs (Wher(j, jp));
-	double waval = abs (Want(j, jp));
-	double vhval = abs (Vher(j, jp));
-	double vaval = abs (Vant(j, jp));
-	double uhval = abs (Uher(j, jp));
-	double uaval = abs (Uant(j, jp));
+	double whval = abs (pWher(j, jp));
+	double waval = abs (pWant(j, jp));
+	double vhval = abs (pVher(j, jp));
+	double vaval = abs (pVant(j, jp));
+	double uhval = abs (pUher(j, jp));
+	double uaval = abs (pUant(j, jp));
 
 	if (whval > Whmax)
 	  Whmax = whval;

@@ -301,23 +301,11 @@ void TJ::Solve ()
       
       // Determine tearing mode dispersion relation and tearing eigenfunctions
       FindDispersion ();
-      
-      if (VIZ)
-	{
-	  // Calculate unreconnected eigenfunction visualization data
-	  VisualizeEigenfunctions ();
-	}
-      
+         
       if (RMP)
 	{
 	  // Calculate resonant magnetic perturbation data
 	  CalculateResonantMagneticPerturbation ();
-	  
-	  if (VIZ)
-	    {
-	      // Calculate resonant magnetic perturbation respose visualization data
-	      VisualizeRMP ();
-	    }
 	}
       
       // Calculate ideal stability
@@ -327,8 +315,20 @@ void TJ::Solve ()
 
 	  CalculatePerfectWallIdealStability ();
 	}
-      
-      // Write program data to Netcdf file
+
+      if (VIZ)
+	{
+	  // Calculate unreconnected eigenfunction and ideal eigenfunction visualization data
+	  VisualizeEigenfunctions ();
+	   
+	  if (RMP)
+	    {
+	      // Calculate resonant magnetic perturbation respose visualization data
+	      VisualizeRMP ();
+	    }
+	}
+
+       // Write program data to Netcdf file
       WriteNetcdf ();
       
       // Clean up

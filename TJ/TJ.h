@@ -505,7 +505,7 @@ class TJ : private Utility
   Array<double,3>          xis;    // Sin component of xi^r on visualization grid
 
   // ----------------------------------------
-  // Vizualization of temperature and density 
+  // Visualization of temperature and density 
   // ----------------------------------------
   int                      NPHI;   // Number of toroidal grid-points on extended vizualization grid (from TJ JSON file)
   double*                  PP;     // Toroidal grid-points on extended visualization grid
@@ -513,6 +513,14 @@ class TJ : private Utility
   Array<double,4>          Tec;    // T_e on extended visualization grid
   Array<double,4>          dnec;   // delta n_e on extended visualization grid
   Array<double,4>          dTec;   // delta T_e on extended visualization grid
+
+  // -------------------------------------
+  // Visualization of ideal eigenfunctions
+  // -------------------------------------
+  Array<complex<double>,3> Xief;   // Xi components of Fourier transformed no-wall ideal eigenfunctions on visualization grid
+  Array<complex<double>,3> pXief;  // Xi components of Fourier transformed perfect-wall ideal eigenfunctions on visualization grid
+  Array<complex<double>,3> Xiev;   // Xi components of no-wall ideal eigenfunctions on visualization grid
+  Array<complex<double>,3> pXiev;  // Xi components of perfect-wall ideal eigenfunctions on visualization grid
 
   // -----------------------------
   // Synthetic ECE diagnostic data 

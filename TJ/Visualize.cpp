@@ -69,6 +69,11 @@ void TJ::VisualizeEigenfunctions ()
   Xres = new double[nres];
   PP   = new double[NPHI];
 
+  Xief.resize  (J, J,  Nf);
+  pXief.resize (J, J,  Nf);
+  Xiev.resize  (J, Nf, Nw+1);
+  pXiev.resize (J, Nf, Nw+1);
+
   for (int i = 0; i < NPHI; i++)
     PP[i] = double (i) * 2.*M_PI /double (NPHI);
 
@@ -170,7 +175,6 @@ void TJ::VisualizeEigenfunctions ()
 	gsl_interp_accel* dTe_r_acc = gsl_interp_accel_alloc ();
 	gsl_interp_accel* dTe_i_acc = gsl_interp_accel_alloc ();
       
-	
 	gsl_spline* psi_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* psi_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
 	gsl_spline* Z_r_spline   = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
@@ -432,6 +436,70 @@ void TJ::VisualizeEigenfunctions ()
 	}
     }
 
+  if (IDEAL)
+    {
+      for (int j = 0; j < J; j++)
+	for (int jp = 0; jp < J; jp++)
+	  {
+	    // Get data from diagnostic grid
+	    double* xi_r  = new double[NDIAG];
+	    double* xi_i  = new double[NDIAG];
+	    double* pxi_r = new double[NDIAG];
+	    double* pxi_i = new double[NDIAG];
+
+	    for (int i = 0; i < NDIAG; i++)
+	      {
+		xi_r [i] = real (Xie (j, jp, i));
+		xi_i [i] = imag (Xie (j, jp, i));
+		pxi_r[i] = real (pXie(j, jp, i));
+		pxi_i[i] = imag (pXie(j, jp, i));
+	      }
+
+	    // Interpolate data from diagnostic grid
+	    gsl_interp_accel* xie_r_acc  = gsl_interp_accel_alloc ();
+	    gsl_interp_accel* xie_i_acc  = gsl_interp_accel_alloc ();
+	    gsl_interp_accel* pxie_r_acc = gsl_interp_accel_alloc ();
+	    gsl_interp_accel* pxie_i_acc = gsl_interp_accel_alloc ();
+	    
+	    gsl_spline* xie_r_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	    gsl_spline* xie_i_spline  = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	    gsl_spline* pxie_r_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+	    gsl_spline* pxie_i_spline = gsl_spline_alloc (gsl_interp_cspline, NDIAG);
+
+	    gsl_spline_init (xie_r_spline,  Rgrid, xi_r,  NDIAG);
+	    gsl_spline_init (xie_i_spline,  Rgrid, xi_i,  NDIAG);
+	    gsl_spline_init (pxie_r_spline, Rgrid, pxi_r, NDIAG);
+	    gsl_spline_init (pxie_i_spline, Rgrid, pxi_i, NDIAG);
+
+	    // Interpolate data onto visualization grid
+	    for (int i = 0; i < Nf; i++)
+	      {
+		double x = gsl_spline_eval (xie_r_spline, rf[i], xie_r_acc);
+		double y = gsl_spline_eval (xie_i_spline, rf[i], xie_i_acc);
+		
+		Xief(j, jp, i) = complex<double> (x, y);
+		
+		x = gsl_spline_eval (pxie_r_spline, rf[i], pxie_r_acc);
+		y = gsl_spline_eval (pxie_i_spline, rf[i], pxie_i_acc);
+		
+		pXief(j, jp, i) = complex<double> (x, y);
+	      }
+
+	    // Clean up
+	    delete[] xi_r; delete[] xi_i; delete[] pxi_r; delete[] pxi_i;
+	    
+	    gsl_spline_free (xie_r_spline);
+	    gsl_spline_free (xie_i_spline);
+	    gsl_spline_free (pxie_r_spline);
+	    gsl_spline_free (pxie_i_spline);
+	    
+	    gsl_interp_accel_free (xie_r_acc);
+	    gsl_interp_accel_free (xie_i_acc);
+	    gsl_interp_accel_free (pxie_r_acc);
+	    gsl_interp_accel_free (pxie_i_acc);
+	  }
+    }
+
   // ..........................................................
   // Calculate B_mod, B_tor, and B_phi on on visualization grid
   // ..........................................................
@@ -453,7 +521,7 @@ void TJ::VisualizeEigenfunctions ()
 	Bpol(i, l) = epsa * Getf(r) * sqrt(fabs(grr2)) /r /R;
 	Bmod(i, l) = sqrt (Btor(i, l) * Btor(i, l) + Bpol(i, l) * Bpol(i, l));
       }
-	
+
   // ............................................................
   // Calculate unreconnected eigenfunctions on visualization grid
   // ............................................................
@@ -522,6 +590,36 @@ void TJ::VisualizeEigenfunctions ()
 	  xis (k, i, l) = xi_s;
 	}
 
+  if (IDEAL)
+    {
+      // ....................................................
+      // Calculate ideal eigenfunctions on visualization grid
+      // ....................................................
+      for (int jp = 0; jp < J; jp++)
+	for (int i = 0; i < Nf; i++)
+	  for (int l = 0; l <= Nw; l++)
+	    {
+	      double R     = RR    (i, l);
+	      double r     = rvals (i, l);
+	      double theta = thvals(i, l);
+	      double xie_r = 0., xie_i = 0., pxie_r = 0., pxie_i = 0.;
+	      
+	      for (int j = 0; j < J; j++)
+		{
+		  double m = mpol[j];
+		  
+		  xie_r += real (Xief(j, jp, i) * (cos(m*theta) + II*sin(m*theta)));
+		  xie_i += imag (Xief(j, jp, i) * (cos(m*theta) + II*sin(m*theta)));
+		  
+		  pxie_r += real (pXief(j, jp, i) * (cos(m*theta) + II*sin(m*theta)));
+		  pxie_i += imag (pXief(j, jp, i) * (cos(m*theta) + II*sin(m*theta)));
+		}
+	      
+	      Xiev (jp, i, l) = complex<double> (xie_r,  xie_i);
+	      pXiev(jp, i, l) = complex<double> (pxie_r, pxie_i);
+	    }
+    }
+    
   if (TEMP)
     {
       for (int k = 0; k < nres; k++)
@@ -577,7 +675,7 @@ void TJ::VisualizeEigenfunctions ()
 		dnec(k, i, l, np) = dne_c;
 		dTec(k, i, l, np) = dTe_c;
 	      }
-      
+
       // ............................................
       // Calculate quantities on tilted central chord
       // ............................................
