@@ -1,6 +1,6 @@
-# Umat.py
+# pUmat.py
 
-# Visualizes no-wall ideal energy matrix U_m^m'
+# Visualizes perfect-wall ideal energy matrix U_m^m'
 # Also shows anti-Hermitian component of U_m^m'
 
 import math
@@ -11,10 +11,10 @@ ReBu = plt.get_cmap ('seismic')
 
 fn    = '../../Outputs/TJ/TJ.nc'
 ds    = nc.Dataset(fn)
-avacr = ds['Umat_r']
-avaci = ds['Umat_i']
-bvacr = ds['Uant_r']
-bvaci = ds['Uant_i']
+avacr = ds['pUmat_r']
+avaci = ds['pUmat_i']
+bvacr = ds['pUant_r']
+bvaci = ds['pUant_i']
 mpol  = ds['mpol']
 
 j0 = 0
@@ -56,7 +56,7 @@ else:
     bimax = -bim
 
 fig = plt.figure (figsize = (10.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Total No-Wall Ideal Energy Matrix')
+fig.canvas.manager.set_window_title (r'TJ Code: Total Perfect-Wall Ideal Energy Matrix')
 plt.rc ('xtick', labelsize = 12) 
 plt.rc ('ytick', labelsize = 12)
 

@@ -1,6 +1,6 @@
-# Xi.py
+# pXi.py
 
-# Plots Fourier harmonics of Xi on plasma boundary associated with no-wall ideal eigenfunction.
+# Plots Fourier harmonics of Xi on plasma boundary associated with perfect-wall ideal eigenfunction.
 # User prompted for eigenfunction number.
 
 import math
@@ -11,12 +11,12 @@ from matplotlib.ticker import MaxNLocator
 
 fn   = '../../Outputs/TJ/TJ.nc'
 ds   = nc.Dataset(fn)
-wr   = ds['Xi_e_r']
-wi   = ds['Xi_e_i']
+wr   = ds['pXi_e_r']
+wi   = ds['pXi_e_i']
 mpol = ds['mpol']
-w    = np.asarray(ds['delta_W'])
-p    = np.asarray(ds['delta_W_p'])
-v    = np.asarray(ds['delta_W_v'])
+w    = np.asarray(ds['pdelta_W'])
+p    = np.asarray(ds['pdelta_W_p'])
+v    = np.asarray(ds['pdelta_W_v'])
 
 J = mpol.shape[0]
 print ("solution number = (%d .. %d)" % (0, J-1))
@@ -26,7 +26,7 @@ xir = wr[:,j,-1]
 xii = wi[:,j,-1]
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Fourier Harmonics of No-Wall Xi on Plasma Boundary: deltaW = %10.3e %10.3e %10.3e' % (w[j], p[j], v[j]))
+fig.canvas.manager.set_window_title (r'TJ Code: Fourier Harmonics of Perfect-Wall Xi on Plasma Boundary: deltaW = %10.3e %10.3e %10.3e' % (w[j], p[j], v[j]))
 plt.rc('xtick', labelsize = 15) 
 plt.rc('ytick', labelsize = 15)
 

@@ -1,8 +1,9 @@
-# Ideale.py
+# pxIdeale.py
 
-# Plots poloidal harmonics of psi, Z, and Xi components of no-wall ideal eigenfunction versus r.
+# Plots poloidal harmonics of psi, Z, and Xi components of perfect-wall ideal eigenfunction versus r.
 # User prompted for eigenfunction number.
 # Locations of rational surfaces are shown.
+# Plots xi instead of Xi
 
 import math
 import numpy as np
@@ -13,17 +14,17 @@ fn    = '../../Outputs/TJ/TJ.nc'
 ds    = nc.Dataset(fn)
 mpol  = ds['mpol']
 r     = ds['r_grid']
-Psi_r = ds['Psi_e_r']
-Psi_i = ds['Psi_e_i']
-Z_r   = ds['Z_e_r']
-Z_i   = ds['Z_e_i']
-Xi_r  = ds['Xi_e_r']
-Xi_i  = ds['Xi_e_i']
+Psi_r = ds['pPsi_e_r']
+Psi_i = ds['pPsi_e_i']
+Z_r   = ds['pZ_e_r']
+Z_i   = ds['pZ_e_i']
+Xi_r  = ds['pxi_e_r']
+Xi_i  = ds['pxi_e_i']
 rres  = ds['r_res']
 mres  = ds['m_res']
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: No-Wall Ideal Eigenfunction')
+fig.canvas.manager.set_window_title (r'TJ Code: Perfect-Wall Ideal Eigenfunction')
 plt.rc('xtick', labelsize = 15) 
 plt.rc('ytick', labelsize = 15)
 
@@ -169,7 +170,7 @@ for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\hat{r}$', fontsize = "15")
-plt.ylabel (r"Re($\Xi_m$)", fontsize = "15")
+plt.ylabel (r"Re($\xi_m$)", fontsize = "15")
 
 plt.subplot (3, 2, 6)
 
@@ -197,7 +198,7 @@ for rx in rres:
     plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\hat{r}$', fontsize = "15")
-plt.ylabel (r"Im($\Xi_m$)", fontsize = "15")
+plt.ylabel (r"Im($\xi_m$)", fontsize = "15")
 
 plt.tight_layout ()
 
