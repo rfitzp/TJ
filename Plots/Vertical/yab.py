@@ -1,6 +1,6 @@
-# deltaW.py
+# yab.py
 
-# Plots no-wall delta_W versus solution number
+# Plots y_a and y_b values
 
 import math
 import numpy as np

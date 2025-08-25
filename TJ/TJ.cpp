@@ -56,8 +56,6 @@ TJ::TJ ()
   VIZ     = JSONData["VIZ"]  .get<int>();
   IDEAL   = JSONData["IDEAL"].get<int>();
   XI      = JSONData["XI"]   .get<int>();
-  INTR    = JSONData["INTR"] .get<int>();
-  RWM     = JSONData["RWM"]  .get<int>();
   LAYER   = JSONData["LAYER"].get<int>();
   TEMP    = JSONData["TEMP"] .get<int>();
 
@@ -260,8 +258,8 @@ void TJ::Solve ()
       printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
       printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
       printf ("Calculation flags:\n");
-      printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d INTR = %1d RWM = %1d LAYER = %1d TEMP = %1d\n",
-	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, INTR, RWM, LAYER, TEMP);
+      printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d LAYER = %1d TEMP = %1d\n",
+	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, LAYER, TEMP);
       printf ("Calculation parameters:\n");
       printf ("ntor = %3d        mmin  = %3d        mmax  = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e NPHI = %3d\n",
 	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND[0], NPHI);
@@ -282,6 +280,9 @@ void TJ::Solve ()
       
       // Calculate metric data at plasma boundary
       CalculateMetricBoundary ();
+
+      // Calculate metric data at wall
+      CalculateMetricWall ();
       
       // Calculate vacuum matrices
       GetVacuumBoundary ();
@@ -322,11 +323,9 @@ void TJ::Solve ()
       // Calculate ideal stability
       if (IDEAL)
 	{
-	  CalculateIdealStability ();
-	  
-	  // Calculate resistive wall mode stability
-	  if (RWM)
-	    CalculateRWMStability ();
+	  CalculateNoWallIdealStability ();
+
+	  CalculatePerfectWallIdealStability ();
 	}
       
       // Write program data to Netcdf file
@@ -448,6 +447,18 @@ void TJ::CleanUp ()
   gsl_interp_accel_free (Rbacc);
   gsl_interp_accel_free (Zbacc);
 
+  delete[] cmuw; delete[] cetaw; delete[] setaw; delete[] eetaw; delete[] R2grgzw; delete[] R2grgew;  
+
+  gsl_spline_free (Rrzwspline);
+  gsl_spline_free (Rrewspline);
+  gsl_spline_free (Rwspline);
+  gsl_spline_free (Zwspline);
+
+  gsl_interp_accel_free (Rrzwacc);
+  gsl_interp_accel_free (Rrewacc);
+  gsl_interp_accel_free (Rwacc);
+  gsl_interp_accel_free (Zwacc);
+
   delete[] Rcoil;   delete[] Zcoil;   delete[] Icoil;  delete[] Psix;
   delete[] Xi;
 
@@ -456,10 +467,9 @@ void TJ::CleanUp ()
       delete[] Upsilon; delete[] Lambda; delete[] Chi; delete[] Psirmps; delete[] Psixs;
     }
   
-  delete[] tbound; delete[] Rbound; delete[] Zbound;
-  delete[] dRdthe; delete[] dZdthe;
+  delete[] tbound; delete[] Rbound; delete[] Zbound; delete[] dRdthe; delete[] dZdthe;
 
-  delete[] wwall;  delete[] Rwall;  delete[] Zwall;
+  delete[] twall; delete[] Rwall; delete[] Zwall; delete[] dRdthw; delete[] dZdthw; 
   
   delete[] mres;  delete[] qres;   delete[] rres;   delete[] qerr;
   delete[] sres;  delete[] DIres;  delete[] nuLres; delete[] nuSres;
@@ -485,11 +495,6 @@ void TJ::CleanUp ()
       delete[] Uval;    delete[] deltaW; delete[] deltaWv;
       delete[] deltaWp; delete[] gammax; delete[] gamma;
       delete[] Wval;    delete[] Vval;
-    }
-
-  if (RWM)
-    {
-      delete[] FFvl; delete[] fw;
     }
 
   if (TEMP)
@@ -525,7 +530,5 @@ void TJ::CleanUp ()
 	  }
       delete[] dTeeqcspline; delete[] dTeeqcacc;
     }
- 
-  delete[] rho;
-}
+ }
 

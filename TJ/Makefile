@@ -20,7 +20,7 @@ ISLAND_LIB      = $(LIB_DIR)/libIsland.a
 
 C_HEADER = TJ.h 
 C_SOURCE = main.cpp TJ.cpp ReadEquilibrium.cpp Interpolate.cpp Rational.cpp Matrix.cpp Vacuum.cpp Armadillo.cpp\
-	ODESolve.cpp Resonant.cpp Dispersion.cpp Toroidal.cpp Ideal.cpp Netcdf.cpp RMP.cpp RWM.cpp Visualize.cpp
+	ODESolve.cpp Resonant.cpp Dispersion.cpp Toroidal.cpp Ideal.cpp Netcdf.cpp RMP.cpp Visualize.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
 U_OBJECT = ../Utility/Utility.o
 

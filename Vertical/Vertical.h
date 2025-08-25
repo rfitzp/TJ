@@ -254,18 +254,18 @@ class Vertical : private Utility
   double* dRdthe; // dR/dtheta values on plasma boundary
   double* dZdthe; // dZ/dtheta values on plasma boundary
 
-  // --------------
+  // ---------------
   // Wall parameters
-  // --------------
+  // ---------------
   double* twall;  // theta values on wall
   double* Rwall;  // R values on wall
   double* Zwall;  // Z values on wall
   double* dRdthw; // dR/dtheta values on wall
   double* dZdthw; // dZ/dtheta values on wall
-  double  H1b;    // H1 at wall
-  double  H1pb;   // H1p at wall
+  double  H1w;    // H1 at wall
+  double  H1pw;   // H1p at wall
   double  alphaw; // Wall effective radius parameter
-  double  gammaw; // Normalized thin-wall resistive wall mode growth rate
+  double  gammaw; // Normalized thin-wall resistive wall mode growth-rate
 
   // -------------------------------------
   // Visualization of ideal eigenfunctions

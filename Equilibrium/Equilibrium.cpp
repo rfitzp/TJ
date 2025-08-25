@@ -1098,6 +1098,8 @@ void Equilibrium::Solve ()
       dZdtheta[j] = gsl_spline_eval_deriv (Zspline, tbound[j], Zacc);
     }
 
+  igrr2b = Getigrr2av (1.);
+
   // ....................
   // Read wall parameters
   // ....................
@@ -1109,15 +1111,16 @@ void Equilibrium::Solve ()
   // ...................
   // Calculate wall data
   // ...................
-  H1b  = GetHHvac (1, bw);
-  H1pb = GetHPvac (1, bw);
+  H1w    = GetHHvac (1, bw);
+  H1pw   = GetHPvac (1, bw);
+  igrr2w = Getigrr2av (bw);
 
-  printf ("Calculating wall data: bw = %10.3e H1 = %10.3e H1p = %10.3e\n", bw, H1b, H1pb);
+  printf ("Calculating wall data: bw = %10.3e H1 = %10.3e H1p = %10.3e\n", bw, H1w, H1pw);
 
   // Calculate preliminary theta grid
   tbound0[0] = 0.;
 
-  rhs_chooser  = 4;
+  rhs_chooser = 4;
   
   w     = 0.;
   h     = h0;
@@ -2150,6 +2153,52 @@ double Equilibrium::Getgrr2 (double r, double t)
   delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
   
   return grr2;
+}
+
+// ###################################
+// Function to return <|nabla r|^{-2}>
+// ###################################
+double Equilibrium::Getigrr2av (double r)
+{
+  double* hn = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    if (r >= 1.)
+      hn[n] = GetHHvac (n, r);
+    else
+      hn[n] = gsl_spline_eval (HHspline[n], r, HHacc[n]);
+  
+  double* vn = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    if (r >= 1.)
+      vn[n] = GetVVvac (n, r);
+    else
+      vn[n] = gsl_spline_eval (VVspline[n], r, VVacc[n]);
+  
+  double* hnp = new double[Ns+1];
+  for (int n = 1; n <= Ns; n++)
+    if (r >= 1.)
+      hnp[n] = GetHPvac (n, r);
+    else
+      hnp[n] = gsl_spline_eval (HPspline[n], r, HPacc[n]);
+  
+  double* vnp = new double[Ns+1];
+  for (int n = 2; n <= Ns; n++)
+    if (r >= 1.)
+      vnp[n] = GetVPvac (n, r);
+    else
+      vnp[n] = gsl_spline_eval (VPspline[n], r, VPacc[n]);
+
+  double igrr2av = 1. + epsa*epsa * (- 0.75*r*r + hn[1] + 3.*hnp[1]*hnp[1] /2.);
+
+  for (int n = 2; n <= Ns; n++)
+    {
+      igrr2av += epsa*epsa * (  (3.*hnp[n]*hnp[n] + double (n*n - 1) * hn[n]*hn[n] /r/r) /2.
+		  	      + (3.*vnp[n]*vnp[n] + double (n*n - 1) * vn[n]*vn[n] /r/r) /2.);
+    }
+
+  delete[] hn; delete[] vn; delete[] hnp; delete[] vnp;
+  
+  return igrr2av;
 }
 
 // ########################################

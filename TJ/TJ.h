@@ -65,16 +65,14 @@ class TJ : private Utility
   int SRC;     // Flag for reading profile data from file (read from Equilibrium JSON file)
   int EQLB;    // Flag for equilibrium calculation only (read from TJ JSON file)
   int FREE;    // Flag for free/fixed boundary calculation (read from TJ JSON file)
-               //  FREE > 0 - perform no-wall calculation
-               //  FREE = 0 - perform perfect-wall calculation
-               //  FREE < 0 - perform fixed-boundary calculation
+               //  FREE > 0 - perform no-wall tearing mode calculation
+               //  FREE = 0 - perform perfect-wall tearing mode calculation
+               //  FREE < 0 - perform fixed-boundary tearing mode calculation
   int FVAL;    // Flag for calculating eigenvalues and eigenvectors of F-matrix (read from TJ JSON file)
   int RMP;     // Flag for resonant magnetic perturbation calculation (read from TJ JSON file)
   int VIZ;     // Flag for generating unreconnected eigenfunction visualization data (read from TJ JSON file)
   int IDEAL;   // Flag for ideal calculation (read from TJ JSON file)
   int XI;      // Flag for using Xi, rather than Psi, as ideal eigenfunction basis (read from TJ JSON file)
-  int INTR;    // Flag for internal ideal stability calculation (read from TJ JSON file)
-  int RWM;     // Flag for resistive wall mode calculation (read from TJ JSON file)
   int LAYER;   // Flag for layer calculation (read from TJ JSON file)
   int TEMP;    // Flag for perturbed temperature calculation (read from TJ JSON file)
 
@@ -205,7 +203,7 @@ class TJ : private Utility
   double*            seta;      // sin(eta) on plasma boundary
   double*            R2grgz;    // R^2 nabla r . nabla z   on plasma boundary
   double*            R2grge;    // R^2 nabla r . nabla eta on plasma boundary
-
+  
   gsl_spline*        Rrzspline; // Interpolated R2grgz function on plasma boundary
   gsl_spline*        Rrespline; // Interpolated R2grge function on plasma boundary
   gsl_spline*        Rbspline;  // Interpolated R function on plasma boundary
@@ -215,6 +213,23 @@ class TJ : private Utility
   gsl_interp_accel*  Rreacc;    // Accelerator for interpolated R2grge function on plasma boundary
   gsl_interp_accel*  Rbacc;     // Accelerator for interpolated R function on plasma boundary
   gsl_interp_accel*  Zbacc;     // Accelerator for interpolated Z function on plasma boundary
+
+  double*            cmuw;       // cosh(mu) on wall
+  double*            eetaw;      // eta on wall
+  double*            cetaw;      // cos(eta) on wall
+  double*            setaw;      // sin(eta) on wall
+  double*            R2grgzw;    // R^2 nabla r . nabla z   on wall
+  double*            R2grgew;    // R^2 nabla r . nabla eta on wall
+
+  gsl_spline*        Rrzwspline; // Interpolated R2grgz function on wall
+  gsl_spline*        Rrewspline; // Interpolated R2grge function on wall
+  gsl_spline*        Rwspline;   // Interpolated R function on wall
+  gsl_spline*        Zwspline;   // Interpolated Z function on wall
+
+  gsl_interp_accel*  Rrzwacc;    // Accelerator for interpolated R2grgz function on wall
+  gsl_interp_accel*  Rrewacc;    // Accelerator for interpolated R2grge function on wall
+  gsl_interp_accel*  Rwacc;      // Accelerator for interpolated R function on wall
+  gsl_interp_accel*  Zwacc;      // Accelerator for interpolated Z function on wall
 
   // -----------
   // Island data
@@ -236,13 +251,21 @@ class TJ : private Utility
   double* Zbound; // Z values on plasma boundary
   double* dRdthe; // dR/dtheta values on plasma boundary
   double* dZdthe; // dZ/dtheta values on plasma boundary
+  double  igrr2b; // <|nabla r|^(-2)> on plasma boundary
 
   // ---------------
   // Wall parameters
   // ---------------
-  double* wwall;  // omega values on wall
+  double* twall;  // theta values on wall
   double* Rwall;  // R values on wall
-  double* Zwall;  // Z values on wall 
+  double* Zwall;  // Z values on wall
+  double* dRdthw; // dR/dtheta values on wall
+  double* dZdthw; // dZ/dtheta values on wall
+  double  H1w;    // H1 at wall
+  double  H1pw;   // H1p at wall
+  double  igrr2w; // <|nabla r|^(-2)> on plasma boundary
+  double  alphaw; // Wall effective radius parameter
+  double  gammaw; // Normalized thin-wall resistive wall mode growth-rate
 
   // -----------------------------------
   // Resonant magnetic perturbation data
@@ -299,8 +322,9 @@ class TJ : private Utility
   // Wall solution data
   // ------------------
   double                   bw;     // Relative wall radius (read from Equilibrium JSON file)
-  double*                  rho;    // Wall scaling vector
 
+  Array<complex<double>,2> Pwal;   // Wall solution matrix
+  Array<complex<double>,2> Qwal;   // Wall solution matrix
   Array<complex<double>,2> Rwal;   // Wall solution matrix
   Array<complex<double>,2> Swal;   // Wall solution matrix
 
@@ -320,10 +344,7 @@ class TJ : private Utility
   Array<complex<double>,2> iRPIdag; // Hermitian conjugate of iRPImat
   Array<complex<double>,2> iGmat;   // Perfect-wall vacuum response matrix: iGmat = (1/2) (iRPImat + iRPIdag)
 
-  Array<complex<double>,2> Bmat;    // Bmat * RImat = IRmat
-  Array<complex<double>,2> Cmat;    // Cmat = (Gmat - Hmat) * Bmat
-  Array<complex<double>,2> Cher;    // Hermitian component of Cmat
-  Array<complex<double>,2> Cant;    // Anti-Hermitian component of Cmat
+  Array<complex<double>,2> Rbamat;  // Rwal Rvac^-1
    
   // ---------------------
   // Rational surface data
@@ -545,16 +566,15 @@ class TJ : private Utility
   Array<complex<double>,2> Psirv;  // Psi components of ideal RMP response eigenfunction
   Array<complex<double>,2> Zrv;    // Z components of ideal RMP response eigenfunction
 
-  // --------------------
-  // Ideal stability data
-  // --------------------
+  // ----------------------------
+  // No-wall ideal stability data
+  // ----------------------------
   Array<complex<double>,3> Psii;    // Psi components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Zi;      // Z components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Xii;     // Xi components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> xii;     // xi components of ideal solutions launched from magnetic axis
   Array<complex<double>,3> Chii;    // Chi components of ideal solutions launched from magnetic axis
-  Array<complex<double>,2> Ji;      // Poloidal harmonics of current on plasma boundary associated with
-                                    //  ideal solutions launched from magnetic axis
+  Array<complex<double>,2> Ji;      // Poloidal harmonics of current on plasma boundary associated with ideal solutions launched from magnetic axis
   Array<complex<double>,2> Wmat;    // Plasma ideal energy matrix
   Array<complex<double>,2> Wher;    // Hermitian component of Wmat
   Array<complex<double>,2> Want;    // Anti-Hermitian component of Wmat
@@ -582,31 +602,40 @@ class TJ : private Utility
   Array<complex<double>,2> Xiy;     // Xi values on plasma boundary associated with ideal eigenfunctions
   complex<double>*         gammax;  // Expansion of Psi_x at boundary in ideal eigenfunctions
   complex<double>*         gamma;   // Expansion of Psi_rmp at boundary in ideal eigenfunctions
+  complex<double>*         ya;      // psi values of zeroth eigenfunction at plasma boundary
+  int                      jzero;   // Index of first solution with positive vacuum energy
 
-  Array<double,2>          lvals;   // Eigenvalues of plasma energy matrix versus r
-
-  // -------------------
-  // Resistive wall data
-  // -------------------
-  Array<complex<double>,2> Wnw;     // No-wall plasma energy matrix
-  Array<complex<double>,2> Wpw;     // Perfect-wall plasma energy matrix
-  Array<complex<double>,2> Wpwh;    // Hermitian component of perfect-wall plasma energy matrix
-  Array<complex<double>,2> Wpw2;    // Inverse square root of Wpwh
-  Array<complex<double>,2> Dmat;    // Wpw2 * Cmat * Wpw2
-  Array<complex<double>,2> Dher;    // Hermitian component of Dmat
-  Array<complex<double>,2> Dsqt;    // Square root of Dher
-  Array<complex<double>,2> Dinv;    // Invese square root of Dher
-  Array<complex<double>,2> Ehmt;    // Wpw2 * Wnw * Bmat * Wpw2
-  Array<complex<double>,2> FFmt;    // Dsqt * Ehmt * Dinv
-  Array<complex<double>,2> FFhr;    // Hermitian component of FFmt
-  Array<complex<double>,2> FFan;    // Anti-Hermitian component of FFmt
-  double*                  FFvl;    // Eigenvalues of FFmt
-  double*                  fw;      // Resistive wall mode growth-rate factors
-  Array<complex<double>,2> FFvc;    // Eigenvectors of FFmt
-  Array<complex<double>,2> FFrs;    // Residuals of FFmt othonormality matrix
-  Array<complex<double>,2> Psir;    // Psi components of resistive wall mode eigenfunctions on boundary
-  Array<complex<double>,2> Xir;     // Xi components of resistive wall mode  eigenfunctions on boundary
-  
+  // ------------------------------
+  // Perfect-wall ideal energy data
+  // ------------------------------
+  Array<complex<double>,2> pWmat;    // Plasma ideal energy matrix
+  Array<complex<double>,2> pWher;    // Hermitian component of Wmat
+  Array<complex<double>,2> pWant;    // Anti-Hermitian component of Wmat
+  double*                  pWval;    // Eigenvalues of symmeterized W-matrix
+  Array<complex<double>,2> pVmat;    // Vacuum ideal energy matrix
+  Array<complex<double>,2> pVher;    // Hermitian component of Vmat
+  Array<complex<double>,2> pVant;    // Anti-Hermitian component of Vmat
+  double*                  pVval;    // Eigenvalues of symmeterized V-matrix
+  Array<complex<double>,2> pUmat;    // Total ideal energy matrix
+  Array<complex<double>,2> pUher;    // Hermitian component of Umat
+  Array<complex<double>,2> pUant;    // Anti-Hermitian component of Umat
+  double*                  pUval;    // Eigenvalues of symmeterized U-matrix
+  Array<complex<double>,2> pUvec;    // Eigenvectors of symmeterized U-matrix
+  Array<complex<double>,2> pUres;    // Residuals of Uvec orthonormality matrix
+  Array<complex<double>,3> pPsie;    // y components of ideal eigenfunctions
+  Array<complex<double>,3> pZe;      // Z components of ideal eigenfunctions
+  Array<complex<double>,3> pXie;     // Xi components of ideal eigenfunctions
+  Array<complex<double>,3> pxie;     // xi components of ideal eigenfunctions
+  Array<complex<double>,2> pJe;      // Poloidal harmomics of current on plasma boundary associated with ideal eigenfunctions
+  double*                  pdeltaW;  // Total perturbed ideal potential energy 
+  double*                  pdeltaWp; // Plasma contribution to perturbed ideal potential energy
+  double*                  pdeltaWv; // Vacuum contribution to perturbed ideal potential energy
+  Array<complex<double>,2> pPsiy;    // y values on plasma boundary associated with ideal eigenfunctions
+  Array<complex<double>,2> pJy;      // Current on plasma boundary associated with ideal eigenfunctions
+  Array<complex<double>,2> pXiy;     // Z values on plasma boundary associated with ideal eigenfunctions
+  complex<double>*         yb;       // psi values of zeroth eigenfunction at wall
+  int                      pjzero;   // Index of first solution with positive vacuum energy
+ 
   // -------------------
   // Resonant layer data
   // -------------------
@@ -793,8 +822,10 @@ class TJ : private Utility
   // In Ideal.cpp
   // ............
 
-  // Calculate ideal stability
-  void CalculateIdealStability ();
+  // Calculate no-wall ideal stability
+  void CalculateNoWallIdealStability ();
+  // Calculate perfect-wall ideal stability
+  void CalculatePerfectWallIdealStability ();
 
   // ..........
   // In RWM.cpp

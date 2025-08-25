@@ -23,7 +23,8 @@
 ## Wall Matrices:
 
 - *Metricw.py*:      Plots metric data at wall
-- *Wall.py*:	     Visualizes wall matrices R_m^m' and S_m^m'
+- *Wall.py*:	     Visualizes wall matrices P_m^m' and R_m^m'
+- *Wall1.py*:	     Visualizes wall matrices Q_m^m' and S_m^m'
 - *Imat.py*:	     Visualizes inverse of wall matrix I_m^m' (should be Hermitian)
 - *Gmat.py*:         Visualizes perfect-wall response matrix, G_mm'
 - *iGmat.py*:        Visualizes inverse perfect-wall response matrix, iG_mm'

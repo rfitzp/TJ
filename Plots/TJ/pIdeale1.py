@@ -1,6 +1,6 @@
-# Ideale1.py
+# pIdeale1.py
 
-# Plots kth poloidal harmonic of psi, Z, and Xi components of no-wall ideal eigenfunction versus r.
+# Plots kth poloidal harmonic of psi, Z, and Xi components of perfect-wall ideal eigenfunction versus r.
 # User prompted for eigenfunction number and poloidal harmomic mode number.
 # Locations of rational surfaces are shown.
 
@@ -22,7 +22,7 @@ Xi_i  = ds['Xi_e_i']
 rres  = ds['r_res']
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: No-Wall Ideal Eigenfunction')
+fig.canvas.manager.set_window_title (r'TJ Code: Perfect-Wall Ideal Eigenfunction')
 plt.rc('xtick', labelsize = 15) 
 plt.rc('ytick', labelsize = 15)
 

@@ -1,6 +1,6 @@
-# Evals.py
+# pEvals.py
 
-# Plots eigenvalues of no-wall W, V, U matrices versus solution number
+# Plots eigenvalues of perfect-wall W, V, U matrices versus solution number
 
 import math
 import numpy as np
@@ -10,9 +10,9 @@ from matplotlib.ticker import MaxNLocator
 
 fn = '../../Outputs/TJ/TJ.nc'
 ds = nc.Dataset(fn)
-w  = ds['Uval']
-p  = ds['Wval']
-v  = ds['Vval']
+w  = ds['pUval']
+p  = ds['pWval']
+v  = ds['pVval']
 
 J = len(w)
 
@@ -33,7 +33,7 @@ for j in range (J-1):
     vvv.append(vv[j])
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: No-Wall Energy Matrix Eigenvalues')
+fig.canvas.manager.set_window_title (r'TJ Code: Perfect-Wall Energy Matrix Eigenvalues')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 

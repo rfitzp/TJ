@@ -3,7 +3,7 @@
 #include "Equilibrium.h"
 
 #define NINPUT 18
-#define NPARA 5
+#define NPARA 7
 #define NBETA 4
 
 // #################################################
@@ -41,8 +41,10 @@ void Equilibrium::WriteNetcdf (double sa)
   para[0] = epsa;
   para[1] = sa;
   para[2] = bw;
-  para[3] = H1b;
-  para[4] = H1pb;
+  para[3] = H1w;
+  para[4] = H1pw;
+  para[5] = igrr2b;
+  para[6] = igrr2w;
 
   Beta[0] = li;
   Beta[1] = betat;

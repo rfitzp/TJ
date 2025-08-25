@@ -1,6 +1,6 @@
-# PsiJSurface.py
+# pPsiJSurface.py
 
-# Plots psi, J, and Xi on plasma boundary associated with no-wall ideal eigenfunction.
+# Plots psi, J, and Xi on plasma boundary associated with perfect-wall ideal eigenfunction.
 # User prompted for eigenfunction number.
 
 import math
@@ -11,15 +11,15 @@ import netCDF4 as nc
 fn    = '../../Outputs/TJ/TJ.nc'
 ds    = nc.Dataset(fn)
 theta = ds['theta']
-Psi_r = ds['Psi_surface_r']
-Psi_i = ds['Psi_surface_i']
-J_r   = ds['J_surface_r']
-J_i   = ds['J_surface_i']
-Xi_r  = ds['Xi_surface_r']
-Xi_i  = ds['Xi_surface_i']
-w     = np.asarray(ds['delta_W'])
-p     = np.asarray(ds['delta_W_p'])
-v     = np.asarray(ds['delta_W_v'])
+Psi_r = ds['pPsi_surface_r']
+Psi_i = ds['pPsi_surface_i']
+J_r   = ds['pJ_surface_r']
+J_i   = ds['pJ_surface_i']
+Xi_r  = ds['pXi_surface_r']
+Xi_i  = ds['pXi_surface_i']
+w     = np.asarray(ds['pdelta_W'])
+p     = np.asarray(ds['pdelta_W_p'])
+v     = np.asarray(ds['pdelta_W_v'])
 
 t  = np.asarray(theta);
 tt = t/math.pi
@@ -29,7 +29,7 @@ print ("solution number = (%d .. %d)" % (0, J-1))
 j   = int(input ("solution number ? "))
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: No-Wall Ideal Eigenfunction Boundary Data: deltaW = %10.3e %10.3e %10.3e' % (w[j], p[j], v[j]))
+fig.canvas.manager.set_window_title (r'TJ Code: Perfect-Wall Ideal Eigenfunction Boundary Data: deltaW = %10.3e %10.3e %10.3e' % (w[j], p[j], v[j]))
 plt.rc('xtick', labelsize = 15) 
 plt.rc('ytick', labelsize = 15)
 

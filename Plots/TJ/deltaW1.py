@@ -1,6 +1,6 @@
 # deltaW1.py
 
-# Plots specified number of delta_W values versus solution number
+# Plots specified number of no-wall delta_W values versus solution number
 
 import math
 import numpy as np
@@ -36,7 +36,7 @@ for j in range (J):
     vvv.append(vv[j])
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: delta W Values')
+fig.canvas.manager.set_window_title (r'TJ Code: No-Wall delta W Values')
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 

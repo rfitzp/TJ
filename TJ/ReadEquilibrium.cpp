@@ -213,6 +213,69 @@ void TJ::CalculateMetricBoundary ()
   gsl_spline_init (Rrespline, tbound, R2grge, Nw+1);
 }
 
+// #########################################
+// Function to calculate metric data on wall
+// #########################################
+void TJ::CalculateMetricWall ()
+{
+  // ...............
+  // Allocate memory
+  // ...............
+  cmuw    = new double[Nw+1];
+  eetaw   = new double[Nw+1];
+  cetaw   = new double[Nw+1];
+  setaw   = new double[Nw+1];
+  R2grgzw = new double[Nw+1];
+  R2grgew = new double[Nw+1];
+
+  Rwspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Zwspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Rwacc    = gsl_interp_accel_alloc ();
+  Zwacc    = gsl_interp_accel_alloc ();
+ 
+  Rrzwspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Rrewspline = gsl_spline_alloc (gsl_interp_cspline_periodic, Nw+1);
+  Rrzwacc    = gsl_interp_accel_alloc ();
+  Rrewacc    = gsl_interp_accel_alloc ();
+ 
+  // .....................
+  // Calculate metric data
+  // .....................
+  for (int i = 0; i <= Nw; i++)
+    {
+      double R  = Rwall [i];
+      double Z  = Zwall [i];
+      double Rt = dRdthw[i];
+      double Zt = dZdthw[i];
+
+      double z   = GetCoshMu (R, Z);
+      double et  = GetEta    (R, Z);
+      double cet = cos (et);
+      double set = sin (et);
+
+      double muR = 1. - z * cet;
+      double muZ = - sqrt (z*z - 1.) * set;
+      double etR = - sqrt (z*z - 1.) * set;
+      double etZ = z * cet - 1.;
+
+      cmuw [i] = z;
+      eetaw[i] = et /M_PI;
+      cetaw[i] = cet;
+      setaw[i] = set;
+    
+      R2grgzw[i] = R * sqrt (z*z - 1.) * (Rt * muZ - Zt * muR);
+      R2grgew[i] = R                   * (Rt * etZ - Zt * etR);
+    }
+
+  // .......................
+  // Interpolate metric data
+  // .......................
+  gsl_spline_init (Rwspline,   twall, Rwall,   Nw+1);
+  gsl_spline_init (Zwspline,   twall, Zwall,   Nw+1);
+  gsl_spline_init (Rrzwspline, twall, R2grgzw, Nw+1);
+  gsl_spline_init (Rrewspline, twall, R2grgew, Nw+1);
+}
+
 // ##############################################################
 // Function to read island data from Outputs/Island/Islandxxxx.nc
 // ##############################################################

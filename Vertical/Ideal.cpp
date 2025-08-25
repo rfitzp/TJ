@@ -651,5 +651,5 @@ void Vertical::CalculatePerfectWallIdealStability ()
   alphaw = M_PI*M_PI * sumw /(pdeltaWv[pjzero] - deltaWv[jzero]);
   gammaw = - deltaW[jzero] /alphaw /pdeltaW[pjzero];
   
-  printf ("solution number (%1d, %1d): alphaw = %10.3e gammaw = %10.3e\n", jzero, pjzero, alphaw, gammaw);
+  printf ("Solution number (%1d, %1d): alphaw = %10.3e gammaw = %10.3e\n", jzero, pjzero, alphaw, gammaw);
 }

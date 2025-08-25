@@ -16,12 +16,12 @@
 
 ## Wall matrices:
 
-- *Wall.py*:	     Visualizes wall matrices R_m^m and S_m^m
+- *Metricw.py*:      Plots metric data at wall
+- *Wall.py*:	     Visualizes wall matrices P_m^m and R_m^m
+- *Wall1.py*:	     Visualizes wall matrices Q_m^m and S_m^m
 - *Imat.py*:	     Visualizes inverse of wall matrix I_m^m (should be Hermitian)
 - *Gmat.py*:         Visualizes perfect-wall response matrix, G_mm'
 - *iGmat.py*:        Visualizes inverse perfect-wall response matrix, iG_mm'
-- *Bmat.py*:         Visualizes wall response matrix, B_mm'
-- *Cmat.py*:         Visualizes wall response matrix, C_mm' (should be Hermtian)
 
 ## ODE Solution:
 
@@ -84,13 +84,13 @@
 - *Psix.py*:           Plots poloidal harmonics of RMP at plasma boundary
 - *Chi.py*:            Plots RMP drives at rational surfaces
 - *Rmp.py*:            Plots ideal response of plasma to RMP
-- *Rmp1.py*:           Plots kth poloidal harmonics of ideal response of plasm to RMP
+- *Rmp1.py*:           Plots kth poloidal harmonics of ideal response of plasma to RMP
 - *Psir.py*:           Plots psi components of ideal response of plasma to RMP in R, Z plane
 - *PsiZr.py*:          Plots psi and Z components of ideal response of plasma to RMP in R, Z plane
 - *PsiRmpSurface.py*:  Plots RMP data on plasma boundary
 - *Gamma.py*:          Plots expansions of Psi_x and Psi^rmp at plasma boundary in terms of ideal eigenfunctions
 
-## Ideal stability:
+## No-wall ideal stability:
 
 - *Ideal.py*:		    Plots poloidal harmonics of ideal solutions launched from magnetic axis versus r
 - *Ideal1.py*:		    Plots kth poloidal harmomic of ideal solutions launched from magnetic axis versus r
@@ -106,12 +106,18 @@
 - *deltaW2.py*:	 	    Plots delta W values versus eigenfunction number in range of y
 - *Xi.py*:              Plots Xi Fourier harmonics of ideal eigenfunctions on plasma boundary
 - *PsiJSurface.py*: 	Plots psi and J on plasma boundary associated with ideal eigenfunctions
-- *lambda.py*:          Plots eigenvalues of plasma energy matrix versus r
-- *crit.py*:		    Plots smallest eigenvalue of plasma energy matrix versus r
 
-## Resistive wall mode stability:
+## Perfect-wall ideal stability:
 
-- *Wmat.py*:	       Plots no-wall and perfect-wall plasma energy matrices
-- *Dmat.py*:	       Plots resistive wall mode matrix D
-- *Fmat.py*:	       Plots resistive wall mode matrix F
-- *Xirwm.py*:          Plots Xi Fourier harmonics of rwm eigenfunctions on plasma boundary
+- *pUmat.py*:		    Visualizes total ideal energy matrix
+- *pIdeale.py*:      	Plots poloidal harmonics of ideal eigenfunctions versus r
+- *pIdeale1.py*:     	Plots kth poloidal harmonic of ideal eigenfunctions versus r
+- *pxIdeale.py*:      	Plots poloidal harmonics of ideal eigenfunctions versus r (plots xi instead of Xi)
+- *pxideale1.py*:     	Plots kth poloidal harmonic of ideal eigenfunctions versus r (plots xi instead of Xi)
+- *pEvals.py*:	 	    Plots eigenvalues of W, V, U matrices 
+- *pdeltaW.py*:	 	    Plots delta W values versus eigenfunction number
+- *pdeltaW1.py*:	 	Plots select number of delta W values versus eigenfunction number
+- *pdeltaW2.py*:	 	Plots delta W values versus eigenfunction number in range of y
+- *pXi.py*:             Plots Xi Fourier harmonics of ideal eigenfunctions on plasma boundary
+- *pPsiJSurface.py*: 	Plots psi and J on plasma boundary associated with ideal eigenfunctions
+- *psiab.py*:           Plots psi_a and psi_b versus mode number

@@ -270,7 +270,8 @@ class Equilibrium : private Utility
   double*            dZdtheta;  // dZ/dtheta values on plasma boundary
   double*            R2b;       // R^2 values on plasma boundary
   double*            grr2b;     // |nabla r|^2 values on plasma boundary
-
+  double             igrr2b;    // <|nabla r|^(-2)> on plasma boundary
+ 
   // ---------
   // Wall data
   // ---------
@@ -284,8 +285,9 @@ class Equilibrium : private Utility
   double*            dZdthetw;  // dZ/dtheta values on wall
   double*            R2w;       // R^2 values on wall
   double*            grr2w;     // |nabla r|^2 values on wall
-  double             H1b;       // H1 at wall
-  double             H1pb;      // H1p at wall
+  double             H1w;       // H1 at wall
+  double             H1pw;      // H1p at wall
+  double             igrr2w;    // <|nabla r|^(-2)> on wall
 
   // -------------------------
   // Synthetic diagnostic data
@@ -462,6 +464,8 @@ private:
   double Getf_Z (double r, double w);
   // Return |nabla r|^2
   double Getgrr2 (double r, double t);
+  // Return <|nabla r|^{-2}>
+  double Getigrr2av (double r);
   
   // Evaluate right-hand sides of differential equations
   void CashKarp45Rhs (double x, double* y, double* dydx) override;

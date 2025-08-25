@@ -1,6 +1,6 @@
 # xIdeale.py
 
-# Plots poloidal harmonics of psi, Z, and Xi components of ideal eigenfunction versus r.
+# Plots poloidal harmonics of psi, Z, and Xi components of no-wall ideal eigenfunction versus r.
 # User prompted for eigenfunction number.
 # Locations of rational surfaces are shown.
 # Plots xi instead of Xi
@@ -24,7 +24,7 @@ rres  = ds['r_res']
 mres  = ds['m_res']
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Ideal Eigenfunction')
+fig.canvas.manager.set_window_title (r'TJ Code: No-Wall Ideal Eigenfunction')
 plt.rc('xtick', labelsize = 15) 
 plt.rc('ytick', labelsize = 15)
 
