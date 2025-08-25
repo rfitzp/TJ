@@ -477,12 +477,12 @@ void Vertical::GetVacuumWall ()
     for (int jp = 0; jp < J; jp++)
       iGmat(j, jp) = 0.5 * iRPImat(j, jp) + 0.5 * iRPIdag(j, jp);
 
-   printf ("I matrix residual: %10.4e\n", Aamax/Ahmax);
+  printf ("I matrix Hermitian test residual: %10.4e\n", Aamax/Ahmax);
 
-   // ................
-   // Calculate Rbamat
-   // ................
-   SolveLinearSystemTranspose (Rvac, Rbamat, Rwal);
+  // ................
+  // Calculate Rbamat
+  // ................
+  SolveLinearSystemTranspose (Rvac, Rbamat, Rwal);
 }
  
 // ####################################################
@@ -492,6 +492,10 @@ void Vertical::CashKarp45Rhs1 (double t, complex<double>* Y, complex<double>* dY
 {
   if (rhs_chooser == 0)
     {
+      // ...........................................................
+      // Right-hand sides for calculation of no-wall vacuum matrices
+      // ...........................................................
+            
       int index = 0, NTOR = 0;
       for (int j = 0; j < J; j++)
 	for (int jp = 0; jp < J; jp++)
@@ -534,8 +538,12 @@ void Vertical::CashKarp45Rhs1 (double t, complex<double>* Y, complex<double>* dY
 	    dYdt[index] = Srhs; index++;
 	  }
     }
-  else
+  else if (rhs_chooser == 1)
     {
+      // ................................................................
+      // Right-hand sides for calculation of perfect-wall vacuum matrices
+      // ................................................................
+      
       int index = 0, NTOR = 0;
       for (int j = 0; j < J; j++)
 	for (int jp = 0; jp < J; jp++)

@@ -1,6 +1,6 @@
 # Vacuum1.py
 
-# Visualizes vacuum matrices, Q_m^m' and Q_m^m'
+# Visualizes vacuum matrices, Q_m^m' and S_m^m'
 
 import math
 import numpy as np

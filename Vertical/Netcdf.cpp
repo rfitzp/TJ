@@ -26,8 +26,8 @@ void Vertical::ReadEquilibriumNetcdf ()
       epsa = para[0];
       sa   = para[1];
       bw   = para[2];
-      H1b  = para[3];
-      H1pb = para[4];
+      H1w  = para[3];
+      H1pw = para[4];
       
       NcVar r_x   = dataFile.getVar ("r");
       NcVar P_x   = dataFile.getVar ("PsiN");
@@ -282,8 +282,12 @@ void Vertical::WriteNetcdf ()
   double* iHmat_r = new double[J*J];
   double* iHmat_i = new double[J*J];
 
+  double* Pwal_r = new double[J*J];
+  double* Pwal_i = new double[J*J];
   double* Rwal_r = new double[J*J];
   double* Rwal_i = new double[J*J];
+  double* Qwal_r = new double[J*J];
+  double* Qwal_i = new double[J*J];
   double* Swal_r = new double[J*J];
   double* Swal_i = new double[J*J];
   double* Imat_r = new double[J*J];
@@ -423,9 +427,13 @@ void Vertical::WriteNetcdf ()
 	Hmat_i [cnt] = Hmat (j, jp).imag();
 	iHmat_r[cnt] = iHmat(j, jp).real();
 	iHmat_i[cnt] = iHmat(j, jp).imag();
-	
+
+	Pwal_r[cnt] = Pwal(j, jp).real();
+	Pwal_i[cnt] = Pwal(j, jp).imag();
 	Rwal_r[cnt] = Rwal(j, jp).real();
 	Rwal_i[cnt] = Rwal(j, jp).imag();
+	Qwal_r[cnt] = Qwal(j, jp).real();
+	Qwal_i[cnt] = Qwal(j, jp).imag();
 	Swal_r[cnt] = Swal(j, jp).real();
 	Swal_i[cnt] = Swal(j, jp).imag();
 
@@ -757,11 +765,19 @@ void Vertical::WriteNetcdf ()
       ihmatr_x.putVar (iHmat_r);
       NcVar ihmati_x = dataFile.addVar ("iHmat_i", ncDouble, vacuum_d);
       ihmati_x.putVar (Hmat_i);
-
+      
+      NcVar pwalr_x = dataFile.addVar ("Pwal_r", ncDouble, vacuum_d);
+      pwalr_x.putVar (Pwal_r);
+      NcVar pwali_x = dataFile.addVar ("Pwal_i", ncDouble, vacuum_d);
+      pwali_x.putVar (Pwal_i);
       NcVar rwalr_x = dataFile.addVar ("Rwal_r", ncDouble, vacuum_d);
       rwalr_x.putVar (Rwal_r);
       NcVar rwali_x = dataFile.addVar ("Rwal_i", ncDouble, vacuum_d);
       rwali_x.putVar (Rwal_i);
+      NcVar qwalr_x = dataFile.addVar ("Qwal_r", ncDouble, vacuum_d);
+      qwalr_x.putVar (Qwal_r);
+      NcVar qwali_x = dataFile.addVar ("Qwal_i", ncDouble, vacuum_d);
+      qwali_x.putVar (Qwal_i);
       NcVar swalr_x = dataFile.addVar ("Swal_r", ncDouble, vacuum_d);
       swalr_x.putVar (Swal_r);
       NcVar swali_x = dataFile.addVar ("Swal_i", ncDouble, vacuum_d);
@@ -974,6 +990,7 @@ void Vertical::WriteNetcdf ()
   delete[] Hmat_r;  delete[] Hmat_i; delete[] iHmat_r; delete[] iHmat_i; 
   delete[] Rwal_r;  delete[] Rwal_i; delete[] Swal_r;  delete[] Swal_i;
   delete[] Imat_r;  delete[] Imat_i; delete[] Iant_r;  delete[] Iant_i;
+  delete[] Pwal_r;  delete[] Pwal_i; delete[] Qwal_r;  delete[] Qwal_i;
 
   delete[] iGmat_r; delete[] iGmat_i; delete[] Gmat_r;  delete[] Gmat_i;
   
