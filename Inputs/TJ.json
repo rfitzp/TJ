@@ -6,9 +6,9 @@
     "NPHI":   32,           // Number of toroidal grid-points on extended visualization grid
 
     "EQLB":   0,           // Flag for equilibrium calculation only
-    "FREE":   1,           // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary tearing mode calculations
+    "FREE":   0,           // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary tearing mode calculations
     "FVAL":   0,           // Flag for calculating eigenvalues and eigenvectors of F-matrix
-    "VIZ":    1,           // Flag for generating unreconnected eigenfunction visualization data
+    "VIZ":    0,           // Flag for generating unreconnected eigenfunction visualization data
     "IDEAL":  1,           // Flag for ideal calculation
     "XI":     1,           // Flag for using Xi, rather than Psi, as ideal eigenfunction basis
     "RMP":    0,           // Flag for resonant magnetic perturbation calculation

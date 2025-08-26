@@ -469,6 +469,8 @@ void TJ::GetVacuumWall ()
 	if (aaval > Aamax)
 	  Aamax = aaval;	
       }
+  
+  printf ("I matrix Hermitian test residuals: %10.4e\n", Aamax/Ahmax);
 
   // .................................
   // Calculate PI, RI, and IR-matrices
@@ -517,8 +519,6 @@ void TJ::GetVacuumWall ()
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       iGmat(j, jp) = 0.5 * iRPImat(j, jp) + 0.5 * iRPIdag(j, jp);
-
-  printf ("I matrix Hermitian test residuals: %10.4e\n", Aamax/Ahmax);
 
   // ................
   // Calculate Rbamat
