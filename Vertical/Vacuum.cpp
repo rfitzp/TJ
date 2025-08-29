@@ -350,6 +350,31 @@ void Vertical::GetVacuumWall ()
   Rwal.resize(J, J);
   Swal.resize(J, J);
 
+  wPdag.resize(J, J);
+  wQdag.resize(J, J);
+  wRdag.resize(J, J);
+  wSdag.resize(J, J);
+
+  wPRmat.resize(J, J);
+  wPRher.resize(J, J);
+  wPRant.resize(J, J);
+
+  wQSmat.resize(J, J);
+  wQSher.resize(J, J);
+  wQSant.resize(J, J);
+
+  wPSmat.resize(J, J);
+
+  wQPmat.resize(J, J);
+  wQPher.resize(J, J);
+  wQPant.resize(J, J);
+
+  wRSmat.resize(J, J);
+  wRSher.resize(J, J);
+  wRSant.resize(J, J);
+
+  wSPmat.resize(J, J);
+
   iImat.resize(J, J);
   iIher.resize(J, J);
   iIant.resize(J, J);
@@ -401,6 +426,229 @@ void Vertical::GetVacuumWall ()
 	Swal(j, jp) = Y[index]; index++;
       }
 
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	wPdag(j, jp) = conj (Pwal(jp, j));
+	wQdag(j, jp) = conj (Qwal(jp, j));
+	wRdag(j, jp) = conj (Rwal(jp, j));
+	wSdag(j, jp) = conj (Swal(jp, j));
+      }
+  
+  // ....................
+  // Calculate wPR-matrix
+  // ....................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += wPdag(j, jpp) * Rwal(jpp, jp);
+
+	wPRmat(j, jp) = sum;
+      }
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	wPRher(j, jp) = 0.5 * (wPRmat(j, jp) + conj (wPRmat(jp, j)));
+	wPRant(j, jp) = 0.5 * (wPRmat(j, jp) - conj (wPRmat(jp, j)));
+      }
+  
+  // .............................
+  // Calculate wPR-matrix residual
+  // .............................
+  double Ahmax = 0., Aamax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double ahval = abs (wPRher(j, jp));
+	double aaval = abs (wPRant(j, jp));
+
+	if (ahval > Ahmax)
+	  Ahmax = ahval;
+	if (aaval > Aamax)
+	  Aamax = aaval;	
+      }
+
+  // ....................
+  // Calculate wQS-matrix
+  // ....................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += wQdag (j, jpp) * Swal (jpp, jp);
+
+	wQSmat (j, jp) = sum;
+      }
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	wQSher(j, jp) = 0.5 * (wQSmat(j, jp) + conj (wQSmat(jp, j)));
+	wQSant(j, jp) = 0.5 * (wQSmat(j, jp) - conj (wQSmat(jp, j)));
+      }
+  
+  // .............................
+  // Calculate wQS-matrix residual
+  // .............................
+  double Bhmax = 0., Bamax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double bhval = abs (wQSher(j, jp));
+	double baval = abs (wQSant(j, jp));
+
+	if (bhval > Bhmax)
+	  Bhmax = bhval;
+	if (baval > Bamax)
+	  Bamax = baval;	
+      }
+
+  // ....................
+  // Calculate wPS-matrix
+  // ....................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += wPdag(j, jpp) * Swal(jpp, jp) - wRdag(j, jpp) * Qwal(jpp, jp);
+
+	wPSmat (j, jp) = sum;
+      }
+  
+  // .............................
+  // Calculate wPS-matrix residual
+  // .............................
+  double Imax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double ival;
+	if (j == jp)
+	  ival = abs (wPSmat(j, jp) - complex<double> (1., 0.));
+	else
+	  ival = abs (wPSmat(j, jp));
+
+	if (ival > Imax)
+	  Imax = ival;
+      }
+  
+  printf ("PR, QS, and PS matrix Hermitian test residuals: %10.4e %10.4e %10.4e\n", Aamax/Ahmax, Bamax/Bhmax, Imax);
+
+  // ....................
+  // Calculate wQP-matrix
+  // ....................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += Qwal(j, jpp) * wPdag(jpp, jp);
+
+	wQPmat(j, jp) = sum;
+      }
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	wQPher(j, jp) = 0.5 * (wQPmat(j, jp) + conj (wQPmat(jp, j)));
+	wQPant(j, jp) = 0.5 * (wQPmat(j, jp) - conj (wQPmat(jp, j)));
+      }
+  
+  // .............................
+  // Calculate wQP-matrix residual
+  // .............................
+  Ahmax = 0.; Aamax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double ahval = abs (wQPher(j, jp));
+	double aaval = abs (wQPant(j, jp));
+
+	if (ahval > Ahmax)
+	  Ahmax = ahval;
+	if (aaval > Aamax)
+	  Aamax = aaval;	
+      }
+
+  // ....................
+  // Calculate wRS-matrix
+  // ....................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += Rwal(j, jpp) * wSdag(jpp, jp);
+
+	wRSmat(j, jp) = sum;
+      }
+
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	wRSher(j, jp) = 0.5 * (wRSmat(j, jp) + conj (wRSmat(jp, j)));
+	wRSant(j, jp) = 0.5 * (wRSmat(j, jp) - conj (wRSmat(jp, j)));
+      }
+  
+  // .............................
+  // Calculate wRS-matrix residual
+  // .............................
+  Bhmax = 0.; Bamax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double bhval = abs (wRSher(j, jp));
+	double baval = abs (wRSant(j, jp));
+
+	if (bhval > Bhmax)
+	  Bhmax = bhval;
+	if (baval > Bamax)
+	  Bamax = baval;	
+      }
+
+  // ....................
+  // Calculate wSP-matrix
+  // ....................
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	complex<double> sum = complex<double> (0., 0.);
+
+	for (int jpp = 0; jpp < J; jpp++)
+	  sum += Pwal(j, jpp) * wSdag(jpp, jp) - Qwal(j, jpp) * wRdag(jpp, jp);
+
+	wSPmat(j, jp) = sum;
+      }
+  
+  // ............................
+  // Calculate SP-matrix residual
+  // ............................
+  Imax = 0.;
+  for (int j = 0; j < J; j++)
+    for (int jp = 0; jp < J; jp++)
+      {
+	double ival;
+	if (j == jp)
+	  ival = abs (wSPmat(j, jp) - complex<double> (1., 0.));
+	else
+	  ival = abs (wSPmat(j, jp));
+
+	if (ival > Imax)
+	  Imax = ival;
+      }
+  
+  printf ("QP, RS, and SP matrix Hermitian test residuals: %10.4e %10.4e %10.4e\n", Aamax/Ahmax, Bamax/Bhmax, Imax);
+
   // ..........................
   // Calculate inverse I-matrix
   // ..........................
@@ -416,7 +664,7 @@ void Vertical::GetVacuumWall ()
   // ....................................
   // Calculate inverse I-matrix residuals
   // ....................................
-  double Ahmax = 0., Aamax = 0.;
+  Ahmax = 0., Aamax = 0.;
   for (int j = 0; j < J; j++)
     for (int jp = 0; jp < J; jp++)
       {

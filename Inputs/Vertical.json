@@ -1,5 +1,5 @@
 {
-    "MMAX":   5,          // Maximum poloidal mode number included in calculation
+    "MMAX":   10,          // Maximum poloidal mode number included in calculation
 
     "EQLB":   0,           // Flag for equilibrium calculation only
  

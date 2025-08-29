@@ -25,6 +25,12 @@
 - *Metricw.py*:      Plots metric data at wall
 - *Wall.py*:	     Visualizes wall matrices P_m^m' and R_m^m'
 - *Wall1.py*:	     Visualizes wall matrices Q_m^m' and S_m^m'
+- *wPRmat.py*:       Visualizes vacuum matrix wPR^mm' (should be Hermitian)
+- *wQSmat.py*:       Visualizes vacuum matrix wQS^mm' (should be Hermitian)
+- *wPSmat.py*:       Visualizes vacuum matrix wPS^mm' (should be unit matrix)
+- *wQPmat.py*:       Visualizes vacuum matrix wQP^mm' (should be Hermitian)
+- *wRSmat.py*:       Visualizes vacuum matrix wRS^mm' (should be Hermitian)
+- *wSPmat.py*:       Visualizes vacuum matrix wSP^mm' (should be unit matrix)
 - *Imat.py*:	     Visualizes inverse of wall matrix I_m^m' (should be Hermitian)
 - *Gmat.py*:         Visualizes perfect-wall response matrix, G_mm'
 - *iGmat.py*:        Visualizes inverse perfect-wall response matrix, iG_mm'

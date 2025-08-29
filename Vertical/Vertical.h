@@ -341,6 +341,31 @@ class Vertical : private Utility
   Array<complex<double>,2> Rwal;    // Wall solution matrix
   Array<complex<double>,2> Swal;    // Wall solution matrix
 
+  Array<complex<double>,2> wPdag;   // Hermitian conjugate of Pwal
+  Array<complex<double>,2> wQdag;   // Hermitian conjugate of Qwal
+  Array<complex<double>,2> wRdag;   // Hermitian conjugate of Rwal
+  Array<complex<double>,2> wSdag;   // Hermitian conjugate of Swal
+
+  Array<complex<double>,2> wPRmat;  // wPdag * Rwal
+  Array<complex<double>,2> wPRher;  // Hermitian component of wPRmat
+  Array<complex<double>,2> wPRant;  // Anti-Hermitian component of wPRmat
+
+  Array<complex<double>,2> wQSmat;  // wQdag * Swal
+  Array<complex<double>,2> wQSher;  // Hermitian component of wQSmat
+  Array<complex<double>,2> wQSant;  // Anti-Hermitian component of wQSmat
+
+  Array<complex<double>,2> wPSmat;  // wPdag * Swal - wRdag * Qwal
+
+  Array<complex<double>,2> wQPmat;  // Qwal * wPdag
+  Array<complex<double>,2> wQPher;  // Hermitian component of wQPmat
+  Array<complex<double>,2> wQPant;  // Anti-Hermitian component of wQPmat
+
+  Array<complex<double>,2> wRSmat;  // Rwal * wSdag
+  Array<complex<double>,2> wRSher;  // Hermitian component of wRSmat
+  Array<complex<double>,2> wRSant;  // Anti-Hermitian component of wRSmat
+
+  Array<complex<double>,2> wSPmat;  // Pwal * wSdag - Qwal * wRdag
+
   Array<complex<double>,2> iImat;   // Rwal * iImat = Swal
   Array<complex<double>,2> iIher;   // Hermitian component of iImat
   Array<complex<double>,2> iIant;   // Anti-Hermitian component of iImat

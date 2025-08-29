@@ -22,7 +22,7 @@ plt.axvline (0.,                        color = 'black', linewidth = 1.5, linest
 
 plt.xlabel (r'$H_3(a)$',        fontsize = "15")
 plt.ylabel (r'$\delta W_{nw}$', fontsize = "15")
-plt.legend (fontsize = "15")
+plt.legend (fontsize = "12")
 
 plt.subplot (2, 2, 2)
 
@@ -36,7 +36,7 @@ plt.axvline (0.,                        color = 'black', linewidth = 1.5, linest
 
 plt.xlabel (r'$H_3(a)$',        fontsize = "15")
 plt.ylabel (r'$\delta W_{pw}$', fontsize = "15")
-plt.legend (fontsize = "15")
+plt.legend (fontsize = "12")
 
 plt.subplot (2, 2, 3)
 
@@ -50,7 +50,7 @@ plt.axvline (0.,                        color = 'black', linewidth = 1.5, linest
 
 plt.xlabel (r'$H_3(a)$',   fontsize = "15")
 plt.ylabel (r'$\alpha_w$', fontsize = "15")
-plt.legend (fontsize = "15")
+plt.legend (fontsize = "12")
 
 plt.subplot (2, 2, 4)
 
@@ -62,11 +62,11 @@ plt.plot (df2.iloc[:,0], df2.iloc[:,5], color = 'blue',  linewidth = 1,   linest
 plt.plot (df3.iloc[:,0], df3.iloc[:,5], color = 'cyan',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5, label = r'$p_2(0)= 0.20$')
 plt.axvline (0.,                        color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$H_3(a)$',         fontsize = "15")
-plt.ylabel (r'$\hat{\gamma}_w$', fontsize = "15")
-plt.legend (fontsize = "15")
+plt.xlabel (r'$H_3(a)$',       fontsize = "15")
+plt.ylabel (r'$\hat{\gamma}$', fontsize = "15")
+plt.legend (fontsize = "12")
 
 plt.tight_layout ()
 
-plt.show ()    
-
+#plt.show ()    
+plt.savefig ("Fig3.pdf")
