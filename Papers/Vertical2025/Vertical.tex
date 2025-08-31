@@ -16,7 +16,7 @@
 
 \begin{abstract}
 The  stability of axisymmetric modes in an aspect-ratio expanded tokamak plasma equilibrium surrounded by
-a conformal resistive wall is calculated. The calculation turns out to be significantly different to the calculation of the stability
+a conformal resistive wall is calculated. The calculation turns out to be significantly different to previous calculations of the stability
 of non-axisymmetric ideal modes in an aspect-ratio expanded equilibrium.  In particular, the role of the toroidal angular momentum flux (which is
 identically zero for an axisymmetric mode) is instead played by the electromagnetic energy flux. The conservation of electromagnetic energy is used to prove that the perturbed plasma potential energy matrix is Hermitian. 
 Positive triangularity is
@@ -456,7 +456,7 @@ Thus,
 -{\rm i}\,\pi\,\omega\oint h\,\sinh^2\mu\left(\frac{\partial V}{\partial z}\,V^\ast - \frac{\partial V^\ast}{\partial z}\,V\right) d\eta\nonumber\\[0.5ex]
 &= {\rm i}\,\pi^2\,\omega\sum_m(p_m\,q_m^{\,\ast}-q_m\,p_m^{\,\ast})\,(z^2-1)\,{\cal W}(P_{|m|-1/2},Q_{|m|-1/2}),
  \end{align}
- where ${\cal W}(f,g)= f\,dg/dz-g\,df/dz$. However,\cite{mf2}
+ where ${\cal W}(f,g)\equiv f\,dg/dz-g\,df/dz$. However,\cite{mf2}
  \begin{equation}
  {\cal W}(P_{|m|-1/2},Q_{|m|-1/2}) = \frac{1}{1-z^2},
  \end{equation}
@@ -575,7 +575,7 @@ Equation~(\ref{e41zx}) ensures that  $\underline{\underline{H}}$ is Hermitian.
 \subsection{Perfect-Wall Matching Condition}
 Suppose that the plasma is surrounded by a vacuum region that is bounded by a perfectly conducting wall that is conformal to the plasma-vacuum interface, and whose inner surface lies at $r=b_w\,a$, where $b_w\geq 1$. 
 Because the wall is perfectly conducting, 
-$\underline{\psi}(r=b_w\,a)=0$.\cite{gs1}
+$\underline{\psi}(r=b_w\,a)=\underline{0}$.\cite{gs1}
 In other words, the normal component of the perturbed magnetic field is zero at the inner surface of the wall. 
 It follows from Eq.~(\ref{e33ay}) that
 \begin{equation}
@@ -625,7 +625,8 @@ The perturbed potential energy in the vacuum region is\,\cite{tj1,gs1}
 where use has been made of the facts that $\nabla^2 V =0$ and $\nabla r\cdot \nabla V=0$ at the ideal wall. 
 
 \section{General Ideal Stability}\label{ideal}
-\subsection{Perturbed Plasma Potential Energy}
+
+\subsection{Perturbed Plasma Potential Energy}\label{ideal1}
 Suppose that the poloidal harmonics included in the calculation range from $m=-m_{\rm max}$ to $m=m_{\rm max}$, where $m_{\rm max} >0$. 
 Let  the $y_{mm'}(r)$ and the $Z_{mm'}(r)$ be linearly independent solutions of the axisymmetric ideal-MHD o.d.e.s, (\ref{e69u}) and
 (\ref{e70uu}), that are well-behaved at the magnetic axis. Here, $m$ indexes the poloidal harmonic, whereas $m'$ indexes the dominant poloidal harmonic close to the magnetic
@@ -767,7 +768,7 @@ and
  \begin{equation}\label{alphaw}
  \alpha_w = \frac{\pi^2\left(\sum_{m\neq 0} |y_{m\,nw}|^2\right)_{\hat{r}=b_w}}{\delta W_{v\,pw}- \delta W_{v\,nw}}.
  \end{equation}
- Here, we have neglected $y_{0\,nw}$ because $y_0$ does not affect the vacuum energy. 
+ Here, we have neglected $y_{0\,nw}$ because $y_0$ does not affect the vacuum energy. (See Sect.~\ref{ideal1}.)
  
  Given that $\underline{q}=\underline{0}$ for a no-wall solution, Eq.~(\ref{e33ay}) yields  
  \begin{equation}
@@ -987,10 +988,10 @@ I_{p\,{\rm cyl}} = \frac{2\pi\,a^2\,g(a)}{q(a)}
 \end{equation}
 is the plasma current predicted by cylindrical theory, whereas
 \begin{equation}
-\gamma_{\rm shape} = \oint_{r=a} |\hat{\nabla}\hat{r}|^2\,\frac{d\theta}{2\pi}
+\gamma_{\rm shape} = \langle |\hat{\nabla}\hat{r}|^2\rangle_{\hat{r}=1}
 \end{equation}
 is the factor by which the toroidal  current is increased due to the shaping of the plasma's poloidal
-boundary. 
+boundary. Here, $\langle\cdots\rangle\equiv\oint(\cdots)\,d\theta/(2\pi)$. 
 
 \subsection{Plasma Self-Inductance}
 The dimensionless self-inductance of the plasma is conventionally defined as\,\cite{tj}
@@ -1028,7 +1029,7 @@ In summary, our model equilibria are controlled by nine parameters: $q(0)$, $q(a
 and the relative wall radius, $b_w$.  
 
 \subsection{Plasma Elongation}
-Figure~\ref{fig1} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the plasma
+Figure~\ref{fig1} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the wall 
 parameter, $\alpha_w$ [see Eq.~(\ref{alphaw})], and the normalized growth-rate of the unstable axisymmetric mode, $\hat{\gamma}$,  with the elongation parameter, $H_2(a)$, for a series of non-triangular plasmas. Results are shown for $m_{\rm max} = 5$ (which implies that 11 poloidal harmonics are included in the calculation), and $m_{\rm max}=10$ 
 (which implies that 21  poloidal harmonics are included in the calculation). The fact that these results are identical demonstrates that the TJ calculation has achieved convergence with
 $m_{\rm max}=5$. 
@@ -1047,7 +1048,7 @@ systems cannot stabilize the axisymmetric mode if its normalized growth-rate, $\
 1.5.\cite{f2} It can be seen that the normalized growth-rates shown in Fig.~\ref{fig1} all lie below this threshold value. 
 
 \subsection{Inverse Aspect-Ratio}
-Figure~\ref{fig3} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the plasma
+Figure~\ref{fig3} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the wall 
 parameter, $\alpha_w$, and the normalized growth-rate of the unstable vertical mode, $\hat{\gamma}$, with the inverse
 aspect-ratio, $\epsilon$, for a series of
 non-triangular plasma equilibria with various different values of the elongation parameter, $H_2(a)$. It can be seen that the growth-rate of the vertical 
@@ -1055,7 +1056,7 @@ mode initially exhibits a linear increase with increasing inverse aspect-ratio, 
 earlier for higher values of $H_2(a)$. 
 
 \subsection{Triangularity}
-Figure~\ref{fig4} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the plasma
+Figure~\ref{fig4} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the wall 
 parameter, $\alpha_w$, and the normalized growth-rate of the unstable vertical mode, $\hat{\gamma}$, with the plasma triangularity parameter, $H_3(a)$,  for a series of
 elongated plasma equilibria with various different values of the normalized central pressure, $p_2(0)$. It can be seen that
 positive triangularity (i.e., a D-shaped plasma cross-section---see Fig.~\ref{fig5}) has a stabilizing effect on the vertical mode, whereas negative triangularity has
@@ -1065,7 +1066,7 @@ such as ELM-free (edge localized mode) operation,\cite{guz} their increased susc
 Furthermore, as is clear from right panel of Fig.~\ref{fig5}, having a highly conformal wall does not solve the vertical mode problem for negative triangularity plasmas. 
 
 \subsection{Wall Radius}
-Figure~\ref{fig6} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the plasma
+Figure~\ref{fig6} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the wall 
 parameter, $\alpha_w$, and the normalized growth-rate of the unstable vertical mode, $\hat{\gamma}$, with the relative wall radius, $b_w$,   for a series of
 elongated non-triangular plasma equilibria with various different values of the normalized central pressure, $p_2(0)$. It can be seen that
 the perfect-wall perturbed plasma energy becomes extremely positive as the wall approaches the plasma boundary (i.e., as $b_w\rightarrow 1$). This is
@@ -1076,7 +1077,7 @@ and quickly attains dangerous levels (i.e., comparable with 1.5). This finding i
 likely to be quite distant from the plasma because of the presence of shielding material inside the vessel. 
 
 \subsection{Internal Inductance}
-Figure~\ref{fig7} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the plasma
+Figure~\ref{fig7} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the wall 
 parameter, $\alpha_w$, and the normalized growth-rate of the unstable vertical mode, $\hat{\gamma}$, with the normalized plasma internal inductance, $l_i$,   for a series of
 elongated plasma equilibria with various different values of triangularity parameter, $H_3(a)$. In practice, the internal inductance is varied by changing $q(0)$ at
 fixed $q(a)$. It can be seen that while non-triangular plasmas only exhibit a weak dependence of the growth-rate of the vertical mode with $l_i$, triangular
@@ -1086,7 +1087,7 @@ plasmas exhibit an increase in the growth-rate with increasing $l_i$ (i.e., incr
 A conventional tokamak plasma generally possess a single magnetic X-point, located either above or below the plasma, which renders it non up-down symmetric. We can model this effect by introducing a vertical
 tilt, $V_2(a)$, into an elongated, triangular plasma equilibrium. As shown in Fig.~\ref{fig9}, the resulting equilibria have egg-shaped poloidal cross-sections. The equilibrium shown in the
 left panel is a rough model of a plasma with an upper X-point on the high-field side, whereas the equilibrium shown in the right panel is a model of a
-plasma with an upper X-point on the low-field side. Figure~\ref{fig8} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the plasma
+plasma with an upper X-point on the low-field side. Figure~\ref{fig8} shows the variation of the no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed plasma energy, $\delta W_{pw}$, the wall 
 parameter, $\alpha_w$, and the normalized growth-rate of the unstable axisymmetric mode, $\hat{\gamma}$, with the vertical tilt parameter, $V_2(a)$,    for a series of
 elongated plasma equilibria with various different values of triangularity parameter, $H_3(a)$. It can be seen that lack of up-down symmetry has a
 destabilizing effect on the axisymmetric mode. Moreover, as is clear from Fig.~\ref{fig9}, in the presence of a vertical tilt,  the axisymmetric mode is
@@ -1106,12 +1107,12 @@ suggests that finite wall thickness should be taken into account when calculatin
 
 \section{Summary}\label{summary}
 In this paper,  we have demonstrated how to calculate the stability of axisymmetric modes in an aspect-ratio expanded tokamak plasma equilibrium surrounded by
-a conformal resistive wall. The calculation of the stability of axisymmetric modes turns out to be significantly different to the calculation of the stability
-of non-axisymmetric ideal modes described in Refs.~\onlinecite{tj} and \onlinecite{tj1}. In particular, the role of the toroidal angular momentum flux (which is
+a conformal resistive wall. The calculation of axisymmetric stability turns out to be significantly different to the calculations of the stability
+of non-axisymmetric ideal modes in aspect-ratio expanded equilibria described in Refs.~\onlinecite{tj} and \onlinecite{tj1}. In particular, the role of the toroidal angular momentum flux (which is
 identically zero for an axisymmetric mode) is instead played by the electromagnetic energy flux. The conservation of electromagnetic energy can be
 used to prove that the perturbed plasma potential energy matrix is Hermitian. 
-The calculation described in the paper has been implemented in the TJ toroidal tearing mode code. 
-The results of the enhanced TJ code are broadly similar to those reported in the literature.\cite{f2,guz} In particular, positive triangularity is
+The calculation described in this paper has been implemented in the TJ toroidal tearing mode code. 
+The results obtained from the enhanced TJ code are broadly similar to those reported previously in the literature.\cite{f2,guz} In particular, positive triangularity is
 found to have a stabilizing effect on the vertical mode, whereas negative triangularity has a marked destabilizing effect. Lack of up-down symmetry
 is found to have a destabilizing effect on the vertical mode. Finally, our calculations indicate that finite wall thickness should be taken into account when
 determining the maximum controllable plasma elongation of a tokamak plasma. 
@@ -1195,7 +1196,7 @@ J-TEXT team, Phys.\ Plasmas {\bf 29}, 032510 (2022).
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Fig1.pdf}}
 \caption{The no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed potential energy, $\delta W_{pw}$, the wall
-parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as a function of the
+parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as  functions of the
 plasma elongation parameter, $H_2(a)$, for plasma equilibria characterized by  $\epsilon=0.1$, $V_2(a)=H_3(a)=0$, $q(0)=1.01$, $q(a)=3.6$,  $p_2(0)=0.05$, $\mu=2.5$, and $b_w=1.1$. \label{fig1}}
 \end{figure}
 
@@ -1209,7 +1210,7 @@ Here, red is positive and blue is negative. The thick black line indicates the w
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Fig3.pdf}}
 \caption{The no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed potential energy, $\delta W_{pw}$, the wall
-parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as a function of the
+parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as  functions of the
 plasma  inverse aspect-ratio, $\epsilon$, for plasma equilibria characterized by   $V_2(a)=0$, $H_3(a)=0$, $q(0)=1.01$, $q(a)=3.6$,  $p_2(0)=0.05$, $\mu=2.5$, $b_w=1.1$, and
 various different values of $H_2(a)$.  \label{fig3}}
 \end{figure}
@@ -1217,7 +1218,7 @@ various different values of $H_2(a)$.  \label{fig3}}
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Fig4.pdf}}
 \caption{The no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed potential energy, $\delta W_{pw}$, the wall
-parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as a function of the
+parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as  functions of the
 plasma triangularity parameter, $H_3(a)$, for plasma equilibria characterized by  $\epsilon=0.1$, $H_2(a)=1$, $V_2(a)=0$, $q(0)=1.01$, $q(a)=3.6$,  $\mu=2.5$, $b_w=1.1$, and
 various different values of $p_2(0)$.  \label{fig4}}
 \end{figure}
@@ -1233,7 +1234,7 @@ Here, red is positive and blue is negative. The thick black line indicates the w
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Fig6.pdf}}
 \caption{The no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed potential energy, $\delta W_{pw}$, the wall
-parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as a function of the
+parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as  functions of the
 relative wall radius, $b_w$, for plasma equilibria characterized by  $\epsilon=0.1$, $H_2(a)=1$, $V_2(a)=H_3(a)=0$, $q(0)=1.01$, $q(a)=3.6$, $\mu=2.5$, and various different values of $p_2(0)$.\label{fig6}}
 \end{figure}
 
@@ -1241,7 +1242,7 @@ relative wall radius, $b_w$, for plasma equilibria characterized by  $\epsilon=0
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Fig7.pdf}}
 \caption{The no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed potential energy, $\delta W_{pw}$, the wall
-parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as a function of the
+parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as  functions of the
 plasma self-inductance, $l_i$, for plasma equilibria characterized by  $\epsilon=0.1$, $H_2(a)=1$, $V_2(a)=0$,  $q(a)=3.6$, $p_2=0.05$, $\mu=2.5$, and various different values of $H_3(a)$.\label{fig7}}
 \end{figure}
 
@@ -1249,7 +1250,7 @@ plasma self-inductance, $l_i$, for plasma equilibria characterized by  $\epsilon
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Fig8.pdf}}
 \caption{The no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed potential energy, $\delta W_{pw}$, the wall
-parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as a function of the
+parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the unstable axisymmetric mode, plotted as  functions of the
 plasma tilt parameter, $V_2(a)$, for plasma equilibria characterized by  $\epsilon=0.1$, $H_2(a)=1$, $H_3(a)=0$,  $q(0) = 1.01$, $q(a)=3.6$, $p_2=0.05$, $\mu=2.5$, and various different values of $H_3(a)$.\label{fig8}}
 \end{figure}
 
