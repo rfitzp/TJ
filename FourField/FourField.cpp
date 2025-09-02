@@ -242,26 +242,30 @@ void FourField::WriteNetcdf ()
        NcDim i_d = dataFile.addDim ("Ni",    NINPUT);
        NcDim x_d = dataFile.addDim ("Nscan", Nscan+1);
 
-       NcVar i_x       = dataFile.addVar ("InputParameters", ncDouble, i_d);
+       NcVar i_x = dataFile.addVar ("InputParameters", ncDouble, i_d);
        i_x.putVar (Input);
-       NcVar givals_x  = dataFile.addVar ("g_i",             ncDouble, x_d);
-       givals_x.putVar (givals);
-       NcVar D3rvals_x = dataFile.addVar ("Delta3_r",        ncDouble, x_d);
-       D3rvals_x.putVar (D3rvals);
-       NcVar D3ivals_x = dataFile.addVar ("Delta3_i",        ncDouble, x_d);
-       D3ivals_x.putVar (D3ivals);
-       NcVar D4rvals_x = dataFile.addVar ("Delta4_r",        ncDouble, x_d);
-       D4rvals_x.putVar (D4rvals);
-       NcVar D4ivals_x = dataFile.addVar ("Delta4_i",        ncDouble, x_d);
-       D4ivals_x.putVar (D4ivals);
-       NcVar J1rvals_x = dataFile.addVar ("DeltaJ1_r",       ncDouble, x_d);
-       J1rvals_x.putVar (J1rvals);
-       NcVar J1ivals_x = dataFile.addVar ("DeltaJ1_i",       ncDouble, x_d);
-       J1ivals_x.putVar (J1ivals);
-       NcVar J2rvals_x = dataFile.addVar ("DeltaJ2_r",       ncDouble, x_d);
-       J2rvals_x.putVar (J2rvals);
-       NcVar J2ivals_x = dataFile.addVar ("DeltaJ2_i",       ncDouble, x_d);
-       J2ivals_x.putVar (J2ivals);
+
+       if (Scan)
+	 {
+	   NcVar givals_x  = dataFile.addVar ("g_i",             ncDouble, x_d);
+	   givals_x.putVar (givals);
+	   NcVar D3rvals_x = dataFile.addVar ("Delta3_r",        ncDouble, x_d);
+	   D3rvals_x.putVar (D3rvals);
+	   NcVar D3ivals_x = dataFile.addVar ("Delta3_i",        ncDouble, x_d);
+	   D3ivals_x.putVar (D3ivals);
+	   NcVar D4rvals_x = dataFile.addVar ("Delta4_r",        ncDouble, x_d);
+	   D4rvals_x.putVar (D4rvals);
+	   NcVar D4ivals_x = dataFile.addVar ("Delta4_i",        ncDouble, x_d);
+	   D4ivals_x.putVar (D4ivals);
+	   NcVar J1rvals_x = dataFile.addVar ("DeltaJ1_r",       ncDouble, x_d);
+	   J1rvals_x.putVar (J1rvals);
+	   NcVar J1ivals_x = dataFile.addVar ("DeltaJ1_i",       ncDouble, x_d);
+	   J1ivals_x.putVar (J1ivals);
+	   NcVar J2rvals_x = dataFile.addVar ("DeltaJ2_r",       ncDouble, x_d);
+	   J2rvals_x.putVar (J2rvals);
+	   NcVar J2ivals_x = dataFile.addVar ("DeltaJ2_i",       ncDouble, x_d);
+	   J2ivals_x.putVar (J2ivals);
+	 }
      }
    catch (NcException& e)
      {

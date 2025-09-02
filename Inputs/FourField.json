@@ -1,12 +1,12 @@
 {
-    "g_r":   0.001,       // Real part of normalized growth-rate in MHD frame 
-    "g_i":  -0.9,         // Imaginary part of normalized growth-rate in MHD frame
-    "Qe":    0.1,         // Normalized electron diamagnetic frequency
-    "Qi":   -0.1,         // Normalized ion diamagnetic frequency
-    "D":     0.1,         // Normalized ion sound radius
-    "Pphi":  0.1,         // Normalized momentum diffusivity
+    "g_r":   0.00,        // Real part of normalized growth-rate in MHD frame 
+    "g_i":   2.00,        // Imaginary part of normalized growth-rate in MHD frame
+    "Qe":    -0.15,        // Normalized electron diamagnetic frequency
+    "Qi":    0.15,         // Normalized ion diamagnetic frequency
+    "D":     1.0,        // Normalized ion sound radius
+    "Pphi":  1.0e-3,         // Normalized momentum diffusivity
     "Pperp": 0.1,         // Normalized energy diffusivity
-    "cbeta": 0.04,        // Normalized plasma pressure
+    "cbeta": 1.0,         // Normalized plasma pressure
 
     "JK":    1,           // Flag for J.-K. Park calculation
     
@@ -15,7 +15,7 @@
     "P3max":  20.0,       // Value of Pmax[3] above which switch to low-D layer equations made
 
     "Scan":   1,          // Flag for performing frequency scan
-    "Fscan":  1.0,        // Scan from g_r = - Fmax * (Qe - Qi) to g_r = Fmax * (Qe - Qi)
+    "Fscan":  1.01,       // Scan from g_i = - Fmax * (Qe - Qi) to g_i = Fmax * (Qe - Qi)
     "Nscan":  500,        // Number of points in scan
     
     "acc":  1.0e-14,      // Integration accuracy

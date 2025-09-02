@@ -32,22 +32,7 @@ fn1   = 'Vertical.nc'
 ds1   = nc.Dataset(fn1)
 psi_r = ds1['py_ideal_eig_r']
 
-fna   = 'Equilibrium1.nc'
-dsa   = nc.Dataset(fna)
-Ra    = dsa['R']
-Za    = dsa['Z']
-
-Rwa   = dsa['Rwall']
-Zwa   = dsa['Zwall']
-
-RRa = np.asarray(Ra);
-ZZa = np.asarray(Za);
-
-fn1a   = 'Vertical1.nc'
-ds1a   = nc.Dataset(fn1a)
-psi_ra = ds1a['py_ideal_eig_r']
-
-fig = plt.figure (figsize = (12.5, 5.8))
+fig = plt.figure (figsize = (6.7, 6.0))
 plt.rc ('xtick', labelsize=15) 
 plt.rc ('ytick', labelsize=15) 
 
@@ -56,7 +41,6 @@ k = 0
 Pr  = psi_r[k,:,:]
 PPr = np.asarray (Pr)
 
-plt.subplot (1, 2, 1)
 plt.xlim (1.-scale, 1.+scale)
 plt.ylim (-scale, scale)
 
@@ -71,25 +55,7 @@ plt.plot ([1.], [0.], marker = 'o', markersize = 1, color = "black")
 plt.xlabel (r'$R/R_0$', fontsize = "15")
 plt.ylabel (r'$Z/R_0$', fontsize = "15")
 
-plt.subplot(1, 2, 2)
-plt.xlim(1.-scale, 1.+scale)
-plt.ylim(-scale, scale)
-
-Pra  = psi_ra[k,:,:]
-PPra = np.asarray (Pra)
-
-plt.plot (Ra[nf-1], Za[nf-1], color = 'black', linewidth = 0.5, linestyle = 'solid')    
-
-plt.plot (Rwa, Zwa, color = 'black', linewidth = 4, linestyle = 'solid')  
-
-ci = plt.contourf (RRa, ZZa, PPra, ncont, cmap = ReBu)
-
-plt.plot ([1.], [0.], marker = 'o', markersize = 1, color="black")
-
-plt.xlabel (r'$R/R_0$', fontsize = "15")
-plt.ylabel (r'$Z/R_0$', fontsize = "15")
-
 plt.tight_layout()
 
-plt.show()    
-#plt.savefig ("Fig5.png")
+#plt.show()    
+plt.savefig ("Fig2.png")
