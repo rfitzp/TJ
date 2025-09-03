@@ -3,8 +3,8 @@
     "g_i":   1.00,        // Imaginary part of normalized growth-rate in MHD frame
     "Qe":    -0.15,       // Normalized electron diamagnetic frequency
     "Qi":    0.15,        // Normalized ion diamagnetic frequency
-    "D":     0.1,         // Normalized ion sound radius
-    "Pphi":  1.0,         // Normalized momentum diffusivity
+    "D":     1.0,         // Normalized ion sound radius
+    "Pphi":  1.0e-3,      // Normalized momentum diffusivity
     "Pperp": 0.1,         // Normalized energy diffusivity
     "cbeta": 1.0,         // Normalized plasma pressure
 

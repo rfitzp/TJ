@@ -137,13 +137,13 @@ void FourField::Solve ()
   // Solve three-field layer equations
   // .................................
   SolveThreeFieldLayerEquations ();
-  printf ("\nDeltas3 = (%10.3e, %10.3e)\n", real(Deltas3), imag(Deltas3));
+  printf ("\nDeltas3 = (%10.3e, %10.3e) pmax = %10.3e\n", real(Deltas3), imag(Deltas3), pmax3);
 
   // ................................
   // Solve four-field layer equations
   // ................................
   SolveFourFieldLayerEquations ();
-  printf ("Deltas4 = (%10.3e, %10.3e)\n", real(Deltas4), imag(Deltas4));
+  printf ("Deltas4 = (%10.3e, %10.3e) pmax = %10.3e\n", real(Deltas4), imag(Deltas4), pmax4);
 
   // ......................
   // Perform frequency scan
@@ -188,8 +188,8 @@ void FourField::Solve ()
 	  J2ivals[i] = imag(_DeltaJ2);
 
 	  if (i % 10 == 0)
-	    printf ("%4d g = (%10.3e, %10.3e) Delta3 = (%10.3e, %10.3e) Delta4 = (%10.3e, %10.3e)\n",
-		  i, g_r, givals[i], D3rvals[i], D3ivals[i], D4rvals[i], D4ivals[i]);
+	    printf ("%4d g = (%10.3e, %10.3e) Delta3 = (%10.3e, %10.3e) Delta4 = (%10.3e, %10.3e) pmax = (%10.3e, %10.3e)\n",
+		    i, g_r, givals[i], D3rvals[i], D3ivals[i], D4rvals[i], D4ivals[i], pmax3, pmax4);
 	}
 
       g_i = gi_save;
@@ -346,6 +346,7 @@ void FourField::SolveThreeFieldLayerEquations ()
 
   alpha = - gEe;
   p     = pstart * PMAX;
+  pmax3 = p;
   h     = - h0;
   if (!lowD)
     {
@@ -436,6 +437,7 @@ void FourField::SolveFourFieldLayerEquations ()
   complex<double>*  err  = new complex<double>[4];
  
   p     = pstart * PMAX;
+  pmax4 = p;
   h     = - h0;
 
   y[0] = - sqrt (iotae) * sqrt (R) * p*p /D - cbeta * sqrt (iotae) * p*p /D;

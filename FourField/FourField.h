@@ -71,6 +71,8 @@ private:
   double pstart;  // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double pend;    // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double P3max;   // Value of Pmax[3] above which switch to low-D three-field layer equations made (read from JSON file)
+  double pmax3;   // Maximum value of p in three-field calculation
+  double pmax4;   // Maximum value of p in four-field calculation
 
   // ....................................
   // Four-field frequency scan parameters

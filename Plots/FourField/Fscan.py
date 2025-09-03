@@ -24,6 +24,7 @@ plt.rc ('ytick', labelsize = 15)
 plt.subplot (2, 1, 1)
 
 plt.xlim (gi[0], gi[-1])
+plt.gca().invert_xaxis()
 
 plt.plot (gi, d3r, color = 'blue', linewidth = 2, linestyle = 'solid', label = r"Re($\Delta_3$)")
 plt.plot (gi, d4r, color = 'red',  linewidth = 2, linestyle = 'solid', label = r"Re($\Delta_4$)")
@@ -34,12 +35,13 @@ plt.axvline (0.,     color = 'green', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (-In[3], color = 'blue',  linewidth = 1.5, linestyle = 'dotted')
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
-plt.xlabel (r'$Im(g)$', fontsize = "15")
+plt.xlabel (r'$Q$', fontsize = "15")
 plt.legend (fontsize = "15");
 
 plt.subplot (2, 1, 2)
 
 plt.xlim (gi[0], gi[-1])
+plt.gca().invert_xaxis()
 
 plt.plot (gi, d3i, color = 'blue', linewidth = 2, linestyle = 'solid', label = r"Im($\Delta_3$)")
 plt.plot (gi, d4i, color = 'red',  linewidth = 2, linestyle = 'solid', label = r"Im($\Delta_4$)")
@@ -50,7 +52,7 @@ plt.axvline (0.,     color = 'green', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (-In[3], color = 'blue',  linewidth = 1.5, linestyle = 'dotted')
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
-plt.xlabel (r'$Im(g)$', fontsize = "15")
+plt.xlabel (r'$Q$', fontsize = "15")
 plt.legend (fontsize = "15");
 
 plt.tight_layout ()
