@@ -151,7 +151,7 @@ Here, we are neglecting plasma inertia on the assumption that the wall slows the
 
 Now,\cite{tj}
 \begin{align}
-(\bxi\times {\bf B})_r&= {\cal J}\,(\xi^{\,\theta}\,B^{\,\phi} - \xi^{\,\phi}\,B^{\,\theta}) = -f\,(q\,\xi^{\,\theta}-\xi^{\,\phi}),\label{e23xx}\\[0.5ex]
+(\bxi\times {\bf B})_r&= {\cal J}\,(\xi^{\,\theta}\,B^{\,\phi} - \xi^{\,\phi}\,B^{\,\theta}) = f\,(q\,\xi^{\,\theta}-\xi^{\,\phi}),\label{e23xx}\\[0.5ex]
 (\bxi\times {\bf B})_\theta&= {\cal J}\,(\xi^{\,\phi}\,B^{\,r} - \xi^{\,r}\,B^{\,\phi}) = -q\,f\,\xi^{\,r},\\[0.5ex]
 (\bxi\times {\bf B})_\phi &= {\cal J}\,(\xi^{\,r}\,B^{\,\theta} - \xi^{\,\theta}\,B^{\,r})= f\,\xi^{\,r}\label{e23x}
 \end{align}
@@ -525,9 +525,9 @@ Thus,
 In the large-aspect ratio limit, $r\ll 1$, it can be demonstrated that\,\cite{mf2}
 \begin{align}
 z&\simeq \frac{1}{r},\label{e25t}\\[0.5ex]
-z^{\,1/2}\,\hat{P}_{-1/2}(z) &\simeq \frac{1}{2}\ln(8\,z),\\[0.5ex]
-z^{1/2}\,\hat{P}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(a\,z)^{|m|}}{|m|},\label{ety}\\[0.5ex]
-z^{1/2}\,\hat{Q}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(a\,z)^{-|m|}}{2}.\label{e29t}
+z^{\,1/2}\,\hat{P}_{-1/2}(z) &\simeq \frac{1}{2}\ln\left(\frac{8}{r}\right),\\[0.5ex]
+z^{1/2}\,\hat{P}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(r/a)^{-|m|}}{|m|},\label{ety}\\[0.5ex]
+z^{1/2}\,\hat{Q}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(r/a)^{|m|}}{2}.\label{e29t}
 \end{align}
 Note that Eq.~(\ref{ety}) only applies to $|m|>0$.
 
@@ -608,7 +608,7 @@ Suppose that the plasma is surrounded by a vacuum region that extends to infinit
 \underline{q}=\underline{0},
 \end{equation}
  because the 
-$\underline{\underline{{\cal Q}}}(r)$ solutions blow up in an unphysical manner as $r\rightarrow\infty$. [See Eqs.~(\ref{e25t}) and (\ref{e29t})].
+$\hat{Q}_{|m|-1/2}(z)$ functions blow up in an unphysical manner as $r/a\rightarrow\infty$. [See Eq.~(\ref{e29t})].
 It immediately follows from Eq.~(\ref{e39x}) that
  \begin{equation}\label{ezero}
  {\cal E}=0.
@@ -660,9 +660,9 @@ where
  is termed the {\em perfect-wall vacuum matrix}.
 It is easily demonstrated from  Eqs.~(\ref{e41zx})--(\ref{e43zx})  that
  \begin{equation}\label{e53xx}
- \underline{\underline{G}}-\underline{\underline{G}}^\dag =- [(\underline{\underline{\cal S}}_{\,a}-\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}]^{\dag}\,(\underline{\underline{I}}_{\,b} -\underline{\underline{I}}^\dag_{\,b})\,  (\underline{\underline{\cal S}}_{\,a}+\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}.
+ \underline{\underline{G}}-\underline{\underline{G}}^\dag =- [(\underline{\underline{\cal S}}_{\,a}-\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}]^{\dag}\,(\underline{\underline{I}}_{\,b} -\underline{\underline{I}}^\dag_{\,b})\,  (\underline{\underline{\cal S}}_{\,a}-\underline{\underline{\cal R}}_{\,a}\,\underline{\underline{I}}_{\,b})^{-1}.
 \end{equation}
-Thus,  the vacuum matrix, $\underline{\underline{G}}$, is Hermitian because  the wall matrix, $\underline{\underline{I}}_{\,b}$, is Hermitian. 
+Thus,  the perfect-wall vacuum matrix, $\underline{\underline{G}}$, is Hermitian because  the wall matrix, $\underline{\underline{I}}_{\,b}$, is Hermitian. 
  
 \subsection{Perturbed Vacuum Potential Energy}
 Equation~(\ref{e41}) implies that 
@@ -1049,7 +1049,7 @@ with $y_{m'}(\hat{r})=Z_{m'}(\hat{r})=0$ for $m'\neq 0$.
 The model plasma equilibria used in the TJ code are characterized by
 \begin{align}
 q_{\rm cly}(r) &= \frac{q(0)\,\nu\,\hat{r}^{\,2}}{1-(1-\hat{r}^{\,2})^\nu},\\[0.5ex]
-p_2(r)&=(1-\hat{r}^{\,2})^\mu.
+p_2(r)&=p_2(0)\,(1-\hat{r}^{\,2})^\mu.
 \end{align}
 Here, $q_{\rm cly}(r)$ is the lowest order (cylindrical) safety-factor profile, whose relation to the actual profile is explained in Ref.~\onlinecite{eql}. The parameter $q(0)$ is the
 safety-factor on the magnetic axis, whereas the parameter $\nu$ is automatically adjusted to give a desired value of the safety-factor at the plasma boundary, $q(a)$.  
@@ -1074,7 +1074,7 @@ plasma cross-section is circular [i.e., if $H_2(a)=0$] then the vertical mode is
 value the vertical mode becomes unstable.
 
  As is clear from Fig.~\ref{fig2}, if the plasma is  elongated then the unstable mode causes the
-plasma to displace vertically. Furthermore, it is clear from the figure that the unstable eigenfunction satisfies the constraint (\ref{sym}).  The same can be
+plasma to displace vertically. Furthermore, it is apparent  from the figure that the unstable eigenfunction satisfies the constraint (\ref{sym}).  The same can be
 said for the unstable eigenfunctions shown in Fig.~\ref{fig5}.
 
 Of course, the vertical mode needs to be stabilized by means of active feedback. Practical feedback coils must be
@@ -1251,7 +1251,8 @@ various different values of $p_2(0)$.  \label{fig4}}
 \newpage
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Fig5.png}}
-\caption{The radial plasma displacement function, $y(r,\theta)=f\,\xi^{\,r}$,  of the vertical mode for the cases $H_3(a)=+0.5$, $p_2(0)=0.2$ (left panel) and $H_3(a)=-0.5$, $p_2(0)=0.2$  (right-panel) that feature in Fig.~\ref{fig4}.
+\caption{The radial plasma displacement function, $y(r,\theta)=f\,\xi^{\,r}$ (left panels),  and the perturbed poloidal magnetic
+field function, ${\cal Z}(r,\theta)= - b_\theta$ (right panels), of the vertical mode for the cases $H_3(a)=+0.5$, $p_2(0)=0.2$ (top panels) and $H_3(a)=-0.5$, $p_2(0)=0.2$  (bottom panels) that feature in Fig.~\ref{fig4}.
 Here, red is positive and blue is negative. The thick black line indicates the wall. \label{fig5}}
 \end{figure}
 
