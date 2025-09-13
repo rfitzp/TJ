@@ -196,7 +196,7 @@ where use has been made of Eq.~(\ref{jac}).
 Thus, according to Eqs.~(\ref{bup1})--(\ref{bup3}), (\ref{jup1}), (\ref{jup2}), and (\ref{jup3a}), 
 \begin{align}
 -\frac{\partial\, (P'\,\xi^{\,r})}{\partial r}  +\frac{\partial\,\delta p}{\partial r}&= f\,(q\,j^{\,\theta} -j^{\,\phi}) - g'\,b^{\,\phi} + \left(q\,g'+\frac{r\,R^{\,2}\,P'}{f}\right)b^{\,\theta},\label{e51}\\[0.5ex]
--\frac{\partial\,(P'\,\xi^{\,r})}{\partial \theta} +\frac{\partial\,\delta p}{\partial \theta}&=-r\,q\,f\,j^{\,r} - \left(q\,g'+\frac{r\,R^{\,2}\,P'}{f}\right)b^{\,r},\label{e44}\\[0.5ex]
+-\frac{\partial\,(P'\,\xi^{\,r})}{\partial \theta} +\frac{\partial\,\delta p}{\partial \theta}&=-q\,f\,j^{\,r} - \left(q\,g'+\frac{r\,R^{\,2}\,P'}{f}\right)b^{\,r},\label{e44}\\[0.5ex]
 0&= f\,j^{\,r}+g'\,b^{\,r}.\label{e53}
 \end{align}
 It follows from Eqs.~(\ref{e41}) and (\ref{e53}) that 
@@ -400,8 +400,8 @@ T_\phi(r)= \oint\oint r\,R^{\,2}\,b_\phi\,b^{\,r}\,d\theta\,d\phi.
 \end{equation}
 It follows from Eqs.~(\ref{e41}) and (\ref{e43yy}) that 
 \begin{equation}
-T_\phi(r) = -\pi\,\alpha_g\oint\left(y^\ast\,\frac{\partial y}{\partial\theta}+y\,\frac{\partial y^\ast}{\partial\theta}\right)d\theta
-= -\pi\,\alpha_g\oint\frac{\partial|y|^2}{\partial\theta}\,d\theta = 0.
+T_\phi(r) = -\frac{\pi\,\alpha_g}{2}\oint\left(y^\ast\,\frac{\partial y}{\partial\theta}+y\,\frac{\partial y^\ast}{\partial\theta}\right)d\theta
+= -\frac{\pi\,\alpha_g}{2}\oint\frac{\partial|y|^2}{\partial\theta}\,d\theta = 0.
 \end{equation}
 We conclude, not surprisingly,  that an axisymmetric perturbation is incapable of exerting a net toroidal electromagnetic torque on the plasma. 
 
@@ -413,7 +413,7 @@ that does not automatically take the value zero. The electromagnetic energy flux
 The net flux of electromagnetic energy across the plasma-vacuum interface is 
 \begin{align}\label{eflux}
 {\cal E} &= \left[\oint\oint ({\bf e}\times {\bf b})\cdot\nabla r\,{\cal J}\,d\theta\,d\phi\right]_{r=a}= \left[\oint\oint (e_\theta\,b_\phi-e_\phi\,b_\theta)\,d\theta\,d\phi\right]_{r=a}\nonumber\\[0.5ex]
-&={\rm i}\,\pi\,\omega\oint (y\,{\cal Z}^{\,\ast}-y^\ast \,{\cal Z})_{r=a}\,d\theta={\rm i}\,\pi^2\,\omega \sum_{m}\left(Z_m^{\,\ast}\,y_m-y_m^\ast\,Z_m\right)_{r=a}.
+&={\rm i}\,\frac{\pi\,\omega}{2}\oint (y\,{\cal Z}^{\,\ast}-y^\ast \,{\cal Z})_{r=a}\,d\theta={\rm i}\,\pi^2\,\omega \sum_{m}\left(Z_m^{\,\ast}\,y_m-y_m^\ast\,Z_m\right)_{r=a}.
 \end{align}
 Here, use has been made of Eqs.~(\ref{e54y}), (\ref{e62s}), (\ref{e63s}),  and  (\ref{ephi}), as well as  the fact that $e_\theta=0$ for $r\geq a$. 
 
@@ -497,7 +497,8 @@ interface is zero, and there are no sources of angular momentum in the vacuum re
 \subsection{Electromagnetic Energy Flux}
 The outward flux of electromagnetic energy flux across a constant-$z$ surface is
 \begin{align}
-{\cal E}(z) = -\oint\oint {\cal J}'\,{\bf e}\times {\bf b}\cdot\nabla \mu\,d\eta\,d\phi= -{\rm i}\,\pi\oint\left(e_\phi\,\frac{\partial V^\ast}{\partial\eta}
+{\cal E}(z) = -\oint\oint {\cal J}'\,{\bf e}\times {\bf b}\cdot\nabla \mu\,d\eta\,d\phi= -{\rm i}\,
+\frac{\pi}{2}\oint\left(e_\phi\,\frac{\partial V^\ast}{\partial\eta}
 - e_\phi^{\,\ast}\,\frac{\partial V}{\partial\eta}\right)d\eta,
 \end{align}
 given that $e_\mu=e_\eta=0$ in the vacuum. 
@@ -507,8 +508,8 @@ However, $\nabla\times{\bf e}= {\rm i}\,\omega\,{\bf b}$ implies that
 \end{equation}
 Thus,
 \begin{align}
-{\cal E}(z) &= {\rm i}\,\pi\oint\left(\frac{\partial e_\phi}{\partial\eta}\,V^\ast - \frac{\partial e_\phi^{\,\ast}}{\partial\eta}\,V\right)d\eta= 
--{\rm i}\,\pi\,\omega\oint h\,\sinh^2\mu\left(\frac{\partial V}{\partial z}\,V^\ast - \frac{\partial V^\ast}{\partial z}\,V\right) d\eta\nonumber\\[0.5ex]
+{\cal E}(z) &= {\rm i}\,\frac{\pi}{2}\oint\left(\frac{\partial e_\phi}{\partial\eta}\,V^\ast - \frac{\partial e_\phi^{\,\ast}}{\partial\eta}\,V\right)d\eta= 
+-{\rm i}\,\frac{\pi\,\omega}{2}\oint h\,\sinh^2\mu\left(\frac{\partial V}{\partial z}\,V^\ast - \frac{\partial V^\ast}{\partial z}\,V\right) d\eta\nonumber\\[0.5ex]
 &= {\rm i}\,\pi^2\,\omega\sum_m(p_m\,q_m^{\,\ast}-q_m\,p_m^{\,\ast})\,(z^2-1)\,{\cal W}(P_{|m|-1/2},Q_{|m|-1/2}),
  \end{align}
  where ${\cal W}(f,g)\equiv f\,dg/dz-g\,df/dz$. However,\cite{mf2}
