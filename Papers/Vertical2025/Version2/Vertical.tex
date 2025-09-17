@@ -347,7 +347,7 @@ b_m^{\,m'}(r)  &=\oint|\nabla r|^{-2}\, R^{-2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,
 c_m^{\,m'}(r)  &=\oint|\nabla r|^{-2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi},\\[0.5ex]
 f_{m}^{\,m'}(r)&= \oint \frac{{\rm i}\,r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\exp[-{\rm i}\,(m-m')\,\theta]\,\frac{d\theta}{2\pi}.\label{e76er}
 \end{align}
-Here, $\delta_m^{\,m'}$ is a Kronecker delta symbol. Note that $Z_0$ is independent of $r$ in the vacuum region, $r\geq a$,  in which
+Here, $\delta_m^{\,m'}$ is a Kronecker delta symbol. Note that $Z_0(r)$ is independent of $r$ in the vacuum region, $r\geq a$,  in which
 $\alpha_g=\alpha_p=0$. 
 
 The axisymmetric ideal-MHD o.d.e.s play the same role for axisymmetric perturbations that the outer-region o.d.e.s, (102) and (103) of Ref.~\onlinecite{tj}, play for
@@ -369,11 +369,9 @@ C_{m'}^{\,m} &= -B_{m'}^{\,m\,\ast},\\[0.5ex]
 D_{m'}^{\,m} &= D_{m'}^{\,m\,\ast}.\label{e82u}
 \end{align}
 It follows from Eqs.~(\ref{e69u}), (\ref{e70uu}), and (\ref{e70u})--(\ref{e82u}) that 
-\begin{align}
+\begin{align}\label{cons}
 r\,\frac{d}{dr}\!\left[\sum_m (Z_m\,y_m^{\,\ast}- y_m\,Z_m^{\,\ast}) \right]&= 0.
 \end{align}
-Thus, checking that $\sum_m (Z_m\,y_m^{\,\ast}- y_m\,Z_m^{\,\ast})$ is indeed constant throughout the plasma is a good numerical check on the accuracy of the TJ
-code. 
 
 \subsection{Perturbed Electric Field}
 Suppose that all perturbed quantities vary in time as ${\rm e}^{-{\rm i}\,\omega\,t}$. 
@@ -406,21 +404,28 @@ T_\phi(r) = -\frac{\pi\,\alpha_g}{2}\oint\left(y^\ast\,\frac{\partial y}{\partia
 We conclude, not surprisingly,  that an axisymmetric perturbation is incapable of exerting a net toroidal electromagnetic torque on the plasma. 
 
 In Ref.~\onlinecite{tj1}, the conservation of toroidal angular momentum is used to prove that the plasma and vacuum perturbed potential energy matrices are Hermitian.
-The fact that the toroidal electromagnetic torque is automatically zero in the axisymmetric case negates this proof. Hence, we need to find a new conserved quantity
-that does not automatically take the value zero. The electromagnetic energy flux is found to play this role. 
+The fact that the toroidal electromagnetic torque is identically  zero in the axisymmetric case negates this proof. Hence, we need to find a new conserved quantity
+that is not identically zero. The electromagnetic energy flux is found to play this role. 
 
 \subsection{Electromagnetic Energy Flux}
 The net flux of electromagnetic energy across the plasma-vacuum interface is 
 \begin{align}\label{eflux}
-{\cal E} &= \left[\oint\oint ({\bf e}\times {\bf b})\cdot\nabla r\,{\cal J}\,d\theta\,d\phi\right]_{r=a}= \left[\oint\oint (e_\theta\,b_\phi-e_\phi\,b_\theta)\,d\theta\,d\phi\right]_{r=a}\nonumber\\[0.5ex]
+{\cal E}(a) &= \left[\oint\oint ({\bf e}\times {\bf b})\cdot\nabla r\,{\cal J}\,d\theta\,d\phi\right]_{r=a}= \left[\oint\oint (e_\theta\,b_\phi-e_\phi\,b_\theta)\,d\theta\,d\phi\right]_{r=a}\nonumber\\[0.5ex]
 &={\rm i}\,\frac{\pi\,\omega}{2}\oint (y\,{\cal Z}^{\,\ast}-y^\ast \,{\cal Z})_{r=a}\,d\theta={\rm i}\,\pi^2\,\omega \sum_{m}\left(Z_m^{\,\ast}\,y_m-y_m^\ast\,Z_m\right)_{r=a}.
 \end{align}
 Here, use has been made of Eqs.~(\ref{e54y}), (\ref{e62s}), (\ref{e63s}),  and  (\ref{ephi}), as well as  the fact that $e_\theta=0$ for $r\geq a$. 
+ Now, Eq.~(\ref{cons}) implies that
+$\sum_m(Z_m^{\,\ast}\,y_m-y_m^\ast\,Z_m)$ is independent of $r$. However, we expect $\sum_m(Z_m^{\,\ast}\,y_m-y_m^\ast\,Z_m)=0$ for a well-behaved
+solution of the axisymmetric ideal-MHD o.d.e.s close to the magnetic axis ($r=0$). [See Eqs.~(\ref{e234g}) and (\ref{e235g}).] Hence, we deduce that
+\begin{equation}\label{excons}
+{\cal E}(a) = 0.
+\end{equation}
+In other words, the net flux of electromagnetic energy out of the plasma is zero. 
 
 \subsection{Perturbed Plasma Potential Energy}
 The perturbed plasma potential energy in the region of the plasma lying within the magnetic flux-surface whose label is $r$ is\,\cite{tj1,gs1}
 \begin{equation}
-\delta W_p = \frac{1}{2}\oint\oint r\,R^{\,2}\,\xi^{\,r\ast}(-{\bf B}\cdot{\bf b} + \xi^{\,r}\,P')\,d\theta\,d\phi.
+\delta W_p(r) = \frac{1}{2}\oint\oint r\,R^{\,2}\,\xi^{\,r\ast}(-{\bf B}\cdot{\bf b} + \xi^{\,r}\,P')\,d\theta\,d\phi.
 \end{equation}
 Here, we have neglected the contribution to the perturbed energy from plasma compressibility because $\nabla\cdot\bxi= 0$. (See Sect.~\ref{pde}.)
 However,
@@ -431,26 +436,15 @@ However,
 where use has been made of Eqs.~(\ref{q})--(\ref{bup3}), (\ref{e42}), (\ref{e43yy}), (\ref{e54y}),  and (\ref{alpp}). Hence,
 we obtain
 \begin{align}\label{e87j}
-\delta W_p(r) &=\frac{1}{2}\oint\oint y^{\ast}\left[{\cal Z} + (q\,\alpha_g + \alpha_p\,R^{\,2})\,y\right]d\theta\,d\phi= \pi^2\sum_{m}y_m^{\,\ast}\,\chi_m,
+\delta W_p(r) &=\frac{1}{2}\left[\oint\oint y^{\ast}\left({\cal Z} + \alpha_g \,q\,y+ \alpha_p\,R^{\,2}\, y\right)d\theta\,d\varphi\right]_r\nonumber\\[0.5ex]
+&=\pi^2\left[\sum_{m}y_m^{\,\ast}\left(Z_m + \alpha_g \,q\,y_m+ \alpha_p\sum_{m'}a_m^{\,m'}\, y_m\right)\right]_r.
 \end{align}
-where 
-\begin{equation}\label{chidef}
-\chi_m(r)=Z_m + q\,\alpha_g\,y_m + \alpha_p\sum_{m'} a_m^{\,m'}\,y_{m'}.
-\end{equation}
-
-\iffalse
-\subsection{Plasma Compressibility}\label{scomp}
-Our one remaining task is to demonstrate that we can find a well-behaved plasma displacement, $\bxi$, which is such that $\nabla\cdot\bxi=0$. 
-Equation~(\ref{e21}) leads directly to Eqs.~(\ref{e41}) and (\ref{e43y}), but also yields the third constraint
-\begin{equation}
-\frac{\partial}{\partial r}\!\left(\frac{r\,y}{f}\right) + \frac{\partial}{\partial\theta}\!\left(r\,\xi^{\,\theta}\right) = \frac{\partial}{\partial\theta}\!\left(\frac{r\,\xi^{\,\phi}}{q}\right).
-\end{equation}
-However, if $\nabla\cdot\bxi=0$ then
-\begin{equation}
-\frac{\partial}{\partial r}\!\left(R^{\,2}\,\frac{r\,y}{f}\right) + \frac{\partial}{\partial\theta}\!\left(R^{\,2}\,r\,\xi^{\,\theta}\right) = 0.
-\end{equation}
-We clearly have enough degrees of freedom to simultaneously satisfy the previous two equations. 
-\fi
+ In particular,  the net perturbed plasma potential energy is 
+ \begin{equation}\label{e7.34yi}
+ \delta W_p(a) =  \pi^2\left(\sum_{m}y_m^{\,\ast}\,Z_m \right)_a,
+ \end{equation}
+ because $\alpha_g=\alpha_p =0$ at $r=a$. However, it is clear from Equations~(\ref{eflux}) and (\ref{excons}) that $(\sum_m y_m^{\,\ast}\,Z_m)_a$ is real. 
+ Hence, we deduce that $\delta W_p(a)$ is real. 
 
 \section{General Vacuum Solution}\label{vacuum}
 \subsection{Toroidal Coordinates}
@@ -486,43 +480,6 @@ where  $z=\cosh\mu$, the $p_m$ and $q_m$ are arbitrary complex coefficients, and
 Here,  the $P_{|m|-1/2}(z)$  and $Q_{|m|-1/2}(z)$ are toroidal functions,\cite{as1} and $\Gamma(z)$ is a
 gamma function.\cite{as2}
 
-\subsection{Toroidal Electromagnetic Angular Momentum Flux}
-The outward flux of toroidal angular momentum across a constant-$z$ surface is\,\cite{tj,tj1}
-\begin{align}
-T_\phi(z) &= -\oint\oint {\cal J}' \,b_\phi\,b^{\,\mu}\,d\eta\,d\phi = 0,
-\end{align}
-because $b_\phi = {\rm i}\,\partial V/\partial\phi = 0$. Of course, the flux has to be zero because the flux of angular momentum across the plasma-vacuum
-interface is zero, and there are no sources of angular momentum in the vacuum region surrounding the plasma. (See Sect.~\ref{storque}.)
-
-\subsection{Electromagnetic Energy Flux}
-The outward flux of electromagnetic energy flux across a constant-$z$ surface is
-\begin{align}
-{\cal E}(z) = -\oint\oint {\cal J}'\,{\bf e}\times {\bf b}\cdot\nabla \mu\,d\eta\,d\phi= -{\rm i}\,
-\frac{\pi}{2}\oint\left(e_\phi\,\frac{\partial V^\ast}{\partial\eta}
-- e_\phi^{\,\ast}\,\frac{\partial V}{\partial\eta}\right)d\eta,
-\end{align}
-given that $e_\mu=e_\eta=0$ in the vacuum. 
-However, $\nabla\times{\bf e}= {\rm i}\,\omega\,{\bf b}$ implies that
-\begin{equation}
-\frac{\partial e_\phi}{\partial\eta} = - \omega\,h\,\sinh\mu\,\frac{\partial V}{\partial \mu}= - \omega\,h\,\sinh^2\mu\,\frac{\partial V}{\partial z}. 
-\end{equation}
-Thus,
-\begin{align}
-{\cal E}(z) &= {\rm i}\,\frac{\pi}{2}\oint\left(\frac{\partial e_\phi}{\partial\eta}\,V^\ast - \frac{\partial e_\phi^{\,\ast}}{\partial\eta}\,V\right)d\eta= 
--{\rm i}\,\frac{\pi\,\omega}{2}\oint h\,\sinh^2\mu\left(\frac{\partial V}{\partial z}\,V^\ast - \frac{\partial V^\ast}{\partial z}\,V\right) d\eta\nonumber\\[0.5ex]
-&= {\rm i}\,\pi^2\,\omega\sum_m(p_m\,q_m^{\,\ast}-q_m\,p_m^{\,\ast})\,(z^2-1)\,{\cal W}(P_{|m|-1/2},Q_{|m|-1/2}),
- \end{align}
- where ${\cal W}(f,g)\equiv f\,dg/dz-g\,df/dz$. However,\cite{mf2}
- \begin{equation}
- {\cal W}(P_{|m|-1/2},Q_{|m|-1/2}) = \frac{1}{1-z^2},
- \end{equation}
- so
- \begin{equation}\label{e168g}
- {\cal E}(z)=- {\rm i}\,\pi^2\,\omega\sum_m(p_m\,q_m^{\,\ast}-q_m\,p_m^{\,\ast}).
- \end{equation}
- Note that ${\cal E}$ is independent of $z$, as must be the case because there are no energy sources in the vacuum region. 
-
-\subsection{Solution in Vacuum Region}
 In the large-aspect ratio limit, $r\ll 1$, it can be demonstrated that\,\cite{mf2}
 \begin{align}
 z&\simeq \frac{1}{r},\label{e25t}\\[0.5ex]
@@ -532,6 +489,43 @@ z^{1/2}\,\hat{Q}_{|m|-1/2}(z) &\simeq \frac{\cos(|m|\,\pi)\,(r/a)^{|m|}}{2}.\lab
 \end{align}
 Note that Eq.~(\ref{ety}) only applies to $|m|>0$.
 
+\subsection{Toroidal Electromagnetic Angular Momentum Flux}
+The outward flux of toroidal angular momentum across a constant-$z$ surface is\,\cite{tj,tj1}
+\begin{align}
+T_\phi(z) &= -\oint\oint {\cal J}' \,b_\phi\,b^{\,\mu}\,d\eta\,d\phi = 0,
+\end{align}
+because $b_\phi = {\rm i}\,\partial V/\partial\phi = 0$. Of course, the flux has to be zero because the flux of angular momentum across the plasma-vacuum
+interface is zero, and there are no sources of angular momentum in the vacuum region surrounding the plasma. (See Sect.~\ref{storque}.)
+
+\subsection{Electromagnetic Energy Flux}
+The outward flux of electromagnetic energy flux across a  surface of constant $z$ is
+\begin{align}
+{\cal E}(z) = -\oint\oint {\cal J}'\,{\bf e}\times {\bf b}\cdot\nabla \mu\,d\eta\,d\phi= -{\rm i}\,
+\frac{\pi}{2}\oint\left(e_\phi\,\frac{\partial V^\ast}{\partial\eta}
+- e_\phi^{\,\ast}\,\frac{\partial V}{\partial\eta}\right)d\eta,
+\end{align}
+given that $e_\mu=e_\eta=0$ in the vacuum. 
+However, $\nabla\times{\bf e}= {\rm i}\,\omega\,{\bf b}$ implies that
+\begin{equation}
+\frac{\partial e_\phi}{\partial\eta} = - \omega\,h\,\sinh\mu\,\frac{\partial V}{\partial \mu}= - \omega\,h\,(z^2-1)\,\frac{\partial V}{\partial z}. 
+\end{equation}
+Thus,
+\begin{align}
+{\cal E}(z) &= {\rm i}\,\frac{\pi}{2}\oint\left(\frac{\partial e_\phi}{\partial\eta}\,V^\ast - \frac{\partial e_\phi^{\,\ast}}{\partial\eta}\,V\right)d\eta= 
+-{\rm i}\,\frac{\pi\,\omega}{2}\oint h\,(z^2-1)\left(\frac{\partial V}{\partial z}\,V^\ast - \frac{\partial V^\ast}{\partial z}\,V\right) d\eta\nonumber\\[0.5ex]
+&= {\rm i}\,\pi^2\,\omega\sum_m(p_m\,q_m^{\,\ast}-q_m\,p_m^{\,\ast})\,(z^2-1)\,{\cal W}(P_{|m|-1/2},Q_{|m|-1/2}),
+ \end{align}
+ where we have integrated by parts, and ${\cal W}(f,g)\equiv f\,dg/dz-g\,df/dz$. However,\cite{mf2}
+ \begin{equation}
+ {\cal W}(P_{|m|-1/2},Q_{|m|-1/2}) = \frac{1}{1-z^2},
+ \end{equation}
+ so
+ \begin{equation}\label{e168g}
+ {\cal E}(z)=- {\rm i}\,\pi^2\,\omega\sum_m(p_m\,q_m^{\,\ast}-q_m\,p_m^{\,\ast}).
+ \end{equation}
+ Note that ${\cal E}(z)$ is independent of $z$, as must be the case because there are no energy sources in the vacuum region. 
+
+\subsection{Solution in Vacuum Region}
 According to Eq.~(\ref{e41}) and (\ref{e54y}),
 \begin{align}\label{e30ay}
 \frac{\partial y}{\partial \theta}&= {\cal J}\,{\bf b}\cdot\nabla r = {\rm i}\,{\cal J}\,\nabla V\cdot\nabla r,\\[0.5ex]
@@ -582,13 +576,13 @@ values, $\underline{p}$ is the vector of the $p_m$ coefficients, and  $\underlin
 subscript $r$ on the integrals indicates that they are taken at constant $r$. 
 
 \subsection{Energy Conservation}
-According to Eq.~(\ref{eflux}), the net flux of electromagnetic energy across the plasma-vacuum interface  is
+By analogy with Eq.~(\ref{eflux}), the net flux of electromagnetic energy across a surface of constant $r$ in the vacuum region is
 \begin{equation}
-{\cal E} = {\rm i}\,\pi^2\,\omega\, (\underline{V}^\dag\,\underline{\psi}- \underline{\psi}^\dag\,\underline{V}).
+{\cal E}(r) = {\rm i}\,\pi^2\,\omega\, (\underline{V}^\dag\,\underline{\psi}- \underline{\psi}^\dag\,\underline{V}).
 \end{equation}
 However, energy conservation requires this flux to be equal  to the energy flux through the vacuum region, so Eq.~(\ref{e168g}) gives
 \begin{equation}\label{e39x}
-{\cal E} =-  {\rm i}\,\pi^2\,\omega\,(\underline{q}^\dag\,\underline{p}-\underline{p}^\dag\,\underline{q}).
+{\cal E}(r) =-  {\rm i}\,\pi^2\,\omega\,(\underline{q}^\dag\,\underline{p}-\underline{p}^\dag\,\underline{q}).
 \end{equation}
 Equations~(\ref{e32ay}), (\ref{e33ay}), and the previous two equations, yield\,\cite{tj1}
 \begin{align}\label{e41zx}
@@ -612,10 +606,10 @@ Suppose that the plasma is surrounded by a vacuum region that extends to infinit
 $\hat{Q}_{|m|-1/2}(z)$ functions blow up in an unphysical manner as $r/a\rightarrow\infty$. [See Eq.~(\ref{e29t})].
 It immediately follows from Eq.~(\ref{e39x}) that
  \begin{equation}\label{ezero}
- {\cal E}=0.
+ {\cal E}(z)=0.
  \end{equation}
-  In other words, as we would expect, there is zero net flux of electromagnetic energy out of  a plasma
- surrounded by a vacuum region that extends to infinity (because there is nothing at infinity that could absorb the energy flux). 
+  In other words, as we would expect, there is zero net flux of electromagnetic energy through the vacuum, because we have already demonstrated that there is zero
+  energy flux across the plasma-vacuum interface. [See Equation~(\ref{excons}).]  
 Equations~(\ref{e32ay}) and (\ref{e33ay}) imply that
 \begin{equation}\label{hdef}
  \underline{V}(r=a_+)= \underline{\underline{H}}\,\underline{\psi}(r=a),
@@ -645,10 +639,10 @@ where
  Here, $\underline{\underline{\cal R}}_{\,b}= \underline{\underline{\cal R}}(r=b_w\,a)$, et cetera. Equation~(\ref{e47x}) ensures that $ \underline{\underline{I}}_b$
  is Hermitian. It immediately follows from Eq.~(\ref{e39x}) that
  \begin{equation}\label{ezero1}
- {\cal E}=0.
+ {\cal E}(z)=0.
  \end{equation}
-  In other words, as we would expect, there is zero net electromagnetic energy flux out of  a plasma
- surrounded by a vacuum region that is bounded by perfectly conducting wall (because a perfect wall could not absorb the energy flux). 
+  In other words, as we would again expect, there is zero net flux of electromagnetic energy through the vacuum, because we have already demonstrated that there is zero
+  energy flux across the plasma-vacuum interface. [See Equation~(\ref{excons}).]  
  
   Making use of Eqs.~(\ref{e32ay}) and (\ref{e33ay}),  the matching condition at the plasma-vacuum interface  for a perfectly-conducting wall becomes 
  \begin{equation}\label{gdef}
@@ -678,51 +672,47 @@ The perturbed potential energy in the vacuum region is\,\cite{tj1,gs1}
 =-\frac{1}{2}\left[\oint\oint \left(-{\rm i}\,\frac{\partial y}{\partial \theta}\right)^\ast\,V\,d\theta\,d\phi\right]_{a_+}\nonumber\\[0.5ex]
 &= - \pi^2\left(\sum_m\,m\,y_m^{\,\ast}\,V_m\right)_{a_+},\label{vac}
 \end{align}
-where use has been made of the facts that $\nabla^2 V =0$ and $\nabla r\cdot \nabla V=0$ at the ideal wall. 
+where use has been made of the facts that $\nabla^2 V =0$, and  $V=0$ at infinity in the no-wall case, and $\nabla r\cdot \nabla V=0$ at the ideal wall in the perfect-wall case. 
 
 \section{General Ideal Stability}\label{ideal}
 
-\subsection{Perturbed Plasma Potential Energy}\label{ideal1}
+\subsection{Perturbed Plasma Potential Energy Matrix}\label{ideal1}
 Suppose that the poloidal harmonics included in the calculation range from $m=-m_{\rm max}$ to $m=m_{\rm max}$, where $m_{\rm max} >0$. 
 Let  the $y_{mm'}(r)$ and the $Z_{mm'}(r)$ be linearly independent solutions of the axisymmetric ideal-MHD o.d.e.s, (\ref{e69u}) and
 (\ref{e70uu}), that are well-behaved at the magnetic axis. Here, $m$ indexes the poloidal harmonic, whereas $m'$ indexes the dominant poloidal harmonic close to the magnetic
 axis. (See Sect.~\ref{axis}.)
-Let 
-\begin{equation}
-\chi_{mm'}(r)=Z_{mm'} + q\,\alpha_g\,y_{mm'} + \alpha_p\sum_{m''} a_m^{\,m''}\,y_{m''m'}.
-\end{equation}
-We can form $J=2\,m_{\rm max}$ linearly independent solutions that all have $Z_0=0$ at $r=a$, as mandated by the matching condition (\ref{e31ay}). 
+We can form $J=2\,m_{\rm max}$ linearly independent solutions that all have $Z_0=0$ at $r=a$, as mandated by the matching condition (\ref{e31ay}). Let these
+new solutions be denoted the $\hat{y}_{mj}(r)$ and the $Z_{mj}(r)$, where $j$ runs from 1 to $J$. 
 The most general solution to the axisymmetric ideal-MHD o.d.e.s that satisfies the constraint $Z_0(a)=0$ is written
 \begin{align}
-y_m(r) &= \sum_{m'=1,J} y_{mm'}(r)\,\alpha_{m'},\\[0.5ex]
-\chi_m(r)&= \sum_{m'=1,J} \chi_{mm'}(r)\,\alpha_{m'},
+y_m(r) &= \sum_{j=1,J} \hat{y}_{mj}(r)\,\alpha_{j'},\\[0.5ex]
+Z_m(r)&= \sum_{j=1,J} \hat{Z}_{mj}(r)\,\alpha_{j'},
 \end{align}
-where the $\alpha_m$ are arbitrary complex coefficients. Here, $m$ indexes the poloidal harmonic and $m'$ indexes the solution. 
- Note that
-$ \chi_m(a_-)=Z_m(a_-)=0$ because $\alpha_g(a)=\alpha_p(a)=0$. [See Eq.~(\ref{chidef}).]
-
+where the $\alpha_j$ are arbitrary complex coefficients. Here, $m$ indexes the poloidal harmonic and $j$ indexes the solution. 
+ 
 According to Eq.~(\ref{e87j}), the net perturbed plasma potential energy is
 \begin{equation}
-\delta W_p = \pi^2\,\underline{y}^{\dag}\,\underline{\chi},
+\delta W_p(a) = \pi^2\,\underline{y}^{\dag}\,\underline{Z},
 \end{equation}
-where $\underline{y}$ is the vector of the $y_m(a)$ values, excluding the $m=0$ harmonic,  and $\underline{\chi}$  the vector of the $\chi_m(a_-)$ values,
-excluding the $m=0$ harmonic.  We can exclude the $m=0$ harmonic because, by construction our solutions are such that $\chi_0(a_-)=0$. It follows that
+where $\underline{y}$ is the vector of the $y_m(a)$ values, excluding the $m=0$ harmonic,  and $\underline{Z}$  the vector of the $Z_m(a_-)$ values,
+excluding the $m=0$ harmonic.  We can exclude the $m=0$ harmonic because, by construction, our solutions are such that $Z_0(a_-)=0$. It follows that
 \begin{equation}
-\delta W_p = \pi^2\,\underline{\alpha}^\dag \,\underline{\underline{y}}^\dag \,\underline{\underline{\chi}}\,\underline{\alpha},
+\delta W_p(a) = \pi^2\,\underline{\alpha}^\dag \,\underline{\underline{y}}^\dag \,\underline{\underline{Z}}\,\underline{\alpha},
 \end{equation}
-where $\underline{\alpha}$ is the vector of the $\alpha_m$ values, $\underline{\underline{y}}$ the matrix of the $y_{mm'}(a)$ values, excluding the $m=0$ harmonic, 
-and $\underline{\underline{\chi}}$ the matrix of the $\chi_{mm'}(a_-)$ values, excluding the $m=0$ harmonic. 
+where $\underline{\alpha}$ is the vector of the $\alpha_j$ values, $\underline{\underline{y}}$ the matrix of the $\hat{y}_{mj}(a)$ values, excluding the $m=0$ harmonic, 
+and $\underline{\underline{Z}}$ the matrix of the $\hat{Z}_{mj}(a_-)$ values, excluding the $m=0$ harmonic. 
 If
 \begin{equation}
 \underline{\underline{\chi}} = \underline{\underline{W}}_{\,p}\,\underline{\underline{y}}.
 \end{equation}
 then 
 \begin{equation}
-\delta W_p = \pi^2\,\underline{\alpha}^\dag \,\underline{\underline{y}}^\dag \,\underline{\underline{W}}_{\,p}\,\underline{\underline{y}}\,\underline{\alpha}.
+\delta W_p(a) = \pi^2\,\underline{\alpha}^\dag \,\underline{\underline{y}}^\dag \,\underline{\underline{W}}_{\,p}\,\underline{\underline{y}}\,\underline{\alpha}.
 \end{equation}
-Equations~(\ref{eflux}), (\ref{ezero}), and (\ref{ezero1}) imply that $\underline{\underline{W}}_{\,p}$ is Hermitian. 
+We have already shown that $\delta W(a)$ is real, which implies that $\underline{\underline{W}}_{\,p}$, which is known as the {\em perturbed plasma potential energy matrix},
+is Hermitian. 
 
-\subsection{Perturbed Vacuum Potential Energy}
+\subsection{Perturbed Vacuum Potential Energy Matrix}
 According to Eq.~(\ref{vac}), the perturbed vacuum potential energy is
 \begin{equation}
 \delta W_v = - \pi^2\sum_m m\,y_m^{\,\ast}(a)\,V_m(a_+),
@@ -743,22 +733,23 @@ Hence, we can write
 \delta W_v = \pi^2\,\underline{y}^\dag\,\underline{\underline{W}}_{\,v}\,\underline{y},
 \end{equation}
 where $\underline{\underline{W}}_{\,v}$ is the matrix of the $-m\,H_{mm'}\,m'$ values in the no-wall case, excluding the $m=0$ and $m'=0$ harmonics, and the
-$-m\,G_{mm'}\,m'$ values in the perfect-wall case, likewise  excluding the $m=0$ and $m'=0$ harmonics,. Given that $H_{mm'}$ and $G_{mm'}$ are Hermitian, we deduce that $\underline{\underline{W}}_{\,v}$ 
+$-m\,G_{mm'}\,m'$ values in the perfect-wall case, likewise  excluding the $m=0$ and $m'=0$ harmonics,. Given that $H_{mm'}$ and $G_{mm'}$ are Hermitian, we deduce that $\underline{\underline{W}}_{\,v}$, which is known as the {\em perturbed vacuum potential energy matrix}, 
 is Hermitian. It follows that
 \begin{equation}
 \delta W_v = \pi^2\,\underline{\alpha}^\dag\,\underline{\underline{y}}^\dag\,\underline{\underline{W}}_{\,v}\,\underline{\underline{y}}\,\underline{\alpha}.
 \end{equation}
 
-\subsection{Total Perturbed Potential Energy}
+\subsection{Total Perturbed Potential Energy Matrix}
 The total perturbed potential energy is
 \begin{equation}
-\delta W = \delta W_p + \delta W_v = \pi^2\,\underline{\alpha}^\dag\,\underline{\underline{y}}^\dag\,\underline{\underline{W}}\,\underline{\underline{y}}\,\underline{\alpha},
+\delta W = \delta W_p(a) + \delta W_v = \pi^2\,\underline{\alpha}^\dag\,\underline{\underline{y}}^\dag\,\underline{\underline{W}}\,\underline{\underline{y}}\,\underline{\alpha},
 \end{equation}
 where 
 \begin{equation}
 \underline{\underline{W}} = \underline{\underline{W}}_{\,p} + \underline{\underline{W}}_{\,v}.
 \end{equation}
-Given that $\underline{\underline{W}}_{\,p}$ and $\underline{\underline{W}}_{\,v}$ are both Hermitian, we deduce that $\underline{\underline{W}}$ is Hermitian.
+Given that $\underline{\underline{W}}_{\,p}$ and $\underline{\underline{W}}_{\,v}$ are both Hermitian, we deduce that $\underline{\underline{W}}$,
+which is known as the {\em total perturbed potential energy matrix},  is Hermitian.
 
 \subsection{Ideal Stability}
 The fact that $\underline{\underline{W}}$ is Hermitian allows us to write
@@ -1039,9 +1030,9 @@ l_i = \frac{2\int_0^1 \hat{r}\,f^2\,\langle |\hat{\nabla}\hat{r}|^2\rangle\,d\ha
 \subsection{Behavior Close to Magnetic Axis}\label{axis}
 When $\hat{r}\ll 1$, the well-behaved solution of the axisymmetric ideal-MHD o.d.e.s, (\ref{e69u}) and (\ref{e70uu}), that is dominated by the poloidal harmonic whose poloidal mode number is
 $m$ is such that
-\begin{align}
+\begin{align}\label{e234g}
 y_m(\hat{r}) &= \hat{r}^{\,|m|},\\[0.5ex]
-Z_m(\hat{r}) &= |m|\,\hat{r}^{\,|m|},
+Z_m(\hat{r}) &= |m|\,\hat{r}^{\,|m|},\label{e235g}
 \end{align}
 with $y_{m'}(\hat{r})=Z_{m'}(\hat{r})=0$ for $m'\neq 0$. 
 
