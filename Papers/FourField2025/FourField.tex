@@ -18,7 +18,7 @@
 
 \section{Introduction}
 Tearing modes are slowly growing instabilities of ideally-stable tokamak plasmas that reconnect magnetic field-lines
-at various rational surfaces within the plasma, in the process forming magnetic island chains that locally flatten the pressure profile and, thereby, degrade the plasma confinement.\cite{wes}
+at various magnetic flux-surfaces within the plasma, in the process forming magnetic island chains that locally flatten the pressure profile and, thereby, degrade the plasma confinement.\cite{wes}
 If tearing modes grow to sufficiently large amplitude then they can trigger major disruptions.\cite{wes1}  In fact,  tokamak
 plasmas are observed to be particularly disruption-prone when tearing modes lock (i.e., become stationary in the
 laboratory frame) to externally generated, resonant magnetic perturbations.\cite{vries}  
@@ -244,7 +244,7 @@ $\tau_R = \mu_0\,r_s^{\,2}/\eta_\parallel$
 $\tau_\varphi
 = r_s^{\,2}/\chi_\varphi$
 the  toroidal momentum confinement time, and 
-$\tau_\perp = r_s^{\,2}/D_\perp$.
+$\tau_\perp = r_s^{\,2}/D_\perp$ the energy confinement time.
   Furthermore, $P_\varphi = \tau_R/\tau_\varphi$ and $P_\perp = \tau_R/\tau_\perp$ are magnetic Prandtl numbers.
 
  Let us define the stretched radial variable $X = S^{\,1/3}\,\hat{x}$.
@@ -273,12 +273,16 @@ converts a four-field resonant response model into a three-field model. In the f
 \subsection{Asymptotic Matching}
 The  linear layer equations, (\ref{e43xx})--(\ref{e46}), possess tearing parity solutions
 characterized by the symmetry $\tilde{\psi}(-X)=\tilde\psi(X)$, 
-$\tilde{N}(-X)= - \tilde{N}(X)$, $\tilde{\phi}(-X)=-\tilde{\phi}(X)$,  $\tilde{V}(-X)=\tilde{V}(X)$. If we assume that
-the asymptotic behavior of the tearing parity layer solutions is such that 
-\begin{equation}\label{e47}
-\tilde{\psi}(X)\rightarrow  \psi_0\!\left[1+ \frac{\hat{\mit\Delta}}{2}\,|X| + {\cal O}(X^2)\right]
-\end{equation}
-as $|X|\rightarrow\infty$, where $\psi_0$ is an arbitrary constant, then asymptotic matching to the outer solution yields
+$\tilde{N}(-X)= - \tilde{N}(X)$, $\tilde{\phi}(-X)=-\tilde{\phi}(X)$,  $\tilde{V}(-X)=\tilde{V}(X)$.
+As is easily demonstrated, the asymptotic behavior of the tearing parity solutions to Eqs.~(\ref{e43xx})--(\ref{e46}) are such that 
+\begin{align}\label{e311}
+\tilde{\psi}(X)&\rightarrow  \psi_0\left[\frac{\skew{6}\hat{\mit\Delta}}{2}\,|X| +1+ {\cal O}\left(\frac{1}{X^2}\right)\right],\\[0.5ex]
+\skew{3}\tilde{\phi}(X)&\rightarrow \psi_0\,{\rm i}\,g\,\left[\frac{\skew{6}\hat{\mit\Delta}}{2}\,{\rm sgn}(X) +\frac{1}{X}+ {\cal O}\left(\frac{1}{X^2}\right)\right],\label{e312a}\\[0.5ex]
+\tilde{N}(X) & \rightarrow \psi_0\,Q_{e}\left[\frac{\skew{6}\hat{\mit\Delta}}{2}\,{\rm sgn}(X) +\frac{1}{X}+ {\cal O}\left(\frac{1}{X^2}\right)\right],\label{e3.13a}\\[0.5ex]
+\tilde{V}(X)&\rightarrow {\cal O}\left(\frac{1}{X^3}\right)\label{e3.14a}
+\end{align}
+as $|X|\rightarrow\infty$, where $\psi_0$ is an arbitrary constant
+Asymptotic matching to the outer solution  then yields
 \begin{equation}\label{e48}
 {\mit\Delta\Psi}_s= (S^{1/3}\,\hat{\mit\Delta})\,\,{\mit\Psi}_s.
 \end{equation}
@@ -300,16 +304,15 @@ g\,\bar{V} &= {\rm i}\,Q_{e}\,\bar{\psi} +\frac{d\bar{N}}{dp}- P_\varphi\,p^2\,\
 \end{align}
 where, for a tearing parity solution, 
 \begin{equation}\label{e41}
-\bar{\phi}(p)\rightarrow \bar{\phi}_0\!\left[\frac{\hat{\mit\Delta}}{\pi\,p} + 1+ {\cal O}(p)\right]
+\bar{\phi}(p)-\bar{N}(p)\equiv\bar{Y} (p)\rightarrow \bar{Y}_0\!\left[\frac{\hat{\mit\Delta}}{\pi\,p} + 1+ {\cal O}(p)\right]
 \end{equation}
-as $p\rightarrow 0$. 
+as $p\rightarrow 0$, where $Y_0$ is an arbitrary constant. 
 
 Finally, if we define 
 \begin{align}
-\bar{J}(p)&= p^2\,\bar{\psi},\\[0.5ex]
-\bar{Y} (p)&= \bar{\phi}-\bar{N},\label{e43}
+\bar{J}(p)&= p^2\,\bar{\psi},
 \end{align}
-then we obtain the following set of four coupled first-order differential equations:
+then Eqs.~(\ref{e314})--(\ref{e317}) can be converted into the following equivalent set of four coupled first-order differential equations:
 \begin{align}\label{e1}
 \frac{d\bar{Y}}{dp} &= \left(\frac{g+{\rm i}\,Q_e+p^2}{p^2}\right)\bar{J},\\[0.5ex]
 \frac{d\bar{N}}{dp} &= \left(\frac{-{\rm i}\,Q_e}{p^2}\right)\bar{J} + (g + P_\varphi\,p^2)\,\bar{V},\\[0.5ex]
@@ -355,13 +358,16 @@ The final solution is such that
 \bar{J}(p)&= \frac{1}{4}\,g\,(g+{\rm i}\,Q_i)\,a_3\,p^4+{\cal O}(p^6),\\[0.5ex]
 \bar{V}(p) &= \frac{g\,(g+{\rm i}\,Q_e)}{2\,c_\beta^{\,2}}\,a_3\,p^2+{\cal O}(p^4),
 \end{align}
-where $a_3$ is an arbitrary constant. 
+where $a_3$ is an arbitrary constant. Note, however, that the third solution is not consistent with Equations~(\ref{e311})--(\ref{e3.14a}), which mandate that 
+$\bar{N}(p) \rightarrow [-{\rm i}\,Q_e/(g+{\rm i}\,Q_e)]\,\bar{Y}(p) + {\cal O}(p)$ and  $\bar{V}(p)\rightarrow {\cal O}(p^2)$
+as $p\rightarrow 0$. Hence, we deduce that $a_2=0$. 
 
 We conclude that, at small values of $p$, the most general solution for $\bar{Y}(p)$ and $\bar{N}(p)$ takes the form 
 \begin{align}\label{yy}
-\bar{Y}(p) &= (g+{\rm i}\,Q_e)\,a_{-1} \,p^{-1}+(g+{\rm i}\,Q_e) \,a_0+ {\cal O}(p),\\[0.5ex]
-\bar{N}(p) &= (-{\rm i}\,Q_e)\,a_{-1}\,p^{-1} + (-{\rm i}\,Q_e)\,a_0 + a_2 + {\cal O}(p).\label{nn}
+\bar{Y}(p) &= (g+{\rm i}\,Q_e)\,(a_{-1} \,p^{-1}+a_0)+ {\cal O}(p),\\[0.5ex]
+\bar{N}(p) &= (-{\rm i}\,Q_e)\,(a_{-1}\,p^{-1} +a_0)+ {\cal O}(p),\label{nn}
 \end{align}
+which is consistent with Eqs.~(\ref{e311})--(\ref{e3.14a}).
 
 \subsection{Ricatti Matrix Differential Equation}
 Let
@@ -464,7 +470,7 @@ Suitable solutions are
 \begin{align}\label{w0def}
 \underline{\underline{W}}^{\,(0)} &=  \left(\begin{array}{cc} -1,&0\\-E_{21}^{\,(0)}/2,&0\end{array}\right),\\[0.5ex]
 W_{12}^{\,(1)} &= 0,\\[0.5ex]
-W_{21}^{\,(1)}& = -\frac{E_{21}^{\,(0)}}{2}\left[W_{11}^{\,(1)}- W_{22}^{\,(1)}\right].\label{w21def}
+W_{21}^{\,(1)}& = \frac{E_{21}^{\,(0)}}{2}\left[W_{11}^{\,(1)}- W_{22}^{\,(1)}\right].\label{w21def}
 \end{align}
 
 At small values of $p$, let
@@ -487,15 +493,17 @@ which implies that
 \frac{E_{21}^{\,(0)}}{2}\,y_{-1}= - \frac{{\rm i}\,Q_e}{g+{\rm i}\,Q_e}\,y_{-1} = n_{-1},
 \end{equation}
 in accordance with Eqs.~(\ref{yy}) and (\ref{nn}), where use has been made of Eq.~(\ref{e210}). 
-Thus, if we write
-$y_{-1} = (g+{\rm i}\,Q_e)\,a_{-1}$, 
-$n_{-1}= -{\rm i}\,Q_e\,a_{-1}$, 
-$y_0= (g+{\rm i}\,Q_e)\,a_0$, and 
-$n_0 = -{\rm i}\,Q_e\,a_0 + a_2$,
-in accordance with Eqs.~(\ref{yy}) and (\ref{nn}), then we deduce from Eqs.~(\ref{e41}), (\ref{e43}), (\ref{w0def})--(\ref{w21def}),  and (\ref{w1def}) that 
-\begin{equation}\label{e111}
-\frac{\pi}{\hat{\mit\Delta}}\equiv \frac{a_0}{a_{-1}} = W_{11}^{\,(1)} = \frac{dW_{11}(0)}{dp}.
+Equations~(\ref{w0def})--(\ref{w21def})  and (\ref{w1def})  yield
+\begin{equation}
+\frac{y_0}{y_{-1}}= W_{11}^{\,(1)},
 \end{equation}
+with $n_0$ undetermined. 
+It follows from Equation~(\ref{e41}) that 
+\begin{equation}\label{e111}
+\frac{\pi}{\hat{\mit\Delta}}\equiv \frac{y_0}{y_{-1}} = W_{11}^{\,(1)} = \frac{dW_{11}(0)}{dp}.
+\end{equation}
+Note, incidentally, that the result $\pi/\hat{\mit\Delta}=y_0/y_{-1}$ follows directly from Equation~(\ref{e43xx}), and would hold even if $a_2$ were non-zero. 
+
 
 \subsection{Large Argument Behavior of Riccati Matrix Differential Equation}
 At large values of $p$, it is clear from Eqs.~(\ref{f1})--(\ref{f4}) that  $\underline{\underline{F}}(p)=\underline{\underline{F}}^{\,(6)}\,p^6+ 
@@ -587,7 +595,7 @@ Hence, the two eigenvalues of the $F$-matrix are
  {\mit\Lambda}_2 &\simeq \frac{[F_{11}^{\,(6)}\,F_{22}^{\,(6)} - F_{12}^{\,(6)}\,F_{21}^{\,(6)}]}{F_{22}^{\,(8)}}\,p^4= \iota_e\,D^{-2}\,R\,p^4.
  \end{align}
  Thus, we deduce that the two eigenvalues of the $W$-matrix are 
- \begin{align}
+ \begin{align}\label{l1}
  \lambda_1&=-{\mit\Lambda}_1^{\,1/2}= -c_\beta^{\,-1}\,\iota_e^{\,-1/2}\,D\,P_\varphi\,p^4,\\[0.5ex]
  \lambda_2&=-{\mit\Lambda}_2^{\,1/2}=-\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}\,p^2,
  \end{align}
@@ -600,7 +608,7 @@ which yields
 \begin{equation}
 \lambda_1\simeq W_{22}^{\,(4)}\,p^4,
 \end{equation}
-which is satisfied, and
+which is in agreement with Eq.~(\ref{l1}), and
 \begin{equation}
 \lambda_2 \simeq \left[W_{11}^{\,(2)} - \frac{W_{12}^{\,(2)}\,W_{21}^{\,(4)}}{W_{22}^{\,(4)}}\right]p^2,
 \end{equation}
@@ -617,6 +625,7 @@ which is satisfied, and
 \subsection{Method of Solution}
 The method of solution is to launch the well-behaved asymptotic solution (\ref{e147}) of Eqs.~(\ref{err1})--(\ref{err4}) from large $p$, and then
 integrate the equations backward to small $p$. The complex layer response parameter, $\hat{\mit\Delta}$, is then determined  from Eq.~(\ref{e111}). 
+Note that, because there are no free parameters in expression (\ref{e147}), the layer response parameter is uniquely determined by this procedure. 
 
 \section*{Acknowledgements}
 This research was directly funded by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences,  under  contracts DE-FG02-04ER54742 and DE-SC0021156. 
