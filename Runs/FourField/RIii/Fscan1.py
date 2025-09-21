@@ -14,45 +14,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4 as nc
 import pandas as pd
-
-x = [0.0397959183673, 
-     0.069387755102,  
-     0.1, 
-     0.129591836735, 
-     0.148979591837, 
-     0.159183673469, 
-     0.188775510204, 
-     0.219387755102, 
-     0.248979591837]
-y = [-0.0638517475956,
-     -0.0346469622332,
-     -0.000867933380249,
-     0.037532254281,
-     0.064672765658,
-     0.0805301430917,
-     0.121229181328,
-     0.161904761905,
-     0.204902650715]
-
-x1 = [0.0421639577649,  
-      0.0715743267291, 
-      0.100996559497, 
-      0.130798433978, 
-      0.151346541701, 
-      0.161632459366,  
-      0.19043777435,  
-      0.221295527346, 
-      0.251121129434] 
-
-y1 = [0.0713845058726,
-      0.0358168228734,
-      0.00257444536718,
-      0.0437418436351,
-      0.0711709574089,
-      0.0872108197888,
-      0.13305255665,
-      0.181172143789,
-      0.226990153043]
  
 def F_r(Q):
 
@@ -91,16 +52,11 @@ d3i = np.asarray(ds['Delta3_i'])
 d4r = np.asarray(ds['Delta4_r'])
 d4i = np.asarray(ds['Delta4_i'])
 
-d3m = (d3r*d3r + d3i*d3i)**0.5
-d4m = (d4r*d4r + d4i*d4i)**0.5
-
 D_r = []
 D_i = []
-D_m = []
 for Q in gi:
     D_r.append(F_r(Q))
     D_i.append(F_i(Q))
-    D_m.append((F_r(Q)*F_r(Q) + F_i(Q)*F_i(Q))**0.5)
 
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'TJ Code: Delta3 and Delta4')
@@ -112,13 +68,11 @@ plt.subplot (2, 1, 1)
 plt.xlim (gi[0], gi[-1])
 plt.gca().invert_xaxis()
 
-plt.plot (gi, d3i, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Im($\Delta_3$)")
-plt.plot (gi, d4i, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Im($\Delta_4$)")
-plt.plot (gi, D_i, color = 'green', linewidth = 2, linestyle = 'dotted', label = r"Analytic")
+plt.plot (gi, d3r, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Re($\Delta_3$)")
+plt.plot (gi, d4r, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Re($\Delta_4$)")
+plt.plot (gi, D_r, color = 'green', linewidth = 2, linestyle = 'dotted', label = r"Analytic")
 
-plt.plot (df[0].values, df[3].values, color = 'cyan', linewidth = 2, linestyle = 'solid', label = "slayer")
-
-plt.plot(x, y, 'ko')
+plt.plot (df[0].values, df[2].values, color = 'cyan', linewidth = 2, linestyle = 'solid', label = "slayer")
 
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (-In[2], color = 'red',   linewidth = 1.5, linestyle = 'dotted')
@@ -134,21 +88,16 @@ plt.subplot (2, 1, 2)
 plt.xlim (gi[0], gi[-1])
 plt.gca().invert_xaxis()
 
-"""
 plt.plot (gi, d3i, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Im($\Delta_3$)")
 plt.plot (gi, d4i, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Im($\Delta_4$)")
 plt.plot (gi, D_i, color = 'green', linewidth = 2, linestyle = 'dotted', label = r"Analytic")
-"""
-plt.plot (gi, d3m, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"|$\Delta_3$|")
-plt.plot (gi, d4m, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"|$\Delta_4$|")
-plt.plot (gi, D_m, color = 'green', linewidth = 2, linestyle = 'dotted', label = r"Analytic")
-
-plt.plot(x1, y1, 'ko')
 
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (-In[2], color = 'red',   linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (0.,     color = 'green', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (-In[3], color = 'blue',  linewidth = 1.5, linestyle = 'dotted')
+
+plt.plot (df[0].values, df[3].values, color = 'cyan', linewidth = 2, linestyle = 'solid', label = "slayer")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
 plt.xlabel (r'$Q$', fontsize = "15")

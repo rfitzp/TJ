@@ -1,4 +1,4 @@
-# Profile1.py
+# P.py
 
 # Plots pressure and pressure gradient profiles versus r
 
@@ -31,8 +31,8 @@ plt.ylim (0.023, 0.026)
 plt.plot (r, pc, color = 'black', linewidth = 2, linestyle = 'solid')
 plt.plot (r, p,  color = 'black', linewidth = 2, linestyle = 'dotted')
 
-plt.xlabel (r'$\hat{r}$', fontsize = fontsize)
-plt.ylabel (r'$\hat{P}$', fontsize = fontsize)
+plt.xlabel (r'$\bar{r}$', fontsize = fontsize)
+plt.ylabel (r'$\bar{P}$', fontsize = fontsize)
 
 plt.subplot (2, 1, 1)
 
@@ -45,9 +45,9 @@ plt.plot    (r, pp,  color = 'black', linewidth = 2,   linestyle = 'solid')
 plt.plot    (r, ppc, color = 'black', linewidth = 2,   linestyle = 'dashed')
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\hat{r}$',             fontsize = fontsize)
-plt.ylabel (r'$-d\hat{P}/d\hat{r}$',  fontsize = fontsize)
+plt.xlabel (r'$\bar{r}$',             fontsize = fontsize)
+plt.ylabel (r'$-d\bar{P}/d\bar{r}$',  fontsize = fontsize)
 plt.tight_layout ()
 
-#plt.show ()    
-plt.savefig("Figure8_4.pdf")
+plt.show ()    
+#plt.savefig("Figure9_4.pdf")

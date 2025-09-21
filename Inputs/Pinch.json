@@ -1,4 +1,5 @@
 {
+    /*
     // RFP   
     "epsa":   0.25,   // Inverse aspect-ratio of plasma boundar
     "q0":     0.14,   // Central safety-factor
@@ -7,8 +8,8 @@
     "nus":    1.6,    // Parallel current profile parameter
     "alphap": 2.0,    // Pressure profile parameter
     "nup":    2.0,    // Pressure profile parameter
+    */
 
-    /*
     // Tokamak
     "epsa":   0.25,   // Inverse aspect-ratio of plasma boundar
     "q0":     0.95,   // Central safety-factor 
@@ -17,8 +18,7 @@
     "nus":    2.0,    // Parallel current profile parameter
     "alphap": 2.0,    // Pressure profile parameter
     "nup":    2.0,    // Pressure profile parameter
-    */
- 
+  
     "Ngrid":  5000,   // Number of radial grid points
     "eps":    1.0e-4  // Closest approach to magnetic axis
 }
