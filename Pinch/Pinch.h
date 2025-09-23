@@ -38,6 +38,7 @@
 #pragma once
 
 #include "Utility.h"
+#include <gsl/gsl_spline.h>
 
 // ############
 // Class header
@@ -57,14 +58,30 @@ class Pinch : private Utility
   double alphap;  // Pressure profile parameter (read from JSON file)
   double nup;     // Pressure profile parameter (read from JSON file)
 
+  double bwall;   // Minor radius of resistive wall relative to that of plasma (read from JSON file)
+  double dwall;   // Thickness of resistive wall relative minor radius of plasma (read from JSON file)
+
   double Theta;   // Pinch parameter 
   double Frev;    // Reversal parameter 
+
+  // ---------------
+  // Mode parameters
+  // ---------------
+  int    mpol;   // Poloidal mode number (read from JSON file)
+  int    ntor;   // Toroidal mode number (read from JSON file)
+  double MPOL;   // Poloidal mode number
+  double NTOR;   // Toroidal mode number
+  double ka;     // Toroidal wavenumber at plasma boundary
+  double kb;     // Toroidal wavenumber at wall
+  double qres;   // Resonant safety-factor
+  double rres;   // Radius of resonant surface
   
   // ----------------------
   // Calculation parameters
   // ----------------------
   int    Ngrid;  // Number of radial grid points (read from JSON file)
   double eps;    // Closest approach to magnetic axis (read from JSON file)
+  double delta;  // Closest approach to rational surface (read from JSON file)
 
   // ----------------
   // Calculation data
@@ -84,6 +101,15 @@ class Pinch : private Utility
   double* PPp;      // Pressure gradient profile
   double* PPpc;     // Critical pressure gradient profile
   double* PPpm;     // Mercier-stable pressure gradient profile
+
+  gsl_interp_accel* Bphi_accel;    // Interpolation accelerator for toroidal magnetic field
+  gsl_spline*       Bphi_spline;   // Interpolator for toroidal magnetic field
+  gsl_interp_accel* Btheta_accel;  // Interpolation accelerator for poloidal magnetic field
+  gsl_spline*       Btheta_spline; // Interpolator for poloidal magnetic field
+  gsl_interp_accel* Pp_accel;      // Interpolation accelerator for pressure gradient
+  gsl_spline*       Pp_spline;     // Interpolator for pressure gradient
+  gsl_interp_accel* q_accel;       // Interpolation accelerator for safety-factor
+  gsl_spline*       q_spline;      // Interpolator for safety-factor
 
   // ----
   // Misc
@@ -125,6 +151,16 @@ private:
   double Gets (double r, double q);
   // Get critical pressure gradient
   double GetPpcrit (double r, double q, double Bphi);
+  // Get beta1
+  double Getbeta1 (double r);
+  // Get beta2
+  double Getbeta2 (double r);
+  // Get F
+  double GetF (double r);
+  // Get G
+  double GetG (double r);
+  // Get H
+  double GetH (double r);
 
   // Evaluate right-hand sides of differential equations
   void CashKarp45Rhs (double x, double*  y, double*  dydx) override;

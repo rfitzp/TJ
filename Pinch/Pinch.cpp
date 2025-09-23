@@ -116,6 +116,16 @@ Pinch::Pinch ()
   PPpc     = new double[Ngrid+1];
   PPpm     = new double[Ngrid+1];
 
+  Bphi_accel   = gsl_interp_accel_alloc ();
+  Btheta_accel = gsl_interp_accel_alloc ();
+  Pp_accel     = gsl_interp_accel_alloc ();
+  q_accel      = gsl_interp_accel_alloc ();
+  
+  Bphi_spline   = gsl_spline_alloc (gsl_interp_cspline, Ngrid+1);
+  Btheta_spline = gsl_spline_alloc (gsl_interp_cspline, Ngrid+1);
+  Pp_spline     = gsl_spline_alloc (gsl_interp_cspline, Ngrid+1);
+  q_spline      = gsl_spline_alloc (gsl_interp_cspline, Ngrid+1);
+
   // ------------------
   // Set up radial grid
   // ------------------
@@ -132,6 +142,11 @@ Pinch::~Pinch ()
   delete[] rr;  delete[] ssigma; delete[] PP;     delete[] BBphi;    delete[] BBtheta; delete[] qq;
   delete[] qqc; delete[] PPc;    delete[] BBphic; delete[] BBthetac;
   delete[] PPp; delete[] PPpc;   delete[] PPpm;
+
+  gsl_interp_accel_free (Bphi_accel);  gsl_interp_accel_free (Btheta_accel);  gsl_interp_accel_free (q_accel);
+  gsl_interp_accel_free (Pp_accel);
+  gsl_spline_free       (Bphi_spline); gsl_spline_free       (Btheta_spline); gsl_spline_free       (q_spline);
+  gsl_spline_free       (Pp_spline);
 }
 
 // #########################
@@ -356,6 +371,14 @@ void Pinch::CalcEquilibrium ()
     PPc[i] = PPc[i] - Pedge;
   
   delete[] y; delete[] err;
+
+  // ................................
+  // Interpolate equilibrium profiles
+  // ................................
+  gsl_spline_init (Bphi_spline,   rr, BBphic,   Ngrid+1);
+  gsl_spline_init (Btheta_spline, rr, BBthetac, Ngrid+1);
+  gsl_spline_init (Pp_spline,     rr, PPpm,     Ngrid+1);
+  gsl_spline_init (q_spline,      rr, qqc,      Ngrid+1);
 }
 
 // ############################################
@@ -419,7 +442,37 @@ double Pinch::GetPpcrit (double r, double q, double Bphi)
 {
   double s = Gets (r, q);
 
-  return  - s*s * Bphi*Bphi /r /(1. - q*q);
+  return - s*s * Bphi*Bphi /r /(1. - q*q) /8.;
+}
+
+// #####################
+// Function to get beta1
+// #####################
+double Pinch::Getbeta1 (double r)
+{
+  if (r > 1.)
+    return 0.;
+  else
+    {
+      double Pp = gsl_spline_eval (Pp_spline, r, Pp_accel);
+
+      return r * Pp;
+    }
+}
+
+// #####################
+// Function to get beta2
+// #####################
+double Pinch::Getbeta2 (double r)
+{
+  if (r > 1.)
+    return 0.;
+  else
+    {
+      double Pp2 = gsl_spline_eval_deriv (Pp_spline, r, Pp_accel);
+
+      return r*r * Pp2;
+    }
 }
 
 // ###############################################################

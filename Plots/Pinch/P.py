@@ -26,7 +26,7 @@ plt.rc ('ytick', labelsize = fontsize)
 plt.subplot (2, 1, 2)
 
 plt.xlim (0., 0.2)
-plt.ylim (0.023, 0.026)
+plt.ylim (0.008, 0.012)
 
 plt.plot (r, pc, color = 'black', linewidth = 2, linestyle = 'solid')
 plt.plot (r, p,  color = 'black', linewidth = 2, linestyle = 'dotted')
