@@ -39,6 +39,7 @@
 
 #include "Utility.h"
 #include <gsl/gsl_spline.h>
+#include <gsl/gsl_sf_bessel.h>
 
 // ############
 // Class header
@@ -52,6 +53,7 @@ class Pinch : private Utility
   // ----------------------
   double epsa;    // Inverse aspect-ratio of plasma boundary (read from JSON file)
   double q0;      // Central safety-factor (read from JSON file)
+  double qa;      // Safety-factor at plasma boundary
   double beta0;   // Central plasma beta (read from JSON file)
   double alphas;  // Parallel current profile parameter (read from JSON file)
   double nus;     // Parallel current profile parameter (read from JSON file)
@@ -59,8 +61,12 @@ class Pinch : private Utility
   double nup;     // Pressure profile parameter (read from JSON file)
 
   double bwall;   // Minor radius of resistive wall relative to that of plasma (read from JSON file)
-  double dwall;   // Thickness of resistive wall relative minor radius of plasma (read from JSON file)
+  double dwall;   // Radial thickness of resistive wall relative to plasma minor radius (read from JSON file)
+  double epsb;    // Inverse aspect-ratio of resistive wall
+  double delw;    // Wall thickness parameter
 
+  double gmax;    // Maximum growth/decay rate (read from JSON file)
+  
   double Theta;   // Pinch parameter 
   double Frev;    // Reversal parameter 
 
@@ -87,6 +93,7 @@ class Pinch : private Utility
   // Calculation data
   // ----------------
   double* rr;       // Radial grid
+  double* rrv;      // Radial grid in vacuum
   double* ssigma;   // Parallel current profile 
   double* PP;       // Pressure profile 
   double* BBphi;    // Toroidal magnetic field 
@@ -102,6 +109,12 @@ class Pinch : private Utility
   double* PPpc;     // Critical pressure gradient profile
   double* PPpm;     // Mercier-stable pressure gradient profile
 
+  double* bbeta1;   // r P' profile
+  double* bbeta2;   // r^2 P'' profile
+  double* ssigp;    // sigma' profile
+  double* ff;       // f profile
+  double* gg;       // tanh(g/10) profile
+
   gsl_interp_accel* Bphi_accel;    // Interpolation accelerator for toroidal magnetic field
   gsl_spline*       Bphi_spline;   // Interpolator for toroidal magnetic field
   gsl_interp_accel* Btheta_accel;  // Interpolation accelerator for poloidal magnetic field
@@ -111,10 +124,27 @@ class Pinch : private Utility
   gsl_interp_accel* q_accel;       // Interpolation accelerator for safety-factor
   gsl_spline*       q_spline;      // Interpolator for safety-factor
 
+  double* Psip;    // Plasma solution
+  double* Psinw;   // No-wall vacuum solution
+  double* Psipw;   // Perfect-wall vacuum solution
+  double* Psirwm;  // Resistive wall mode vacuum solution
+
+  double lbar;  // Plasma stability index
+  double Lnw;   // No-wall vacuum stability index
+  double Lpw;   // No-wall vacuum stability index
+  double alpw;  // Wall parameter
+  double Wnw;   // No-wall delta-W
+  double Wpw;   // Perfect-wall delta-W
+  double c1;    // Amount of Psinw in Psirwm
+  double c2;    // Amount of Psipw in Psirwm
+  double rhs;   // Right-hand side of resistive wall mode dispersion relation
+
+  double gamma; // Resistive wall mode growth-rate
+
   // ----
   // Misc
   // ----
-  int count, rhs_chooser;
+  int count, rhs_chooser, f_chooser;
   
 public:
 
@@ -136,6 +166,14 @@ private:
 
   // Calculate equilibrium
   void CalcEquilibrium ();
+  // Find resonant surface
+  void FindResonant ();
+  // Solve Newcomb's equation
+  void SolveNewcomb ();
+  // Solve vacuum solution
+  void SolveVacuum ();
+  // Calculate resistive wall mode growth-rate
+  void Growth ();
   // Output data to Netcdf file
   void WriteNetcdf ();
   
@@ -151,6 +189,12 @@ private:
   double Gets (double r, double q);
   // Get critical pressure gradient
   double GetPpcrit (double r, double q, double Bphi);
+  // Get q
+  double Getq (double r);
+  // Get Btheta
+  double GetBtheta (double r);
+  // Get Bphi
+  double GetBphi (double r);
   // Get beta1
   double Getbeta1 (double r);
   // Get beta2
@@ -161,8 +205,22 @@ private:
   double GetG (double r);
   // Get H
   double GetH (double r);
-
+  // Get f
+  double Getf (double r);
+  // Get g
+  double Getg (double r);
+  // Get Im
+  double GetIm (double r);
+  // Get Km
+  double GetKm (double r);
+  // Get Imp
+  double GetImp (double r);
+  // Get Km
+  double GetKmp (double r);
+ 
   // Evaluate right-hand sides of differential equations
   void CashKarp45Rhs (double x, double*  y, double*  dydx) override;
+  // Target function for zero finding
+  double RootFindF (double x) override;
 };
 

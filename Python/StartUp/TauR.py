@@ -34,4 +34,11 @@ a  = 2.0
 
 tauR3 = a*a * sc.mu_0 /eta
 
-print ("\ntau_R: JET - %11.4e SPARC - %11.4e ITER - %11.4e\n" % (tauR1, tauR2, tauR3))
+# ####
+# DEMO
+# ####
+a = 2.93
+
+tauR4 = a*a * sc.mu_0 /eta
+
+print ("\ntau_R: JET - %11.4e SPARC - %11.4e ITER - %11.4e DEMO - %11.4e\n" % (tauR1, tauR2, tauR3, tauR4))

@@ -20,6 +20,11 @@ btc = ds['B_phi_c']
 bpc = ds['B_theta_c']
 qc  = ds['q_c']
 
+ip = ds['InputParameters']
+
+rs = ip[14]
+qs = ip[15]
+
 fontsize = 20
 
 fig = plt.figure (figsize = (12.0, 8.0))
@@ -33,6 +38,8 @@ plt.xlim (0., 1.)
 plt.ylim (0., 1.05*s[0])
 
 plt.plot (r, s, color = 'black', linewidth = 2, linestyle = 'solid')
+if rs > 0.:
+    plt.axvline (rs, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\bar{r}$', fontsize = fontsize)
 plt.ylabel (r'$\sigma$',  fontsize = fontsize)
@@ -44,6 +51,8 @@ plt.ylim (0., 1.05*p[0])
 
 plt.plot (r, pc, color = 'black', linewidth = 2, linestyle = 'solid')
 plt.plot (r, p,  color = 'black', linewidth = 2, linestyle = 'dotted')
+if rs > 0.:
+    plt.axvline (rs, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\bar{r}$', fontsize = fontsize)
 plt.ylabel (r'$\bar{P}$', fontsize = fontsize)
@@ -57,6 +66,8 @@ plt.plot    (r, bpc, color = 'black', linewidth = 2,   linestyle = 'dashed', lab
 plt.plot    (r, btc, color = 'black', linewidth = 2,   linestyle = 'dotted')
 plt.plot    (r, bpc, color = 'black', linewidth = 2,   linestyle = 'dotted')
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
+if rs > 0.:
+    plt.axvline (rs, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
 plt.xlabel (r'$\bar{r}$', fontsize = fontsize)
 plt.legend (fontsize = fontsize)
@@ -71,6 +82,10 @@ plt.plot (r, qc, color = 'black', linewidth = 2, linestyle = 'dotted')
 
 if (q[-1] < 0.):
     plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
+if rs > 0.:
+    plt.axvline (rs, color = 'black', linewidth = 1.5, linestyle = 'dashed')
+    plt.axhline (qs, color = 'black', linewidth = 1.5, linestyle = 'dashed')
+
 
 plt.xlabel (r'$\bar{r}$', fontsize = fontsize)
 plt.ylabel (r'$q$',       fontsize = fontsize)

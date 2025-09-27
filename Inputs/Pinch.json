@@ -1,14 +1,31 @@
 {
-
-    // RFP   
     "epsa":   0.25,   // Inverse aspect-ratio of plasma boundar
     "q0":     0.14,   // Central safety-factor
-    "beta0":  2.0e-2, // Central plasma beta
+    "beta0":  0.0e-2, // Central plasma beta
     "alphas": 4.0,    // Parallel current profile parameter
-    "nus":    1.6,    // Parallel current profile parameter
+    "nus":    2.0,    // Parallel current profile parameter
     "alphap": 2.0,    // Pressure profile parameter
     "nup":    2.0,    // Pressure profile parameter
-   
+    "bwall":  1.12,   // Relative wall radius
+    "dwall":  0.4,    // Relative wall thickness
+    
+    "mpol":  1,       // Poloidal mode number
+    "ntor":  11,      // Toroidal mode number
+  
+    "Ngrid":  5000,   // Number of radial grid points
+    "eps":    1.0e-4, // Closest approach to magnetic axis
+    "delta":  1.0e-7, // Closest approach to rational surface
+
+    "acc":  1.0e-14,  // Adaptive integration accuracy
+    "h0":   1.0e-4,   // Initial integration step-length 
+    "hmin": 1.0e-10,  // Minimum integration step-length 
+    "hmax": 1.0e-2,   // Maximum integration step-length
+
+    "Eta":     1.0e-12, // Minimum magnitude of F at root F(x) = 0
+    "Maxiter": 60,      // Maximum number of root finding iterations
+    "Nint":    100,     // Number of root finding search intervals
+    "gmax":    50.0     // Maximum growth-rate for root finding
+    
     /*
     // Tokamak
     "epsa":   0.25,   // Inverse aspect-ratio of plasma boundar
@@ -19,7 +36,5 @@
     "alphap": 2.0,    // Pressure profile parameter
     "nup":    2.0,    // Pressure profile parameter
     */
-  
-    "Ngrid":  5000,   // Number of radial grid points
-    "eps":    1.0e-4  // Closest approach to magnetic axis
+ 
 }
