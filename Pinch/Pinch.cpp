@@ -51,7 +51,6 @@ Pinch::Pinch ()
 
   Eta     = JSONData["Eta"]    .get<double> ();
   Maxiter = JSONData["Maxiter"].get<int>    ();
-  gmax    = JSONData["gmax"]   .get<double> ();
   Nint    = JSONData["Nint"]   .get<int>    ();
 
   // ------------
@@ -155,26 +154,33 @@ Pinch::Pinch ()
   PPpc     = new double[Ngrid+1];
   PPpm     = new double[Ngrid+1];
 
+  FF       = new double[Ngrid+1];
+  GG       = new double[Ngrid+1];
+  HH       = new double[Ngrid+1];
   bbeta1   = new double[Ngrid+1];
   bbeta2   = new double[Ngrid+1];
   ssigp    = new double[Ngrid+1];
   ff       = new double[Ngrid+1];
   gg       = new double[Ngrid+1];
 
-  Bphi_accel   = gsl_interp_accel_alloc ();
-  Btheta_accel = gsl_interp_accel_alloc ();
-  Pp_accel     = gsl_interp_accel_alloc ();
-  q_accel      = gsl_interp_accel_alloc ();
+  Psip     = new double[Ngrid+1];
+  Psinw    = new double[Ngrid+1];
+  Psipw    = new double[Ngrid+1];
+  Psirwm   = new double[Ngrid+1];
+  xip      = new double[Ngrid+1];
+  xinw     = new double[Ngrid+1];
+  xipw     = new double[Ngrid+1];
+  xirwm    = new double[Ngrid+1];
+
+  Bphi_accel    = gsl_interp_accel_alloc ();
+  Btheta_accel  = gsl_interp_accel_alloc ();
+  Pp_accel      = gsl_interp_accel_alloc ();
+  q_accel       = gsl_interp_accel_alloc ();
   
   Bphi_spline   = gsl_spline_alloc (gsl_interp_cspline, Ngrid+1);
   Btheta_spline = gsl_spline_alloc (gsl_interp_cspline, Ngrid+1);
   Pp_spline     = gsl_spline_alloc (gsl_interp_cspline, Ngrid+1);
   q_spline      = gsl_spline_alloc (gsl_interp_cspline, Ngrid+1);
-
-  Psip   = new double[Ngrid+1];
-  Psinw  = new double[Ngrid+1];
-  Psipw  = new double[Ngrid+1];
-  Psirwm = new double[Ngrid+1];
 
   // ------------------
   // Set up radial grid
@@ -196,14 +202,16 @@ Pinch::~Pinch ()
   delete[] qqc; delete[] PPc;    delete[] BBphic; delete[] BBthetac;
   delete[] PPp; delete[] PPpc;   delete[] PPpm;   delete[] rrv;
 
+  delete[] FF;     delete[] GG;     delete[] HH;
   delete[] bbeta1; delete[] bbeta2; delete[] ssigp; delete[] ff; delete[] gg;
 
-  delete[] Psip; delete[] Psinw; delete[] Psipw; delete[] Psirwm; 
+  delete[] Psip; delete[] Psinw; delete[] Psipw; delete[] Psirwm;
+  delete[] xip;  delete[] xinw;  delete[] xipw;  delete[] xirwm; 
 
   gsl_interp_accel_free (Bphi_accel);  gsl_interp_accel_free (Btheta_accel);  gsl_interp_accel_free (q_accel);
-  gsl_interp_accel_free (Pp_accel);
+  gsl_interp_accel_free (Pp_accel);    
   gsl_spline_free       (Bphi_spline); gsl_spline_free       (Btheta_spline); gsl_spline_free       (q_spline);
-  gsl_spline_free       (Pp_spline);
+  gsl_spline_free       (Pp_spline);   
 }
 
 // #########################
@@ -228,14 +236,34 @@ void Pinch::Solve ()
   // Find resonant surface
   FindResonant ();
 
-  // Solve Newcomb's equation
+  // Solve Newcomb's equation to get plasma eigenfunction
   SolveNewcomb ();
 
-  // Calculate vacuum solution
+  // Calculate vacuum ideal eigenfunctions
   SolveVacuum ();
 
   // Calculate resistive wall mode growth-rate
-  Growth ();
+  CalculateRwmGrowth ();
+
+  // Calculate resistive wall mode eigenfunction
+  CalculateRwmSolution ();
+
+  // Calculate displacement eignfunctions
+  for (int i = 1; i <= Ngrid; i++)
+    {
+      xip[i] = Psip[i] * GetF(1.) /GetF (rr[i]);
+    }
+  if (abs (mpol) == 1)
+    xip[0] = xip[1];
+  else
+    xip[0] = 0.;
+
+  for (int i = 0; i <= Ngrid; i++)
+    {
+      xinw [i] = Psinw [i] * GetF(1.) /GetF (rrv[i]);
+      xipw [i] = Psipw [i] * GetF(1.) /GetF (rrv[i]);
+      xirwm[i] = Psirwm[i] * GetF(1.) /GetF (rrv[i]);
+    }
  
   // Output data to netcdf file
   WriteNetcdf ();
@@ -375,6 +403,9 @@ void Pinch::CalcEquilibrium ()
   // .............................
   for (int i = 0; i <= Ngrid; i++)
     {
+      FF    [i] = GetF      (rr[i]);
+      GG    [i] = GetG      (rr[i]);
+      HH    [i] = GetH      (rr[i]);
       bbeta1[i] = Getbeta1  (rr[i]);
       bbeta2[i] = Getbeta2  (rr[i]);
       ssigp [i] = GetSigmap (rr[i]);
@@ -410,9 +441,9 @@ void Pinch::FindResonant ()
     printf ("Rational surface: rres = %10.3e qres = %10.3e residual = %10.3e\n\n", rres, qres, fabs(Getq(rres) - qres));
 }
 
-// ####################################
-// Function to solve Newcomb's equation
-// ####################################
+// ################################################################
+// Function to solve Newcomb's equation to get plasma eigenfunction
+// ################################################################
 void Pinch::SolveNewcomb ()
 {
   for (int i = 0; i <= Ngrid; i++)
@@ -468,7 +499,7 @@ void Pinch::SolveNewcomb ()
 	}
     }
   lbar = y[1] /Getf (1.) /y[0];
-  printf ("Stopping solution: r = %10.3e y = (%10.3e, %10.3e) lbar = %10.3e\n", r, y[0], y[1], lbar);
+  printf ("Stopping solution:  r = %10.3e y = (%10.3e, %10.3e) lbar = %10.3e\n", r, y[0], y[1], lbar);
  
   delete[] y; delete[] err;
   
@@ -477,14 +508,14 @@ void Pinch::SolveNewcomb ()
     Psip[i] /= Psia;
 }
 
-// ###########################################
-// Function to calculate vacuum eigenfunctions
-// ###########################################
+// #################################################
+// Function to calculate vacuum ideal eigenfunctions
+// #################################################
 void Pinch::SolveVacuum ()
 {
   if (ntor == 0)
     {
-      Lnw  = - 1./ fabs (MPOL);
+      Lnw  = 1./ fabs (MPOL);
       Lpw  = (1. + pow (bwall, - 2. * fabs (MPOL))) / (1. - pow (bwall, - 2. * fabs (MPOL))) /fabs (MPOL);
       alpw = (1. - pow (bwall, - 2. * fabs (MPOL))) /2. /fabs (MPOL);
       
@@ -547,7 +578,6 @@ void Pinch::SolveVacuum ()
   Wpw = M_PI*M_PI * F*F * (lbar /H + Lpw);
   c1  =   Wpw / (Wpw - Wnw);
   c2  = - Wnw / (Wpw - Wnw);
-
   rhs = - Wnw /Wpw /alpw;
 
   printf ("\nLambda_nw = %10.3e Lambda_pw = %10.3e alpha_w = %10.3e dW_nw = %10.3e dW_pw = %10.3e c1 = %10.3e c2 = %10.3e\n\n",
@@ -557,8 +587,10 @@ void Pinch::SolveVacuum ()
 // #####################################################
 // Function to calculate resistive wall mode growth-rate
 // #####################################################
-void Pinch::Growth ()
+void Pinch::CalculateRwmGrowth ()
 {
+  double residual;
+  
   if (Wpw < 0.)
     {
       gamma = 1.e3;
@@ -571,16 +603,60 @@ void Pinch::Growth ()
 	{
 	  f_chooser = 1;
 	  
-	  gamma = RootFind (0., gmax);
+	  gamma = RootFind (0., 100.*rhs);
+
+	  residual = fabs (RootFindF (gamma));
 	}
       else
 	{
 	  f_chooser = 2;
 	  
-	  gamma = RootFind (0., -gmax);
+	  gamma = RootFind (0., 100.*rhs);
+
+	  residual = fabs (RootFindF (gamma));
 	}
 
-        printf ("rhs = %10.3e gamma = %10.3e\n\n", rhs, gamma);
+      printf ("rhs = %10.3e gamma = %10.3e residual = %10.3e\n\n", rhs, gamma, residual);
+    }
+}
+
+// #######################################################
+// Function to calculate resistive wall mode eigenfunction
+// #######################################################
+void Pinch::CalculateRwmSolution ()
+{
+  if (gamma > 0.)
+    c3 = c1 /cosh (sqrt (  delw * gamma));
+  else
+    c3 = c1 /cos  (sqrt (- delw * gamma));
+  
+  for (int i = 0; i<= Ngrid; i++)
+    {
+      double r = rrv[i];
+
+      if (r < bwall)
+	{
+	  Psirwm[i] = c1 * Psinw[i] + c2 * Psipw[i];
+	}
+      else if (r > bwall + dwall)
+	{
+	  Psirwm[i] = c3 * Psinw[i];
+	}
+      else
+	{
+	  double u   = (r - bwall) /dwall;
+	  
+	  if (gamma > 0.)
+	    {
+	      Psirwm[i] = c1 * Psinw[i] * (cosh (sqrt (delw * gamma) * u)
+				      - tanh (sqrt (delw * gamma)) * sinh (sqrt (delw * gamma) * u));
+   	    }
+	  else
+	    {
+	      Psirwm[i] = c1 * Psinw[i] * (cos (sqrt (- delw * gamma) * u)
+				      + tan (sqrt (- delw * gamma)) * sin (sqrt (- delw * gamma) * u));
+	    }
+	}
     }
 }
 
@@ -621,52 +697,68 @@ void Pinch::WriteNetcdf ()
        NcDim i_d = dataFile.addDim ("Ni", NINPUT);
        NcDim r_d = dataFile.addDim ("Nr", Ngrid+1);
          
-       NcVar i_x     = dataFile.addVar ("InputParameters", ncDouble, i_d);
+       NcVar i_x      = dataFile.addVar ("InputParameters", ncDouble, i_d);
        i_x.putVar (Input);
-       NcVar r_x     = dataFile.addVar ("r",               ncDouble, r_d);
+       NcVar r_x      = dataFile.addVar ("r",               ncDouble, r_d);
        r_x.putVar (rr);
-       NcVar rv_x    = dataFile.addVar ("r_v",             ncDouble, r_d);
+       NcVar rv_x     = dataFile.addVar ("r_v",             ncDouble, r_d);
        rv_x.putVar (rrv);
-       NcVar sigma_x = dataFile.addVar ("sigma",           ncDouble, r_d);
+       NcVar sigma_x  = dataFile.addVar ("sigma",           ncDouble, r_d);
        sigma_x.putVar (ssigma);
-       NcVar P_x     = dataFile.addVar ("P",               ncDouble, r_d);
+       NcVar P_x      = dataFile.addVar ("P",               ncDouble, r_d);
        P_x.putVar (PP);
-       NcVar Bt_x    = dataFile.addVar ("B_phi",           ncDouble, r_d);
+       NcVar Bt_x     = dataFile.addVar ("B_phi",           ncDouble, r_d);
        Bt_x.putVar (BBphi);
-       NcVar Bp_x    = dataFile.addVar ("B_theta",         ncDouble, r_d);
+       NcVar Bp_x     = dataFile.addVar ("B_theta",         ncDouble, r_d);
        Bp_x.putVar (BBtheta);
-       NcVar q_x     = dataFile.addVar ("q",               ncDouble, r_d);
+       NcVar q_x      = dataFile.addVar ("q",               ncDouble, r_d);
        q_x.putVar (qq);
-       NcVar Pc_x    = dataFile.addVar ("P_c",             ncDouble, r_d);
+       NcVar Pc_x     = dataFile.addVar ("P_c",             ncDouble, r_d);
        Pc_x.putVar (PPc);
-       NcVar Btc_x   = dataFile.addVar ("B_phi_c",         ncDouble, r_d);
+       NcVar Btc_x    = dataFile.addVar ("B_phi_c",         ncDouble, r_d);
        Btc_x.putVar (BBphic);
-       NcVar Bpc_x   = dataFile.addVar ("B_theta_c",       ncDouble, r_d);
+       NcVar Bpc_x    = dataFile.addVar ("B_theta_c",       ncDouble, r_d);
        Bpc_x.putVar (BBthetac);
-       NcVar qc_x    = dataFile.addVar ("q_c",             ncDouble, r_d);
+       NcVar qc_x     = dataFile.addVar ("q_c",             ncDouble, r_d);
        qc_x.putVar (qqc);
-       NcVar pp_x    = dataFile.addVar ("dPdr",            ncDouble, r_d);
+       NcVar pp_x     = dataFile.addVar ("dPdr",            ncDouble, r_d);
        pp_x.putVar (PPp);
-       NcVar ppc_x   = dataFile.addVar ("dPdr_crit",       ncDouble, r_d);
+       NcVar ppc_x    = dataFile.addVar ("dPdr_crit",       ncDouble, r_d);
        ppc_x.putVar (PPpc);
-       NcVar ppm_x   = dataFile.addVar ("dPdr_marg",       ncDouble, r_d);
+       NcVar ppm_x    = dataFile.addVar ("dPdr_marg",       ncDouble, r_d);
        ppm_x.putVar (PPpm);
-       NcVar bb1_x   = dataFile.addVar ("beta_1",          ncDouble, r_d);
+       NcVar FF_x     = dataFile.addVar ("F",               ncDouble, r_d);
+       FF_x.putVar (FF);
+       NcVar GG_x     = dataFile.addVar ("G",               ncDouble, r_d);
+       GG_x.putVar (GG);
+       NcVar HH_x     = dataFile.addVar ("H",               ncDouble, r_d);
+       HH_x.putVar (HH);
+       NcVar bb1_x    = dataFile.addVar ("beta_1",          ncDouble, r_d);
        bb1_x.putVar (bbeta1);
-       NcVar bb2_x   = dataFile.addVar ("beta_2",          ncDouble, r_d);
+       NcVar bb2_x    = dataFile.addVar ("beta_2",          ncDouble, r_d);
        bb2_x.putVar (bbeta2);
-       NcVar ssp_x   = dataFile.addVar ("sigma_p",         ncDouble, r_d);
+       NcVar ssp_x    = dataFile.addVar ("sigma_p",         ncDouble, r_d);
        ssp_x.putVar (ssigp);
-       NcVar ff_x    = dataFile.addVar ("f",               ncDouble, r_d);
+       NcVar ff_x     = dataFile.addVar ("f",               ncDouble, r_d);
        ff_x.putVar (ff);
-       NcVar gg_x    = dataFile.addVar ("g",               ncDouble, r_d);
+       NcVar gg_x     = dataFile.addVar ("g",               ncDouble, r_d);
        gg_x.putVar (gg);
-       NcVar psip_x  = dataFile.addVar ("psi_p",           ncDouble, r_d);
+       NcVar psip_x   = dataFile.addVar ("psi_p",           ncDouble, r_d);
        psip_x.putVar (Psip);
-       NcVar psinw_x = dataFile.addVar ("psi_nw",          ncDouble, r_d);
+       NcVar psinw_x  = dataFile.addVar ("psi_nw",          ncDouble, r_d);
        psinw_x.putVar (Psinw);
-       NcVar psipw_x = dataFile.addVar ("psi_pw",          ncDouble, r_d);
+       NcVar psipw_x  = dataFile.addVar ("psi_pw",          ncDouble, r_d);
        psipw_x.putVar (Psipw);
+       NcVar psirwm_x = dataFile.addVar ("psi_rwm",         ncDouble, r_d);
+       psirwm_x.putVar (Psirwm);
+       NcVar xip_x    = dataFile.addVar ("xi_p",           ncDouble, r_d);
+       xip_x.putVar (xip);
+       NcVar xinw_x   = dataFile.addVar ("xi_nw",          ncDouble, r_d);
+       xinw_x.putVar (xinw);
+       NcVar xipw_x   = dataFile.addVar ("xi_pw",          ncDouble, r_d);
+       xipw_x.putVar (xipw);
+       NcVar xirwm_x  = dataFile.addVar ("xi_rwm",         ncDouble, r_d);
+       xirwm_x.putVar (xirwm);
      }
    catch (NcException& e)
      {
@@ -751,7 +843,7 @@ double Pinch::Gets (double r, double q)
 {
   double sigma = GetSigma (r);
 
-  return 2. - sigma * (epsa*epsa *r*r + q*q) /epsa /q;
+  return 2. - sigma * (epsa*epsa * r*r + q*q) /epsa /q;
 }
 
 // ##########################################

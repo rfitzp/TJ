@@ -1,20 +1,19 @@
-# Psi.py
+# xirwm.py
 
-# Plots ideal displacement eigenfunctions Psi_p, Psi_nw, and Psi_pw versus r
+# Plots resistive wall mode displacemnt eigenfunction versus r
 
 import math
 import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4 as nc
 
-fn    = '../../Outputs/Pinch/Pinch.nc'
-ds    = nc.Dataset(fn)
-r     = ds['r']
-rv    = ds['r_v']
-psip  = ds['psi_p']
-psinw = ds['psi_nw']
-psipw = ds['psi_pw']
-ip    = ds['InputParameters']
+fn     = '../../Outputs/Pinch/Pinch.nc'
+ds     = nc.Dataset(fn)
+r      = ds['r']
+rv     = ds['r_v']
+psip   = ds['xi_p']
+psirwm = ds['xi_rwm']
+ip     = ds['InputParameters']
 
 rs = ip[14]
 bw = ip[7]
@@ -23,17 +22,16 @@ dw = ip[8]
 fontsize = 20
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Pinch Code: Ideal Eigenfunctions')
+fig.canvas.manager.set_window_title (r'Pinch Code: Resistive Wall Mode Displacement Eigenfunction')
 plt.rc ('xtick', labelsize = fontsize) 
 plt.rc ('ytick', labelsize = fontsize) 
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0., 1.2*bw)
+plt.xlim (0., 1.2*(bw+dw))
 
-plt.plot (r,  psip,  color = 'black', linewidth = 2, linestyle = 'solid',   label = r"$\bar{\psi}_p$")
-plt.plot (rv, psinw, color = 'black', linewidth = 2, linestyle = 'dashed',  label = r"$\bar{\psi}_{nw}$")
-plt.plot (rv, psipw, color = 'black', linewidth = 2, linestyle = 'dashdot', label = r"$\bar{\psi}_{pw}$")
+plt.plot (r,  psip,   color = 'black', linewidth = 2, linestyle = 'solid')
+plt.plot (rv, psirwm, color = 'black', linewidth = 2, linestyle = 'solid')
 
 plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axhline (1., color = 'black', linewidth = 1.5, linestyle = 'dotted')
@@ -45,8 +43,8 @@ plt.axvline (bw+dw, color = 'black', linewidth = 2.0, linestyle = 'solid')
 if rs > 0.:
     plt.axvline (rs, color = 'black', linewidth = 1.5, linestyle = 'dashed')
 
-plt.xlabel (r'$\bar{r}$', fontsize = fontsize)
-plt.legend (fontsize = fontsize)
+plt.xlabel (r'$\bar{r}$',         fontsize = fontsize)
+plt.ylabel (r'$\bar{\xi}_{rwm}$', fontsize = fontsize)
 
 plt.tight_layout ()
 

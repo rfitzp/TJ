@@ -48,9 +48,9 @@ class Pinch : private Utility
 {
  private:
 
-  // ----------------------
-  // Equilibrium parameters
-  // ----------------------
+  // -----------------------------
+  // Plasma Equilibrium parameters
+  // -----------------------------
   double epsa;    // Inverse aspect-ratio of plasma boundary (read from JSON file)
   double q0;      // Central safety-factor (read from JSON file)
   double qa;      // Safety-factor at plasma boundary
@@ -60,15 +60,16 @@ class Pinch : private Utility
   double alphap;  // Pressure profile parameter (read from JSON file)
   double nup;     // Pressure profile parameter (read from JSON file)
 
+  double Theta;   // Pinch parameter 
+  double Frev;    // Reversal parameter 
+
+  // ---------------
+  // Wall parameters
+  // ---------------
   double bwall;   // Minor radius of resistive wall relative to that of plasma (read from JSON file)
   double dwall;   // Radial thickness of resistive wall relative to plasma minor radius (read from JSON file)
   double epsb;    // Inverse aspect-ratio of resistive wall
-  double delw;    // Wall thickness parameter
-
-  double gmax;    // Maximum growth/decay rate (read from JSON file)
-  
-  double Theta;   // Pinch parameter 
-  double Frev;    // Reversal parameter 
+  double delw;    // Wall thickness parameter: dwall/bwall
 
   // ---------------
   // Mode parameters
@@ -96,8 +97,8 @@ class Pinch : private Utility
   double* rrv;      // Radial grid in vacuum
   double* ssigma;   // Parallel current profile 
   double* PP;       // Pressure profile 
-  double* BBphi;    // Toroidal magnetic field 
-  double* BBtheta;  // Poloidal magnetic field 
+  double* BBphi;    // Toroidal magnetic field profile
+  double* BBtheta;  // Poloidal magnetic field profile
   double* qq;       // Safety-factor profile
 
   double* qqc;      // Mercier-stable safety-factor profile
@@ -109,12 +110,36 @@ class Pinch : private Utility
   double* PPpc;     // Critical pressure gradient profile
   double* PPpm;     // Mercier-stable pressure gradient profile
 
+  double* FF;       // F profile
+  double* GG;       // G profile
+  double* HH;       // H profile
   double* bbeta1;   // r P' profile
   double* bbeta2;   // r^2 P'' profile
   double* ssigp;    // sigma' profile
   double* ff;       // f profile
   double* gg;       // tanh(g/10) profile
 
+  double lbar;      // Plasma stability index
+  double Lnw;       // No-wall vacuum stability index
+  double Lpw;       // No-wall vacuum stability index
+  double alpw;      // Wall parameter
+  double Wnw;       // No-wall delta-W
+  double Wpw;       // Perfect-wall delta-W
+  double c1;        // Amount of Psinw in Psirwm inside wall
+  double c2;        // Amount of Psipw in Psirwm inside wall
+  double c3;        // Amount of Psinw in Psirwm outside wall
+  double rhs;       // Right-hand side of resistive wall mode dispersion relation
+  double gamma;     // Resistive wall mode growth-rate
+
+  double* Psip;     // Plasma eigenfunction
+  double* Psinw;    // No-wall vacuum eigenfunction
+  double* Psipw;    // Perfect-wall vacuum eigenfunction
+  double* Psirwm;   // Resistive wall mode vacuum eigenfunction
+  double* xip;      // Plasma displacement
+  double* xinw;     // No-wall vacuum displacement
+  double* xipw;     // Perfect-wall vacuum displacement
+  double* xirwm;    // Resistive wall mode vacuum displacement
+  
   gsl_interp_accel* Bphi_accel;    // Interpolation accelerator for toroidal magnetic field
   gsl_spline*       Bphi_spline;   // Interpolator for toroidal magnetic field
   gsl_interp_accel* Btheta_accel;  // Interpolation accelerator for poloidal magnetic field
@@ -123,24 +148,7 @@ class Pinch : private Utility
   gsl_spline*       Pp_spline;     // Interpolator for pressure gradient
   gsl_interp_accel* q_accel;       // Interpolation accelerator for safety-factor
   gsl_spline*       q_spline;      // Interpolator for safety-factor
-
-  double* Psip;    // Plasma solution
-  double* Psinw;   // No-wall vacuum solution
-  double* Psipw;   // Perfect-wall vacuum solution
-  double* Psirwm;  // Resistive wall mode vacuum solution
-
-  double lbar;  // Plasma stability index
-  double Lnw;   // No-wall vacuum stability index
-  double Lpw;   // No-wall vacuum stability index
-  double alpw;  // Wall parameter
-  double Wnw;   // No-wall delta-W
-  double Wpw;   // Perfect-wall delta-W
-  double c1;    // Amount of Psinw in Psirwm
-  double c2;    // Amount of Psipw in Psirwm
-  double rhs;   // Right-hand side of resistive wall mode dispersion relation
-
-  double gamma; // Resistive wall mode growth-rate
-
+ 
   // ----
   // Misc
   // ----
@@ -168,12 +176,14 @@ private:
   void CalcEquilibrium ();
   // Find resonant surface
   void FindResonant ();
-  // Solve Newcomb's equation
+  // Solve Newcomb's equation to get plasma eigenfunction
   void SolveNewcomb ();
-  // Solve vacuum solution
+  // Solve for vacuum ideal eigenfunctions
   void SolveVacuum ();
   // Calculate resistive wall mode growth-rate
-  void Growth ();
+  void CalculateRwmGrowth ();
+  // Calculate resistive wall mode eigenfunction
+  void CalculateRwmSolution ();
   // Output data to Netcdf file
   void WriteNetcdf ();
   

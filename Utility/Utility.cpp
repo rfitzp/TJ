@@ -876,7 +876,7 @@ void Utility::Ridder (double x1, double x2, double F1, double F2, double& x)
       iter++;
     } 
   // Iterate until absolute change in x falls below Eta
-  while (fabs (x - xold) > Eta && fabs(Fx) > Eta && iter < Maxiter); 
+  while (fabs (x - xold) > Eta && fabs (Fx) > Eta && iter < Maxiter); 
 }
 
 // ############################################################################
