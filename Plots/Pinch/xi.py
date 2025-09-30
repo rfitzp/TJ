@@ -1,6 +1,6 @@
 # xi.py
 
-# Plots ideal displacement eigenfunctions xi_p, xi_nw, and xi_pw versus r
+# Plots ideal external displacement eigenfunctions xi_p, xi_nw, and xi_pw versus r
 
 import math
 import numpy as np
@@ -23,7 +23,7 @@ dw = ip[8]
 fontsize = 20
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'Pinch Code: Ideal Displacement Eigenfunctions')
+fig.canvas.manager.set_window_title (r'Pinch Code: Ideal External Displacement Eigenfunctions')
 plt.rc ('xtick', labelsize = fontsize) 
 plt.rc ('ytick', labelsize = fontsize) 
 

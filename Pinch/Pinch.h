@@ -61,7 +61,9 @@ class Pinch : private Utility
   double nup;     // Pressure profile parameter (read from JSON file)
 
   double Theta;   // Pinch parameter 
-  double Frev;    // Reversal parameter 
+  double Frev;    // Reversal parameter
+  double betat;   // Toroidal beta
+  double betap;   // Poloidal beta
 
   // ---------------
   // Wall parameters
@@ -89,6 +91,15 @@ class Pinch : private Utility
   int    Ngrid;  // Number of radial grid points (read from JSON file)
   double eps;    // Closest approach to magnetic axis (read from JSON file)
   double delta;  // Closest approach to rational surface (read from JSON file)
+
+  // ---------------
+  // Scan parameters
+  // ---------------
+  double kmax;   // Maximum value of ntor*epsa in toroidal mode number scan (read from JSON file)
+  double bmax;   // Maximum value of bwall in wall position scan (read from JSON file)
+  int    Nscan;  // Number of points in scans (read from JSON file)
+  double betm;   // Maximum value of beta0 in beta scan (read from JSON file)
+  int    mmax;   // Maximum poloidal mode number in poloidal mode number scan (read from JSON file)
 
   // ----------------
   // Calculation data
@@ -130,12 +141,20 @@ class Pinch : private Utility
   double c3;        // Amount of Psinw in Psirwm outside wall
   double rhs;       // Right-hand side of resistive wall mode dispersion relation
   double gamma;     // Resistive wall mode growth-rate
+  int    INST;      // -1 if mode non-resonant
+                    //  0 if mode resonant and internally stable
+                    // +1 if mode resonant and internally unstable
+  int    EXST;      // -1 if no-wall mode stable and perfect-wall mode stable
+                    //  0 if no-wall mode unstable and perfect-wall mode stable
+                    // +1 if no-wall mode unstable and perfect-wall mode unstable
 
-  double* Psip;     // Plasma eigenfunction
+  double* Psii;     // Plasma internal eigenfunction
+  double* Psip;     // Plasma external eigenfunction
   double* Psinw;    // No-wall vacuum eigenfunction
   double* Psipw;    // Perfect-wall vacuum eigenfunction
   double* Psirwm;   // Resistive wall mode vacuum eigenfunction
-  double* xip;      // Plasma displacement
+  double* xii;      // Plasma internal displacement
+  double* xip;      // Plasma external displacement
   double* xinw;     // No-wall vacuum displacement
   double* xipw;     // Perfect-wall vacuum displacement
   double* xirwm;    // Resistive wall mode vacuum displacement
@@ -161,29 +180,27 @@ public:
   // Destructor
   ~Pinch ();
 
-  // Set beta0
-  void Setbeta0 (double _beta0);
-  // Set q0
-  void Setq0 (double _q0);
-  // Set nus
-  void Setnus (double _nus);
+  // Perform parameter scan
+  void Scan (int option);
   // Solve problem
-  void Solve ();
+  void Solve (int verbose, double _dwall);
 
 private:
 
   // Calculate equilibrium
-  void CalcEquilibrium ();
+  void CalcEquilibrium (int verbose );
   // Find resonant surface
-  void FindResonant ();
-  // Solve Newcomb's equation to get plasma eigenfunction
-  void SolveNewcomb ();
+  void FindResonant (int verbose);
+  // Solve Newcomb's equation to get internal plasma eigenfunction
+  void SolveInternal (int verbose);
+  // Solve Newcomb's equation to get external plasma eigenfunction
+  void SolveExternal (int verbose);
   // Solve for vacuum ideal eigenfunctions
-  void SolveVacuum ();
+  void SolveVacuum (int verbose);
   // Calculate resistive wall mode growth-rate
-  void CalculateRwmGrowth ();
+  void CalculateRwmGrowth (int verbose);
   // Calculate resistive wall mode eigenfunction
-  void CalculateRwmSolution ();
+  void CalculateRwmSolution (int verbose);
   // Output data to Netcdf file
   void WriteNetcdf ();
   
@@ -197,6 +214,8 @@ private:
   double GetPp (double r);
   // Get magnetic shear
   double Gets (double r, double q);
+  // Get DI
+  double GetDI (double r);
   // Get critical pressure gradient
   double GetPpcrit (double r, double q, double Bphi);
   // Get q

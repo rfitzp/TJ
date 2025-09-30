@@ -74,9 +74,9 @@
 %Headers and footers
 \pagestyle{fancy}
 \fancyhfoffset[L]{27mm}
-\fancyhead[L]{{\small \sf IOP Publishing}\hspace{5mm} {\it Journal} {\bf vv} (yyyy) aaaaaa}
+\fancyhead[L]{{\small \sf IOP Publishing}\hspace{5mm} {\it Nuclear Fusion} (2025)}
 \fancyhead[C]{}
-\fancyhead[R]{Author {\it et al}\ }
+\fancyhead[R]{R.~Fitzpatrick}
 \fancyfoot[LR]{}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.5pt}

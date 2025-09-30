@@ -2,7 +2,7 @@
 
 #include "Pinch.h"
 
-#define NINPUT 16
+#define NINPUT 17
 
 // ###########
 // Constructor
@@ -39,6 +39,12 @@ Pinch::Pinch ()
 
   mpol = JSONData["mpol"].get<int> ();
   ntor = JSONData["ntor"].get<int> ();
+
+  kmax  = JSONData["kmax"] .get<double> (); 
+  bmax  = JSONData["bmax"] .get<double> ();
+  Nscan = JSONData["Nscan"].get<int>    ();
+  betm  = JSONData["betm"] .get<double> ();
+  mmax  = JSONData["mmax"] .get<int>    ();
   
   Ngrid = JSONData["Ngrid"].get<int>    ();
   eps   = JSONData["eps"]  .get<double> ();
@@ -118,7 +124,12 @@ Pinch::Pinch ()
     }
   if (mpol == 0 && ntor == 0)
     {
-      printf ("Pinch:: Error - mpol and ntor cannot both be zeron");
+      printf ("Pinch:: Error - mpol and ntor cannot both be zero\n");
+      exit (1);
+    }
+  if (ntor < 0)
+    {
+      printf ("Pinch:: Error - ntor cannot be negative\n");
       exit (1);
     }
   
@@ -163,10 +174,12 @@ Pinch::Pinch ()
   ff       = new double[Ngrid+1];
   gg       = new double[Ngrid+1];
 
+  Psii     = new double[Ngrid+1];
   Psip     = new double[Ngrid+1];
   Psinw    = new double[Ngrid+1];
   Psipw    = new double[Ngrid+1];
   Psirwm   = new double[Ngrid+1];
+  xii      = new double[Ngrid+1];
   xip      = new double[Ngrid+1];
   xinw     = new double[Ngrid+1];
   xipw     = new double[Ngrid+1];
@@ -188,7 +201,7 @@ Pinch::Pinch ()
   double dr = 1. /double (Ngrid);
   for (int i = 0; i <= Ngrid; i++)
     {
-      rr[i]  = double (i) * dr;
+      rr [i] = double (i) * dr;
       rrv[i] = 1. + rr[i];
     }
 }
@@ -205,8 +218,8 @@ Pinch::~Pinch ()
   delete[] FF;     delete[] GG;     delete[] HH;
   delete[] bbeta1; delete[] bbeta2; delete[] ssigp; delete[] ff; delete[] gg;
 
-  delete[] Psip; delete[] Psinw; delete[] Psipw; delete[] Psirwm;
-  delete[] xip;  delete[] xinw;  delete[] xipw;  delete[] xirwm; 
+  delete[] Psip; delete[] Psinw; delete[] Psipw; delete[] Psirwm; delete[] Psii; 
+  delete[] xip;  delete[] xinw;  delete[] xipw;  delete[] xirwm;  delete[] xii;
 
   gsl_interp_accel_free (Bphi_accel);  gsl_interp_accel_free (Btheta_accel);  gsl_interp_accel_free (q_accel);
   gsl_interp_accel_free (Pp_accel);    
@@ -214,11 +227,235 @@ Pinch::~Pinch ()
   gsl_spline_free       (Pp_spline);   
 }
 
+// ###################################
+// Function to scan various quantities
+// ###################################
+void Pinch::Scan (int option)
+{
+  // .........................
+  // Scan toroidal mode number
+  // .........................
+  if (option == 1)
+    {
+      printf ("\nToroidal mode number scan:\n");
+
+      int    _ntor  = ntor;
+      double _dwall = dwall;
+      int    nmax   = int (kmax /epsa);
+      double gamma1, gamma2, gamma3;
+      
+      printf ("\nm = -1 modes:\n");
+      mpol = -1;
+      
+      FILE* file = OpenFilew ("../Outputs/Pinch/mm1.out");
+      for (int n = 0; n <= nmax; n++)
+	{
+	  ntor = n;
+	  
+	  Solve (0, 0.01);
+	  gamma1 = gamma;
+	  
+	  Solve (0, 0.05);
+	  gamma2 = gamma;
+	  
+	  Solve (0, 0.1);
+	  gamma3 = gamma;
+	  
+	  printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
+		  mpol, ntor, rres, rhs, gamma1, gamma2, gamma3);
+	  
+	  fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d\n",
+		   mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, gamma1, gamma2, gamma3, INST, EXST);
+	}
+      fclose (file);
+      
+      printf ("\nm = 0 modes:\n");
+      mpol = 0;
+      
+      file = OpenFilew ("../Outputs/Pinch/m0.out");
+      for (int n = 1; n <= nmax; n++)
+	{
+	  ntor = n;
+	  
+	  Solve (0, 0.01);
+	  gamma1 = gamma;
+	  
+	  Solve (0, 0.05);
+	  gamma2 = gamma;
+	  
+	  Solve (0, 0.1);
+	  gamma3 = gamma;
+	  
+	  printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
+		  mpol, ntor, rres, rhs, gamma1, gamma2, gamma3);
+	  
+	  fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.2e %11.4e %2d %2d\n",
+		   mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, gamma1, gamma2, gamma3, INST, EXST);
+	}
+      fclose (file);
+      
+      printf ("\nm = 1 modes:\n");
+      mpol = 1;
+      
+      file = OpenFilew ("../Outputs/Pinch/m1.out");
+      for (int n = 0; n <= nmax; n++)
+	{
+	  ntor = n;
+	  
+	  Solve (0, 0.01);
+	  gamma1 = gamma;
+	  
+	  Solve (0, 0.05);
+	  gamma2 = gamma;
+	  
+	  Solve (0, 0.1);
+	  gamma3 = gamma;
+	  
+	  printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
+		  mpol, ntor, rres, rhs, gamma1, gamma2, gamma3);
+	  
+	  fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d\n",
+		   mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, gamma1, gamma2, gamma3, INST, EXST);
+	}
+      fclose (file);
+      
+      ntor  = _ntor;
+      dwall = _dwall;
+    }
+  // .........................
+  // Scan poloidal mode number
+  // .........................
+  else if (option == 2)
+    {
+      printf ("\nPoloidal mode number scan:\n");
+
+      int    _mpol  = mpol;
+      double _dwall = dwall;
+      double gamma1, gamma2, gamma3;
+      
+      FILE* file = OpenFilew ("../Outputs/Pinch/mscan.out");
+      for (int m = -mmax; m <= mmax; m++)
+	{
+	  mpol = m;
+
+	  if (!(ntor == 0 && mpol == 0))
+	    {
+	      Solve (0, 0.01);
+	      gamma1 = gamma;
+	  
+	      Solve (0, 0.05);
+	      gamma2 = gamma;
+	      
+	      Solve (0, 0.1);
+	      gamma3 = gamma;
+	      
+	      printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
+		      mpol, ntor, rres, rhs, gamma1, gamma2, gamma3);
+	      
+	      fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d\n",
+		       mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, gamma1, gamma2, gamma3, INST, EXST);
+	    }
+	}
+      fclose (file);
+
+      mpol   = _mpol;
+      dwall = _dwall;
+    }
+  // ..................
+  // Scan wall position
+  // ..................
+  else if (option == 3)
+    {
+      printf ("\nWall position scan:\n");
+      double _bwall = bwall;
+      double _dwall = dwall;
+        
+      double  gamma1, gamma2, gamma3;
+      
+      FILE* file = OpenFilew ("../Outputs/Pinch/bscan.out");
+      for (int i = 0; i <= Nscan; i++)
+	{
+	  bwall = 1.001 + (bmax - 1.) * double (i) /double (Nscan);
+
+	  if (!(ntor == 0 && mpol == 0))
+	    {
+	      Solve (0, 0.01);
+	      gamma1 = gamma;
+	  
+	      Solve (0, 0.05);
+	      gamma2 = gamma;
+	      
+	      Solve (0, 0.1);
+	      gamma3 = gamma;
+
+	      if (Wpw < 0.)
+		break;
+
+	      printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e dbwall = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
+		      mpol, ntor, rres, rhs, bwall, gamma1, gamma2, gamma3);
+	      	      
+	      fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d\n",
+		       mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, bwall, gamma1, gamma2, gamma3, INST, EXST);
+	    }
+	}
+      fclose (file);
+
+      bwall = _bwall;
+      dwall = _dwall;
+    }
+  // ..................
+  // Scan central beta
+  // ..................
+  else if (option == 4)
+    {
+      printf ("\nbeta0 position scan:\n");
+      double _beta0 = beta0;
+      double _dwall = dwall;
+        
+      double  gamma1, gamma2, gamma3;
+      
+      FILE* file = OpenFilew ("../Outputs/Pinch/b0scan.out");
+      for (int i = 0; i <= Nscan; i++)
+	{
+	  beta0 = betm * double (i) /double (Nscan);
+
+	  if (!(ntor == 0 && mpol == 0))
+	    {
+	      Solve (0, 0.01);
+	      gamma1 = gamma;
+	  
+	      Solve (0, 0.05);
+	      gamma2 = gamma;
+	      
+	      Solve (0, 0.1);
+	      gamma3 = gamma;
+
+	      if (Wpw < 0.)
+		break;
+
+	      printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e beta0 = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
+		      mpol, ntor, rres, rhs, beta0, gamma1, gamma2, gamma3);
+	      	      
+	      fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d %11.4e\n",
+		       mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, beta0, gamma1, gamma2, gamma3, INST, EXST, betap);
+	    }
+	}
+      fclose (file);
+
+      beta0 = _beta0;
+      dwall = _dwall;
+    }
+}
+
 // #########################
 // Function to solve problem
 // #########################
-void Pinch::Solve ()
+void Pinch::Solve (int verbose, double _dwall)
 {
+  // Set wall thickness
+  if (_dwall > 0.)
+    dwall = _dwall;
+  
   // Set wall data
   epsb = bwall * epsa;
   delw = dwall /bwall;
@@ -231,27 +468,34 @@ void Pinch::Solve ()
   qres = MPOL /NTOR;
   
   // Calculate toroidal pinch equilibrium
-  CalcEquilibrium ();
+  CalcEquilibrium (verbose);
 
   // Find resonant surface
-  FindResonant ();
+  FindResonant (verbose);
 
-  // Solve Newcomb's equation to get plasma eigenfunction
-  SolveNewcomb ();
+  // Solve Newcomb's equation to get interal plasma eigenfunction
+  if (rres < 0.)
+    INST = -1;
+  else
+    SolveInternal (verbose);
+
+  // Solve Newcomb's equation to get external plasma eigenfunction
+  SolveExternal (verbose);
 
   // Calculate vacuum ideal eigenfunctions
-  SolveVacuum ();
+  SolveVacuum (verbose);
 
   // Calculate resistive wall mode growth-rate
-  CalculateRwmGrowth ();
+  CalculateRwmGrowth (verbose);
 
   // Calculate resistive wall mode eigenfunction
-  CalculateRwmSolution ();
+  CalculateRwmSolution (verbose);
 
   // Calculate displacement eignfunctions
   for (int i = 1; i <= Ngrid; i++)
     {
-      xip[i] = Psip[i] * GetF(1.) /GetF (rr[i]);
+      xii[i] = Psii[i] * GetF (1.) /GetF (rr[i]);
+      xip[i] = Psip[i] * GetF (1.) /GetF (rr[i]);
     }
   if (abs (mpol) == 1)
     xip[0] = xip[1];
@@ -260,19 +504,20 @@ void Pinch::Solve ()
 
   for (int i = 0; i <= Ngrid; i++)
     {
-      xinw [i] = Psinw [i] * GetF(1.) /GetF (rrv[i]);
-      xipw [i] = Psipw [i] * GetF(1.) /GetF (rrv[i]);
-      xirwm[i] = Psirwm[i] * GetF(1.) /GetF (rrv[i]);
+      xinw [i] = Psinw [i] * GetF (1.) /GetF (rrv[i]);
+      xipw [i] = Psipw [i] * GetF (1.) /GetF (rrv[i]);
+      xirwm[i] = Psirwm[i] * GetF (1.) /GetF (rrv[i]);
     }
  
   // Output data to netcdf file
-  WriteNetcdf ();
+  if (verbose)
+    WriteNetcdf ();
 }
 
 // #################################
 // Function to calculate equilibrium
 // #################################
-void Pinch::CalcEquilibrium ()
+void Pinch::CalcEquilibrium (int verbose)
 {
   // ................................................
   // Calculate parallel current and pressure profiles
@@ -288,14 +533,14 @@ void Pinch::CalcEquilibrium ()
   // ...................................................
   rhs_chooser = 0;
   
-  BBphi[0]   = 1.;
+  BBphi  [0] = 1.;
   BBtheta[0] = 0.;
-  qq[0]      = q0;
+  qq     [0] = q0;
  
   double  r, h, t_err;
   int     rept;
-  double* y   = new double[3];
-  double* err = new double[3];
+  double* y   = new double[4];
+  double* err = new double[4];
 
   r     = eps;
   h     = h0;
@@ -304,26 +549,31 @@ void Pinch::CalcEquilibrium ()
   y[0] = 1.;
   y[1] = (epsa /q0) * r;
   y[2] = 0.;
+  y[3] = 0.;
 
   for (int i = 1; i <= Ngrid; i++)
     {
       do
 	{
-	  CashKarp45Adaptive (3, r, y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+	  CashKarp45Adaptive (4, r, y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
 	}
       while (r < rr[i]);
-      CashKarp45Fixed (3, r, y, err, rr[i] - r);
+      CashKarp45Fixed (4, r, y, err, rr[i] - r);
 
-      BBphi[i]   = y[0];
+      BBphi  [i] = y[0];
       BBtheta[i] = y[1];
-      qq[i]      = epsa * rr[i] * BBphi[i] /BBtheta[i];
+      qq     [i] = epsa * rr[i] * BBphi[i] /BBtheta[i];
     }
 
   Theta = y[1] /2./y[2];
   Frev  = y[0] /2./y[2];
+  betat = 4. * y[3] /BBphi[Ngrid]  /BBphi[Ngrid];
+  betap = 4. * y[3] /BBtheta[Ngrid]/BBtheta[Ngrid];
   qa    = qq[Ngrid];
-  
-  printf ("\nF = %10.4e Theta = %10.4e\n", Frev, Theta);
+
+  if (verbose)
+    printf ("\nF = %10.4e Theta = %10.4e beta_t = %10.4e beta_p = %10.4e\n",
+	    Frev, Theta, betat, betap);
   
   delete[] y; delete[] err;
 
@@ -341,8 +591,8 @@ void Pinch::CalcEquilibrium ()
   PPpc[0]     = 0.;
   PPpm[0]     = 0.;
  
-  y   = new double[4];
-  err = new double[4];
+  y   = new double[5];
+  err = new double[5];
 
   r     = eps;
   h     = h0;
@@ -351,23 +601,24 @@ void Pinch::CalcEquilibrium ()
   y[0] = 1.;
   y[1] = (epsa /q0) * r;
   y[2] = 0.;
-  y[3] = beta0/2.;
+  y[3] = beta0 /2.;
+  y[5] = 0.;
 
   for (int i = 1; i <= Ngrid; i++)
     {
       do
 	{
-	  CashKarp45Adaptive (4, r, y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+	  CashKarp45Adaptive (5, r, y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
 	}
       while (r < rr[i]);
-      CashKarp45Fixed (4, r, y, err, rr[i] - r);
+      CashKarp45Fixed (5, r, y, err, rr[i] - r);
 
-      BBphic[i]   = y[0];
+      BBphic  [i] = y[0];
       BBthetac[i] = y[1];
-      qqc[i]      = epsa * rr[i] * BBphi[i] /BBtheta[i];
-      PPc[i]      = y[3];
+      qqc     [i] = epsa * rr[i] * BBphi[i] /BBtheta[i];
+      PPc     [i] = y[3];
 
-      PPp[i]  = GetPp(rr[i]);
+      PPp [i] = GetPp(rr[i]);
       PPpc[i] = GetPpcrit (rr[i], qqc[i], BBphic[i]);
 
       if (PPpc[i] > 0.)
@@ -381,13 +632,20 @@ void Pinch::CalcEquilibrium ()
 
   Theta = y[1] /2./y[2];
   Frev  = y[0] /2./y[2];
-
-  printf ("F = %10.4e Theta = %10.4e\n\n", Frev, Theta);
+  betat = 4. * y[4] /BBphi[Ngrid]  /BBphi[Ngrid];
+  betap = 4. * y[4] /BBtheta[Ngrid]/BBtheta[Ngrid];
 
   double Pedge = PPc[Ngrid];
   for (int i = 0; i < Ngrid; i++)
     PPc[i] = PPc[i] - Pedge;
-  
+
+  betat -= 2. * Pedge /BBphi[Ngrid]  /BBphi[Ngrid];
+  betap -= 2. * Pedge /BBtheta[Ngrid]/BBtheta[Ngrid];
+
+  if (verbose)
+    printf ("F = %10.4e Theta = %10.4e beta_t = %10.4e beta_p = %10.4e\n\n",
+	    Frev, Theta, betat, betap);
+    
   delete[] y; delete[] err;
 
   // ................................
@@ -417,7 +675,7 @@ void Pinch::CalcEquilibrium ()
 // #################################
 // Function to find resonant surface
 // #################################
-void Pinch::FindResonant ()
+void Pinch::FindResonant (int verbose)
 {
   double x1 = eps;
   double x2 = 1.;
@@ -436,15 +694,108 @@ void Pinch::FindResonant ()
     }
 
   if (rres < 0.)
-    printf ("Nonresonant mode\n\n");
+    {
+      if (verbose)
+	printf ("Nonresonant mode\n\n");
+    }
   else
-    printf ("Rational surface: rres = %10.3e qres = %10.3e residual = %10.3e\n\n", rres, qres, fabs(Getq(rres) - qres));
+    {
+      double DI  = GetDI (rres);
+
+      if (DI > 0.)
+	{
+	  if (verbose)
+	    printf ("Rational surface: rres = %10.3e qres = %10.3e residual = %10.3e DI = %10.3e -- Interchange unstable\n\n",
+		    rres, qres, fabs (Getq (rres) - qres), DI);
+	}
+      else
+	{
+	  double nuS = 0.5 + sqrt (- DI);
+	  double nuL = 0.5 - sqrt (- DI);
+
+	  if (verbose)
+	    printf ("Rational surface: rres = %10.3e qres = %10.3e residual = %10.3e DI = %10.3e nuS = %10.3e nuL = %10.3e\n\n",
+		    rres, qres, fabs (Getq (rres) - qres), DI, nuS, nuL);
+	}
+    }
 }
 
-// ################################################################
-// Function to solve Newcomb's equation to get plasma eigenfunction
-// ################################################################
-void Pinch::SolveNewcomb ()
+// #########################################################################
+// Function to solve Newcomb's equation to get internal plasma eigenfunction
+// #########################################################################
+void Pinch::SolveInternal (int verbose)
+{
+  for (int i = 0; i <= Ngrid; i++)
+    Psii[i] = 0.;
+
+  double  r, h, t_err;
+  int     rept; rhs_chooser = 2;
+  double* y   = new double[2];
+  double* err = new double[2];
+
+  h     = h0;
+  count = 0;
+
+  r = eps;
+  
+  if (mpol == 0)
+    {
+      y[0] = 0.;
+      y[1] = 1.;
+    }
+  else
+    {
+      y[0] = pow (eps, fabs (MPOL));
+      y[1] = y[0] /fabs (MPOL);
+    }
+  
+  Psii[0] = 0.;
+
+  if (verbose)
+    printf ("Launching internal solution: r = %10.3e y = (%10.3e, %10.3e)\n", r, y[0], y[1]);
+ 
+  for (int i = 1; i <= Ngrid; i++)
+    {
+      if (rr[i] + h > rres)
+	break;
+      
+      if (r < rr[i])
+	{
+	  do
+	    {
+	      CashKarp45Adaptive (2, r, y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+	    }
+	  while (r < rr[i]);
+	  CashKarp45Fixed (2, r, y, err, rr[i] - r);
+	  
+	  Psii[i] = y[0];
+	}
+    }
+
+  if (y[0] > 0.)
+    INST = 0;
+  else
+    INST = 1;
+
+  if (verbose)
+    {
+      if (y[0] > 0.)
+	{
+	  printf ("Stopping internal solution : r = %10.3e y = (%10.3e, %10.3e) - Internal mode stable\n",   r, y[0], y[1]);
+	}
+      else
+	{
+	  printf ("Stopping internal solution : r = %10.3e y = (%10.3e, %10.3e) - Internal mode unstable\n", r, y[0], y[1]);
+	}
+    }
+ 
+  delete[] y; delete[] err;
+ }
+
+// #########################################################################
+// Function to solve Newcomb's equation to get external plasma eigenfunction
+// #########################################################################
+void Pinch::SolveExternal (int verbose)
 {
   for (int i = 0; i <= Ngrid; i++)
     Psip[i] = 0.;
@@ -482,7 +833,8 @@ void Pinch::SolveNewcomb ()
       y[1] = 1.;
     }
 
-  printf ("Launching solution: r = %10.3e y = (%10.3e, %10.3e)\n", r, y[0], y[1]);
+  if (verbose)
+    printf ("Launching external solution: r = %10.3e y = (%10.3e, %10.3e)\n", r, y[0], y[1]);
  
   for (int i = 1; i <= Ngrid; i++)
     {
@@ -499,7 +851,8 @@ void Pinch::SolveNewcomb ()
 	}
     }
   lbar = y[1] /Getf (1.) /y[0];
-  printf ("Stopping solution:  r = %10.3e y = (%10.3e, %10.3e) lbar = %10.3e\n", r, y[0], y[1], lbar);
+  if (verbose)
+    printf ("Stopping external solution : r = %10.3e y = (%10.3e, %10.3e) lbar = %10.3e\n", r, y[0], y[1], lbar);
  
   delete[] y; delete[] err;
   
@@ -511,12 +864,12 @@ void Pinch::SolveNewcomb ()
 // #################################################
 // Function to calculate vacuum ideal eigenfunctions
 // #################################################
-void Pinch::SolveVacuum ()
+void Pinch::SolveVacuum (int verbose)
 {
   if (ntor == 0)
     {
       Lnw  = 1./ fabs (MPOL);
-      Lpw  = (1. + pow (bwall, - 2. * fabs (MPOL))) / (1. - pow (bwall, - 2. * fabs (MPOL))) /fabs (MPOL);
+      Lpw  = (1. + pow (bwall, - 2. * fabs (MPOL))) /(1. - pow (bwall, - 2. * fabs (MPOL))) /fabs (MPOL);
       alpw = (1. - pow (bwall, - 2. * fabs (MPOL))) /2. /fabs (MPOL);
       
       for (int i = 0; i <= Ngrid; i++)
@@ -580,14 +933,22 @@ void Pinch::SolveVacuum ()
   c2  = - Wnw / (Wpw - Wnw);
   rhs = - Wnw /Wpw /alpw;
 
-  printf ("\nLambda_nw = %10.3e Lambda_pw = %10.3e alpha_w = %10.3e dW_nw = %10.3e dW_pw = %10.3e c1 = %10.3e c2 = %10.3e\n\n",
-	  Lnw, Lpw, alpw, Wnw, Wpw, c1, c2);
+  if (Wnw < 0. && Wpw < 0.)
+    EXST = 2;
+  else if (Wnw > 0. && Wpw > 0.)
+    EXST = 0;
+  else
+    EXST = 1;
+
+  if (verbose)
+    printf ("\nLambda_nw = %10.3e Lambda_pw = %10.3e alpha_w = %10.3e dW_nw = %10.3e dW_pw = %10.3e c1 = %10.3e c2 = %10.3e\n\n",
+	    Lnw, Lpw, alpw, Wnw, Wpw, c1, c2);
 }
 
 // #####################################################
 // Function to calculate resistive wall mode growth-rate
 // #####################################################
-void Pinch::CalculateRwmGrowth ()
+void Pinch::CalculateRwmGrowth (int verbose)
 {
   double residual;
   
@@ -595,7 +956,8 @@ void Pinch::CalculateRwmGrowth ()
     {
       gamma = 1.e3;
 
-      printf ("Perfect-wall mode is ideally unstable\n\n"); 
+      if (verbose)
+	printf ("Perfect-wall mode is ideally unstable\n\n"); 
     }
   else
     {
@@ -616,14 +978,15 @@ void Pinch::CalculateRwmGrowth ()
 	  residual = fabs (RootFindF (gamma));
 	}
 
-      printf ("rhs = %10.3e gamma = %10.3e residual = %10.3e\n\n", rhs, gamma, residual);
+      if (verbose)
+	printf ("rhs = %10.3e gamma = %10.3e residual = %10.3e\n\n", rhs, gamma, residual);
     }
 }
 
 // #######################################################
 // Function to calculate resistive wall mode eigenfunction
 // #######################################################
-void Pinch::CalculateRwmSolution ()
+void Pinch::CalculateRwmSolution (int verbose)
 {
   if (gamma > 0.)
     c3 = c1 /cosh (sqrt (  delw * gamma));
@@ -665,7 +1028,7 @@ void Pinch::CalculateRwmSolution ()
 // ######################################
 void Pinch::WriteNetcdf ()
 {
-   printf ("Writing data to netcdf file Outputs/Pinch/Pinch.nc:\n");
+  printf ("Writing data to netcdf file Outputs/Pinch/Pinch.nc:\n");
 
    double Input[NINPUT];
    
@@ -685,6 +1048,7 @@ void Pinch::WriteNetcdf ()
    Input[13] = delta;
    Input[14] = rres;
    Input[15] = qres;
+   Input[16] = qa;
       
    try
      {
@@ -745,19 +1109,23 @@ void Pinch::WriteNetcdf ()
        gg_x.putVar (gg);
        NcVar psip_x   = dataFile.addVar ("psi_p",           ncDouble, r_d);
        psip_x.putVar (Psip);
+       NcVar psii_x   = dataFile.addVar ("psi_i",           ncDouble, r_d);
+       psii_x.putVar (Psii);
        NcVar psinw_x  = dataFile.addVar ("psi_nw",          ncDouble, r_d);
        psinw_x.putVar (Psinw);
        NcVar psipw_x  = dataFile.addVar ("psi_pw",          ncDouble, r_d);
        psipw_x.putVar (Psipw);
        NcVar psirwm_x = dataFile.addVar ("psi_rwm",         ncDouble, r_d);
        psirwm_x.putVar (Psirwm);
-       NcVar xip_x    = dataFile.addVar ("xi_p",           ncDouble, r_d);
+       NcVar xii_x    = dataFile.addVar ("xi_i",            ncDouble, r_d);
+       xii_x.putVar (xii);
+       NcVar xip_x    = dataFile.addVar ("xi_p",            ncDouble, r_d);
        xip_x.putVar (xip);
-       NcVar xinw_x   = dataFile.addVar ("xi_nw",          ncDouble, r_d);
+       NcVar xinw_x   = dataFile.addVar ("xi_nw",           ncDouble, r_d);
        xinw_x.putVar (xinw);
-       NcVar xipw_x   = dataFile.addVar ("xi_pw",          ncDouble, r_d);
+       NcVar xipw_x   = dataFile.addVar ("xi_pw",           ncDouble, r_d);
        xipw_x.putVar (xipw);
-       NcVar xirwm_x  = dataFile.addVar ("xi_rwm",         ncDouble, r_d);
+       NcVar xirwm_x  = dataFile.addVar ("xi_rwm",          ncDouble, r_d);
        xirwm_x.putVar (xirwm);
      }
    catch (NcException& e)
@@ -766,30 +1134,6 @@ void Pinch::WriteNetcdf ()
        printf ("%s\n", e.what ());
        exit (1);
      }
-}
-
-// #####################
-// Function to set beta0
-// #####################
-void Pinch::Setbeta0 (double _beta0)
-{
-  beta0 = _beta0;
-}
-
-// #####################
-// Function to set q0
-// #####################
-void Pinch::Setq0 (double _q0)
-{
-  q0 = _q0;
-}
-
-// ###################
-// Function to set nus
-// ###################
-void Pinch::Setnus (double _nus)
-{
-  nus = _nus;
 }
 
 // ############################################
@@ -844,6 +1188,22 @@ double Pinch::Gets (double r, double q)
   double sigma = GetSigma (r);
 
   return 2. - sigma * (epsa*epsa * r*r + q*q) /epsa /q;
+}
+
+// ##################
+// Function to get DI
+// ##################
+double Pinch::GetDI (double r)
+{
+  double q     = Getq      (r);
+  double Bt    = GetBtheta (r);
+  double sigma = GetSigma  (r);
+  double Pp    = GetPp     (r);
+
+  double qp  = 2. * q /r - sigma * (epsa*epsa * r*r + q*q) /epsa /r;
+  double Bps = qp * Bt /epsa;
+
+  return - 0.25 - 2. * r * Pp * (1. - q*q) /Bps/Bps;
 }
 
 // ##########################################
@@ -1039,6 +1399,7 @@ void Pinch::CashKarp45Rhs (double r, double* y, double* dydr)
   if (rhs_chooser == 0)
     {
       double sigma  = GetSigma (r);
+      double P      = GetP (r);
       double Pp     = GetPp (r);
       double Bphi   = y[0];
       double Btheta = y[1];
@@ -1046,6 +1407,7 @@ void Pinch::CashKarp45Rhs (double r, double* y, double* dydr)
       dydr[0] =             - sigma * Btheta - Pp * Bphi   /(Btheta*Btheta + Bphi*Bphi);
       dydr[1] = - Btheta /r + sigma * Bphi   - Pp * Btheta /(Btheta*Btheta + Bphi*Bphi);
       dydr[2] = Bphi * r;
+      dydr[3] = P    * r;
     }
   else if (rhs_chooser == 1)
     {
@@ -1068,7 +1430,8 @@ void Pinch::CashKarp45Rhs (double r, double* y, double* dydr)
       dydr[0] =             - sigma * Btheta - Ppp * Bphi   /(Btheta*Btheta + Bphi*Bphi);
       dydr[1] = - Btheta /r + sigma * Bphi   - Ppp * Btheta /(Btheta*Btheta + Bphi*Bphi);
       dydr[2] = Bphi * r;
-      dydr[3] = Ppp; 
+      dydr[3] = Ppp;
+      dydr[4] = r * y[3];
     }
   else
     {
