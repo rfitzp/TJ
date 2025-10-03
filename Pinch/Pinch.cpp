@@ -40,11 +40,13 @@ Pinch::Pinch ()
   mpol = JSONData["mpol"].get<int> ();
   ntor = JSONData["ntor"].get<int> ();
 
-  kmax  = JSONData["kmax"] .get<double> (); 
-  bmax  = JSONData["bmax"] .get<double> ();
   Nscan = JSONData["Nscan"].get<int>    ();
-  betm  = JSONData["betm"] .get<double> ();
+  kmax  = JSONData["kmax"] .get<double> (); 
   mmax  = JSONData["mmax"] .get<int>    ();
+  bmax  = JSONData["bmax"] .get<double> ();
+  betm  = JSONData["betm"] .get<double> ();
+  q0min = JSONData["q0min"].get<double> ();
+  q0max = JSONData["q0max"].get<double> ();
   
   Ngrid = JSONData["Ngrid"].get<int>    ();
   eps   = JSONData["eps"]  .get<double> ();
@@ -221,10 +223,10 @@ Pinch::~Pinch ()
   delete[] Psip; delete[] Psinw; delete[] Psipw; delete[] Psirwm; delete[] Psii; 
   delete[] xip;  delete[] xinw;  delete[] xipw;  delete[] xirwm;  delete[] xii;
 
-  gsl_interp_accel_free (Bphi_accel);  gsl_interp_accel_free (Btheta_accel);  gsl_interp_accel_free (q_accel);
-  gsl_interp_accel_free (Pp_accel);    
-  gsl_spline_free       (Bphi_spline); gsl_spline_free       (Btheta_spline); gsl_spline_free       (q_spline);
-  gsl_spline_free       (Pp_spline);   
+  gsl_interp_accel_free (Bphi_accel);  gsl_interp_accel_free (Btheta_accel);  
+  gsl_interp_accel_free (Pp_accel);    gsl_interp_accel_free (q_accel);
+  gsl_spline_free       (Bphi_spline); gsl_spline_free       (Btheta_spline); 
+  gsl_spline_free       (Pp_spline);   gsl_spline_free       (q_spline);
 }
 
 // ###################################
@@ -240,6 +242,7 @@ void Pinch::Scan (int option)
       printf ("\nToroidal mode number scan:\n");
 
       int    _ntor  = ntor;
+      int    _mpol  = mpol;
       double _dwall = dwall;
       int    nmax   = int (kmax /epsa);
       double gamma1, gamma2, gamma3;
@@ -289,7 +292,7 @@ void Pinch::Scan (int option)
 	  printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
 		  mpol, ntor, rres, rhs, gamma1, gamma2, gamma3);
 	  
-	  fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.2e %11.4e %2d %2d\n",
+	  fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d\n",
 		   mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, gamma1, gamma2, gamma3, INST, EXST);
 	}
       fclose (file);
@@ -320,6 +323,7 @@ void Pinch::Scan (int option)
       fclose (file);
       
       ntor  = _ntor;
+      mpol  = _mpol;
       dwall = _dwall;
     }
   // .........................
@@ -345,7 +349,7 @@ void Pinch::Scan (int option)
 	  
 	      Solve (0, 0.05);
 	      gamma2 = gamma;
-	      
+
 	      Solve (0, 0.1);
 	      gamma3 = gamma;
 	      
@@ -377,26 +381,23 @@ void Pinch::Scan (int option)
 	{
 	  bwall = 1.001 + (bmax - 1.) * double (i) /double (Nscan);
 
-	  if (!(ntor == 0 && mpol == 0))
-	    {
-	      Solve (0, 0.01);
-	      gamma1 = gamma;
+	  Solve (0, 0.01);
+	  gamma1 = gamma;
 	  
-	      Solve (0, 0.05);
-	      gamma2 = gamma;
+	  Solve (0, 0.05);
+	  gamma2 = gamma;
 	      
-	      Solve (0, 0.1);
-	      gamma3 = gamma;
-
-	      if (Wpw < 0.)
-		break;
-
-	      printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e dbwall = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
-		      mpol, ntor, rres, rhs, bwall, gamma1, gamma2, gamma3);
-	      	      
-	      fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d\n",
-		       mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, bwall, gamma1, gamma2, gamma3, INST, EXST);
-	    }
+	  Solve (0, 0.1);
+	  gamma3 = gamma;
+	  
+	  if (Wpw < 0.)
+	    break;
+	  
+	  printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e bwall = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
+		  mpol, ntor, rres, rhs, bwall, gamma1, gamma2, gamma3);
+	  
+	  fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d\n",
+		   mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, bwall, gamma1, gamma2, gamma3, INST, EXST);
 	}
       fclose (file);
 
@@ -419,30 +420,66 @@ void Pinch::Scan (int option)
 	{
 	  beta0 = betm * double (i) /double (Nscan);
 
-	  if (!(ntor == 0 && mpol == 0))
-	    {
-	      Solve (0, 0.01);
-	      gamma1 = gamma;
+	  Solve (0, 0.01);
+	  gamma1 = gamma;
 	  
-	      Solve (0, 0.05);
-	      gamma2 = gamma;
-	      
-	      Solve (0, 0.1);
-	      gamma3 = gamma;
-
-	      if (Wpw < 0.)
-		break;
-
-	      printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e beta0 = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
-		      mpol, ntor, rres, rhs, beta0, gamma1, gamma2, gamma3);
-	      	      
-	      fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d %11.4e\n",
-		       mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, beta0, gamma1, gamma2, gamma3, INST, EXST, betap);
-	    }
+	  Solve (0, 0.05);
+	  gamma2 = gamma;
+	  
+	  Solve (0, 0.1);
+	  gamma3 = gamma;
+	  
+	  if (Wpw < 0.)
+	    break;
+	  
+	  printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e beta0 = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
+		  mpol, ntor, rres, rhs, beta0, gamma1, gamma2, gamma3);
+	  
+	  fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d %11.4e\n",
+		   mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, beta0, gamma1, gamma2, gamma3, INST, EXST, betap);
 	}
       fclose (file);
 
       beta0 = _beta0;
+      dwall = _dwall;
+    }
+  // ...............
+  // Scan central q0
+  // ...............
+  else if (option == 5)
+    {
+      printf ("\nq0 position scan:\n");
+      double _q0    = q0;
+      double _dwall = dwall;
+        
+      double  gamma1, gamma2, gamma3;
+      
+      FILE* file = OpenFilew ("../Outputs/Pinch/q0scan.out");
+      for (int i = 0; i <= Nscan; i++)
+	{
+	  q0 = q0min + (q0max - q0min) * double (i) /double (Nscan);
+
+	  Solve (0, 0.01);
+	  gamma1 = gamma;
+	  
+	  Solve (0, 0.05);
+	  gamma2 = gamma;
+	  
+	  Solve (0, 0.1);
+	  gamma3 = gamma;
+	  
+	  if (Wpw < 0.)
+	    break;
+	  
+	  printf ("m = %3d n = %3d rres = %10.3e rhs = %10.3e q0 = %10.3e gamma1 = %10.3e gamma2 = %10.3e gamma3 = %10.3e\n",
+		  mpol, ntor, rres, rhs, q0, gamma1, gamma2, gamma3);
+	  
+	  fprintf (file, "%3d %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %2d %2d %11.4e %11.4e\n",
+		   mpol, ntor, epsa/q0, epsa/qa, epsa * NTOR, q0, gamma1, gamma2, gamma3, INST, EXST, Frev, Theta);
+	}
+      fclose (file);
+
+      q0    = _q0;
       dwall = _dwall;
     }
 }
@@ -565,10 +602,10 @@ void Pinch::CalcEquilibrium (int verbose)
       qq     [i] = epsa * rr[i] * BBphi[i] /BBtheta[i];
     }
 
-  Theta = y[1] /2./y[2];
-  Frev  = y[0] /2./y[2];
-  betat = 4. * y[3] /BBphi[Ngrid]  /BBphi[Ngrid];
-  betap = 4. * y[3] /BBtheta[Ngrid]/BBtheta[Ngrid];
+  Theta = y[1] /2. /y[2];
+  Frev  = y[0] /2. /y[2];
+  betat = 4. * y[3] /BBphi[Ngrid]   /BBphi[Ngrid];
+  betap = 4. * y[3] /BBtheta[Ngrid] /BBtheta[Ngrid];
   qa    = qq[Ngrid];
 
   if (verbose)
@@ -1429,7 +1466,7 @@ void Pinch::CashKarp45Rhs (double r, double* y, double* dydr)
 
       dydr[0] =             - sigma * Btheta - Ppp * Bphi   /(Btheta*Btheta + Bphi*Bphi);
       dydr[1] = - Btheta /r + sigma * Bphi   - Ppp * Btheta /(Btheta*Btheta + Bphi*Bphi);
-      dydr[2] = Bphi * r;
+      dydr[2] = r * Bphi;
       dydr[3] = Ppp;
       dydr[4] = r * y[3];
     }

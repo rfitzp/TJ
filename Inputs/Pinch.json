@@ -3,21 +3,23 @@
     "q0":     0.14,   // Central safety-factor
     "beta0":  2.0e-2, // Central plasma beta
     "alphas": 4.0,    // Parallel current profile parameter
-    "nus":    1.7,    // Parallel current profile parameter
+    "nus":    1.5,    // Parallel current profile parameter
     "alphap": 2.0,    // Pressure profile parameter
     "nup":    2.0,    // Pressure profile parameter
 
     "bwall":  1.2,   // Relative wall radius
     "dwall":  0.1,    // Relative wall thickness
     
-    "mpol":  0,       // Poloidal mode number
-    "ntor":  1,       // Toroidal mode number
+    "mpol":  1,       // Poloidal mode number
+    "ntor":  7,       // Toroidal mode number
 
     "kmax":  5.0,     // Maximum value of ntor*epsa in toroidal mode number scan
     "bmax":  1.5,     // Maximum value of bwall in wall position scan
-    "Nscan": 100,     // Number of points in scans
+    "Nscan": 500,     // Number of points in scans
     "betm":  1.2e-1,  // Maximum value of beta0 in beta scan
     "mmax":  20,      // Maximum value of mpol in scan
+    "q0min": 0.13,    // Minimum value of q0 in q0 scan
+    "q0max": 0.16,    // Maximum value of q0 in q0 scan
   
     "Ngrid": 5000,    // Number of radial grid points
     "eps":   1.0e-4,  // Closest approach to magnetic axis

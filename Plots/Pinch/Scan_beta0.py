@@ -19,6 +19,7 @@ bb = []
 g1 = []
 g2 = []
 g3 = []
+bp = []
 
 for line in infile: 
 
@@ -29,10 +30,12 @@ for line in infile:
     c2      = float(numbers[6])
     c3      = float(numbers[7])
     c4      = float(numbers[8])
+    c5      = float(numbers[11])
     bb.append(c1)
     g1.append(c2)
     g2.append(c3)
     g3.append(c4)
+    bp.append(c5)
 
 fig = plt.figure (figsize = (8., 6.))
 fig.canvas.manager.set_window_title (r'Pinch Code: Central beta Scan: m = %2d, n = %2d' % (mm, nn))
@@ -46,18 +49,18 @@ if (len(sys.argv) > 1):
 if (len(sys.argv) > 2):
     plt.ylim (gmin, gmax)
 
-plt.plot (bb, g1, color = 'black', linewidth = 0.5, linestyle = 'dotted', markerfacecolor = 'none', marker = 'o', markersize = 5, label = r"$d/a=0.01$")
-plt.plot (bb, g2, color = 'black', linewidth = 0.5, linestyle = 'dotted', markerfacecolor = 'none', marker = 'v', markersize = 5, label = r"$d/a=0.05$")
-plt.plot (bb, g3, color = 'black', linewidth = 0.5, linestyle = 'dotted', markerfacecolor = 'none', marker = 's', markersize = 5, label = r"$d/a=0.10$")
+plt.plot (bp, g1, color = 'black', linewidth = 0.5, linestyle = 'dotted', markerfacecolor = 'none', marker = 'o', markersize = 5, label = r"$d/a=0.01$")
+plt.plot (bp, g2, color = 'black', linewidth = 0.5, linestyle = 'dotted', markerfacecolor = 'none', marker = 'v', markersize = 5, label = r"$d/a=0.05$")
+plt.plot (bp, g3, color = 'black', linewidth = 0.5, linestyle = 'dotted', markerfacecolor = 'none', marker = 's', markersize = 5, label = r"$d/a=0.10$")
 
 plt.axhline (0.,  color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (0.,  color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\beta_0$',        fontsize = "15")
+plt.xlabel (r'$\beta_p$',        fontsize = "15")
 plt.ylabel (r'$\gamma\,\tau_w$', fontsize = "15")
 plt.legend (fontsize = "15")
 
 plt.tight_layout()
 
 plt.show()    
-#plt.savefig("Fig5.pdf")
+#plt.savefig("Figure9_14.pdf")

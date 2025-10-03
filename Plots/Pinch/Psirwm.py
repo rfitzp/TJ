@@ -49,3 +49,4 @@ plt.ylabel (r'$\bar{\psi}_{rwm}$', fontsize = fontsize)
 plt.tight_layout ()
 
 plt.show ()    
+#plt.savefig ("Figure9_9.pdf")

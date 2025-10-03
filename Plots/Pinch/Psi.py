@@ -29,7 +29,7 @@ plt.rc ('ytick', labelsize = fontsize)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0., 1.2*bw)
+plt.xlim (0., 1.2*(bw+dw))
 
 plt.plot (r,  psip,  color = 'black', linewidth = 2, linestyle = 'solid',   label = r"$\bar{\psi}_p$")
 plt.plot (rv, psinw, color = 'black', linewidth = 2, linestyle = 'dashed',  label = r"$\bar{\psi}_{nw}$")
@@ -51,3 +51,4 @@ plt.legend (fontsize = fontsize)
 plt.tight_layout ()
 
 plt.show ()    
+#plt.savefig ("Figure9_8.pdf")

@@ -20,4 +20,5 @@
 - *Scan_mpol.py*:     Plots gamma versus mpol for various values of dwall
 - *Scan_bwll.py*:     Plots gamma versus bwall for various values of dwall
 - *Scan_beta0.py*:    Plots gamma versus beta0 for various values of dwall
-- *Scan_betap.py*:    Plots gamma versus betap for various values of dwall
+- *Scan_betap.py*:    Plots gamma versus betap for various values of dwal
+- *Scan_q0.py*:       Plots gamma versus F for various values of dwall

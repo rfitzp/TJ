@@ -95,11 +95,13 @@ class Pinch : private Utility
   // ---------------
   // Scan parameters
   // ---------------
+  int    Nscan;  // Number of points in scans (read from JSON file)
+  int    mmax;   // Maximum poloidal mode number in poloidal mode number scan (read from JSON file)
   double kmax;   // Maximum value of ntor*epsa in toroidal mode number scan (read from JSON file)
   double bmax;   // Maximum value of bwall in wall position scan (read from JSON file)
-  int    Nscan;  // Number of points in scans (read from JSON file)
   double betm;   // Maximum value of beta0 in beta scan (read from JSON file)
-  int    mmax;   // Maximum poloidal mode number in poloidal mode number scan (read from JSON file)
+  double q0min;  // Minimum value of q0 in q0 scan (read from JSON file)
+  double q0max;  // Maximum value of q0 in q0 scan (read from JSON file)
 
   // ----------------
   // Calculation data
