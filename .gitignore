@@ -19,6 +19,7 @@
 *.sh
 *.bib
 *.bat
+*.out
 *.a
 bin
 lib

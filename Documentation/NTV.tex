@@ -1,0 +1,266 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage {amsmath}
+\usepackage{amssymb}
+\pdfoutput = 1 
+\usepackage {graphicx}
+\usepackage{cancel}
+\newcommand{\bomega}{\mbox{\boldmath$\omega$}}
+\newcommand{\bPi}{\mbox{\boldmath$\Pi$}}
+\allowdisplaybreaks
+\newcommand{\smalltensor}[1]{\overset{\text{\tiny$\leftrightarrow$}}{#1}}
+
+\begin{document}
+
+\title{Neoclassical Toroidal Viscosity}
+\author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies,  Department of Physics,  University of Texas at Austin,  Austin TX 78712, USA}\begin{abstract}
+\end{abstract}
+\maketitle
+
+\section{Curvilinear Coordinates}
+Let ${\bf x}=(x_1,\,x_2,\,x_3)$ be a position vector, where the $x_i$ are Cartesian coordinates, and $i$ runs from 1 to 3. 
+Let the $q_i(x_1,x_2,x_3)$ be curvilinear coordinates. We can define the contravariant basis vectors,
+\begin{equation}\label{e1}
+{\bf e}^i = \frac{\partial q^i}{\partial {\bf x}},
+\end{equation}
+and the covariant basis vectors, 
+\begin{equation}\label{e2}
+{\bf e}_i = \frac{\partial {\bf x}}{\partial q^i}.
+\end{equation}
+Note that
+\begin{equation}\label{e3}
+{\bf e}^i\cdot{\bf e}_j = \frac{\partial q^i}{\partial {\bf x}}\,\frac{\partial {\bf x}}{\partial q^j}= \frac{\partial q^i}{\partial x_k}\,\frac{\partial x_k}{\partial q^j}=
+\frac{\partial q^i}{\partial q^j} = \delta^i_j.
+\end{equation}
+Here, use has been made of the Einstein summation convention, as well as the chain rule. 
+
+The Jacobian, ${\cal J}$,  is defined as
+\begin{equation}
+{\cal J}^{-1} = \frac{\partial q^1}{\partial {\bf x}}\cdot\frac{\partial q^2}{\partial{\bf x}}\times\frac{\partial q^3}{\partial{\bf x}}.
+\end{equation}
+It is easily seen that
+\begin{equation}
+{\bf e}_i = {\cal J}\,\frac{\partial q^j}{\partial {\bf x}}\times \frac{\partial{q^k}}{\partial{\bf x}},
+\end{equation}
+where $i$, $j$, $k$ are cyclic. To demonstrate this we need to show that ${\bf e}_i\cdot{\bf e}^l = \delta_i^l$, 
+which implies that 
+\begin{equation}
+ {\cal J}\,\frac{\partial q^l}{\partial {\bf x}}\cdot\frac{\partial q^j}{\partial {\bf x}}\times \frac{\partial{q^k}}{\partial{\bf x}}= \delta_i^l,
+ \end{equation}
+ which is obviously satisfied. 
+ 
+ The contravariant components, $a^i$,  of a vector ${\bf a}$ are defined via
+ \begin{equation}
+ {\bf a} = a^i\,{\bf e}_i.
+ \end{equation}
+ The covariant components, $a_i$, are defined via
+ \begin{equation}
+  {\bf a} = a_i\,{\bf e}^i.
+  \end{equation}
+  Thus,
+  \begin{equation}
+  {\bf a}\cdot{\bf b} = a^i\,b_j\,{\bf e}_i\cdot{\bf e}^j = a^i\,b_j\,\delta_i^j = a^i\,b_i,
+  \end{equation}
+  where use has been made of Eq.~(\ref{e3}). 
+  Similarly, 
+  \begin{equation}
+  {\bf a}\cdot{\bf b} = a_i\,b^{\,j}\,{\bf e}^i\cdot{\bf e}_j = a_i\,b^{\,j}\,\delta^i_j = a_i\,b^i,
+  \end{equation}
+  Note that
+  \begin{align}
+  a^i &= {\bf a}\cdot{\bf e}^i,\\[0.5ex]
+  a_i &= {\bf a}\cdot{\bf e}_i.
+    \end{align}
+    
+ The contravariant components of the metric tensor, $\smalltensor{\bf g}$, are defined
+ \begin{equation}
+ g^{ij} = {\bf e}^i\cdot{\bf e}^{\,j}.
+ \end{equation}
+ Note that $g^{ij}=g^{ji}$. 
+ Likewise, the covariant components of the metric tensor are  
+ \begin{equation}
+ g_{ij} = {\bf e}_i\cdot{\bf e}_j.
+ \end{equation}
+ Note that $g_{ij}= g_{ji}$. 
+ Now, 
+ \begin{equation}
+ {\bf e}^i = ({\bf e}^i\cdot{\bf e}^{\,j})\,{\bf e}_j,
+ \end{equation}
+so
+\begin{equation}
+{\bf a}\cdot{\bf e}^i = {\bf a}\cdot[ ({\bf e}^i\cdot{\bf e}^{\,j})\,{\bf e}_j]=( {\bf e}^i\cdot{\bf e}^{\,j})\,{\bf a}\cdot{\bf e}_j,
+\end{equation}
+which yields
+\begin{equation}\label{e17}
+a^i = g^{ij}\,a_j.
+\end{equation}
+Likewise, 
+\begin{equation}
+ {\bf e}_i = ({\bf e}_i\cdot{\bf e}_j)\,{\bf e}^{\,j},
+ \end{equation}
+so 
+\begin{equation}
+{\bf a}\cdot{\bf e}_i = {\bf a}\cdot[ ({\bf e}_i\cdot{\bf e}_j)\,{\bf e}^{\,j}]= ({\bf e}_i\cdot{\bf e}_j)\,{\bf a}\cdot{\bf e}^{\,j},
+\end{equation}
+which yields
+\begin{equation}\label{e20}
+a_i = g_{ij}\,a^{\,j}.
+\end{equation}
+Combining Eqs.~(\ref{e17}) and (\ref{e20}), we get
+\begin{equation}
+a^i = g^{ij}\,g_{jk}\,a^k = \delta^{i}_k\,a^k,
+\end{equation}
+which implies that
+\begin{equation}
+g^{ij}\,g_{jk}= \delta^{\,i}_k.
+\end{equation}
+Likewise, 
+\begin{equation}
+a_i = g_{ij}\,g^{\,jk}\,a_k = \delta_{i}^k\,a_k,
+\end{equation}
+which implies that
+\begin{equation}
+g_{ij}\,g^{\,jk}= \delta_{i}^k.
+\end{equation}
+
+The Christoffel symbol, ${\mit\Gamma}_{k,ij}$ is defined such that 
+\begin{equation}\label{e25}
+\frac{\partial {\bf e}_i}{\partial q^{\,j}} = {\mit\Gamma}_{k,ij}\,{\bf e}^k.
+\end{equation}
+It follows that 
+\begin{equation}
+{\mit\Gamma}_{k,ij} = {\bf e}_k\cdot\,\frac{\partial {\bf e}_i}{\partial q^j}.
+\end{equation}
+Thus, 
+\begin{align}
+\frac{\partial g_{ij}}{\partial q^k} = \frac{\partial ({\bf e}_i\cdot{\bf e}_j)}{\partial q^k}= \frac{\partial {\bf e}_i}{\partial q^k}\cdot{\bf e}_j + {\bf e}_i\cdot\frac{\partial {\bf e}_j}{\partial q^k}= {\mit\Gamma}_{j,ik} + {\mit\Gamma}_{i,jk},\\[0.5ex]
+\frac{\partial g_{ik}}{\partial q^{\,j}} = \frac{\partial ({\bf e}_i\cdot{\bf e}_k)}{\partial q^{\,j}}= \frac{\partial {\bf e}_i}{\partial q^{\,j}}\cdot{\bf e}_k+ {\bf e}_i\cdot\frac{\partial {\bf e}_k}{\partial q^{\,j}}= {\mit\Gamma}_{k,ij} + {\mit\Gamma}_{i,kj},\\[0.5ex]
+\frac{\partial g_{jk}}{\partial q^i} = \frac{\partial ({\bf e}_j\cdot{\bf e}_k)}{\partial q^i}= \frac{\partial {\bf e}_j}{\partial q^i}\cdot{\bf e}_k+ {\bf e}_j\cdot\frac{\partial {\bf e}_k}{\partial q^i}= {\mit\Gamma}_{k,ji} + {\mit\Gamma}_{j,ki}.
+\end{align}
+However,
+\begin{equation}
+\frac{\partial{\bf e}_i}{\partial q^{\,j}} = \frac{\partial^2{\bf x}}{\partial q^i\,\partial q^{\,j}}= \frac{\partial^2{\bf x}}{\partial q^{\,j}\,\partial q^{i}}
+= \frac{\partial{\bf e}_j}{\partial q^i},
+\end{equation}
+where use has been made of Eq.~(\ref{e2}). Hence, we deduce that
+\begin{equation}
+{\mit\Gamma}_{k,ij}= {\mit\Gamma}_{k,ji}.
+\end{equation}
+It follows that
+\begin{align}
+\frac{\partial g_{ij}}{\partial q^k} + \frac{\partial g_{jk}}{\partial q^i} -\frac{\partial g_{ik}}{\partial q^{\,j}}& = {\mit\Gamma}_{j,ik} + {\mit\Gamma}_{i,jk}+ {\mit\Gamma}_{k,ji} + {\mit\Gamma}_{j,ki}-{\mit\Gamma}_{k,ij} - {\mit\Gamma}_{i,kj}\nonumber\\[0.5ex]
+&= {\mit\Gamma}_{j,ik} + \cancel{{\mit\Gamma}_{i,jk}}+ \cancel{{\mit\Gamma}_{k,ji}} + {\mit\Gamma}_{j,ik}-\cancel{{\mit\Gamma}_{k,ji}} - \cancel{{\mit\Gamma}_{i,jk}},
+\end{align}
+which implies that
+\begin{equation}
+ {\mit\Gamma}_{j,ik}=\frac{1}{2}\left(\frac{\partial g_{ij}}{\partial q^k} + \frac{\partial g_{jk}}{\partial q^i} -\frac{\partial g_{ik}}{\partial q^{\,j}}\right),
+ \end{equation}
+ or 
+ \begin{equation}
+ {\mit\Gamma}_{i,jk}=\frac{1}{2}\left(\frac{\partial g_{ij}}{\partial q^k} + \frac{\partial g_{ik}}{\partial q^{\,j}} -\frac{\partial g_{jk}}{\partial q^{i}}\right).
+ \end{equation}
+ The previous two equations yield
+ \begin{equation}\label{e35}
+ \frac{\partial g_{ij}}{\partial q^k} = {\mit\Gamma}_{i,jk} + {\mit\Gamma}_{j,ik}.
+ \end{equation}
+ 
+ Let us define the Jacobian matrix
+ \begin{equation}
+ J_{ij} = \frac{\partial x_j}{\partial q^i}.
+ \end{equation}
+ The Jacobian is the determinant of the Jacobian matrix
+ \begin{equation}
+ {\cal J} = ||J_{ij}||= \frac{\partial{\bf x}}{\partial q^1}\cdot\frac{\partial {\bf x}}{\partial q^2}\times\frac{\partial{\bf x}}{\partial q^3}.
+ \end{equation}
+ Now,
+ \begin{equation}
+ g_{ij} = {\bf e}_i\cdot{\bf e}_j= \frac{\partial{\bf x}}{\partial q^i}\cdot\frac{{\partial {\bf x}}}{\partial q^{\,j}}= \frac{\partial x_k}{\partial q^i}\,\frac{{\partial x_k}}{\partial q^{\,j}}= J_{ik}\,J_{jk} = J_{ij}\,J^{\,T}_{kj},
+ \end{equation}
+ where $J^{\,T}_{ij}= J_{ji}$. However, $||A\,B|| = ||A||\,||B||$ and $||A^{\,T}|| = ||A||$. Hence, we deduce that
+ \begin{equation}\label{e39}
+ ||g_{ij}|| = {\cal J}^{\,2}.
+ \end{equation}
+ 
+ Jacobi's formula states that
+ \begin{equation}
+ \frac{\partial ||A||}{\partial q^k} = ||A||\,{\rm tr}\left(A^{-1}\,\frac{\partial A}{\partial q^k}\right)
+ \end{equation}
+ for any square matrix, $A_{ij}(q_1,q_2,q_3)$. 
+ Let $A_{ij}= g_{ij}$. Now, the inverse of $g_{ij}$ is $g^{ij}$. Hence, making use of Eq.~(\ref{e39}), we deduce that
+ \begin{equation}
+ \frac{\partial{\cal J}^{\,2}}{\partial q^k} = {\cal J}^{\,2}\,g^{ij}\,\frac{\partial g_{ji}}{\partial q^k},
+ \end{equation}
+ which reduces to
+ \begin{equation}\label{e42}
+ \frac{\partial g_{ij}}{\partial q^k}\,g^{ij} = \frac{2}{\cal J}\,\frac{\partial{\cal J}}{\partial q^k}.
+ \end{equation}
+ 
+\section{Equilibrium Magnetic Field}
+Let $\psi$, $\theta$, $\alpha$ be magnetic coordinates, where $\psi$ is a flux-surface label, $\theta$ a poloidal angle, and $\alpha$
+a helical angle. Let ${\cal  J}^{-1}= \nabla\psi\cdot\nabla\theta\times \nabla\alpha$. Suppose that the geometric toroidal angle is $\varphi = \alpha+ q(\psi)\,\theta$. Let the equilibrium magnetic field
+take the form
+\begin{equation}\label{e44}
+{\bf B} =  \nabla\alpha\times\nabla\psi={\cal J}^{-1}\,{\bf e}_\theta.
+\end{equation}
+It follows that 
+\begin{equation}
+{\bf b} \equiv \frac{{\bf B}}{B}= ({\cal J}\,B)^{-1}\,{\bf e}_\theta.
+\end{equation}
+Thus,
+\begin{equation}
+({\bf b}\,{\bf b})^{ij}= ({\cal J}\,B)^{-2} \,({\bf e}_\theta\cdot{\bf e}^i)\,({\bf e}_\theta\cdot{\bf e}^{\,j})=  ({\cal J}\,B)^{-2} \,\delta_\theta^{\,i}\,\delta_\theta^{\,j}.
+\end{equation}
+
+\section{Plasma Viscosity Tensor}
+Let ${\bf 1}$ be the identity tensor. It follows that
+\begin{equation}
+1^{ij}= {\bf e}^i\cdot{\bf e}^{\,j} = g^{ij}.
+\end{equation}
+Thus, if 
+\begin{equation}
+\smalltensor{\bPi}= (\delta p_\parallel-\delta p_\perp)\,{\bf b}\,{\bf b} + \delta p_\perp\,\smalltensor{\bf 1}
+\end{equation}
+is the plasma viscosity tensor then
+\begin{equation}\label{e48}
+{\mit\Pi}^{\,ij} = (\delta p_\parallel-\delta p_\perp)\,({\cal J}\,B)^{-2} \,\delta_\theta^{\,i}\,\delta_\theta^{\,j} +\delta p_\perp\,g^{ij}.
+\end{equation}
+
+ Consider
+ \begin{equation}\label{e43}
+ \nabla\cdot\left(\smalltensor{\bPi}\cdot {\bf e}_k\right)= \nabla\cdot\smalltensor{\bPi}\cdot{\bf e}_k+ \smalltensor{\bPi}:\frac{\partial {\bf e}_k}{\partial{\bf x}}.
+ \end{equation}
+ Now,
+  \begin{equation}
+ \frac{\partial {\bf e}_k}{\partial{\bf x}}= \frac{\partial{\bf e}_k}{\partial q^{\,j}}\,\frac{\partial q^{\,j}}{\partial {\bf x}}= {\mit\Gamma}_{i,kj}\,{\bf e}^i\,{\bf e}^{\,j}
+ = {\mit\Gamma}_{i,jk}\,{\bf e}^i\,{\bf e}^{\,j},
+ \end{equation}
+ where use has been made of Eqs.~(\ref{e1}) and (\ref{e25}). 
+ Thus,
+ \begin{equation}
+ \smalltensor{\bPi}:\frac{\partial {\bf e}_k}{\partial{\bf x}}= {\mit\Pi}^{\,ij}\,{\mit\Gamma}_{i,jk}.
+ \end{equation}
+ Now,  ${\mit\Pi}^{\,ij}={\mit\Pi}^{\,ji}$, so  
+ \begin{equation}\label{e53}
+ \smalltensor{\bPi}:\frac{\partial {\bf e}_k}{\partial{\bf x}}= \frac{1}{2}\,{\mit\Pi}^{\,ij}\left({\mit\Gamma}_{i,jk}+{\mit\Gamma}_{j,ik}\right)= \frac{1}{2}\,{\mit\Pi}^{\,ij}\,\frac{\partial g_{ij}}{\partial q^k},
+ \end{equation}
+ where use has been made of Eq.~(\ref{e35}).
+ 
+ If we integrate Eq.~(\ref{e43}) over all space, and neglect surface terms, then we find that
+ \begin{equation}
+ \int \nabla\cdot\smalltensor{\bPi}\cdot{\bf e}_k\,d^3{\bf x}= - \frac{1}{2}\int {\mit\Pi}^{\,ij}\,\frac{\partial g_{ij}}{\partial q^k}\,d^3{\bf x},
+ \end{equation}
+ where use has been made of Eq.~(\ref{e53}). It follows from Eq.~(\ref{e48}) that
+ \begin{equation}
+ \int \nabla\cdot\smalltensor{\bPi}\cdot{\bf e}_k\,d^3{\bf x}= - \frac{1}{2}\int \left[\frac{(\delta p_\parallel-\delta p_\perp)}{({\cal J}\,B)^2}\,\frac{\partial g_{\theta\theta}}{\partial q^k}+\delta p_\perp\,g^{ij}\,\frac{\partial g_{ij}}{\partial q^k}\right]d^3{\bf x}.
+ \end{equation}
+ However, Eq.~(\ref{e44}) implies that
+ \begin{equation}
+ g_{\theta\theta}= {\bf e}_\theta\cdot{\bf e}_\theta = ({\cal J}\,B)^2.
+ \end{equation}
+ Finally, making use of Eq.~(\ref{e42}), we get
+ \begin{align}
+ \int \nabla\cdot\smalltensor{\bPi}\cdot{\bf e}_k\,d^3{\bf x}&= - \frac{1}{2}\int \left[\frac{(\delta p_\parallel-\delta p_\perp)}{({\cal J}\,B)^2}\,\frac{\partial ({\cal J}\,B)^2}{\partial q^k}+\delta p_\perp\,\frac{2}{{\cal J}}\,\frac{\partial{\cal J}}{\partial q^k}\right]d^3{\bf x}\nonumber\\[0.5ex]
+ &= -\int \left[(\delta p_\parallel-\delta p_\perp)\,\frac{1}{B}\,\frac{\partial B}{\partial q^k}+\delta p_\parallel\,\frac{1}{{\cal J}}\,\frac{\partial{\cal J}}{\partial q^k}\right]d^3{\bf x}.
+ \end{align}
+ 
+\end{document}

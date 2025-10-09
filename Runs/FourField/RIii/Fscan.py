@@ -4,7 +4,7 @@
 # Qi    = +0.15
 # cbeta = 1.
 # D     = 1.
-# P     = 1.e-3
+# P     = 1.e-4
 # tau   = -Qe/Qi = 1.
 
 # Delta = 2.124 * [i (Q - Qi)]^0.25 [i (Q - Qe)]
@@ -15,45 +15,6 @@ import matplotlib.pyplot as plt
 import netCDF4 as nc
 import pandas as pd
 
-x = [0.0397959183673, 
-     0.069387755102,  
-     0.1, 
-     0.129591836735, 
-     0.148979591837, 
-     0.159183673469, 
-     0.188775510204, 
-     0.219387755102, 
-     0.248979591837]
-y = [-0.0638517475956,
-     -0.0346469622332,
-     -0.000867933380249,
-     0.037532254281,
-     0.064672765658,
-     0.0805301430917,
-     0.121229181328,
-     0.161904761905,
-     0.204902650715]
-
-x1 = [0.0421639577649,  
-      0.0715743267291, 
-      0.100996559497, 
-      0.130798433978, 
-      0.151346541701, 
-      0.161632459366,  
-      0.19043777435,  
-      0.221295527346, 
-      0.251121129434] 
-
-y1 = [0.0713845058726,
-      0.0358168228734,
-      0.00257444536718,
-      0.0437418436351,
-      0.0711709574089,
-      0.0872108197888,
-      0.13305255665,
-      0.181172143789,
-      0.226990153043]
- 
 def F_r(Q):
 
     Qe     = 0.15
@@ -80,8 +41,6 @@ def F_i(Q):
     
     return 2.124 * (pow(i * (Q - Qi), 0.25) * i * (Q - Qe)).imag
 
-df  = pd.read_csv("slayer_Qscan_n1.out", skiprows=1, delim_whitespace=True, header=None)
-
 fn = 'FourField.nc'
 ds  = nc.Dataset(fn)
 In  = ds['InputParameters']
@@ -91,9 +50,6 @@ d3i = np.asarray(ds['Delta3_i'])
 d4r = np.asarray(ds['Delta4_r'])
 d4i = np.asarray(ds['Delta4_i'])
 
-d3m = (d3r*d3r + d3i*d3i)**0.5
-d4m = (d4r*d4r + d4i*d4i)**0.5
-
 D_r = []
 D_i = []
 D_m = []
@@ -102,6 +58,12 @@ for Q in gi:
     D_i.append(F_i(Q))
     D_m.append((F_r(Q)*F_r(Q) + F_i(Q)*F_i(Q))**0.5)
 
+df =  pd.read_csv("RIii_Vz.txt", delim_whitespace=True, skiprows=1)
+
+Q   = df.iloc[:,0]
+D4r = df.iloc[:,2]
+D4i = df.iloc[:,3]
+    
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'TJ Code: Delta3 and Delta4')
 plt.rc ('xtick', labelsize = 15) 
@@ -112,13 +74,10 @@ plt.subplot (2, 1, 1)
 plt.xlim (gi[0], gi[-1])
 plt.gca().invert_xaxis()
 
-plt.plot (gi, d3i, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Im($\Delta_3$)")
-plt.plot (gi, d4i, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Im($\Delta_4$)")
-plt.plot (gi, D_i, color = 'green', linewidth = 2, linestyle = 'dotted', label = r"Analytic")
-
-plt.plot (df[0].values, df[3].values, color = 'cyan', linewidth = 2, linestyle = 'solid', label = "slayer")
-
-plt.plot(x, y, 'ko')
+plt.plot (gi, d3r, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Re($\Delta_3$)")
+plt.plot (gi, d4r, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Re($\Delta_4$)")
+plt.plot (Q,  D4r, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"slayer")
+plt.plot (gi, D_r, color = 'green', linewidth = 2, linestyle = 'dotted', label = r"Analytic")
 
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (-In[2], color = 'red',   linewidth = 1.5, linestyle = 'dotted')
@@ -134,16 +93,10 @@ plt.subplot (2, 1, 2)
 plt.xlim (gi[0], gi[-1])
 plt.gca().invert_xaxis()
 
-"""
 plt.plot (gi, d3i, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Im($\Delta_3$)")
 plt.plot (gi, d4i, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Im($\Delta_4$)")
+plt.plot (Q,  D4i, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"slayer")
 plt.plot (gi, D_i, color = 'green', linewidth = 2, linestyle = 'dotted', label = r"Analytic")
-"""
-plt.plot (gi, d3m, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"|$\Delta_3$|")
-plt.plot (gi, d4m, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"|$\Delta_4$|")
-plt.plot (gi, D_m, color = 'green', linewidth = 2, linestyle = 'dotted', label = r"Analytic")
-
-plt.plot(x1, y1, 'ko')
 
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (-In[2], color = 'red',   linewidth = 1.5, linestyle = 'dotted')
@@ -157,11 +110,3 @@ plt.legend (fontsize = "15");
 plt.tight_layout ()
 
 plt.show () 
-#plt.savefig ("RIii.pdf")
-
-with open("RIii.txt", "w") as f:
-    f.write ("RIii: Qe = 0.15, Qi = -0.15, cbeta = 1, D = 1, P = 1.e-3: Columns are Q, Delta3_r, Delta3_i, Delta4_r, Delta4_i, Delta_analytic_r, Delta_analytic_i\n")
-    for gi, x3, y3, x4, y4, xa, ya in zip (gi, d3r, d3i, d4r, d4i, D_r, D_i):
-        f.write ("%10.4e  %10.3e %10.3e  %10.3e %10.3e  %10.3e %10.3e\n" % (gi, x3, y3, x4, y4, xa, ya))
-
-f.close ()        
