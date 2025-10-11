@@ -19,6 +19,7 @@
 \maketitle
 
 \section{Curvilinear Coordinates}
+\subsection{Basis Vectors} 
 Let ${\bf x}=(x_1,\,x_2,\,x_3)$ be a position vector, where the $x_i$ are Cartesian coordinates.  (In the following, all latin indices, $i$, $j$, $k$, $l$ are assumed to run from 1 to 3. Moreover,
 use is made of the Einstein summation convention.)
 Let the $q_i(x_1,x_2,x_3)$ be curvilinear coordinates. We can define the contravariant basis vectors,
@@ -32,12 +33,12 @@ and the covariant basis vectors,
 Note that
 \begin{equation}\label{e3}
 {\bf e}^i\cdot{\bf e}_j = \frac{\partial q^i}{\partial {\bf x}}\,\frac{\partial {\bf x}}{\partial q^j}= \frac{\partial q^i}{\partial x_k}\,\frac{\partial x_k}{\partial q^j}=
-\frac{\partial q^i}{\partial q^j} = \delta^i_j.
+\frac{\partial q^i}{\partial q^j} = \delta^i_j,
 \end{equation}
-Here, use has been made of the chain rule. 
+where  $\delta^i_j$ is the Kronecker delta symbol, and use has been made of the chain rule. 
 
-The Jacobian, ${\cal J}$,  of the curvilinear coordinates system is defined as
-\begin{align}
+The Jacobian, ${\cal J}$,  of the curvilinear coordinate system is defined as
+\begin{align}\label{e4}
 {\cal J} &= \frac{\partial{\bf x}}{\partial q^1}\cdot\frac{\partial {\bf x}}{\partial q^2}\times\frac{\partial{\bf x}}{\partial q^3}={\bf e}_1\cdot{\bf e}_2\times{\bf e}_3.
 \end{align}
 Note that
@@ -45,20 +46,29 @@ Note that
 {\cal J}^{\,-1} &= \frac{\partial q^1}{\partial {\bf x}}\cdot\frac{\partial q^2}{\partial{\bf x}}\times\frac{\partial q^3}{\partial{\bf x}}= {\bf e}^1\cdot{\bf e}^2\times{\bf e}^3.
 \end{align}
 It is easily seen that
+\begin{align}
+\epsilon_{ijk}\equiv {\bf e}_i\cdot{\bf e}_j\times{\bf e}_k&= {\cal J}\,\varepsilon_{ijk},\label{edown}\\[0.5ex]
+\epsilon^{ijk}\equiv {\bf e}^i\cdot{\bf e}^{\,j}\times{\bf e}^k&= {\cal J}^{\,-1}\,\varepsilon_{ijk},\label{eup}
+\end{align}
+where $\varepsilon_{ijk}$ is the Levi-Civita symbol, and the $\epsilon_{ijk}$  and the $\epsilon^{ijk}$ are the covariant and
+contravaiant components of the  Levi-Civita tensor, respectively. 
+
+The covariant basis vectors can be expressed in terms of the contravariant basis vectors, as follows
 \begin{equation}\label{e5}
 {\bf e}_i = {\cal J}\,\frac{\partial q^j}{\partial {\bf x}}\times \frac{\partial{q^k}}{\partial{\bf x}}= {\cal J}\,{\bf e}^{\,j}\times{\bf e}^k,
 \end{equation}
-where $i$, $j$, $k$ are cyclic. To demonstrate this we need to show that ${\bf e}^l\cdot{\bf e}_i= \delta_i^l$, 
+where $i$, $j$, $k$ are cyclic. To demonstrate the validity of this expression we need to show that ${\bf e}^l\cdot{\bf e}_i= \delta_i^l$, 
 which implies that 
 \begin{equation}
- {\cal J}\,\frac{\partial q^l}{\partial {\bf x}}\cdot\frac{\partial q^j}{\partial {\bf x}}\times \frac{\partial{q^k}}{\partial{\bf x}}= \delta_i^l,
+ {\cal J}\,{\bf e}^l\cdot{\bf e}^{\,j}\times {\bf e}^k= \varepsilon_{ljk}=\delta_i^l,
  \end{equation}
- which is obviously satisfied. It can also be demonstrated that
+ which is obviously satisfied. The contravariant basis vectors can also be expressed in terms of the covariant basis vectors as follows, 
  \begin{equation}
  {\bf e}^i = {\cal J}^{\,-1}\,{\bf e}_j\times{\bf e}_k,
  \end{equation}
  where $i$, $j$, $k$ are cyclic. 
  
+\subsection{Vectors}
  The contravariant components, $a^i$,  of a vector ${\bf a}$ are defined via
  \begin{equation}
  {\bf a} = a^i\,{\bf e}_i.
@@ -82,6 +92,18 @@ which implies that
   a_i &= {\bf a}\cdot{\bf e}_i.
     \end{align}
     
+ Now,
+ \begin{equation}
+ ({\bf a}\times{\bf b})^i = {\bf a}\times {\bf b}\cdot{\bf e}^i = a_j\,b_k\,{\bf e}^{\,j}\times{\bf e}^k\cdot{\bf e}^i ={\cal J}^{-1}\,\varepsilon^{ijk}\,a_j\,b_k,
+ \end{equation}
+ where use has been made of Eq.~(\ref{eup}). 
+ Likewise, 
+ \begin{equation}
+ ({\bf a}\times{\bf b})_i = {\bf a}\times {\bf b}\cdot{\bf e}_i = a^{\,j}\,b^k\,{\bf e}_{j}\times{\bf e}_k\cdot{\bf e}_i={\cal J}\,\varepsilon_{ijk}\,a^{\,j}\,b^k,
+ \end{equation}
+ where use has been made of Eq.~(\ref{edown}). 
+
+\subsection{Metric Tensor}  
  The contravariant components of the metric tensor, $\smalltensor{\bf g}$, are defined
  \begin{equation}
  g^{ij} = {\bf e}^i\cdot{\bf e}^{\,j}.
@@ -91,7 +113,12 @@ which implies that
  \begin{equation}
  g_{ij} = {\bf e}_i\cdot{\bf e}_j.
  \end{equation}
- Note that $g_{ji}= g_{ij}$. 
+ Note that $g_{ji}= g_{ij}$. Furthermore,
+ \begin{equation}
+ dx^{\,2}= \frac{\partial {\bf x}}{\partial q^i}\cdot \frac{\partial {\bf x}}{\partial q^{\,j}}\,dq^i\,dq^{\,j} = {\bf e}_i\cdot{\bf e}_j\,dq^i\,dq^{\,j} = g_{ij}\,dq^i\,dq^{\,j},
+ \end{equation}
+ where use has been made of Eq.~(\ref{e2}). 
+ 
  Now, 
  \begin{equation}
  {\bf e}^i = ({\bf e}^i\cdot{\bf e}^{\,j})\,{\bf e}_j,
@@ -122,7 +149,7 @@ a^i = g^{ij}\,g_{jk}\,a^k = \delta^{i}_k\,a^k,
 \end{equation}
 which implies that
 \begin{equation}
-g^{ij}\,g_{jk}= \delta^{i}_k.
+g^{ik}\,g_{kj}= \delta^{i}_j.
 \end{equation}
 Likewise, 
 \begin{equation}
@@ -130,22 +157,34 @@ a_i = g_{ij}\,g^{\,jk}\,a_k = \delta_{i}^k\,a_k,
 \end{equation}
 which implies that
 \begin{equation}
-g_{ij}\,g^{\,jk}= \delta_{i}^k.
+g_{ik}\,g^{\,kj}= \delta_{i}^j.
 \end{equation}
 
-The Christoffel symbol, ${\mit\Gamma}_{k,ij}$ is defined such that 
+\subsection{Chistoffel Symbol}
+The Christoffel symbols, ${\mit\Gamma}_{kij}$ and ${\mit\Gamma}^k_{\,\,ij}$, are defined such that 
 \begin{equation}\label{e25}
-\frac{\partial {\bf e}_i}{\partial q^{\,j}} = {\mit\Gamma}_{k,ij}\,{\bf e}^k.
+\frac{\partial {\bf e}_i}{\partial q^{\,j}} = {\mit\Gamma}_{kij}\,{\bf e}^k= {\mit\Gamma}^k_{\,\,ij}\,{\bf e}_k.
 \end{equation}
 It follows that 
+\begin{align}
+{\mit\Gamma}_{kij} &= {\bf e}_k\cdot\,\frac{\partial {\bf e}_i}{\partial q^{\,j}},\\[0.5ex]
+{\mit\Gamma}^k_{\,\,ij} &= {\bf e}^k\cdot\,\frac{\partial {\bf e}_i}{\partial q^{\,j}}.
+\end{align}
+However,
 \begin{equation}
-{\mit\Gamma}_{k,ij} = {\bf e}_k\cdot\,\frac{\partial {\bf e}_i}{\partial q^j}.
+\frac{\partial ({\bf e}^k\cdot{\bf e}_i)}{\partial q^j} ={\bf e}^k \cdot\frac{\partial {\bf e}_i}{\partial q_k} + {\bf e}_i\cdot\frac{\partial{\bf e}^k}{\partial q^j}
+= 0,
 \end{equation}
-Thus, 
+which implies that
+\begin{equation}\label{e27}
+{\bf e}_i\cdot\frac{\partial{\bf e}^k}{\partial q^j}= - {\mit\Gamma}^k_{\,\,ij}.
+\end{equation}
+
+Now, 
 \begin{align}\label{e28}
-\frac{\partial g_{ij}}{\partial q^k} = \frac{\partial ({\bf e}_i\cdot{\bf e}_j)}{\partial q^k}= \frac{\partial {\bf e}_i}{\partial q^k}\cdot{\bf e}_j + {\bf e}_i\cdot\frac{\partial {\bf e}_j}{\partial q^k}= {\mit\Gamma}_{j,ik} + {\mit\Gamma}_{i,jk},\\[0.5ex]
-\frac{\partial g_{ik}}{\partial q^{\,j}} = \frac{\partial ({\bf e}_i\cdot{\bf e}_k)}{\partial q^{\,j}}= \frac{\partial {\bf e}_i}{\partial q^{\,j}}\cdot{\bf e}_k+ {\bf e}_i\cdot\frac{\partial {\bf e}_k}{\partial q^{\,j}}= {\mit\Gamma}_{k,ij} + {\mit\Gamma}_{i,kj},\\[0.5ex]
-\frac{\partial g_{jk}}{\partial q^i} = \frac{\partial ({\bf e}_j\cdot{\bf e}_k)}{\partial q^i}= \frac{\partial {\bf e}_j}{\partial q^i}\cdot{\bf e}_k+ {\bf e}_j\cdot\frac{\partial {\bf e}_k}{\partial q^i}= {\mit\Gamma}_{k,ji} + {\mit\Gamma}_{j,ki}.\label{e30}
+\frac{\partial g_{ij}}{\partial q^k} = \frac{\partial ({\bf e}_i\cdot{\bf e}_j)}{\partial q^k}= \frac{\partial {\bf e}_i}{\partial q^k}\cdot{\bf e}_j + {\bf e}_i\cdot\frac{\partial {\bf e}_j}{\partial q^k}= {\mit\Gamma}_{jik} + {\mit\Gamma}_{ijk},\\[0.5ex]
+\frac{\partial g_{ik}}{\partial q^{\,j}} = \frac{\partial ({\bf e}_i\cdot{\bf e}_k)}{\partial q^{\,j}}= \frac{\partial {\bf e}_i}{\partial q^{\,j}}\cdot{\bf e}_k+ {\bf e}_i\cdot\frac{\partial {\bf e}_k}{\partial q^{\,j}}= {\mit\Gamma}_{kij} + {\mit\Gamma}_{ikj},\\[0.5ex]
+\frac{\partial g_{jk}}{\partial q^i} = \frac{\partial ({\bf e}_j\cdot{\bf e}_k)}{\partial q^i}= \frac{\partial {\bf e}_j}{\partial q^i}\cdot{\bf e}_k+ {\bf e}_j\cdot\frac{\partial {\bf e}_k}{\partial q^i}= {\mit\Gamma}_{kji} + {\mit\Gamma}_{jki}.\label{e30}
 \end{align}
 However,
 \begin{equation}
@@ -154,26 +193,57 @@ However,
 \end{equation}
 where use has been made of Eq.~(\ref{e2}). Hence, we deduce  that
 \begin{equation}\label{e32}
-{\mit\Gamma}_{k,ij}= {\mit\Gamma}_{k,ij}.
+{\mit\Gamma}_{kji}= {\mit\Gamma}_{kij}.
 \end{equation}
 It follows  from Eqs.~(\ref{e28})--(\ref{e30}) and (\ref{e32}) that
 \begin{align}
-\frac{\partial g_{ij}}{\partial q^k} + \frac{\partial g_{jk}}{\partial q^i} -\frac{\partial g_{ik}}{\partial q^{\,j}}& = {\mit\Gamma}_{j,ik} + {\mit\Gamma}_{i,jk}+ {\mit\Gamma}_{k,ji} + {\mit\Gamma}_{j,ki}-{\mit\Gamma}_{k,ij} - {\mit\Gamma}_{i,kj}\nonumber\\[0.5ex]
-&= {\mit\Gamma}_{j,ik} + \cancel{{\mit\Gamma}_{i,jk}}+ \cancel{{\mit\Gamma}_{k,ji}} + {\mit\Gamma}_{j,ik}-\cancel{{\mit\Gamma}_{k,ji}} - \cancel{{\mit\Gamma}_{i,jk}},
+\frac{\partial g_{ij}}{\partial q^k} + \frac{\partial g_{jk}}{\partial q^i} -\frac{\partial g_{ik}}{\partial q^{\,j}}& = {\mit\Gamma}_{jik} + {\mit\Gamma}_{ijk}+ {\mit\Gamma}_{k,ji} + {\mit\Gamma}_{jki}-{\mit\Gamma}_{kij} - {\mit\Gamma}_{ikj}\nonumber\\[0.5ex]
+&= {\mit\Gamma}_{jik} + \cancel{{\mit\Gamma}_{ijk}}+ \cancel{{\mit\Gamma}_{kji}} + {\mit\Gamma}_{jik}-\cancel{{\mit\Gamma}_{kji}} - \cancel{{\mit\Gamma}_{i,jk}},
 \end{align}
 which implies that
 \begin{equation}
- {\mit\Gamma}_{j,ik}=\frac{1}{2}\left(\frac{\partial g_{ij}}{\partial q^k} + \frac{\partial g_{jk}}{\partial q^i} -\frac{\partial g_{ik}}{\partial q^{\,j}}\right),
+ {\mit\Gamma}_{jik}=\frac{1}{2}\left(\frac{\partial g_{ij}}{\partial q^k} + \frac{\partial g_{jk}}{\partial q^i} -\frac{\partial g_{ik}}{\partial q^{\,j}}\right),
  \end{equation}
  or 
- \begin{equation}
- {\mit\Gamma}_{i,jk}=\frac{1}{2}\left(\frac{\partial g_{ij}}{\partial q^k} + \frac{\partial g_{ik}}{\partial q^{\,j}} -\frac{\partial g_{jk}}{\partial q^{i}}\right).
+ \begin{equation}\label{e34}
+ {\mit\Gamma}_{ijk}=\frac{1}{2}\left(\frac{\partial g_{ij}}{\partial q^k} + \frac{\partial g_{ik}}{\partial q^{\,j}} -\frac{\partial g_{jk}}{\partial q^{i}}\right).
  \end{equation}
  The previous two equations yield
  \begin{equation}\label{e35}
- \frac{\partial g_{ij}}{\partial q^k} = {\mit\Gamma}_{i,jk} + {\mit\Gamma}_{j,ik}.
+ \frac{\partial g_{ij}}{\partial q^k} = {\mit\Gamma}_{ijk} + {\mit\Gamma}_{jik}.
  \end{equation}
  
+\subsection{Covariant Derivative}
+Let ${\bf A}({\bf x})$ be a vector field. 
+We can write 
+\begin{equation}
+\frac{\partial {\bf A}}{\partial q^{\,j}} = \frac{\partial\,(A^k\,{\bf e}_k)}{\partial q^{\,j}} = \frac{\partial A^k}{\partial q^{\,j}}\,{\bf e}_k + A^k\,\frac{\partial {\bf e}_k}{\partial q^{\,j}}= 
+ \frac{\partial A^k}{\partial q^{\,j}}\,{\bf e}_k +A^k\, {\mit\Gamma}^l_{\,kj}\,{\bf e}_l,
+ \end{equation}
+ where use has been made of Eq.~(\ref{e25}). Let
+ \begin{equation}
+ \partial_j A^i \equiv  {\bf e}^i\cdot\frac{\partial{\bf A}}{\partial q^{\,j}},
+ \end{equation}
+ where $\partial_j$ is the covariant derivative. 
+ It follows that
+ \begin{equation}\label{cov1}
+ \partial_j A^i = \frac{\partial A^i}{\partial q^{\,j}} + {\mit\Gamma}^i_{\,jk}\,A^k.
+ \end{equation}
+ We can also write 
+\begin{equation}
+\frac{\partial {\bf A}}{\partial q^{\,j}} = \frac{\partial\,(A_k\,{\bf e}^k)}{\partial q^{\,j}} = \frac{\partial A_k}{\partial q^{\,j}}\,{\bf e}^k + A_k\,\frac{\partial {\bf e}^k}{\partial q^{\,j}}= 
+ \frac{\partial A_k}{\partial q^{\,j}}\,{\bf e}^k -A_k\, {\mit\Gamma}^k_{\,jl}\,{\bf e}_l,
+ \end{equation}
+ where use has been made of Eq.~(\ref{e27}). Let
+ \begin{equation}
+ \partial_j A_i \equiv  {\bf e}_i\cdot\frac{\partial{\bf A}}{\partial q^{\,j}}.
+ \end{equation}
+ It follows that
+ \begin{equation}\label{cov2}
+ \partial_j A_i = \frac{\partial A_i}{\partial q_j} - {\mit\Gamma}^k_{\,ij}\,A_k.
+ \end{equation}
+ 
+\subsection{Jacobian Matrix}
  Let us define the Jacobian matrix
  \begin{equation}
  J_{ij} = \frac{\partial x_j}{\partial q^i}.
@@ -182,11 +252,12 @@ which implies that
  \begin{equation}
  {\cal J} = ||J_{ij}||= \frac{\partial{\bf x}}{\partial q^1}\cdot\frac{\partial {\bf x}}{\partial q^2}\times\frac{\partial{\bf x}}{\partial q^3}.
  \end{equation}
+ See Eq.~(\ref{e4}). 
  Now,
  \begin{equation}
  g_{ij} = {\bf e}_i\cdot{\bf e}_j= \frac{\partial{\bf x}}{\partial q^i}\cdot\frac{{\partial {\bf x}}}{\partial q^{\,j}}= \frac{\partial x_k}{\partial q^i}\,\frac{{\partial x_k}}{\partial q^{\,j}}= J_{ik}\,J_{jk} = J_{ij}\,J^{\,T}_{kj},
  \end{equation}
- where $J^{\,T}_{ij}= J_{ji}$. However, $||A\,B|| = ||A||\,||B||$ and $||A^{\,T}|| = ||A||$. Hence, we deduce that
+ where use has been made of Eq.~(\ref{e2}), and $J^{\,T}_{ij}= J_{ji}$. However, $||A\,B|| = ||A||\,||B||$ and $||A^{\,T}|| = ||A||$. Hence, we deduce that
  \begin{equation}\label{e39}
  ||g_{ij}|| = {\cal J}^{\,2}.
  \end{equation}
@@ -195,7 +266,7 @@ which implies that
  \begin{equation}
  \frac{\partial ||A||}{\partial q^k} = ||A||\,{\rm Tr}\!\left(A^{-1}\,\frac{\partial A}{\partial q^k}\right)
  \end{equation}
- for any square matrix, $A_{ij}(q_1,q_2,q_3)$. 
+ for any square differentiable matrix, $A_{ij}(q_1,q_2,q_3)$. 
  Let $A_{ij}= g_{ij}$. Now, the inverse of $g_{ij}$ is $g^{ij}$. Hence, making use of Eq.~(\ref{e39}), we deduce that
  \begin{equation}
  \frac{\partial{\cal J}^{\,2}}{\partial q^k} = {\cal J}^{\,2}\,g^{ij}\,\frac{\partial g_{ji}}{\partial q^k},
@@ -204,6 +275,49 @@ which implies that
  \begin{equation}\label{e42}
  \frac{\partial g_{ij}}{\partial q^k}\,g^{ij} = \frac{2}{\cal J}\,\frac{\partial{\cal J}}{\partial q^k}.
  \end{equation}
+ 
+\subsection{Scalar Fields}
+Let $\phi({\bf x})$ be a scalar field. It follows that
+\begin{equation}
+\nabla \phi \equiv \frac{\partial \phi}{\partial{\bf x}}  = \frac{\partial\phi}{\partial q^i}\,\frac{\partial q^i}{\partial{\bf x}}= \frac{\partial\phi}{\partial q^i}\,{\bf e}^i,
+\end{equation}
+where use has been made of Eq.~(\ref{e1}). Thus,
+\begin{equation}
+(\nabla\phi)_i = \frac{\partial\phi}{\partial q^i}.
+\end{equation}
+
+\subsection{Vector Fields}
+Let ${\bf A}({\bf x})$ be a vector field. Now,
+\begin{align}\label{div1}
+\nabla\cdot{\bf A}& = \frac{\partial {\bf A}}{\partial {\bf x}} = \frac{\partial q^i}{\partial{\bf x}}\cdot\,\frac{\partial}{\partial q^i}\left(A^{\,j}\,{\bf e}_j\right)
+= {\bf e}^i\cdot\left(\frac{\partial A^{\,j}}{\partial q^i}\,{\bf e}_j + A^{\,j}\,\frac{\partial {\bf e}_j}{\partial q^i}\right)\nonumber\\[0.5ex]
+&= {\bf e}^i\cdot\left(\frac{\partial A^{\,j}}{\partial q^i}\,{\bf e}_j + A^j\,{\mit\Gamma}^k_{\,\,ji}\,{\bf e}_k\right)= \frac{\partial A^i}{\partial q^i} + 
+A^{\,j}\,{\mit\Gamma}^i_{\,\,ij},
+\end{align}
+where use has been made of Eqs.~(\ref{e1}), (\ref{e3}),  (\ref{e25}), and (\ref{e32}). 
+Now,
+\begin{equation}
+{\mit\Gamma}^i_{\,\,ij} = g^{ik}\,{\mit\Gamma}_{kij} = \frac{1}{2}\,g^{ik}\left(\frac{\partial g_{ki}}{\partial q^j}+\cancel{\frac{\partial g_{kj}}{\partial q^i}}-
+\cancel{\frac{\partial g_{ij}}{\partial q_k}}\right)= \frac{1}{2}\,g^{ik}\,\frac{\partial g_{ik}}{\partial q^j} = \frac{1}{\cal J}\,\frac{\partial{\cal J}}{\partial q^j},
+\end{equation}
+where use has been made of Eqs.~(\ref{e34}) and (\ref{e42}). Thus,
+\begin{equation}
+\nabla\cdot{\bf A} = \frac{\partial A^i}{\partial q^i} + \frac{A^i}{\cal J}\,\frac{\partial {\cal J}}{\partial q^i} = \frac{1}{\cal J}\,\frac{\partial ({\cal J}\,A^i)}{\partial q^i}.
+\end{equation}
+It is clear from Eqs.~(\ref{cov1}) and (\ref{div1}) that
+\begin{equation}
+\nabla\cdot{\bf A} = \partial_i A^i.
+\end{equation}
+
+Let us assume that
+\begin{equation}
+(\nabla\times{\bf A})^i = \epsilon^{ijk}\,\partial_j A_k ={\cal J}^{\,-1}\,\varepsilon_{ijk}\left(\frac{\partial A_k}{\partial q_j} - {\mit\Gamma}^l_{\,jk}\,A_l\right),
+\end{equation}
+where use has been made of Eqs.~(\ref{eup}) and (\ref{cov1}). However, given that ${\mit\Gamma}^l_{\,\,jk}={\mit\Gamma}^l_{\,\,kj}$, it
+is clear that $\varepsilon_{ijk}\,{\mit\Gamma}^l_{\,\,jk} =0$. Thus, we obtain
+\begin{equation}\label{ecurl}
+(\nabla\times{\bf A})^i = {\cal J}^{\,-1}\,\varepsilon_{ijk}\,\frac{\partial A_k}{\partial q_j}. 
+\end{equation}
  
 \section{Equilibrium Magnetic Field}
 Let $\psi$, $\theta$, $\alpha$ be magnetic coordinates, where $\psi$ is a flux-surface label, $\theta$ a poloidal angle, and $\alpha$
@@ -228,7 +342,7 @@ Furthermore,
 \end{equation}
 
 \section{Plasma Viscosity Tensor}
-Let ${\bf 1}$ be the identity tensor. It follows that
+Let $\smalltensor{\bf 1}$ be the identity tensor. It follows that
 \begin{equation}\label{e47}
 1^{ij}= {\bf e}^i\cdot{\bf e}^{\,j} = g^{ij}.
 \end{equation}
@@ -248,17 +362,17 @@ where use has been made of Eqs.~(\ref{e46}) and (\ref{e47}).
  \end{equation}
  Now,
   \begin{equation}
- \frac{\partial {\bf e}_k}{\partial{\bf x}}= \frac{\partial{\bf e}_k}{\partial q^{\,j}}\,\frac{\partial q^{\,j}}{\partial {\bf x}}= {\mit\Gamma}_{i,kj}\,{\bf e}^i\,{\bf e}^{\,j}
- = {\mit\Gamma}_{i,jk}\,{\bf e}^i\,{\bf e}^{\,j},
+ \frac{\partial {\bf e}_k}{\partial{\bf x}}= \frac{\partial{\bf e}_k}{\partial q^{\,j}}\,\frac{\partial q^{\,j}}{\partial {\bf x}}= {\mit\Gamma}_{ikj}\,{\bf e}^i\,{\bf e}^{\,j}
+ = {\mit\Gamma}_{ijk}\,{\bf e}^i\,{\bf e}^{\,j},
  \end{equation}
  where use has been made of Eqs.~(\ref{e1}), (\ref{e25}), and (\ref{e32}). 
  Thus,
  \begin{equation}
- \smalltensor{\bPi}:\frac{\partial {\bf e}_k}{\partial{\bf x}}= {\mit\Pi}^{\,ij}\,{\mit\Gamma}_{i,jk}.
+ \smalltensor{\bPi}:\frac{\partial {\bf e}_k}{\partial{\bf x}}= {\mit\Pi}^{\,ij}\,{\mit\Gamma}_{ijk}.
  \end{equation}
  Now,  ${\mit\Pi}^{\,ij}={\mit\Pi}^{\,ji}$, so  
  \begin{equation}\label{e53}
- \smalltensor{\bPi}:\frac{\partial {\bf e}_k}{\partial{\bf x}}= \frac{1}{2}\,{\mit\Pi}^{\,ij}\left({\mit\Gamma}_{i,jk}+{\mit\Gamma}_{j,ik}\right)= \frac{1}{2}\,{\mit\Pi}^{\,ij}\,\frac{\partial g_{ij}}{\partial q^k},
+ \smalltensor{\bPi}:\frac{\partial {\bf e}_k}{\partial{\bf x}}= \frac{1}{2}\,{\mit\Pi}^{\,ij}\left({\mit\Gamma}_{ijk}+{\mit\Gamma}_{jik}\right)= \frac{1}{2}\,{\mit\Pi}^{\,ij}\,\frac{\partial g_{ij}}{\partial q^k},
  \end{equation}
  where use has been made of Eq.~(\ref{e35}).
  
@@ -304,7 +418,7 @@ where use has been made of Eqs.~(\ref{e46}) and (\ref{e47}).
  $dV= {\cal J}\,d\psi\,d\theta\,d\alpha\rightarrow {\cal J}\,(1+\nabla\cdot\bxi)\,d\psi\,d\theta\,d\alpha$, where $\bxi({\bf x})$ is the plasma displacement. Hence,
  to lowest order in perturbed quantities, 
  \begin{equation}\label{e62}
- T_\varphi = -\int \left[(\delta p_\parallel-\delta p_\perp)\,\frac{1}{B}\,\frac{\partial \delta B}{\partial \alpha}+\delta p_\parallel\,\frac{\partial(\nabla\cdot\bxi)}{\partial \alpha}\right]d^3{\bf x}.
+ T_\varphi = -\int \left[(\delta p_\parallel-\delta p_\perp)\,\frac{\partial}{\partial \alpha}\!\left(\frac{\delta B}{B}\right)+\delta p_\parallel\,\frac{\partial(\nabla\cdot\bxi)}{\partial \alpha}\right]d^3{\bf x}.
  \end{equation}
  
  Let $\hat{\bf e}_1$, $\hat{\bf e}_2$, $\hat{\bf e}_3$ be right-handed orthogonal unit vectors such that $\hat{\bf e}_3={\bf b}$ at a given
@@ -330,14 +444,14 @@ where use has been made of Eqs.~(\ref{e46}) and (\ref{e47}).
  T_\varphi =-\int\!\!\!\int \left[(2\,E-3\,\mu\,B)\,\frac{\partial}{\partial\alpha}\!\left(\frac{\delta B}{B}\right) + (2\,E-\,2\,\mu\,B)\,\frac{\partial(\nabla\cdot\bxi)}{\partial\alpha}\right]f_1\,d^3{\bf x}\,d^3{\bf v}.
  \end{equation}
  Finally, making use of Eq.~(\ref{e66}), we get
- \begin{equation}
+ \begin{equation}\label{e92x}
  T_\varphi = -\frac{2\pi}{m^2}\int \frac{{\cal J}\,B}{v_\parallel}\left[(2\,E-3\,\mu\,B)\,\frac{\partial}{\partial\alpha}\!\left(\frac{\delta B}{B}\right) + (2\,E-\,2\,\mu\,B)\,\frac{\partial(\nabla\cdot\bxi)}{\partial\alpha}\right]f_1\,dE\,d\mu\,d\psi\,d\theta\,d\alpha.
  \end{equation}
  
 \section{Ion Drift-Kinetic Equation}
  The ion drift-kinetic equation is written
  \begin{equation}
- v_\parallel\,{\bf b}\cdot\nabla f_1 + v_d^{\,\alpha}\,\frac{\partial f_1}{\partial\alpha} - C_i(f_1)=- v_d^{\,\psi}\,\frac{\partial f_0}{partial\psi},
+ v_\parallel\,{\bf b}\cdot\nabla f_1 + v_d^{\,\alpha}\,\frac{\partial f_1}{\partial\alpha} - C_i(f_1)=- v_d^{\,\psi}\,\frac{\partial f_0}{\partial\psi},
  \end{equation}
  where ${\bf v}_d$ is the ion drift-velocity, $C_i$ the ion collision operator, and $f_0(\psi,E,\mu)$ the unperturbed ion distribution function. Let us
  employ a Krook collision operator, such that $C_i(f_1)= - \nu_i\,f_1$, where $\nu_i$ is the ion collision frequency. It follows that
@@ -355,7 +469,7 @@ where use has been made of Eqs.~(\ref{e46}) and (\ref{e47}).
  (ds)^2 = g_{\theta\theta}\,(d\theta)^2= ({\cal J}\,B)^2\,(d\theta)^2,
  \end{equation}
  where use has been made of Eq.~(\ref{gtt}). Thus, $ds = {\cal J}\,B\,d\theta$. The time interval required for an ion to move along a
- magnetic field-line from $\theta$ to $\theta+d\theta$ is
+ magnetic field-line between points $\theta$ and $\theta+d\theta$ is
  \begin{equation}\label{dt}
  dt = \frac{ds}{v_\parallel} =\frac{{\cal J}\,B}{v_\parallel}\,d\theta.
  \end{equation}
@@ -381,11 +495,7 @@ where use has been made of Eqs.~(\ref{e46}) and (\ref{e47}).
  \begin{equation}
  {\mit\Delta}\varphi = {\mit\Delta}\alpha+ 2\pi\,q
  \end{equation}
- for a passing ion  that is moving parallel to the magnetic field, and 
- \begin{equation}
- {\mit\Delta}\varphi = {\mit\Delta}\alpha- 2\pi\,q
- \end{equation}
- for a passing ion that is moving anti-parallel to the magnetic field. 
+ for a passing ion. 
  
  Suppose that perturbed quantities vary with $\alpha$ as $\exp(-{\rm i}\,n\,\alpha)$, where the positive integer $n$ is the toroidal
  mode number of the magnetic perturbation. It follows that perturbed quantities are periodic in the toroidal angle with periodicity interval $2\pi/n$. If
@@ -402,16 +512,12 @@ where use has been made of Eqs.~(\ref{e46}) and (\ref{e47}).
  \begin{equation}
  ({\mit\Delta}\alpha)_{res} = \frac{2\pi\,(\ell-n\,q)}{n}
  \end{equation}
- if they are passing and moving parallel to the magnetic field, and 
-  \begin{equation}
- ({\mit\Delta}\alpha)_{res} = \frac{2\pi\,(\ell+n\,q)}{n}
- \end{equation}
- if they are passing and  moving anti-parallel to the field.
+ if they are passing.
 Thus, we can write
   \begin{equation}
  ({\mit\Delta}\alpha)_{res} = \frac{2\pi\,(\ell-\sigma\,n\,q)}{n},
  \end{equation}
- where $\sigma=0$ for trapped ions, and $\sigma=+1$ for passing ions moving parallel to the field, and $\sigma=-1$ for passing ions moving anti-parallel to the field. Let us suppose that
+ where $\sigma=0$ for trapped ions, and $\sigma=1$ for passing ions. Let us suppose that
  \begin{equation}\label{e83}
  f_1({\bf x},{\bf v})= \delta f_{\ell}(\psi,E,\mu)\,{\cal P}_{\ell}(\psi,\theta,\alpha,E,\mu),
  \end{equation}
@@ -425,7 +531,8 @@ Thus, we can write
  h(\psi,\theta,E,\mu)=2\pi \left.\int_0^\theta\frac{{\cal J}\,B\,v_d^{\,\alpha}}{v_\parallel}\, d\theta' \right/
  \int_{-\theta_t}^{\theta_t}\frac{{\cal J}\,B\,v_d^{\,\alpha}}{v_\parallel}\,d\theta.
  \end{equation}
- The previous three equations ensure that ${\mit\Delta}\alpha= ({\mit\Delta}\alpha)_{res}$. 
+ The previous three equations ensure that ${\mit\Delta}\alpha= ({\mit\Delta}\alpha)_{res}$. Note that, for passing ions, $f_1$ is periodic in both $\theta$ and
+ $\varphi$. For trapped ions, $f_1$ is periodic at $\theta=\pm \theta_t$ on a given magnetic field-line.  
  
  Combining Eqs.~(\ref{e71}) and (\ref{e83})--(\ref{e85}), we get 
  \begin{equation}\label{e86}
@@ -444,7 +551,7 @@ Thus, we can write
  \end{equation}
  where
  \begin{equation}
- \omega_b(E,\mu) = 2\pi\left/\int_{-\theta_t}^{\theta_t}\frac{{\cal J}\,B}{v_\parallel}\,d\theta\right.
+ \omega_b(\psi,E,\mu) = 2\pi\left/\int_{-\theta_t}^{\theta_t}\frac{{\cal J}\,B}{v_\parallel}\,d\theta\right.
  \end{equation}
  is the bounce frequency. 
  
@@ -461,9 +568,9 @@ electrostatic potential. If we assume ion motion takes place at constant magneti
  {\bf v}_d = \frac{v_\parallel}{{\mit\Omega}}\,\nabla\times (v_\parallel\,{\bf b}) - \frac{v_\parallel^{\,2}}{{\mit\Omega}}\,[{\bf b}\cdot(\nabla\times {\bf b})]\,{\bf b}.
  \end{equation}
  
- Now,
+ Now, from Eq.~(\ref{ecurl}), 
  \begin{equation}
- v_d^{\,\alpha}= \frac{v_\parallel}{{\cal J}\,{\mit\Omega}}\left[\frac{\partial (v_\parallel\,b_\theta)}{\partial\psi} - \frac{\partial (v_\parallel\,b_r)}{\partial \theta}\right],
+ v_d^{\,\alpha}= \frac{v_\parallel}{{\cal J}\,{\mit\Omega}}\left[\frac{\partial (v_\parallel\,b_\theta)}{\partial\psi} - \frac{\partial (v_\parallel\,b_\psi)}{\partial \theta}\right],
  \end{equation}
  so
  \begin{equation}
@@ -473,7 +580,7 @@ electrostatic potential. If we assume ion motion takes place at constant magneti
  \begin{equation}
  b^\theta = ({\cal J}\,B)^{-1}\,{\bf e}_\theta\cdot{\bf e}_\theta= {\cal J}\,B.
  \end{equation}
- The latter equation follows from Eqs.~(\ref{e44}) and (\ref{gtt}). Thus, we obtain 
+ The latter equation follows from Eqs.~(\ref{e45}) and (\ref{gtt}). Thus, we obtain 
  \begin{equation}\label{e98}
   \langle v_d^{\,\alpha}\rangle_b=\omega_E +\omega_D
  \end{equation}
@@ -490,7 +597,7 @@ electrostatic potential. If we assume ion motion takes place at constant magneti
  \end{align}
  is the magnetic precession frequency. 
  
- Now, 
+ Now, from Eq.~(\ref{ecurl}), 
  \begin{equation}\label{e101}
  v_d^{\,\psi}= \frac{v_\parallel}{{\cal J}\,{\mit\Omega}}\left[\frac{\partial (v_\parallel\,b_\alpha)}{\partial\theta} - \frac{\partial (v_\parallel\,b_\theta)}{\partial \alpha}\right],
  \end{equation}
@@ -501,26 +608,27 @@ electrostatic potential. If we assume ion motion takes place at constant magneti
  where we have ignored the term involving $b_\alpha$ on the assumption that it will average to zero when integrated in $\alpha$. 
  Thus,
  \begin{equation}\label{e103}
- \left\langle v_d^{\,\psi}\,{\cal P}_{\ell}^{\,-1}\right\rangle_b =-\frac{\omega_b}{2\pi\,e}\,\frac{\partial \delta J_{-\ell}}{\partial\alpha},
+ \left\langle v_d^{\,\psi}\,{\cal P}_{\ell}^{\,-1}\right\rangle_b =-\frac{\omega_b}{2\pi\,e}\,J_{\ell}^{\,\ast}
  \end{equation}
  where
  \begin{equation}
- \frac{\partial \delta J_{-\ell}}{\partial\alpha}= \int_{-\theta_t}^{\theta_t}
- \frac{{\cal J}\,B}{v_\parallel}\,{\cal P}_{\ell}^{-1}
+ J_\ell(\psi,\alpha,E,\mu)= \int_{-\theta_t}^{\theta_t}
+ \frac{{\cal J}\,B}{v_\parallel}\,{\cal P}_{\ell}
  \left[(2\,E-3\,\mu\,B)\,\frac{1}{B}\,\frac{\partial B}{\partial \alpha} + (2\,E-2\,\mu\,B)\,\frac{1}{{\cal J}}\,\frac{\partial
  {\cal J}}{\partial\alpha}\right]d\theta,
  \end{equation}
  which reduces to 
- \begin{equation}
- \frac{\partial \delta J_{-\ell}}{\partial\alpha}= \int_{-\theta_t}^{\theta_t}
- \frac{{\cal J}\,B}{v_\parallel}\,{\cal P}_{\ell}^{-1}
- \left[(2\,E-3\,\mu\,B)\,\frac{1}{B}\,\frac{\partial \delta B}{\partial \alpha} + (2\,E-2\,\mu\,B)\,\frac{\partial
-(\nabla\cdot\bxi)}{\partial\alpha}\right]d\theta,
+ \begin{equation}\label{e126}
+ J_\ell(\psi,\alpha,E,\mu)= \int_{-\theta_t}^{\theta_t}
+ \frac{{\cal J}\,B}{v_\parallel}\,{\cal P}_{\ell}
+ \left[(2\,E-3\,\mu\,B)\,\frac{\partial }{\partial \alpha} \!\left(\frac{\delta B}{B}\right)+ (2\,E-2\,\mu\,B)\,\frac{\partial
+(\nabla\cdot\bxi)}{\partial\alpha}\right]d\theta
  \end{equation}
+ to lowest order in perturbed quantities. 
  
  Finally, Eqs.~(\ref{e91}), (\ref{e98}), and (\ref{e103}) yield
- \begin{equation}
- \left[-{\rm i}\,(\ell - \sigma\,n\,q)\,\omega_b -{\rm i}\,n\,(\omega_E+\omega_D) + \nu_i\right]\delta f_\ell = \frac{\omega_b}{2\pi\,e}\,\frac{\partial \delta J_{\ell}}{\partial\alpha}\,\frac{\partial f_0}{\partial \psi}.
+ \begin{equation}\label{e128}
+ \left[-{\rm i}\,(\ell - \sigma\,n\,q)\,\omega_b -{\rm i}\,n\,(\omega_E+\omega_D) + \nu_i\right]\delta f_\ell = \frac{\omega_b}{2\pi\,e}\,J_\ell^{\,\ast}\,\frac{\partial f_0}{\partial \psi}.
  \end{equation}
  
 \section{Neoclassical Toroidal Viscous Torque}
@@ -530,7 +638,7 @@ f_0(\psi,E,\mu) = \frac{N(\psi)}{[2\pi\,T(\psi)/m]^{3/2}}\,\exp\left[-\frac{{\ca
 \end{equation} 
 where $N(\psi)$ is the ion number density, and $T(\psi)$ the ion temperature. The derivative of this distribution function with respect to $\psi$ is
 taken at constant ${\cal E}$. Thus, 
-\begin{equation}
+\begin{equation}\label{e128a}
 \left.\frac{\partial f_0}{\partial\psi}\right|_{\cal E}= -\frac{e\,f_0}{T}\left[\omega_E +\omega_{\ast N}+ \left(\frac{E}{T}-\frac{3}{2}\right)\omega_{\ast T}\right],
 \end{equation}
 where
@@ -539,4 +647,24 @@ where
 \omega_{\ast T}(\psi)&=-\frac{1}{e}\,\frac{dT}{d\psi}
 \end{align}
 are the density gradient and temperature gradient contributions to the ion diamagnetic frequency, respectively. 
+
+Equations~(\ref{e92x}), (\ref{e83}), (\ref{e126}), (\ref{e128}), and (\ref{e128a}) give the following expression for the neoclassical toroidal viscous torque,
+\begin{equation}
+T_\varphi =- \frac{1}{m^2}\int\int\int K_l\,\frac{\omega_b\,f_0}{T}\,\frac{[\omega_E + \omega_{\ast N}+(E/T-3/2)\,\omega_{\ast T}]}{
+{\rm i}\,(\ell - \sigma\,n\,q)\,\omega_b +{\rm i}\,n\,(\omega_E+\omega_D)-\nu_i}\,d\psi\,dE\,d\mu,
+\end{equation}
+where
+\begin{equation}
+K_\ell = \oint| J_\ell|^2\,d\alpha.
+\end{equation}
+Let $x=E/T$, ${\mit\Lambda}=\mu\,B_0/E$, $\bar{\omega}_b(\psi,{\mit\Lambda}) = R_0\,\omega_b/(2\,x\,T\,)^{1/2}$, $\bar{J}_\ell(\psi,{\mit\Lambda}) = J_\ell/(2\,x\,T\,m\,R_0^{\,2})^{1/2}$,
+and $\bar{K}_\ell(\psi, {\mit\Lambda}) = \oint |\bar{J}_\ell|^2\,d\alpha$, where all quantities are dimensionless. We find that
+\begin{equation}
+T_\varphi = - \frac{R_0}{\pi^{3/2}\,B_0}\int d\psi\,N\,T\int d{\mit\Lambda}\,\bar{\omega}_b\,\bar{K}_\ell\int dx\,{\cal R}_\ell,
+\end{equation}
+where
+\begin{equation}
+{\cal R}_\ell(\psi,{\mit\Lambda},x) =\frac{[\omega_E + \omega_{\ast N}+(x-3/2)\,\omega_{\ast T}]\,x^{5/2}\,{\rm e}^{-x}}{
+{\rm i}\,(\ell - \sigma\,n\,q)\,\omega_b +{\rm i}\,n\,(\omega_E+\omega_D)-\nu_i},
+\end{equation}
   \end{document}
