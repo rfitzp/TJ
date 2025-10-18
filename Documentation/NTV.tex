@@ -53,7 +53,7 @@ It is easily seen that
 where $\varepsilon_{ijk}$ is the Levi-Civita symbol, and the $\epsilon_{ijk}$  and the $\epsilon^{ijk}$ are the covariant and
 contravaiant components of the  Levi-Civita tensor, respectively. 
 
-The covariant basis vectors can be expressed in terms of the contravariant basis vectors, as follows
+The covariant basis vectors can be expressed in terms of the contravariant basis vectors as follows
 \begin{equation}\label{e5}
 {\bf e}_i = {\cal J}\,\frac{\partial q^j}{\partial {\bf x}}\times \frac{\partial{q^k}}{\partial{\bf x}}= {\cal J}\,{\bf e}^{\,j}\times{\bf e}^k,
 \end{equation}
@@ -439,7 +439,7 @@ where use has been made of Eqs.~(\ref{e46}) and (\ref{e47}).
  \delta p_\parallel({\bf x}) &= \int M\,v_\parallel^{\,2}\,f_1\,d^3{\bf v},\\[0.5ex]
  \delta p_\perp({\bf x}) &= \frac{1}{2}\int M\,v_\perp^{\,2}\,f_1\,d^3{\bf v},\label{e65}
  \end{align}
- where $f_1({\bf x},E\,\mu)$ is the perturbed, gyro-averaged, ion distribution function, and $M$  the ion mass. Let
+ where $f_1({\bf x},E,\mu)$ is the perturbed, gyro-averaged, ion distribution function, and $M$  the ion mass. Let
  $E=M\,(v_\perp^{\,2}+v_\parallel^{\,2})/2$ be the ion kinetic energy,  and $\mu=M\,v_\perp^{\,2}/(2\,B)$ the ion magnetic moment. 
  It is easily demonstrated that
  \begin{equation}\label{e66}
@@ -447,7 +447,7 @@ where use has been made of Eqs.~(\ref{e46}) and (\ref{e47}).
  \end{equation}
  Equations~(\ref{e62}), (\ref{e64}), and (\ref{e65}) yield
  \begin{equation}
- T_\varphi =-\int\!\!\!\int \left[(2\,E-3\,\mu\,B)\,\frac{\partial}{\partial\alpha}\!\left(\frac{\delta B}{B}\right) + (2\,E-\,2\,\mu\,B)\,\frac{\partial(\nabla\cdot\bxi)}{\partial\alpha}\right]f_1\,d^3{\bf x}\,d^3{\bf v}.
+ T_\varphi =-\int\!\!\!\int \left[(2\,E-3\,\mu\,B)\,\frac{\partial}{\partial\alpha}\!\left(\frac{\delta B}{B}\right) + (2\,E-\,2\,\mu\,B)\,\frac{\partial(\nabla\cdot\bxi)}{\partial\alpha}\right]f_1\,d^3{\bf v}\,d^3{\bf x}.
  \end{equation}
  Finally, making use of Eq.~(\ref{e66}), we get
  \begin{equation}\label{e92x}
@@ -460,7 +460,7 @@ where use has been made of Eqs.~(\ref{e46}) and (\ref{e47}).
  v_\parallel\,{\bf b}\cdot\nabla f_1 + v_d^{\,\alpha}\,\frac{\partial f_1}{\partial\alpha} - C_i(f_1)=- v_d^{\,\psi}\,\frac{\partial f_0}{\partial\psi},
  \end{equation}
  where ${\bf v}_d$ is the ion drift-velocity, $C_i$ the ion collision operator, and $f_0(\psi,E,\mu)$ the unperturbed ion distribution function. Let us
- employ a Krook collision operator, such that $C_i(f_1)= - \nu_i\,f_1$, where $\nu_i$ is the ion collision frequency. It follows that
+ employ a Krook collision operator, such that $C_i(f_1)= - \nu_i\,f_1$, where $\nu_i$ is the effective ion collision frequency. It follows that
  \begin{equation}\label{e71}
  \frac{v_\parallel}{{\cal J}\,B}\,\frac{\partial f_1}{\partial\theta} + v_d^{\,\alpha}\,\frac{\partial f_1}{\partial\alpha} + \nu_i\,f_1= - v_d^{\,\psi}\,\frac{\partial f_0}{\partial\psi},
  \end{equation}
@@ -556,7 +556,7 @@ Thus, we can write
  
  Let us suppose that
  \begin{equation}\label{e83}
- f_1({\bf x},E,\mu)=\sum_\ell \delta f_{\ell}(\psi,E,\mu)\,{\cal P}_{\ell}(\psi,\theta,\alpha,E,\mu),
+ f_1({\bf x},E,\mu)=\sum_{\ell} f_{1\ell}({\bf x}, E,\mu)= \sum_\ell \delta f_{\ell}(\psi,E,\mu)\,{\cal P}_{\ell}(\psi,\theta,\alpha,E,\mu),
  \end{equation}
  where
  \begin{align}
@@ -583,9 +583,9 @@ Thus, we can write
  for circulating ions. 
  
  The previous four equations ensure that ${\mit\Delta}\alpha= ({\mit\Delta}\alpha)_{res}$. To be more specific, for circulating ions, the
- perturbed distribution function, $f_1$,   is periodic in $\varphi$ with period
- $2\pi/n$, and is periodic in $\theta$ with period $2\pi/\ell$. For trapped ions, $f_1$ is periodic is periodic in $\varphi$ with period
- $2\pi/n$. Moreover, on a given magnetic field-line (i.e., a given value of $\alpha$), $f_1$  exhibits an $\exp(\,{\rm i}\,\ell\,\pi)$ phase difference
+ perturbed distribution function, $f_{1\ell}$,   is periodic in $\varphi$ with period
+ $2\pi/n$, and is periodic in $\theta$ with period $2\pi/\ell$. For trapped ions, $f_{1\ell}$ is periodic is periodic in $\varphi$ with period
+ $2\pi/n$. Moreover, on a given magnetic field-line (i.e., for a given value of $\alpha$), $f_{1\ell}$  exhibits an $\exp(\,{\rm i}\,\ell\,\pi)$ phase difference
  when evaluated at $\theta=\pm\theta_t$. 
  
  Combining Eqs.~(\ref{e71}) and (\ref{e83})--(\ref{e85}), we get 
@@ -771,7 +771,7 @@ B&= B_0\,(1-\epsilon\,\cos\theta)+{\cal O}(\epsilon_a^{\,2})+ B_0\,{\rm Re}\sum_
 \end{align}
 where $\epsilon=r/R_0$, $\epsilon_a=a/R_0$, $g_2$ is order unity, and $|\delta_{m}|\ll \epsilon_a$. Here, the ${\cal O}(\epsilon_a^{\,2})$ corrections in the previous two
 equations are independent of $\varphi$. 
-Moreover, the $\delta_{mn}(r)$ parameterize the $\varphi$-dependent perturbed magnetic field. 
+Moreover, the $\delta_{m}(r)$ parameterize the $\varphi$-dependent perturbed magnetic field. 
 
 \subsection{Trapped and Circulating Ions}
 Now, to first order in $\epsilon$, 
@@ -1056,7 +1056,7 @@ T_\varphi = \sum_{\ell} \int_0^a T_\ell(r)\,dr,
 \end{equation}
 where
 \begin{equation}
-T_\ell(r) = -\frac{2\,n^2\,R_0}{\pi^{1/2}}\,r\,N\,T\int_0^{{\mit\Lambda}_t}d{\mit\Lambda}\,\bar{\omega}_b(r,{\mit\Lambda})\,\bar{K}_l(r,{\mit\Lambda})\int_0^\infty dx\,{\cal R}_\ell(r,{\mit\Lambda},x),
+T_\ell(r) = -\frac{2\,n^2\,R_0}{\pi^{1/2}}\,r\,N\,T\int_0^{{\mit\Lambda}_t}\left[\bar{\omega}_b(r,{\mit\Lambda})\,\bar{K}_l(r,{\mit\Lambda})\int_0^\infty {\cal R}_\ell(r,{\mit\Lambda},x)\,dx\right]d{\mit\Lambda}, 
 \end{equation}
 and ${\mit\Lambda}_t(r)=(1-\epsilon)^{-1}$. 
 
@@ -1078,7 +1078,7 @@ The normalized magnetic precession frequency is
 \begin{equation}
 \bar{\omega}_D(\epsilon,s,{\mit\Lambda}) =\frac{1}{\kappa_c^{\,2}}\left[(1+2\,s\,{\mit\Lambda})\,\frac{E(\kappa_c)}{K(\kappa_c)} - \left(1-\frac{\kappa_c^{\,2}}{2}\right)\right].
 \end{equation}
-for for $0<{\mit\Lambda}< {\mit\Lambda}_c$, and 
+for $0<{\mit\Lambda}< {\mit\Lambda}_c$, and 
 \begin{equation}
 \bar{\omega}_D(\epsilon,s,{\mit\Lambda}) =(1+2\,s\,{\mit\Lambda})\,\frac{E(\kappa_t)}{K(\kappa_t)} -2\,s\,{\mit\Lambda}\,(1-\kappa_t^{\,2})-\frac{1}{2}.
 \end{equation}
@@ -1107,7 +1107,7 @@ E^\pm_{m\ell}(x) &= \int_0^{\pi/2} (1-x^2\,\sin^2 u)^{1/2}\,\cos[(m-n\,q)\,\thet
 F_{m\ell}^\pm(\epsilon,{\mit\Lambda}) &= 2\left\{-[(2\,\epsilon\,{\mit\Lambda})^{-1/2}+3\,(2\,\epsilon\,{\mit\Lambda})^{1/2}\,(1-\kappa_t^{\,2})]\,K^\pm_{m\ell}(\kappa_t) + 3\,(2\,\epsilon\,{\mit\Lambda})^{1/2}\,E^\pm_{m\ell}(\kappa_t)\right\},\\[0.5ex]
 K^\pm_{m\ell}(x) &= \int_0^{\pi/2} (1-x^2\,\sin^2 u)^{-1/2}\,\cos[(m-n\,q)\,\theta \pm \ell\,{\mit\Theta}(\theta)]\,du,\\[0.5ex]
 E^\pm_{m\ell}(x) &= \int_0^{\pi/2} (1-x^2\,\sin^2 u)^{1/2}\,\cos[(m-n\,q)\,\theta \pm \ell \,{\mit\Theta}(\theta)]\,du,\\[0.5ex]
-\theta&=2\,\sin^{-1}[\kappa_t\,\sin u],\\[0.5ex]
+\theta&=2\,\sin^{-1}(\kappa_t\,\sin u),\\[0.5ex]
 {\mit\Theta}&= \frac{\pi}{2}\,\frac{K(\kappa_t,u)}{K(\kappa_t)}.
 \end{align}
 for ${\mit\Lambda}_c<{\mit\Lambda}<{\mit\Lambda}_t$. 
@@ -1119,14 +1119,14 @@ The energy integrand is
 \end{equation}
 Here, 
 \begin{align}
-\omega_b(r,{\mit\Lambda},x) &= x^{1/2}\,\omega_t\,\bar{\omega}_b,\\[0.5ex]
-\omega_D(r,{\mit\Lambda,x}) &= \frac{\omega_t^{\,2}\,q^3}{{\mit\Omega}\,\epsilon}\,x\,\bar{\omega}_D,\\[0.5ex]
+\omega_b(r,{\mit\Lambda},x) &=\omega_t\,\bar{\omega}_b(\epsilon,{\mit\Lambda})\,x^{1/2},\\[0.5ex]
+\omega_D(r,{\mit\Lambda,x}) &= \frac{\omega_t^{\,2}\,q^3}{{\mit\Omega}\,\epsilon}\,\bar{\omega}_D(\epsilon,s,{\mit\Lambda})\,x,\\[0.5ex]
 \omega_t(r) &= \frac{(2\,T/M)^{1/2}}{R_0\,q},\\[0.5ex]
 {\mit\Omega} &= \frac{e\,B_0}{M},\\[0.5ex]
-\omega_E(r) &= - \frac{q}{r\,B_0}\,\frac{d{\mit\Phi}}{dr},\\[0.5ex]
+\omega_E(r) &= - \frac{q}{B_0\,r}\,\frac{d{\mit\Phi}}{dr},\\[0.5ex]
 \omega_{\ast M}(r) &= -\frac{q\,T}{N\,e\,B_0\,r}\,\frac{dN}{dr},\\[0.5ex]
 \omega_{\ast T}(r) &= - \frac{q}{e\,B_0\,r}\,\frac{dT}{dr},\\[0.5ex]
-\nu_i(r,x) &= \left(\frac{\nu_{ii}}{2\,\epsilon}\right) x^{-3/2}\,[1+(m-n\,q)^2 + (\ell/2)^2].
+\nu_i(r,x) &= \left(\frac{\nu_{ii}}{2\,\epsilon}\right) x^{-3/2}\left[1+(m-n\,q)^2 + (\ell/2)^2\right].
 \end{align}
 
 \end{document}
