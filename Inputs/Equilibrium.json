@@ -7,7 +7,7 @@
     "mu":   2.5,              // Pressure peaking parameter
     "epsa": 0.1,              // Inverse aspect-ratio of plasma
 
-    "Hna": [1.0, -0.5, 0.0], // Horizontal shaping harmonic values at plasma boundary
+    "Hna": [1.0, 0.0, 0.5], // Horizontal shaping harmonic values at plasma boundary
     "Vna": [0.0, 0.0, 0.0],   // Vertical shaping harmonic values at plasma boundary
 
     "bw": 1.10,                // Relative wall radius

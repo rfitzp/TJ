@@ -209,7 +209,8 @@ plt.legend (fontsize = font)
 plt.tight_layout ()
 
 #plt.show () 
-plt.savefig("Figure6.pdf")
+plt.savefig("Figure6.jpg", dpi=300)
+plt.close()
 
 # #####
 # SPARC
@@ -382,7 +383,8 @@ plt.legend (fontsize = font)
 plt.tight_layout ()
 
 #plt.show ()
-plt.savefig("Figure5.pdf")
+plt.savefig("Figure5.jpg", dpi=300)
+plt.close()
 
 # ###
 # JET
@@ -556,7 +558,8 @@ plt.legend (fontsize = font)
 plt.tight_layout ()
 
 #plt.show ()
-plt.savefig("Figure4.pdf")
+plt.savefig("Figure4.jpg", dpi=300)
+plt.close()
 
 # ###
 # DEMO
@@ -730,5 +733,5 @@ plt.legend (fontsize = font)
 plt.tight_layout ()
 
 #plt.show ()
-plt.savefig("Figure4.pdf")
-
+plt.savefig("Figure7.jpg", dpi=300)
+plt.close()

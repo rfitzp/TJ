@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 df  = pd.read_csv("Results.out",  skiprows=0, delim_whitespace=True)
 df1 = pd.read_csv("Results1.out", skiprows=0, delim_whitespace=True)
@@ -21,7 +22,7 @@ plt.xlabel (r'$b_w$',           fontsize = "15")
 plt.ylabel (r'$\delta W_{nw}$', fontsize = "15")
 plt.legend (fontsize = "12")
 
-plt.subplot (2, 2, 2)
+ax = plt.subplot (2, 2, 2)
 
 plt.xlim (1.0, 1.5)
 
@@ -32,6 +33,19 @@ plt.plot (df2.iloc[:,0], df2.iloc[:,3], color = 'blue',  linewidth = 1,   linest
 plt.xlabel (r'$b_w$',           fontsize = "15")
 plt.ylabel (r'$\delta W_{pw}$', fontsize = "15")
 plt.legend (fontsize = "12")
+
+inset_ax = inset_axes(ax, width="50%", height="30%", bbox_to_anchor=(0.1, 0., 1., 1.), bbox_transform=ax.transAxes, loc='center')
+
+inset_ax.tick_params(axis='both', labelsize=10)
+
+inset_ax.set_xlim (1.199, 1.251)
+inset_ax.set_ylim (25., 35.)
+
+inset_ax.plot (df.iloc [:,0],  df.iloc[:,3], color = 'red',   linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
+inset_ax.plot (df1.iloc[:,0], df1.iloc[:,3], color = 'green', linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
+inset_ax.plot (df2.iloc[:,0], df2.iloc[:,3], color = 'blue',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
+
+inset_ax.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.subplot (2, 2, 3)
 
