@@ -1,0 +1,88 @@
+\documentclass[12pt,prb,aps]{revtex4-1}
+\usepackage{amsmath}           		          	
+\usepackage{graphicx,epstopdf}					
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{esint}
+\pdfoutput = 1 
+\newcommand {\bxi}{\mbox{\boldmath$\xi$}}
+\allowdisplaybreaks
+
+\begin{document}
+
+\section{Safety-Factor}
+Let $\hat{r}=r/a$. Suppose that the last closed magnetic flux surface is at $\hat{r}=1$. Suppose that the safety-factor profile takes the
+form
+\begin{equation}
+q(\hat{r}) = q_0 + (q_{95}-q_0)\,\frac{\ln(1-\hat{r}^{\,2})}{\ln(1-\hat{r}_{95}^{\,2})}.
+\end{equation}
+
+\section{Poloidal Magnetic Flux}
+Now,
+\begin{equation}
+\frac{d{\mit\Psi}_p}{dr} = B_0\,R_0\,f = B_0\,a\,\frac{\hat{r}}{q},
+\end{equation}
+assuming that $g(\hat{r})=1$. Let $\psi_p = {\mit\Psi}_p/(B_0\,a^2)$. It follows that
+\begin{equation}
+\frac{d\psi_p}{d\hat{r}} = \frac{\hat{r}}{q}=\frac{\hat{r}}{q_0-\alpha\,\ln(1-\hat{r}^{\,2})},
+\end{equation}
+where
+\begin{equation}
+\alpha = -\frac{q_{95}-q_0}{\ln(1-\hat{r}_{95}^{\,2})}.
+\end{equation}
+So,
+\begin{align}
+\psi_p(\hat{r})&=\int_0^{\hat{r}}\frac{d\hat{\psi}_p}{d\hat{r}}\,d\hat{r} = \frac{1}{2}\int_0^{\hat{r}^{\,2}}\frac{dx}{q_0 -\alpha\,\ln(1-x)} = \frac{1}{2}\int_{1-\hat{r}^{\,2}}^1\frac{dy}{q_0-\alpha\,\ln y}\nonumber\\[0.5ex]
+&=
+\frac{{\rm e}^{\,q_0/\alpha}}{2\,\alpha}\int^{q_0/\alpha-\ln(1-\hat{r}^{\,2})}_{q_0/\alpha}\frac{{\rm e}^{-z}\,dz}{z},
+\end{align}
+giving
+\begin{equation}
+\psi_p(\hat{r}) = \frac{{\rm e}^{\,q_0/\alpha}}{2\,\alpha}\left\{E_1(q_0/\alpha)-E_1[q_0/\alpha-\ln(1-\hat{r}^{\,2})]\right\}.
+\end{equation}
+Thus,
+\begin{equation}
+\psi_p(1) =  \frac{{\rm e}^{\,q_0/\alpha}}{2\,\alpha}\,E_1(q_0/\alpha).
+\end{equation}
+Let $\hat{\psi}_p(\hat{r})=\psi_p(\hat{r})/\psi_p(1)$. It follows that
+\begin{equation}
+\hat{\psi}_p(\hat{r})= 1- \frac{E_1[q_0/\alpha-\ln(1-\hat{r}^{\,2})]}{E_1(q_0/\alpha)}.
+\end{equation}
+By definition, $\hat{\psi}_p(\hat{r}_{95}) = 0.95$, so 
+\begin{equation}
+0.95 = 1- \frac{E_1[q_0/\alpha-\ln(1-\hat{r}_{95}^{\,2})]}{E_1(q_0/\alpha)}= 1- \frac{E_1(q_{95}/\alpha)}{E_1(q_0/\alpha)},
+\end{equation}
+giving
+\begin{equation}
+0.05 = \frac{E_1(q_{95}/\alpha)}{E_1(q_0/\alpha)}.
+\end{equation}
+Assuming that $q_0$ and $q_{95}$ are specified, the  previous equation can be solved to give $\alpha$, which then determines $\hat{r}_{95}$. 
+
+\section{Magnetic Shear}
+The magnetic shear is
+\begin{equation}
+s(\hat{r}) = \frac{\hat{r}}{q}\,\frac{dq}{d\hat{r}} = \frac{2\,\alpha\,\hat{r}^{\,2}}{(1-\hat{r}^{\,2})\,q}.
+\end{equation}
+
+\section{Profiles}
+Let
+\begin{align}
+n_e(\hat{\psi}_p) &= n_{e\,0}\,(1-\hat{\psi}_p)^{\alpha_n}+ n_{e\,a},\\[0.5ex]
+T_e(\hat{\psi}_p) &= T_{e\,0}\,(1-\hat{\psi}_p)^{\alpha_e}+ T_{e\,a},\\[0.5ex]
+T_i(\hat{\psi}_p) &= T_{i\,0}\,(1-\hat{\psi}_p)^{\alpha_i}+ T_{i\,a}.
+\end{align}
+Thus,
+\begin{align}
+\omega_{\ast\,e}(\hat{\psi}_p)& = \frac{T_e}{e}\left(\frac{d\ln n_e}{d{\mit\Psi}_p}+ \frac{d\ln T_e}{d{\mit\Psi}_p}\right)=
+\frac{T_e}{e\,B_0\,a^2\,\psi_p(1)}\left(\frac{d\ln n_e}{d\hat{\psi}_p}+ \frac{d\ln T_e}{d\hat{\psi}_p}\right),\\[0.5ex]
+\omega_{\ast\,i}(\hat{\psi}_p) &= -\frac{T_i}{e}\left(\frac{d\ln n_e}{d{\mit\Psi}_p}+ \frac{d\ln T_i}{d{\mit\Psi}_p}\right)=
+-\frac{T_i}{e\,B_0\,a^2\,\psi_p(1)}\left(\frac{d\ln n_e}{d\hat{\psi}_p}+ \frac{d\ln T_i}{d\hat{\psi}_p}\right). 
+\end{align}
+Furthermore,
+\begin{align}
+\tau_{ee}(\hat{\psi}_p) &= \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_e^{\,3/2}}{\ln{\mit\Lambda}\,e^4\,n_e},\\[0.5ex]
+\sigma_\parallel(\hat{\psi}_p) &= 1.96\,\frac{n_e\,e^2\,\tau_{ee}}{m_e}.
+\end{align}
+
+\end{document}

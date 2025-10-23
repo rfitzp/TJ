@@ -20,8 +20,9 @@ The  stability of vertical modes in an up-down symmetric, aspect-ratio expanded,
 a conformal resistive wall is calculated. The calculation turns out to be significantly different to previous calculations of the stability
 of non-axisymmetric ideal modes in an aspect-ratio expanded equilibrium.  In particular, the role of the toroidal angular momentum flux (which is
 identically zero for an axisymmetric mode) is instead played by the electromagnetic energy flux. The conservation of electromagnetic energy is used to prove that the perturbed plasma potential energy matrix is Hermitian. 
-Positive triangularity is
-found to have a stabilizing effect on the vertical mode in vertically elongated plasmas, whereas negative triangularity has a marked destabilizing effect. It is concluded that finite wall thickness should be taken into account when
+Positive triangularity is found to have a
+strong stabilizing effect on the vertical mode in vertically elongated plasmas, whereas
+negative triangularity is either destabilizing or weakly stabilizing. It is concluded that finite wall thickness should be taken into account when
 calculating the maximum controllable plasma elongation of a tokamak plasma. 
 \end{abstract}
 
@@ -88,7 +89,7 @@ $\theta$  a poloidal angle. Note that ${\bf B}\cdot\nabla\psi=0$, which implies 
 field-line appears as a straight-line in $\phi$--$\theta$ space. Hence, $\psi$, $\theta$, $\phi$ are often referred to as {\em straight field-line coordinates}. 
 
 It is convenient to define a flux-surface label, $r$, that can be interpreted as the mean minor radius of a given magnetic flux-surface. Thus,
-in its normalized form, $r$ is the mean inverse aspect-ratio of the flux surface. Writing $d\psi/dr=f(r)$, we get
+in its normalized form, $r$ is the mean inverse aspect-ratio of the flux-surface. Writing $d\psi/dr=f(r)$, we get
 \begin{equation}
 {\bf B} =f\,\nabla\phi\times\nabla r + \frac{f\,q\,R^{\,2}}{{\cal J}}\,\nabla\phi,
 \end{equation}
@@ -577,7 +578,7 @@ then
 \begin{equation}
 \delta W_p(a) = \pi^2\,\underline{\alpha}^\dag \,\underline{\underline{y}}^\dag \,\underline{\underline{W}}_{\,p}\,\underline{\underline{y}}\,\underline{\alpha}.
 \end{equation}
-We have already shown that $\delta W(a)$ is real, which implies that $\underline{\underline{W}}_{\,p}$, which is known as the {\em perturbed plasma potential energy matrix},
+We have already shown that $\delta W_p(a)$ is real, which implies that $\underline{\underline{W}}_{\,p}$, which is known as the {\em perturbed plasma potential energy matrix},
 is Hermitian. 
 
 \subsection{Perturbed Vacuum Potential Energy Matrix}
@@ -902,7 +903,7 @@ likely to be quite distant from the plasma because of the presence of shielding 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Fig6.pdf}}
 \caption{The no-wall perturbed potential energy, $\delta W_{nw}$, the perfect-wall perturbed potential energy, $\delta W_{pw}$, the wall
-parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of thevertical mode, plotted as  functions of the
+parameter, $\alpha_w$, and the normalized thin-wall growth-rate, $\hat{\gamma}$,  of the vertical mode, plotted as  functions of the
 relative wall radius, $b_w$, for plasma equilibria characterized by  $\epsilon=0.1$, $H_2(a)=1$, $H_3(a)=0$, $q(0)=1.01$, $q(a)=3.6$, $\nu_p=2.5$, and various different values of $p_2(0)$.\label{fig6}}
 \end{figure}
 
@@ -945,10 +946,10 @@ a conformal resistive wall. The calculation of vertical stability turns out to b
 of non-axisymmetric ideal modes in aspect-ratio expanded equilibria described in Refs.~\onlinecite{tj} and \onlinecite{tj1}. In particular, the role of the toroidal angular momentum flux (which is
 identically zero for an axisymmetric mode) is instead played by the electromagnetic energy flux. The conservation of electromagnetic energy can be
 used to prove that the perturbed plasma potential energy matrix is Hermitian. 
-The calculation described in this paper has been implemented in the TJ toroidal tearing mode code. (The basis solutions used to construct
-tearing eigenfunctions in TJ can easily be repurposed to construct ideal eigenfunctions.) 
+The calculation described in this paper has been implemented in the TJ toroidal tearing mode code. (This is possible because the basis solutions used to construct
+tearing eigenfunctions in TJ can  be repurposed to construct ideal eigenfunctions.) 
 The results obtained from the enhanced TJ code are broadly similar to those reported previously in the literature.\cite{f2,hump,reb,ros,ward,guz} In particular, positive triangularity is
-found to have a stabilizing effect on the vertical mode, whereas negative triangularity has a marked destabilizing effect. Finally, our calculations indicate that finite wall thickness should be taken into account when
+found to have a strong stabilizing effect on the vertical mode, whereas negative triangularity either destabilizing or weakly stabilizing. Finally, our calculations indicate that finite wall thickness should be taken into account when
 determining the maximum controllable plasma elongation of a tokamak plasma. 
 
 It should be noted that all of the analysis prior to Sect.~\ref{large} is completely general, and could be used as the basis for the calculation of the
@@ -995,7 +996,7 @@ available at {\tt https://github.com/rfitzp/TJ}.
 A.S.~Welander, G.~Raupp, W.~Treutterer, P.~de~Vries, J.~Snipes and A.~Winter, {\em Plasma Control Studies
 Using DIII-D Design Tools in Support of ITER}, 2016 IAEA Fusion Energy Conf.\ (Kyoto, Japan) [EX/P6-37].
 
-\bibitem{boozer} A.H.~Boozer, Rev.\ Mod.\ Phys., {\bf 76}, 1071 (2004). 
+\bibitem{boozer} A.H.~Boozer, Rev.\ Mod.\ Phys.\  {\bf 76}, 1071 (2004). 
 
 \bibitem{bussac} M.N.~Bussac, R.~Pellat, D.~Edery and J.L.~Soule, Phys.\ Rev.\ Lett.\ {\bf 35}, 1638 (1975).
 
@@ -1249,7 +1250,7 @@ In this case, Eqs.~(\ref{deltag}) and (\ref{deltap}) yield
 \end{equation}
  which, from Eq.~(\ref{e25ii}),  implies that $\nabla\cdot\bxi=0$. In other words, the perturbation to the plasma equilibrium does not compress the plasma. 
 
-IEquations~(\ref{zdef}), (\ref{e58u}), and   (\ref{e70tt}) yield the  axisymmetric ideal-MHD partial differential equations (p.d.e.s),
+Equations~(\ref{zdef}), (\ref{e58u}), and   (\ref{e70tt}) yield the  axisymmetric ideal-MHD partial differential equations (p.d.e.s),
 \begin{align}\label{e63y}
 r\,\frac{\partial y}{\partial r} &= \frac{{\cal Z}}{|\nabla r|^2} - \frac{r\,\nabla r\cdot\nabla\theta}{|\nabla r|^2}\,\frac{\partial y}{\partial\theta},\\[0.5ex]
 r\,\frac{\partial {\cal Z}}{\partial r}&= -\left[(\alpha_f\,\alpha_p+ r\,\alpha_p')R^{\,2} + q\,r\,\alpha_g'+r^2\,\alpha_g^{\,2}\right]y-\frac{\partial}{\partial\theta}\!\left(\frac{1}{|\nabla r|^2\,R^{\,2}}\,\frac{\partial y}{\partial\theta}\right)\nonumber\\[0.5ex]
