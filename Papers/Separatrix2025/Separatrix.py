@@ -4,8 +4,12 @@ from scipy.optimize import root_scalar
 import matplotlib.pyplot as plt
 import numpy as np
 
-q0  = 1.
-q95 = 3.5
+q0   = 1.01
+q95  = 3.5
+ntor = 1.
+
+rstart = 0.9
+rstop  = 0.9999
 
 def f(x):
     return sp.exp1(q95/x) /sp.exp1(q0/x) - 0.05
@@ -23,10 +27,7 @@ def psi(x):
 def s(x):
     return 2.*alpha*x*x/(1.-x*x)/q(x)
 
-start = 0.8
-stop  = 0.999
-
-rr = np.linspace(start,stop,1000)
+rr = np.linspace(rstart,rstop,10000)
 
 qq = []
 pp = []
@@ -35,39 +36,57 @@ ss = []
 for r in rr:
     qq.append(q(r))
     pp.append(psi(r))
-    ss.append(s(r))                                 
+    ss.append(s(r))
 
-fig = plt.figure (figsize = (12.0, 6.0))
+mstart = int (q0    /ntor) + 1    
+mstop  = int (qq[-1]/ntor)
+
+rm = []
+pm = []
+
+for mpol in range(mstart,mstop,1):
+
+    qs = float (mpol) /ntor
+    rm.append ((1. - math.exp((q0 - qs) /alpha))**0.5)
+    pm.append (1. - sp.exp1(qs/alpha) /sp.exp1(q0/alpha))
+
+fig = plt.figure (figsize = (8.0, 6.0))
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 
 plt.subplot (3, 1, 1)
 
-plt.xlim (start, stop)
+plt.xlim (rstart, 1.)
 
 plt.plot (rr, qq, color = 'blue', linewidth = 2, linestyle = 'solid')
 
 plt.axhline (q95, color = 'red', linewidth = 1.0, linestyle = 'dotted')
 plt.axvline (r95, color = 'red', linewidth = 1.0, linestyle = 'dotted')
 
+for r in rm:
+    plt.axvline (r, color = 'green', linewidth = 1.0, linestyle = 'dotted')
+
 plt.xlabel (r'$\hat{r}$', fontsize = "15")
 plt.ylabel (r'$q$',       fontsize = "15")
 
 plt.subplot (3, 1, 2)
 
-plt.xlim (start, stop)
+plt.xlim (rstart, 1.)
 
 plt.plot (rr, pp, color = 'blue', linewidth = 2, linestyle = 'solid')
 
 plt.axhline (0.95, color = 'red', linewidth = 1.0, linestyle = 'dotted')
 plt.axvline (r95,  color = 'red', linewidth = 1.0, linestyle = 'dotted')
 
+for r in pm:
+    plt.axvline (r, color = 'green', linewidth = 1.0, linestyle = 'dotted')
+
 plt.xlabel (r'$\hat{r}$',    fontsize = "15")
 plt.ylabel (r'$\hat{\psi}$', fontsize = "15")
 
 plt.subplot (3, 1, 3)
 
-plt.xlim (start, stop)
+plt.xlim (rstart, 1.)
 
 plt.plot (rr, ss, color = 'blue', linewidth = 2, linestyle = 'solid')
 

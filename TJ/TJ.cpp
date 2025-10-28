@@ -481,6 +481,7 @@ void TJ::CleanUp ()
   delete[] Qeres;  delete[] Qires;  delete[] Dres;   delete[] Pmres;
   delete[] Peres;  delete[] Dcres;  delete[] Ls;     delete[] LT;
   delete[] Lc;     delete[] alphab; delete[] alphac; delete[] betah;
+  delete[] Wdres;
 
   delete[] MPOL; delete[] mpol;
      

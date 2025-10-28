@@ -1,4 +1,4 @@
-\documentclass[12pt,prb,aps]{revtex4-1}
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
 \usepackage{amsmath}           		          	
 \usepackage{graphicx,epstopdf}					
 \usepackage{amssymb}
@@ -10,6 +10,10 @@
 \allowdisplaybreaks
 
 \begin{document}
+
+\title{Separatrix}
+\author{Richard Fitzpatrick}
+\maketitle
 
 \section{Safety-Factor}
 Let $\hat{r}=r/a$. Suppose that the last closed magnetic flux surface is at $\hat{r}=1$. Suppose that the safety-factor profile takes the
@@ -35,7 +39,10 @@ So,
 \begin{align}
 \psi_p(\hat{r})&=\int_0^{\hat{r}}\frac{d\hat{\psi}_p}{d\hat{r}}\,d\hat{r} = \frac{1}{2}\int_0^{\hat{r}^{\,2}}\frac{dx}{q_0 -\alpha\,\ln(1-x)} = \frac{1}{2}\int_{1-\hat{r}^{\,2}}^1\frac{dy}{q_0-\alpha\,\ln y}\nonumber\\[0.5ex]
 &=
-\frac{{\rm e}^{\,q_0/\alpha}}{2\,\alpha}\int^{q_0/\alpha-\ln(1-\hat{r}^{\,2})}_{q_0/\alpha}\frac{{\rm e}^{-z}\,dz}{z},
+\frac{{\rm e}^{\,q_0/\alpha}}{2\,\alpha}\int^{q_0/\alpha-\ln(1-\hat{r}^{\,2})}_{q_0/\alpha}\frac{{\rm e}^{-z}\,dz}{z}
+= \frac{{\rm e}^{\,q_0/\alpha}}{2\,\alpha}\left[\int_{q_0/\alpha}^\infty \frac{{\rm e}^{-z}\,dz}{z}-\int_{q_0/\alpha-\ln(1-\hat{r}^{\,2})}^\infty \frac{{\rm e}^{-z}\,dz}{z}\right]\nonumber\\[0.5ex]
+&= \frac{{\rm e}^{\,q_0/\alpha}}{2\,\alpha}\left[\int_{1}^\infty \frac{{\rm e}^{-(q_0/\alpha)\,t}\,dt}{t}-
+\int_1^\infty \frac{{\rm e}^{-[q_0/\alpha-\ln(1-\hat{r}^{\,2})]\,t}\,dt}{t}\right],
 \end{align}
 giving
 \begin{equation}
@@ -59,30 +66,138 @@ giving
 \end{equation}
 Assuming that $q_0$ and $q_{95}$ are specified, the  previous equation can be solved to give $\alpha$, which then determines $\hat{r}_{95}$. 
 
+\section{Rational Surfaces}
+Suppose that $n$ is the toroidal mode number. The $m$, $n$ rational surface lies at $\hat{r}=\hat{r}_m$, where $q(\hat{r}_m)=q_m$ and $q_m=m/n$. 
+Thus,
+\begin{equation}
+\hat{r}_m= \left[1-\exp\left(\frac{q_0 - q_m}{\alpha}\right)\right]^{1/2}.
+\end{equation}
+Hence, if $\hat{\psi}_m = \hat{\psi}_p(\hat{r}_m)$ then
+\begin{equation}
+\hat{\psi}_m =1 - \frac{E_1(q_m/\alpha)}{E_1(q_0/\alpha)}.
+\end{equation}
+The spacing (in $\hat{r}$) between successive rational surfaces is
+\begin{equation}
+\delta_m = \frac{d\hat{r}_m}{dm} = \frac{1-\hat{r}_m^{\,2}}{2\,\hat{r}_m\,n\,\alpha}.
+\end{equation}
+In the continuum limit, assuming that $\hat{r}_m\simeq 1$, we get
+\begin{equation}
+\hat{\delta}_{\rm rational}(\hat{r})  \simeq \frac{1-\hat{r}}{n\,\alpha}=\frac{x}{n\,\alpha},
+\end{equation}
+where $x=1-\hat{r}$. 
+
 \section{Magnetic Shear}
 The magnetic shear is
 \begin{equation}
-s(\hat{r}) = \frac{\hat{r}}{q}\,\frac{dq}{d\hat{r}} = \frac{2\,\alpha\,\hat{r}^{\,2}}{(1-\hat{r}^{\,2})\,q}.
+s(\hat{r}) = \frac{\hat{r}}{q}\,\frac{dq}{d\hat{r}} = \frac{2\,\alpha\,\hat{r}^{\,2}}{(1-\hat{r}^{\,2})\,q} \simeq \frac{1}{f(x)},
+\end{equation}
+where
+\begin{equation}
+f(x) = - x\,\ln(2\,x).
 \end{equation}
 
 \section{Profiles}
 Let
 \begin{align}
-n_e(\hat{\psi}_p) &= n_{e\,0}\,(1-\hat{\psi}_p)^{\alpha_n}+ n_{e\,a},\\[0.5ex]
-T_e(\hat{\psi}_p) &= T_{e\,0}\,(1-\hat{\psi}_p)^{\alpha_e}+ T_{e\,a},\\[0.5ex]
-T_i(\hat{\psi}_p) &= T_{i\,0}\,(1-\hat{\psi}_p)^{\alpha_i}+ T_{i\,a}.
+n_e(\hat{\psi}_p) &= 20\,n_{e\,95}\,(1-\hat{\psi}_p) + n_{e\,100},\\[0.5ex]
+T_e(\hat{\psi}_p) &=20\,T_{e\,95}\,(1-\hat{\psi}_p) + T_{e\,100},\\[0.5ex]
+T_i(\hat{\psi}_p) &= 20\,T_{i\,95}\,(1-\hat{\psi}_p) + T_{i\,100}.
 \end{align}
 Thus,
 \begin{align}
 \omega_{\ast\,e}(\hat{\psi}_p)& = \frac{T_e}{e}\left(\frac{d\ln n_e}{d{\mit\Psi}_p}+ \frac{d\ln T_e}{d{\mit\Psi}_p}\right)=
-\frac{T_e}{e\,B_0\,a^2\,\psi_p(1)}\left(\frac{d\ln n_e}{d\hat{\psi}_p}+ \frac{d\ln T_e}{d\hat{\psi}_p}\right),\\[0.5ex]
+\frac{T_e}{e\,B_0\,a^2\,\psi_p(1)}\left(\frac{d\ln n_e}{d\hat{\psi}_p}+ \frac{d\ln T_e}{d\hat{\psi}_p}\right)\nonumber\\[0.5ex]
+&\simeq - \frac{20\,T_{e\,100}}{e\,B_0\,a^2\,\psi_p(1)}\left(\frac{n_{e\,95}}{n_{e\,100} }+ \frac{T_{e\,95}}{T_{e\,100}}\right),\\[0.5ex]
 \omega_{\ast\,i}(\hat{\psi}_p) &= -\frac{T_i}{e}\left(\frac{d\ln n_e}{d{\mit\Psi}_p}+ \frac{d\ln T_i}{d{\mit\Psi}_p}\right)=
--\frac{T_i}{e\,B_0\,a^2\,\psi_p(1)}\left(\frac{d\ln n_e}{d\hat{\psi}_p}+ \frac{d\ln T_i}{d\hat{\psi}_p}\right). 
+-\frac{T_i}{e\,B_0\,a^2\,\psi_p(1)}\left(\frac{d\ln n_e}{d\hat{\psi}_p}+ \frac{d\ln T_i}{d\hat{\psi}_p}\right)\nonumber\\[0.5ex]
+&\simeq - \frac{20\,T_{i\,100}}{e\,B_0\,a^2\,\psi_p(1)}\left(\frac{n_{e\,95}}{n_{e\,100} }+ \frac{T_{i\,95}}{T_{i\,100}}\right).
 \end{align}
-Furthermore,
+
+\section{Layer Quantities}
+Now, 
 \begin{align}
-\tau_{ee}(\hat{\psi}_p) &= \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_e^{\,3/2}}{\ln{\mit\Lambda}\,e^4\,n_e},\\[0.5ex]
-\sigma_\parallel(\hat{\psi}_p) &= 1.96\,\frac{n_e\,e^2\,\tau_{ee}}{m_e}.
+\tau_{ee}(\hat{\psi}_p) &= \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_e^{\,3/2}}{\ln{\mit\Lambda}\,e^4\,n_e}\simeq  \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_{e\,100}^{\,3/2}}{\ln{\mit\Lambda}\,e^4\,n_{e\,100}} ,\\[0.5ex]
+\sigma_\parallel &= 1.96\,\frac{n_e\,e^2\,\tau_{ee}}{m_e},\\[0.5ex]
+\tau_R &= \mu_0\,a^2\,\sigma_\parallel\,\hat{r}^{\,2}\simeq \mu_0\,a^2\,\sigma_\parallel,\\[0.5ex]
+\tau_H &= \frac{R_0}{B_0}\,\frac{\sqrt{\mu_0\,m_i\,n_e}}{n\,s}\simeq \tau_A\,f(x),\\[0.5ex]
+\tau_A &= \frac{R_0}{B_0}\,\frac{\sqrt{\mu_0\,m_i\,n_{e\,100}}}{n},\\[0.5ex]
+\tau_\perp &= \frac{a^2\,\hat{r}^{\,2}}{D_\perp} \simeq \frac{a^2}{D_\perp},\\[0.5ex]
+\tau_\varphi &= \frac{a^2\,\hat{r}^{\,2}}{\chi_\varphi}\simeq \frac{a^2}{\chi_\varphi},\\[0.5ex]
+\tau &= -\frac{\omega_{\ast\,e}}{\omega_{\ast\,i}},\\[0.5ex]
+d_\beta &= \frac{\sqrt{(5/3)\,m_i\,(T_e+T_i)}}{e\,B_0}\simeq  \frac{\sqrt{(5/3)\,m_i\,(T_{e\,100}+T_{i\,100})}}{e\,B_0},\\[0.5ex]
+S &= \frac{\tau_R}{\tau_H} =\frac{ {\cal S}}{f(x)},\\[0.5ex]
+{\cal S} &= \frac{\tau_R}{\tau_A},\\[0.5ex]
+P_\varphi &=\frac{\tau_R}{\tau_\varphi},\\[0.5ex]
+P_\perp &= \frac{\tau_R}{\tau_\perp},\\[0.5ex]
+D &= S^{1/3}\left(\frac{\tau}{1+\tau}\right)^{1/2}\,\frac{d_\beta}{a\,\hat{r}}\simeq {\cal D}\,[f(x)]^{-1/3},\\[0.5ex]
+{\cal D} &= {\cal S}^{1/3}\left(\frac{\tau}{1+\tau}\right)^{1/2}\,\frac{d_\beta}{a},\\[0.5ex]
+Q_E &= -S^{1/3}\,n\,\omega_E\,\tau_H\simeq {\cal Q}_E\,[f(x)]^{2/3},\\[0.5ex]
+{\cal Q}_E&= -{\cal S}^{1/3}\,n\,\omega_E\,\tau_A,\\[0.5ex]
+{\cal Q}_{e,i} &= -S^{1/3}\,n\,\omega_{\ast\,e,i}\,\tau_H\simeq {\cal Q}_{\ast\,e,i}\,[f(x)]^{2/3},\\[0.5ex]
+{\cal Q}_{e\,i}&= -{\cal S}^{1/3}\,n\,\omega_{\ast\,e\,i}\,\tau_A,\\[0.5ex]
+Q &= S^{1/3}\,\omega\,\tau_H= {\cal Q}\,[f(x)]^{2/3},\\[0.5ex]
+{\cal Q}&= {\cal S}^{1/3}\,\omega\,\tau_A.
 \end{align}
+
+\section{Layer Equation}
+The layer equation is written
+\begin{equation}
+\frac{d}{dp}\!\left[A(p)\,\frac{dY_e}{dp}\right] - \frac{B(p)}{C(p)}\,p^2\,Y_e=0,
+\end{equation}
+where
+\begin{align}
+A &= \frac{p^2}{-{\rm i}\,(Q-Q_E-Q_e)+p^2},\\[0.5ex]
+B &= - {\rm i}\,(Q-Q_E)\,(Q-Q_E-Q_i)-{\rm i}\,(Q-Q_E-Q_i)\,(P_\varphi+P_\perp)\,p^2 + P_\varphi\,P_\perp\,p^4,\\[0.5ex]
+C &= - {\rm i}\,(Q-Q_E-Q_e)+ [P_\perp-{\rm i}\,(Q-Q_E-Q_i)\,D^{\,2}]\,p^2
++ (1+1/\tau)\,P_\varphi\,D^{\,2}\,p^4.
+\end{align}
+Let
+\begin{equation}
+p = f^{-1/9}\,\hat{p}.
+\end{equation}
+It follows that 
+\begin{equation}\label{elayer}
+\frac{d}{d\hat{p}}\!\left[{\cal A}\,\frac{dY_e}{d\hat{p}}\right] - \frac{{\cal B}}{\cal{C}}\,\hat{p}^{\,2}\,Y_e=0,
+\end{equation}
+where
+\begin{align}
+{\cal A} &= \frac{\hat{p}^{\,2}}{-{\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_e)\,f^{\,8/9}+\hat{p}^{\,2}},\\[0.5ex]
+{\cal B} &= - {\rm i}\,({\cal Q}-{\cal Q}_E)\,({\cal Q}-{\cal Q}_E-{\cal Q}_i)\,f^{\,16/9}-{\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_i)\,(P_\varphi+P_\perp)\,\hat{p}^{\,2}\,f^{\,8/9} + P_\varphi\,P_\perp\,\hat{p}^{\,4},\\[0.5ex]
+{\cal C} &= - {\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_e)\,f^{\,12/9}+ [P_\perp-{\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_i)\,{\cal D}^{\,2}]\,\hat{p}^{\,2}\,f^{\,8/9}
++ (1+1/\tau)\,P_\varphi\,{\cal D}^{\,2}\,\hat{p}^{\,4}.
+\end{align}
+Thus, Eq.~(\ref{elayer}) reduces to 
+\begin{equation}
+\frac{d^2\,Y_e}{d\hat{p}^{\,2}}- \frac{P_\perp}{(1+1/\tau)\,{\cal D}^{\,2}}\,\hat{p}^{\,2}\,Y_e\simeq =0.
+\end{equation}
+The characteristic layer width in $\hat{p}$ space is
+\begin{equation}
+\hat{p}_\ast = \left[\frac{{\cal D}^{\,2}\,(1+1/\tau)}{P_\perp}\right]^{1/4}.
+\end{equation}
+Thus, the characteristic layer width in $\hat{r}$ space is
+\begin{equation}
+\hat{\delta}_{\rm layer} = \frac{S^{-1/3}}{f^{-1/9}\,\hat{p}_\ast}= {\cal S}^{-1/3}\left[\frac{P_\perp}{{\cal D}^{\,2}\,(1+1/\tau)}\right]^{1/4}\,f^{-2/9}
+= {\mit\Delta}_{\rm layer}\,f^{-2/9},
+\end{equation}
+where
+\begin{align}
+{\mit\Delta}_{\rm layer}&= \left(\frac{\tau_A^{\,1/6}\,\tau_\perp^{\,1/4}}{\tau_R^{\,5/6}}\right)\hat{d}_\beta^{\,1/2},\\[0.5ex]
+\hat{d}_\beta &=  \frac{\sqrt{(5/3)\,m_i\,(T_{e\,100}+T_{i\,100})}}{e\,B_0\,a}.
+\end{align}
+
+\section{Overlap Criterion}
+The resistive layer width exceeds the spacing between rational surfaces when
+\begin{equation}
+\hat{\delta}_{\rm layer} > \hat{\delta}_{\rm rational},
+\end{equation}
+or
+\begin{equation}
+x>x_c
+\end{equation}
+where
+\begin{equation}
+x_c^{\,11/4}\,[-\ln(2\,x_c)]^{2/9} = n\,\alpha\,{\mit\Delta}_{\rm layer}.
+\end{equation}
+
 
 \end{document}

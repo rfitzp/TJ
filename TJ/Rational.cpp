@@ -141,6 +141,7 @@ void TJ::GetLayerData ()
   Qeres  = new double[nres];
   Qires  = new double[nres];
   Dres   = new double[nres];
+  Wdres  = new double[nres];
   Pmres  = new double[nres];
   Peres  = new double[nres];
   Dcres  = new double[nres];
@@ -201,6 +202,7 @@ void TJ::GetLayerData ()
       Pmres [k] = tRk /tPk;
       Peres [k] = tRk /tPk;
       Dcres [k] = - sqrt(2.) * pow(M_PI, 1.5) * DRres[k] /Wd;
+      Wdres [k] = rres[k] * Wd;
     }
 
   // .......................
@@ -208,6 +210,6 @@ void TJ::GetLayerData ()
   // .......................
   printf ("Resonant layer data:\n");
   for (int k = 0; k < nres; k++)
-    printf ("m = %3d r = %9.2e Te = %9.2e S13 = %9.2e tau = %9.2e Qe = %9.2e D = %9.2e P = %9.2e Delta_c = %9.2e\n",
-	    mres[k], rres[k], Teres[k], S13res[k], taures[k], Qeres[k], Dres[k], Pmres[k], Dcres[k]);
+    printf ("m = %3d r = %9.2e Te = %9.2e S13 = %9.2e tau = %9.2e Qe = %9.2e D = %9.2e P = %9.2e Delta_c = %9.2e Wd = %9.2e\n",
+	    mres[k], rres[k], Teres[k], S13res[k], taures[k], Qeres[k], Dres[k], Pmres[k], Dcres[k], Wdres[k]);
 }

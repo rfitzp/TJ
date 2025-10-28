@@ -657,6 +657,7 @@ class TJ : private Utility
   double* Pmres;  // Magnetic Prandtl number for perpendicular momentum diffusion
   double* Peres;  // Magnetic Prandtl number for perpendicular energy diffusion
   double* Dcres;  // Critical Delta' for instability
+  double* Wdres;  // Critical island width for temperature flattening
 
   // ----
   // Misc

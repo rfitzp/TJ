@@ -1,0 +1,55 @@
+\documentclass{article}[12pt]
+\usepackage{fullpage}
+\usepackage{amsmath}
+\newcommand {\bxi}{\mbox{\boldmath$\xi$}}
+
+\begin{document}
+\begin{center}
+{\em Investigation of Neoclassical Tearing Mode Detection by ECE Radiometry in  an ITER-like Tokamak via Asymptotic Matching Techniques}\\[1ex]
+by R.~Fitzpatrick\\[1ex]
+{\bf Reply to Referees' Comments}\\[1ex]
+~
+\end{center}
+Let me thank the referees for their helpful and insightful comments on my paper. Here are my responses to these comments. 
+
+\begin{enumerate}
+
+\item The main change that I have made to the paper is to move most of the technical parts  into Appendices. I hope
+that this will make the paper more easily readable. 
+
+\item I have changed Eq.~(19) in the paper to remove the offset in the temperature, $T_{e\,{\rm ped}}$, because this was actually zero in the calculation. This means that
+the pressure now has the regular definition as the product of the temperature and density. 
+
+\item The fact that the plasma pressure is limited to a rather low value by classical tearing mode stability is symptomatic of the fact
+that the inverse aspect-ratio of the equilibrium is limited to $\epsilon=0.2$. If TJ were able to deal with the realistic inverse aspect-ratio of $\epsilon= 0.32$ then the pressure
+could be increased (because the true limit is set by $\beta_N\propto \beta_t/\epsilon$). It is also possible that the pressure could be increased by
+optimizing the safety-factor and pressure profiles. It have added comments to this effect in Sect.~3.2.
+
+\item In Eq.~(42), it is true that $8\,X^2$ is the first term in a Taylor expansion. The next term in the expansion is of order $(q''\,W/q')\,X^3$. Obviously,
+this next term can be neglected for a sufficiently thin island. However, the real reason for neglecting the term is that I do not know how to
+solve the island force balance equation (40) if the term is retained. I have added a comment to this effect in Sect.~C.3. 
+
+\item In my statement (in Sect.~D.4) that ECCD can successfully stabilize an NTM provided that the offset of the peak of the current drive profile
+from the rational surface, $d$, is less than twice the standard deviation of the deposition profile, $D$, there is an implicit assumption that the
+island width is less than the deposition width. This is a reasonable assumption because, to be successful, an ECCD mitigation system need to 
+detect and suppress an NTM before the island width grows to a large value. (Incidentally, $D$ and $d$ are normalized to the plasma
+minor radius rather than the island width.) I have added  comments to this effect  whenever this result is mentioned. 
+
+\item In Sect.~D.4, I have added a discussion of why I think that NTMs are probably going to be rotating in ITER. 
+
+\item In Sect.~8.5, I have added a comment to the effect that the 1\% of the plasma minor radius island width detection threshold excludes the effect of experimental noise, and
+should be treated as an absolute, rather than a practical, detection threshold. 
+
+\item I have added the critical island width for temperature flattening to Table~1. It can be seen that the critical island width is less
+than 1\% of the plasma minor radius, which means that incomplete flattening is not going to modify my calculation. 
+
+\item I have added more explanation of the model equilibrium to Sect.~A.3. 
+
+\item I have added a brief discussion of Thomson scattering to Sect.~9. As far as I can ascertain, Thomson scattering is only used to detect
+NTMs when ECE is not practical: e.g., in high-density ITER baseline scenario discharges in DIII-D, or in spherical tokamaks. I could not find an
+example of the use of Thomson scattering as part of an NTM mitigation scheme in an experiment. The main drawback of Thomson
+scattering is that its temporal resolution is not as good as ECE. 
+
+\end{enumerate}
+
+\end{document}
