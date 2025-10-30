@@ -15,13 +15,78 @@
 \author{Richard Fitzpatrick}
 \maketitle
 
+\section{Simple Model}
+Suppose that we have two current filaments running parallel to the $z$-axis. Let the upper filament carry the
+current $I_0$ and pierce the $x$-$y$ plane at $x=y=0$. Let the lower  filament carry the current $I_1$ and
+pierce the $x$-$y$ plane at $x=0$, $y=-a$.  Suppose that there is a uniform $z$-directed magnetic
+field of strength $B_0$. Let the system be periodic in the $z$ direction with period $2\pi\,R_0$. 
+Let $\phi= z/R_0$. 
+We can write
+\begin{equation}
+{\bf B} = \nabla\phi\times \nabla\psi + B_0\,R_0\,\nabla\phi,
+\end{equation}
+where 
+\begin{equation}
+\psi(x,y)=  \frac{\mu_0\,I_0\,R_0}{4\pi}\,\ln(x^2+y^2) + \frac{\mu_0\,I_1\,R_0}{4\pi} \,\ln[x^2+(y+a)^2].
+\end{equation}
+
+Let us write
+\begin{equation}
+{\bf B} = \nabla(\phi-q\,\theta)\times \nabla \psi,
+\end{equation}
+where $q=q(\psi)$. It follows that
+\begin{equation}
+\nabla\psi\times\nabla\theta\cdot\nabla\phi = \frac{B_0}{R_0\,q}.
+\end{equation}
+Note that ${\bf B}\cdot\nabla\phi=0$, so $\psi$ is a magnetic flux-surface label. Also,
+${\bf B}\cdot\nabla(\phi-q\,\theta)=0$. So, magnetic field-lines within a given flux-surface appear as straight lines when 
+plotted in $\theta$-$\phi$ space. 
+Thus,
+\begin{equation}
+\frac{d\theta}{dl} = \frac{B_0}{q\,|\nabla\psi|},
+\end{equation}
+where $dl$ is an element of length around a flux-surface. Thus,
+\begin{align}
+dx &= -\frac{\psi_y\,dl}{\sqrt{\psi_x^{\,2}+\psi_y^{\,2}}},\\[0.5ex]
+dy&= \frac{\psi_x\,dl}{\sqrt{\psi_x^{\,2}+\psi_y^{\,2}}},
+\end{align}
+so that $d{\bf r}\cdot\nabla\psi=0$. It follows that
+\begin{equation}
+q(\psi)= \frac{B_0}{2\pi}\oint\frac{dl}{\sqrt{\psi_x^{\,2}+\psi_y^{\,2}}}
+\end{equation}
+
+Let $\psi = \mu_0\,I_0\,R_0\,{\mit\Psi}/(2\pi)$, $x=a\,X$, $y=a\,X$, $l=a\,L$, and $r=a\,\hat{r}$. It follows that
+\begin{align}
+dX &= -\frac{{\mit\Psi}_Y\,dL}{\sqrt{\mit{\Psi}_X^{\,2}+{\mit\Psi}_Y^{\,2}}},\\[0.5ex]
+dY&= \frac{{\mit\Psi}_X\,dL}{\sqrt{{\mit\Psi}_X^{\,2}+{\mit\Psi}_Y^{\,2}}},\\[0.5ex]
+q(\psi)&= \frac{1}{2\pi}\oint\frac{dL}{\sqrt{{\mit\Psi}_X^{\,2}+{\mit\Psi}_Y^{\,2}}}.
+\end{align}
+Here, we have assumed that
+\begin{equation}
+ \frac{B_0\,a^2}{\mu_0\,I_0\,R_0}= \frac{1}{2\pi},
+\end{equation}
+which ensures that 
+\begin{equation}
+q({\mit\Psi}) = \exp(2\,{\mit\Psi})
+\end{equation}
+as $X^2+Y^2\rightarrow 0$. 
+Moreover, 
+\begin{align}
+{\mit\Psi} &= \frac{1}{2}\,\ln(X^2+Y^2) + \frac{\beta}{2}\,\ln[X^2+(Y+1)^2],\\[0.5ex]
+{\mit\Psi}_X &= \frac{X}{X^2+Y^2} + \frac{\beta\,X}{X^2+(Y+1)^2},\\[0.5ex]
+{\mit\Psi}_Y &= \frac{Y}{X^2+Y^2} +\frac{\beta\,(Y+1)}{X^2+(Y+1)^2},
+\end{align}
+where $\beta=I_1/I_0$. 
+
+
 \section{Safety-Factor}
 Let $\hat{r}=r/a$. Suppose that the last closed magnetic flux surface is at $\hat{r}=1$. Suppose that the safety-factor profile takes the
 form
 \begin{equation}
 q(\hat{r}) = q_0 + (q_{95}-q_0)\,\frac{\ln(1-\hat{r}^{\,2})}{\ln(1-\hat{r}_{95}^{\,2})}.
 \end{equation}
-
+[Logarithmic increase in $q$ at separatrix:  N.~Pomphrey and
+ A.~Reiman, Phys.\ Fluids B {\bf 4}, 938 (1992).]
 \section{Poloidal Magnetic Flux}
 Now,
 \begin{equation}
@@ -78,7 +143,7 @@ Hence, if $\hat{\psi}_m = \hat{\psi}_p(\hat{r}_m)$ then
 \end{equation}
 The spacing (in $\hat{r}$) between successive rational surfaces is
 \begin{equation}
-\delta_m = \frac{d\hat{r}_m}{dm} = \frac{1-\hat{r}_m^{\,2}}{2\,\hat{r}_m\,n\,\alpha}.
+\hat{\delta}_{\rm rational} = \frac{d\hat{r}_m}{dm} = \frac{1-\hat{r}_m^{\,2}}{2\,\hat{r}_m\,n\,\alpha}.
 \end{equation}
 In the continuum limit, assuming that $\hat{r}_m\simeq 1$, we get
 \begin{equation}
@@ -119,23 +184,23 @@ Now,
 \tau_{ee}(\hat{\psi}_p) &= \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_e^{\,3/2}}{\ln{\mit\Lambda}\,e^4\,n_e}\simeq  \frac{6\sqrt{2}\,\pi^{3/2}\,\epsilon_0^{\,2}\,m_e^{1/2}\,T_{e\,100}^{\,3/2}}{\ln{\mit\Lambda}\,e^4\,n_{e\,100}} ,\\[0.5ex]
 \sigma_\parallel &= 1.96\,\frac{n_e\,e^2\,\tau_{ee}}{m_e},\\[0.5ex]
 \tau_R &= \mu_0\,a^2\,\sigma_\parallel\,\hat{r}^{\,2}\simeq \mu_0\,a^2\,\sigma_\parallel,\\[0.5ex]
-\tau_H &= \frac{R_0}{B_0}\,\frac{\sqrt{\mu_0\,m_i\,n_e}}{n\,s}\simeq \tau_A\,f(x),\\[0.5ex]
+\tau_H &= \frac{R_0}{B_0}\,\frac{\sqrt{\mu_0\,m_i\,n_e}}{n\,s}\simeq \tau_A\,f,\\[0.5ex]
 \tau_A &= \frac{R_0}{B_0}\,\frac{\sqrt{\mu_0\,m_i\,n_{e\,100}}}{n},\\[0.5ex]
 \tau_\perp &= \frac{a^2\,\hat{r}^{\,2}}{D_\perp} \simeq \frac{a^2}{D_\perp},\\[0.5ex]
 \tau_\varphi &= \frac{a^2\,\hat{r}^{\,2}}{\chi_\varphi}\simeq \frac{a^2}{\chi_\varphi},\\[0.5ex]
 \tau &= -\frac{\omega_{\ast\,e}}{\omega_{\ast\,i}},\\[0.5ex]
 d_\beta &= \frac{\sqrt{(5/3)\,m_i\,(T_e+T_i)}}{e\,B_0}\simeq  \frac{\sqrt{(5/3)\,m_i\,(T_{e\,100}+T_{i\,100})}}{e\,B_0},\\[0.5ex]
-S &= \frac{\tau_R}{\tau_H} =\frac{ {\cal S}}{f(x)},\\[0.5ex]
+S &= \frac{\tau_R}{\tau_H} = {\cal S}\,f^{-1}\\[0.5ex]
 {\cal S} &= \frac{\tau_R}{\tau_A},\\[0.5ex]
 P_\varphi &=\frac{\tau_R}{\tau_\varphi},\\[0.5ex]
 P_\perp &= \frac{\tau_R}{\tau_\perp},\\[0.5ex]
-D &= S^{1/3}\left(\frac{\tau}{1+\tau}\right)^{1/2}\,\frac{d_\beta}{a\,\hat{r}}\simeq {\cal D}\,[f(x)]^{-1/3},\\[0.5ex]
-{\cal D} &= {\cal S}^{1/3}\left(\frac{\tau}{1+\tau}\right)^{1/2}\,\frac{d_\beta}{a},\\[0.5ex]
-Q_E &= -S^{1/3}\,n\,\omega_E\,\tau_H\simeq {\cal Q}_E\,[f(x)]^{2/3},\\[0.5ex]
-{\cal Q}_E&= -{\cal S}^{1/3}\,n\,\omega_E\,\tau_A,\\[0.5ex]
-{\cal Q}_{e,i} &= -S^{1/3}\,n\,\omega_{\ast\,e,i}\,\tau_H\simeq {\cal Q}_{\ast\,e,i}\,[f(x)]^{2/3},\\[0.5ex]
-{\cal Q}_{e\,i}&= -{\cal S}^{1/3}\,n\,\omega_{\ast\,e\,i}\,\tau_A,\\[0.5ex]
-Q &= S^{1/3}\,\omega\,\tau_H= {\cal Q}\,[f(x)]^{2/3},\\[0.5ex]
+D &= S^{\,1/3}\left(\frac{\tau}{1+\tau}\right)^{1/2}\,\frac{d_\beta}{a\,\hat{r}}\simeq {\cal D}\,f^{-1/3},\\[0.5ex]
+{\cal D} &= {\cal S}^{\,1/3}\left(\frac{\tau}{1+\tau}\right)^{1/2}\,\frac{d_\beta}{a},\\[0.5ex]
+Q_E &= -S^{\,1/3}\,n\,\omega_E\,\tau_H\simeq {\cal Q}_E\,f^{\,2/3},\\[0.5ex]
+{\cal Q}_E&= -{\cal S}^{\,1/3}\,n\,\omega_E\,\tau_A,\\[0.5ex]
+{\cal Q}_{e,i} &= -S^{\,1/3}\,n\,\omega_{\ast\,e,i}\,\tau_H\simeq {\cal Q}_{\ast\,e,i}\,f^{\,2/3},\\[0.5ex]
+{\cal Q}_{e\,i}&= -{\cal S}^{\,1/3}\,n\,\omega_{\ast\,e\,i}\,\tau_A,\\[0.5ex]
+Q &= S^{1/3}\,\omega\,\tau_H= {\cal Q}\,f^{\,2/3},\\[0.5ex]
 {\cal Q}&= {\cal S}^{1/3}\,\omega\,\tau_A.
 \end{align}
 
@@ -153,7 +218,7 @@ C &= - {\rm i}\,(Q-Q_E-Q_e)+ [P_\perp-{\rm i}\,(Q-Q_E-Q_i)\,D^{\,2}]\,p^2
 \end{align}
 Let
 \begin{equation}
-p = f^{-1/9}\,\hat{p}.
+p = f^{-1/6}\,\hat{p}.
 \end{equation}
 It follows that 
 \begin{equation}\label{elayer}
@@ -161,9 +226,9 @@ It follows that
 \end{equation}
 where
 \begin{align}
-{\cal A} &= \frac{\hat{p}^{\,2}}{-{\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_e)\,f^{\,8/9}+\hat{p}^{\,2}},\\[0.5ex]
-{\cal B} &= - {\rm i}\,({\cal Q}-{\cal Q}_E)\,({\cal Q}-{\cal Q}_E-{\cal Q}_i)\,f^{\,16/9}-{\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_i)\,(P_\varphi+P_\perp)\,\hat{p}^{\,2}\,f^{\,8/9} + P_\varphi\,P_\perp\,\hat{p}^{\,4},\\[0.5ex]
-{\cal C} &= - {\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_e)\,f^{\,12/9}+ [P_\perp-{\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_i)\,{\cal D}^{\,2}]\,\hat{p}^{\,2}\,f^{\,8/9}
+{\cal A} &= \frac{\hat{p}^{\,2}}{-{\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_e)\,f+\hat{p}^{\,2}},\\[0.5ex]
+{\cal B} &= - {\rm i}\,({\cal Q}-{\cal Q}_E)\,({\cal Q}-{\cal Q}_E-{\cal Q}_i)\,f^{\,2}-{\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_i)\,(P_\varphi+P_\perp)\,\hat{p}^{\,2}\,f + P_\varphi\,P_\perp\,\hat{p}^{\,4},\\[0.5ex]
+{\cal C} &= - {\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_e)\,f^{\,2}+ [P_\perp-{\rm i}\,({\cal Q}-{\cal Q}_E-{\cal Q}_i)\,{\cal D}^{\,2}]\,\hat{p}^{\,2}\,f
 + (1+1/\tau)\,P_\varphi\,{\cal D}^{\,2}\,\hat{p}^{\,4}.
 \end{align}
 Thus, Eq.~(\ref{elayer}) reduces to 
@@ -176,12 +241,13 @@ The characteristic layer width in $\hat{p}$ space is
 \end{equation}
 Thus, the characteristic layer width in $\hat{r}$ space is
 \begin{equation}
-\hat{\delta}_{\rm layer} = \frac{S^{-1/3}}{f^{-1/9}\,\hat{p}_\ast}= {\cal S}^{-1/3}\left[\frac{P_\perp}{{\cal D}^{\,2}\,(1+1/\tau)}\right]^{1/4}\,f^{-2/9}
-= {\mit\Delta}_{\rm layer}\,f^{-2/9},
+\hat{\delta}_{\rm layer} = \frac{S^{-1/3}}{f^{-1/6}\,\hat{p}_\ast}= {\cal S}^{-1/3}\left[\frac{P_\perp}{{\cal D}^{\,2}\,(1+1/\tau)}\right]^{1/4}\,f^{\,1/2}
+= n^{-1/2}\,{\mit\Delta}_{\rm layer}\,f^{\,1/2},
 \end{equation}
 where
 \begin{align}
-{\mit\Delta}_{\rm layer}&= \left(\frac{\tau_A^{\,1/6}\,\tau_\perp^{\,1/4}}{\tau_R^{\,5/6}}\right)\hat{d}_\beta^{\,1/2},\\[0.5ex]
+{\mit\Delta}_{\rm layer}&=\frac{\tau_A^{\,1/2}}{\tau_R^{\,1/4}\,\tau_\perp^{\,1/4}\,\hat{d}_\beta ^{\,1/2}}\\[0.5ex]
+\hat{\tau}_{A} &= \frac{R_0}{B_0}\,\sqrt{\mu_0\,m_i\,n_{e\,100}},\\[0.5ex]
 \hat{d}_\beta &=  \frac{\sqrt{(5/3)\,m_i\,(T_{e\,100}+T_{i\,100})}}{e\,B_0\,a}.
 \end{align}
 
@@ -192,11 +258,11 @@ The resistive layer width exceeds the spacing between rational surfaces when
 \end{equation}
 or
 \begin{equation}
-x>x_c
+x<x_c
 \end{equation}
 where
 \begin{equation}
-x_c^{\,11/4}\,[-\ln(2\,x_c)]^{2/9} = n\,\alpha\,{\mit\Delta}_{\rm layer}.
+\frac{x_c}{-\ln(2\,x_c)}= n\,(\alpha\,{\mit\Delta}_{\rm layer})^2.
 \end{equation}
 
 
