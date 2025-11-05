@@ -1,9 +1,10 @@
-# Script to plot magnetic flux-surface in simple two-filament model with divertor
+# Script to plot outer flux coordinates in simple two-filament model
 
 import numpy as np
 import math
 from scipy.integrate import solve_ivp
 from scipy.optimize import root_scalar
+from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
 
 beta = 0.2
@@ -98,40 +99,6 @@ def F (Y):
 Y_c = root_scalar(F, bracket=[0.01, 1.]).root
 X_c = 0.
 
-def GetPointsInner (y):
-
-    X     = 0.0
-    Y     = y*Y_c 
-    phi   = 0.0
-    omega = 0.0
-
-    y0 = [X, Y, phi, omega]
-    
-    sol = solve_ivp(
-        Rhs,
-        [0., 100.],
-        y0,
-        method       = 'RK45',
-        events       = Stop_Condition,
-        dense_output = True,
-        rtol         = 1e-8,
-        atol         = 1e-10
-    )
-    
-    tmax     = sol.t_events[0][0]
-    t_points = np.linspace (0., tmax, 1000)
-    
-    X_points     = sol.sol (t_points)[0]
-    Y_points     = sol.sol (t_points)[1]
-    phi_points   = sol.sol (t_points)[2] /math.pi
-    omega_points = sol.sol (t_points)[3] /math.pi
-    
-    q = phi_points[-1] /2.
-
-    theta_points = phi_points /q
-
-    return q, X_points, Y_points, phi_points, omega_points, theta_points
-
 def GetPointsOuter (y):
 
     X     = 0.0
@@ -157,8 +124,8 @@ def GetPointsOuter (y):
     
     X_points1     = sol1.sol (t_points1)[0]
     Y_points1     = sol1.sol (t_points1)[1]
-    phi_points1   = sol1.sol (t_points1)[2] /math.pi
-    omega_points1 = sol1.sol (t_points1)[3] /math.pi
+    phi_points1   = sol1.sol (t_points1)[2] 
+    omega_points1 = sol1.sol (t_points1)[3] 
 
     X_d = X_points1[-1]
 
@@ -174,7 +141,7 @@ def GetPointsOuter (y):
     sol2 = solve_ivp(
         Rhs1,
         [0., 100.],
-        [X_points1[-1], Y_points1[-1], math.pi*phi_points1[-1], math.pi*omega_points1[-1]],
+        [X_points1[-1], Y_points1[-1], phi_points1[-1], omega_points1[-1]],
         method       = 'RK45',
         events       = Stop_Condition2,
         dense_output = True,
@@ -187,13 +154,13 @@ def GetPointsOuter (y):
     
     X_points2     = sol2.sol (t_points2)[0]
     Y_points2     = sol2.sol (t_points2)[1]
-    phi_points2   = sol2.sol (t_points2)[2] /math.pi
-    omega_points2 = sol2.sol (t_points2)[3] /math.pi
+    phi_points2   = sol2.sol (t_points2)[2] 
+    omega_points2 = sol2.sol (t_points2)[3]
     
     sol3 = solve_ivp(
         Rhs,
         [0., 100.],
-        [X_points2[-1], Y_points2[-1], math.pi*phi_points2[-1], math.pi*omega_points2[-1]],
+        [X_points2[-1], Y_points2[-1], phi_points2[-1], omega_points2[-1]],
         method       = 'RK45',
         events       = Stop_Condition,
         dense_output = True,
@@ -206,26 +173,62 @@ def GetPointsOuter (y):
     
     X_points3     = sol3.sol (t_points3)[0]
     Y_points3     = sol3.sol (t_points3)[1]
-    phi_points3   = sol3.sol (t_points3)[2] /math.pi
-    omega_points3 = sol3.sol (t_points3)[3] /math.pi
+    phi_points3   = sol3.sol (t_points3)[2]
+    omega_points3 = sol3.sol (t_points3)[3]
     
-    q = phi_points3[-1] /2.
+    q = phi_points3[-1] /2./math.pi
     
     theta_points1 = phi_points1 /q
     theta_points2 = phi_points2 /q
     theta_points3 = phi_points3 /q
+
+    t_points2 += t_points1[-1]
+    t_points3 += t_points2[-1]
 
     X_points     = np.concatenate ((np.array(X_points1),     np.array(X_points2),     np.array(X_points3)))
     Y_points     = np.concatenate ((np.array(Y_points1),     np.array(Y_points2),     np.array(Y_points3)))
     phi_points   = np.concatenate ((np.array(phi_points1),   np.array(phi_points2),   np.array(phi_points3)))
     omega_points = np.concatenate ((np.array(omega_points1), np.array(omega_points2), np.array(omega_points3)))
     theta_points = np.concatenate ((np.array(theta_points1), np.array(theta_points2), np.array(theta_points3)))
+    t_points     = np.concatenate ((np.array(t_points1),     np.array(t_points2),     np.array(t_points3)))
 
-    return q, X_points, Y_points, phi_points, omega_points, theta_points
+    return q, X_points, Y_points, phi_points, omega_points, theta_points, t_points
 
-q1, X_points1, Y_points1, phi_points1, omega_points1, theta_points1 = GetPointsInner (0.94533)
-q2, X_points2, Y_points2, phi_points2, omega_points2, theta_points2 = GetPointsOuter (1.0)
-q3, X_points3, Y_points3, phi_points3, omega_points3, theta_points3 = GetPointsOuter (1.047)
+npsi   = 1000
+ntheta = 80
+nt     = 1000
+
+yy = np.logspace (1.e-5, 0.1,           npsi, base = 10.0)
+tt = np.linspace (0., 2.*math.pi-1.e-8, ntheta)
+
+Xvals = np.empty((npsi, nt))
+Yvals = np.empty((npsi, nt))
+Xval1 = np.empty((npsi, ntheta))
+Yval1 = np.empty((npsi, ntheta))
+
+n = 0
+for y in yy:
+    
+    q, X_points, Y_points, phi_points, omega_points, theta_points, t_points = GetPointsOuter (y)
+
+    tx = np.linspace (0., t_points[-1], nt)
+    
+    Xint = interp1d (t_points, X_points, kind = 'linear')
+    Yint = interp1d (t_points, Y_points, kind = 'linear')
+    
+    Xvals[n,:] = Xint (tx)
+    Yvals[n,:] = Yint (tx)
+    
+    Xint1 = interp1d (theta_points, X_points, kind = 'linear')
+    Yint1 = interp1d (theta_points, Y_points, kind = 'linear')
+
+    Xnew = Xint1 (tt)
+    Ynew = Yint1 (tt)
+
+    Xval1[n,:] = Xnew
+    Yval1[n,:] = Ynew
+
+    n = n + 1
 
 fig = plt.figure (figsize = (12.0, 8.0))
 plt.rc ('xtick', labelsize = 20) 
@@ -233,20 +236,23 @@ plt.rc ('ytick', labelsize = 20)
 
 plt.subplot (1, 1, 1)
 
-plt.axis    ('equal')  
-plt.plot    (X_points1, Y_points1, color = "red",   linewidth = 2)
-plt.plot    (X_points3, Y_points3, color = "green", linewidth = 2)
-plt.plot    (X_points2, Y_points2, color = "blue",  linewidth = 2)
-plt.axhline (0.,                   color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (0.,                   color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axis ('equal')
+
+for n in range (0, npsi, 50):
+    plt.plot (Xvals[n,:], Yvals[n,:], color = "red", linewidth = 1.)
+plt.plot (Xvals[-1,:], Yvals[-1,:],   color = "red", linewidth = 1.)
+for n in range (ntheta):
+    plt.plot (Xval1[:,n], Yval1[:,n], color = "blue", linewidth = 1.)
+    
+plt.plot (0., 0.,  'ko')
 
 plt.plot ((-0.3, 0.3), (Y_d, Y_d),  color = 'black', linewidth = 3.)
 
-plt.plot (0., 0.,  'ko')
 
 plt.xlabel (r'$X$', fontsize = "20")
 plt.ylabel (r'$Y$', fontsize = "20")
 
 plt.tight_layout ()
 #plt.show ()
-plt.savefig ("Figure5.pdf")
+plt.savefig ("Figure6.pdf")
+    

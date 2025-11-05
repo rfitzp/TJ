@@ -170,8 +170,8 @@ q = phi_points3[-1] /2.
 theta_points3 = phi_points3 /q 
 
 fig = plt.figure (figsize = (12.0, 8.0))
-plt.rc ('xtick', labelsize = 15) 
-plt.rc ('ytick', labelsize = 15) 
+plt.rc ('xtick', labelsize = 20) 
+plt.rc ('ytick', labelsize = 20) 
 
 plt.subplot (1, 1, 1)
 
@@ -185,8 +185,8 @@ plt.axvline (0.,                   color = 'black', linewidth = 1.5, linestyle =
 plt.plot (0., 0.,  'ko')
 plt.plot (0., -1., 'ko')
 
-plt.xlabel (r'$X$', fontsize = "15")
-plt.ylabel (r'$Y$', fontsize = "15")
+plt.xlabel (r'$X$', fontsize = "20")
+plt.ylabel (r'$Y$', fontsize = "20")
 
 plt.tight_layout ()
 plt.savefig ("Figure1.pdf")

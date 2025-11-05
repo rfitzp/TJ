@@ -130,8 +130,8 @@ for y in yy:
     n = n + 1
 
 fig = plt.figure (figsize = (12.0, 8.0))
-plt.rc ('xtick', labelsize = 15) 
-plt.rc ('ytick', labelsize = 15) 
+plt.rc ('xtick', labelsize = 20) 
+plt.rc ('ytick', labelsize = 20) 
 
 plt.subplot (1, 1, 1)
 
@@ -148,6 +148,9 @@ for n in range (ntheta):
 
 plt.plot (0., 0.,  'ko')
 #plt.plot (0., -1., 'ro')
+
+plt.xlabel (r'$X$', fontsize = "20")
+plt.ylabel (r'$Y$', fontsize = "20")
 
 plt.tight_layout ()
 #plt.show ()

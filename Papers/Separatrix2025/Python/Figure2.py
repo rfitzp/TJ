@@ -47,6 +47,23 @@ def Rhs (t, y):
 
     return [dXdt, dYdt, dphidt, domegadt]
 
+def Rhs1 (t, y):
+
+    X, Y, phi, omega = y
+
+    psiX = PsiX (X, Y)
+    psiY = PsiY (X, Y)
+
+    gradPsi = math.sqrt (psiX * psiX + psiY * psiY)
+    L2      = X*X + Y*Y
+
+    dXdt     = 1.
+    dYdt     = 0.
+    dphidt   = 0.
+    domegadt = - Y /L2
+
+    return [dXdt, dYdt, dphidt, domegadt]
+
 def Stop_Condition (t, y):
     
     X, Y, phi, omega = y
@@ -60,23 +77,34 @@ X_x   = 0.
 Y_x   = - 1. /(1. + beta)
 Psi_x = math.log (beta ** beta /(1. + beta) ** (1. + beta))
 
-def F (X):
+Y_d = (-1. + Y_x) /2.
 
-    f1 = X*X
-    f2 = X*X + 1.
+def Stop_Condition1 (t, y):
+    
+    X, Y, phi, omega = y
+
+    return Y - Y_d
+
+Stop_Condition1.terminal  = True   
+Stop_Condition1.direction = -1  
+
+def F (Y):
+
+    f1 = Y*Y
+    f2 = (Y+1.)*(Y+1.)
 
     return 0.5 * math.log (f1) + 0.5 * beta * math.log (f2) - Psi_x
 
-X_c = root_scalar(F, bracket=[0.01, 1.]).root
-Y_c = 0.
+Y_c = root_scalar(F, bracket=[0.01, 1.]).root
+X_c = 0.
 
-def Get_q (x):
-
-    X     = x*X_c 
-    Y     = 0.0
+def Get_q (y):
+    
+    X     = 0.0
+    Y     = y*Y_c 
     phi   = 0.0
     omega = 0.0
-
+ 
     y0 = [X, Y, phi, omega]
     
     sol = solve_ivp(
@@ -94,16 +122,73 @@ def Get_q (x):
 
     return qval
 
-xx = np.logspace (-1., -1.e-4, 5000, base = 10.0)
+def Get_q1 (y):
+
+    X     = 0.0
+    Y     = y*Y_c 
+    phi   = 0.0
+    omega = 0.0
+
+    y0 = [X, Y, phi, omega]
+
+    sol1 = solve_ivp(
+        Rhs,
+        [0., 100.],
+        y0,
+        method       = 'RK45',
+        events       = Stop_Condition1,
+        dense_output = False,
+        rtol         = 1e-8,
+        atol         = 1e-10
+    )
+    
+    X_d = sol1.y[0][-1]
+
+    def Stop_Condition2 (t, y):
+    
+        X, Y, phi, omega = y
+        
+        return X + X_d
+    
+    Stop_Condition2.terminal  = True   
+    Stop_Condition2.direction = +1
+    
+    sol2 = solve_ivp(
+        Rhs1,
+        [0., 100.],
+        [sol1.y[0][-1], sol1.y[1][-1], sol1.y[2][-1], sol1.y[3][-1]],
+        method       = 'RK45',
+        events       = Stop_Condition2,
+        dense_output = True,
+        rtol         = 1e-8,
+        atol         = 1e-10
+    )
+    
+    sol3 = solve_ivp(
+        Rhs,
+        [0., 100.],
+        [sol2.y[0][-1], sol2.y[1][-1], sol2.y[2][-1], sol2.y[3][-1]],
+        method       = 'RK45',
+        events       = Stop_Condition,
+        dense_output = True,
+        rtol         = 1e-8,
+        atol         = 1e-10
+    )
+
+    qval = sol3.y[2][-1] /2./math.pi
+
+    return qval
+
+yy = np.logspace (-1., -1.e-4, 5000, base = 10.0)
 qq = []
 pp = []
 pl = []
 
 n = 0
-for x in xx:
+for y in yy:
 
-    qval = Get_q (x)
-    psi  = Psi_x /Psi (x*X_c, Y_c)
+    qval = Get_q (y)
+    psi  = Psi_x /Psi (X_c, y*Y_c)
 
     qq.append (qval)
     pp.append (psi)
@@ -114,16 +199,16 @@ for x in xx:
 
     n = n + 1
 
-xx1 = np.logspace (1.e-4, 0.1, 5000, base = 10.0)
+yy1 = np.logspace (1.e-4, 0.1, 5000, base = 10.0)
 qq1 = []
 pp1 = []
 pl1 = []
 
 n = 0
-for x in xx1:
+for y in yy1:
 
-    qval = Get_q (x)
-    psi  = Psi_x /Psi (x*X_c, Y_c)
+    qval = Get_q (y)
+    psi  = Psi_x /Psi (X_c, y*Y_c)
 
     qq1.append (qval)
     pp1.append (psi)
@@ -133,31 +218,54 @@ for x in xx1:
         print ("n = %3d" % n)
 
     n = n + 1
+
+qq2 = []
+pp2 = []
+pl2 = []
+
+n = 0
+for y in yy1:
+
+    qval = Get_q1 (y)
+    psi  = Psi_x /Psi (X_c, y*Y_c)
+
+    qq2.append (qval)
+    pp2.append (psi)
+    pl2.append (-math.log10(psi - 1.))
+
+    if n%1000 == 0:
+        print ("n = %3d" % n)
+
+    n = n + 1    
     
 fig = plt.figure (figsize = (12.0, 8.0))
-plt.rc ('xtick', labelsize = 15) 
-plt.rc ('ytick', labelsize = 15) 
+plt.rc ('xtick', labelsize = 20) 
+plt.rc ('ytick', labelsize = 20) 
 
 plt.subplot (2, 1, 1)
 
 plt.plot    (pp,  qq,  color = "red",   linewidth = 2)
 plt.plot    (pp1, qq1, color = "blue",  linewidth = 2)
-plt.axhline (0.,       color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.plot    (pp2, qq2, color = "green", linewidth = 2)
 plt.axvline (1.,       color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlim (0.2, 1.5)
+plt.ylim (0.,  7.5)
 
-plt.xlabel (r'$\Psi$', fontsize = "15")
-plt.ylabel (r'$q$',    fontsize = "15")
+plt.xlabel (r'$\Psi$', fontsize = "20")
+plt.ylabel (r'$q$',    fontsize = "20")
 
 plt.subplot (2, 1, 2)
 
 plt.plot    (pl,  qq,  color = "red",   linewidth = 2)
 plt.plot    (pl1, qq1, color = "blue",  linewidth = 2)
-plt.axhline (0.,       color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.plot    (pl2, qq2, color = "green", linewidth = 2)
 
-plt.xlabel (r'$-\log_{10}(|1-\Psi|)$', fontsize = "15")
-plt.ylabel (r'$q$',                  fontsize = "15")
+plt.xlim (0., 3.5)
+plt.ylim (0., 7.5)
+
+plt.xlabel (r'$-\log_{10}(|1-\Psi|)$', fontsize = "20")
+plt.ylabel (r'$q$',                    fontsize = "20")
 
 plt.tight_layout ()
 #plt.show ()
