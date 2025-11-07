@@ -1,4 +1,6 @@
+# #################################################################
 # Script to plot magnetic flux-surface in simple two-filament model
+# #################################################################
 
 import numpy as np
 import math
