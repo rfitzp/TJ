@@ -44,13 +44,13 @@ omegaEfac = 0.
 # .........
 # Mode data
 # .........
-ntor = 2.
+ntor = 4.
 
 # .........
 # Plot data
 # .........
-rmin = 0.99
-rmax = 1.01
+rmin = 0.985
+rmax = 1.02
 
 # .................................
 # Defininition of mtanh() functions
@@ -397,6 +397,8 @@ d1 = []
 d2 = []
 d3 = []
 ps = []
+db = []
+qx = []
 
 for r in rrr:    
 
@@ -408,8 +410,15 @@ for r in rrr:
     d2.append (Delta(r))
     d3.append (Delta(r)/Ekk(r))
     ps.append (Psi(r) - 1)
+    db.append (math.log10(dbeta(r)))
+    qx.append (q(r))
 
-fig = plt.figure (figsize = (8.0, 6.0))
+for n in range(len(qx) - 1):
+
+    if (d1[n] - ee[n]) * (d1[n+1] - ee[n+1]) < 0.:
+        print ("Psi = %11.4e q = %11.4e m = %3d" % (1.+ps[n], qx[n], int(ntor*qx[n])))    
+
+fig = plt.figure (figsize = (5.0, 7.0))
 
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
@@ -418,8 +427,9 @@ plt.subplot (3, 1, 1)
 
 plt.xlim (ps[0], ps[-1])
  
-plt.plot (ps, ee, color = 'red',   linewidth = 2, linestyle = 'solid', label = '$log_{10}(\hat{\epsilon}_k)$')
-plt.plot (ps, d1, color = 'blue',  linewidth = 2, linestyle = 'solid', label = '$\log_{10}(\hat{\delta}_k)$')
+plt.plot (ps, db, color = 'green', linewidth = 2, linestyle = 'dashed',  label = r'$\log_{10}(\hat{d}_\beta)$')
+plt.plot (ps, ee, color = 'red',   linewidth = 2, linestyle = 'solid',   label = '$log_{10}(\hat{\epsilon}_k)$')
+plt.plot (ps, d1, color = 'blue',  linewidth = 2, linestyle = 'solid',   label = '$\log_{10}(\hat{\delta}_k)$')
 
 plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
 
@@ -427,15 +437,15 @@ plt.ticklabel_format (style = 'sci', axis = 'x', scilimits = (0, 0))
 
 plt.xlabel (r'$\Psi-1$', fontsize = "15")
 
-plt.legend (fontsize = '15')
+plt.legend (fontsize = '12')
 
 plt.subplot (3, 1, 2)
 
 plt.xlim (ps[0], ps[-1])
 
-plt.ylim (0., 70.)
+plt.ylim (0., 150.)
 
-plt.plot (ps, d2, color = 'red',  linewidth = 2, linestyle = 'solid')
+plt.plot (ps, d2, color = 'green',  linewidth = 2, linestyle = 'solid')
 
 plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
 
@@ -448,7 +458,7 @@ plt.subplot (3, 1, 3)
 
 plt.xlim (ps[0], ps[-1])
 
-plt.ylim (0., 3.)
+plt.ylim (0., 3.5)
 
 plt.plot (ps, d3, color = 'red',  linewidth = 2, linestyle = 'solid')
 
@@ -463,3 +473,4 @@ plt.ylabel (r'$|\Delta_k|/(-E_{kk})$', fontsize = "15")
 plt.tight_layout ()
 
 plt.show ()
+#plt.savefig ("Figure10.pdf")

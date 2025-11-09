@@ -466,10 +466,11 @@ plt.plot (ps, nn, color = 'green',  linewidth = 2, linestyle = 'solid')
 
 plt.axvline (1.,   color = 'black', linewidth = 2, linestyle = 'dotted')
 
-plt.xlabel (r'$\Psi$',      fontsize = "15")
-plt.ylabel (r'$n_e(m^-3)$', fontsize = "15")
+plt.xlabel (r'$\Psi$',        fontsize = "15")
+plt.ylabel (r'$n_e(m^{-3})$', fontsize = "15")
 
 plt.tight_layout ()
 
-plt.show ()
+#plt.show ()
 
+plt.savefig ("Figure8.pdf")

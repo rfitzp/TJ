@@ -417,7 +417,6 @@ plt.rc ('ytick', labelsize = 15)
 plt.subplot (3, 1, 1)
 
 plt.xlim (ps[0], ps[-1])
-plt.ylim (0., 400.)
  
 plt.plot (ps, ee, color = 'red',   linewidth = 2, linestyle = 'solid', label = '$log_{10}(\hat{\epsilon}_k)$')
 plt.plot (ps, d1, color = 'blue',  linewidth = 2, linestyle = 'solid', label = '$\log_{10}(\hat{\delta}_k)$')

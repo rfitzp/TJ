@@ -1,4 +1,6 @@
-\documentclass{iopjournal}
+%\documentclass{iopjournal}
+\documentclass{article}
+\usepackage{fullpage}
 \usepackage{amsmath}           		          	
 \usepackage{graphicx,epstopdf}					
 \usepackage{amssymb}
@@ -7,35 +9,56 @@
 \allowdisplaybreaks
 
 \begin{document}
-\articletype{paper}
-\title{ Response of a Magnetically Diverted Tokamak Plasma to a Resonant Magnetic Peturbation}
-\author{Richard Fitzpatrick\orcid{0000-0001-6237-9309}}
-\affil{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin TX 78712, USA}
-\email{rfitzp@utexas.edu}
+%\articletype{paper}
+\title{ Response of a magnetically diverted tokamak plasma to a resonant magnetic perturbation}
+%\author{Richard Fitzpatrick\orcid{0000-0001-6237-9309}}
+%\affil{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin TX 78712, USA}
+%\email{rfitzp@utexas.edu}
+\author{Richard Fitzpatrick\,\footnote{rfitzp@utexas.edu}\\[0.5ex]{\em Institute for Fusion Studies, Department of Physics,}\\[0.5ex] {\em University of Texas at Austin, Austin TX 78712, USA}}
+\date{}
+
+\maketitle
+
+\begin{abstract}
+The safety-factor profile of a magnetically diverted tokamak plasma diverges logarithmically as the magnetic separatrix 
+(a.k.a.\ the last closed magnetic flux-surface) is approached. At first sight, this suggests that, when determining the response of such a plasma to a static,  externally generated,  resonant
+magnetic perturbation (RMP), it is necessary to include an infinite number of rational magnetic flux-surfaces in the calculation, the
+majority of which lie  very close to the separatrix. In fact, when finite plasma resistivity is taken into account, this turns out not to be the case. 
+Instead, it is only necessary to include rational surfaces that
+lie in the region $0<{\mit\Psi}<{\mit\Psi}_c$, where ${\mit\Psi}$ is the normalized poloidal magnetic flux, and
+${\mit\Psi}_c<1$ can be calculated from the edge plasma parameters. It is estimated that ${\mit\Psi}_c= 0.9985$ for an $n=1$
+RMP, and ${\mit\Psi}_c=0.9952$ for an $n=4$ RMP,  in  a typical JET H-mode plasma. 
+\end{abstract}
 
 \section{Introduction}
-All modern tokamak plasmas feature a {\em magnetic divertor},  which is a particular configuration of the magnetic field that redirects the outermost field-lines  away from the confined plasma region, and into a controlled exhaust area, where the plasma particle and heat fluxes can safely be absorbed by a solid  target plate \cite{wesson}. Each magnetic flux-surface in a tokamak has an associated value of the {\em safety-factor}, which specifies the average number of
-toroidal circuits of the surface that a constituent  magnetic field-line makes per poloidal circuit \cite{boozer}. Magnetic flux-surfaces with rational
-values of the safety-factor are special. Indeed, externally generated, non-axisymmetric magnetic perturbations---known as {\em resonant magnetic perturbations} (RMPs)---can drive  magnetic reconnection  on such {\em rational surfaces}, leading to localized changes in magnetic
+All modern tokamak plasmas feature a {\em magnetic divertor},  which is a particular configuration of the magnetic field that redirects the outermost field-lines  away from the confined plasma region and into a controlled exhaust area where the plasma particle and heat fluxes can safely be absorbed by a solid  target plate \cite{wesson}. Each magnetic flux-surface in a tokamak has an associated value of the {\em safety-factor}, which specifies the average number of
+toroidal circuits of the surface that a constituent  magnetic field-line makes per poloidal circuit \cite{boozer}. Magnetic flux-surfaces possessing rational
+values of the safety-factor are special. Indeed, externally generated, static, non-axisymmetric magnetic perturbations---known as {\em resonant magnetic perturbations} (RMPs)---can drive  magnetic reconnection  on such {\em rational surfaces}, leading to localized changes in magnetic
 topology that degrade the ability of the surrounding flux-surfaces to confine energy. Alternatively, shielding currents can flow, predominately parallel 
 to magnetic field-lines, on rational surfaces, and act to suppress driven  magnetic
-reconnection \cite{rf1}. In general, neither driven magnetic reconnection nor shielding currents occur on non-resonant magnetic flux-surfaces.
+reconnection \cite{rf1}. In general, neither driven magnetic reconnection nor shielding currents can occur on irrational magnetic flux-surfaces.
 
 A magnetically diverted tokamak plasma possesses a so-called ``last closed magnetic flux-surface" (LCFS). Magnetic flux-surfaces that lie inside the
 LCFS are topologically simple tori, and are completely occupied by plasma. Magnetic flux-surfaces that lie outside the LCFS have more complicated
-topology, and are only partly occupied by plasma. The LCFS features a magnetic ``X-point", which is a circular loop, coaxial with the plasma torus, on
+topology, and are only partialy occupied by plasma. The LCFS features a magnetic ``X-point", which is a circular loop, coaxial with the plasma torus, on
 which the poloidal magnetic field is zero. (In some very  special tokamak plasmas, the LCFS features two X-points. However, we shall 
 not consider such plasmas here.) As the LCFS is approached, the safety-factor exhibits a logarithmic singularity \cite{pom}, as a direct consequence of the presence of the X-point, and there is an
-associated accumulation of rational flux-surfaces around the LCFS. In fact, for an RMP with a given toroidal mode number, there are,
-in principle, an {\em infinite}\/ number of associated rational surfaces, most of which lie close to the LCFS,  on which the RMP can drive magnetic reconnection. It is
+associated accumulation of rational magnetic flux-surfaces in the vicinity of the LCFS. In fact, for an RMP with a given toroidal mode number, there are,
+in principle, an {\em infinite}\/ number of associated rational surfaces, most of which lie  very close to the LCFS,  on which the RMP can drive magnetic reconnection. It is
 impossible to include all of these surfaces in a practical plasma response calculation. Hence, the standard approach is to simply ignore rational flux-surfaces associated with very high values of the
-safety-factor \cite{ipec,epec,gpec}. The aim of this paper is to investigate to what extent this approach is justified. 
+safety-factor \cite{ipec,epec,gpec}. The purpose of this paper is to investigate to what extent this approach is justified. 
 
-\section{Two-Filament Model of a Magnetically Diverted Plasma}\label{stwo}
+This paper is organized as follows. A particularly simple model of a magnetically diverted tokamak plasma is introduced in Sect.~\ref{stwo}, and is
+used to define exactly what is meant by a flux coordinate system, the safety-factor profile, and a rational surface, both inside and outside the LCFS. 
+A more realistic model of a magnetically diverted tokamak plasma is presented in Sect.~\ref{sthree}. The response of a magnetically diverted plasma
+to an RMP is analyzed  in Sect.~\ref{response}. Section~\ref{separatrix}  investigates the behavior of the plasma
+response model in the vicinity of the LCFS. Finally, the paper is summarized, and conclusions are drawn, in Sect.~\ref{sum}. 
+
+\section{Simple model of a magnetically diverted plasma}\label{stwo}
 \subsection{Introduction}
 The aim of this section is to construct a very simple model of a magnetically diverted tokamak plasma.
 
-\subsection{Equilibrium Magnetic Field}
+\subsection{Equilibrium magnetic field}
 Suppose that two current filaments run parallel to the $z$-axis \cite{pom}. Let the first filament carry the
 current $I_p$, and pierce the $x$-$y$ plane at $x=y=0$. Let the second filament carry the current $I_c$, and
 pierce the $x$-$y$ plane at $x=0$, $y=-a$.  The first filament represents the ``toroidal'' (i.e., $z$-directed) plasma
@@ -55,7 +78,7 @@ where
 \end{equation}
 is the ``poloidal'' (i.e., circulating in  the $x$-$y$ plane) magnetic flux (divided by $2\pi$) generated by the two current filaments.
 
-\subsection{Flux Coordinates}
+\subsection{Flux coordinates}
 It is convenient to re-express the magnetic field in the usual Clebsch form
 \begin{equation}\label{e2}
 {\bf B} = \nabla(\phi-q\,\theta)\times \nabla \psi_p,
@@ -70,37 +93,37 @@ with gradient $d\phi/d\theta = q$, when
 plotted in the $\theta$-$\phi$ plane. In fact, $\psi_p$, $\theta$, $\phi$ are known as {\em flux coordinates}, and $\theta$
 is termed a {\em straight}\/  poloidal angle \cite{boz}.
 
-\subsection{Non-Diverted Edge Safety-Factor}
+\subsection{Non-diverted edge safety-factor}
 In the absence of the divertor current, the plasma would have a circular cross-section of minor radius $a$, and
 an edge safety-factor value of
 \begin{equation}\label{e4}
 q_\ast = \frac{2\pi\,B_0\,a^2}{\mu_0\,I_p\,R_0}.
 \end{equation}
 
-\subsection{Normalization Scheme}
+\subsection{Normalization scheme}
 Let  $x=a\,X$, $y=a\,Y$,  $\nabla = a^{-1}\,\hat{\nabla}$, and $\psi_p = \mu_0\,I_p\,R_0\,\psi/(2\pi)$.
 It follows that
 \begin{align}
 \hat{\nabla}\psi\times \hat{\nabla}\theta\cdot\hat{\nabla}\phi &= \frac{a}{R_0}\,\frac{q_\ast}{q},\label{ex}\\[0.5ex]
-\psi &= \frac{1}{2}\,\ln\left(X^2+Y^2\right) + \frac{\beta}{2}\,\ln\left[X^2+(Y+1)^2\right],\\[0.5ex]
-\psi_X &= \frac{X}{X^2+Y^2} + \frac{\beta\,X}{X^2+(Y+1)^2},\\[0.5ex]
-\psi_Y &= \frac{Y}{X^2+Y^2} +\frac{\beta\,(Y+1)}{X^2+(Y+1)^2},
+\psi &= \frac{1}{2}\,\ln\left(X^2+Y^2\right) + \frac{\zeta}{2}\,\ln\left[X^2+(Y+1)^2\right],\\[0.5ex]
+\psi_X &= \frac{X}{X^2+Y^2} + \frac{\zeta\,X}{X^2+(Y+1)^2},\\[0.5ex]
+\psi_Y &= \frac{Y}{X^2+Y^2} +\frac{\zeta\,(Y+1)}{X^2+(Y+1)^2},
 \end{align}
-where $\beta=I_c/I_p$. Here, $\psi_X\equiv\partial\psi/\partial X$, et cetera. 
+where $\zeta=I_c/I_p$. Here, $\psi_X\equiv\partial\psi/\partial X$, et cetera. 
 
 \subsection{Magnetic X-point}
 The magnetic $X$-point is located at the point in the $X$-$Y$ plane where  $\psi_X=\psi_Y=0$ (i.e., where the poloidal magnetic
 field-strength is zero).
-As is easily demonstrated, the coordinates of this point are ($X_c$, $Y_c$), where  $X_c=0$ and $Y_c=-1/(1+\beta)$. 
+As is easily demonstrated, the coordinates of this point are ($X_c$, $Y_c$), where  $X_c=0$ and $Y_c=-1/(1+\zeta)$. 
 The magnetic separatrix corresponds to the curve $\psi(X,Y)= \psi_c$, where 
 \begin{equation}
-\psi_c \equiv \psi(X_c,Y_c) = \ln\left[\frac{\beta^{\,\beta}}{(1+\beta)^{1+\beta}}\right].
+\psi_c \equiv \psi(X_c,Y_c) = \ln\left[\frac{\zeta^{\,\zeta}}{(1+\zeta)^{1+\zeta}}\right].
 \end{equation}
- It is helpful to define the normalized poloidal flux ${\mit\Psi}= \psi_c/\psi$. (Note that this definition is different from the
+ It is helpful to define the normalized poloidal flux, ${\mit\Psi}= \psi_c/\psi$. (Note that this definition is different from the
  conventional one, ${\mit\Psi}= \psi/\psi_c$, because $\psi\rightarrow \infty$ on the magnetic axis, $X=Y=0$, and
  we wish the normalized flux to increase as we go from the axis to the separatrix.)
 
-\subsection{Construction of Flux Coordinate System}
+\subsection{Construction of flux coordinate system}
 Equation~(\ref{ex})  yields
 \begin{equation}
 \frac{d\theta}{dL} = \frac{q_\ast}{q\,|\hat{\nabla}\psi|}.
@@ -133,20 +156,20 @@ We can then compute $\theta$ using
 
 \begin{figure}
 \centerline{\includegraphics[width=\textwidth]{Figure1.pdf}}
-\caption{The magnetic flux-surfaces ${\mit\Psi}=0.9$ (red), ${\mit\Psi}=1.0$ (green), and ${\mit\Psi}=1.1$ (blue) in the absence of a divertor plate. The black dots shows the locations of the two current filaments. Here, $q_\ast=12$ and $\beta=0.2$. }\label{fig1}
+\caption{The magnetic flux-surfaces ${\mit\Psi}=0.9$ (red), ${\mit\Psi}=1.0$ (green), and ${\mit\Psi}=1.1$ (blue) in the absence of a divertor plate. The black dots shows the locations of the two current filaments. Here, $q_\ast=12$ and $\zeta=0.2$. }\label{fig1}
 \end{figure}
 
-Let $q_\ast = 12$ and $\beta=0.2$. 
+Let $q_\ast = 12$ and $\zeta=0.2$. 
 Figure~\ref{fig1} shows the magnetic flux-surfaces ${\mit\Psi}=0.9$, ${\mit\Psi}=1.0$, and ${\mit\Psi}=1.1$, plotted in the 
 $X$-$Y$ plane. Flux-surfaces characterized by ${\mit\Psi}<1$ do not enclose the divertor current filament, whereas those
-characterized by ${\mit\Psi}<1$ do enclose the filament. The {\em magnetic separatrix}, ${\mit\Psi}=1$, separates flux-surfaces
+characterized by ${\mit\Psi}>1$ do enclose the filament. The {\em magnetic separatrix}, ${\mit\Psi}=1$, separates flux-surfaces
  that do and do not enclose the divertor current filament, and crosses itself at the magnetic X-point. 
  
- \begin{figure}
+ \begin{figure}[t]
 \centerline{\includegraphics[width=\textwidth]{Figure2.pdf}}
 \caption{The safety-factor profile, $q({\mit\Psi})$. The red curve shows the safety-factor
 inside the magnetic separatrix. The blue and green curves show the safety-factor outside the separatrix in the absence and
-in the presence of a divertor plate, respectively.  Here, $q_\ast=12$ and $\beta=0.2$ }\label{fig2}
+in the presence of a divertor plate, respectively.  Here, $q_\ast=12$ and $\zeta=0.2$. }\label{fig2}
 \end{figure}
 
 The red and  blue curves in Fig.~\ref{fig2} show the safety-factor profile, $q({\mit\Psi})$, inside and outside the magnetic separatrix, respectively. It is clear that the safety-factor generally increases with increasing ${\mit\Psi}$. 
@@ -165,34 +188,34 @@ However,   $q\rightarrow\infty$ as ${\mit\Psi}\rightarrow 1$.
  for ${\mit\Psi}>1$. 
  Moreover, it is clear from the figure that $\alpha_+>\alpha_-$. 
  
-\begin{figure}
+\begin{figure}[t]
 \centerline{\includegraphics[width=\textwidth]{Figure3.pdf}}
 \caption{The flux coordinate system inside the magnetic separatrix. The red curves
-are surfaces of constant $\hat{\psi}$, whereas the blue curves are surfaces of constant $\theta$. The black dot shows the location of the plasma current filament. Here, $q_\ast=12$ and $\beta=0.2$}\label{fig3}
+are surfaces of constant $\hat{\psi}$, whereas the blue curves are surfaces of constant $\theta$. The black dot shows the location of the plasma current filament. Here, $q_\ast=12$ and $\zeta=0.2$.}\label{fig3}
 \end{figure}
 
  Figures~\ref{fig3} and \ref{fig4} show the flux coordinate system inside and outside the magnetic separatrix, respectively. It can be seen that, as the magnetic
  separatrix is crossed, all of the contours of $\theta$ converge onto, and then diverge away from, the X-point. This singular behavior occurs
- because the Jacobian of the flux coordinate system, ${\cal J} \equiv (\hat{\nabla}\psi\times\hat{\nabla}\theta\cdot\hat{\nabla}\phi)^{-1} = (R_0/a)\,(q/q_\ast)$,
- is infinite at the X-point. 
+ because $|\hat{\nabla}\psi|\rightarrow \ell$ and $|\hat{\nabla}\theta|\rightarrow 1/[\ell\,\ln|{\mit\Psi}-1|]$ as the X-point is approached, where $\ell$ represents 
+ distance from the X-point in the $X$-$Y$ plane
  
-\begin{figure}
+\begin{figure}[t]
 \centerline{\includegraphics[width=\textwidth]{Figure4.pdf}}
 \caption{The flux coordinate system outside the magnetic separatrix in the absence of a divertor plate. The red curves
-are surfaces of constant $\hat{\psi}$, whereas the blue curves are surfaces of constant $\theta$. The black dots shows the locations of the two current filaments.  Here, $q_\ast=12$ and $\beta=0.2$.  }\label{fig4}
+are surfaces of constant $\hat{\psi}$, whereas the blue curves are surfaces of constant $\theta$. The black dots shows the locations of the two current filaments.  Here, $q_\ast=12$ and $\zeta=0.2$.  }\label{fig4}
 \end{figure}
 
-\subsection{Significance of Flux Coordinates}
-To understand the significance of the flux coordinate system, suppose that the plasma is subject to a magnetic perturbation that
-varies with $\theta$, $\phi$,  and time, $t$, as  $\exp[\,{\rm i}\,(m\,\theta-n\,\phi )]$. Here, $m$ and $n$ are integers. 
+\subsection{Significance of flux coordinates}
+To understand the significance of the flux coordinate system, suppose that the plasma is subject to a static (in the laboratory frame) magnetic perturbation that
+varies with $\theta$ and $\phi$ as  $\exp[\,{\rm i}\,(m\,\theta-n\,\phi )]$. Here, $m$ and $n$ are integers. 
 In other words, the perturbation  (which is, of course, single-valued in the angular coordinates $\theta$ and $\phi$) possesses
-$m$ periods in the poloidal angle, $n$ periods in the toroidal angle, and is stationary in the laboratory frame.  The curl of the perturbed, linearized,
+$m$ periods in the poloidal angle,  and $n$ periods in the toroidal angle.  The curl of the perturbed, linearized,
 electron fluid equation of motion yields
 \begin{equation}\label{e21}
  n\,(\omega_E+\omega_{\ast\,e})\left[b^{\psi_p} -\frac{B_0}{R_0\,q}\,(m-n\,q)\,\xi^{\psi_p}\right] \simeq \frac{B_0}{R_0\,q}\,m \,\eta_\parallel \,j_\phi,
 \end{equation}
 where subscripts and superscripts denote covariant and contravariant components in the $\psi_p$, $\theta$, $\phi$ coordinate
-system, respectively.  Here, ${\bf b}$ is the perturbed magnetic field, $\bxi$ the Largrangian electron fluid displacement,  ${\bf j}$ the perturbed current
+system, respectively.  Here, ${\bf b}$ is the perturbed magnetic field, $\bxi$ the Lagrangian electron fluid displacement,  ${\bf j}$ the perturbed current
 density, and $\eta_\parallel$ the plasma parallel electrical resistivity. Moreover,
 \begin{align}
 \omega_E(\psi_p) = -\frac{d{\mit\Phi}}{d\psi_p}
@@ -208,7 +231,7 @@ Equation~(\ref{e21}) describes how
 the inductive electric
 field generated by a time-varying magnetic field, as seen in rest frame of the local electron fluid, attempts to drive  a current parallel to magnetic field-lines. On a general magnetic flux-surface, the
 two terms (in the large square brackets) on the left-hand side of the equation cancel one another out, and there is no  driven current. In other words, 
-the electron fluid displaces rather than allowing a parallel inductive current to flow. However, it is clear from the equation that there exist
+the electron fluid displaces rather than allowing a parallel inductive current to flow \cite{rf1}. However, it is clear from the equation that there exists 
 a special magnetic flux-surface, termed  a {\em rational}\/ flux-surface, at which the safety-factor takes the rational
 value $q=m/n$ \cite{boz}. On the rational flux-surface, the two terms on the left-hand side of Eq.~(\ref{e21}) cannot cancel one another
 out, because the second term is zero everywhere on the surface. Hence, in general, a parallel inductive current is driven on the rational flux-surface. The current is a
@@ -217,15 +240,15 @@ out, because the second term is zero everywhere on the surface. Hence, in genera
 We can now appreciate that, by employing a flux coordinate system, we can distinguish rational magnetic flux-surfaces from
 irrational flux-surfaces. (A rational surface is one on which the associated safety-factor can be expressed as a rational number. Note that
 this definition only makes sense if the safety-factor is a flux-surface function.) We can also determine the angular variation of the particular magnetic perturbation that drives a
-shielding current on a particular rational surface. Note, finally, that Figs.~\ref{fig2}--\ref{fig4} make it clear that rational
+shielding current on a particular rational surface. Finally, it is clear from  that Figs.~\ref{fig2}--\ref{fig4}  that rational
 flux-surfaces exist both inside and outside the magnetic separatrix. 
 
-\subsection{Effect of Divertor Plate}
-The reason that rational magnetic flux-surfaces exist outside the magnetic separatrix is because the flux-surfaces in this region form closed loops, that complete below the
+\subsection{Effect of divertor plate}
+Rational magnetic flux-surfaces exist outside the magnetic separatrix  because flux-surfaces in this region form closed loops, that complete below the
 divertor filament, when plotted in
 the $X$-$Y$ plane. In fact, this must be the case in an axisymmetric system otherwise the divergence of the magnetic field would be non-zero.
 Thus, the commonly used term  ``last closed magnetic flux-surface" (meaning the magnetic separatrix) is inaccurate. All of the magnetic
-flux-surfaces are closed. However, those outside the magnetic sepatatrix are only partly
+flux-surfaces are closed. However, those outside the magnetic sepatatrix are only partially 
 occupied by plasma because they intersect the solid divertor plate.
 
  Suppose that
@@ -241,12 +264,12 @@ $X$-axis at constant $\phi$. It follows that, within the divertor plate, Eqs.~(\
 \frac{d\varpi}{dL}  &=-\frac{Y}{X^2+Y^2}. 
 \end{align}
 
-\begin{figure}
+\begin{figure}[t]
 \centerline{\includegraphics[width=\textwidth]{Figure5.pdf}}
-\caption{The magnetic flux-surfaces ${\mit\Psi}=0.9$ (red), ${\mit\Psi}=1.0$ (green), and ${\mit\Psi}=1.1$ (blue)  in the presence of a divertor plate located halfway between the X-point and the divertor filament. The black dot shows the location of plasma current filament, and the horizontal black line shows the location of the divertor plate. Here, $q_\ast=12$ amd $\beta=0.2$. }\label{fig5}
+\caption{The magnetic flux-surfaces ${\mit\Psi}=0.9$ (red), ${\mit\Psi}=1.0$ (green), and ${\mit\Psi}=1.1$ (blue)  in the presence of a divertor plate located halfway between the X-point and the divertor filament. The black dot shows the location of plasma current filament, and the horizontal black line shows the location of the divertor plate. Here, $q_\ast=12$ amd $\zeta=0.2$. }\label{fig5}
 \end{figure}
 
-Again, let $q_\ast = 12$ and $\beta=0.2$. 
+Again, let $q_\ast = 12$ and $\zeta=0.2$. 
 Figure~\ref{fig5} shows the magnetic flux-surfaces ${\mit\Psi}=0.9$, ${\mit\Psi}=1.0$, and ${\mit\Psi}=1.1$, plotted in the 
 $X$-$Y$ plane. Note that the surfaces ${\mit\Psi}=1.0$ and ${\mit\Psi}=1.1$ both have sections that run parallel to
 the divertor plate. Strictly speaking, these sections are not magnetic flux-surfaces (the actual magnetic flux-surfaces complete below the divertor plate, as shown in Fig.~\ref{fig1}), but instead represent the paths of  shielding current filaments. 
@@ -258,30 +281,23 @@ current filaments can take a short-cuts through it, rather than having to run in
 Finally, Fig.~\ref{fig6}  shows the flux coordinate system  outside the magnetic separatrix in the presence of the divertor plate. Observe that the
 divertor plate is a surface of constant $\theta$. 
 
-\begin{figure}
+\begin{figure}[t]
 \centerline{\includegraphics[width=\textwidth]{Figure6.pdf}}
 \caption{The flux coordinate system outside the magnetic separatrix in the presence of a divertor plate located halfway
 between the X-point and the divertor filament. The red curves
 are surfaces of constant $\hat{\psi}$, whereas the blue curves are surfaces of constant $\theta$. The black dot shows the location of the plasma filament,
-and the horizontal black line shows the location of the divertor plate. Here, $q_\ast=12$ and $\beta=0.2$. }\label{fig6}
+and the horizontal black line shows the location of the divertor plate. Here, $q_\ast=12$ and $\zeta=0.2$. }\label{fig6}
 \end{figure}
 
-\subsection{Summary}
-In this section, we have constructed a very simple model of a magnetically diverted plasma. We find that it is possible to construct a
-flux coordinate system both inside and outside the  magnetic separatrix, even in the presence of a divertor plate. We can also
-define a safety-factor profile outside the separatrix. This implies that rational magnetic ``flux-surfaces'' (with sections that run
-along the divertor plate) exist outside the separatrix, and that we can determine the angular variation of the magnetic perturbations that
-would excite shielding currents on these surfaces. 
-
-\section{Improved Model of a Magnetically Diverted Plasma}
+\section{Improved model of a magnetically diverted plasma}\label{sthree}
 
 \subsection{Introduction}
 The model described in Sect.~\ref{stwo} has the unrealistic feature that $q=0$ at the magnetic axis. This feature is
 an artifact of treating the plasma current as a filament, rather than a spatially extended distribution. In this
 section, we shall attempt to construct an improved model.
 
-\subsection{Equilibrium Magnetic Field}
-Let $R$, $\phi$, $Z$ be conventional cylindrical coordinates that are coaxial with the plasma torus. 
+\subsection{Equilibrium magnetic field}
+Let $R$, $\phi$, $Z$ be conventional cylindrical coordinates that are coaxial with the plasma torus. Thus, $\nabla R\times\nabla\phi\cdot\nabla Z= 1/R$. 
 We can  express the equilibrium magnetic field in the divergence-free manner \cite{rf2}
 \begin{equation}
  {\bf B} = \nabla\phi\times \nabla\psi_p + B_0\,R_0\,g\,\nabla\phi= \nabla(\phi-q\,\theta)\times \nabla \psi_p.
@@ -298,14 +314,14 @@ It is helpful to define a magnetic flux-surface label, $r$,  with the dimensions
 \frac{d\psi_p}{dr} =\frac{B_0\,r\,g}{q}.
 \end{equation}
 It is easily demonstrated that 
-\begin{equation}
+\begin{equation}\label{fluxc}
 \nabla r\times\nabla\theta\cdot\nabla\phi = \frac{R_0}{R^{\,2}\,r}.
 \end{equation}
 Here, $r$ can be interpreted as the mean minor radius of a given magnetic flux-surface. Suppose that the magnetic
 separatrix corresponds to the flux-surface $r=a$. Thus, we can interpret $a$ as the mean minor radius of the plasma. Moreover,
 flux-surfaces with $r<a$ lie inside the separatrix, whereas those with $r>a$ lie outside. 
 
-\subsection{Model Safety-Factor Profile}
+\subsection{Model safety-factor profile}
 Let us adopt a model safety-factor profile inspired by the analysis of Sect.~\ref{stwo}. 
 Let $\hat{r}=r/a$. Suppose that
 \begin{align}\label{e37}
@@ -326,7 +342,7 @@ flux-surface, $q_{105}$ is the safety-factor on the magnetic flux-surface that
 encloses $105\%$ of the poloidal magnetic flux enclosed by the magnetic separatrix, and $\hat{r}_{105}$ is the $\hat{r}$-coordinate of the $105\%$
 flux-surface.
 
-\subsection{Poloidal Magnetic Flux}
+\subsection{Poloidal magnetic flux}
 We wish to determine the poloidal flux in the vicinity of the magnetic separatrix. Let $\psi_p = B_0\,a^2\,\psi$. 
 It follows  from Eq.~(\ref{e30})  that
 \begin{equation}\label{e36}
@@ -347,8 +363,9 @@ Hence,
 \begin{equation}\label{psi1}
 \psi(1) =  \frac{{\rm e}^{\,q_0/\alpha_-}}{2\,\alpha_-}\,E_1\!\left(\frac{q_0}{\alpha_-}\right)
 \end{equation}
-is the normalized poloidal flux enclosed within the magnetic separatrix. 
-Let ${\mit\Psi}(\hat{r})=\psi(\hat{r})/\psi(1)$. It follows that
+is the  poloidal magnetic flux (divided by $2\pi\,B_0\,a^2$) enclosed within the magnetic separatrix. 
+Let us define the {\em normalized poloidal magnetic flux}, ${\mit\Psi}(\hat{r})=\psi(\hat{r})/\psi(1)$. Thus, ${\mit\Psi}=0$ on the magnetic axis, ${\mit\Psi}=1$ on the magnetic separatrix, and ${\mit\Psi}>1$ outside the separatrix. 
+ It follows that
 \begin{equation}
 {\mit\Psi}(\hat{r})= 1- \frac{E_1[q_0/\alpha_--\ln(1-\hat{r}^{\,2})]}{E_1(q_0/\alpha_-)} = 1- \frac{E_1(q/\alpha_-)}{E_1(q_0/\alpha_-)}.
 \end{equation}
@@ -380,8 +397,8 @@ By definition, ${\mit\Psi}(\hat{r}_{105})=1.05$. Hence, Eqs.~(\ref{e41}) and (\r
 Assuming that $q_{105}$ is specified, the  previous equation can be solved to give $\alpha_+$, which then allows $\hat{r}_{105}$ to be determined
 from Eq.~(\ref{e35}).
 
-\begin{figure}
-\centerline{\includegraphics[width=\textwidth]{Figure7.pdf}}
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.8\textwidth]{Figure7.pdf}}
 \caption{The model safety-factor profile in the vicinity of the magnetic separatrix, calculated for $q_0=1.01$,
 $q_{95}=3.5$, and $q_{105}= 4.0$. The black vertical lines show the locations of the $n=1$ rational surfaces. }\label{fig7}
 \end{figure}
@@ -391,19 +408,19 @@ and (\ref{e45}) to give $\alpha_-= 1.196$ and $\alpha_+ = 2.163$. Equations~(\re
 reveal that $\hat{r}_{95} =0.9355$ and $\hat{r}_{105} =1.076$. The resulting model safety-factor profile in the vicinity of the
 magnetic separatrix is shown in Fig.~\ref{fig7}. 
 
-\section{Plasma Response Theory}
+\section{Plasma response theory}\label{response}
 \subsection{Introduction}
-The aim of this section is to formulate the response of a plasma possessing a magnetic separatrix to an RMP of toroidal mode number $n$. 
+The aim of this section is analyze  the response of a plasma possessing a magnetic separatrix to a static RMP of toroidal mode number $n$. 
 
-\subsection{Ideal-MHD Perturbation}
-Suppose that the plasma equilibrium is subject to a magnetic perturbation that possesses $n$ periods in the toroidal direction, and is such that \cite{rf3}
+\subsection{Ideal-MHD perturbation}
+Suppose that the plasma equilibrium is subject to a static magnetic perturbation that possesses $n$ periods in the toroidal direction, and is such that \cite{rf3}
 \begin{equation}
-\frac{r\,b^r(r,\theta,\phi,t)}{B_0\,R_0} = {\rm i}\left(\frac{R_0}{R}\right)^2
-\sum_m\psi_m(r)\,{\rm e}^{\,{\rm i}\,(m\,\theta-n\,\phi+\omega\,t)},
+\frac{r\,b^r(r,\theta,\phi)}{B_0\,R_0} = {\rm i}\left(\frac{R_0}{R}\right)^2
+\sum_m\psi_m(r)\,{\rm e}^{\,{\rm i}\,(m\,\theta-n\,\phi)},
 \end{equation}
-where $b^r = {\bf b}\cdot\nabla r$,  ${\bf b}$ is the perturbed magnetic field, and the $\psi_m$ are dimensionless. Note that the perturbation consists of a single toroidal
+where $b^r = {\bf b}\cdot\nabla r$,  ${\bf b}$ is the perturbed magnetic field, and the $\psi_m(r)$ are dimensionless functions. Note that the perturbation consists of a single toroidal
 harmonic, but multiple coupled poloidal harmonics characterized by the set of integer poloidal mode numbers $m$. 
-Everywhere in the plasma, apart from the immediate vicinity of the various rational surfaces, the tearing mode is governed by the perturbed,
+Everywhere in the plasma, apart from the immediate vicinity of the various rational surfaces, the perturbation is governed by the 
 linearized equations of marginally-stable, ideal-magnetohydrodynamics (MHD) \cite{fkr}. These equations reduce to
 a set of coupled ordinary differential equations (o.d.e.s) that
 take the form \cite{rf2,rf3}
@@ -411,8 +428,8 @@ take the form \cite{rf2,rf3}
 r\,\frac{d\psi_m}{dr}&= \sum_{m'} \frac{L_m^{\,m'} \,Z_{m'}+M_{m}^{\,m'}\,\psi_{m'}}{m'-n\,q},\\[0.5ex]
 (m-n\,q)\,r\,\frac{d}{dr}\!\left(\frac{Z_m}{m-n\,q}\right)&= \sum_{m'}\frac{N_m^{\,m'}\,Z_{m'} + P_m^{\,m'}\,\psi_{m'}}{m'-n\,q}.\label{e48}
 \end{align}
-Here, the (dimensionless) $Z_m(r)$ are related to the perturbed toroidal magnetic field. Moreover, the (dimensionless) $L_m^{\,m'}(r)$, $M_m^{\,m'}(r)$, $N_m^{\,m'}(r)$,
-and $P_m^{\,m'}(r)$ coefficients are functions of the equilibrium profiles and the metric elements of the $r$, $\theta$, $\phi$ flux coordinate
+Here, the (dimensionless) $Z_m(r)$ functions are related to the perturbed toroidal magnetic field. Moreover, the (dimensionless) $L_m^{\,m'}(r)$, $M_m^{\,m'}(r)$, $N_m^{\,m'}(r)$,
+and $P_m^{\,m'}(r)$ coefficients are determined by the equilibrium profiles and the metric elements of the $r$, $\theta$, $\phi$ flux coordinate
 system \cite{rf3}. 
 Note that Eqs.~(\ref{e47}) and (\ref{e48}) are singular at rational magnetic flux-surfaces at which $q=m/n$.
 
@@ -420,12 +437,7 @@ The locations of the $n=1$ rational surfaces for our model safety-factor profile
 It can be seen that rational surfaces accumulate in the vicinity of the magnetic separatrix, where $q(\hat{r})$ has a logarithmic singularity. 
 Moreover, rational surfaces exist both inside and outside the separatrix. 
 
-The accumulation of rational surfaces at the magnetic separatrix is problematic. In principle, for a given toroidal mode number, there are
-an infinite number of rational surfaces, the majority of which lie very close to the separatrix. It would be  be prohibitively difficult 
-to include all of these
-surfaces in a plasma response calculation. Let us see whether this is really necessary. 
-
-\subsection{Behavior in Vicinity of Rational Surface}
+\subsection{Behavior in vicinity of rational surface}
 Consider the solution of the ideal-MHD o.d.e.s, (\ref{e47}) and (\ref{e48}), in the vicinity of a rational surface, of radius $r_s$, 
 where $q(r_s)= m/n$, and $m$ is the resonant poloidal mode number. Let $x=r-r_s$. At small values of $|x|$, the function  $\psi_m(r)$ takes the
 form \cite{rf2,rf3}
@@ -433,9 +445,9 @@ form \cite{rf2,rf3}
 \psi_m(r_s+x) = A_L^{\,\pm}\,|x|^{\,\nu_L}(1+\lambda_L\,x)+ A_S^{\,\pm}\,{\rm sgn}(x)\,|x|^{\,\nu_S}+ A_C\,x + {\cal O}(x^2),
 \end{align}
 where
-\begin{align}
+\begin{align}\label{nul}
 \nu_L &= \frac{1}{2}-\sqrt{-D_I},\\[0.5ex]
-\nu_S&= \frac{1}{2}+\sqrt{-D_I},\\[0.5ex]
+\nu_S&= \frac{1}{2}+\sqrt{-D_I},\label{nus}\\[0.5ex]
 D_I &= - L_0\,P_0-\frac{1}{4},\\[0.5ex]
 L_0 &= -\left(\frac{L_m^{\,m}}{m\,s}\right)_{r_s},\\[0.5ex]
 P_0 &= -\left(\frac{P_m^{\,m}}{m\,s}\right)_{r_s},\\[0.5ex]
@@ -443,15 +455,15 @@ s &= \frac{d\ln q}{d\ln r},
 \end{align}
 and $\lambda_L$ and $A_C$ are defined in Refs.~\cite{rf2} and \cite{rf3}. The superscripts $+$ and $-$ correspond to $x>0$ and $x<0$, respectively. 
 Here, $A_L^{\,\pm}$ are known as the {\em coefficients of the large solution}, whereas $A_S^{\,\pm}$ are termed  the {\em coefficients of the
-small solution}. The {\em Mercier interchange stability parameter}, $D_I$, is assumed to be negative. (Otherwise, the the rational
+small solution}. The {\em Mercier interchange stability parameter}, $D_I$, is assumed to be negative. (Otherwise, the plasma in the vicinity of the rational
 surface would be unstable to localized ideal interchange modes \cite{mercier}.) Note that $\nu_L$ and $\nu_S$ are known as {\em Mercier indices}. 
 
 In general, the response of the plasma in the vicinity of a given rational surface to the RMP is predominately {\em tearing parity}\/ in nature \cite{rf4}. 
-For the case of a tearing parity response, the coefficients of the large solution to the left and the right of a rational surface have to be equal
+For the case of a tearing parity response, the coefficients of the large solution to the left and the right of a rational surface are equal
 to one another. In other words, $A_L^{\,+}=A_L^{\,-} = A_L$.  Note, however, that the coefficients of the small solution to the
 left and the right of a rational surface are not, in general, equal to one another. 
 
-\subsection{Plasma Response Equation}
+\subsection{Plasma response equation}
 Let us index the various rational surfaces in the plasma by means of an integer $k$. Note that this is possible even if there are an infinite number of
 such surfaces. Thus, the $k$th rational surface possesses the minor radius $r_k$, the resonant poloidal mode number $m_k$, the
 coefficient of the large solution $A_{L\,k}$, the coefficients of the small solution $A_{S\,k}^{\,\pm}$, and the Mercier indices 
@@ -460,22 +472,22 @@ $\nu_{L\,k}$ and $\nu_{S\,k}$. It is helpful to define the  quantities \cite{rf2
 {\mit\Psi}_k &= r_k^{\,\nu_{L\,k}}\left(\frac{\nu_{S\,k} -\nu_{L\,k}}{L_{m_k}^{\,m_k}}\right)_{r_k}^{1/2}A_{L\,k},\\[0.5ex]
 {\mit\Delta\Psi}_k &= r_k^{\,\nu_{S\,k}}\left(\frac{\nu_{S\,k} -\nu_{L\,k}}{L_{m_k}^{\,m_k}}\right)_{r_k}^{1/2}(A_{S\,k}^{\,+}-A_{S\,k}^{\,-}).
 \end{align}
-at each rational surface. Here, the complex dimensionless parameter ${\mit\Psi}_k$ is a measure of the reconnected magnetic flux
+at each rational surface. Here, the complex dimensionless parameter ${\mit\Psi}_k$ is a measure of the driven reconnected magnetic flux
 at the $k$th rational surface, whereas the complex dimensionless parameter ${\mit\Delta\Psi}_k$ is a measure of the strength of
 the radially  localized shielding current that flows around the surface. 
 
-The general response of a tokamak plasma to an RMP takes the form \cite{rf2,rf3}
+The  response of a tokamak plasma to an RMP takes the general form \cite{rf2,rf3}
 \begin{equation}\label{e58}
-{\mit\Delta\Psi}_k- \sum_{k'}E_{kk'}\,{\mit\Psi}_{k'}=\chi_k,
+{\mit\Delta\Psi}_k= \sum_{k'}E_{kk'}\,{\mit\Psi}_{k'}+\chi_k,
 \end{equation}
 and specifies the shielding current that is excited in the vicinity of the $k$th rational surface in response to reconnected magnetic
-flux at the other rational surfaces, and the RMP. Here, $E_{kk'}$ is an Hermitian matrix that can be determined entirely from the ideal-MHD o.d.e.s, (\ref{e47})
+flux at the other rational surfaces, as well as to the RMP. Here, $E_{kk'}$ is an Hermitian matrix that can be determined entirely from the ideal-MHD o.d.e.s, (\ref{e47})
 and (\ref{e48}), subject to physical boundary conditions at small and large $r$ \cite{rf2,rf3}. Moreover, the real quantity $E_{kk}$
 can be interpreted as the {\em tearing stability index}\/ \cite{fkr} of  a tearing mode that only reconnects magnetic flux at the
-$k$th rational surface. Finally, the $\chi_k$ specify the poloidal harmonics of the RMP itself \cite{rf3,rf4}. 
+$k$th rational surface. Finally, the $\chi_k$ specify the poloidal harmonics of the RMP  \cite{rf3,rf4}. 
 
-\subsection{Resistive Layers}
-In reality, the shielding current that flows in the vicinity of the $k$th rational surface does so in a thin resistive layer
+\subsection{Resistive layers}
+In reality, the shielding current that flows in the vicinity of the $k$th rational surface does so in a resistive layer
 whose thickness (in $r$), $\delta_k$, is much less than $r_k$ \cite{fkr}. We can define the complex dimensionless {\em layer response index}, 
 \begin{equation}\label{e59}
 {\mit\Delta}_k \equiv \frac{{\mit\Delta\Psi}_k}{{\mit\Psi}_k}, 
@@ -486,17 +498,16 @@ be combined to give
 \begin{equation}\label{e60}
 \sum_{k'} ({\mit\Delta}_k\,\delta_{kk'} -E_{kk'})\,{\mit\Psi}_k= \chi_k,
 \end{equation}
-where $\delta_{kk'}$ is a Kronecker delta symbol. The previous equation is termed the {\em plasma response equation}, and specifies the magnetic
+where $\delta_{kk'}$ is a Kronecker delta symbol. The previous equation is termed the {\em plasma response equation}, and specifies the 
+reconnected magnetic
 flux driven by the RMP at each rational surface in the plasma. 
 
-Note that the derivation of Eq.~(\ref{e60}) depends crucially  on the principle of {\em asymptotic matching}. According to this principle, 
-the plasma response is governed by the equations of perturbed, linearized, marginally-stable, ideal-MHD throughout most of the plasma. However, these equations become
+Note that the derivation of Eq.~(\ref{e60}) depends crucially  on the principle of {\em asymptotic matching}\/ \cite{fkr}. According to this principle, 
+the plasma response is governed by the equations of  linearized, marginally-stable, ideal-MHD throughout most of the plasma. However, these equations become
 singular at the various rational surfaces in the plasma. [See Eqs.~(\ref{e47}) and (\ref{e48}).] The singularities are resolved by asymptotically matching
-the ideal-MHD solution to resistive layer solutions at each rational surface in the plasma. However, this procedure is only valid as long as the
-thicknesses of the resistive layers are less than the distances between successive rational surfaces. Let us see whether this is
-the case close to the magnetic separatrix. 
+the ideal-MHD solution to resistive layer solutions at each rational surface in the plasma. 
 
-\subsection{Ideal Versus Vacuum Response}
+\subsection{Ideal and vacuum responses}
 Suppose, for the sake of argument, that the plasma only contains a single rational surface. In this case, the
 plasma response equation, (\ref{e60}),  reduces to
 \begin{equation}
@@ -507,7 +518,7 @@ Alternatively, Eq.~(\ref{e58}) yields
 {\mit\Delta\Psi}_k = E_{kk}\,{\mit\Psi}_k + \chi_k.
 \end{equation}
 We can distinguish two asymptotic limits. In the first limit, $|{\mit\Delta}_k|\gg |E_{kk}|$. In this limit, the shielding current excited at the
-rational surface is sufficiently strong that driven magnetic reconnection is strongly suppressed at the surface \cite{rf1,rf2}. In other words,
+rational surface is sufficiently strong that driven magnetic reconnection is largely suppressed at the surface \cite{rf1,rf2}. In other words,
 ${\mit\Psi}_k\simeq 0$. We term this an {\em ideal response}, because it is the exactly the same response as one would get by imposing the
 ideal-MHD flux-freezing  constraint that the topology of the magnetic field cannot change at the rational surface: i.e., ${\mit\Psi}_k=0$ \cite{boozer}. 
 In the second limit, $|{\mit\Delta}_k|\ll |E_{kk}|$. In this limit, the shielding current is too weak to prevent
@@ -516,28 +527,28 @@ We term this a {\em vacuum response}, because it is exactly the same response as
 vacuum constraint that no shielding current flows at the rational surface: i.e., ${\mit\Delta\Psi}_k=0$. 
 
 In a region of the plasma in which the response to the RMP lies in the ideal regime (i.e., $|{\mit\Delta}_k|/|E_{kk}|\gg 1$ at all rational surfaces), the perturbed magnetic field has
-a strong dependence on the equilibrium magnetic field, because this field determines the locations of the rational
+a strong dependence on the equilibrium magnetic field, because the equilibrium field determines the locations of the rational
 surfaces on which the constraints ${\mit\Psi}_k\simeq 0$ have to be imposed. On the other hand, in a region of the plasma in which the response lies in the vacuum
 regime (i.e., $|{\mit\Delta}_k|/|E_{kk}|\ll 1$ at all rational surfaces), the perturbed magnetic field has no (local) dependence on the equilibrium magnetic field. This is the case because we
 can write the perturbed field in a current-free region  in the form ${\bf b} = \nabla V$, where the vacuum potential satisfies
 $\nabla^2 V=0$, which completely independent of the equilibrium field. Moreover, writing the perturbed magnetic field in this form
-automatically satisfies the constraints that ${\mit\Delta\Psi}_k=0$ at the rational surfaces. Thus, there is no necessity for us to determine the locations of the
+automatically satisfies the constraints that ${\mit\Delta\Psi}_k=0$ at the rational surfaces. Thus, there is no need for us to determine the locations of the
 rational surfaces, which means that we do not have to employ a flux coordinate system, which implies that there is no reason for our
 adopted coordinate system to become singular anywhere. 
 
-\section{Behavior Close to Magnetic Separatrix}
+\section{Behavior close to magnetic separatrix}\label{separatrix}
 \subsection{Introduction}
 The aim of this section is to investigate asymptotic matching in the immediate vicinity of the magnetic separatrix. 
 
-\subsection{Spacing Between Successive Rational Surfaces}
+\subsection{Spacing between successive rational surfaces}
 Suppose that $r_{k+1}>r_k$ for all values of $k$. In other words, suppose that the rational surfaces are indexed in order of increasing minor radius.
 In the vicinity of the magnetic separatrix, Eqs.~(\ref{e37}) and (\ref{e38}) yield
 \begin{equation}
-\hat{r}_k\simeq \left[1-\exp\left(-\frac{m_k}{n\,\alpha_-}\right)\right]^{1/2}.
+\hat{r}_k\simeq \left[1-\exp\left(-\frac{m_k}{n\,\alpha_-}\right)\right]^{1/2}
 \end{equation}
 for $\hat{r}_k<1$, and 
 \begin{equation}
-\hat{r}_k= \left[1+\exp\left(-\frac{m_k}{n\,\alpha_+}\right)\right]^{1/2}.
+\hat{r}_k= \left[1+\exp\left(-\frac{m_k}{n\,\alpha_+}\right)\right]^{1/2}
 \end{equation}
 for $\hat{r}_k>1$. Here, $\hat{r}_k=r_k/a$. 
 
@@ -553,23 +564,24 @@ and
 for $\hat{r}_k>1$.
 Thus,
 \begin{equation}
-\hat{\epsilon}_k(\hat{r}_k)= \frac{1-\hat{r}_k^{\,2}}{2\,n\,\alpha_-\,\hat{r}_k}.
+\hat{\epsilon}_k(\hat{r}_k)= \frac{1-\hat{r}_k^{\,2}}{2\,n\,\alpha_-\,\hat{r}_k}
 \end{equation}
 for $\hat{r}_k<1$, and 
 \begin{equation}
-\hat{\epsilon}_k(\hat{r}_k)= \frac{\hat{r}_k^{\,2}-1}{2\,n\,\alpha_+\,\hat{r}_k}.
+\hat{\epsilon}_k(\hat{r}_k)= \frac{\hat{r}_k^{\,2}-1}{2\,n\,\alpha_+\,\hat{r}_k}
 \end{equation}
 for $\hat{r_k}>0$. 
+Note that the spacing between successive rational surfaces tends to zero linearly as the magnetic separatrix ($\hat{r}_k=1$) is approached. 
 
-\subsection{Magnetic Shear}\label{shear}
+\subsection{Magnetic shear}\label{shear}
 In the vicinity of the magnetic separatrix, the magnetic shear can be written
-\begin{equation}
-s(\hat{r}) \equiv \frac{\hat{r}}{q}\,\frac{dq}{d\hat{r}}\simeq - \frac{1}{-y\,\ln(2\,|y|)},
+\begin{equation}\label{e69}
+s(\hat{r}) \equiv \frac{\hat{r}}{q}\,\frac{dq}{d\hat{r}}\simeq -\frac{1}{y\,\ln(2\,|y|)},
 \end{equation}
 where $y=\hat{r}-1$.
-Note that the magnitude of the shear becomes infinite as the magnetic separatrix ($y=0$) is approached. 
+Observe that the magnitude of the shear becomes infinite as the magnetic separatrix ($y=0$) is approached. 
 
-\subsection{Resistive Layer Quantities}
+\subsection{Resistive layer quantities}
 It is helpful to define the following quantities that parameterize a general resistive layer \cite{layer}:
 \begin{align}
 {\mit\Lambda} &= 24 - \ln\left[\left(\frac{n_e}{10^6}\right)^{1/2}\left(\frac{e}{T_e}\right)\right],\\[0.5ex]
@@ -588,28 +600,28 @@ diffusivity, and $\chi_\phi(r)$ the perpendicular momentum diffusivity. Furtherm
 $\tau_A(r)$ the Alfv\'{e}n time, $\tau_\perp(r)$ the energy confinement time,  $\tau_\phi(r)$ the momentum confinement time,  $d_\beta(r)$
 the ion sound radius, and $S(r)$ the Lundquist number. 
 
-\subsection{Resistive Layer Equation}
-Let $Y(r)\,\exp[\,{\rm i}\,(m\,\theta-n\,\phi)]$ be the perturbed electron fluid stream-function in the laboratory frame. Consider the resistive layer centered on the $k$th rational surface. Let
+\subsection{Resistive layer equation}\label{layer}
+Let $Y(r)\,\exp[\,{\rm i}\,(m\,\theta-n\,\phi)]$ represent the perturbed electron fluid stream-function in the laboratory frame. Consider the resistive layer centered on the $k$th rational surface. Let
 $X=S^{\,1/3}\,(r-r_k)/r_k$, where $S$ is evaluated at radius $r_k$. We can write
 \begin{equation}
 \overline{Y}(p)= \int_{-\infty}^\infty Y(X)\,{\rm e}^{-{\rm i}\,p\,X}\,dX.
 \end{equation}
-The boundary conditions are that $Y(p)\rightarrow 0$ as $p\rightarrow\infty$, and 
+The boundary conditions are that $\overline{Y}(p)\rightarrow 0$ as $p\rightarrow\infty$, and 
 \begin{equation}\label{e79}
-Y(p)=Y_0 \left[\frac{S^{-1/3}\,{\mit\Delta}_k}{\pi\,p} + 1+{\cal O}(p)\right]
+\overline{Y}(p)=Y_0 \left[\frac{S^{-1/3}\,{\mit\Delta}_k}{\pi\,p} + 1+{\cal O}(p)\right]
 \end{equation}
 at small values of $p$ \cite{layer,cole}. Here, $Y_0$ is an arbitrary constant, and ${\mit\Delta}_k$ is the complex (dimensionless) layer response index introduced in Eq.~(\ref{e59}). 
 
-Suppose that the layer physics is controlled by the low-$\beta$,  three-field extended-MHD model described in Ref.~\cite{layer}. In this
+Suppose that the resistive layer physics is controlled by the low-$\beta$,  three-field, extended-MHD model described in Ref.~\cite{layer}. In this
 case, the Fourier transformed layer equations reduce to the following equation:
 \begin{equation}\label{e80}
-\frac{d}{dp}\!\left[A(p)\,\frac{dY_e}{dp}\right] - \frac{B(p)}{C(p)}\,p^2\,Y_e=0,
+\frac{d}{dp}\!\left[A(p)\,\frac{d\overline{Y}}{dp}\right] - \frac{B(p)}{C(p)}\,p^2\,\overline{Y}=0,
 \end{equation}
 where
 \begin{align}
 A &= \frac{(n\,s)^2\,p^2}{-{\rm i}\,(Q_E+Q_e)+p^2},\\[0.5ex]
 B &= - {\rm i}\,Q_E\,(Q_E+Q_i)-{\rm i}\,(Q_E+Q_i)\,(P_\varphi+P_\perp)\,p^2 + P_\varphi\,P_\perp\,p^4,\\[0.5ex]
-C &= - {\rm i}\,(Q_E+Q_e)+ [P_\perp-{\rm i}\,(Q_E+Q_i)\,D^{\,2}]\,p^2
+C &= - {\rm i}\,(Q_E+Q_e)+ \left[P_\perp-{\rm i}\,(Q_E+Q_i)\,D^{\,2}\right]p^2
 + (1+1/\tau)\,P_\varphi\,D^{\,2}\,p^4.\label{e83}
 \end{align}
 Here,
@@ -625,39 +637,39 @@ and
 \begin{equation}
 \omega_{\ast\,i} = -\frac{1}{e\,n_e}\,\frac{dp_i}{d\psi_p}
 \end{equation}
-is the {\em ion diamagnetic frequency}. Moreover, $\hat{d}_\beta=d_\beta/r$. As before, all quantities are evaluated at radius $r_k$. 
+is the {\em ion diamagnetic frequency}. Moreover, $p_i(r)$ is the ion pressure, and $\hat{d}_\beta=d_\beta/r$. As before, all quantities are evaluated at radius $r_k$. 
 
-\subsection{Solution of Resistive Layer Equation}
+\subsection{Solution of resistive layer equation}\label{layer1}
 As we saw in Sect.~\ref{shear}, the magnetic shear becomes very large as the magnetic separatrix is approached. If we treat $(n\,s)^2$ as much
-larger than the other parameters (e.g., $Q_E$, $Q_e$, $P_\perp$, $D$) that appear in Eqs.~(\ref{e80})--(\ref{e83}) then it is clear that the first term on the left-hand side of Eq.~(\ref{e80}) dominates the second term for $p\lesssim1$. In this case, we can solve the equation to give
+larger than the other parameters (e.g., $Q_E$, $Q_e$, $P_\perp$, $D$) that appear in Eqs.~(\ref{e80})--(\ref{e83}) then it is clear that the first term on the left-hand side of Eq.~(\ref{e80}) dominates the second term in the region  $p\lesssim1$. In this case, we can integrate  the equation to give
 \begin{equation}
-Y(p)= Y_0\left\{\frac{S^{-1/3}\,{\mit\Delta}_k}{\pi}\left[\frac{1}{p} + \frac{p}{{\rm i}\,(Q_E+Q_e)}\right] + 1+{\cal O}(p^2)\right\}
+\overline{Y}(p)= Y_0\left\{\frac{S^{-1/3}\,{\mit\Delta}_k}{\pi}\left[\frac{1}{p} + \frac{p}{{\rm i}\,(Q_E+Q_e)}\right] + 1+{\cal O}(p^2)\right\}
 \end{equation}
 for $p\lesssim 1$, where use has been made of Eq.~(\ref{e79}). Incidentally, the previous equation bears the hallmark of a {\em constant-$\psi$} layer response
 regime \cite{fkr,layer}. 
 
 Let $p=(n\,|s|)^{1/2}\,\hat{p}$. For $\hat{p}\gtrsim 1$, Eqs.~(\ref{e80})--(\ref{e83}) yield
 \begin{equation}
-\frac{d^2Y}{d\hat{p}^{\,2}} -\frac{B}{C}\,\hat{p}^{\,2}\,Y\simeq 0,
+\frac{d^2\overline{Y}}{d\hat{p}^{\,2}} -\frac{B}{C}\,\hat{p}^{\,2}\,\overline{Y}\simeq 0,
 \end{equation}
 where 
 \begin{align}
 B &= - {\rm i}\,Q_E\,(Q_E+Q_i)-{\rm i}\,(Q_E+Q_i)\,(P_\varphi+P_\perp)\,(n\,|s|)\,\hat{p}^{\,2} + P_\varphi\,P_\perp\,(n\,|s|)^2\,\hat{p}^{\,4}\nonumber\\[0.5ex]
 &\simeq  P_\varphi\,P_\perp\,(n\,|s|)^2\,\hat{p}^{\,4},\\[0.5ex]
-C &= - {\rm i}\,(Q_E+Q_e)+ [P_\perp-{\rm i}\,(Q_E+Q_i)\,D^{\,2}]\,(n\,|s|)\,\hat{p}^{\,2}
+C &= - {\rm i}\,(Q_E+Q_e)+ \left[P_\perp-{\rm i}\,(Q_E+Q_i)\,D^{\,2}\right](n\,|s|)\,\hat{p}^{\,2}
 + (1+1/\tau)\,P_\varphi\,D^{\,2}\,(n\,|s|)^2\,\hat{p}^{\,4}\nonumber\\[0.5ex]
 &\simeq (1+1/\tau)\,P_\varphi\,D^{\,2}\,(n\,|s|)^2\,\hat{p}^{\,4},
 \end{align}
 which reduces to 
 \begin{equation}
-\frac{d^2Y}{dp^2} - G\,p^2\,Y\simeq 0,
+\frac{d^2\overline{Y}}{dp^2} - G\,p^2\,\overline{Y}\simeq 0,
 \end{equation}
 where 
 \begin{equation}
 G = \frac{P_\perp}{(1+1/\tau)\,D^{\,2}\,n^2\,|s|^2}= \frac{\tau_A^{\,2/3}\,\tau_R^{\,1/3}}{\tau_\perp\,\hat{d}_\beta^{\,2}\,(n\,|s|)^2}.
 \end{equation}
 
-In the language of Ref.~\cite{layer}, we have a layer solution characterized by $k=2$ and $\nu=1/4$. 
+In the language of Ref.~\cite{layer}, we have found a constant-$\psi$ layer solution characterized by  $\nu=1/4$. 
 It follows from the analysis of Ref.~\cite{layer} that
 \begin{equation}
 S^{-1/3}\,{\mit\Delta}_k = \frac{\nu^{\,2\nu-1}\pi\,\Gamma(1-\nu)}{\Gamma(\nu)}\,[-{\rm i}\,(Q_E+Q_e)]\,G^{\,\nu},
@@ -668,23 +680,165 @@ Hence, in the continuum limit in which the resistive layers are very closely spa
 {\mit\Delta}_k(\hat{r})= -{\rm i}\,\frac{2\pi\,\Gamma(3/4)}{\Gamma(1/4)} \,
 \frac{n\,(\omega_E+\omega_{\ast\,e})\,\tau_A^{\,1/2}\,\tau_R^{\,3/4}}{\tau_\perp^{\,1/4}\,\hat{d}_\beta^{\,1/2}\,(n\,|s|)^{1/2}},
 \end{equation}
-where all terms on the right-hand side are evaluated at normalized radius $\hat{r}$. Thus, we deduce that the strong magnetic shear in
+where all terms on the right-hand side are evaluated at the normalized radius $\hat{r}$. Thus, we deduce that the strong magnetic shear in
 the vicinity of the magnetic separatrix forces all of the resonant layers in this region to lie in the so-called {\em diffusive-resistive}\/ regime 
 introduced in Ref.~\cite{layer}.
 
-The thickness of  a given resistive layer in $p$-space is $|G|^{-\nu}$ \cite{layer}, so the thickness in $\hat{r}$ space is
+Finally, the thickness of  a given resistive layer in $p$-space is $|G|^{-\nu}$ \cite{layer}, so the thickness in $\hat{r}$-space is
 \begin{equation}
 \hat{\delta}_k(\hat{r}) = \frac{\tau_A^{\,1/2}}{\tau_R^{\,1/4}\,\tau_\perp^{\,1/4}\,\hat{d}_\beta^{\,1/2}\,(n\,|s|)^{1/2}}.
 \end{equation}
 
-\funding{This research was funded by the  U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences under contract DE-FG02-04ER54742.}
-\ack{} 
+\subsection{Mercier indices}
+The resistive layer solutions discussed in Sects.~\ref{layer} and \ref{layer1} are premised on the assumption that the
+Mercier indices at the rational surfaces, $\nu_{L\,k}$ and $\nu_{S\,k}$,  take the respective values $0$ and $1$. 
+As is described in Ref.~\cite{rf5}, if this is not the case then the mismatch between the Mercier indices in the layer
+and those in the outer region (i.e., the region of the plasma that is governed by ideal-MHD) can be reconciled by matching the layer to the
+outer solution by means of an intermediate layer. However, the cylindrical expression for the Mercier interchange stability parameter takes the form 
+\begin{equation}
+D_{I\,k}=-\frac{\mu_0}{B_0^{\,2}}\left[\frac{2\,(1-q^2)}{s^2}\,\hat{r}\,\frac{dp}{d\hat{r}}\right]-\frac{1}{4},
+\end{equation}
+where $p(\hat{r})$ is the total plasma pressure, and all quantities are evaluated at the rational surface \cite{ggj}. 
+Although the magnetic separatrix, $\hat{r}=1$,  is not well-described by the cylindrical approximation, if we use the previous expression to roughly gauge how
+$D_{I\,k}$ varies in the vicinity of the separatrix then the fact that $q\sim \ln|\hat{r}-1|$, whereas
+ $|s|\sim 1/[|\hat{r}-1|\,\ln|\hat{r}-1|]$ [see Eqs.~(\ref{e38}) and (\ref{e69})], indicates that the strong magnetic shear in the vicinity of the
+ separaratrix ensures that $D_{I\,k}\rightarrow -1/4$.
+ In this  case, $\nu_{L\,k}\rightarrow 0$ and $\nu_{S\,k}\rightarrow 1$  [see
+ Eqs.~(\ref{nul}) and (\ref{nus})], and there is no need for an intermediate layer. 
+ 
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.5\textwidth]{Figure8.pdf}}
+\caption{Model safety-factor, electron temperature, and electron number density profiles at the edge of a typical JET  H-mode plasma. }\label{fig8}
+\end{figure}
 
-\data{The digital data used in the figures in this paper can be obtained from the author upon reasonable request.}
+\subsection{Plasma parameters}
+ Suppose that the safety-factor profile is characterized by $q_0=1.01$, $q_{95}=3.5$, and $q_{105}=4.0$, as  was previously assumed. 
+ 
+ We shall adopt the model edge electron temperature and 
+ number density profiles shown in Fig.~\ref{fig8}. These are modified hyperbolic tangent ({\rm mtanh}) profiles deduced from
+ Figs.~1 and 2 of Ref.~\cite{jet}, and represent a typical reactor-relevant high-density/low-temperature pedestal in a   JET H-mode plasma (discharge 84600). We shall assume that
+ $T_i=T_e$, for the sake of simplicity. 
+ 
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.5\textwidth]{Figure9.pdf}}
+\caption{Overlap criterion for the resistive layers associated with an $n=1$ RMP close to the magnetic
+separatrix of the JET plasma shown in Fig.~\ref{fig8}.}\label{fig9}
+\end{figure}
+
+Let us suppose that $\omega_E+ \omega_{\,\ast\,e}\simeq \omega_{\ast\,e}$ close to the magnetic separatrix. This is a reasonable assumption because we have no reason to imagine that the magnitude of $\omega_E$ greatly exceeds that of $\omega_{\ast\,e}$
+ in the pedestal region of an H-mode tokamak plasma. In fact, Fig.~3 of Ref.~\cite{diiid} suggests that the magnitude of 
+ $\omega_E$ is about a factor of 5 times smaller than that of $\omega_{\ast\,e}$ in the pedestal of a typical DIII-D H-mode plasma (discharge
+ 158115). 
+ 
+ We can complete our model by adopting the following JET-like values of the remaining unspecified plasma parameters: $B_0=3.45\,{\rm T}$, $R_0=2.96\,{\rm m}$, $a=1.25\,{\rm m}$, $Z=10.0$,
+ $M=2.0$, $\chi_\perp=\chi_\phi=1\,{\rm m^{2}/s}$ \cite{jetx}. Here, $M$ is the ion mass number, and the rather large value of $Z$ is meant to account for the presence of a significant fraction
+ of trapped particles, in addition to plasma impurities, close to the plasma boundary. 
+
+ \begin{figure}[t]
+\centerline{\includegraphics[width=0.5\textwidth]{Figure10.pdf}}
+\caption{Overlap criterion for the resistive layers associated with an $n=4$ RMP close to the magnetic
+separatrix of the JET plasma shown in Fig.~\ref{fig8}.}\label{fig10}
+\end{figure}
+ 
+\subsection{Overlap criterion}
+The top panel of Fig.~\ref{fig9} shows the spacing (in $\hat{r}$) between successive rational surfaces $\hat{\epsilon}_k({\mit\Psi})$, as well as the resistive 
+layer width  (in $\hat{r}$), $\hat{\delta}_k({\mit\Psi})$, calculated in the vicinity of the magnetic separatrix for the case of an $n=1$ RMP applied to our model JET equilibrium. 
+It can be seen that the spacing between rational surfaces and the resistive layer width both tend to zero as the separatrix (${\mit\Psi}=1$) is approached. However, the rational surface spacing tends to zero faster than the layer width. Consequently, the resistive layers overlap one another
+in the immediate vicinity of the separatrix. In fact, the figure indicates that the region of overlap extends from ${\mit\Psi}=0.9985$ to $1.0009$. 
+Note, from the figure, that the resistive layers overlap well before either the spacing between successive rational surfaces or the layer thickness
+fall below the ion gyroradius (which is approximately equal to $d_\beta$). 
+
+It should be noted that the spacing between successive rational surfaces, $\hat{\epsilon}_k$, and the resistive layer width, $\hat{\delta}_k$, exhibit
+no dependence on the angular coordinates  $\theta$ and $\phi$, when expressed in terms of the radial flux coordinate $\hat{r}$.
+On the other hand, in the vicinity of the magnetic separatrix,  the  spacing and width in the $R$-$Z$ plane exhibit strong dependences on the angular coordinates. This behavior occurs because $|\nabla\hat{r}|\sim \ell\,\ln|{\mit\Psi}-1|$, where $\ell$ is the distance from the X-point in the $R$-$Z$ plane.
+Nevertheless, two neighboring resistive layers that overlap at the mid-plane  ($Z=0$)  also overlap in the vicinity of the X-point, and vice versa. 
+
+The middle panel of Fig.~\ref{fig9} shows the magnitude of the layer response index, $|{\mit\Delta}_k|$. It can be seen that this quantity is zero
+at the separatrix, but increases steeply as we move from the separatrix into the interior of the plasma, indicating that strong
+shielding currents are excited in the plasma interior. The steep increase is mostly due to the fact that the magnetic shear exhibits a
+steep decrease as we move away from the separatrix.
+On the other hand, the magnitude of the layer response index seems to
+asymptote to a constant value as we move from the separatrix into the scape-off layer (SOL) (i.e., the region ${\mit\Psi}>1$), indicating that only comparatively weak
+shielding currents are excited in the SOL. The magnitude of the index fails to exhibit a steep increase as we move into the SOL,
+despite the fact that the magnetic shear is strongly decreasing, because the electron temperature falls off rapidly with increasing distance from the separatrix.
+ In reality, the value of $|{\mit\Delta}_k|$ in the SOL is probably an overestimate, because we have not taken into account the fact that shielding current filaments in the SOL run partially through the divertor plate, which is likely to increase the effective resistivity of rational magnetic flux-surfaces in this region. 
+
+The lower panel of Fig.~\ref{fig9} shows the ratio $|{\mit\Delta}_k|/(-E_{kk})$. Here, we have used the cylindrical result $E_{kk}=-2\,|m|$
+to estimate $E_{kk}$. It is clear that $|{\mit\Delta}_k|/(-E_{kk})\gg 1$ in the interior of the plasma. In other words, the plasma interior 
+exhibits an ideal response to the RMP. However, $|{\mit\Delta}_k|/(-E_{kk})\lesssim 1$ in the overlap region and the SOL. In other words,  
+it would not be unreasonable to characterize the response of the overlap region and the  SOL as being vacuum-like. 
+
+Figure~\ref{fig10} shows analogous data to that displayed in Fig.~\ref{fig9} for the case of an $n=4$ RMP. In this case, the region of resistive layer overlap
+extends from ${\mit\Psi}= 0.9952$ to $1.0043$. Thus, the width  in ${\mit\Psi}$ of the overlap region exhibits a roughly linearly scaling with $n$. 
+As before, the response of the plasma interior is ideal, whereas that of the overlap region and the  SOL could reasonably
+be characterized as being vacuum-like. 
+
+\subsection{Discussion}
+We have seen that rational surfaces accumulate in the vicinity of the magnetic separatrix. Moreover, the resistive layers, 
+centered on the various rational surfaces, merge into one another in a very narrow region that straddles the  separatrix. 
+Furthermore, while the plasma response in the plasma interior lies in the ideal regime, that in the region of resistive layer
+overlap and the SOL can reasonably be modeled as being vacuum-like. It follows that the magnetic perturbation in the plasma interior is governed by Eqs.~(\ref{e47}) and (\ref{e48}). In order to solve these equations, we need to know the locations of all of the rational magnetic flux-surfaces
+in this region, which implies that we must adopt a flux coordinate system. On the other hand, in the overlap region and the SOL, we can
+write ${\bf b}=\nabla V$, where $\nabla^2 V=0$, which automatically ensures that the response is vacuum-like. In this case, there is
+no need to know the locations of the rational surfaces, which implies that it is not necessary to adopt a flux coordinate system. 
+
+We are now in a position to formulate a practical, yet physically justified,  approach to calculating the response of a magnetically
+diverted tokamak plasma to an RMP. Let the inner boundary of the region of resistive layer overlap that straddles the 
+magnetic separatrix lie at ${\mit\Psi}={\mit\Psi}_c$. Note that ${\mit\Psi}_c<1$. We must solve Eqs.~(\ref{e47}) and (\ref{e48}) in the region $0<{\mit\Psi}<{\mit\Psi}_c$, using
+the flux coordinate system specified in Eq.~(\ref{fluxc}), and treating the region ${\mit\Psi}>{\mit\Psi}_c$ as a vacuum. Of course, this
+is the approach taken in existing plasma response codes such as GPEC \cite{ipec}, in which ${\mit\Psi}_c$ is given an arbitrary value that lie just below unity, such as $0.998$. (This course of action is adopted because GPEC cannot deal with the singularity of the flux coordinate system at ${\mit\Psi}=1$, and
+is taken in the hope that the neglect of a very narrow strip of plasma lying just inside the separatrix,
+as well as the plasma in the SOL,  does not unduly affect the results of the calculation.) However, the analysis of this paper allows us to
+determine the correct value of ${\mit\Psi}_c$ from the edge plasma parameters, and also justifies the neglect of the plasma in the region ${\mit\Psi}>{\mit\Psi}_c$.  The fact that the region ${\mit\Psi}>{\mit\Psi}_c$ is treated as a vacuum
+means that rational surfaces in this region do not contribute to the plasma response. In other words, the plasma response
+calculation only needs to take a finite, rather than an infinite,  number of rational surfaces into account. Indeed, for an $n=1$ RMP, applied to our model JET equilibrium, we
+only need to include rational surfaces whose resonant poloidal mode numbers are less than 8. On the other hand, for an $n=4$ RMP, we  need to include all rational surfaces whose resonant poloidal mode numbers are less than 24. 
+Because the flux coordinate
+system is only required in the region $0<{\mit\Psi}<{\mit\Psi}_c$,  where ${\mit\Psi}_c<1$,  the fact that the system becomes singular at ${\mit\Psi}=1$ is irrelevant. Indeed, we are
+free to choose a convenient non-singular coordinate system in the vacuum region, ${\mit\Psi}>{\mit\Psi}_c$. 
+
+\section{Summary and conclusions}\label{sum}
+In Sect.~\ref{stwo}, we construct a simple model of a magnetically diverted tokamak plasma. We argue that the commonly used term ``last closed magnetic flux-surface" (LCFS) is misleading. 
+In fact, all equilibrium magnetic flux-surfaces are closed. However, flux-surfaces that lie outside the magnetic separatrix (i.e., the flux-surface that
+contains the X-point) are only partially occupied by plasma. We show that it is possible to calculate  unique values of the safety-factor 
+on flux-surfaces that lie both inside and outside the magnetic separatrix. We conclude  that rational magnetic flux-surfaces exist in both regions.  The safety-factor is shown to diverge logarithmically as the magnetic separatrix is approached. 
+
+ A more realistic model of a magnetically diverted 
+tokamak plasma is introduced in Sect.~\ref{sthree}. 
+
+In Sect.~\ref{response}, we show that the response of a magnetically diverted tokamak plasma to an externally generated, static,  RMP can be formulated
+as an asymptotic matching problem. The response throughout most of the plasma is governed by the equations of
+linearized,  marginally-stable, ideal-MHD. However, these equations are singular at the various rational surfaces in the plasma. 
+The singularities are resolved by asymptotically matching the ideal-MHD solution to resistive layer solutions centered on the rational
+surfaces. The fact that the safety-factor diverges logarithmically as the magnetic separatrix is approached means that, in principle, the asymptotic matching problem involves an
+infinite number of coupled rational surfaces, the majority of which are located very close to the magnetic separatrix. 
+
+In Sect.~\ref{separatrix}, we examine the asymptotic matching problem close to the magnetic separatrix. We find that, due to the strong magnetic
+shear in the vicinity of the separatrix, both the spacing between successive rational surfaces and the resistive layer thickness tend to zero
+as the separatrix is approached. However, the rational surface spacing tends to zero faster. Consequently, there exits a radially thin region, that
+straddles the magnetic separatrix, in which the resistive layers overlap. When we calculate the response to the RMP of the resistive layers in the overlap
+region, as well as those in the SOL,  we find that the shielding currents excited in the layers are comparatively feeble, which implies that the plasma response to the RMP in these regions is essentially vacuum-like.  On the other hand, the shielding currents excited in resistive layers that lie in the interior of the
+plasma are comparatively strong, which implies that the plasma response to the RMP in this region is essentially ideal. We are thus able to
+formulate a practical, yet physically justified,  approach to calculating the response of a magnetically
+diverted tokamak plasma to an RMP. Essentially, we treat the region of the plasma that lies outside the inner boundary of the
+overlap region, which lies at ${\mit\Psi}={\mit\Psi}_c$, where ${\mit\Psi}_c<1$,  as a vacuum. This means that  that rational surfaces that lie in the
+region ${\mit\Psi}>{\mit\Psi}_c$ do not contribute to the plasma response. Hence, a plasma response calculation only needs to take a
+finite number of rational surfaces into account. Our analysis enables us to determine ${\mit\Psi}_c$ from the 
+edge plasma parameters. We find that ${\mit\Psi}_c= 0.9985$ for an $n=1$
+RMP,  and ${\mit\Psi}_c=0.9952$ for an $n=4$ RMP,  in  a typical JET H-mode plasma. 
+
+%\funding{This research was funded by the  U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences under contract DE-FG02-04ER54742.}
+%\ack{} 
+\section*{Acknowledgements}
+This research was funded by the  U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences under contract DE-FG02-04ER54742.
+
+\section*{Data availability statement}
+%\data{The digital data used in the figures in this paper can be obtained from the author upon reasonable request.}
+The digital data used in the figures in this paper can be obtained from the author upon reasonable request.
 
 \begin{thebibliography}{99}\baselineskip 5ex
 
-\bibitem{wesson} J.A.~Wesson, {\em Tokamaks}, 4th edition. (Oxford University Press, Oxford UK, 2011). 
+\bibitem{wesson} J.A.~Wesson, {\em Tokamaks}, 4th edition, (Oxford University Press, Oxford UK, 2011). 
 
 \bibitem{boozer} A.H.~Boozer, Rev.\ Mod.\ Phys.\ {\bf 76}, 1071 (2004).
 
@@ -692,13 +846,13 @@ The thickness of  a given resistive layer in $p$-space is $|G|^{-\nu}$ \cite{lay
 
 \bibitem{pom} N.~Pomphrey and A.~Reiman, Phys.\ Fluids B {\bf 4}, 938 (1992). 
 
-\bibitem{ipec} J.-K.Park,  A.H.~Boozer and  A.H.~Glasser,  Phys.\ Plasmas {\bf 14}, 052110 (2007). 
+\bibitem{ipec} J.-K.~Park,  A.H.~Boozer and  A.H.~Glasser,  Phys.\ Plasmas {\bf 14}, 052110 (2007). 
 
 \bibitem{epec} R.~Fitzpatrick, Phys.\ Plasmas {\bf 27}, 102511 (2020).
 
 \bibitem{gpec} Q.M.~Hu, J.-K.~Park, N.C.~Logan, S.M.~Yang, B.A.~Grierson, R.~Nazikian and Q.~Yu, Nucl.\ Fusion {\bf 61}, 106006 (2021). 
 
-\bibitem{boz} R.D.~Hazeltine and J.D.~Meiss, Phys. Reports, {\bf 121}, 1 (1984).
+\bibitem{boz} R.D.~Hazeltine and J.D.~Meiss, Phys.\ Reports, {\bf 121}, 1 (1984).
 
 \bibitem{rf2} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin and C.M.~Roach, Nucl.\ Fusion {\bf 33}, 1533 (1993).
 
@@ -717,6 +871,18 @@ The thickness of  a given resistive layer in $p$-space is $|G|^{-\nu}$ \cite{lay
 \bibitem{cole} A.~Cole and R.~Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
 
 \bibitem{as1} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}, (Dover, New York NY, 1964), chap.~6.
+
+\bibitem{rf5} R.~Fitzpatrick,  Phys.\ Plasmas {\bf 32}, 062509 (2025).
+
+\bibitem{ggj} A.H.~Glasser, J.M.~Greene and J.L.~Johnson, Phys.\ Fluids {\bf 19}, 567 (1976).
+
+\bibitem{jet} L.~Frassinetti, S.~Saarelma, G.~Verdoolaege, M.~Groth, J.C.~Hillesheim, P.~Bilkova,
+P.~Bohm, M.~Dunne, R.~Fridstr\"{o}m, E.~Giovannozzi, et al., Nucl.\ Fusion {\bf 61}, 016001 (2021).
+
+\bibitem{jetx} Z.S.~Hartwig and Y.A.~Podpaly, {\em Magnetic Fusion Energy Formulary}, (Massachusetts Institute of Technology, Cambridge MA, 2011).
+
+\bibitem{diiid} R.~Nazikian, C.~Paz-Solden, J.D.~Callen, J.S.~deGrassie, D.~Eldon, T.E.~Evans, N.M.~Ferraro,
+B.A.~Grierson, R.J.~Groebner, S.R.~Haskey, et al., Phys.\ Rev.\ Lett.\ {\bf 114}, 105002 (2015).
 
 \end{thebibliography}
 
