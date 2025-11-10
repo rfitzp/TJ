@@ -429,7 +429,7 @@ for r in rr:
     pp.append (math.log10(Pperp(r)))
     ps.append (Psi(r))
 
-fig = plt.figure (figsize = (5.0, 7.0))
+fig = plt.figure (figsize = (6.0, 7.0))
 
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 

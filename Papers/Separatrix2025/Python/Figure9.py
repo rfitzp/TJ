@@ -418,7 +418,7 @@ for n in range(len(qx) - 1):
     if (d1[n] - ee[n]) * (d1[n+1] - ee[n+1]) < 0.:
         print ("Psi = %11.4e q = %11.4e m = %3d" % (1.+ps[n], qx[n], int(ntor*qx[n]))) 
 
-fig = plt.figure (figsize = (5.0, 7.0))
+fig = plt.figure (figsize = (6.0, 7.0))
 
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
@@ -428,7 +428,7 @@ plt.subplot (3, 1, 1)
 plt.xlim (ps[0], ps[-1])
  
 plt.plot (ps, db, color = 'green', linewidth = 2, linestyle = 'dashed',  label = r'$\log_{10}(\hat{d}_\beta)$')
-plt.plot (ps, ee, color = 'red',   linewidth = 2, linestyle = 'solid',   label = '$log_{10}(\hat{\epsilon}_k)$')
+plt.plot (ps, ee, color = 'red',   linewidth = 2, linestyle = 'solid',   label = '$\log_{10}(\hat{\epsilon}_k)$')
 plt.plot (ps, d1, color = 'blue',  linewidth = 2, linestyle = 'solid',   label = '$\log_{10}(\hat{\delta}_k)$')
 
 plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
@@ -472,5 +472,5 @@ plt.ylabel (r'$|\Delta_k|/(-E_{kk})$', fontsize = "15")
       
 plt.tight_layout ()
 
-plt.show ()
-#plt.savefig ("Figure9.pdf")
+#plt.show ()
+plt.savefig ("Figure9.pdf")

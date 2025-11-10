@@ -179,7 +179,7 @@ def Get_q1 (y):
 
     return qval
 
-yy = np.logspace (-1., -1.e-4, 5000, base = 10.0)
+yy = np.logspace (-1., -1.e-5, 5000, base = 10.0)
 qq = []
 pp = []
 pl = []
@@ -261,10 +261,10 @@ plt.plot    (pl,  qq,  color = "red",   linewidth = 2)
 plt.plot    (pl1, qq1, color = "blue",  linewidth = 2)
 plt.plot    (pl2, qq2, color = "green", linewidth = 2)
 
-plt.xlim (0., 3.5)
+plt.xlim (0., 3.25)
 plt.ylim (0., 7.5)
 
-plt.xlabel (r'$-\log_{10}(|1-\Psi|)$', fontsize = "20")
+plt.xlabel (r'$-\log_{10}(|\Psi-1|)$', fontsize = "20")
 plt.ylabel (r'$q$',                    fontsize = "20")
 
 plt.tight_layout ()
