@@ -1,7 +1,7 @@
 {
-    "NTOR":  2,        // Toroidal mode number
+    "NTOR":  1,        // Toroidal mode number
     "q0":    1.1,      // Central safety-factor
-    "qa":    2.986,    // Edge safety-factor
+    "qa":    4.1,    // Edge safety-factor
     "Fixed": 0,        // Flag for fixed boundary calculation  
 
     "eps":   1.0e-4,   // Distance of closest approach to magnetic axis

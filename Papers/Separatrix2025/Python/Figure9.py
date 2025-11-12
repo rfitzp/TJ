@@ -49,7 +49,7 @@ ntor = 1.
 # .........
 # Plot data
 # .........
-rmin = 0.994
+rmin = 0.991
 rmax = 1.008
 
 # .................................
@@ -416,7 +416,7 @@ for r in rrr:
 for n in range(len(qx) - 1):
 
     if (d1[n] - ee[n]) * (d1[n+1] - ee[n+1]) < 0.:
-        print ("Psi = %11.4e q = %11.4e m = %3d" % (1.+ps[n], qx[n], int(ntor*qx[n]))) 
+        print ("Psi = %11.4e Psi-1 = %11.4e q = %11.4e m = %3d" % (1.+ps[n], ps[n], qx[n], int(ntor*qx[n])))    
 
 fig = plt.figure (figsize = (6.0, 7.0))
 
@@ -433,6 +433,9 @@ plt.plot (ps, d1, color = 'blue',  linewidth = 2, linestyle = 'solid',   label =
 
 plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
 
+plt.axvline (-1.4747e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.axvline ( 9.1388e-04, color = 'black', linewidth = 1, linestyle = 'dotted')
+
 plt.ticklabel_format (style = 'sci', axis = 'x', scilimits = (0, 0))
 
 plt.xlabel (r'$\Psi-1$', fontsize = "15")
@@ -443,11 +446,14 @@ plt.subplot (3, 1, 2)
 
 plt.xlim (ps[0], ps[-1])
 
-plt.ylim (0., 30.)
+plt.ylim (0., 45.)
 
 plt.plot (ps, d2, color = 'green',  linewidth = 2, linestyle = 'solid')
 
 plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
+
+plt.axvline (-1.4747e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.axvline ( 9.1388e-04, color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.ticklabel_format (style = 'sci', axis = 'x', scilimits = (0, 0))
 
@@ -458,18 +464,23 @@ plt.subplot (3, 1, 3)
 
 plt.xlim (ps[0], ps[-1])
 
-plt.ylim (0., 2.5)
+plt.ylim (0., 3.75)
 
 plt.plot (ps, d3, color = 'red',  linewidth = 2, linestyle = 'solid')
 
 plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
 plt.axhline (1., color = 'black', linewidth = 1, linestyle = 'dotted')
 
+plt.axvline (-1.4747e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.axvline ( 9.1388e-04, color = 'black', linewidth = 1, linestyle = 'dotted')
+
 plt.ticklabel_format (style = 'sci', axis = 'x', scilimits = (0, 0))
 
 plt.xlabel (r'$\Psi-1$',             fontsize = "15")
 plt.ylabel (r'$|\Delta_k|/(-E_{kk})$', fontsize = "15")
-      
+
+plt.yticks([0, 1, 2, 3])
+
 plt.tight_layout ()
 
 #plt.show ()

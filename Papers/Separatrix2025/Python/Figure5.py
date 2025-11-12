@@ -233,14 +233,14 @@ plt.rc ('ytick', labelsize = 20)
 
 plt.subplot (1, 1, 1)
 
+plt.plot ((-0.3, 0.3), (Y_d, Y_d),  color = 'black', linewidth = 3.)
+
 plt.axis    ('equal')  
 plt.plot    (X_points1, Y_points1, color = "red",   linewidth = 2)
 plt.plot    (X_points3, Y_points3, color = "green", linewidth = 2)
 plt.plot    (X_points2, Y_points2, color = "blue",  linewidth = 2)
 plt.axhline (0.,                   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (0.,                   color = 'black', linewidth = 1.5, linestyle = 'dotted')
-
-plt.plot ((-0.3, 0.3), (Y_d, Y_d),  color = 'black', linewidth = 3.)
 
 plt.plot (0., 0.,  'ko')
 
