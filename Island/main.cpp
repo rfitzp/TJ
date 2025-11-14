@@ -15,5 +15,5 @@ int main (int argc, char** argv)
   Island island;
   island.Solve (1);
 
-    return 0;
+  return 0;
 }

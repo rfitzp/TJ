@@ -1178,6 +1178,21 @@ FILE* Utility::OpenFiler (char* filename)
   return file;
 }
 
+// #######################################
+// Function to open new file for appending
+// #######################################
+FILE* Utility::OpenFilea (char* filename)
+{
+  FILE* file = fopen (filename, "a");
+  if (file == NULL) 
+    {
+      printf ("Utility::OpenFilea: Error opening data-file: %s\n", filename);
+      exit (1);
+    }
+  return file;
+}
+
+
 // ################################################################
 // Function to check that directory exists, and create it otherwise
 // ################################################################

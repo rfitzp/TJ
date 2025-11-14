@@ -205,6 +205,8 @@ public:
   FILE* OpenFilew (char* filename);
   // Open file for reading
   FILE* OpenFiler (char* filename);
+  // Open file for appending
+  FILE* OpenFilea (char* filename);
 
   // Check that directory exists, and create it otherwise
   bool CreateDirectory (const char* path);

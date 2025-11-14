@@ -1,0 +1,25 @@
+{
+    "NTOR":   1,        // Toroidal mode number
+    "q0":     1.01,     // Central safety-factor
+    "nu":     2.1,      // Current peaking factor
+    "alpha":  0.4,      // X-point parameter
+
+    "eps":    1.0e-4,   // Distance of closest approach to magnetic axis
+    "del":    1.0e-8,   // Distance of closest approach to rational surface
+    "EPS":    1.0e-6,   // Regularization parameter for logarithm
+    "Psimax": 0.9999,   // Poloidal flux at effective plasma boundary
+    "Nr":     10000,    // Number of radial gridpoints in output
+
+    "q0_sta": 1.01,     // Start value for q0 scan
+    "q0_end": 3.5,      // End value for q0 scan
+    "q0_num": 1000,     // Number of points in q0 scan
+
+    "nu_sta": 2.01,     // Start value for nu scan
+    "nu_end": 7.5,      // End value for nu scan
+    "nu_num": 1000,     // Number of points in nu scan
+
+    "acc":    1.0e-12,  // Integration accuracy
+    "h0":     1.0e-4,   // Initial integration step-length
+    "hmin":   1.0e-10,  // Minimum integration step-length
+    "hmax":   1.0e-3    // Maximum integration step-length
+}
