@@ -223,6 +223,7 @@ void TearX::Solve (int flag)
   rr  = new double[Nr];
   qq  = new double[Nr];
   PSI = new double[Nr];
+  rho = new double[Nr];
 
   // ------------------
   // Set up radial grid
@@ -246,6 +247,7 @@ void TearX::Solve (int flag)
   h           = h0;
   count       = 0;
   PSI[0]      = 0.;
+  rho[0]      = 0.;
 
   for (int i = 1; i < Nr; i++)
     {
@@ -263,26 +265,33 @@ void TearX::Solve (int flag)
   for (int i = 0; i < Nr; i++)
     {
       PSI[i] /= PSIa;
+      rho[i] = sqrt (PSI[i]);
     }
 
   q_spline = gsl_spline_alloc (gsl_interp_cspline, Nr);
   P_spline = gsl_spline_alloc (gsl_interp_cspline, Nr);
+  R_spline = gsl_spline_alloc (gsl_interp_cspline, Nr);
 
   q_acc = gsl_interp_accel_alloc ();
   P_acc = gsl_interp_accel_alloc ();
+  R_acc = gsl_interp_accel_alloc ();
 
   gsl_spline_init (q_spline, rr,  qq,  Nr);
   gsl_spline_init (P_spline, PSI, rr,  Nr);
+  gsl_spline_init (R_spline, rr,  rho, Nr);
 
   r95 = gsl_spline_eval (P_spline, 0.95, P_acc);
-  q95 = gsl_spline_eval (q_spline, r95,  P_acc);
+  R95 = gsl_spline_eval (R_spline, r95,  R_acc);
+  q95 = Getq (r95);
+  s95 = GetShear (r95);
+  S95 = R95 * gsl_spline_eval_deriv (q_spline, r95, q_acc) /q95 /gsl_spline_eval_deriv (R_spline, r95, R_acc);
 
   rmax = gsl_spline_eval (P_spline, Psimax, P_acc);
   qmax = gsl_spline_eval (q_spline, rmax,   P_acc);
 
   if (flag == 0)
-    printf ("\nr95  = %-10.3e q95  = %-10.3e\n",
-	    r95, q95);
+    printf ("\nr95  = %-10.3e R95  = %-10.3e q95  = %-10.3e s95 = %-10.3e S95 = %10.3e\n",
+	    r95, R95, q95, s95, S95);
   if (flag == 0)
     printf ("rmax = %-10.3e qmax = %-10.3e\n\n",
 	    rmax, qmax);
@@ -302,6 +311,7 @@ void TearX::Solve (int flag)
   // ---------------
   mres  = new int   [nres];
   rres  = new double[nres];
+  Pres  = new double[nres];
   sres  = new double[nres];
   Dres  = new double[nres];
   Psi.resize (Nr, nres);
@@ -356,6 +366,7 @@ void TearX::Solve (int flag)
       // ----------
       mres[isurf] = mmin + isurf;
       rres[isurf] = rs;
+      Pres[isurf] = pow (gsl_spline_eval (R_spline, rres[isurf],  R_acc), 2.);
       sres[isurf] = sr;
       Dres[isurf] = Delta;
     }
@@ -377,20 +388,20 @@ void TearX::Solve (int flag)
 	      q0, qq[Nr-1]/qc, q95, nres, mres[0], mres[nres-1]);
 	      
       for (int i = 0; i < nres; i++)
-	fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e\n",
-		 q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i]);
+	fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e %11.4e\n",
+		 q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i], Pres[i]);
       fclose (file);
     }
   if (flag == 2)
     {
       FILE* file = OpenFilea ("../Outputs/TearX/Scannu.txt");
       
-      printf ("nu = %-10.3e qa/qc = %-10.3e q95 = %-10.3e nres = %-3d m = (%-3d, %-3d)\n",
+      printf ("nu = %-10.3e qa/qc = %-10.3e q95 = %-10.3e nres = %-3d m = (%d, %d)\n",
 	      nu, qq[Nr-1]/qc, q95, nres, mres[0], mres[nres-1]);
 	      
       for (int i = 0; i < nres; i++)
-	fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e\n",
-		 q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i]);
+	fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e %11.4e\n",
+		 q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i], Pres[i]);
       fclose (file);
     }
   
@@ -399,9 +410,10 @@ void TearX::Solve (int flag)
   // -------
   delete[] rr;   delete[] ss;   delete[] JJ;   delete[] JJp; delete[] lvals;
   delete[] mres; delete[] rres; delete[] Dres; delete[] PSI; delete[] sres;
+  delete[] rho;  delete[] Pres;
 
-  gsl_spline_free (q_spline);    gsl_spline_free (P_spline);
-  gsl_interp_accel_free (q_acc); gsl_interp_accel_free (P_acc);
+  gsl_spline_free (q_spline);    gsl_spline_free (P_spline);    gsl_spline_free (R_spline);
+  gsl_interp_accel_free (q_acc); gsl_interp_accel_free (P_acc); gsl_interp_accel_free (R_acc);
 }
 
 // #####################################
@@ -451,6 +463,8 @@ void TearX::WriteNetcdf ()
       m_x.putVar (mres);
       NcVar rs_x  = dataFile.addVar ("rres",   ncDouble, s_d);
       rs_x.putVar (rres);
+      NcVar Ps_x  = dataFile.addVar ("Pres",   ncDouble, s_d);
+      Ps_x.putVar (Pres);
       NcVar ss_x  = dataFile.addVar ("sres",   ncDouble, s_d);
       ss_x.putVar (sres);
       NcVar D_x   = dataFile.addVar ("Dres",   ncDouble, s_d);
@@ -503,7 +517,7 @@ double TearX::Getq (double r)
   double nu2 = nu - 2.;
   double q;
 
-  double f  = (1. - pow (or2, nu)) /q0/nu;
+  double f = (1. - pow (or2, nu)) /q0/nu;
   if (r > 1.)
     {
       f = 1. /q0/nu;
@@ -574,7 +588,7 @@ double TearX::FindRationalSurface ()
 {
   double rs = -1.;
   
-  int N = 1000;
+  int N = 10000;
   for (int i = 0; i < N; i++)
     {
       double r1 = double (i)   /double (N);

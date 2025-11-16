@@ -7,17 +7,28 @@
 // toroidal mode number.
 
 // All lengths normalized to a (minor radius of plasma).
+// Major radius of plasma is R_0.
 // So r = 0 is magnetic axis and r = 1 is plasma/vacuum interface.
 // All magnetic field-strengths normalized to B_0 (on-axis toroidal magnetic field-strength).
 
 // Equilibrium profiles:
 
-//  Safety-factor profile is q(r) = r^2 /f(r)
+//  Safety-factor profile is q(r) = r^2 /f(r) - alpha ln(|1 - r^2| + EPS) where
 //
-//  f(r) = (1 /nu/q0) [1 - (1 - r^2)^nu] - alpha ln(1 - r^2)
+//   f(r) = (1 /nu/q0) [1 - (1 - r^2)^nu]).
+//
+//  Normalized current profile is
+//
+//   J(r) = (2/q0) (1 - r^2)^(nu-1).
 //
 // q0 is safety-factor on magnetic axis.
-// qa = nu * q0 is cylindrical safety-factor at plasma/vacuum interface.
+// qc = nu * q0 is cylindrical safety-factor at plasma/vacuum interface.
+//
+//  Electron number density, electron temperature, and ion temperature profiles are
+//
+//   n_e(r) = n_e0 (1 - r^2)^nu_ne + (1/2) Delta_ne (1 - tanh[(r - r_ne) /delta_ne]),
+//   T_e(r) = T_e0 (1 - r^2)^nu_Te + (1/2) Delta_Te (1 - tanh[(r - r_Te) /delta_Te]),
+//   T_i(r) = T_i0 (1 - r^2)^nu_Ti + (1/2) Delta_Ti (1 - tanh[(r - r_Ti) /delta_Ti]).
 
 // Class uses following external libraries:
 //  nclohmann JSON library (https://github.com/nlohmann/json)
@@ -72,7 +83,10 @@ class TearX: private Utility
   // Calculation data
   // ----------------
   double            r95;      // Radius of 95% flux-surface
+  double            R95;      // Rho value of 95% flux-surface
   double            q95;      // Safety-factor at 95% flux-surface
+  double            s95;      // Magnetic shear (in terms of r) at 95% flux-surface
+  double            S95;      // Magnetic shear (in terms of rho) at 95% flux-surface
   double            rmax;     // Radius of PSI = Psimax flux-surface
   double            qmax;     // Safety-factor at PSI = Psimax flux-surface
     
@@ -86,12 +100,14 @@ class TearX: private Utility
   int               nres;     // Number of rational surfaces
   int*              mres;     // Resonant poloidal mode numbers
   double*           rres;     // Rational surface radii
+  double*           Pres;     // PSI values
   double*           sres;     // Magnetic shears
   double*           Dres;     // Tearing stability indicies
   
   double*           rr;       // Radial grid
   double*           qq;       // Safety factor
   double*           PSI;      // Normalized equilibrium poloidal magnetic flux
+  double*           rho;      // rho = PSI^1/2
   double*           ss;       // Magnetic shear
   double*           JJ;       // Toroidal plasma current
   double*           JJp;      // Toroidal plasma current gradient
@@ -100,9 +116,11 @@ class TearX: private Utility
 
   gsl_spline*       q_spline; // Interpolated q function
   gsl_spline*       P_spline; // Interpolated PSI function
+  gsl_spline*       R_spline; // Interpolated rho function
 
   gsl_interp_accel* q_acc;    // Accelerator for interpolated q function
   gsl_interp_accel* P_acc;    // Accelerator for interpolated PSI function
+  gsl_interp_accel* R_acc;    // Accelerator for interpolated rho function
 
   // ----
   // Misc
