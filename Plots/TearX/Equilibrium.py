@@ -1,6 +1,6 @@
 # Equilibrium.py
 
-# Plots equilibrium quantites versus radius
+# Plots equilibrium quantities versus radius
 
 import math
 import numpy as np
@@ -15,7 +15,14 @@ s    = ds['s']
 j    = ds['J']
 jp   = ds['Jp']
 l    = ds['lambda']
-rres = ds['rres'];
+rres = ds['rres']
+
+rr = np.asarray(r)
+r1 = 1. + rr
+lr = np.log(r1)/math.log(2.)
+ss = np.asarray(s)
+s1 = 1. + ss
+ls = np.log(s1)
 
 mjp = - np.asarray(jp)
 
@@ -30,7 +37,7 @@ plt.xlim (0., 1.)
  
 plt.plot (r, q, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 for rs in rres:
-    plt.axvline (rs, color = 'black', linewidth = 2.0, linestyle = 'dotted')
+    plt.axvline (rs, color = 'black', linewidth = 1.0, linestyle = 'dotted')
 
 plt.xlabel (r'$r$', fontsize = "15")
 plt.ylabel (r'$q$', fontsize = "15")
@@ -39,14 +46,12 @@ plt.subplot (2, 2, 2)
 
 plt.xlim (0., 1.)
  
-plt.plot    (r, s, color = 'blue',  linewidth = 2,   linestyle = 'solid')
-plt.axhline (0.,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axhline (2.,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.plot    (lr, ls, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 for rs in rres:
-    plt.axvline (rs, color = 'black', linewidth = 2.0, linestyle = 'dotted')
+    plt.axvline (math.log(1. + rs)/math.log(2.), color = 'black', linewidth = 1.0, linestyle = 'dotted')
 
-plt.xlabel (r'$r$', fontsize = "15")
-plt.ylabel (r'$s$', fontsize = "15")
+plt.xlabel (r'$\ln(1+r)/\ln 2$', fontsize = "15")
+plt.ylabel (r'$\ln(1+s)$', fontsize = "15")
 
 plt.subplot (2, 2, 3)
 
@@ -56,7 +61,7 @@ plt.plot    (r, j,   color = 'blue',  linewidth = 2,   linestyle = 'solid',  lab
 plt.plot    (r, mjp, color = 'red',   linewidth = 2,   linestyle = 'solid', label = r"$-J'$")
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rs in rres:
-    plt.axvline (rs, color = 'black', linewidth = 2.0, linestyle = 'dotted')
+    plt.axvline (rs, color = 'black', linewidth = 1.0, linestyle = 'dotted')
 
 plt.xlabel (r'$r$', fontsize = "15")
 plt.ylabel (r'$J$', fontsize = "15")
@@ -69,7 +74,7 @@ plt.xlim (0., 1.)
 plt.plot    (r, l, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 plt.axhline (0.,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rs in rres:
-    plt.axvline (rs, color = 'black', linewidth = 2.0, linestyle = 'dotted')
+    plt.axvline (rs, color = 'black', linewidth = 1.0, linestyle = 'dotted')
 
 plt.xlabel (r'$r$',       fontsize = "15")
 plt.ylabel (r'$\lambda$', fontsize = "15")

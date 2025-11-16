@@ -1,25 +1,58 @@
 {
-    "NTOR":   1,        // Toroidal mode number
-    "q0":     1.01,     // Central safety-factor
-    "nu":     2.1,      // Current peaking factor
-    "alpha":  0.4,      // X-point parameter
+    "NTOR":     1,        // Toroidal mode number
+    "q0":       1.01,     // Central safety-factor
+    "nu":       2.5,      // Current peaking factor
+    "alpha":    0.4,      // X-point parameter
 
-    "eps":    1.0e-4,   // Distance of closest approach to magnetic axis
-    "del":    1.0e-8,   // Distance of closest approach to rational surface
-    "EPS":    1.0e-6,   // Regularization parameter for logarithm
-    "Psimax": 0.9999,   // Poloidal flux at effective plasma boundary
-    "Nr":     10000,    // Number of radial gridpoints in output
+    "B0":       5.3,      // Toroidal magnetic field-strength (SI)
+    "R0":       6.2,      // Major radius (SI)
+    "a":        2.0,      // Minor radius (SI)
+    "M":        2.0,      // Ion mass number
+    "chiE":     1.0,      // Perpendicular energy diffusivity (SI)
+    "chip":     1.5,      // Perpendicular momentum diffusivity (SI)
+    "Z":        3.0,      // Effective ion charge number
+ 
+    "ne_0":     1.0e20,   // Central electron number density (SI)
+    "ne_1":     9.6e18,   // Electron number density offset (SI)
+    "Delta_ne": 2.0e19,   // Height of electron number density pedestal (SI)
+    "nu_ne":    1.1,      // Electron number density central peaking parameter
+    "r_ne":     0.95,     // Central radius of electron number density pedestal
+    "delta_ne": 0.025,    // Width of electron number density pedestal
 
-    "q0_sta": 1.01,     // Start value for q0 scan
-    "q0_end": 3.5,      // End value for q0 scan
-    "q0_num": 1000,     // Number of points in q0 scan
+    "Te_0":     7.0e3,    // Central electron temperature (eV)
+    "Te_1":     7.5e1,    // Electron temperature offset (eV)
+    "Delta_Te": 1.0e3,    // Height of electron temperature pedestal (eV)
+    "nu_Te":    2.0,      // Electron temperature central peaking parameter
+    "r_Te":     0.955,    // Central radius of electron temperature pedestal
+    "delta_Te": 0.025,    // Width of electron temperature pedestal
 
-    "nu_sta": 2.01,     // Start value for nu scan
-    "nu_end": 7.5,      // End value for nu scan
-    "nu_num": 1000,     // Number of points in nu scan
+    "Ti_0":     8.0e3,    // Central ion temperature (eV)
+    "Ti_1":     7.5e1,    // Ion temperature offset (eV)
+    "Delta_Ti": 9.0e2,    // Height of ion temperature pedestal (eV)
+    "nu_Ti":    2.0,      // Ion temperarature central peaking parameter
+    "r_Ti":     0.95,     // Central radius of ion temperature pedestal
+    "delta_Ti": 0.025,    // Width of ion temperature pedestal
 
-    "acc":    1.0e-12,  // Integration accuracy
-    "h0":     1.0e-4,   // Initial integration step-length
-    "hmin":   1.0e-10,  // Minimum integration step-length
-    "hmax":   1.0e-3    // Maximum integration step-length
+    "alphaE":   0.5,      // ExB frequency factor
+    "omegaE_0": 1.0e4,    // Central ExB frequency offset (rad/s)
+    "nu_E":     1.1,      // ExB frequency central peaking parameter
+
+    "eps":      1.0e-4,   // Distance of closest approach to magnetic axis
+    "del":      1.0e-8,   // Distance of closest approach to rational surface
+    "EPS":      1.0e-6,   // Regularization parameter for logarithm
+    "Psimax":   0.9999,   // Poloidal flux at effective plasma boundary
+    "Nr":       10000,    // Number of radial gridpoints in output
+
+    "q0_sta":   1.01,     // Start value for q0 scan
+    "q0_end":   3.5,      // End value for q0 scan
+    "q0_num":   1000,     // Number of points in q0 scan
+
+    "nu_sta":   2.01,     // Start value for nu scan
+    "nu_end":   7.5,      // End value for nu scan
+    "nu_num":   1000,     // Number of points in nu scan
+
+    "acc":      1.0e-12,  // Integration accuracy
+    "h0":       1.0e-4,   // Initial integration step-length
+    "hmin":     1.0e-10,  // Minimum integration step-length
+    "hmax":     1.0e-3    // Maximum integration step-length
 }
