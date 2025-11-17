@@ -25,10 +25,10 @@ TearX::TearX ()
   string JSONFilename = "../Inputs/TearX.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  NTOR   = JSONData["NTOR"] .get<int>    ();
-  q0     = JSONData["q0"]   .get<double> ();
-  nu     = JSONData["nu"]   .get<double> ();
-  alpha  = JSONData["alpha"].get<double> ();
+  NTOR  = JSONData["NTOR"] .get<int>    ();
+  q0    = JSONData["q0"]   .get<double> ();
+  nu    = JSONData["nu"]   .get<double> ();
+  alpha = JSONData["alpha"].get<double> ();
 
   B0   = JSONData["B0"]  .get<double> ();
   R0   = JSONData["R0"]  .get<double> ();
@@ -77,10 +77,10 @@ TearX::TearX ()
   nu_end = JSONData["nu_end"].get<double> ();
   nu_num = JSONData["nu_num"].get<int>    ();
   
-  acc    = JSONData["acc"]   .get<double> ();
-  h0     = JSONData["h0"]    .get<double> ();
-  hmin   = JSONData["hmin"]  .get<double> ();
-  hmax   = JSONData["hmax"]  .get<double> ();
+  acc  = JSONData["acc"] .get<double> ();
+  h0   = JSONData["h0"]  .get<double> ();
+  hmin = JSONData["hmin"].get<double> ();
+  hmax = JSONData["hmax"].get<double> ();
 
   // ------------
   // Sanity check
@@ -778,6 +778,15 @@ double TearX::GetTi (double r)
     + 0.5 * Delta_Ti * (1. - tanh ((r - r_Ti) /delta_Ti));
 }
 
+// ##############################################
+// Function to return gradient of ion temperature
+// ##############################################
+double TearX::GetdTidr (double r)
+{
+  return nu_Ti * (Ti_0 - Ti_1) * (-2.*r) * pow (1 - r*r, nu_Ti - 1.)
+    - 0.5 * (Delta_Ti /delta_Ti) /cosh ((r - r_Ti) /delta_Ti) /cosh ((r - r_Ti) /delta_Ti);
+}
+
 // #################################################
 // Function to return electron diamagnetic frequency
 // #################################################
@@ -814,15 +823,6 @@ double TearX::GetwE (double r)
   double waste = Getwaste (r);  
 
   return omegaE_0 * pow (1. - r*r, nu_E) + alphaE * waste;
-}
-
-// ##############################################
-// Function to return gradient of ion temperature
-// ##############################################
-double TearX::GetdTidr (double r)
-{
-  return nu_Ti * (Ti_0 - Ti_1) * (-2.*r) * pow (1 - r*r, nu_Ti - 1.)
-    - 0.5 * (Delta_Ti /delta_Ti) /cosh ((r - r_Ti) /delta_Ti) /cosh ((r - r_Ti) /delta_Ti);
 }
 
 // #############################################
@@ -901,10 +901,10 @@ double TearX::Getcbeta (double r)
 // ##################################
 double TearX::Getdbeta (double r)
 {
-  double ne = Getne (r);
-
-  double di    = sqrt (M * m_p /ne /e/e /mu_0);
+  double ne    = Getne (r);
   double cbeta = Getcbeta (r);
+
+  double di = sqrt (M * m_p /ne /e/e /mu_0);
 
   return cbeta * di;
 }

@@ -29,8 +29,8 @@ plt.subplot (3, 2, 1)
 
 plt.xlim (0., 1.)
  
-plt.plot (r, tauR, color = 'blue',  linewidth = 2,   linestyle = 'solid')
-plt.axhline (0.,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.plot    (r, tauR, color = 'blue',  linewidth = 2,   linestyle = 'solid')
+plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rs in rres:
     plt.axvline (rs, color = 'black', linewidth = 1.0, linestyle = 'dotted')
 
