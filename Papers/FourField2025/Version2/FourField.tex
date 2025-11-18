@@ -1,0 +1,723 @@
+%\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\documentclass{article}
+\usepackage{fullpage}
+\usepackage {amsmath}
+\pdfoutput = 1 
+\usepackage {graphicx}
+
+\begin{document}
+
+\title{\bf A Four-Field Resonant Response Model for Tokamak Plasmas}
+
+\author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu} \& Y.~Lin\\[2ex]{\em Institute for Fusion Studies,  Department of Physics,}\\[0.5ex]{\em   University of Texas at Austin,  Austin TX, 78712, USA}}
+\date{}
+\maketitle
+%\begin{abstract}
+
+%\end{abstract}
+
+\section{Introduction}
+Externally generated, static, {\em resonant magnetic perturbations}\/ (RMPs) can drive magnetic reconnection in tokamak plasmas that
+are intrinsically stable to tearing perturbations \cite{sco,compass,fish,rf1993,rf1998}.
+Driven reconnection leads to the formation of magnetic island chains at so-called {\em rational}\/ magnetic flux-surfaces \cite{boz}. Such chains locally flatten the pressure profile, and, thereby, degrade the plasma confinement \cite{chang}. 
+
+The analysis  of the response of a tokamak plasma to an RMP  is most efficiently formulated as an asymptotic matching problem in which the  plasma is  divided into two distinct regions \cite{fkr}.    In the so-called {\em outer region}, which comprises most
+of the plasma, the plasma perturbation is governed by the equations of linearized, marginally-stable, ideal-magnetohydrodynamics (MHD).
+However, these equations become singular on    rational  magnetic flux-surfaces at which the perturbed magnetic field resonates with the equilibrium field. In the {\em inner region}, which
+consists of a set of narrow layers centered on the various rational surfaces, non-ideal-MHD effects   become important.
+
+It is well known that single-fluid resistive-MHD offers a very poor description of
+the response of the inner region to the magnetic perturbation in the outer region. 
+For instance, the strong  diamagnetic flows present in tokamak plasmas imply that the  electron and ion fluid velocities are significantly different from one another,
+necessitating a two-fluid treatment \cite{ara}. Moreover, resistive-MHD does not take  into account the important  ion sound radius lengthscale below which electron and ion dynamics become decoupled from one another \cite{drake,wal}. Previously, Cole \& Fitzpatrick\,\cite{cole} used the four-field model
+of Fitzpatrick \& Waelbroeck \cite{fw} (which is based on the original four-field model of Hazeltine, Kotschenreuther \& Morrison \cite{haz}) 
+to determine the linear two-fluid response of a resonant layer to the perturbation in the outer region. This treatment was extended in Ref.~\cite{rf2022} to take into account the
+ anomalously large perpendicular  energy diffusivity  present in tokamak plasmas. 
+ 
+ In configuration space, the four-field models of Refs.~\cite{cole} and \cite{rf2022} yield a set of resonant layer equations that can be expressed as 
+ {\em ten}\/ coupled
+ first-order linear differential equations \cite{lee}. However, in Fourier space, the resonant layer equations can be written as 
+ {\em four}\/ first-order linear differential equatons \cite{cole}. It is clearly advantageous to solve the equations in Fourier space. In Refs.~\cite{cole}
+ and \cite{rf2022}, an approximation is made by which one of the terms in the Fourier-transformed layer equations is neglected. This
+ approximation, which is valid in low-$\beta$ plasmas,  is such that the layer equation that governs the parallel ion dynamics decouples from the other three equations, effectively
+ converting a four-field resonant response model into a three-field model. Furthermore, the three remaining layer equations can be combined to give a
+ single second-order linear ordinary differential equation. This second-order equation is most conveniently solved numerically by means of a Riccati transformation
+ that converts it into a first-order nonlinear differential equation \cite{ric1,ric2}. The advantage of the Riccati approach is that it can deal with numerically problematic  solutions
+ that blow up as $\exp(p^2)$, or faster, at large $p$, where $p$ is the Fourier-space variable. 
+ 
+ Lee, Park \& Na \cite{lee} recently demonstrated  how to solve the full tenth-order four-field resonant layer equations in configuration  space using a Riccati transformation. In the process, they discovered that, in a high-$\beta$ plasma,  the RMP frequency (as seen in the local ${\bf E}\times {\bf B}$ frame
+ at the rational surface)  at which driven magnetic reconnection is maximized is shifted in the ion diamagnetic direction from the electron diamagnetic frequency.
+ This result is significant because there is some experimental evidence for such a shift \cite{paz}. In the present paper, we demonstrate how the calculation of
+ Lee et alia can be reimplemented in Fourier space. The Fourier version of the calculation is more convenient, from a numerical point of view, because
+ it involves the solution of a fourth-order, rather than a tenth-order, system of equations. 
+
+\section{Asymptotic Matching}\label{sect1}
+\subsection{Plasma Equilibrium}
+Consider a large aspect-ratio tokamak plasma equilibrium whose magnetic flux-surfaces map out
+(almost) concentric circles in the poloidal plane. Such an equilibrium can be approximated as a
+periodic cylinder \cite{rf1993}. Let $r$, $\theta$, $z$ be right-handed cylindrical coordinates. 
+The magnetic axis corresponds to $r=0$, and the plasma boundary to $r=a$, where $a$ is the simulated minor radius of the plasma. The system is assumed to be periodic in the $z$-direction with periodicity length $2\pi\,R_0$, where $R_0$ is the simulated major radius of the plasma. The
+safety-factor profile takes the form $q(r)=r\,B_z/[R_0\,B_\theta(r)]$, where $B_z$ is the constant
+``toroidal'' magnetic field-strength, and $B_\theta(r)$ is the poloidal magnetic field-strength. The equilibrium poloidal and toroidal magnetic
+fluxes (divided by $2\pi$) are written $\psi_p(r)=B_z\int_0^r r'/q(r')\,dr'$ and $\psi_t(r)=B_z\,r^2/2$, respectively.
+The standard
+large aspect-ratio orderings, $r/R_0\ll 1$ and $B_\theta/B_z\ll 1$, are adopted. 
+
+\subsection{Outer Region}\label{cyl}
+Consider a static (in the laboratory frame) magnetic perturbation that has $m$ periods in the poloidal direction, and
+$n$ periods in the toroidal direction. 
+The response of the plasma to the perturbation is
+governed by the linearized equations of marginally-stable ideal-MHD everywhere in the plasma, apart from a (radially) narrow
+layer centered on the rational surface whose minor radius, $r_s$,  is such that $q(r_s)=m/n$ \cite{fkr}.
+
+The perturbed magnetic field associated with the tearing mode is written $\delta{\bf B} \simeq \nabla\delta\psi\times{\bf e}_z$,  
+where
+$\delta\psi(r,\theta,\varphi)= \delta\psi(r)\,\exp[\,{\rm i}\,(m\,\theta-n\,\varphi)]$, 
+and $\varphi=z/R_0$ is a simulated toroidal angle. 
+In the outer region  (i.e., everywhere in the plasma
+apart from the resonant layer), the perturbed helical magnetic flux, $\delta\psi(r)$, satisfies the
+{\em cylindrical tearing mode equation}\/  \cite{cyl,wes},
+\begin{equation}\label{e3}
+\frac{d^2 \delta\psi}{d r^2} + \frac{1}{r}\,\frac{d \delta\psi}{dr}-\frac{m^2}{r^2}\,\delta\psi - \frac{J_z'\,\delta\psi}{r\,(1/q-n/m)}=  0,
+\end{equation}
+where 
+$J_z(r)= R_0\,\mu_0\,j_z(r)/B_z$,
+and $j_z(r)$ is the equilibrium ``toroidal'' current density. Here, $'\equiv d/dr$. 
+
+In general, the solution of Eq.~(\ref{e3}) that satisfies physical
+boundary conditions at the magnetic axis and the plasma boundary is such that $\delta\psi(r)$ is continuous
+across the rational surface, whereas $d\delta\psi/dr$ is discontinuous. The discontinuity of
+ $d\delta\psi/dr$ across the rational surface is indicative of the presence of a helical current
+ sheet at the surface.  The complex quantity ${\mit\Psi}_s= \delta\psi(r_s)$ determines the amplitude
+ and phase of the reconnected helical magnetic flux at the rational surface, whereas the complex quantity 
+ \begin{equation}
+{\mit\Delta\Psi}_{\!s} = \left[r\,\frac{d\delta\psi}{dr}\right]_{r_{s-}}^{r_{s+}}
+\end{equation}
+parameterizes the amplitude and phase of the helical current sheet \cite{rf1993}. 
+
+The solution of
+the cylindrical tearing mode equation in the outer region, in the presence of an externally generated RMP (with $m$ periods in the poloidal
+direction and $n$ periods in the toroidal direction), leads to the {\rm tearing mode dispersion relation}\/ \cite{rf1993,fkr}
+\begin{equation}\label{e110}
+{\mit\Delta\Psi}_{\!s}- E_{ss}\,{\mit\Psi}_s = -E_{ss}\,{\mit\Psi}_v,
+\end{equation}
+where $E_{ss}$ is a real dimensionless quantity known as the {\em tearing stability index}\/ \cite{fkr}. Moreover,
+${\mit\Psi}_v$ is the so-called {\em vacuum flux}, and is defined as the reconnected magnetic flux
+that would be driven at the rational surface by the RMP were the
+plasma intrinsically tearing-stable (i.e., $E_{ss} <0$), and were there no current sheet at the rational surface
+(i.e., ${\mit\Delta\Psi}_{\!s}=0$) \cite{rf1993}.
+
+\subsection{Inner Region}
+The current sheet at the rational surface is resolved by employing a extended-MHD resonant response model
+in the  inner region (i.e., the region of the plasma in the immediate vicinity of the rational surface) to determine the
+complex {\em layer response index}, ${\mit\Delta}_s$. Asymptotic matching between the solutions in the inner and the outer regions
+yields
+\begin{equation}
+{\mit\Delta}_s= \frac{{\mit\Delta\Psi}_{\!s}}{{\mit\Psi}_s}.
+\end{equation}
+The previous two equations lead to the {\em plasma response equation}, 
+\begin{equation}
+{\mit\Psi}_s = \frac{{\mit\Psi}_v}{1+{\mit\Delta}_s/(-E_{ss})}.
+\end{equation}
+
+Note that if $|{\mit\Delta}_s|/(-E_{ss})\ll 1$ then ${\mit\Psi}_s\simeq {\mit\Psi}_v$ and ${\mit\Delta\Psi}_{\!s}\simeq 0$, 
+which is termed a {\em vacuum response}. On the other hand, if $|{\mit\Delta}_s|/(-E_{ss})\gg 1$ then $|{\mit\Psi}_s|\ll |{\mit\Psi}_v|$,
+which is termed an {\em ideal response}. In the vacuum response regime, the current sheet that is excited in the resonant layer is too feeble
+to prevent driven magnetic reconnection, and the reconnected flux at the rational surface is the same as that which would
+be driven if there were no plasma present at the surface. On the other hand, in the ideal response regime, the  current sheet excited in the layer is
+large enough to almost completely suppress driven magnetic reconnection, which implies that the response of the plasma is equivalent
+to that which would occur if the ideal-MHD flux freezing constraint, ${\mit\Psi}_s=0$, were imposed at the rational surface \cite{rf2025}. 
+
+\section{Four-Field Resonant Response Model}
+\subsection{Description}
+Our four-field resonant response model is described in detail in Appendix~\ref{sfour}. The model is defined by the following eight dimensionless parameters:
+$S=\tau_R/\tau_H$, $Q_E=-S^{\,1/3}\,n\,\omega_E\,\tau_H$, $Q_e=-S^{\,1/3}\,n\,\omega_{\ast\,e}\,\tau_H$, $Q_i=
+-S^{\,1/3}\,n\,\omega_{\ast\,i}\,\tau_H$, $c_\beta=\sqrt{\beta/(1+\beta})$, $D=S^{\,1/3}\,\iota_e^{\,1/2}\,\hat{d}_\beta$, $P_E=\tau_R/\tau_E$,  and $P_\varphi=\tau_R/\tau_\varphi$. 
+Here, $\tau_R$ is the resistive diffusion timescale, $\tau_H$ the hydrodynamic timescale, $\tau_E$ the energy confinement timescale,
+$\tau_\varphi$ the momentum confinement timescale, $\omega_E$ the ${\bf E}\times {\bf B}$ frequency, $\omega_{\ast\,e}$ the
+electron diamagnetic frequency, $\omega_{\ast\,i}$ the ion diamagnetic frequency, $\beta=(5/3)\,\mu_0\,p/B_z^{\,2}$ the square of the ratio of the sound speed
+to the Alfv\'{e}n speed, $p$ the plasma pressure, $d_\beta=c_\beta\,d_i$ the ion sound radius, and $d_i$ the collisionless ion skin-depth.  Moreover,
+$\iota_e = - \omega_{\ast\,e}/(\omega_{\ast\,i}-\omega_{\ast\,e})$, and $\hat{d}_\beta= d_\beta/r_s$. All quantities are evaluated at the
+rational surface. 
+
+After linearization and Fourier transformation (with respect to $x=r-r_s$), our four-field model reduces to the $2\times 2$ Ricatti matrix
+differential equation specified in Eq.~(\ref{ricc}). Here, the elements of the $2\times 2$ matrices $\underline{\underline{E}}$ and
+$\underline{\underline{F}}$ are given in Eqs.~(\ref{ee1})--(\ref{ee4}) and (\ref{f1})--(\ref{f4}). The method of solution is as follows. A solution of the Ricatti equation
+is launched from a large value of the Fourier transform variable $p$, with the initial conditions specified in Eq.~(\ref{e147}), and
+integrated to a small value of $p$. The layer response index, ${\mit\Delta}_s=S^{\,1/3}\,\hat{\mit\Delta}$, is then deduced from Eqs.~(\ref{e48}) and (\ref{e111}). 
+
+\section*{Acknowledgements}
+The authors would like to thank   Y.~Lee, J.-K.~Park, J.~Waybright, and D.~Burgess for help benchmarking the results of this paper against those of
+Ref.~\cite{lee}. 
+
+\section*{Funding}
+This research was supported by the U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences,  under  contract DE-FG02-04ER54742. 
+
+\section*{Data Availability Statement}
+The data that support the findings of this study are available from the corresponding author upon reasonable request.
+
+%\section*{References}
+\begin{thebibliography}{99}\baselineskip 5ex
+
+\bibitem{sco} J.T.~Scoville, R.J.~La\,Haye, A.G.~Kellman, T.H.~Osborne, R.D.~Stambaugh, E.J.~Strait and T.S.~Taylor, Nucl.\ Fusion {\bf 31}, 875 (1991).
+
+\bibitem{compass} T.C.~Hender, R.~Fitzpatrick, A.W.~Morris,  P.G.~Carolan, R.D.~Durst,
+T.~Edlington, J.~Ferreira, S.J.~Fielding, P.S.~Haynes, J.~Hugill, et al., Nucl.\ Fusion {\bf 32}, 2091 (1992).
+
+\bibitem{fish} G.M.~Fishpool and P.S.~Haynes, Nucl.\ Fusion {\bf 34}, 109 (1994).
+
+\bibitem{rf1993} R.~Fitzpatrick, Nucl.\ Fusion {\bf 33}, 1049 (1993).
+
+\bibitem{rf1998} R.~Fitzpatrick, Phys.\ Plasmas {\bf 5}, 3325 (1998).
+
+\bibitem{boz} A.H.~Boozer, Rev.\ Mod.\ Phys.\ {\bf 76}, 1071 (2004).
+
+\bibitem{chang}  Z.~Chang and J.D.~Callen, Nucl.\ Fusion {\bf 30}, 219 (1990).
+
+\bibitem{fkr} H.P.~Furth, J.~Killeen and M.N.~Rosenbluth, Phys.\ Fluids {\bf 6}, 459 (1963).
+
+\bibitem{ara} G.~Ara, B.~Basu, B.~Coppi, G.~Laval, M.N.~Rosenbluth and B.V.~Waddell, Ann.\ Phys.\ (NY) {\bf 112}, 443 (1978).
+
+\bibitem{drake} J.F.~Drake and Y.C.~Lee, Phys.\ Fluids {\bf 20}, 1341 (1977).
+
+\bibitem{wal} F.L.~Waelbroeck, Phys.\ Plasmas {\bf 10}, 4040 (2003).
+
+\bibitem{cole} A.~Cole and R.~Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
+
+\bibitem{fw} R.~Fitzpatrick and F.L.~Waelbroeck, Phys. Plasmas {\bf 12}, 022307 (2005).
+
+\bibitem{haz} R.D.~Hazeltine, M.~Kotschenreuther and P.G.~Morrison, Phys.\ Fluids {\bf 28}, 2466 (1985).
+
+\bibitem{rf2022} R. Fitzpatrick,  Phys.\ Plasmas {\bf 29}, 032507 (2022).
+
+\bibitem{lee} Y.~Lee, J.-K.~Park and Y.-S.~Na, Nucl.\ Fusion {\bf 64}, 106058 (2024).
+
+\bibitem{ric1} D.P.~Brennan, A.J.~Cole, C.~Akcay and J.M.~Finn, Bul.\ Am.\ Phys.\ Soc.\ {\bf 64}, 249 (2019).
+
+\bibitem{ric2} J.-K.~Park, Phys.\ Plasmas {\bf 29}, 072506 (2022).
+
+\bibitem{paz} C.~Paz-Soldan, R.~Nazikian, L.~Cui, B.C.~Lyons, D.M.~Orlov, A.~Kirk, 
+N.C.~Logan, T.H.~Osborne, W.~Suttrop and D.B.~Weisberg, Nucl.\ Fusion {\bf 59},
+056012 (2019).
+
+\bibitem{cyl} H.P.~Furth, P.H.~Rutherford and H.~Selberg, Phys.\  Fluids {\bf 16}, 1054 (1973). 
+
+\bibitem{wes} J.A.~Wesson, Nucl.\ Fusion {\bf 18}, 87 (1978).
+\bibitem{rf2025} R.~Fitzpatrick, {\em Response of a magnetically diverted tokamak plasma to a resonant magnetic perturbation}, 
+arXiv 2511.07666 (2025).
+
+\bibitem{haz1} R.D.~Hazeltine and J.D.~Meiss, {\em Plasma Confinement}, (Dover, New York NY, 2003).
+
+\end{thebibliography}
+
+\appendix
+\section{Four-Field Resonant Plasma Response Model}\label{sfour}
+\subsection{Fundamental Definitions}
+The plasma is assumed to consist of two species. First, electrons of mass $m_e$, electrical charge $-e$, 
+number density $n_e$, and temperature $T_e$.  Second, ions of mass $m_i$, electrical charge $+e$,  
+number density $n_e$, and temperature $T_i$. Let $p=n_e\,(T_e+T_i)$ be the total plasma pressure. 
+
+Let $r_s$ be the minor radius of the rational surface. It is helpful to define $n_0 = n_e(r_s)$, $p_0= p(r_s)$,
+\begin{align}
+\eta_e &=\left.\frac{d\ln T_e}{d\ln n_e}\right|_{r=r_s},\label{e211}\\[0.5ex]
+\eta_i &= \left.\frac{d\ln T_i}{d\ln n_e}\right|_{r=r_s},\\[0.5ex]
+\iota&= \left(\frac{T_e}{T_i}\right)_{r=r_s}\left(\frac{1+\eta_e}{1+\eta_i}\right)=\left(\frac{dp_e}{dp_i}\right)_{r_s},\label{e213}
+\end{align}
+where $n_e(r)$, $p(r)$, $p_e(r)$, $p_i(r)$, $T_e(r)$, and $T_i(r)$ refer to
+electron number density, total pressure, electron pressure, ion pressure, electron temperature, and ion temperature profiles, respectively, in the absence of the magnetic perturbation. 
+
+For the sake of simplicity, the perturbed electron and ion temperature profiles are assumed to be functions of
+the perturbed electron number density profile in the immediate vicinity of the rational surface. In other words, $T_e=T_e(n_e)$ and $T_i=T_i(n_e)$. This
+implies that $p=p(n_e)$. 
+The ``MHD velocity'', which is the velocity of a
+fictional MHD fluid \cite{haz1}, is defined ${\bf V}={\bf V}_E + V_{\parallel\,i}\,{\bf b}$, where ${\bf V}_E$ is the
+${\bf E}\times{\bf B}$ drift velocity, $V_{\parallel\,i}$ is the parallel component of the ion fluid
+velocity, ${\bf b}= {\bf B}/|{\bf B}|$, and ${\bf B}$ is the magnetic field-strength.
+
+\subsection{Fundamental Fields}
+The four fundamental fields in our four-field model---namely, $\psi$, $N$, $\phi$, and $V$---have the following
+definitions:
+\begin{align}\label{e10}
+\nabla\psi &= \frac{{\bf e}_\parallel\times{\bf B}} {r_s\,B_z},\\[0.5ex]
+N &=-\hat{d}_i\left(\frac{p-p_0}{B_z^{\,2}/\mu_0}\right),\\[0.5ex]
+\nabla\phi &= \frac{{\bf e}_{\parallel}\times {\bf V}}{r_s\,V_A},\\[0.5ex]
+V &= \hat{d}_i\left(\frac{{\bf e}_{\parallel}\cdot {\bf V}}{V_A}\right).\label{e13}
+\end{align}
+Here,   ${\bf e}_{\parallel} = (0,\,\epsilon/q_s,\,1)$, $\epsilon = r/R_0$, $q_s=m/n$, 
+$V_A =(B_z/\sqrt{\mu_0\,n_0\,m_i})_{r_s}$, 
+$d_i =[m_i/(n_0\,e^{\,2}\,\mu_0)]^{1/2}_{r_s}$,
+and $\hat{d}_i=d_i/r_s$. 
+ Our
+model also employs the auxiliary field
+\begin{align}\label{e16}
+J=-\frac{2\,\epsilon_s}{q_s}+\hat{\nabla}^2\psi,
+\end{align}
+where 
+$\epsilon_s=r_s/R_0$, and $\hat{\nabla} = r_s\,\nabla$. Note that $V_A$ is the {\em Alfv\'{e}n speed}\/ at the rational surface, whereas $d_i$ is the {\em collisionless ion skin-depth}. 
+
+\subsection{Fundamental Equations}
+For the case of a static (in the laboratory frame) magnetic perturbation, the four-field model takes the form \cite{fw,cole,rf2022}:
+\begin{align}\label{e12v}
+0&= [\phi,\psi] -\iota_e\,[N,\psi]
++\hat{\eta}_\parallel\,J + \hat{E}_\parallel,\\[0.5ex]
+0&= [\phi,N] +\hat{d}_\beta^{\,2}\,[J,\psi]+c_\beta^{\,2}\,[V,\psi] 
++ \hat{\chi}_E\,\hat{\nabla}^{2}N,\\[0.5ex]
+0&= [\phi,\hat{\nabla}^2\phi] - \frac{\iota_i}{2}\left(\hat{\nabla}^2[\phi,N] + [\hat{\nabla}^2\phi,N] + [\hat{\nabla}^2 N,\phi]\right) + [J,\psi] +\hat{\chi}_\varphi  \,\hat{\nabla}^4\!\left(\phi + \iota_i\,N\right), \\[0.5ex]
+0&= [\phi,V] +[N,\psi] + \hat{\chi}_\varphi\,\hat{\nabla}^2 V.\label{e21}
+\end{align}
+Here, $[A,B]\equiv \hat{\nabla} A\times \hat{\nabla} B\cdot {\bf e}_{\parallel}$, $\iota_e=\iota/(1+\iota)$, $\iota_i=1/(1+\iota)$, $\hat{t} = t/(r_s/V_A)$, $\hat{\eta}_{\parallel} = \eta_{\parallel}/(\mu_0\,r_s\,V_A)$, $\hat{E}_\parallel = E_\parallel/(B_z\,V_A)$, 
+$\hat{\chi}_E= \chi_E/(r_s\,V_A)$, $\hat{\chi}_\varphi= \chi_\varphi/(r_s\,V_A)$, where $\eta_{\parallel}$ is the parallel  plasma electrical
+resistivity at the rational surface, $E_\parallel$ the parallel inductive electric field that maintains the equilibrium toroidal
+plasma current in the vicinity of the rational surface, $\chi_E$ the anomalous perpendicular heat diffusivity at the
+rational surface, and $\chi_\varphi$  the anomalous perpendicular ion momentum
+diffusivity at the rational surface. 
+Moreover, $d_\beta=c_\beta\,d_i$, and $\hat{d}_\beta=d_\beta/r_s$, where $c_\beta =[\beta/(1+\beta)]^{1/2}_{r_s}$, and
+$\beta=(5/3)\,\mu_0\,p_0/B_z^{\,2}$. Here, $d_\beta$ is usually referred to as the {\em ion sound radius}.  
+
+\subsection{Matching to Plasma Equilibrium}
+The unperturbed plasma equilibrium is such that
+${\bf B} = (0,\,B_\theta(r),\,B_z)$,  $p = p(r)$,
+${\bf V} = (0,\,V_E(r),\,V_z(r))$,
+where 
+$V_E(r)\simeq -E_r/B_z$
+ is the (dominant $\theta$-component of the) ${\bf E}\times {\bf B}$ velocity. Now, the resonant layer is assumed to have a radial thickness that is
+much smaller than $r_s$.   Hence, we only need to evaluate plasma equilibrium quantities in the immediate vicinity of the rational
+surface. Equations~(\ref{e10})--(\ref{e13}) suggest that 
+\begin{align}
+\psi(\hat{x})&= \frac{\hat{x}^{\,2}}{2\,\hat{L}_s},\label{e23}\\[0.5ex]
+N(\hat{x}) &= -\hat{V}_\ast\,\hat{x},\\[0.5ex]
+\phi(\hat{x}) &= - \hat{V}_E\,\hat{x},\\[0.5ex]
+V (\hat{x})&= \hat{V}_\parallel,\label{e26}
+\end{align}
+where 
+$\hat{x}=(r-r_s)/r_s$,
+ $\hat{L}_s=L_s/r_s$,  $L_s=R_0\,q_s/s_s$, 
+  $\hat{V}_E= V_E(r_s)/V_A$,
+$\hat{V}_\ast= V_\ast(r_s)/V_A$,
+$V_\ast(r) = (dp/dr)/(e\,n_0\,B_z)$ 
+is the (dominant $\theta$-component of the) diamagnetic velocity,
+  and 
+ $\hat{V}_\parallel=\hat{d}_i\, V_z(r_s)/V_A$. Here, $s_s=s(r_s)$ and $s(r)=d\ln q/d\ln r$. We also have
+ \begin{align}\label{e28}
+ J (\hat{x})&= -\left(\frac{2}{s_s}-1\right)\frac{1}{\hat{L}_s},
+\end{align} 
+and $ \hat{E}_\parallel(\hat{x}) =(2/s_s-1)\, (\hat{\eta}_\parallel/\hat{L}_s)$.
+
+\subsection{Derivation of Linear Layer Equations}
+In accordance with Eqs.~(\ref{e23})--(\ref{e28}), let us write
+\begin{align}\label{e31}
+\psi(\hat{x},\zeta) &= \frac{\hat{x}^{\,2} }{2\,\hat{L}_s}+ \tilde{\psi}(\hat{x})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
+\phi(\hat{x},\zeta) &=-\hat{V}_E\,\hat{x}+ \tilde{\phi}(\hat{x})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
+N(\hat{x},\zeta) &= -\hat{V}_\ast\,\hat{x}+\iota_e\,\tilde{N}(\hat{x})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
+V(\hat{x},\zeta) &= \hat{V}_\parallel +\iota_e\,\tilde{V}(\hat{x})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
+J(\hat{x},\zeta) &=-\left(\frac{2}{s_s}-1\right)\!\frac{1}{\hat{L}_s}+ \hat{\nabla}^2\tilde{\psi}(\hat{x})\,{\rm e}^{\,{\rm i}\,\zeta},\label{e36}
+\end{align}
+where $\zeta=m\,\theta-n\,\varphi$. 
+Substituting Eqs.~(\ref{e31})--(\ref{e36}) into Eqs.~(\ref{e16})--(\ref{e21}), 
+ and only retaining terms that
+are first order in perturbed quantities, we obtain the following set of linear equations:
+\begin{align}\label{e37}
+-{\rm i}\,n\,(\omega_E +\omega_{\ast\,e})\,\tau_H\,\tilde{\psi} &= -{\rm i} \,\hat{x}\,(\tilde{\phi}-\tilde{N})+ S^{-1}\,\hat{\nabla}^2\tilde{\psi},\\[0.5ex]
+-{\rm i}\, n\,\omega_E\,\tau_H\,\tilde{N} &= {\rm i}\,n\,\omega_{\ast\,e}\,\tau_H\,\tilde{\phi}- {\rm i}\,\iota_e\,\hat{d}_\beta^{\,2}\,\hat{x}\,\hat{\nabla}^2\tilde{\psi}-{\rm i}\,c_\beta^{\,2}\,\hat{x}\,\tilde{V}  + S^{-1}\,P_E\,\hat{\nabla}^2 \tilde{N},\\[0.5ex]
+-{\rm i}\,n\,(\omega_E+\omega_{\ast\,i})\,\tau_H\,\hat{\nabla}^2\tilde{\phi} &= -{\rm i}\,\hat{x}\,\hat{\nabla}^2\tilde{\psi}+S^{-1}\,P_\varphi\,\hat{\nabla}^4\!\left(\tilde{\phi} + \frac{\tilde{N}}{\iota}\right),\\[0.5ex]
+-{\rm i}\,n\,\omega_E\,\tau_H\,\tilde{V} &= -{\rm i}\,n\,\omega_{\ast\,e}\,\tau_H\,\tilde{\psi} - {\rm i}\,\hat{x}\,\tilde{N}
++ S^{-1}\,P_\varphi\,\hat{\nabla}^2\tilde{V}.\label{e40}
+\end{align}
+Here, 
+$\tau_H = L_s/(m\,V_A)$ 
+is the  hydromagnetic time, 
+$\omega_E =-(q_s/r_s)\,V_E(r_s) = -(d{\mit\Phi}/d\psi_p)_{r_s}$
+  the 
+ ${\bf E}\times {\bf B}$ frequency, 
+$\omega_{\ast\,e} = \iota_e\,(q_s/r_s)V_\ast(r_s)= [(dp_e/d\psi_p)/(e\,n_e)]_{r_s}$
+the electron diamagnetic frequency,
+$\omega_{\ast\,i} =-\iota_i\,(m/r_s)V_\ast(r_s)=-[(dp_i/d\psi_p)/(e\,n_e)]_{r_s}$
+ the  ion diamagnetic frequency,  ${\mit\Phi}(r)$ the equilibrium electrostatic potential, $S=\tau_R/\tau_H$ the  Lundquist number, 
+$\tau_R = \mu_0\,r_s^{\,2}/\eta_\parallel$
+ the
+ resistive diffusion time,  $\tau_E = r_s^{\,2}/\chi_E$ the energy confinement time,
+and $\tau_\varphi
+= r_s^{\,2}/\chi_\varphi$
+the  toroidal momentum confinement time.
+Furthermore, $P_E = \tau_R/\tau_E$ and $P_\varphi = \tau_R/\tau_\varphi$ are magnetic Prandtl numbers.
+
+ Let us define the stretched radial variable $X = S^{\,1/3}\,\hat{x}$.
+Assuming that $X\sim{\cal O}(1)$ in the layer (i.e., assuming that the layer thickness is roughly of order $S^{-1/3}\,r_s$),
+and making use of the fact that $S\gg 1$ in conventional tokamak plasmas,  Eqs.~(\ref{e37})--(\ref{e40}) reduce to the following
+set of linear layer equations \cite{cole,rf2022}:
+\begin{align}\label{e43xx}
+{\rm i}\,(Q_E+ Q_e)\,\tilde{\psi}&= - {\rm i}\,X\left(\tilde{\phi}-\tilde{N}\right)+ \frac{d^{\,2}\tilde{\psi}}{d X^2},\\[0.5ex]
+{\rm i}\,Q_E\,\tilde{N} &=  -{\rm i}\,Q_{e}\,\tilde{\phi}   - {\rm i} \,D^{2}\,X\,\frac{d^{\,2}\tilde{\psi}}{dX^{2}}- {\rm i}\,c_\beta^{\,2}\,X\,\tilde{V}
++ P_E\,\frac{d^{\,2} \tilde{N}}{dX^{2}},\label{e44xx}\\[0.5ex]
+{\rm i}\,(Q_E+Q_i)\,\frac{d^{\,2}\tilde{\phi}}{dX^2}&= - {\rm i}\,X\,\frac{d^{\,2}\tilde{\psi}}{dX^2}+ P_\varphi\,\frac{d^{\,4}}{dX^4}\!\left(\tilde{\phi} + \frac{\tilde{N}}{\iota}\right),\\[0.5ex]
+{\rm i}\,Q_E\,\tilde{V} &= {\rm i}\,Q_{e}\,\tilde{\psi} - {\rm i}\,X\,\tilde{N} + P_\varphi\,\frac{d^{\,2}\tilde{V}}{dX^{2}}.\label{e46}
+\end{align}
+Here, $Q_E=-S^{1/3}\,n\,\omega_E\,\tau_H$, $Q_{e,i} = -S^{\,1/3}\,n\,\omega_{\ast\,e,i}\,\tau_H$,
+and $D = S^{\,1/3}\,\iota_e^{1/2}\,\hat{d}_\beta$. If we write $P_E = c_\beta^{\,2}$
+then Eqs.~(\ref{e43xx})--(\ref{e46}) become equivalent to the set of  layer equations solved by Lee et alia. (To be slightly more exact, we
+get from our equations to those of Lee et alia by making the following transformation: $Q_E\rightarrow Q$, $Q_e\rightarrow -Q_{\ast\,e}$, $Q_i\rightarrow -Q_{\ast\,i}$, $\iota\rightarrow 1/\tau$, $P_E\rightarrow c_\beta^{\,2}$,
+ $P_\varphi\rightarrow P$, $\tilde{\psi}\rightarrow-\tilde{\psi}$, $\tilde{N}\rightarrow \tilde{Z}$, $\tilde{\phi}\rightarrow\tilde{\phi}$, and
+$\tilde{V}\rightarrow-\tilde{V}_z$.)
+
+The previously mentioned low-$\beta$ approximation used in Refs.~\cite{cole} and \cite{rf2022} involves neglecting the term
+containing $c_\beta^{\,2}$ in Eq.~(\ref{e44xx}). This approximation decouples Eq.~(\ref{e46}) from the three preceding equations, and effectively
+converts a four-field resonant response model into a three-field model. In the following, we shall not use this approximation.
+
+\subsection{Asymptotic Matching}
+The  linear layer equations, (\ref{e43xx})--(\ref{e46}), possess tearing parity solutions
+characterized by the symmetry $\tilde{\psi}(-X)=\tilde\psi(X)$, 
+$\tilde{N}(-X)= - \tilde{N}(X)$, $\tilde{\phi}(-X)=-\tilde{\phi}(X)$,  $\tilde{V}(-X)=\tilde{V}(X)$.
+As is easily demonstrated, the asymptotic behavior of the tearing parity solutions to Eqs.~(\ref{e43xx})--(\ref{e46}) are such that 
+\begin{align}\label{e311}
+\tilde{\psi}(X)&\rightarrow  \psi_0\left[\frac{\skew{6}\hat{\mit\Delta}}{2}\,|X| +1+ {\cal O}\left(\frac{1}{X^2}\right)\right],\\[0.5ex]
+\skew{3}\tilde{\phi}(X)&\rightarrow -\psi_0\,Q_E\,\left[\frac{\skew{6}\hat{\mit\Delta}}{2}\,{\rm sgn}(X) +\frac{1}{X}+ {\cal O}\left(\frac{1}{X^2}\right)\right],\label{e312a}\\[0.5ex]
+\tilde{N}(X) & \rightarrow \psi_0\,Q_{e}\left[\frac{\skew{6}\hat{\mit\Delta}}{2}\,{\rm sgn}(X) +\frac{1}{X}+ {\cal O}\left(\frac{1}{X^2}\right)\right],\label{e3.13a}\\[0.5ex]
+\tilde{V}(X)&\rightarrow {\cal O}\left(\frac{1}{X^3}\right)\label{e3.14a}
+\end{align}
+as $|X|\rightarrow\infty$, where $\psi_0$ is an arbitrary constant
+The layer response index is
+\begin{equation}\label{e48}
+{\mit\Delta}_s= S^{1/3}\,\hat{\mit\Delta}.
+\end{equation}
+
+\subsection{Fourier Transformation}
+Equations~(\ref{e43xx})--(\ref{e46}) are most conveniently solved in Fourier transform space \cite{cole}.
+Let
+\begin{equation}
+\bar{\phi}(p) = \int_{-\infty}^\infty \tilde{\phi}(X)\,{\rm e}^{-{\rm i}\,p\,X}\,dX,
+\end{equation}
+et cetera. The Fourier transformed linear layer equations become
+\begin{align}\label{e314}
+{\rm i}\,(Q_E+Q_e)\,\bar{\psi}&=\frac{d}{dp}\!\left(\bar{\phi}-\bar{N}\right)-p^2\,\bar{\psi},\\[0.5ex]
+{\rm i}\,Q_E\,\bar{N} &= - {\rm i}\,Q_{e}\,\bar{\phi} -D^{\,2}\,\frac{d(p^2\,\bar{\psi})}{dp}+ c_\beta^{\,2}\,\frac{d\bar{V}}{dp}
+  - P_E\,p^2\bar{N},\label{e316}\\[0.5ex]
+{\rm i}\,(Q_E+Q_i)\,p^2\,\bar{\phi}&=  \frac{d(p^2\,\bar{\psi})}{dp}- P_\varphi\,p^4\!\left(\bar{\phi} + \frac{\bar{N}}{\iota}\right),\\[0.5ex]
+{\rm i}\,Q_E\,\bar{V} &= {\rm i}\,Q_{e}\,\bar{\psi} +\frac{d\bar{N}}{dp}- P_\varphi\,p^2\,\bar{V},\label{e317}
+\end{align}
+where, for a tearing parity solution, 
+\begin{equation}\label{e41}
+\bar{\phi}(p)-\bar{N}(p)\equiv\bar{Y} (p)\rightarrow \bar{Y}_0\!\left[\frac{\hat{\mit\Delta}}{\pi\,p} + 1+ {\cal O}(p)\right]
+\end{equation}
+as $p\rightarrow 0$, where $Y_0$ is an arbitrary constant. 
+
+Finally, if we define 
+\begin{align}
+\bar{J}(p)&= p^2\,\bar{\psi},
+\end{align}
+then Eqs.~(\ref{e314})--(\ref{e317}) can be converted into the following equivalent set of four coupled first-order differential equations:
+\begin{align}\label{e1}
+\frac{d\bar{Y}}{dp} &= \left[\frac{\,{\rm i}\,(Q_E+Q_e)+p^2}{p^2}\right]\bar{J},\\[0.5ex]
+\frac{d\bar{N}}{dp} &= -\left(\frac{{\rm i}\,Q_e}{p^2}\right)\bar{J} + (\,{\rm i}\,Q_E + P_\varphi\,p^2)\,\bar{V},\\[0.5ex]
+\frac{d\bar{J}}{dp} &= [\,{\rm i}\,(Q_E+Q_i)\,p^2 + P_\varphi\,p^4]\,\bar{Y}
++ [\,{\rm i}\,(Q_E+Q_i)\,p^2 + \iota_e^{\,-1}\,P_\varphi\,p^4]\,\bar{N},\\[0.5ex]
+c_\beta^{\,2}\,\frac{d\bar{V}}{dp} &= [\,{\rm i}\,Q_e+ {\rm i}\,(Q_E+Q_i)\,D^{\,2}\,p^2 + D^{\,2}\,P_\varphi\,p^4]\,\bar{Y}
+\nonumber\\[0.5ex]&\phantom{=} +\{\,{\rm i}\,(Q_E+Q_e) + [P_E+{\rm i}\,(Q_E + Q_i) \,D^{\,2}]\,p^2 + \iota_e^{\,-1}\,D^{\,2}\,P_\varphi\,p^4\}\,\bar{N},\label{e4}
+\end{align}
+Note that $\iota_e= -Q_e/(Q_i-Q_e)$. 
+
+\subsection{Small Argument Expansion}
+Let us search for power-law solutions of Eqs.~(\ref{e1})--(\ref{e4}) at small values of $p$. Given that we have four coupled first-order differential equations,
+we expect to find four independent power-law solutions.
+The first solution is
+such that
+\begin{align}
+\bar{Y}(p) &= {\rm i}\,(Q_E+Q_e)\,a_{-1}\,p^{-1} -\left[\frac{{\rm i}}{2}\,Q_E\,(Q_E+Q_e)\,(Q_E+Q_i) +1\right]a_{-1}\,p +{\cal O}(p^3),\\[0.5ex]
+\bar{N}(p)&= -{\rm i}\,Q_e\,a_{-1}\, p^{-1} + \frac{{\rm i}}{2}\,Q_E\,Q_e\,(Q_E+Q_i)\,a_{-1}\,p + {\cal O}(p^3),\\[0.5ex]
+\bar{J}(p)&= -a_{-1}- \frac{1}{2}\,Q_E\,(Q_E+Q_i)\,a_{-1}\,p^2 +{\cal O}(p^4),\\[0.5ex]
+\bar{V}(p)&=- \frac{[\,{\rm i}\,Q_e\,(1+P_E) +Q_E\,(Q_E+Q_i)\,D^{\,2}]}{2\,c_\beta^{\,2}}\,a_{-1}\,p^2+{\cal O}(p^4),
+\end{align}
+where $a_{-1}$ is an arbitrary constant. 
+The second solution is such that
+\begin{align}
+\bar{Y}(p) &= {\rm i}\,(Q_E+Q_e)\,a_0-\frac{{\rm i}}{6}\,Q_E\,(Q_E+Q_e)\,(Q_E+Q_i)\,a_0\,p^2 +{ \cal O}(p^4),\\[0.5ex]
+\bar{N}(p) &= -{\rm i}\,Q_e\,a_0+\frac{{\rm i}}{6}\,Q_E\,Q_e\,(Q_E+Q_i)\,a_0\,p^2+{\cal O}(p^4),\\[0.5ex]
+\bar{J}(p)&= -\frac{1}{3}\,Q_E\,(Q_E+Q_i)\,a_0\,p^3+{\cal O}(p^5),\\[0.5ex]
+\bar{V}(p)&= -\frac{1}{3}\,\frac{[\,{\rm i}\,Q_e\,P_E + Q_E\,(Q_E+Q_i)\,D^{\,2}]}{c_\beta^{\,2}}\,a_0\,p^3+{\cal O}(p^5),
+\end{align}
+where $a_0$ is an arbitrary constant. 
+The third solution is such that
+\begin{align}
+\bar{Y}(p) &= -\frac{1}{6}\,(Q_E+Q_e)\,(Q_E+Q_i)\,a_2\,p^2+{\cal O}(p^4),\\[0.5ex]
+\bar{N}(p) &= a_2+\frac{{\rm i}}{2}\,(Q_E+Q_i)\left(-\frac{{\rm i}}{3}\,Q_e\,+ \frac{g}{c_\beta^{\,2}}\right)a_2\,p^2+{\cal O}(p^4),\\[0.5ex]
+\bar{J}(p) &=\frac{{\rm i}}{3}\,(Q_E+Q_i)\,a_2\,p^3+{\cal O}(p^5),\\[0.5ex]
+\bar{V}(p) &={\rm i}\,\frac{(Q_E+Q_e)}{c_\beta^{\,2}}\,a_2\,p+{\cal O}(p^3),
+\end{align}
+where $a_2$ is an arbitrary constant. 
+The final solution is such that
+\begin{align}
+\bar{Y}(p)& =- \frac{{\rm i}}{12}\,Q_E\,(Q_E+Q_e)\,(Q_E+Q_i)\,a_3\,p^3+{\cal O}(p^5),\\[0.5ex]
+\bar{N}(p) &=-{\rm i}\, Q_E\,a_3\,p+{\cal O}(p^3),\\[0.5ex]
+\bar{J}(p)&= -\frac{1}{4}\,Q_E\,(Q_E+Q_i)\,a_3\,p^4+{\cal O}(p^6),\\[0.5ex]
+\bar{V}(p) &=- \frac{Q_E\,(Q_E+Q_e)}{2\,c_\beta^{\,2}}\,a_3\,p^2+{\cal O}(p^4),
+\end{align}
+where $a_3$ is an arbitrary constant. Note, however, that the third solution is not consistent with Equations~(\ref{e311})--(\ref{e3.14a}), which mandate that 
+$\bar{N}(p) \rightarrow- [Q_e/(Q_E+Q_e)]\,\bar{Y}(p) + {\cal O}(p)$ and  $\bar{V}(p)\rightarrow {\cal O}(p^2)$
+as $p\rightarrow 0$. Hence, we deduce that $a_2=0$. 
+
+We conclude that, at small values of $p$, the most general solution for $\bar{Y}(p)$ and $\bar{N}(p)$ takes the form 
+\begin{align}\label{yy}
+\bar{Y}(p) &= {\rm i}\,(Q_E+Q_e)\,(a_{-1} \,p^{-1}+a_0)+ {\cal O}(p),\\[0.5ex]
+\bar{N}(p) &= -{\rm i}\,Q_e\,(a_{-1}\,p^{-1} +a_0)+ {\cal O}(p),\label{nn}
+\end{align}
+which is consistent with Eqs.~(\ref{e311})--(\ref{e3.14a}).
+
+\subsection{Ricatti Matrix Differential Equation}
+Let
+\begin{align}
+\underline{u}&= \left(\begin{array}{c}\bar{Y}\\\bar{N}\end{array}\right),\\[0.5ex]
+\underline{v}&= \left(\begin{array}{c}\bar{J}\\c_\beta^{\,2}\,\bar{V}\end{array}\right).
+\end{align}
+Equations~(\ref{e1})--(\ref{e4}) can be written in the form 
+\begin{align}
+\frac{d\underline{u}}{dp}= \underline{\underline{A}}\,\underline{v},\\[0.5ex]
+\frac{d\underline{v}}{dp}= \underline{\underline{B}}\,\underline{u},
+\end{align}
+where
+\begin{align}
+A_{11} &=  \frac{{\rm i}\,(Q_E+Q_e)+p^2}{p^2},\\[0.5ex]
+A_{12}&=0,\\[0.5ex]
+A_{21} &=- \frac{{\rm i}\,Q_e}{p^2},\\[0.5ex]
+A_{22} &= \frac{{\rm i}\,Q_E + P_\varphi\,p^2}{c_\beta^{\,2}},\\[0.5ex]
+B_{11} &= {\rm i}\,(Q_E+Q_i)\,p^2 + P_\varphi\,p^4,\\[0.5ex]
+B_{12} &= {\rm i}\,(Q_E+Q_i)\,p^2 + \iota_e^{\,-1}\,P_\varphi\,p^4,\\[0.5ex]
+B_{21}&= {\rm i}\,Q_e+ {\rm i}\,(Q_E+Q_i)\,D^{\,2}\,p^2 + D^{\,2}\,P_\varphi\,p^4,\\[0.5ex]
+B_{22} & ={\rm i}\,(Q_E+Q_e) + [P_E + {\rm i}\,(Q_E +Q_i)\,D^{\,2}]\,p^2 + \iota_e^{\,-1}\,D^{\,2}\,P_\varphi\,p^4.
+\end{align}
+Thus, we obtain the following matrix differential equation: 
+\begin{equation}\label{mat}
+\frac{d}{dp}\!\left(\underline{\underline{A}}^{-1}\,\frac{d\underline{u}}{dp}\right) = \underline{\underline{B}}\,\underline{u}.
+\end{equation}
+
+Let
+\begin{equation}\label{wdef}
+ p\,\frac{d\underline{u}}{dp}=\underline{\underline{W}}\,\underline{u}.
+\end{equation}
+The previous two equations can be combined to give 
+\begin{equation}
+\left(p\,\frac{d\underline{\underline{W}}}{dp} - \underline{\underline{W}} 
++ \underline{\underline{W}}\,\underline{\underline{W}} + \underline{\underline{A}}\,p\,\frac{d\underline{\underline{A}}^{-1}}{dp}\,\underline{\underline{W}}- p^2\,\underline{\underline{A}}\,\underline{\underline{B}}\right)\underline{u} = \underline{0},
+\end{equation}
+which  yields the Riccati matrix differential equation, 
+\begin{equation}\label{ricc}
+p\,\frac{d\underline{\underline{W}}}{dp} = \underline{\underline{W}} - \underline{\underline{W}}\,\underline{\underline{W}} - \underline{\underline{E}}\,\underline{\underline{W}}
++\underline{\underline{F}},
+\end{equation}
+where 
+\begin{align}
+\underline{\underline{E}}(p) &= 
+\underline{\underline{A}}\,p\,\frac{d\underline{\underline{A}}^{-1}}{dp},\\[0.5ex]
+\underline{\underline{F}}(p)&= p^2\,\underline{\underline{A}}\,\underline{\underline{B}}.
+\end{align}
+In fact, it is easily demonstrated that
+\begin{align}\label{ee1}
+E_{11} &= \frac{2\,{\rm i}\,(Q_E+Q_e)}{{\rm i}\,(Q_E+ Q_e)+p^2},\\[0.5ex]
+E_{12}&= 0,\\[0.5ex]
+E_{21} &=-\frac{2\,{\rm i}\,Q_e\,(\,{\rm i}\,Q_E+2\,P_\varphi\,p^2)}{[\,{\rm i}\,(Q_E+Q_e)+p^2]\,(\,{\rm i}\,Q_E+P_\varphi\,p^2)},\\[0.5ex]
+E_{22} &= -\frac{2\,P_\varphi\,p^2}{{\rm i}\,Q_E+ P_\varphi\,p^2},\label{ee4}
+\end{align}
+and
+\begin{align}\label{f1}
+F_{11} &= p^2\,[\,{\rm i}\,(Q_E+Q_e)+p^2]\,[\,{\rm i}\,(Q_E+Q_i) + P_\varphi\,p^2],\\[0.5ex]
+F_{12} &= p^2\,[\,{\rm i}\,(Q_E+Q_e)+p^2]\,[\,{\rm i}\,(Q_E+Q_i) + \iota_e^{\,-1}\,P_\varphi\,p^2],\\[0.5ex]
+F_{21} &=-{\rm i}\,Q_e\,p^2\,[\,{\rm i}\,(Q_E+Q_i)+P_\varphi\,p^2]\nonumber\\[0.5ex]
+&\phantom{=} + c_\beta^{\,-2}\,p^2\,(\,{\rm i}\,Q_E+P_\varphi\,p^2)\,[\,{\rm i}\,Q_e+ {\rm i}\,(Q_E+Q_i)\,D^{\,2}\,p^2 + D^{\,2}\,P_\varphi\,p^4],\\[0.5ex]
+F_{22} &=-{\rm i}\,Q_e\,p^2\,[\,{\rm i}\,(Q_E+Q_i)+\iota_e^{\,-1}\,P_\varphi\,p^2]\nonumber\\[0.5ex] 
+&\phantom{=}+c_\beta^{\,-2}\,p^2\,(\,{\rm i}\,Q_E+P_\varphi\,p^2)\,\{\,{\rm i}\,(Q_E+Q_e) + [P_E +{\rm i}\,(Q_E + Q_i)\,D^{\,2}]\,p^2 + \iota_e^{\,-1}\,D^{\,2}\,P_\varphi\,p^4\}.\label{f4}
+\end{align}
+
+Finally, if 
+\begin{equation}
+\underline{\underline{W}}(p)= \left(\begin{array}{cc} W_{11},&W_{12}\\W_{21},&W_{22}\end{array}\right)
+\end{equation}
+then Eq.~(\ref{ricc}) yields 
+\begin{align}\label{err1}
+p\,\frac{dW_{11}}{dp}  &= W_{11}  - W_{11}\,W_{11}-W_{12}\,W_{21}- E_{11}\,W_{11} + F_{11},\\[0.5ex]
+p\,\frac{dW_{12}}{dp} &= W_{12} - W_{11}\,W_{12} - W_{12}\,W_{22} - E_{11}\,W_{12} + F_{12},\\[0.5ex]
+p\,\frac{dW_{21}}{dp} &= W_{21} -W_{21}\,W_{11}- W_{22}\,W_{21} - E_{21}\,W_{11} - E_{22}\,W_{21} + F_{21},\\[0.5ex]
+p\,\frac{dW_{22}}{dp} &= W_{22} -W_{21}\,W_{12}- W_{22}\,W_{22}- E_{21}\,W_{12} - E_{22}\,W_{22} + F_{22}.\label{err4}
+\end{align}
+Thus, our final system of equations consists of a set of four coupled nonlinear differential equations. 
+
+\subsection{Small Argument Behavior of Riccati Matrix Differential Equation}
+It follows from Eqs.~(\ref{ee1})--(\ref{ee4})  that  $\underline{\underline{E}}(p) = \underline{\underline{E}}^{\,(0)} + {\cal O}(p^2)$ at small values of $p$,
+where 
+\begin{align}
+E_{11}^{\,(0)} &= 2,\\[0.5ex]
+E_{12}^{\,(0)}&=0,\\[0.5ex]
+E_{21}^{\,(0)} &= - \frac{2\,Q_e}{Q_E+Q_e},\label{e210}\\[0.5ex]
+E_{22}^{\,(0)}&= 0.
+\end{align}
+Likewise,  Eqs.~(\ref{f1})--(\ref{f4}) imply that $\underline{\underline{F}}(p) ={\cal O}(p^2)$.
+
+Suppose that  $\underline{\underline{W}}(p)= \underline{\underline{W}}^{\,(0)}+ \underline{\underline{W}}^{\,(1)}\,p$ at small values of $p$,
+where the elements of  $\underline{\underline{W}}^{\,(0)}$ and $\underline{\underline{W}}^{\,(1)}$ are independent of $p$. 
+Equation~(\ref{ricc}) gives
+\begin{align}
+\underline{\underline{0}}&= \underline{\underline{W}}^{\,(0)}-\underline{\underline{W}}^{\,(0)}\,\underline{\underline{W}}^{\,(0)}- 
+\underline{\underline{E}}^{\,(0)}\,\underline{\underline{W}}^{\,(0)},\\[0.5ex]
+\underline{\underline{0}}&= -\underline{\underline{W}}^{\,(1)}\,\underline{\underline{W}}^{\,(0)}-\underline{\underline{W}}^{\,(0)}\,\underline{\underline{W}}^{\,(1)}- 
+\underline{\underline{E}}^{\,(0)}\,\underline{\underline{W}}^{\,(1)}.
+\end{align}
+Suitable solutions are
+\begin{align}\label{w0def}
+\underline{\underline{W}}^{\,(0)} &=  \left(\begin{array}{cc} -1,&0\\-E_{21}^{\,(0)}/2,&0\end{array}\right),\\[0.5ex]
+W_{12}^{\,(1)} &= 0,\\[0.5ex]
+W_{21}^{\,(1)}& = \frac{E_{21}^{\,(0)}}{2}\left[W_{11}^{\,(1)}- W_{22}^{\,(1)}\right].\label{w21def}
+\end{align}
+
+At small values of $p$, let
+\begin{align}
+\underline{u}(p) &= \underline{u}_{-1}\,p^{-1} + \underline{u}_0,
+\end{align}
+where the elements of  $\underline{u}_{-1}$ (which are $y_{-1}$ and $n_{-1}$, respectively) and the elements of $\underline{u}_{0}$ (which are $y_0$ 
+and $n_0$, respectively) are all constants.
+Equation~(\ref{wdef}) gives 
+\begin{align}
+\underline{\underline{W}}^{\,(0)}\,\underline{u}_{-1} &= - \underline{u}_{-1},\\[0.5ex]
+\underline{\underline{W}}^{\,(0)}\,\underline{u}_{0} + \underline{\underline{W}}^{\,(1)}\,\underline{u}_{-1} &=\underline{0}.\label{w1def}
+\end{align}
+Thus, making use of Eq.~(\ref{w0def}), we get
+\begin{equation}
+\left(\begin{array}{cc} -1,&0\\ -E_{21}^{\,(0)}/2,&0\end{array}\right) \left(\begin{array}{c}y_{-1}\\ n_{-1}\end{array}\right)= -\left(\begin{array}{c}y_{-1}\\ n_{-1}\end{array}\right),
+\end{equation}
+which implies that
+\begin{equation}
+\frac{E_{21}^{\,(0)}}{2}\,y_{-1}= - \frac{Q_e}{Q_E+Q_e}\,y_{-1} = n_{-1},
+\end{equation}
+in accordance with Eqs.~(\ref{yy}) and (\ref{nn}), where use has been made of Eq.~(\ref{e210}). 
+Equations~(\ref{w0def})--(\ref{w21def})  and (\ref{w1def})  yield
+\begin{equation}
+\frac{y_0}{y_{-1}}= W_{11}^{\,(1)},
+\end{equation}
+with $n_0$ undetermined. 
+It follows from Equation~(\ref{e41}) that 
+\begin{equation}\label{e111}
+\frac{\pi}{\hat{\mit\Delta}}\equiv \frac{y_0}{y_{-1}} = W_{11}^{\,(1)} = \frac{dW_{11}(0)}{dp}.
+\end{equation}
+Note, incidentally, that the result $\pi/\hat{\mit\Delta}=y_0/y_{-1}$ follows directly from Equation~(\ref{e43xx}), and would hold even if $a_2$ were non-zero. 
+
+\subsection{Large Argument Behavior of Riccati Matrix Differential Equation}
+At large values of $p$, it is clear from Eqs.~(\ref{f1})--(\ref{f4}) that  $\underline{\underline{F}}(p)=\underline{\underline{F}}^{\,(6)}\,p^6+ 
+\underline{\underline{F}}^{\,(8)}\,p^8$, where the elements of $\underline{\underline{F}}^{\,(6)}$ and $\underline{\underline{F}}^{\,(8)}$ are constants.
+On the other hand, Eqs.~(\ref{ee1})--(\ref{ee4}) imply that $\underline{\underline{E}}(p)=\underline{\underline{E}}^{\,(0)}$, 
+where the elements of $\underline{\underline{E}}^{\,(0)}$ are constants. 
+Thus, if we write $\underline{\underline{W}}(p) =\underline{\underline{W}}^{\,(2)}\,p^2+\underline{\underline{W}}^{\,(4)}\,p^4$,
+where the elements of $\underline{\underline{W}}^{\,(2)}$ and  $\underline{\underline{W}}^{\,(4)}$ are constants, then Eq.~(\ref{ricc}) gives 
+\begin{align}\label{e138}
+\underline{\underline{W}}^{\,(4)}\,\underline{\underline{W}}^{\,(4)}&= \underline{\underline{F}}^{\,(8)},\\[0.5ex]
+\underline{\underline{W}}^{\,(2)}\,\underline{\underline{W}}^{\,(4)}+ \underline{\underline{W}}^{\,(4)}\,\underline{\underline{W}}^{\,(2)}&= 
+\underline{\underline{F}}^{\,(6)}.\label{e139}
+\end{align}
+Now, according to Eqs.~(\ref{f1})--(\ref{f4}), 
+\begin{align}
+F^{\,(8)}_{11} &=0,\\[0.5ex]
+F^{\,(8)}_{12} &= 0,\\[0.5ex]
+F^{\,(8)}_{21} &= c_\beta^{\,-2}\,D^{\,2}\,P_\varphi^{\,2},\\[0.5ex]
+F^{\,(8)}_{22} &= c_\beta^{\,-2}\,\iota_e^{\,-1}\,D^{\,2}\,P_\varphi^{\,2},
+\end{align}
+so Eq.~(\ref{e138}) yields 
+\begin{align}
+W^{\,(4)}_{11} &=0,\\[0.5ex]
+W^{\,(4)}_{12} &= 0,\\[0.5ex]
+W^{\,(4)}_{21} &= -c_\beta^{\,-1}\,\iota_e^{\,1/2}\,D\,P_\varphi,\\[0.5ex]
+W^{\,(4)}_{22} &=-c_\beta^{\,-1}\,\iota_e^{\,-1/2}\, D\,P_\varphi,
+\end{align}
+where we have chosen the sign of the square root that is associated with well-behaved solutions at large values of $p$. Here, we are  assuming that $\iota_e>0$. 
+Equations~(\ref{f1})--(\ref{f4}) also give 
+\begin{align}
+F^{\,(6)}_{11} &=P_\varphi,\\[0.5ex]
+F^{\,(6)}_{12} &= \iota_e^{\,-1}\,P_\varphi,\\[0.5ex]
+F^{\,(6)}_{21} &={\rm i}\,c_\beta^{\,-2}\,Q_E\,D^{\,2}\,P_\varphi + {\rm i}\,c_\beta^{\,-2}\,(Q_E+Q_i)\,D^{\,2}\,P_\varphi,\\[0.5ex]
+F^{\,(6)}_{22} &={\rm i}\,c_\beta^{\,-2}\,\iota_e^{\,-1}\,Q_E\,D^{\,2}\,P_\varphi + c_\beta^{\,-2}\,[P_E+{\rm i}\,(Q_E+Q_i)\,D^{\,2}]\,P_\varphi.
+\end{align}
+Thus, Eq.~(\ref{e139}) yields
+\begin{align}
+W_{12}^{\,(2)}\,W_{21}^{\,(4)} &= F_{11}^{\,(6)},\\[0.5ex]
+W_{12}^{\,(2)}\,W_{22}^{\,(4)} &= F_{12}^{\,(6)},
+\end{align}
+which gives 
+\begin{align}
+W_{12}^{\,(2)} &= - c_\beta\,\iota_e^{\,-1/2}\,D^{-1}.
+\end{align}
+
+Now, if
+\begin{equation}\label{e155}
+\underline{\underline{W}}\,\underline{u}= \lambda(p)\,\underline{u}
+\end{equation}
+then Eq.~(\ref{wdef}) yields
+\begin{equation}
+p\,\frac{d\underline{u}}{dp} = \lambda\,\underline{u},
+\end{equation}
+which implies that
+\begin{equation}
+\underline{u}(p) = \underline{u}(p_0)\,\exp\left[\int_{p_0}^p\frac{\lambda_r(p')}{p'}\,dp'\right]\exp\left[\,{\rm i}\!\int_{p_0}^p\frac{\lambda_i(p')}{p'}\,dp'\right], 
+\end{equation}
+where $\lambda_r$  and $\lambda_i$ are the real and imaginary parts of $\lambda$, respectively. 
+Of course, a solution that is well behaved at large values of $p$ is such that $\lambda_r$ is negative. As we have seen, the large-$p$ limit of
+Eq.~(\ref{ricc}) is
+\begin{equation}
+\underline{\underline{W}}\,\underline{\underline{W}} = \underline{\underline{F}}.
+\end{equation}
+Hence, if
+\begin{equation}\label{e158}
+ \underline{\underline{F}}\,\underline{u} = {\mit\Lambda}\,\underline{u}
+ \end{equation}
+ then Eqs.~(\ref{e155}) and (\ref{e158}) imply that 
+ \begin{equation}
+ \lambda^2 = {\mit\Lambda}.
+ \end{equation}
+ The eigenvalue problem for the $F$-matrix reduces to
+ \begin{equation}
+ {\mit\Lambda}^{\,2}- (F_{11}+ F_{22})\,{\mit\Lambda} + F_{11}\,F_{22} - F_{12}\,F_{21}=0.
+ \end{equation}
+ Now,
+ \begin{align}
+ F_{11}+F_{22}&\simeq  F_{22}^{\,(8)}\,p^8 =c_\beta^{\,-2}\, \iota_e^{\,-1}\,D^{\,2}\,P_\varphi^{\,2}\,p^8,\\[0.5ex]
+ F_{11}\,F_{22} - F_{12}\,F_{21}&  \simeq \left[F_{11}^{\,(6)}\,F_{22}^{\,(8)} - F_{12}^{\,(6)}\,F_{21}^{\,(8)}\right]p^{14}\nonumber\\[0.5ex]&\phantom{=}+\left[F_{11}^{\,(6)}\,F_{22}^{\,(6)} - F_{12}^{\,(6)}\,F_{21}^{\,(6)}\right]p^{12}
+=c_\beta^{\,-2}\,R\,P_\varphi^{\,2}\,p^{12},
+ \end{align}
+  where 
+ \begin{equation}
+ R= P_E + {\rm i}\,(1-\iota_e^{\,-1})\,(Q_E+Q_i)\,D^{\,2},
+ \end{equation}
+Hence, the two eigenvalues of the $F$-matrix are
+ \begin{align}
+ {\mit\Lambda}_1&\simeq F_{22}^{\,(8)}\,p^8=  c_\beta^{\,-2}\,\iota_e^{\,-1}\,D^2\,P_\varphi^{\,2}\,p^8,\\[0.5ex]
+ {\mit\Lambda}_2 &\simeq \frac{[F_{11}^{\,(6)}\,F_{22}^{\,(6)} - F_{12}^{\,(6)}\,F_{21}^{\,(6)}]}{F_{22}^{\,(8)}}\,p^4= \iota_e\,D^{-2}\,R\,p^4.
+ \end{align}
+ Thus, we deduce that the two eigenvalues of the $W$-matrix are 
+ \begin{align}\label{l1}
+ \lambda_1&=-{\mit\Lambda}_1^{\,1/2}= -c_\beta^{\,-1}\,\iota_e^{\,-1/2}\,D\,P_\varphi\,p^4,\\[0.5ex]
+ \lambda_2&=-{\mit\Lambda}_2^{\,1/2}=-\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}\,p^2,
+ \end{align}
+ Here, the square root of $R$ is taken such that the real part of $\lambda_2$ is negative. 
+  Now, the eigenvalue problem for the $W$-matrix reduces to 
+ \begin{equation}
+ \lambda^{2} - W_{22}^{\,(4)}\,p^4\,\lambda + \left[W_{11}^{\,(2)}\,W_{22}^{\,(4)} - W_{12}^{\,(2)}\,W_{21}^{\,(4)}\right]p^6 = 0.
+ \end{equation}
+which yields
+\begin{equation}
+\lambda_1\simeq W_{22}^{\,(4)}\,p^4,
+\end{equation}
+which is in agreement with Eq.~(\ref{l1}), and
+\begin{equation}
+\lambda_2 \simeq \left[W_{11}^{\,(2)} - \frac{W_{12}^{\,(2)}\,W_{21}^{\,(4)}}{W_{22}^{\,(4)}}\right]p^2,
+\end{equation}
+ which implies that
+ \begin{equation}
+ W_{11}^{\,(2)} = -\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}-c_\beta\,\iota_e^{\,1/2}\,D^{-1}.
+ \end{equation}
+ Hence, the large-$p$ boundary condition for the $W$-matrix
+ is
+ \begin{equation}\label{e147}
+ \underline{\underline{W}}(p) =  \left(\begin{array}{cc} -\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}\,p^2-c_\beta\,\iota_e^{\,1/2}\,D^{-1}\,p^2,& - c_\beta\,\iota_e^{\,-1/2}\,D^{-1}\,p^2\\-c_\beta^{\,-1}\,\iota_e^{\,1/2}\,D\,P_\varphi\,p^4,&-c_\beta^{\,-1}\,\iota_e^{\,-1/2}\,D\,P_\varphi\,p^4\end{array}\right).
+ \end{equation}
+
+\subsection{Method of Solution}
+The method of solution is to launch the well-behaved asymptotic solution (\ref{e147}) of Eqs.~(\ref{err1})--(\ref{err4}) from large $p$, and then
+integrate the equations backward to small $p$. The complex layer response index, ${\mit\Delta}_s$, is then determined  from Eqs.~(\ref{e48}) and (\ref{e111}). 
+Note that, because there are no free parameters in expression (\ref{e147}), the layer response index is uniquely determined by this procedure. 
+
+
+
+\end{document}

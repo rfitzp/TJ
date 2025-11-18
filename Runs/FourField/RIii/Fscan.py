@@ -74,18 +74,17 @@ plt.subplot (2, 1, 1)
 plt.xlim (gi[0], gi[-1])
 plt.gca().invert_xaxis()
 
-plt.plot (gi, d3r, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Re($\Delta_3$)")
-plt.plot (gi, d4r, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Re($\Delta_4$)")
-plt.plot (Q,  D4r, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"slayer")
-plt.plot (gi, D_r, color = 'green', linewidth = 2, linestyle = 'dotted', label = r"Analytic")
-
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (-In[2], color = 'red',   linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (0.,     color = 'green', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (-In[3], color = 'blue',  linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (-In[2], color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (-In[3], color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
+plt.plot (gi, d3r, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Re($\hat{\Delta}_3$)")
+plt.plot (gi, d4r, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Re($\hat{\Delta}_4$)")
+plt.plot (Q,  D4r, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"slayer")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
-plt.xlabel (r'$Q$', fontsize = "15")
+plt.xlabel (r'$Q_E$', fontsize = "15")
 plt.legend (fontsize = "15");
 
 plt.subplot (2, 1, 2)
@@ -93,18 +92,17 @@ plt.subplot (2, 1, 2)
 plt.xlim (gi[0], gi[-1])
 plt.gca().invert_xaxis()
 
-plt.plot (gi, d3i, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Im($\Delta_3$)")
-plt.plot (gi, d4i, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Im($\Delta_4$)")
-plt.plot (Q,  D4i, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"slayer")
-plt.plot (gi, D_i, color = 'green', linewidth = 2, linestyle = 'dotted', label = r"Analytic")
-
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (-In[2], color = 'red',   linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (0.,     color = 'green', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (-In[3], color = 'blue',  linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (-In[2], color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (-In[3], color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
+plt.plot (gi, d3i, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Im($\hat{\Delta}_3$)")
+plt.plot (gi, d4i, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Im($\hat{\Delta}_4$)")
+plt.plot (Q,  D4i, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"slayer")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
-plt.xlabel (r'$Q$', fontsize = "15")
+plt.xlabel (r'$Q_E$', fontsize = "15")
 plt.legend (fontsize = "15");
 
 plt.tight_layout ()
