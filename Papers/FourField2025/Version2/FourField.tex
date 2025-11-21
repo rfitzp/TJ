@@ -7,9 +7,10 @@
 
 \begin{document}
 
-\title{\bf A Four-Field Resonant Response Model for Tokamak Plasmas}
+\title{\bf A four-field resonant response model for tokamak plasmas}
 
-\author{R.~Fitzpatrick\,\footnote{rfitzp@utexas.edu} \& Y.~Lin\\[2ex]{\em Institute for Fusion Studies,  Department of Physics,}\\[0.5ex]{\em   University of Texas at Austin,  Austin TX, 78712, USA}}
+\author{R.~Fitzpatrick\thanks{rfitzp@utexas.edu}~
+  and Y.~Lin\\[2ex]{\em Institute for Fusion Studies,  Department of Physics,}\\[0.5ex]{\em   University of Texas at Austin,  Austin TX, 78712, USA}}
 \date{}
 \maketitle
 %\begin{abstract}
@@ -18,8 +19,9 @@
 
 \section{Introduction}
 Externally generated, static, {\em resonant magnetic perturbations}\/ (RMPs) can drive magnetic reconnection in tokamak plasmas that
-are intrinsically stable to tearing perturbations \cite{sco,compass,fish,rf1993,rf1998}.
-Driven reconnection leads to the formation of magnetic island chains at so-called {\em rational}\/ magnetic flux-surfaces \cite{boz}. Such chains locally flatten the pressure profile, and, thereby, degrade the plasma confinement \cite{chang}. 
+are intrinsically stable to tearing perturbations \cite{sco,compass,fish,rf1993,rf1998}. RMPs arise naturally as a consequence  of magnetic
+field-coil misalignments  \cite{error}, but are sometimes deliberately applied to tokamak plasmas in order to suppress edge localized modes (ELMs) \cite{elm}. 
+Driven reconnection is significant because it leads to the formation of magnetic island chains at so-called {\em rational}\/ magnetic flux-surfaces within the plasma \cite{boz}. Such chains locally flatten the pressure profile, and, thereby, degrade the plasma energy confinement \cite{chang}. 
 
 The analysis  of the response of a tokamak plasma to an RMP  is most efficiently formulated as an asymptotic matching problem in which the  plasma is  divided into two distinct regions \cite{fkr}.    In the so-called {\em outer region}, which comprises most
 of the plasma, the plasma perturbation is governed by the equations of linearized, marginally-stable, ideal-magnetohydrodynamics (MHD).
@@ -29,30 +31,31 @@ consists of a set of narrow layers centered on the various rational surfaces, no
 It is well known that single-fluid resistive-MHD offers a very poor description of
 the response of the inner region to the magnetic perturbation in the outer region. 
 For instance, the strong  diamagnetic flows present in tokamak plasmas imply that the  electron and ion fluid velocities are significantly different from one another,
-necessitating a two-fluid treatment \cite{ara}. Moreover, resistive-MHD does not take  into account the important  ion sound radius lengthscale below which electron and ion dynamics become decoupled from one another \cite{drake,wal}. Previously, Cole \& Fitzpatrick\,\cite{cole} used the four-field model
-of Fitzpatrick \& Waelbroeck \cite{fw} (which is based on the original four-field model of Hazeltine, Kotschenreuther \& Morrison \cite{haz}) 
+necessitating a two-fluid treatment \cite{ara}. Moreover, resistive-MHD does not take  into account the important  ion sound-radius lengthscale below which electron and ion dynamics become decoupled from one another \cite{drake,wal}. Previously, Cole \& Fitzpatrick\,\cite{cole} used the four-field model
+of Fitzpatrick \& Waelbroeck \cite{fw}, which consists of four coupled nonlinear partial differential equations,
+and which is based on the original four-field model of Hazeltine, Kotschenreuther \& Morrison \cite{haz}, 
 to determine the linear two-fluid response of a resonant layer to the perturbation in the outer region. This treatment was extended in Ref.~\cite{rf2022} to take into account the
  anomalously large perpendicular  energy diffusivity  present in tokamak plasmas. 
  
  In configuration space, the four-field models of Refs.~\cite{cole} and \cite{rf2022} yield a set of resonant layer equations that can be expressed as 
- {\em ten}\/ coupled
- first-order linear differential equations \cite{lee}. However, in Fourier space, the resonant layer equations can be written as 
- {\em four}\/ first-order linear differential equatons \cite{cole}. It is clearly advantageous to solve the equations in Fourier space. In Refs.~\cite{cole}
+ {\em ten}\/  coupled 
+ first-order linear ordinary differential equations (o.d.e.s)  \cite{lee}. However, in Fourier space, the resonant layer equations can be written as 
+ {\em four}\/  coupled  first-order linear o.d.es.  \cite{cole}. It is clearly advantageous to solve the equations in Fourier space. In Refs.~\cite{cole}
  and \cite{rf2022}, an approximation is made by which one of the terms in the Fourier-transformed layer equations is neglected. This
  approximation, which is valid in low-$\beta$ plasmas,  is such that the layer equation that governs the parallel ion dynamics decouples from the other three equations, effectively
  converting a four-field resonant response model into a three-field model. Furthermore, the three remaining layer equations can be combined to give a
- single second-order linear ordinary differential equation. This second-order equation is most conveniently solved numerically by means of a Riccati transformation
- that converts it into a first-order nonlinear differential equation \cite{ric1,ric2}. The advantage of the Riccati approach is that it can deal with numerically problematic  solutions
+ single second-order linear o.d.e. This second-order equation is most conveniently solved  by means of a Riccati transformation
+ that converts it into a first-order nonlinear o.d.e.\ \cite{ric1,ric2}. The advantage of the Riccati approach is that it can deal with numerically problematic  solutions
  that blow up as $\exp(p^2)$, or faster, at large $p$, where $p$ is the Fourier-space variable. 
  
- Lee, Park \& Na \cite{lee} recently demonstrated  how to solve the full tenth-order four-field resonant layer equations in configuration  space using a Riccati transformation. In the process, they discovered that, in a high-$\beta$ plasma,  the RMP frequency (as seen in the local ${\bf E}\times {\bf B}$ frame
- at the rational surface)  at which driven magnetic reconnection is maximized is shifted in the ion diamagnetic direction from the electron diamagnetic frequency.
+ Lee, Park \& Na \cite{lee} recently demonstrated  how to solve the full tenth-order four-field resonant layer equations in configuration space using a Riccati transformation. In the process, they discovered that, in a high-$\beta$ plasma,  the RMP rotation frequency (as seen in the local ${\bf E}\times {\bf B}$ frame
+ at the rational surface)  at which the electromagnetic torque exerted on the plasma in the immediate vicinity of the resonant layer passes through zero is shifted in the ion diamagnetic direction from the electron diamagnetic frequency.
  This result is significant because there is some experimental evidence for such a shift \cite{paz}. In the present paper, we demonstrate how the calculation of
  Lee et alia can be reimplemented in Fourier space. The Fourier version of the calculation is more convenient, from a numerical point of view, because
  it involves the solution of a fourth-order, rather than a tenth-order, system of equations. 
 
-\section{Asymptotic Matching}\label{sect1}
-\subsection{Plasma Equilibrium}
+\section{Asymptotic matching}\label{sect1}
+\subsection{Plasma equilibrium}
 Consider a large aspect-ratio tokamak plasma equilibrium whose magnetic flux-surfaces map out
 (almost) concentric circles in the poloidal plane. Such an equilibrium can be approximated as a
 periodic cylinder \cite{rf1993}. Let $r$, $\theta$, $z$ be right-handed cylindrical coordinates. 
@@ -63,14 +66,14 @@ fluxes (divided by $2\pi$) are written $\psi_p(r)=B_z\int_0^r r'/q(r')\,dr'$ and
 The standard
 large aspect-ratio orderings, $r/R_0\ll 1$ and $B_\theta/B_z\ll 1$, are adopted. 
 
-\subsection{Outer Region}\label{cyl}
+\subsection{Outer region}\label{cyl}
 Consider a static (in the laboratory frame) magnetic perturbation that has $m$ periods in the poloidal direction, and
 $n$ periods in the toroidal direction. 
 The response of the plasma to the perturbation is
 governed by the linearized equations of marginally-stable ideal-MHD everywhere in the plasma, apart from a (radially) narrow
 layer centered on the rational surface whose minor radius, $r_s$,  is such that $q(r_s)=m/n$ \cite{fkr}.
 
-The perturbed magnetic field associated with the tearing mode is written $\delta{\bf B} \simeq \nabla\delta\psi\times{\bf e}_z$,  
+The perturbed magnetic field is written $\delta{\bf B} \simeq \nabla\delta\psi\times{\bf e}_z$,  
 where
 $\delta\psi(r,\theta,\varphi)= \delta\psi(r)\,\exp[\,{\rm i}\,(m\,\theta-n\,\varphi)]$, 
 and $\varphi=z/R_0$ is a simulated toroidal angle. 
@@ -97,7 +100,7 @@ parameterizes the amplitude and phase of the helical current sheet \cite{rf1993}
 
 The solution of
 the cylindrical tearing mode equation in the outer region, in the presence of an externally generated RMP (with $m$ periods in the poloidal
-direction and $n$ periods in the toroidal direction), leads to the {\rm tearing mode dispersion relation}\/ \cite{rf1993,fkr}
+direction and $n$ periods in the toroidal direction), leads to the {\em tearing mode dispersion relation}\/ \cite{rf1993,fkr}
 \begin{equation}\label{e110}
 {\mit\Delta\Psi}_{\!s}- E_{ss}\,{\mit\Psi}_s = -E_{ss}\,{\mit\Psi}_v,
 \end{equation}
@@ -107,12 +110,12 @@ that would be driven at the rational surface by the RMP were the
 plasma intrinsically tearing-stable (i.e., $E_{ss} <0$), and were there no current sheet at the rational surface
 (i.e., ${\mit\Delta\Psi}_{\!s}=0$) \cite{rf1993}.
 
-\subsection{Inner Region}
+\subsection{Inner region}
 The current sheet at the rational surface is resolved by employing a extended-MHD resonant response model
 in the  inner region (i.e., the region of the plasma in the immediate vicinity of the rational surface) to determine the
 complex {\em layer response index}, ${\mit\Delta}_s$. Asymptotic matching between the solutions in the inner and the outer regions
 yields
-\begin{equation}
+\begin{equation}\label{e4g}
 {\mit\Delta}_s= \frac{{\mit\Delta\Psi}_{\!s}}{{\mit\Psi}_s}.
 \end{equation}
 The previous two equations lead to the {\em plasma response equation}, 
@@ -128,23 +131,116 @@ be driven if there were no plasma present at the surface. On the other hand, in 
 large enough to almost completely suppress driven magnetic reconnection, which implies that the response of the plasma is equivalent
 to that which would occur if the ideal-MHD flux freezing constraint, ${\mit\Psi}_s=0$, were imposed at the rational surface \cite{rf2025}. 
 
-\section{Four-Field Resonant Response Model}
-\subsection{Description}
-Our four-field resonant response model is described in detail in Appendix~\ref{sfour}. The model is defined by the following eight dimensionless parameters:
-$S=\tau_R/\tau_H$, $Q_E=-S^{\,1/3}\,n\,\omega_E\,\tau_H$, $Q_e=-S^{\,1/3}\,n\,\omega_{\ast\,e}\,\tau_H$, $Q_i=
--S^{\,1/3}\,n\,\omega_{\ast\,i}\,\tau_H$, $c_\beta=\sqrt{\beta/(1+\beta})$, $D=S^{\,1/3}\,\iota_e^{\,1/2}\,\hat{d}_\beta$, $P_E=\tau_R/\tau_E$,  and $P_\varphi=\tau_R/\tau_\varphi$. 
+\section{Four-field resonant response model}
+\subsection{Introduction}
+The Fourier-space  four-field resonant response model employed in this paper is described in detail in Appendix~\ref{sfour}. 
+
+\begin{table}[t]
+\centering
+\begin{tabular}{ccccccc}
+\hline
+Regime & $Q_e$ & $Q_i$ & $c_\beta$ & $D$ & $P_E$ & $P_\varphi$\\[0.5ex]\hline
+&&&&&&\\[-2ex]
+HRi  & $-1.0$  & $1.0$  &1.0  &10.0 & 1.0 & $1.0\times 10^{+0}$\\[0.5ex]
+HRii & $-1.0$  & $1.0$  & 1.0 & 10.0& 1.0 & $1.0\times 10^{-1}$\\[0.5ex]
+RIii   & $-0.15$ & $0.15$ &1.0 & 1.0 & 1.0 & $1.0\times 10^{-4}$\\[0.5ex]
+VRii & $-0.15$ & $0.15$ &1.0 & 0.1& 1.0 & $1.0\times 10^{+0}$
+\end{tabular}
+\caption{The normalized layer parameters used in the benchmark comparisons shown in Figs.~\ref{fig1}--\ref{fig4}. }\label{t1}
+\end{table}
+
+\subsection{Dimensionless parameters}
+All four-field resonant response models are defined by the following seven dimensionless parameters:
+ $Q_E=-S^{1/3}\,n\,\omega_E\,\tau_H$, $Q_e=-S^{1/3}\,n\,\omega_{\ast\,e}\,\tau_H$, $Q_i=
+-S^{1/3}\,n\,\omega_{\ast\,i}\,\tau_H$, $c_\beta=\sqrt{\beta/(1+\beta)}$, $D=S^{1/3}\,\iota_e^{\,1/2}\,\hat{d}_\beta$, $P_E=\tau_R/\tau_E$,  and $P_\varphi=\tau_R/\tau_\varphi$. 
 Here, $\tau_R$ is the resistive diffusion timescale, $\tau_H$ the hydrodynamic timescale, $\tau_E$ the energy confinement timescale,
-$\tau_\varphi$ the momentum confinement timescale, $\omega_E$ the ${\bf E}\times {\bf B}$ frequency, $\omega_{\ast\,e}$ the
-electron diamagnetic frequency, $\omega_{\ast\,i}$ the ion diamagnetic frequency, $\beta=(5/3)\,\mu_0\,p/B_z^{\,2}$ the square of the ratio of the sound speed
-to the Alfv\'{e}n speed, $p$ the plasma pressure, $d_\beta=c_\beta\,d_i$ the ion sound radius, and $d_i$ the collisionless ion skin-depth.  Moreover,
+$\tau_\varphi$ the momentum confinement timescale, $S=\tau_R/\tau_H$ the Lundquist number, $\omega_E$ the ${\bf E}\times {\bf B}$ frequency, $\omega_{\ast\,e}$ the
+electron diamagnetic frequency, $\omega_{\ast\,i}$ the ion diamagnetic frequency, $\sqrt{\beta}=\sqrt{(5/3)\,\mu_0\,p}/B_z$ the ratio of the sound speed
+to the Alfv\'{e}n speed, $p$ the plasma pressure, $d_\beta=c_\beta\,d_i$ the ion sound-radius, and $d_i$ the collisionless ion skin-depth.  Moreover,
+$P_E$ and $P_\varphi$ are magnetic Prandtl numbers, 
 $\iota_e = - \omega_{\ast\,e}/(\omega_{\ast\,i}-\omega_{\ast\,e})$, and $\hat{d}_\beta= d_\beta/r_s$. All quantities are evaluated at the
 rational surface. 
 
-After linearization and Fourier transformation (with respect to $x=r-r_s$), our four-field model reduces to the $2\times 2$ Ricatti matrix
-differential equation specified in Eq.~(\ref{ricc}). Here, the elements of the $2\times 2$ matrices $\underline{\underline{E}}$ and
-$\underline{\underline{F}}$ are given in Eqs.~(\ref{ee1})--(\ref{ee4}) and (\ref{f1})--(\ref{f4}). The method of solution is as follows. A solution of the Ricatti equation
-is launched from a large value of the Fourier transform variable $p$, with the initial conditions specified in Eq.~(\ref{e147}), and
-integrated to a small value of $p$. The layer response index, ${\mit\Delta}_s=S^{\,1/3}\,\hat{\mit\Delta}$, is then deduced from Eqs.~(\ref{e48}) and (\ref{e111}). 
+Note that the previous definitions are slightly different to those adopted in Ref.~\cite{lee}. We can convert our dimensionless parameter  into
+into those used by Lee et alia by letting $Q_E\rightarrow Q$, $Q_e\rightarrow -Q_{\ast\,e}$, $Q_i\rightarrow -Q_{\ast\,i}$, $\iota_e\rightarrow 1/(1+\tau)$, $P_E\rightarrow c_\beta^{\,2}$, and 
+ $P_\varphi\rightarrow P$. 
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.9\textwidth]{Figure1.pdf}}
+\caption{The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q$, in
+the first Hall-resistive (HRi) response regime of Ref.~\cite{cole}. $\hat{\mit\Delta}_3$ is the response index predicted by the three-field Fourier-space
+response model of Ref.~\cite{rf2022}. $\hat{\mit\Delta}_4$ is the response index predicted by the four-field Fourier-space
+response model specified in Appendix~\ref{sfour}. SLAYER is the response index predicted by the four-field configuration-space response model of
+Ref.~\cite{lee}. The three vertical lines indicate the ion fluid resonance, $Q_E+Q_i=0$, the MHD fluid resonance, $Q_E=0$,
+and the electron fluid resonance, $Q_E+Q_e=0$, respectively, in order from the left to the right.}\label{fig1}
+\end{figure}
+
+\subsection{Method of solution}
+After linearization and Fourier transformation (with respect to $x=r-r_s$), our four-field equations can be converted into  the  Ricatti matrix
+differential equation 
+\begin{equation}
+p\,\frac{d\underline{\underline{W}}}{dp} = \underline{\underline{W}} - \underline{\underline{W}}\,\underline{\underline{W}} - \underline{\underline{E}}\,\underline{\underline{W}}
++\underline{\underline{F}}. 
+\end{equation}
+ Here, $p$ is the Fourier transform variable, and $\underline{\underline{W}}(p)$  the $2\times 2$ solution matrix. The elements of the $2\times 2$ matrices $\underline{\underline{E}}(p)$ and
+$\underline{\underline{F}}(p)$ are specified in Eqs.~(\ref{ee1})--(\ref{ee4}) and (\ref{f1})--(\ref{f4}), respectively.  The method of solution is as follows. A solution of the Ricatti equation
+is launched from a large (with respect to unity) value of $p$, with the initial solution matrix specified in Eq.~(\ref{e147}), and
+is then integrated to a small (with respect to unity) value of $p$. The scaled layer response index, $\hat{\mit\Delta}$, is then deduced from  the small-$p$ elements of the solution matrix
+by means of Eq.~(\ref{e111}). The
+true layer response index is ${\mit\Delta}_s=S^{1/3}\,\hat{\mit\Delta}$.
+
+\subsection{Benchmarking against SLAYER}
+Our first task is to benchmark the results of our Fourier-space calculation of $\hat{\mit\Delta}$ against the results of the configuration-space
+calculation  performed by Lee et alia. The latter calculation has been implemented in the SLAYER code \cite{lee,ric2}. 
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.9\textwidth]{Figure2.pdf}}
+\caption{ The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q$, in
+the second Hall-resistive (HRii) response regime of Ref.~\cite{cole}. See caption to Fig.~\ref{fig1}. }\label{fig2}
+\end{figure}
+
+Figures~\ref{fig1}--\ref{fig4} show the scaled layer response index, $\hat{\mit\Delta}$, calculated as a function of the normalized ${\bf E}\times {\bf B}$
+frequency, $Q_E$, by three different solution methods, in four of the analytic layer response regimes identified in Ref.~\cite{cole}. The dimensionless 
+layer parameters used in the four calculations are specified in Table~\ref{t1}. 
+The first solution
+method involves using the Fourier-space analysis of Ref.~\cite{rf2022}. In this analysis, the term involving $c_\beta^{\,2}$ is neglected in Eq.~(\ref{e316}).
+Consequently, Eq.~(\ref{e317}) decouples from Eqs.~(\ref{e314})--(\ref{e316a}), which effectively converts a four-field response model 
+(the four fields being $\bar{\psi}$, $\bar{N}$, $\bar{\phi}$, and $\bar{V}$) into a three-field response model (the three fields being $\bar{\psi}$, $\bar{N}$, 
+and $\bar{\phi}$). The second solution method involves using the Fourier-space analysis set out in Appendix~\ref{sfour}. This method
+ solves  Eqs.~(\ref{e314})--(\ref{e317}), with no neglected terms, and thus constitutes   a four-field response model. The first two methods have
+ been implemented in the TJ code \cite{tj,tj1}. 
+ The third solution method
+involves using the configuration-space analysis of Ref.~\cite{lee}, which is implemented in the SLAYER code  \cite{ric2}.   Solution methods two and three  constitute equivalent four-field response models. 
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.9\textwidth]{Figure3.pdf}}
+\caption{The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q$, in
+the second resistive-inertial (RIii) response regime of Ref.~\cite{cole}. See caption to Fig.~\ref{fig1}.  }\label{fig3}
+\end{figure}
+
+It is clear from Figs.~\ref{fig1}--\ref{fig4} that the second and third solution methods yield exactly the same results. This is remarkable because
+the second method involves solving four coupled first-order o.d.e.s in Fourier space, whereas the third involves solving ten coupled first-order o.d.e.s
+in configuration space. Moreover, as is clear from a comparison of Appendix~\ref{sfour} and Ref.~\cite{lee},  the analysis that leads to the
+four coupled equations in the former method is radically different from, and completely independent of, that which leads to the ten
+coupled equations in the the latter method. It follows that the two solution methods constitute strong independent checks on one another. 
+Hence, we can be confident that the two methods are valid, and also that they have been implemented correctly in the TJ and SLAYER codes. 
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.9\textwidth]{Figure4.pdf}}
+\caption{ The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q$, in
+the second viscous-resistive (VRii) response regime of Ref.~\cite{cole}. See caption to Fig.~\ref{fig1}. }\label{fig4}
+\end{figure}
+
+Figures~\ref{fig1}--\ref{fig4} allow us to assess the consequences of neglecting the term involving $c_\beta^{\,2}$ in Eq.~(\ref{e316}).
+Obviously, this neglect is not going to make a difference if the ion sound parameter, $c_\beta$, is much less than unity, which explains
+why the rather large value, $c_\beta=1$, is used in the calculations shown in the figures. (See Table~\ref{t1}.) It can be seen from the figures that
+the neglect of the $c_\beta$ term has a larger relative effect on the real part of the scaled layer response index than on the imaginary part.
+Furthermore, Figs.~\ref{fig2} and \ref{fig3} indicate that if the $c_\beta$ term is neglected then the plasma response model fails to capture resonant behavior
+that occurs, in some response regimes,  close to the MHD-fluid resonance ($Q_E=0$). All four figures indicate that if the $c_\beta$ term is neglected then the imaginary part
+of the response index passes through zero exactly at the electron fluid resonance ($Q_E+Q_e=0$). This implies that the electromagnetic
+torque exerted by the RMP on the plasma in the resonant layer is zero at the electron fluid resonance. However, as is
+clear from the figures, when the $c_\beta$ term is retained then the $Q_E$ value at which ${\rm Im}(\hat{\mit\Delta})=0$ is shifted from the
+electron fluid resonace in the ion diamagnetic direction [i.e., ${\rm Im}(\hat{\mit\Delta})=0$ when $Q_E+Q_e<0$] \cite{lee}. 
 
 \section*{Acknowledgements}
 The authors would like to thank   Y.~Lee, J.-K.~Park, J.~Waybright, and D.~Burgess for help benchmarking the results of this paper against those of
@@ -156,63 +252,10 @@ This research was supported by the U.S.\ Department of Energy, Office of Science
 \section*{Data Availability Statement}
 The data that support the findings of this study are available from the corresponding author upon reasonable request.
 
-%\section*{References}
-\begin{thebibliography}{99}\baselineskip 5ex
-
-\bibitem{sco} J.T.~Scoville, R.J.~La\,Haye, A.G.~Kellman, T.H.~Osborne, R.D.~Stambaugh, E.J.~Strait and T.S.~Taylor, Nucl.\ Fusion {\bf 31}, 875 (1991).
-
-\bibitem{compass} T.C.~Hender, R.~Fitzpatrick, A.W.~Morris,  P.G.~Carolan, R.D.~Durst,
-T.~Edlington, J.~Ferreira, S.J.~Fielding, P.S.~Haynes, J.~Hugill, et al., Nucl.\ Fusion {\bf 32}, 2091 (1992).
-
-\bibitem{fish} G.M.~Fishpool and P.S.~Haynes, Nucl.\ Fusion {\bf 34}, 109 (1994).
-
-\bibitem{rf1993} R.~Fitzpatrick, Nucl.\ Fusion {\bf 33}, 1049 (1993).
-
-\bibitem{rf1998} R.~Fitzpatrick, Phys.\ Plasmas {\bf 5}, 3325 (1998).
-
-\bibitem{boz} A.H.~Boozer, Rev.\ Mod.\ Phys.\ {\bf 76}, 1071 (2004).
-
-\bibitem{chang}  Z.~Chang and J.D.~Callen, Nucl.\ Fusion {\bf 30}, 219 (1990).
-
-\bibitem{fkr} H.P.~Furth, J.~Killeen and M.N.~Rosenbluth, Phys.\ Fluids {\bf 6}, 459 (1963).
-
-\bibitem{ara} G.~Ara, B.~Basu, B.~Coppi, G.~Laval, M.N.~Rosenbluth and B.V.~Waddell, Ann.\ Phys.\ (NY) {\bf 112}, 443 (1978).
-
-\bibitem{drake} J.F.~Drake and Y.C.~Lee, Phys.\ Fluids {\bf 20}, 1341 (1977).
-
-\bibitem{wal} F.L.~Waelbroeck, Phys.\ Plasmas {\bf 10}, 4040 (2003).
-
-\bibitem{cole} A.~Cole and R.~Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
-
-\bibitem{fw} R.~Fitzpatrick and F.L.~Waelbroeck, Phys. Plasmas {\bf 12}, 022307 (2005).
-
-\bibitem{haz} R.D.~Hazeltine, M.~Kotschenreuther and P.G.~Morrison, Phys.\ Fluids {\bf 28}, 2466 (1985).
-
-\bibitem{rf2022} R. Fitzpatrick,  Phys.\ Plasmas {\bf 29}, 032507 (2022).
-
-\bibitem{lee} Y.~Lee, J.-K.~Park and Y.-S.~Na, Nucl.\ Fusion {\bf 64}, 106058 (2024).
-
-\bibitem{ric1} D.P.~Brennan, A.J.~Cole, C.~Akcay and J.M.~Finn, Bul.\ Am.\ Phys.\ Soc.\ {\bf 64}, 249 (2019).
-
-\bibitem{ric2} J.-K.~Park, Phys.\ Plasmas {\bf 29}, 072506 (2022).
-
-\bibitem{paz} C.~Paz-Soldan, R.~Nazikian, L.~Cui, B.C.~Lyons, D.M.~Orlov, A.~Kirk, 
-N.C.~Logan, T.H.~Osborne, W.~Suttrop and D.B.~Weisberg, Nucl.\ Fusion {\bf 59},
-056012 (2019).
-
-\bibitem{cyl} H.P.~Furth, P.H.~Rutherford and H.~Selberg, Phys.\  Fluids {\bf 16}, 1054 (1973). 
-
-\bibitem{wes} J.A.~Wesson, Nucl.\ Fusion {\bf 18}, 87 (1978).
-\bibitem{rf2025} R.~Fitzpatrick, {\em Response of a magnetically diverted tokamak plasma to a resonant magnetic perturbation}, 
-arXiv 2511.07666 (2025).
-
-\bibitem{haz1} R.D.~Hazeltine and J.D.~Meiss, {\em Plasma Confinement}, (Dover, New York NY, 2003).
-
-\end{thebibliography}
 
 \appendix
-\section{Four-Field Resonant Plasma Response Model}\label{sfour}
-\subsection{Fundamental Definitions}
+\section{Four-field resonant plasma response model}\label{sfour}
+\subsection{Fundamental definitions}
 The plasma is assumed to consist of two species. First, electrons of mass $m_e$, electrical charge $-e$, 
 number density $n_e$, and temperature $T_e$.  Second, ions of mass $m_i$, electrical charge $+e$,  
 number density $n_e$, and temperature $T_i$. Let $p=n_e\,(T_e+T_i)$ be the total plasma pressure. 
@@ -234,7 +277,7 @@ fictional MHD fluid \cite{haz1}, is defined ${\bf V}={\bf V}_E + V_{\parallel\,i
 ${\bf E}\times{\bf B}$ drift velocity, $V_{\parallel\,i}$ is the parallel component of the ion fluid
 velocity, ${\bf b}= {\bf B}/|{\bf B}|$, and ${\bf B}$ is the magnetic field-strength.
 
-\subsection{Fundamental Fields}
+\subsection{Fundamental fields}
 The four fundamental fields in our four-field model---namely, $\psi$, $N$, $\phi$, and $V$---have the following
 definitions:
 \begin{align}\label{e10}
@@ -245,7 +288,7 @@ V &= \hat{d}_i\left(\frac{{\bf e}_{\parallel}\cdot {\bf V}}{V_A}\right).\label{e
 \end{align}
 Here,   ${\bf e}_{\parallel} = (0,\,\epsilon/q_s,\,1)$, $\epsilon = r/R_0$, $q_s=m/n$, 
 $V_A =(B_z/\sqrt{\mu_0\,n_0\,m_i})_{r_s}$, 
-$d_i =[m_i/(n_0\,e^{\,2}\,\mu_0)]^{1/2}_{r_s}$,
+$d_i =\sqrt{m_i/(n_0\,e^{\,2}\,\mu_0)}_{r_s}$,
 and $\hat{d}_i=d_i/r_s$. 
  Our
 model also employs the auxiliary field
@@ -255,7 +298,7 @@ J=-\frac{2\,\epsilon_s}{q_s}+\hat{\nabla}^2\psi,
 where 
 $\epsilon_s=r_s/R_0$, and $\hat{\nabla} = r_s\,\nabla$. Note that $V_A$ is the {\em Alfv\'{e}n speed}\/ at the rational surface, whereas $d_i$ is the {\em collisionless ion skin-depth}. 
 
-\subsection{Fundamental Equations}
+\subsection{Fundamental equations}
 For the case of a static (in the laboratory frame) magnetic perturbation, the four-field model takes the form \cite{fw,cole,rf2022}:
 \begin{align}\label{e12v}
 0&= [\phi,\psi] -\iota_e\,[N,\psi]
@@ -272,9 +315,9 @@ plasma current in the vicinity of the rational surface, $\chi_E$ the anomalous p
 rational surface, and $\chi_\varphi$  the anomalous perpendicular ion momentum
 diffusivity at the rational surface. 
 Moreover, $d_\beta=c_\beta\,d_i$, and $\hat{d}_\beta=d_\beta/r_s$, where $c_\beta =[\beta/(1+\beta)]^{1/2}_{r_s}$, and
-$\beta=(5/3)\,\mu_0\,p_0/B_z^{\,2}$. Here, $d_\beta$ is usually referred to as the {\em ion sound radius}.  
+$\beta=(5/3)\,\mu_0\,p_0/B_z^{\,2}$. Here, $d_\beta$ is usually referred to as the {\em ion sound-radius}.  
 
-\subsection{Matching to Plasma Equilibrium}
+\subsection{Matching to plasma equilibrium}
 The unperturbed plasma equilibrium is such that
 ${\bf B} = (0,\,B_\theta(r),\,B_z)$,  $p = p(r)$,
 ${\bf V} = (0,\,V_E(r),\,V_z(r))$,
@@ -303,7 +346,7 @@ is the (dominant $\theta$-component of the) diamagnetic velocity,
 \end{align} 
 and $ \hat{E}_\parallel(\hat{x}) =(2/s_s-1)\, (\hat{\eta}_\parallel/\hat{L}_s)$.
 
-\subsection{Derivation of Linear Layer Equations}
+\subsection{Derivation of linear layer equations}
 In accordance with Eqs.~(\ref{e23})--(\ref{e28}), let us write
 \begin{align}\label{e31}
 \psi(\hat{x},\zeta) &= \frac{\hat{x}^{\,2} }{2\,\hat{L}_s}+ \tilde{\psi}(\hat{x})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
@@ -341,7 +384,7 @@ and $\tau_\varphi
 the  toroidal momentum confinement time.
 Furthermore, $P_E = \tau_R/\tau_E$ and $P_\varphi = \tau_R/\tau_\varphi$ are magnetic Prandtl numbers.
 
- Let us define the stretched radial variable $X = S^{\,1/3}\,\hat{x}$.
+ Let us define the stretched radial variable $X = S^{1/3}\,\hat{x}$.
 Assuming that $X\sim{\cal O}(1)$ in the layer (i.e., assuming that the layer thickness is roughly of order $S^{-1/3}\,r_s$),
 and making use of the fact that $S\gg 1$ in conventional tokamak plasmas,  Eqs.~(\ref{e37})--(\ref{e40}) reduce to the following
 set of linear layer equations \cite{cole,rf2022}:
@@ -352,18 +395,20 @@ set of linear layer equations \cite{cole,rf2022}:
 {\rm i}\,(Q_E+Q_i)\,\frac{d^{\,2}\tilde{\phi}}{dX^2}&= - {\rm i}\,X\,\frac{d^{\,2}\tilde{\psi}}{dX^2}+ P_\varphi\,\frac{d^{\,4}}{dX^4}\!\left(\tilde{\phi} + \frac{\tilde{N}}{\iota}\right),\\[0.5ex]
 {\rm i}\,Q_E\,\tilde{V} &= {\rm i}\,Q_{e}\,\tilde{\psi} - {\rm i}\,X\,\tilde{N} + P_\varphi\,\frac{d^{\,2}\tilde{V}}{dX^{2}}.\label{e46}
 \end{align}
-Here, $Q_E=-S^{1/3}\,n\,\omega_E\,\tau_H$, $Q_{e,i} = -S^{\,1/3}\,n\,\omega_{\ast\,e,i}\,\tau_H$,
-and $D = S^{\,1/3}\,\iota_e^{1/2}\,\hat{d}_\beta$. If we write $P_E = c_\beta^{\,2}$
+Here, $Q_E=-S^{1/3}\,n\,\omega_E\,\tau_H$, $Q_{e,i} = -S^{1/3}\,n\,\omega_{\ast\,e,i}\,\tau_H$,
+and $D = S^{1/3}\,\iota_e^{1/2}\,\hat{d}_\beta$. 
+
+If we write $P_E = c_\beta^{\,2}$
 then Eqs.~(\ref{e43xx})--(\ref{e46}) become equivalent to the set of  layer equations solved by Lee et alia. (To be slightly more exact, we
 get from our equations to those of Lee et alia by making the following transformation: $Q_E\rightarrow Q$, $Q_e\rightarrow -Q_{\ast\,e}$, $Q_i\rightarrow -Q_{\ast\,i}$, $\iota\rightarrow 1/\tau$, $P_E\rightarrow c_\beta^{\,2}$,
  $P_\varphi\rightarrow P$, $\tilde{\psi}\rightarrow-\tilde{\psi}$, $\tilde{N}\rightarrow \tilde{Z}$, $\tilde{\phi}\rightarrow\tilde{\phi}$, and
 $\tilde{V}\rightarrow-\tilde{V}_z$.)
 
-The previously mentioned low-$\beta$ approximation used in Refs.~\cite{cole} and \cite{rf2022} involves neglecting the term
+Theow-$\beta$ approximation used in Refs.~\cite{cole} and \cite{rf2022} involves neglecting the term
 containing $c_\beta^{\,2}$ in Eq.~(\ref{e44xx}). This approximation decouples Eq.~(\ref{e46}) from the three preceding equations, and effectively
-converts a four-field resonant response model into a three-field model. In the following, we shall not use this approximation.
+converts a four-field resonant response model into a three-field model. In the following, we shall not make use of this approximation.
 
-\subsection{Asymptotic Matching}
+\subsection{Asymptotic matching}
 The  linear layer equations, (\ref{e43xx})--(\ref{e46}), possess tearing parity solutions
 characterized by the symmetry $\tilde{\psi}(-X)=\tilde\psi(X)$, 
 $\tilde{N}(-X)= - \tilde{N}(X)$, $\tilde{\phi}(-X)=-\tilde{\phi}(X)$,  $\tilde{V}(-X)=\tilde{V}(X)$.
@@ -374,13 +419,13 @@ As is easily demonstrated, the asymptotic behavior of the tearing parity solutio
 \tilde{N}(X) & \rightarrow \psi_0\,Q_{e}\left[\frac{\skew{6}\hat{\mit\Delta}}{2}\,{\rm sgn}(X) +\frac{1}{X}+ {\cal O}\left(\frac{1}{X^2}\right)\right],\label{e3.13a}\\[0.5ex]
 \tilde{V}(X)&\rightarrow {\cal O}\left(\frac{1}{X^3}\right)\label{e3.14a}
 \end{align}
-as $|X|\rightarrow\infty$, where $\psi_0$ is an arbitrary constant
-The layer response index is
+as $|X|\rightarrow\infty$, where $\psi_0$ is an arbitrary constant. 
+It follows from Eq.~(\ref{e4g}) that layer response index is
 \begin{equation}\label{e48}
 {\mit\Delta}_s= S^{1/3}\,\hat{\mit\Delta}.
 \end{equation}
 
-\subsection{Fourier Transformation}
+\subsection{Fourier transformation}
 Equations~(\ref{e43xx})--(\ref{e46}) are most conveniently solved in Fourier transform space \cite{cole}.
 Let
 \begin{equation}
@@ -391,20 +436,20 @@ et cetera. The Fourier transformed linear layer equations become
 {\rm i}\,(Q_E+Q_e)\,\bar{\psi}&=\frac{d}{dp}\!\left(\bar{\phi}-\bar{N}\right)-p^2\,\bar{\psi},\\[0.5ex]
 {\rm i}\,Q_E\,\bar{N} &= - {\rm i}\,Q_{e}\,\bar{\phi} -D^{\,2}\,\frac{d(p^2\,\bar{\psi})}{dp}+ c_\beta^{\,2}\,\frac{d\bar{V}}{dp}
   - P_E\,p^2\bar{N},\label{e316}\\[0.5ex]
-{\rm i}\,(Q_E+Q_i)\,p^2\,\bar{\phi}&=  \frac{d(p^2\,\bar{\psi})}{dp}- P_\varphi\,p^4\!\left(\bar{\phi} + \frac{\bar{N}}{\iota}\right),\\[0.5ex]
+{\rm i}\,(Q_E+Q_i)\,p^2\,\bar{\phi}&=  \frac{d(p^2\,\bar{\psi})}{dp}- P_\varphi\,p^4\!\left(\bar{\phi} + \frac{\bar{N}}{\iota}\right),\label{e316a}\\[0.5ex]
 {\rm i}\,Q_E\,\bar{V} &= {\rm i}\,Q_{e}\,\bar{\psi} +\frac{d\bar{N}}{dp}- P_\varphi\,p^2\,\bar{V},\label{e317}
 \end{align}
 where, for a tearing parity solution, 
 \begin{equation}\label{e41}
 \bar{\phi}(p)-\bar{N}(p)\equiv\bar{Y} (p)\rightarrow \bar{Y}_0\!\left[\frac{\hat{\mit\Delta}}{\pi\,p} + 1+ {\cal O}(p)\right]
 \end{equation}
-as $p\rightarrow 0$, where $Y_0$ is an arbitrary constant. 
+as $p\rightarrow 0$. Here,  $\bar{Y}_0$ is an arbitrary constant. 
 
 Finally, if we define 
 \begin{align}
 \bar{J}(p)&= p^2\,\bar{\psi},
 \end{align}
-then Eqs.~(\ref{e314})--(\ref{e317}) can be converted into the following equivalent set of four coupled first-order differential equations:
+then Eqs.~(\ref{e314})--(\ref{e317}) can be converted into the following equivalent set of four coupled first-order o.d.e.s:
 \begin{align}\label{e1}
 \frac{d\bar{Y}}{dp} &= \left[\frac{\,{\rm i}\,(Q_E+Q_e)+p^2}{p^2}\right]\bar{J},\\[0.5ex]
 \frac{d\bar{N}}{dp} &= -\left(\frac{{\rm i}\,Q_e}{p^2}\right)\bar{J} + (\,{\rm i}\,Q_E + P_\varphi\,p^2)\,\bar{V},\\[0.5ex]
@@ -415,8 +460,8 @@ c_\beta^{\,2}\,\frac{d\bar{V}}{dp} &= [\,{\rm i}\,Q_e+ {\rm i}\,(Q_E+Q_i)\,D^{\,
 \end{align}
 Note that $\iota_e= -Q_e/(Q_i-Q_e)$. 
 
-\subsection{Small Argument Expansion}
-Let us search for power-law solutions of Eqs.~(\ref{e1})--(\ref{e4}) at small values of $p$. Given that we have four coupled first-order differential equations,
+\subsection{Small argument expansion}
+Let us search for power-law solutions of Eqs.~(\ref{e1})--(\ref{e4}) at small values of $p$. Given that we have four coupled first-order o.d.e.s,
 we expect to find four independent power-law solutions.
 The first solution is
 such that
@@ -450,7 +495,7 @@ The final solution is such that
 \bar{J}(p)&= -\frac{1}{4}\,Q_E\,(Q_E+Q_i)\,a_3\,p^4+{\cal O}(p^6),\\[0.5ex]
 \bar{V}(p) &=- \frac{Q_E\,(Q_E+Q_e)}{2\,c_\beta^{\,2}}\,a_3\,p^2+{\cal O}(p^4),
 \end{align}
-where $a_3$ is an arbitrary constant. Note, however, that the third solution is not consistent with Equations~(\ref{e311})--(\ref{e3.14a}), which mandate that 
+where $a_3$ is an arbitrary constant. Note, however, that the third solution is not consistent with Eqs.~(\ref{e311})--(\ref{e3.14a}), which mandate that 
 $\bar{N}(p) \rightarrow- [Q_e/(Q_E+Q_e)]\,\bar{Y}(p) + {\cal O}(p)$ and  $\bar{V}(p)\rightarrow {\cal O}(p^2)$
 as $p\rightarrow 0$. Hence, we deduce that $a_2=0$. 
 
@@ -461,7 +506,7 @@ We conclude that, at small values of $p$, the most general solution for $\bar{Y}
 \end{align}
 which is consistent with Eqs.~(\ref{e311})--(\ref{e3.14a}).
 
-\subsection{Ricatti Matrix Differential Equation}
+\subsection{Ricatti matrix differential equation}
 Let
 \begin{align}
 \underline{u}&= \left(\begin{array}{c}\bar{Y}\\\bar{N}\end{array}\right),\\[0.5ex]
@@ -538,7 +583,7 @@ p\,\frac{dW_{22}}{dp} &= W_{22} -W_{21}\,W_{12}- W_{22}\,W_{22}- E_{21}\,W_{12} 
 \end{align}
 Thus, our final system of equations consists of a set of four coupled nonlinear differential equations. 
 
-\subsection{Small Argument Behavior of Riccati Matrix Differential Equation}
+\subsection{Small-argument behavior of Riccati matrix differential equation}
 It follows from Eqs.~(\ref{ee1})--(\ref{ee4})  that  $\underline{\underline{E}}(p) = \underline{\underline{E}}^{\,(0)} + {\cal O}(p^2)$ at small values of $p$,
 where 
 \begin{align}
@@ -594,15 +639,15 @@ It follows from Equation~(\ref{e41}) that
 \begin{equation}\label{e111}
 \frac{\pi}{\hat{\mit\Delta}}\equiv \frac{y_0}{y_{-1}} = W_{11}^{\,(1)} = \frac{dW_{11}(0)}{dp}.
 \end{equation}
-Note, incidentally, that the result $\pi/\hat{\mit\Delta}=y_0/y_{-1}$ follows directly from Equation~(\ref{e43xx}), and would hold even if $a_2$ were non-zero. 
+Note, incidentally, that the result $\pi/\hat{\mit\Delta}=y_0/y_{-1}$ follows directly from Eq.~(\ref{e43xx}), and would hold even if $a_2$ were non-zero. 
 
-\subsection{Large Argument Behavior of Riccati Matrix Differential Equation}
+\subsection{Large-argument behavior of Riccati matrix differential equation}
 At large values of $p$, it is clear from Eqs.~(\ref{f1})--(\ref{f4}) that  $\underline{\underline{F}}(p)=\underline{\underline{F}}^{\,(6)}\,p^6+ 
-\underline{\underline{F}}^{\,(8)}\,p^8$, where the elements of $\underline{\underline{F}}^{\,(6)}$ and $\underline{\underline{F}}^{\,(8)}$ are constants.
+\underline{\underline{F}}^{\,(8)}\,p^8$, where the elements of $\underline{\underline{F}}^{\,(6)}$ and $\underline{\underline{F}}^{\,(8)}$ are independent ot $p$.
 On the other hand, Eqs.~(\ref{ee1})--(\ref{ee4}) imply that $\underline{\underline{E}}(p)=\underline{\underline{E}}^{\,(0)}$, 
-where the elements of $\underline{\underline{E}}^{\,(0)}$ are constants. 
+where the elements of $\underline{\underline{E}}^{\,(0)}$ are independent of $p$. 
 Thus, if we write $\underline{\underline{W}}(p) =\underline{\underline{W}}^{\,(2)}\,p^2+\underline{\underline{W}}^{\,(4)}\,p^4$,
-where the elements of $\underline{\underline{W}}^{\,(2)}$ and  $\underline{\underline{W}}^{\,(4)}$ are constants, then Eq.~(\ref{ricc}) gives 
+where the elements of $\underline{\underline{W}}^{\,(2)}$ and  $\underline{\underline{W}}^{\,(4)}$ are independent of $p$, then Eq.~(\ref{ricc}) gives 
 \begin{align}\label{e138}
 \underline{\underline{W}}^{\,(4)}\,\underline{\underline{W}}^{\,(4)}&= \underline{\underline{F}}^{\,(8)},\\[0.5ex]
 \underline{\underline{W}}^{\,(2)}\,\underline{\underline{W}}^{\,(4)}+ \underline{\underline{W}}^{\,(4)}\,\underline{\underline{W}}^{\,(2)}&= 
@@ -713,11 +758,76 @@ which is in agreement with Eq.~(\ref{l1}), and
  \underline{\underline{W}}(p) =  \left(\begin{array}{cc} -\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}\,p^2-c_\beta\,\iota_e^{\,1/2}\,D^{-1}\,p^2,& - c_\beta\,\iota_e^{\,-1/2}\,D^{-1}\,p^2\\-c_\beta^{\,-1}\,\iota_e^{\,1/2}\,D\,P_\varphi\,p^4,&-c_\beta^{\,-1}\,\iota_e^{\,-1/2}\,D\,P_\varphi\,p^4\end{array}\right).
  \end{equation}
 
-\subsection{Method of Solution}
+\subsection{Method of solution}
 The method of solution is to launch the well-behaved asymptotic solution (\ref{e147}) of Eqs.~(\ref{err1})--(\ref{err4}) from large $p$, and then
-integrate the equations backward to small $p$. The complex layer response index, ${\mit\Delta}_s$, is then determined  from Eqs.~(\ref{e48}) and (\ref{e111}). 
-Note that, because there are no free parameters in expression (\ref{e147}), the layer response index is uniquely determined by this procedure. 
+integrate the equations backward to small $p$. The scaled layer response index, $\hat{\mit\Delta}$, is then determined  from Eq.~(\ref{e111}). 
+Note that, because there are no free parameters in expression (\ref{e147}), the scaled layer response index is uniquely determined by this procedure. 
+Finally, the true layer response index is given by ${\mit\Delta}_s= S^{\,1/3}\,\hat{\mit\Delta}$. [See Eq.~(\ref{e48}).]
 
+%\section*{References}
+\begin{thebibliography}{99}\baselineskip 5ex
+
+\bibitem{sco} J.T.~Scoville, R.J.~La\,Haye, A.G.~Kellman, T.H.~Osborne, R.D.~Stambaugh, E.J.~Strait and T.S.~Taylor, Nucl.\ Fusion {\bf 31}, 875 (1991).
+
+\bibitem{compass} T.C.~Hender, R.~Fitzpatrick, A.W.~Morris,  P.G.~Carolan, R.D.~Durst,
+T.~Edlington, J.~Ferreira, S.J.~Fielding, P.S.~Haynes, J.~Hugill, et al., Nucl.\ Fusion {\bf 32}, 2091 (1992).
+
+\bibitem{fish} G.M.~Fishpool and P.S.~Haynes, Nucl.\ Fusion {\bf 34}, 109 (1994).
+
+\bibitem{rf1993} R.~Fitzpatrick, Nucl.\ Fusion {\bf 33}, 1049 (1993).
+
+\bibitem{rf1998} R.~Fitzpatrick, Phys.\ Plasmas {\bf 5}, 3325 (1998).
+
+\bibitem{error} M.~Pharr, N.C.~Logan C.~Paz-Soldan, J.-K.~Park and C.~Hansen, Nucl.\ Fusion {\bf 64}, 126025 (2024).
+
+\bibitem{elm} T.E.~Evans, R.A.~Moyer, J.G.~Watkins, P.R.~Thomas, T.H.~Osborne, 
+J.A.~Boedo, M.E.~Fenstermacher, K.H.~Finken, R.J.~Groebner, M.~Groth, et al.,
+Phys.\ Rev.\ Lett.\ {\bf 92}, 235003 (2004).
+
+\bibitem{boz} A.H.~Boozer, Rev.\ Mod.\ Phys.\ {\bf 76}, 1071 (2004).
+
+\bibitem{chang}  Z.~Chang and J.D.~Callen, Nucl.\ Fusion {\bf 30}, 219 (1990).
+
+\bibitem{fkr} H.P.~Furth, J.~Killeen and M.N.~Rosenbluth, Phys.\ Fluids {\bf 6}, 459 (1963).
+
+\bibitem{ara} G.~Ara, B.~Basu, B.~Coppi, G.~Laval, M.N.~Rosenbluth and B.V.~Waddell, Ann.\ Phys.\ (NY) {\bf 112}, 443 (1978).
+
+\bibitem{drake} J.F.~Drake and Y.C.~Lee, Phys.\ Fluids {\bf 20}, 1341 (1977).
+
+\bibitem{wal} F.L.~Waelbroeck, Phys.\ Plasmas {\bf 10}, 4040 (2003).
+
+\bibitem{cole} A.~Cole and R.~Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
+
+\bibitem{fw} R.~Fitzpatrick and F.L.~Waelbroeck, Phys. Plasmas {\bf 12}, 022307 (2005).
+
+\bibitem{haz} R.D.~Hazeltine, M.~Kotschenreuther and P.G.~Morrison, Phys.\ Fluids {\bf 28}, 2466 (1985).
+
+\bibitem{rf2022} R. Fitzpatrick,  Phys.\ Plasmas {\bf 29}, 032507 (2022).
+
+\bibitem{lee} Y.~Lee, J.-K.~Park and Y.-S.~Na, Nucl.\ Fusion {\bf 64}, 106058 (2024).
+
+\bibitem{ric1} D.P.~Brennan, A.J.~Cole, C.~Akcay and J.M.~Finn, Bul.\ Am.\ Phys.\ Soc.\ {\bf 64}, 249 (2019).
+
+\bibitem{ric2} J.-K.~Park, Phys.\ Plasmas {\bf 29}, 072506 (2022).
+
+\bibitem{paz} C.~Paz-Soldan, R.~Nazikian, L.~Cui, B.C.~Lyons, D.M.~Orlov, A.~Kirk, 
+N.C.~Logan, T.H.~Osborne, W.~Suttrop and D.B.~Weisberg, Nucl.\ Fusion {\bf 59},
+056012 (2019).
+
+\bibitem{cyl} H.P.~Furth, P.H.~Rutherford and H.~Selberg, Phys.\  Fluids {\bf 16}, 1054 (1973). 
+
+\bibitem{wes} J.A.~Wesson, Nucl.\ Fusion {\bf 18}, 87 (1978).
+
+\bibitem{rf2025} R.~Fitzpatrick, {\em Response of a magnetically diverted tokamak plasma to a resonant magnetic perturbation}, 
+arXiv 2511.07666 (2025).
+
+\bibitem{tj} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31}, 102507 (2024).
+
+\bibitem{tj1} R.~Fitzpatrick, Phys.\ Plasmas {\bf 32}, 062509 (2025).
+
+\bibitem{haz1} R.D.~Hazeltine and J.D.~Meiss, {\em Plasma Confinement}, (Dover, New York NY, 2003).
+
+\end{thebibliography}
 
 
 \end{document}

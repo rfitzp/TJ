@@ -12,29 +12,29 @@
     "chip":     1.5,      // Perpendicular momentum diffusivity (SI)
     "Z":        3.0,      // Effective ion charge number
  
-    "ne_0":     1.0e20,   // Central electron number density (SI)
-    "ne_1":     9.6e18,   // Electron number density offset (SI)
-    "Delta_ne": 2.0e19,   // Height of electron number density pedestal (SI)
+    "ne_0":     1.2e20,   // Central electron number density (SI)
+    "ne_1":     2.0e19,   // Electron number density offset (SI)
+    "Delta_ne": 9.0e19,   // Height of electron number density pedestal (SI)
     "nu_ne":    1.1,      // Electron number density central peaking parameter
     "r_ne":     0.95,     // Central radius of electron number density pedestal
     "delta_ne": 0.025,    // Width of electron number density pedestal
 
-    "Te_0":     7.0e3,    // Central electron temperature (eV)
-    "Te_1":     7.5e1,    // Electron temperature offset (eV)
-    "Delta_Te": 1.0e3,    // Height of electron temperature pedestal (eV)
+    "Te_0":     1.6e4,    // Central electron temperature (eV)
+    "Te_1":     0.0e1,    // Electron temperature offset (eV)
+    "Delta_Te": 4.0e3,    // Height of electron temperature pedestal (eV)
     "nu_Te":    2.0,      // Electron temperature central peaking parameter
     "r_Te":     0.955,    // Central radius of electron temperature pedestal
     "delta_Te": 0.025,    // Width of electron temperature pedestal
 
-    "Ti_0":     8.0e3,    // Central ion temperature (eV)
-    "Ti_1":     7.5e1,    // Ion temperature offset (eV)
-    "Delta_Ti": 9.0e2,    // Height of ion temperature pedestal (eV)
+    "Ti_0":     1.4e4,    // Central ion temperature (eV)
+    "Ti_1":     2.5e1,    // Ion temperature offset (eV)
+    "Delta_Ti": 4.0e3,    // Height of ion temperature pedestal (eV)
     "nu_Ti":    2.0,      // Ion temperarature central peaking parameter
     "r_Ti":     0.95,     // Central radius of ion temperature pedestal
     "delta_Ti": 0.025,    // Width of ion temperature pedestal
 
-    "alphaE":   0.5,      // ExB frequency factor
-    "omegaE_0": 1.0e4,    // Central ExB frequency offset (rad/s)
+    "alphaE":   0.3,      // ExB frequency factor
+    "omegaE_0": 3.0e4,    // Central ExB frequency offset (rad/s)
     "nu_E":     1.1,      // ExB frequency central peaking parameter
 
     "eps":      1.0e-4,   // Distance of closest approach to magnetic axis
@@ -45,11 +45,11 @@
 
     "q0_sta":   1.01,     // Start value for q0 scan
     "q0_end":   3.5,      // End value for q0 scan
-    "q0_num":   1000,     // Number of points in q0 scan
-
+    "q0_num":   1000,      // Number of points in q0 scan
+ 
     "nu_sta":   2.01,     // Start value for nu scan
     "nu_end":   7.5,      // End value for nu scan
-    "nu_num":   1000,     // Number of points in nu scan
+    "nu_num":   100,      // Number of points in nu scan
 
     "acc":      1.0e-12,  // Integration accuracy
     "h0":       1.0e-4,   // Initial integration step-length

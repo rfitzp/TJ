@@ -272,7 +272,7 @@ void TearX::Scannu ()
 
   for (int i = 0; i < nu_num; i++)
     {
-      double _nu = q0_sta + (nu_end - nu_sta) * double (i) /double (nu_num - 1);
+      double _nu = nu_sta + (nu_end - nu_sta) * double (i) /double (nu_num - 1);
 
       Setnu (_nu);
 
@@ -382,11 +382,15 @@ void TearX::Solve (int flag)
   Pres  = new double[nres];
   sres  = new double[nres];
   Dres  = new double[nres];
+  Drres = new double[nres];
+  Dires = new double[nres];
+  Idres = new double[nres];
   Psi.resize (Nr, nres);
     
   ss    = new double[Nr];
   JJ    = new double[Nr];
   JJp   = new double[Nr];
+  JJbs  = new double[Nr];
   lvals = new double[Nr];
 
   ne    = new double[Nr];
@@ -407,6 +411,14 @@ void TearX::Solve (int flag)
   S     = new double[Nr];
   cbeta = new double[Nr];
   dbeta = new double[Nr];
+
+  QE    = new double[Nr];
+  Qe    = new double[Nr];
+  Qi    = new double[Nr];
+  D     = new double[Nr];
+  P_E   = new double[Nr];
+  P_phi = new double[Nr];
+  Scale = new double[Nr];
   
   // --------------------------------
   // Calculate equilibrium quantities
@@ -417,8 +429,8 @@ void TearX::Solve (int flag)
       
       GetEquilibrium (rr[i], q, s, J, Jp, lambda);
 
-      ss[i]  = s;
-      JJ[i]  = J;
+      ss [i] = s;
+      JJ [i] = J;
       JJp[i] = Jp;
 
       ne   [i] = Getne    (rr[i]);
@@ -427,6 +439,7 @@ void TearX::Solve (int flag)
       dTedr[i] = GetdTedr (rr[i]);
       Ti   [i] = GetTi    (rr[i]);
       dTidr[i] = GetdTidr (rr[i]);
+      JJbs [i] = GetJbs   (rr[i]);
 
       waste[i] = Getwaste (rr[i]);
       wasti[i] = Getwasti (rr[i]);
@@ -436,10 +449,18 @@ void TearX::Solve (int flag)
       tauA [i] = GettauA (rr[i]);
       tauE [i] = GettauE (rr[i]);
       taup [i] = Gettaup (rr[i]);
-      S[i]     = tauR[i] /tauA[i];
+      S    [i] = tauR[i] /tauA[i];
       cbeta[i] = Getcbeta (rr[i]);
       dbeta[i] = Getdbeta (rr[i]);
-       
+
+      QE   [i] = GetQE    (rr[i]);
+      Qe   [i] = GetQe    (rr[i]);
+      Qi   [i] = GetQi    (rr[i]);
+      D    [i] = GetD     (rr[i]);
+      P_E  [i] = GetP_E   (rr[i]);
+      P_phi[i] = GetP_phi (rr[i]);
+      Scale[i] = GetScale (rr[i]);
+
       if (i == 0)
 	lvals[i] = 4. * q0 * (nu - 1.) /(q0 * (nu - 1.) + 2. * alpha);
       else
@@ -448,9 +469,11 @@ void TearX::Solve (int flag)
   waste[0] = waste[1];
   wasti[0] = wasti[1];
   wE   [0] = wE   [1];
+  JJbs [0] = JJbs [1];
 
-  printf ("ne(1) = %-10.3e Te(1) = %-10.3e Ti(1) = %-10.3e\n\n",
-	  ne[Nr-1], Te[Nr-1], Ti[Nr-1]);
+  if (flag == 0)
+    printf ("ne(1) = %-10.3e Te(1) = %-10.3e Ti(1) = %-10.3e\n\n",
+	    ne[Nr-1], Te[Nr-1], Ti[Nr-1]);
 
   int mmax = int (qmax /ntor);
   int mmin = mmax - nres + 1;
@@ -469,18 +492,43 @@ void TearX::Solve (int flag)
       // Calculate tearing stability index
       // ---------------------------------
       Delta = GetDelta (isurf);
+      
+      // ------------------------------
+      // Calculate layer response index
+      // ------------------------------
+      double QEs = GetQE    (rs);
+      double Qes = GetQe    (rs);
+      double Qis = GetQi    (rs);
+      double cbs = Getcbeta (rs);
+      double Ds  = GetD     (rs);
+      double PEs = GetP_E   (rs);
+      double Pps = GetP_phi (rs);
+      double Sc  = GetScale (rs);
+      double Delta_r, Delta_i;
+
+      FourField fourfield (1);
+      fourfield.GetDelta (QEs, Qes, Qis, cbs, Ds, PEs, Pps, Delta_r, Delta_i);
+
+      Delta_r *= Sc;
+      Delta_i *= Sc;
+
+      double Ideal = sqrt (Delta_r*Delta_r + Delta_i*Delta_i) /fabs (Delta);
+      
       if (flag == 0)
-	printf ("mpol = %-2d ntor = %-2d rs = %-10.3e s = %-10.3e Delta = %11.4e\n",
-		mmin + isurf, NTOR, rs, sr, Delta);
+	printf ("mpol = %-2d ntor = %-2d rs = %-10.3e s = %-10.3e E_ss = %10.3e Delta = (%10.3e, %10.3e) Ideal = %10.3e\n",
+		mmin + isurf, NTOR, rs, sr, Delta, Delta_r, Delta_i, Ideal);
 
       // ----------
       // Store data
       // ----------
-      mres[isurf] = mmin + isurf;
-      rres[isurf] = rs;
-      Pres[isurf] = pow (gsl_spline_eval (R_spline, rres[isurf],  R_acc), 2.);
-      sres[isurf] = sr;
-      Dres[isurf] = Delta;
+      mres [isurf] = mmin + isurf;
+      rres [isurf] = rs;
+      Pres [isurf] = pow (gsl_spline_eval (R_spline, rres[isurf],  R_acc), 2.);
+      sres [isurf] = sr;
+      Dres [isurf] = Delta;
+      Drres[isurf] = Delta_r;
+      Dires[isurf] = Delta_i;
+      Idres[isurf] = Ideal;
     }
 
   // -----------------
@@ -500,8 +548,8 @@ void TearX::Solve (int flag)
 	      q0, qq[Nr-1]/qc, q95, nres, mres[0], mres[nres-1]);
 	      
       for (int i = 0; i < nres; i++)
-	fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e %11.4e\n",
-		 q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i], Pres[i]);
+	fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e\n",
+		 q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i], Pres[i], Drres[i], Dires[i], Idres[i]);
       fclose (file);
     }
   if (flag == 2)
@@ -512,21 +560,22 @@ void TearX::Solve (int flag)
 	      nu, qq[Nr-1]/qc, q95, nres, mres[0], mres[nres-1]);
 	      
       for (int i = 0; i < nres; i++)
-	fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e %11.4e\n",
-		 q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i], Pres[i]);
+	fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e\n",
+		 q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i], Pres[i], Drres[i], Dires[i], Idres[i]);
       fclose (file);
     }
   
   // -------
   // Cleanup
   // -------
-  delete[] rr;   delete[] ss;   delete[] JJ;   delete[] JJp; delete[] lvals;
-  delete[] mres; delete[] rres; delete[] Dres; delete[] PSI; delete[] sres;
-  delete[] rho;  delete[] Pres;
+  delete[] rr;   delete[] ss;   delete[] JJ;    delete[] JJp;   delete[] lvals;
+  delete[] mres; delete[] rres; delete[] Dres;  delete[] PSI;   delete[] sres;
+  delete[] rho;  delete[] Pres; delete[] Drres; delete[] Dires; delete[] Idres;
 
   delete[] ne;    delete[] dnedr; delete[] Te;    delete[] dTedr; delete[] Ti;   delete[] dTidr;
   delete[] waste; delete[] wasti; delete[] wE;    delete[] tauR;  delete[] tauA; delete[] tauE;
-  delete[] taup;  delete[] S;     delete[] cbeta; delete[] dbeta;
+  delete[] taup;  delete[] S;     delete[] cbeta; delete[] dbeta; delete[] JJbs; delete[] Scale;
+  delete[] QE;    delete[] Qe;    delete[] Qi;    delete[] D;     delete[] P_E;  delete[] P_phi; 
 
   gsl_spline_free (q_spline);    gsl_spline_free (P_spline);    gsl_spline_free (R_spline);
   gsl_interp_accel_free (q_acc); gsl_interp_accel_free (P_acc); gsl_interp_accel_free (R_acc);
@@ -587,6 +636,8 @@ void TearX::WriteNetcdf ()
       Ti_x.putVar (Ti);
       NcVar Tip_x = dataFile.addVar ("dTidr",  ncDouble, r_d);
       Tip_x.putVar (dTidr);
+      NcVar jbs_x = dataFile.addVar ("Jbs",   ncDouble, r_d);
+      jbs_x.putVar (JJbs);
 
       NcVar we_x = dataFile.addVar  ("omegae", ncDouble, r_d);
       we_x.putVar (waste);
@@ -609,19 +660,40 @@ void TearX::WriteNetcdf ()
       cb_x.putVar (cbeta);
       NcVar db_x = dataFile.addVar  ("d_beta", ncDouble, r_d);
       db_x.putVar (dbeta);
-      
-      NcVar m_x   = dataFile.addVar ("mres",   ncInt,    s_d);
-      m_x.putVar (mres);
-      NcVar rs_x  = dataFile.addVar ("rres",   ncDouble, s_d);
-      rs_x.putVar (rres);
-      NcVar Ps_x  = dataFile.addVar ("Pres",   ncDouble, s_d);
-      Ps_x.putVar (Pres);
-      NcVar ss_x  = dataFile.addVar ("sres",   ncDouble, s_d);
-      ss_x.putVar (sres);
-      NcVar D_x   = dataFile.addVar ("Dres",   ncDouble, s_d);
-      D_x.putVar (Dres);
 
-      NcVar psi_x = dataFile.addVar ("psi",    ncDouble, psi_d);
+      NcVar qE_x = dataFile.addVar  ("Q_E",    ncDouble, r_d);
+      qE_x.putVar (QE);
+      NcVar qe_x = dataFile.addVar  ("Q_e",    ncDouble, r_d);
+      qe_x.putVar (Qe);
+      NcVar qi_x = dataFile.addVar  ("Q_i",    ncDouble, r_d);
+      qi_x.putVar (Qi);
+      NcVar d_x = dataFile.addVar   ("D",      ncDouble, r_d);
+      d_x.putVar (D);
+      NcVar pe_x = dataFile.addVar  ("P_E",    ncDouble, r_d);
+      pe_x.putVar (P_E);
+      NcVar pp_x = dataFile.addVar  ("P_phi",  ncDouble, r_d);
+      pp_x.putVar (P_phi);
+      NcVar sc_x = dataFile.addVar  ("Scale",  ncDouble, r_d);
+      sc_x.putVar (Scale);
+      
+      NcVar m_x   = dataFile.addVar ("mres",        ncInt,    s_d);
+      m_x.putVar (mres);
+      NcVar rs_x  = dataFile.addVar ("rres",        ncDouble, s_d);
+      rs_x.putVar (rres);
+      NcVar Ps_x  = dataFile.addVar ("Pres",        ncDouble, s_d);
+      Ps_x.putVar (Pres);
+      NcVar ss_x  = dataFile.addVar ("sres",        ncDouble, s_d);
+      ss_x.putVar (sres);
+      NcVar D_x   = dataFile.addVar ("Dres",        ncDouble, s_d);
+      D_x.putVar (Dres);
+      NcVar Dr_x  = dataFile.addVar ("Delta_r_res", ncDouble, s_d);
+      Dr_x.putVar (Drres);
+      NcVar Di_x  = dataFile.addVar ("Delta_i_res", ncDouble, s_d);
+      Di_x.putVar (Dires);
+      NcVar id_x  = dataFile.addVar ("Ideal",       ncDouble, s_d);
+      id_x.putVar (Idres);
+
+      NcVar psi_x = dataFile.addVar ("psi", ncDouble, psi_d);
       psi_x.putVar (Psi_y);
     }
       catch (NcException& e)
@@ -639,20 +711,17 @@ void TearX::WriteNetcdf ()
 // #########################################
 void TearX::GetEquilibrium (double r, double& q, double& s, double& J, double& Jp, double& lambda)
 {
-  double r2  = r*r;
-  double or2 = 1. - r2;
-  double nu1 = nu - 1.;
-  double nu2 = nu - 2.;
+  q  = Getq (r);
+  s  = GetShear (r);
+  J  = GetJ (r);
+  Jp = GetJp (r);
 
-  q      = Getq (r);
-  s      = r * Getqp (r) /q;
-  J      = (2./q0) * pow (or2, nu1);
-  Jp     = - (4./q0) * nu1 * r * pow (or2, nu2);
   if (r > 1.)
     {
       J  = 0.;
       Jp = 0.;
     }
+
   lambda = - q * Jp /s;
 }
 
@@ -713,13 +782,43 @@ double TearX::Getqp (double r)
   if (r < 0.01)
     {
       qp = q0 * (nu1*r + 4.*(0.25*nu1*nu1 - nu1*nu2/6.)*r3) + 2.*alpha*r;
-     }
+    }
   else
     {
       qp = 2.*r /f - r2 * fp /f/f + 2.*alpha*r /lg;
     }
-
+  
   return qp;
+}
+
+// ############################################
+// Function to return cylindrical safety-factor
+// ############################################
+double TearX::Getq_cyl (double r)
+{
+  double r2  = r*r;
+  double r4  = r2*r2;
+  double or2 = 1. - r2;
+  double nu1 = nu - 1.;
+  double nu2 = nu - 2.;
+  double q_cyl;
+
+  double f = (1. - pow (or2, nu)) /q0/nu;
+  if (r > 1.)
+    {
+      f = 1. /q0/nu;
+    }
+  
+  if (r < 0.01)
+    {
+      q_cyl = q0 * (1. + 0.5*nu1*r2 + (0.25*nu1*nu1 - nu1*nu2/6.)*r4);
+     }
+  else
+    {
+      q_cyl = r2 /f;
+    }
+
+  return q_cyl;
 }
 
 // ##########################################
@@ -731,6 +830,31 @@ double TearX::GetShear (double r)
   double qp = Getqp (r);
 
   return r * qp /q;
+}
+
+// #############################################
+// Function to return normalized current density
+// #############################################
+double TearX::GetJ (double r)
+{
+  double r2  = r*r;
+  double or2 = 1. - r2;
+  double nu1 = nu - 1.;
+ 
+  return (2./q0) * pow (or2, nu1);
+}
+
+// ######################################################
+// Function to return normalized current density gradient
+// ######################################################
+double TearX::GetJp (double r)
+{
+  double r2  = r*r;
+  double or2 = 1. - r2;
+  double nu1 = nu - 1.;
+  double nu2 = nu - 2.;
+
+  return - (4./q0) * nu1 * r * pow (or2, nu2);
 }
 
 // ###################################################
@@ -785,6 +909,25 @@ double TearX::GetdTidr (double r)
 {
   return nu_Ti * (Ti_0 - Ti_1) * (-2.*r) * pow (1 - r*r, nu_Ti - 1.)
     - 0.5 * (Delta_Ti /delta_Ti) /cosh ((r - r_Ti) /delta_Ti) /cosh ((r - r_Ti) /delta_Ti);
+}
+
+// ############################################
+// Function to return bootstrap current density
+// ############################################
+double TearX::GetJbs (double r)
+{
+  double eps   = (r*a /R0);
+  double j0    = mu_0 * R0*R0 * e /a/a /B0/B0;
+
+  double q_cyl = Getq_cyl (r);
+  double ne    = Getne (r);
+  double nep   = Getdnedr (r);
+  double Te    = GetTe (r);
+  double Tep   = GetdTedr (r);
+  double Ti    = GetTi (r);
+  double Tip   = GetdTidr (r);
+
+  return - j0 * (q_cyl * sqrt (eps) /r) * (2.40 * (Te + Ti) * nep + 0.61 * ne * Tep - 0.41 * ne * Tip);
 }
 
 // #################################################
@@ -907,6 +1050,100 @@ double TearX::Getdbeta (double r)
   double di = sqrt (M * m_p /ne /e/e /mu_0);
 
   return cbeta * di;
+}
+
+// ##############################
+// Function to return value of QE
+// ##############################
+double TearX::GetQE (double r)
+{
+  double tauR = GettauR  (r);
+  double tauA = GettauA  (r);
+  double wE   = GetwE    (r);
+  double s    = GetShear (r);
+  double S    = tauR /tauA;
+
+  return - pow (S, 1./3.) * ntor * wE * tauA / pow (ntor * fabs (s), 2./3.);
+}
+
+// ##############################
+// Function to return value of Qe
+// ##############################
+double TearX::GetQe (double r)
+{
+  double tauR = GettauR  (r);
+  double tauA = GettauA  (r);
+  double we   = Getwaste (r);
+  double s    = GetShear (r);
+  double S    = tauR /tauA;
+
+  return - pow (S, 1./3.) * ntor * we * tauA / pow (ntor * fabs (s), 2./3.);
+}
+
+// ##############################
+// Function to return value of Qi
+// ##############################
+double TearX::GetQi (double r)
+{
+  double tauR = GettauR  (r);
+  double tauA = GettauA  (r);
+  double wi   = Getwasti (r);
+  double s    = GetShear (r);
+  double S    = tauR /tauA;
+
+  return - pow (S, 1./3.) * ntor * wi * tauA / pow (ntor * fabs (s), 2./3.);
+}
+
+// ##############################
+// Function to return value of D
+// ##############################
+double TearX::GetD (double r)
+{
+  double tauR  = GettauR  (r);
+  double tauA  = GettauA  (r);
+  double we    = Getwaste (r);
+  double wi    = Getwasti (r);
+  double dbeta = Getdbeta (r);
+  double s     = GetShear (r);
+  double S     = tauR /tauA;
+  double iotae = - we /(wi - we);
+
+  return pow (S * ntor * fabs (s), 1./3.) * sqrt (iotae) * dbeta /a/r;
+}
+
+// ###############################
+// Function to return value of P_E
+// ###############################
+double TearX::GetP_E (double r)
+{
+  double tauR = GettauR (r);
+  double tauE = GettauE (r);
+
+  return tauR /tauE;
+}
+
+// #################################
+// Function to return value of P_phi
+// #################################
+double TearX::GetP_phi (double r)
+{
+  double tauR = GettauR (r);
+  double taup = Gettaup (r);
+
+  return tauR /taup;
+}
+
+// ########################################
+// Function to return value of scale factor
+// ########################################
+double TearX::GetScale (double r)
+{
+  double tauR = GettauR  (r);
+  double tauA = GettauA  (r);
+  double s    = GetShear (r);
+  double S    = tauR /tauA;
+
+  return pow (S * ntor * fabs (s), 1./3.);
 }
 
 // ########################################

@@ -128,6 +128,52 @@ FourField::FourField ()
 	  acc, h0, hmin, hmax);
 }
 
+// #######################
+// Lightweight constructor
+// #######################
+FourField::FourField (int flg)
+{
+  // ......................................
+  // Read control parameters from JSON file
+  // ......................................
+  string JSONFilename = "../Inputs/FourField.json";
+  json   JSONData     = ReadJSONFile (JSONFilename);
+
+  pstart = JSONData["pstart"].get<double> ();
+  pend   = JSONData["pend"]  .get<double> ();
+  P3max  = JSONData["P3max"] .get<double> ();
+
+  Scan  = JSONData["Scan"] .get<int>    ();
+  Fscan = JSONData["Fscan"].get<double> ();
+  Nscan = JSONData["Nscan"].get<int>    ();
+
+  acc  = JSONData["acc"] .get<double> ();
+  h0   = JSONData["h0"]  .get<double> ();
+  hmin = JSONData["hmin"].get<double> ();
+  hmax = JSONData["hmax"].get<double> ();
+}
+
+// ###################################
+// Function to return four-field Delta
+// ###################################
+void FourField::GetDelta (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i)
+{
+  g_r   = 0.;
+  g_i   = _QE;
+  Qe    = _Qe;
+  Qi    = _Qi;
+  D     = _D;
+  Pphi  = _Pp;
+  Pperp = _PE;
+  cbeta = _cbeta;
+  iotae = - Qe /(Qi - Qe);
+
+  SolveFourFieldLayerEquations ();
+
+  Delta_r = real(Deltas4);
+  Delta_i = imag(Deltas4);
+}
+  
 // #########################
 // Function to solve problem
 // #########################

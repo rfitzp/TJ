@@ -77,7 +77,7 @@ plt.axvline (-In[3], color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.plot (gi, d3r, color = 'blue',  linewidth = 2, linestyle = 'solid',   label = r"Re($\hat{\Delta}_3$)")
 plt.plot (gi, d4r, color = 'red',   linewidth = 2, linestyle = 'solid',   label = r"Re($\hat{\Delta}_4$)")
-plt.plot (Q,  D4r, color = 'cyan',  linewidth = 2, linestyle = 'dotted',  label = r"slayer")
+plt.plot (Q,  D4r, color = 'cyan',  linewidth = 2, linestyle = 'dotted',  label = r"SLAYER")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
 plt.xlabel (r'$Q_E$', fontsize = "15")
@@ -95,7 +95,7 @@ plt.axvline (-In[3], color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.plot (gi, d3i, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Im($\hat{\Delta}_3$)")
 plt.plot (gi, d4i, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Im($\hat{\Delta}_4$)")
-plt.plot (Q,  D4i, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"slayer")
+plt.plot (Q,  D4i, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"SLAYER")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
 plt.xlabel (r'$Q_E$', fontsize = "15")
@@ -103,6 +103,6 @@ plt.legend (fontsize = "15");
 
 plt.tight_layout ()
 
-plt.show () 
-#plt.savefig ("VRii.pdf")
+#plt.show () 
+plt.savefig ("Figure4.pdf")
 

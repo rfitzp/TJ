@@ -7,18 +7,22 @@ COMPILE_TIME = `date -u +'%Y-%m-%d %H:%M:%S UTC'`
 GIT_BRANCH   = `git branch | grep "^\*" | sed 's/^..//'`
 export VERSION_FLAGS=-DGIT_HASH="\"$(GIT_HASH)\"" -DCOMPILE_TIME="\"$(COMPILE_TIME)\"" -DGIT_BRANCH="\"$(GIT_BRANCH)\""
 
-BUILD_DIR   = ../bin
-UTILITY_DIR = ../Utility
+BUILD_DIR     = ../bin
+LIB_DIR       = ../lib
+UTILITY_DIR   = ../Utility
+FOURFIELD_DIR = ../FourField
+
+FOURFIELD_LIB = $(LIB_DIR)/libFourField.a
 
 C_HEADER = TearX.h
 C_SOURCE = main.cpp TearX.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
-U_OBJECT = ../Utility/Utility.o ../Utility/Faddeeva.o
+U_OBJECT = ../Utility/Utility.o 
 
 EXECUTABLE = ../bin/tearx
 
-$(EXECUTABLE):	 	$(C_OBJECT) $(BUILD_DIR)
-			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(U_OBJECT) $(C_LIBS)
+$(EXECUTABLE):	 	$(C_OBJECT) $(BUILD_DIR) $(FOURFIELD_DIR)
+			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(U_OBJECT) $(C_LIBS) -L../lib -lFourField
 
 $(BUILD_DIR):
 			@mkdir -p $(BUILD_DIR)
@@ -29,6 +33,9 @@ $(C_OBJECT):		$(C_SOURCE) $(C_HEADER)
 $(U_OBJECT):
 			$(MAKE) -C $(UTILITY_DIR)
 
+$(FOUFIELD_LIB):
+			$(MAKE) -C $(FOUFIELD_DIR)
+
 clean: 
-			rm -f $(F_OBJECT) $(C_OBJECT) $(EXECUTABLE)
+			rm -f $(C_OBJECT) $(EXECUTABLE)
 

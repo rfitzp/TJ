@@ -28,7 +28,7 @@ plt.subplot (2, 2, 1)
 
 plt.xlim (0., 1.)
  
-plt.plot (r, ne, color = 'blue',  linewidth = 2,   linestyle = 'solid')
+plt.plot     (r, ne, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rs in rres:
     plt.axvline (rs, color = 'black', linewidth = 1.0, linestyle = 'dotted')
@@ -40,8 +40,8 @@ plt.subplot (2, 2, 2)
 
 plt.xlim (0., 1.)
  
-plt.plot (r, Te, color = 'red',  linewidth = 2,    linestyle = 'solid', label = "$T_e$")
-plt.plot (r, Ti, color = 'blue',  linewidth = 2,   linestyle = 'solid', label = "$T_i$")
+plt.plot (r, Te, color = 'red',  linewidth = 2,   linestyle = 'solid', label = "$T_e$")
+plt.plot (r, Ti, color = 'blue', linewidth = 2,   linestyle = 'solid', label = "$T_i$")
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rs in rres:
     plt.axvline (rs, color = 'black', linewidth = 1.0, linestyle = 'dotted')

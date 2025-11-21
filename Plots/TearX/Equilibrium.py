@@ -14,6 +14,7 @@ q    = ds['q']
 s    = ds['s']
 j    = ds['J']
 jp   = ds['Jp']
+jbs  = ds['Jbs']
 l    = ds['lambda']
 rres = ds['rres']
 
@@ -57,8 +58,9 @@ plt.subplot (2, 2, 3)
 
 plt.xlim (0., 1.)
  
-plt.plot    (r, j,   color = 'blue',  linewidth = 2,   linestyle = 'solid',  label = r'$J$')
+plt.plot    (r, j,   color = 'blue',  linewidth = 2,   linestyle = 'solid', label = r'$J$')
 plt.plot    (r, mjp, color = 'red',   linewidth = 2,   linestyle = 'solid', label = r"$-J'$")
+plt.plot    (r, jbs, color = 'green', linewidth = 2,   linestyle = 'solid', label = r"$J_{bs}$")
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rs in rres:
     plt.axvline (rs, color = 'black', linewidth = 1.0, linestyle = 'dotted')
