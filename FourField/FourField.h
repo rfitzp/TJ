@@ -105,7 +105,7 @@ public:
   FourField (int flg);
 
   // Return four-field layer response index
-  void GetDelta (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i);
+  void GetDelta (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i, double& pmax);
   
   // Solve problem
   void Solve ();

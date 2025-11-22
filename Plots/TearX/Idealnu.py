@@ -64,10 +64,10 @@ plt.rc ('ytick', labelsize = 15)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0.88, 1.001)
+plt.xlim (0.89, 1.001)
 
-#if len(p3) > 0:
-#    plt.plot (p3, i3, color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=3$')
+if len(p3) > 0:
+    plt.plot (p3, i3,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=3$')
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'red',     linewidth = 2, linestyle = 'solid', label = '$m=4$')
 if len(p5) > 0:

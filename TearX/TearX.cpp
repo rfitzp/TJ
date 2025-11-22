@@ -504,10 +504,12 @@ void TearX::Solve (int flag)
       double PEs = GetP_E   (rs);
       double Pps = GetP_phi (rs);
       double Sc  = GetScale (rs);
-      double Delta_r, Delta_i;
+      double Delta_r, Delta_i, pmax;
 
       FourField fourfield (1);
-      fourfield.GetDelta (QEs, Qes, Qis, cbs, Ds, PEs, Pps, Delta_r, Delta_i);
+      fourfield.GetDelta (QEs, Qes, Qis, cbs, Ds, PEs, Pps, Delta_r, Delta_i, pmax);
+      printf ("QE = %9.2e Qe = %9.2e Qis = %9.2e cbeta = %9.2e D = %9.2e PE = %9.2e Pp = %9.2e Delta = (%9.2e, %9.2e) pmax = %9.2e\n",
+	      QEs, Qes, Qis, cbs, Ds, PEs, Pps, Delta_r, Delta_i, pmax);
 
       Delta_r *= Sc;
       Delta_i *= Sc;

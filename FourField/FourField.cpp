@@ -156,7 +156,7 @@ FourField::FourField (int flg)
 // ###################################
 // Function to return four-field Delta
 // ###################################
-void FourField::GetDelta (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i)
+void FourField::GetDelta (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i, double& pmax)
 {
   g_r   = 0.;
   g_i   = _QE;
@@ -168,10 +168,22 @@ void FourField::GetDelta (double _QE, double _Qe, double _Qi, double _cbeta, dou
   cbeta = _cbeta;
   iotae = - Qe /(Qi - Qe);
 
-  SolveFourFieldLayerEquations ();
+  if (cbeta > 0.01)
+    {
+      SolveFourFieldLayerEquations ();
 
-  Delta_r = real(Deltas4);
-  Delta_i = imag(Deltas4);
+      Delta_r = real(Deltas4);
+      Delta_i = imag(Deltas4);
+      pmax    = pmax4;
+    }
+  else
+    {
+      SolveThreeFieldLayerEquations ();
+
+      Delta_r = real(Deltas3);
+      Delta_i = imag(Deltas3);
+      pmax    = pmax3;
+    }
 }
   
 // #########################
