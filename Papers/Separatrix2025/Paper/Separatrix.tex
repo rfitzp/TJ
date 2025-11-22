@@ -32,16 +32,16 @@ RMP, and ${\mit\Psi}_c=0.9952$ for an $n=4$ RMP,  in  a typical JET H-mode plasm
 \end{abstract}
 
 \section{Introduction}
-All modern tokamak plasmas feature a {\em magnetic divertor},  which is a particular configuration of the magnetic field that redirects the outermost field-lines  away from the confined plasma region and into a controlled exhaust area where the plasma particle and heat fluxes can safely be absorbed by a solid  target plate \cite{wesson}. Each magnetic flux-surface in a tokamak plasma has an associated value of the {\em safety-factor}, which specifies the average number of
-toroidal circuits of the surface that a constituent  magnetic field-line makes per poloidal circuit \cite{boozer}. Magnetic flux-surfaces possessing rational
+All modern tokamak plasmas feature a {\em magnetic divertor},  which is a particular configuration of the magnetic field that redirects the outermost field-lines  away from the confined plasma region and into a controlled exhaust area where the plasma particle and heat fluxes can be safely  absorbed by a solid  target plate \cite{wesson}. Each magnetic flux-surface in a tokamak plasma has an associated value of the {\em safety-factor}, which specifies the  number of
+toroidal circuits of the surface that a constituent  magnetic field-line makes per poloidal circuit \cite{meiss,boozer}. Magnetic flux-surfaces possessing rational
 values of the safety-factor are special. Indeed, externally generated, static, non-axisymmetric magnetic perturbations---known as {\em resonant magnetic perturbations} (RMPs)---can drive  magnetic reconnection  on such {\em rational surfaces}, leading to localized changes in magnetic
-topology that degrade the ability of the surrounding flux-surfaces to confine energy. Alternatively, shielding currents can flow, predominately parallel 
+topology that degrade the ability of the surrounding flux-surfaces to confine energy \cite{chang}. Alternatively, shielding currents can flow, predominately parallel 
 to magnetic field-lines, on rational surfaces, and act to suppress driven  magnetic
 reconnection \cite{rf1}. In general, neither driven magnetic reconnection nor shielding currents can occur on irrational magnetic flux-surfaces.
 
 A magnetically diverted tokamak plasma possesses a so-called ``last closed magnetic flux-surface" (LCFS). Magnetic flux-surfaces that lie inside the
 LCFS are topologically simple tori, and are completely occupied by plasma. Magnetic flux-surfaces that lie outside the LCFS have more complicated
-topology, and are only partialy occupied by plasma. The LCFS features a magnetic ``X-point", which is a circular loop, coaxial with the plasma torus, on
+topology, and are only partially occupied by plasma. The LCFS features a magnetic ``X-point", which is a circular loop, coaxial with the plasma torus, on
 which the poloidal magnetic field is zero. (In some very  special tokamak plasmas, the LCFS features two X-points. However, we shall 
 not consider such plasmas here.) As the LCFS is approached, the safety-factor exhibits a logarithmic singularity \cite{pom}, as a direct consequence of the presence of the X-point, and there is an
 associated accumulation of rational magnetic flux-surfaces in the vicinity of the LCFS. In fact, for an RMP with a given toroidal mode number, there are,
@@ -52,7 +52,7 @@ safety-factor \cite{mars,ipec,dcon,park,epec,gpec,logan}. The purpose of this pa
 This paper is organized as follows. A particularly simple model of a magnetically diverted tokamak plasma is introduced in Sect.~\ref{stwo}, and is
 used to define exactly what is meant by a straight-field-line  coordinate system, the safety-factor profile, and a rational surface, both inside and outside the LCFS. 
 A more realistic model of a magnetically diverted tokamak plasma is presented in Sect.~\ref{sthree}. The response of a magnetically diverted plasma
-to an RMP is analyzed  in Sect.~\ref{response}. Section~\ref{separatrix}  investigates the behavior of the plasma
+to an RMP is analyzed  in Sect.~\ref{response}. Section~\ref{separatrix}  investigates the predictions of the plasma
 response model in the vicinity of the LCFS. Finally, the paper is summarized in Sect.~\ref{sum}. 
 
 \section{Simple model of a magnetically diverted plasma}\label{stwo}
@@ -65,7 +65,7 @@ current $I_p$, and pierce the $x$-$y$ plane at $x=y=0$. Let the second filament 
 pierce the $x$-$y$ plane at $x=0$, $y=-a$.  The first filament represents the ``toroidal'' (i.e., $z$-directed) plasma
 current, whereas the second represents the toroidal current flowing in the magnetic divertor coil that generates the magnetic X-point. 
 Suppose that there is a uniform, externally generated, toroidal magnetic
-field of strength $B_0$. Let the system be periodic in the $z$ direction with period $2\pi\,R_0$, where $R_0$ is the simulated major
+field of strength $B_0$. Let the system be periodic in the $z$-direction with period $2\pi\,R_0$, where $R_0$ is the simulated major
 radius of the plasma.  
 It is helpful to define the simulated toroidal angle,  $\phi= z/R_0$. 
 
@@ -80,7 +80,7 @@ where
 is the ``poloidal'' (i.e., circulating in  the $x$-$y$ plane) magnetic flux (divided by $2\pi$) generated by the two current filaments.
 
 \subsection{Straight-field-line coordinates}
-It is convenient to re-express the magnetic field in the usual Clebsch form
+It is convenient to re-express the magnetic field in the standard Clebsch form
 \begin{equation}\label{e2}
 {\bf B} = \nabla(\phi-q\,\theta)\times \nabla \psi_p,
 \end{equation}
@@ -94,12 +94,13 @@ with gradient $d\phi/d\theta = q$, when
 plotted in the $\theta$-$\phi$ plane. In fact, $\psi_p$, $\theta$, $\phi$ are known as {\em straight-field-line coordinates}, and $\theta$
 is termed a {\em straight}\/  poloidal angle \cite{boz}. The defining property of a straight-field-line coordinate system is the choice $q=q(\psi_p)$,
 rather than $q=q(\psi_p,\theta)$, or even $q=q(\psi_p,\theta,\phi)$. There are many types of straight-field-line coordinate
-systems (e.g., Hamada \cite{hamada}, Boozer \cite{bcoord}, PEST \cite{pest}, equal-arc), all of which have the required property that $q=q(\psi_p)$. For the sake of convenience, we have chosen to use PEST
-coordinates, which are characterized by a toroidal angle, $\phi$, that corresponds to the polar angle in the $R$, $\phi$, $Z$ cylindrical 
-coordinate system. (See Sect.~\ref{equil}.) Once the choice of toroidal angle is made, the coordinate system is uniquely defined. 
+systems (e.g., Hamada \cite{hamada}, Boozer \cite{bcoord}, PEST \cite{pest}, equal-arc), all of which have the required property that $q=q(\psi_p)$. For the sake of convenience, in this paper we shall adopt PEST
+coordinates, which are characterized by a toroidal angle, $\phi$, that corresponds to the angular coordinate in the $R$, $\phi$, $Z$ cylindrical 
+coordinate system (that is coaxial with the plasma torus). (Here, we are looking ahead to the generalization to
+true toroidal geometry that takes place in Sect.~\ref{equil}.) Once the choice of toroidal angle is made, the coordinate system is uniquely defined. 
 
 \subsection{Non-diverted edge safety-factor}
-In the absence of the divertor current, the plasma would have a circular cross-section of minor radius $a$, and
+In the absence of the divertor current, the plasma would have a circular cross-section in the $x$-$y$ plane of minor radius $a$, and
 an edge safety-factor value of
 \begin{equation}\label{e4}
 q_\ast = \frac{2\pi\,B_0\,a^2}{\mu_0\,I_p\,R_0}.
@@ -120,7 +121,7 @@ where $\zeta=I_c/I_p$. Here, $\psi_X\equiv\partial\psi/\partial X$, et cetera.
 The magnetic $X$-point is located at the point in the $X$-$Y$ plane where  $\psi_X=\psi_Y=0$ (i.e., where the poloidal magnetic
 field-strength is zero).
 As is easily demonstrated, the coordinates of this point are ($X_x$, $Y_x$), where  $X_x=0$ and $Y_x=-1/(1+\zeta)$. 
-The magnetic separatrix corresponds to the curve $\psi(X,Y)= \psi_x$, where 
+The so-called magnetic separatrix corresponds to the curve $\psi(X,Y)= \psi_x$, where 
 \begin{equation}
 \psi_x \equiv \psi(X_x,Y_x) = \ln\left[\frac{\zeta^{\,\zeta}}{(1+\zeta)^{1+\zeta}}\right].
 \end{equation}
@@ -166,9 +167,9 @@ We can then compute $\theta$ using
 
 Let $q_\ast = 12$ and $\zeta=0.2$. 
 Figure~\ref{fig1} shows the magnetic flux-surfaces ${\mit\Psi}=0.9$, ${\mit\Psi}=1.0$, and ${\mit\Psi}=1.1$, plotted in the 
-$X$-$Y$ plane. Flux-surfaces characterized by ${\mit\Psi}<1$ do not enclose the divertor current filament, whereas those
+$X$-$Y$ plane. Flux-surfaces characterized by ${\mit\Psi}<1$ do not enclose the divertor coil filament, whereas those
 characterized by ${\mit\Psi}>1$ do enclose the filament. The {\em magnetic separatrix}, ${\mit\Psi}=1$, separates flux-surfaces
- that do and do not enclose the divertor current filament, and crosses itself at the magnetic X-point. 
+ that do and do not enclose the divertor coil filament, and crosses itself at the magnetic X-point. 
  
  \begin{figure}[t]
 \centerline{\includegraphics[width=\textwidth]{Figure2.pdf}}
@@ -220,7 +221,7 @@ electron fluid equation of motion yields
  n\,(\omega_E+\omega_{\ast\,e})\left[b^{\psi_p} -\frac{B_0}{R_0}\left(\frac{m}{q}-n\right)\xi^{\psi_p}\right] \simeq \frac{B_0}{R_0}\,\frac{m}{q} \,\eta_\parallel \,j_\phi,
 \end{equation}
 where subscripts and superscripts denote covariant and contravariant components in the $\psi_p$, $\theta$, $\phi$ coordinate
-system, respectively.  Here, ${\bf b}$ is the perturbed magnetic field, $\bxi$ the Lagrangian electron fluid displacement,  ${\bf j}$ the perturbed current
+system, respectively \cite{meiss}.  Here, ${\bf b}$ is the perturbed magnetic field, $\bxi$ the Lagrangian electron fluid displacement,  ${\bf j}$ the perturbed current
 density, and $\eta_\parallel$ the plasma parallel electrical resistivity. Moreover,
 \begin{align}
 \omega_E(\psi_p) = -\frac{d{\mit\Phi}}{d\psi_p}
@@ -250,14 +251,14 @@ flux-surfaces exist both inside and outside the magnetic separatrix.
 
 \subsection{Effect of divertor plate}
 Rational magnetic flux-surfaces exist outside the magnetic separatrix  because flux-surfaces in this region form closed loops, that complete below the
-divertor filament, when plotted in
+divertor coil filament, when plotted in
 the $X$-$Y$ plane. In fact, this must be the case in an axisymmetric system otherwise the divergence of the magnetic field would be non-zero.
 Thus, the commonly used term  ``last closed magnetic flux-surface" (meaning the magnetic separatrix) is inaccurate. All of the magnetic
 flux-surfaces are closed. However, those outside the magnetic sepatatrix are only partially 
 occupied by plasma because they intersect the solid divertor plate.
 
  Suppose that
-the divertor plate is horizontal (i.e., parallel to the $X$-axis), and is situated halfway between the X-point and the divertor filament. 
+the divertor plate is horizontal (i.e., parallel to the $X$-axis), and is situated halfway between the X-point and the divertor coil filament. 
 When integrating Eqs.~(\ref{e11})--(\ref{e22}), we are really integrating along the path of a shielding current filament excited by an inductive electric field.
  Under normal circumstances, the  filament is constrained to run parallel to magnetic
 field-lines. However, within the rigid divertor plate (which is assumed to be electrically conducting), the filament  takes the path of least electrical resistance, which implies that it runs along the
@@ -271,7 +272,7 @@ $X$-axis at constant $\phi$. It follows that, within the divertor plate, Eqs.~(\
 
 \begin{figure}[t]
 \centerline{\includegraphics[width=\textwidth]{Figure5.pdf}}
-\caption{The magnetic flux-surfaces ${\mit\Psi}=0.9$ (red), ${\mit\Psi}=1.0$ (green), and ${\mit\Psi}=1.1$ (blue)  in the presence of a divertor plate located halfway between the X-point and the divertor filament. The black dot shows the location of plasma current filament, and the horizontal black line shows the location of the divertor plate. Here, $q_\ast=12$ amd $\zeta=0.2$. }\label{fig5}
+\caption{The magnetic flux-surfaces ${\mit\Psi}=0.9$ (red), ${\mit\Psi}=1.0$ (green), and ${\mit\Psi}=1.1$ (blue)  in the presence of a divertor plate located halfway between the X-point and the divertor coil filament. The black dot shows the location of plasma current filament, and the horizontal black line shows the location of the divertor plate. Here, $q_\ast=12$ amd $\zeta=0.2$. }\label{fig5}
 \end{figure}
 
 Again, let $q_\ast = 12$ and $\zeta=0.2$. 
@@ -281,7 +282,7 @@ the divertor plate. Strictly speaking, these sections are not magnetic flux-surf
 
 The green curve in Fig.~\ref{fig2} shows the safety-factor profile   calculated outside the magnetic separatrix in the presence of
 the divertor plate. Note that the safety-factor is decreased in the presence of the  plate, because shielding 
-current filaments can take a short-cuts through it, rather than having to run in loops below it. 
+current filaments can take a short-cuts through, rather than having to run in loops below, the plate. 
 
 Finally, Fig.~\ref{fig6}  shows the straight-field-line coordinate system  outside the magnetic separatrix in the presence of the divertor plate. Observe that the
 divertor plate is a surface of constant $\theta$. 
@@ -289,8 +290,8 @@ divertor plate is a surface of constant $\theta$.
 \begin{figure}[t]
 \centerline{\includegraphics[width=\textwidth]{Figure6.pdf}}
 \caption{The straight-field-line coordinate system outside the magnetic separatrix in the presence of a divertor plate located halfway
-between the X-point and the divertor filament. The red curves
-are surfaces of constant $\hat{\psi}$, whereas the blue curves are surfaces of constant $\theta$. The black dot shows the location of the plasma filament,
+between the X-point and the divertor coil filament. The red curves
+are surfaces of constant $\hat{\psi}$, whereas the blue curves are surfaces of constant $\theta$. The black dot shows the location of the plasma current filament,
 and the horizontal black line shows the location of the divertor plate. Here, $q_\ast=12$ and $\zeta=0.2$. }\label{fig6}
 \end{figure}
 
@@ -593,16 +594,16 @@ It is helpful to define the following quantities that parameterize a general res
 \eta_\parallel &= \frac{m_e}{1.96\,n_e\,e^2\,\tau_{ei}},\\[0.5ex]
 \tau_R &= \frac{\mu_0\,r^2}{\eta_\parallel},\\[0.5ex]
 \tau_A &= \frac{R_0\,\sqrt{\mu_0\,m_i\,n_e}}{B_0},\\[0.5ex]
-\tau_\perp &= \frac{r^2}{\chi_\perp},\\[0.5ex]
-\tau_\phi &= \frac{r^2}{\chi_\varphi},\\[0.5ex]
+\tau_E &= \frac{r^2}{\chi_E},\\[0.5ex]
+\tau_\phi &= \frac{r^2}{\chi_\phi},\\[0.5ex]
 d_\beta &= \frac{\sqrt{(5/3)\,m_i\,(T_e+T_i)}}{e\,B_0},\\[0.5ex]
 S &= \frac{\tau_R}{\tau_A}.
 \end{align}
 Here, $Z$ is the effective ion charge number, $T_e(r)$  the electron temperature, $T_i(r)$  the ion temperature, $m_e$ the electron mass,  
-$m_i$ the ion mass, $\chi_\perp(r)$ the perpendicular energy
+$m_i$ the ion mass, $\chi_E(r)$ the perpendicular energy
 diffusivity, and $\chi_\phi(r)$ the perpendicular momentum diffusivity. Furthermore, $\tau_R(r)$ is the resistive diffusion time,
-$\tau_A(r)$ the Alfv\'{e}n time, $\tau_\perp(r)$ the energy confinement time,  $\tau_\phi(r)$ the momentum confinement time,  $d_\beta(r)$
-the ion sound radius, and $S(r)$ the Lundquist number. 
+$\tau_A(r)$ the Alfv\'{e}n time, $\tau_E(r)$ the energy confinement time,  $\tau_\phi(r)$ the momentum confinement time,  $d_\beta(r)$
+the ion sound-radius, and $S(r)$ the Lundquist number. 
 
 \subsection{Resistive layer equation}\label{layer}
 Let $Y(r)\,\exp[\,{\rm i}\,(m\,\theta-n\,\phi)]$ represent the perturbed electron fluid stream-function in the laboratory frame. Consider the resistive layer centered on the $k$th rational surface. Let
@@ -623,18 +624,18 @@ case, the Fourier transformed layer equations reduce to the following equation:
 \end{equation}
 where
 \begin{align}
-A &= \frac{(n\,s)^2\,p^2}{-{\rm i}\,(Q_E+Q_e)+p^2},\\[0.5ex]
-B &= - Q_E\,(Q_E+Q_i)-{\rm i}\,(Q_E+Q_i)\,(P_\varphi+P_\perp)\,p^2 + P_\varphi\,P_\perp\,p^4,\\[0.5ex]
-C &= - {\rm i}\,(Q_E+Q_e)+ \left[P_\perp-{\rm i}\,(Q_E+Q_i)\,D^{\,2}\right]p^2
-+ (1+1/\tau)\,P_\varphi\,D^{\,2}\,p^4.\label{e83}
+A(p) &= \frac{(n\,s)^2\,p^2}{{\rm i}\,(Q_E+Q_e)+p^2},\\[0.5ex]
+B(p)&= - Q_E\,(Q_E+Q_i)+{\rm i}\,(Q_E+Q_i)\,(P_\phi+P_E)\,p^2 + P_\phi\,P_E\,p^4,\\[0.5ex]
+C(p) &= -{\rm i}\,(Q_E+Q_e)+ \left[P_E+{\rm i}\,(Q_E+Q_i)\,D^{\,2}\right]p^2
++ (1+1/\tau)\,P_\phi\,D^{\,2}\,p^4.\label{e83}
 \end{align}
 Here,
 \begin{align}
 \tau &=-\frac{ \omega_{\ast\,e}}{\omega_{\ast\,i}},\\[0.5ex]
-Q_E &= S^{1/3}\,n\,\omega_E\,\tau_A,\\[0.5ex]
-Q_{e,i} &= S^{1/3}\,n\,\omega_{\ast\,e,i}\,\tau_A,\\[0.5ex]
+Q_E &= -S^{1/3}\,n\,\omega_E\,\tau_A,\\[0.5ex]
+Q_{e,i} &=- S^{1/3}\,n\,\omega_{\ast\,e,i}\,\tau_A,\\[0.5ex]
 D &= S^{1/3}\left(\frac{\tau}{1+\tau}\right)^{1/2}\hat{d}_\beta,\\[0.5ex]
-P_\perp&= \frac{\tau_R}{\tau_\perp},\\[0.5ex]
+P_E&= \frac{\tau_R}{\tau_E},\\[0.5ex]
 P_\phi&= \frac{\tau_R}{\tau_\phi},
 \end{align}
 and
@@ -645,24 +646,24 @@ is the {\em ion diamagnetic frequency}. Moreover, $p_i(r)$ is the ion pressure, 
 
 \subsection{Solution of resistive layer equation}\label{layer1}
 As we saw in Sect.~\ref{shear}, the magnetic shear becomes very large as the magnetic separatrix is approached. If we treat $(n\,s)^2$ as much
-larger than the other parameters (e.g., $Q_E$, $Q_e$, $P_\perp$, $D$) that appear in Eqs.~(\ref{e80})--(\ref{e83}) then it is clear that the first term on the left-hand side of Eq.~(\ref{e80}) dominates the second term in the region  $p\lesssim1$. In this case, we can integrate  the equation to give
+larger than the other parameters (e.g., $Q_E$, $Q_e$, $P_E$, $D$) that appear in Eqs.~(\ref{e80})--(\ref{e83}) then it is clear that the first term on the left-hand side of Eq.~(\ref{e80}) dominates the second term in the region  $p\lesssim1$. In this case, we can integrate  the equation to give
 \begin{equation}
-\overline{Y}(p)= Y_0\left\{\frac{S^{-1/3}\,{\mit\Delta}_k}{\pi}\left[\frac{1}{p} + \frac{p}{{\rm i}\,(Q_E+Q_e)}\right] + 1+{\cal O}(p^2)\right\}
+\overline{Y}(p)= Y_0\left\{\frac{S^{-1/3}\,{\mit\Delta}_k}{\pi}\left[\frac{1}{p} + \frac{p}{-{\rm i}\,(Q_E+Q_e)}\right] + 1+{\cal O}(p^2)\right\}
 \end{equation}
 for $p\lesssim 1$, where use has been made of Eq.~(\ref{e79}). Incidentally, the previous equation bears the hallmark of a {\em constant-$\psi$} layer response
 regime \cite{fkr,layer}. 
 
 Let $p=(n\,|s|)^{1/2}\,\hat{p}$. For $\hat{p}\gtrsim 1$, Eqs.~(\ref{e80})--(\ref{e83}) yield
 \begin{equation}
-\frac{d^2\overline{Y}}{d\hat{p}^{\,2}} -\frac{B}{C}\,\hat{p}^{\,2}\,\overline{Y}\simeq 0,
+\frac{d^2\overline{Y}}{d\hat{p}^{\,2}} -\frac{B(\hat{p})}{C(\hat{p})}\,\hat{p}^{\,2}\,\overline{Y}\simeq 0,
 \end{equation}
 where 
 \begin{align}
-B &= - Q_E\,(Q_E+Q_i)-{\rm i}\,(Q_E+Q_i)\,(P_\varphi+P_\perp)\,(n\,|s|)\,\hat{p}^{\,2} + P_\varphi\,P_\perp\,(n\,|s|)^2\,\hat{p}^{\,4}\nonumber\\[0.5ex]
-&\simeq  P_\varphi\,P_\perp\,(n\,|s|)^2\,\hat{p}^{\,4},\\[0.5ex]
-C &= - {\rm i}\,(Q_E+Q_e)+ \left[P_\perp-{\rm i}\,(Q_E+Q_i)\,D^{\,2}\right](n\,|s|)\,\hat{p}^{\,2}
-+ (1+1/\tau)\,P_\varphi\,D^{\,2}\,(n\,|s|)^2\,\hat{p}^{\,4}\nonumber\\[0.5ex]
-&\simeq (1+1/\tau)\,P_\varphi\,D^{\,2}\,(n\,|s|)^2\,\hat{p}^{\,4},
+B(\hat{p}) &= - Q_E\,(Q_E+Q_i)+{\rm i}\,(Q_E+Q_i)\,(P_\phi+P_E)\,(n\,|s|)\,\hat{p}^{\,2} + P_\phi\,P_E\,(n\,|s|)^2\,\hat{p}^{\,4}\nonumber\\[0.5ex]
+&\simeq  P_\phi\,P_E\,(n\,|s|)^2\,\hat{p}^{\,4},\\[0.5ex]
+C(\hat{p}) &=  {\rm i}\,(Q_E+Q_e)+ \left[P_E+{\rm i}\,(Q_E+Q_i)\,D^{\,2}\right](n\,|s|)\,\hat{p}^{\,2}
++ (1+1/\tau)\,P_\phi\,D^{\,2}\,(n\,|s|)^2\,\hat{p}^{\,4}\nonumber\\[0.5ex]
+&\simeq (1+1/\tau)\,P_\phi\,D^{\,2}\,(n\,|s|)^2\,\hat{p}^{\,4},
 \end{align}
 which reduces to 
 \begin{equation}
@@ -670,19 +671,19 @@ which reduces to
 \end{equation}
 where 
 \begin{equation}
-G = \frac{P_\perp}{(1+1/\tau)\,D^{\,2}\,n^2\,|s|^2}= \frac{\tau_A^{\,2/3}\,\tau_R^{\,1/3}}{\tau_\perp\,\hat{d}_\beta^{\,2}\,(n\,|s|)^2}.
+G = \frac{P_E}{(1+1/\tau)\,D^{\,2}\,n^2\,|s|^2}= \frac{\tau_A^{\,2/3}\,\tau_R^{\,1/3}}{\tau_E\,\hat{d}_\beta^{\,2}\,(n\,|s|)^2}.
 \end{equation}
 
 In the language of Ref.~\cite{layer}, we have found a constant-$\psi$ layer solution characterized by  $\nu=1/4$. 
 It follows from the analysis of Ref.~\cite{layer} that
 \begin{equation}
-S^{-1/3}\,{\mit\Delta}_k = \frac{\nu^{\,2\nu-1}\pi\,\Gamma(1-\nu)}{\Gamma(\nu)}\,[-{\rm i}\,(Q_E+Q_e)]\,G^{\,\nu},
+S^{-1/3}\,{\mit\Delta}_k = \frac{\nu^{\,2\nu-1}\pi\,\Gamma(1-\nu)}{\Gamma(\nu)}\,[\,{\rm i}\,(Q_E+Q_e)]\,G^{\,\nu},
 \end{equation}
-where $\Gamma(z)$ is a gamma function \cite{as1}.
+where $\Gamma(z)$ is a gamma function \cite{as}.
 Hence, in the continuum limit in which the resistive layers are very closely spaced, 
 \begin{equation}
 {\mit\Delta}_k(\hat{r})= -{\rm i}\,\frac{2\pi\,\Gamma(3/4)}{\Gamma(1/4)} \,
-\frac{n\,(\omega_E+\omega_{\ast\,e})\,\tau_A^{\,1/2}\,\tau_R^{\,3/4}}{\tau_\perp^{\,1/4}\,\hat{d}_\beta^{\,1/2}\,(n\,|s|)^{1/2}},
+\frac{n\,(\omega_E+\omega_{\ast\,e})\,\tau_A^{\,1/2}\,\tau_R^{\,3/4}}{\tau_E^{\,1/4}\,\hat{d}_\beta^{\,1/2}\,(n\,|s|)^{1/2}},
 \end{equation}
 where all terms on the right-hand side are evaluated at the normalized radius $\hat{r}$. Thus, we deduce that the strong magnetic shear in
 the vicinity of the magnetic separatrix forces all of the resonant layers in this region to lie in the so-called {\em diffusive-resistive}\/ regime 
@@ -690,7 +691,7 @@ introduced in Ref.~\cite{layer}.
 
 Finally, the thickness of  a given resistive layer in $p$-space is $|G|^{-\nu}$ \cite{layer}, so the thickness in $\hat{r}$-space is
 \begin{equation}
-\hat{\delta}_k(\hat{r}) = \frac{\tau_A^{\,1/2}}{\tau_R^{\,1/4}\,\tau_\perp^{\,1/4}\,\hat{d}_\beta^{\,1/2}\,(n\,|s|)^{1/2}}.
+\hat{\delta}_k(\hat{r}) = \frac{\tau_A^{\,1/2}}{\tau_R^{\,1/4}\,\tau_E^{\,1/4}\,\hat{d}_\beta^{\,1/2}\,(n\,|s|)^{1/2}}.
 \end{equation}
 
 \subsection{Mercier indices}
@@ -737,7 +738,7 @@ Let us suppose that $\omega_E+ \omega_{\,\ast\,e}\simeq \omega_{\ast\,e}$ close 
  158115). 
  
  We can complete our model by adopting the following JET-like values of the remaining unspecified plasma parameters: $B_0=3.45\,{\rm T}$, $R_0=2.96\,{\rm m}$, $a=1.25\,{\rm m}$, $Z=10.0$,
- $M=2.0$, $\chi_\perp=\chi_\phi=1\,{\rm m^{2}/s}$ \cite{jetx}. Here, $M$ is the ion mass number, and the rather large value of $Z$ is meant to account for the presence of a significant fraction
+ $M=2.0$, $\chi_E=\chi_\phi=1\,{\rm m^{2}/s}$ \cite{jetx}. Here, $M$ is the ion mass number, and the rather large value of $Z$ is meant to account for the presence of a significant fraction
  of trapped particles, in addition to plasma impurities, close to the plasma boundary. 
 
  \begin{figure}[t]
@@ -835,14 +836,14 @@ straddles the magnetic separatrix, in which the resistive layers overlap. When w
 region, as well as those in the SOL,  we find that the shielding currents excited in the layers are comparatively feeble, which implies that the plasma response to the RMP in these regions is essentially vacuum-like.  On the other hand, the shielding currents excited in resistive layers that lie in the interior of the
 plasma are comparatively strong, which implies that the plasma response to the RMP in this region is essentially ideal. We are thus able to
 formulate a practical, yet physically justified,  approach to calculating the response of a magnetically
-diverted tokamak plasma to an RMP. Essentially, we treat the region of the plasma that lies outside the inner boundary of the
-overlap region, which lies at ${\mit\Psi}={\mit\Psi}_c$, where ${\mit\Psi}_c<1$,  as a vacuum. This means that  that rational surfaces that lie in the
+diverted tokamak plasma to an RMP. In essence, we treat the region of the plasma that lies outside the inner boundary of the
+overlap region, which is situated  at ${\mit\Psi}={\mit\Psi}_c$, where ${\mit\Psi}_c<1$,  as a vacuum. This means that  that rational surfaces that lie in the
 region ${\mit\Psi}>{\mit\Psi}_c$ do not contribute to the plasma response. Hence, a plasma response calculation only needs to take a
 finite number of rational surfaces into account. Our analysis enables us to determine ${\mit\Psi}_c$ from the 
 edge plasma parameters. We find that ${\mit\Psi}_c= 0.9985$ for an $n=1$
 RMP,  and ${\mit\Psi}_c=0.9952$ for an $n=4$ RMP,  in  a typical JET H-mode plasma. 
 
-\funding{This research was funded by the  U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences under contract DE-FG02-04ER54742.}
+\funding{This research was supported by the  U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences under contract DE-FG02-04ER54742.}
 %\ack{} 
 %\section*{Acknowledgements}
 %This research was funded by the  U.S.\ Department of Energy, Office of Science, Office of Fusion Energy Sciences under contract DE-FG02-04ER54742.
@@ -855,7 +856,11 @@ RMP,  and ${\mit\Psi}_c=0.9952$ for an $n=4$ RMP,  in  a typical JET H-mode plas
 
 \bibitem{wesson} J.A.~Wesson, {\em Tokamaks}, 4th ed., (Oxford University Press, Oxford UK, 2011). 
 
+\bibitem{meiss} R.D.~Hazeltine and J.D.~Meiss, {\em Plasma Confinement}, (Dover, New York NY, 2003).
+
 \bibitem{boozer} A.H.~Boozer, Rev.\ Mod.\ Phys.\ {\bf 76}, 1071 (2004).
+
+\bibitem{chang}  Z.~Chang and J.D.~Callen, Nucl.\ Fusion {\bf 30}, 219 (1990).
 
 \bibitem {rf1} R. Fitzpatrick, Nucl.\ Fusion {\bf 33}, 1049 (1993).
 
@@ -885,7 +890,7 @@ RMP,  and ${\mit\Psi}_c=0.9952$ for an $n=4$ RMP,  in  a typical JET H-mode plas
 
 \bibitem{rf2} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin and C.M.~Roach, Nucl.\ Fusion {\bf 33}, 1533 (1993).
 
-\bibitem{as} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}, (Dover, New York NY, 1964), chap.~5.
+\bibitem{as} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}, (Dover, New York NY, 1964).
 
 \bibitem{rf3} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31}, 102507 (2024).
 
@@ -898,8 +903,6 @@ RMP,  and ${\mit\Psi}_c=0.9952$ for an $n=4$ RMP,  in  a typical JET H-mode plas
 \bibitem{layer} R.~Fitzpatrick, Phys.\ Plasmas {\bf 29}, 032507 (2022).
 
 \bibitem{cole} A.~Cole and R.~Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
-
-\bibitem{as1} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}, (Dover, New York NY, 1964), chap.~6.
 
 \bibitem{rf5} R.~Fitzpatrick,  Phys.\ Plasmas {\bf 32}, 062509 (2025).
 

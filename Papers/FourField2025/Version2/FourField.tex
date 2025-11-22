@@ -10,7 +10,7 @@
 \title{\bf A four-field resonant response model for tokamak plasmas}
 
 \author{R.~Fitzpatrick\thanks{rfitzp@utexas.edu}~
-  and Y.~Lin\\[2ex]{\em Institute for Fusion Studies,  Department of Physics,}\\[0.5ex]{\em   University of Texas at Austin,  Austin TX, 78712, USA}}
+  and Y.~Lin\\[2ex]{\em Institute for Fusion Studies,  Department of Physics,}\\[0.5ex]{\em   University of Texas at Austin,  Austin TX 78712, USA}}
 \date{}
 \maketitle
 %\begin{abstract}
@@ -18,6 +18,7 @@
 %\end{abstract}
 
 \section{Introduction}
+\subsection{Resonant magnetic perturbations}
 Externally generated, static, {\em resonant magnetic perturbations}\/ (RMPs) can drive magnetic reconnection in tokamak plasmas that
 are intrinsically stable to tearing perturbations \cite{sco,compass,fish,rf1993,rf1998}. RMPs arise naturally as a consequence  of magnetic
 field-coil misalignments  \cite{error}, but are sometimes deliberately applied to tokamak plasmas in order to suppress edge localized modes (ELMs) \cite{elm}. 
@@ -28,6 +29,7 @@ of the plasma, the plasma perturbation is governed by the equations of linearize
 However, these equations become singular on    rational  magnetic flux-surfaces at which the perturbed magnetic field resonates with the equilibrium field. In the {\em inner region}, which
 consists of a set of narrow layers centered on the various rational surfaces, non-ideal-MHD effects   become important.
 
+\subsection{Four-field resonant response model}
 It is well known that single-fluid resistive-MHD offers a very poor description of
 the response of the inner region to the magnetic perturbation in the outer region. 
 For instance, the strong  diamagnetic flows present in tokamak plasmas imply that the  electron and ion fluid velocities are significantly different from one another,
@@ -40,19 +42,21 @@ to determine the linear two-fluid response of a resonant layer to the perturbati
  In configuration space, the four-field models of Refs.~\cite{cole} and \cite{rf2022} yield a set of resonant layer equations that can be expressed as 
  {\em ten}\/  coupled 
  first-order linear ordinary differential equations (o.d.e.s)  \cite{lee}. However, in Fourier space, the resonant layer equations can be written as 
- {\em four}\/  coupled  first-order linear o.d.es.  \cite{cole}. It is clearly advantageous to solve the equations in Fourier space. In Refs.~\cite{cole}
+ {\em four}\/  coupled  first-order linear o.d.e.s  \cite{cole}. It is clearly advantageous to solve the equations in Fourier space. In Refs.~\cite{cole}
  and \cite{rf2022}, an approximation is made by which one of the terms in the Fourier-transformed layer equations is neglected. This
  approximation, which is valid in low-$\beta$ plasmas,  is such that the layer equation that governs the parallel ion dynamics decouples from the other three equations, effectively
  converting a four-field resonant response model into a three-field model. Furthermore, the three remaining layer equations can be combined to give a
  single second-order linear o.d.e. This second-order equation is most conveniently solved  by means of a Riccati transformation
- that converts it into a first-order nonlinear o.d.e.\ \cite{ric1,ric2}. The advantage of the Riccati approach is that it can deal with numerically problematic  solutions
+ that converts it into a first-order nonlinear o.d.e.\ \cite{ric1,ric2,ric3}. The advantage of the Riccati approach is that it can deal with numerically problematic  solutions
  that blow up as $\exp(p^2)$, or faster, at large $p$, where $p$ is the Fourier-space variable. 
  
  Lee, Park \& Na \cite{lee} recently demonstrated  how to solve the full tenth-order four-field resonant layer equations in configuration space using a Riccati transformation. In the process, they discovered that, in a high-$\beta$ plasma,  the RMP rotation frequency (as seen in the local ${\bf E}\times {\bf B}$ frame
  at the rational surface)  at which the electromagnetic torque exerted on the plasma in the immediate vicinity of the resonant layer passes through zero is shifted in the ion diamagnetic direction from the electron diamagnetic frequency.
- This result is significant because there is some experimental evidence for such a shift \cite{paz}. In the present paper, we demonstrate how the calculation of
+ This result is significant because there is some experimental evidence for such a shift \cite{paz}. The first aim of this paper is to demonstrate how the calculation of
  Lee et alia can be reimplemented in Fourier space. The Fourier version of the calculation is more convenient, from a numerical point of view, because
  it involves the solution of a fourth-order, rather than a tenth-order, system of equations. 
+ 
+ \subsection{Magnetically diverted plasmas}
 
 \section{Asymptotic matching}\label{sect1}
 \subsection{Plasma equilibrium}
@@ -809,6 +813,8 @@ Phys.\ Rev.\ Lett.\ {\bf 92}, 235003 (2004).
 \bibitem{ric1} D.P.~Brennan, A.J.~Cole, C.~Akcay and J.M.~Finn, Bul.\ Am.\ Phys.\ Soc.\ {\bf 64}, 249 (2019).
 
 \bibitem{ric2} J.-K.~Park, Phys.\ Plasmas {\bf 29}, 072506 (2022).
+
+\bibitem{ric3} R.~Fitzpatrick, {\em Tearing Mode Dynamics in Tokamak Plasmas}, (IOP Publishing, Bristol UK, 2023). 
 
 \bibitem{paz} C.~Paz-Soldan, R.~Nazikian, L.~Cui, B.C.~Lyons, D.M.~Orlov, A.~Kirk, 
 N.C.~Logan, T.H.~Osborne, W.~Suttrop and D.B.~Weisberg, Nucl.\ Fusion {\bf 59},

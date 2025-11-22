@@ -6,7 +6,7 @@
     "D":     0.1,         // Normalized ion sound radius
     "Pphi":  1.0,         // Normalized momentum diffusivity
     "Pperp": 1.0,         // Normalized energy diffusivity
-    "cbeta": 0.01,         // Normalized plasma pressure
+    "cbeta": 1.0,         // Normalized plasma pressure
 
     "JK":    0,           // Flag for J.-K. Park calculation
     
