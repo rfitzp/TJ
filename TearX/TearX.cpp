@@ -316,14 +316,17 @@ void TearX::Solve (int flg)
   q_spline = gsl_spline_alloc (gsl_interp_cspline, Nr);
   P_spline = gsl_spline_alloc (gsl_interp_cspline, Nr);
   R_spline = gsl_spline_alloc (gsl_interp_cspline, Nr);
+  Q_spline = gsl_spline_alloc (gsl_interp_cspline, Nr);
 
   q_acc = gsl_interp_accel_alloc ();
   P_acc = gsl_interp_accel_alloc ();
   R_acc = gsl_interp_accel_alloc ();
+  Q_acc = gsl_interp_accel_alloc ();
 
   gsl_spline_init (q_spline, rr,  qq,  Nr);
   gsl_spline_init (P_spline, PSI, rr,  Nr);
   gsl_spline_init (R_spline, rr,  rho, Nr);
+  gsl_spline_init (Q_spline, rr,  PSI, Nr);
 
   r95 = gsl_spline_eval (P_spline, 0.95, P_acc);
   R95 = gsl_spline_eval (R_spline, r95,  R_acc);
@@ -516,7 +519,7 @@ void TearX::Solve (int flg)
       // ----------
       mres [isurf] = mmin + isurf;
       rres [isurf] = rs;
-      Pres [isurf] = pow (gsl_spline_eval (R_spline, rres[isurf],  R_acc), 2.);
+      Pres [isurf] = gsl_spline_eval (Q_spline, rres[isurf], Q_acc);
       sres [isurf] = sr;
       Dres [isurf] = Delta;
       Drres[isurf] = Delta_r;
@@ -559,8 +562,8 @@ void TearX::Solve (int flg)
   delete[] taup;  delete[] S;     delete[] cbeta; delete[] dbeta; delete[] JJbs; delete[] Scale;
   delete[] QE;    delete[] Qe;    delete[] Qi;    delete[] D;     delete[] P_E;  delete[] P_phi; 
 
-  gsl_spline_free (q_spline);    gsl_spline_free (P_spline);    gsl_spline_free (R_spline);
-  gsl_interp_accel_free (q_acc); gsl_interp_accel_free (P_acc); gsl_interp_accel_free (R_acc);
+  gsl_spline_free (q_spline);    gsl_spline_free (P_spline);    gsl_spline_free (R_spline);    gsl_spline_free (Q_spline);
+  gsl_interp_accel_free (q_acc); gsl_interp_accel_free (P_acc); gsl_interp_accel_free (R_acc); gsl_interp_accel_free (Q_acc);
 }
 
 // #####################################

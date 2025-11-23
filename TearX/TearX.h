@@ -194,10 +194,10 @@ class TearX: private Utility
   double            mpol;     // Poloidal mode number
   double            ntor;     // Toroidal mode number
   int               nres;     // Number of rational surfaces
-  int*              mres;     // Resonant poloidal mode numbers
+  int*              mres;     // Resonant poloidal mode numbers at rational surfaces
   double*           rres;     // Rational surface radii
-  double*           Pres;     // PSI values
-  double*           sres;     // Magnetic shears
+  double*           Pres;     // PSI values at rational surfaces
+  double*           sres;     // Magnetic shears at rational surfaces
   double*           Dres;     // Tearing stability indicies
   double*           Drres;    // Real parts of layer response indices
   double*           Dires;    // Imaginary parts of layer response indices
@@ -241,13 +241,15 @@ class TearX: private Utility
   double*           P_phi;    // Momentum magnetic Prandtl number
   double*           Scale;    // Scale factor
 
-  gsl_spline*       q_spline; // Interpolated q function
-  gsl_spline*       P_spline; // Interpolated PSI function
-  gsl_spline*       R_spline; // Interpolated rho function
+  gsl_spline*       q_spline; // Interpolated q(r) function
+  gsl_spline*       P_spline; // Interpolate r(PSI) function
+  gsl_spline*       R_spline; // Interpolated rho(r) function
+  gsl_spline*       Q_spline; // Interpolate PSI(r) function
 
-  gsl_interp_accel* q_acc;    // Accelerator for interpolated q function
-  gsl_interp_accel* P_acc;    // Accelerator for interpolated PSI function
-  gsl_interp_accel* R_acc;    // Accelerator for interpolated rho function
+  gsl_interp_accel* q_acc;    // Accelerator for interpolated q(r) function
+  gsl_interp_accel* P_acc;    // Accelerator for interpolated r(PSI) function
+  gsl_interp_accel* R_acc;    // Accelerator for interpolated rho(r) function
+  gsl_interp_accel* Q_acc;    // Accelerator for interpolated PSI(r) function
 
   // ----
   // Misc
