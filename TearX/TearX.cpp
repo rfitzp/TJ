@@ -25,10 +25,13 @@ TearX::TearX ()
   string JSONFilename = "../Inputs/TearX.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  NTOR  = JSONData["NTOR"] .get<int>    ();
-  q0    = JSONData["q0"]   .get<double> ();
-  nu    = JSONData["nu"]   .get<double> ();
-  alpha = JSONData["alpha"].get<double> ();
+  NTOR    = JSONData["NTOR"]   .get<int>    ();
+  q0      = JSONData["q0"]     .get<double> ();
+  nu      = JSONData["nu"]     .get<double> ();
+  alpha   = JSONData["alpha"]  .get<double> ();
+  Delta_q = JSONData["Delta_q"].get<double> ();
+  r_q     = JSONData["r_q"]    .get<double> ();
+  delta_q = JSONData["delta_q"].get<double> ();
 
   B0   = JSONData["B0"]  .get<double> ();
   R0   = JSONData["R0"]  .get<double> ();
@@ -69,13 +72,12 @@ TearX::TearX ()
   Psimax = JSONData["Psimax"].get<double> ();
   Nr     = JSONData["Nr"]    .get<int>    ();
 
-  q0_sta = JSONData["q0_sta"].get<double> ();
-  q0_end = JSONData["q0_end"].get<double> ();
-  q0_num = JSONData["q0_num"].get<int>    ();
-
   nu_sta = JSONData["nu_sta"].get<double> ();
   nu_end = JSONData["nu_end"].get<double> ();
   nu_num = JSONData["nu_num"].get<int>    ();
+  m_min  = JSONData["m_min"] .get<int>    ();
+  r_min  = JSONData["r_min"] .get<double> ();
+  c_min  = JSONData["c_min"] .get<double> ();
   
   acc  = JSONData["acc"] .get<double> ();
   h0   = JSONData["h0"]  .get<double> ();
@@ -150,11 +152,6 @@ TearX::TearX ()
       printf ("TearX:: Error - hmax must exceed hmin\n");
       exit (1);
     }
-  if (q0_num < 2)
-    {
-      printf ("TearX:: Error - q0_num must be greater than 1\n");
-      exit (1);
-    }
   if (nu_num < 2)
     {
       printf ("TearX:: Error - nu_num must be greater than 1\n");
@@ -197,9 +194,9 @@ TearX::TearX ()
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("ntor   = %-2d         q0       = %-10.3e nu       = %-10.3e qc    = %-10.3e alpha  = %-10.3e\n",
-	  NTOR, q0, nu, qc, alpha);
-  printf ("B0     = %-10.3e R0       = %-10.3e a        = %-10.3e M     = %-10.3e chiE   = %-10.3e chip     = %-10.3e Z = %-10.3e\n",
+  printf ("ntor   = %-2d         q0       = %-10.3e nu       = %-10.3e qc    = %-10.3e alpha  = %-10.3e Delta_q  = %-10.3e r_q = %-10.3e delta_q = %-10.3e\n",
+	  NTOR, q0, nu, qc, alpha, Delta_q, r_q, delta_q);
+  printf ("B0     = %-10.3e R0       = %-10.3e a        = %-10.3e M     = %-10.3e chiE   = %-10.3e chip     = %-10.3e Z   = %-10.3e\n",
 	  B0, R0, a, M, chiE, chip, Z);
   printf ("ne_0   = %-10.3e ne_1     = %-10.3e Delta_ne = %-10.3e nu_ne = %-10.3e r_ne   = %-10.3e delta_ne = %-10.3e\n",
 	  ne_0, ne_1, Delta_ne, nu_ne, r_ne, delta_ne);
@@ -211,10 +208,8 @@ TearX::TearX ()
 	  alphaE, omegaE_0, nu_E);
   printf ("\nNr     = %-5d      eps      = %-10.3e del      = %-10.3e EPS   = %-10.3e Psimax = %-10.3e\n",
 	  Nr, eps, del, EPS, Psimax);
-  printf ("q0_sta = %-10.3e q0_end   = %-10.3e q0_num   = %-5d\n",
-	  q0_sta, q0_end, q0_num);
-  printf ("nu_sta = %-10.3e nu_end   = %-10.3e nu_num   = %-5d\n",
-	  q0_sta, q0_end, q0_num);
+  printf ("nu_sta = %-10.3e nu_end   = %-10.3e nu_num   = %-5d      m_min = %-3d        r_min  = %-10.3e c_min    = %-10.3e\n",
+	  nu_sta, nu_end, nu_num, m_min, r_min, c_min);
   printf ("acc    = %-10.3e h0       = %-10.3e hmax     = %-10.3e\n",
 	  acc, h0, hmax);
 }
@@ -245,24 +240,6 @@ void TearX::Setnu (double _nu)
 }
 
 // ###################
-// Function to scan q0
-// ###################
-void TearX::Scanq0 ()
-{
-  FILE* file = OpenFilew ("../Outputs/TearX/Scanq0.txt");
-  fclose (file);
-
-  for (int i = 0; i < q0_num; i++)
-    {
-      double _q0 = q0_sta + (q0_end - q0_sta) * double (i) /double (q0_num - 1);
-
-      Setq0 (_q0);
-
-      Solve (1);
-    }
-}
-
-// ###################
 // Function to scan nu
 // ###################
 void TearX::Scannu ()
@@ -276,14 +253,14 @@ void TearX::Scannu ()
 
       Setnu (_nu);
 
-      Solve (2);
+      Solve (1);
     }
 }
 
 // #########################
 // Function to solve problem
 // #########################
-void TearX::Solve (int flag)
+void TearX::Solve (int flg)
 {
   // ---------------
   // Allocate memory
@@ -357,10 +334,10 @@ void TearX::Solve (int flag)
   rmax = gsl_spline_eval (P_spline, Psimax, P_acc);
   qmax = gsl_spline_eval (q_spline, rmax,   P_acc);
 
-  if (flag == 0)
+  if (flg == 0)
     printf ("\nr95  = %-10.3e R95  = %-10.3e q95  = %-10.3e s95 = %-10.3e S95 = %10.3e\n",
 	    r95, R95, q95, s95, S95);
-  if (flag == 0)
+  if (flg == 0)
     printf ("rmax = %-10.3e qmax = %-10.3e\n\n",
 	    rmax, qmax);
 
@@ -471,7 +448,7 @@ void TearX::Solve (int flag)
   wE   [0] = wE   [1];
   JJbs [0] = JJbs [1];
 
-  if (flag == 0)
+  if (flg == 0)
     printf ("ne(1) = %-10.3e Te(1) = %-10.3e Ti(1) = %-10.3e\n\n",
 	    ne[Nr-1], Te[Nr-1], Ti[Nr-1]);
 
@@ -504,21 +481,35 @@ void TearX::Solve (int flag)
       double PEs = GetP_E   (rs);
       double Pps = GetP_phi (rs);
       double Sc  = GetScale (rs);
-      double Delta_r, Delta_i, pmax;
+      double Delta_r, Delta_i, pmax, Ideal;
 
-      FourField fourfield (1);
-      fourfield.GetDelta (QEs, Qes, Qis, cbs, Ds, PEs, Pps, Delta_r, Delta_i, pmax);
-      printf ("QE = %9.2e Qe = %9.2e Qi = %9.2e cbeta = %9.2e D = %9.2e PE = %9.2e Pp = %9.2e Delta = (%9.2e, %9.2e) pmax = %9.2e\n",
-	      QEs, Qes, Qis, cbs, Ds, PEs, Pps, Delta_r, Delta_i, pmax);
+      if (rs > r_min && mpol >= m_min)
+	{
+	  FourField fourfield (1);
 
-      Delta_r *= Sc;
-      Delta_i *= Sc;
-
-      double Ideal = sqrt (Delta_r*Delta_r + Delta_i*Delta_i) /fabs (Delta);
-      
-      if (flag == 0)
-	printf ("mpol = %-2d ntor = %-2d rs = %-10.3e s = %-10.3e E_ss = %10.3e Delta = (%10.3e, %10.3e) Ideal = %10.3e\n",
-		mmin + isurf, NTOR, rs, sr, Delta, Delta_r, Delta_i, Ideal);
+	  if (cbs < c_min)
+	    fourfield.GetDelta3 (QEs, Qes, Qis, cbs, Ds, PEs, Pps, Delta_r, Delta_i, pmax);
+	  else
+	    fourfield.GetDelta4 (QEs, Qes, Qis, cbs, Ds, PEs, Pps, Delta_r, Delta_i, pmax);
+	  if (flg != 0)
+	    printf ("QE = %9.2e Qe = %9.2e Qi = %9.2e cbeta = %9.2e D = %9.2e PE = %9.2e Pp = %9.2e Delta = (%9.2e, %9.2e) pmax = %9.2e\n",
+		    QEs, Qes, Qis, cbs, Ds, PEs, Pps, Delta_r, Delta_i, pmax);
+	  
+	  Delta_r *= Sc;
+	  Delta_i *= Sc;
+	  
+	  Ideal = sqrt (Delta_r*Delta_r + Delta_i*Delta_i) /fabs (Delta);
+	  
+	  if (flg == 0)
+	    printf ("mpol = %-2d ntor = %-2d rs = %-10.3e s = %-10.3e E_ss = %10.3e Delta = (%10.3e, %10.3e) Ideal = %10.3e\n",
+		    mmin + isurf, NTOR, rs, sr, Delta, Delta_r, Delta_i, Ideal);
+	}
+      else
+	{
+	  Delta_r = 0.;
+	  Delta_i = 0.;
+	  Ideal   = -1.;
+	}
 
       // ----------
       // Store data
@@ -536,25 +527,13 @@ void TearX::Solve (int flag)
   // -----------------
   // Write netcdf file
   // -----------------
-  if (flag == 0)
+  if (flg == 0)
     WriteNetcdf ();
 
   // ---------------
   // Write scan data
   // ---------------
-  if (flag == 1)
-    {
-      FILE* file = OpenFilea ("../Outputs/TearX/Scanq0.txt");
-      
-      printf ("q0 = %-10.3e qa/qc = %-10.3e q95 = %-10.3e nres = %-3d m = (%d, %d)\n",
-	      q0, qq[Nr-1]/qc, q95, nres, mres[0], mres[nres-1]);
-	      
-      for (int i = 0; i < nres; i++)
-	fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e\n",
-		 q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i], Pres[i], Drres[i], Dires[i], Idres[i]);
-      fclose (file);
-    }
-  if (flag == 2)
+  if (flg != 0)
     {
       FILE* file = OpenFilea ("../Outputs/TearX/Scannu.txt");
       
@@ -562,8 +541,9 @@ void TearX::Solve (int flag)
 	      nu, qq[Nr-1]/qc, q95, nres, mres[0], mres[nres-1]);
 	      
       for (int i = 0; i < nres; i++)
-	fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e\n",
-		 q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i], Pres[i], Drres[i], Dires[i], Idres[i]);
+	if (rres[i] > r_min && mres[i] >= m_min)
+	  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e\n",
+		   q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i], Pres[i], Drres[i], Dires[i], Idres[i]);
       fclose (file);
     }
   
@@ -715,18 +695,20 @@ void TearX::GetEquilibrium (double r, double& q, double& s, double& J, double& J
 {
   q  = Getq (r);
   s  = GetShear (r);
-  J  = GetJ (r);
-  Jp = GetJp (r);
 
   if (r > 1.)
     {
       J  = 0.;
       Jp = 0.;
     }
+  else
+    {
+      J  = GetJ (r);
+      Jp = GetJp (r);
+    }
 
   lambda = - q * Jp /s;
 }
-
 
 // #########################################
 // Function to return value of safety-factor
@@ -738,14 +720,14 @@ double TearX::Getq (double r)
   double or2 = 1. - r2;
   double nu1 = nu - 1.;
   double nu2 = nu - 2.;
-  double q;
+  double lg  = log (fabs (1. - r2) + EPS);
+ 
+  double q, f;
 
-  double f = (1. - pow (or2, nu)) /q0/nu;
   if (r > 1.)
-    {
-      f = 1. /q0/nu;
-    }
-  double lg = log (fabs (1. - r2) + EPS);
+    f = 1. /q0/nu;
+  else
+    f = (1. - pow (or2, nu)) /q0/nu;
   
   if (r < 0.01)
     {
@@ -753,7 +735,7 @@ double TearX::Getq (double r)
      }
   else
     {
-      q = r2 /f - alpha * lg;
+      q = r2 /f - alpha * lg - 0.5 * Delta_q * (1. + tanh ((r - r_q) /delta_q));
     }
 
   return q;
@@ -769,16 +751,18 @@ double TearX::Getqp (double r)
   double or2 = 1. - r2;
   double nu1 = nu - 1.;
   double nu2 = nu - 2.;
-  double qp;
-
-  double f  = (1. - pow (or2, nu)) /q0/nu;
-  double fp = 2. * r * pow (or2, nu1) /q0;
-  double lg = fabs (1. - r2) + EPS;
+  double lg  = fabs (1. - r2) + EPS;
+  double qp, f, fp;
 
   if (r > 1.)
     {
       f  = 1. /q0/nu;
       fp = 0.;
+    }
+  else
+    {
+      f  = (1. - pow (or2, nu)) /q0/nu;
+      fp = 2. * r * pow (or2, nu1) /q0;
     }
   
   if (r < 0.01)
@@ -787,7 +771,7 @@ double TearX::Getqp (double r)
     }
   else
     {
-      qp = 2.*r /f - r2 * fp /f/f + 2.*alpha*r /lg;
+      qp = 2.*r /f - r2 * fp /f/f + 2.*alpha*r /lg - 0.5 * (Delta_q /delta_q) /cosh ((r - r_q) /delta_q) /cosh ((r - r_q) /delta_q);
     }
   
   return qp;

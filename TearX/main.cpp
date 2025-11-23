@@ -15,9 +15,9 @@ int main (int argc, char** argv)
   int   calc;
   TearX tearx;
 
-  printf ("\nOption ? (Single calculation = 1 q0 scan = 2 nu scan = 3) ");
+  printf ("\nOption ? (Single calculation = 1 nu scan = 2) ");
   scanf ("%d", &calc);
-  if (calc < 1 || calc > 3)
+  if (calc < 1 || calc > 2)
     {
       printf ("Error - Unknown option\n");
       exit (1);
@@ -28,10 +28,6 @@ int main (int argc, char** argv)
       tearx.Solve (0);
     }
   else if (calc == 2)
-    {
-      tearx.Scanq0 ();
-    }
-  else if (calc == 3)
     {
       tearx.Scannu ();
     }

@@ -153,10 +153,10 @@ FourField::FourField (int flg)
   hmax = JSONData["hmax"].get<double> ();
 }
 
-// ###################################
-// Function to return four-field Delta
-// ###################################
-void FourField::GetDelta (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i, double& pmax)
+// ##############################################################
+// Function to return three-field normalized layer response index
+// ##############################################################
+void FourField::GetDelta3 (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i, double& pmax)
 {
   g_r   = 0.;
   g_i   = _QE;
@@ -168,22 +168,33 @@ void FourField::GetDelta (double _QE, double _Qe, double _Qi, double _cbeta, dou
   cbeta = _cbeta;
   iotae = - Qe /(Qi - Qe);
 
-  if (cbeta > 0.01)
-    {
-      SolveFourFieldLayerEquations ();
+  SolveThreeFieldLayerEquations ();
+  
+  Delta_r = real(Deltas3);
+  Delta_i = imag(Deltas3);
+  pmax    = pmax3;
+}
+  
+// #############################################################
+// Function to return four-field normalized layer response index
+// #############################################################
+void FourField::GetDelta4 (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i, double& pmax)
+{
+  g_r   = 0.;
+  g_i   = _QE;
+  Qe    = _Qe;
+  Qi    = _Qi;
+  D     = _D;
+  Pphi  = _Pp;
+  Pperp = _PE;
+  cbeta = _cbeta;
+  iotae = - Qe /(Qi - Qe);
 
-      Delta_r = real(Deltas4);
-      Delta_i = imag(Deltas4);
-      pmax    = pmax4;
-    }
-  else
-    {
-      SolveThreeFieldLayerEquations ();
-
-      Delta_r = real(Deltas3);
-      Delta_i = imag(Deltas3);
-      pmax    = pmax3;
-    }
+  SolveFourFieldLayerEquations ();
+  
+  Delta_r = real(Deltas4);
+  Delta_i = imag(Deltas4);
+  pmax    = pmax4;
 }
   
 // #########################

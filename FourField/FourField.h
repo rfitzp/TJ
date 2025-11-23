@@ -104,8 +104,10 @@ public:
   // Lightweight constructor
   FourField (int flg);
 
+  // Return three-field layer response index
+  void GetDelta3 (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i, double& pmax);
   // Return four-field layer response index
-  void GetDelta (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i, double& pmax);
+  void GetDelta4 (double _QE, double _Qe, double _Qi, double _cbeta, double _D, double _PE, double _Pp, double& Delta_r, double& Delta_i, double& pmax);
   
   // Solve problem
   void Solve ();

@@ -1,6 +1,6 @@
-# Psinu.py
+# Delta.py
 
-# Plots PSI versus q95 for nu scan
+# Plots E_ss versus PSI for nu scan
 
 import math
 import numpy as np
@@ -10,9 +10,9 @@ import pandas as pd
 
 df = pd.read_csv ("../../Outputs/TearX/Scannu.txt", delim_whitespace = True, header = None)
 
-id  = df.iloc[:,9]
+psi = df.iloc[:,9]
 m   = df.iloc[:,5]
-psi = df.iloc[:,4]
+id  = df.iloc[:,8]
 
 p3  = []
 i3  = []
@@ -64,10 +64,10 @@ plt.rc ('ytick', labelsize = 15)
 
 plt.subplot (1, 1, 1)
 
-plt.ylim (0.88, 1.001)
+plt.xlim (0.8, 1.001)
 
-#if len(p3) > 0:
-#    plt.plot (p3, i3, color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=3$')
+if len(p3) > 0:
+    plt.plot (p3, i3, color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=3$')
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'red',     linewidth = 2, linestyle = 'solid', label = '$m=4$')
 if len(p5) > 0:
@@ -83,14 +83,14 @@ if len(p9) > 0:
 if len(p10) > 0:
     plt.plot (p10, i10, color = 'brown',   linewidth = 2, linestyle = 'solid', label = '$m=10$')    
     
-plt.axhline (1.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$q_{95}$', fontsize = "15")
-plt.ylabel (r"$\Psi$",   fontsize = "15")
+plt.xlabel (r'$\Psi}$',  fontsize = "15")
+plt.ylabel (r"$E_{ss}$", fontsize = "15")
 #plt.xticks([0.9, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99, 1.0])
 plt.legend (fontsize = '15')
 
 plt.tight_layout ()
 
 plt.show ()    
-

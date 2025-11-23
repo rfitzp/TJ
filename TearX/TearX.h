@@ -17,7 +17,7 @@
 
 //  The safety-factor profile is
 //
-//   q(r) = r^2 /f(r) - alpha ln(|1 - r^2| + EPS), 
+//   q(r) = r^2 /f(r) - alpha ln(|1 - r^2| + EPS) - (1/2) Delta_q (1 + tanh[(r - r_q) /delta_q]), 
 //
 //  where
 //
@@ -115,6 +115,9 @@ class TearX: private Utility
   double q0;       // Central safety-factor (read from JSON file)
   double nu;       // Current peaking factor (read from JSON file)
   double alpha;    // X-point parameter (read from JSON file)
+  double Delta_q;  // Height of safety-factor step (read from JSON file)
+  double r_q;      // Central radius of safery-factor step (read from JSON file)
+  double delta_q;  // Width of safety-factor step (read from JSON file)
 
   double B0;       // Toroidal magnetic field-strength (SI) (read from JSON file)
   double R0;       // Plasma minor radius (SI) (read from JSON file)
@@ -164,12 +167,12 @@ class TearX: private Utility
   double EPS;      // ln (1 - r^2) regularized as ln (|1 - r^2| + EPS) (read from JSON file)
   double Psimax;   // Rational surfaces ignored in region PSI > Psimax (read from JSON file)
 
-  double q0_sta;   // Start value for q0 scan (read from JSON file)
-  double q0_end;   // End value for q0 scan (read from JSON file)
-  int    q0_num;   // Number of points in q0 scan (read from JSON file)
   double nu_sta;   // Start value for nu scan (read from JSON file)
   double nu_end;   // End value for nu scan (read from JSON file)
   int    nu_num;   // Number of points in nu scan (read from JSON file)
+  int    m_min;    // Ignore rational surfaces with poloidal mode numbers less than m_min (read from JSON file)
+  double r_min;    // Ignore rational surfaces with radii less than r_min (read from JSON file)
+  double c_min;    // Use three-field layer Delta calculation for c_beta < c_min (read from JSON file)
   
   // ----------------
   // Calculation data
@@ -258,13 +261,11 @@ public:
   // Destructor
   ~TearX ();
 
-  // Scan q0
-  void Scanq0 ();
   // Scan nu
   void Scannu ();
   
   // Solve problem
-  void Solve (int verbose);
+  void Solve (int flg);
 
 private:
 

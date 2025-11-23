@@ -100,10 +100,11 @@ plt.plot (rp, qqp, color = 'red', linewidth = 2, linestyle = 'solid')
 
 plt.ylim (3., 18.)
 
+#plt.xticks([0.95,0.975,1.0,1.025,1.05])
 plt.xlabel (r'$\hat{r}$', fontsize = "15")
 plt.ylabel (r'$q$',       fontsize = "15")
 
 plt.tight_layout ()
 
-#plt.show ()    
+plt.show ()    
 plt.savefig ("Figure7.pdf")

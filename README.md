@@ -83,6 +83,10 @@ Program to simulate tokamak current ramp.
 
 Program to calculate vertical stability of aspect-ratio expanded tokamak equilibrium.
 
+# Program TearX
+
+Program to calculate the response of cylindrical plasma with simulated X-point to RMP.
+
 # Directories
 
   - *Benchmark*:        Benchmark tests
@@ -103,6 +107,7 @@ Program to calculate vertical stability of aspect-ratio expanded tokamak equilib
   - *StartUp*:          Source for code StartUp
   - *TJ*:		        Source for code TJ
   - *Tear*:		        Source for code Tear
+  - *TearX*:		    Source for code TearX
   - *Utility*:          Source for class Utility
   - *Vertical*:         Source for code Vertical
   - *WriteEFIT*:	    Source for code WriteEFIT

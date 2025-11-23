@@ -1,6 +1,6 @@
-# Shearnu.py
+# Shear.py
 
-# Plots magnetic shear versus q95 for nu scan
+# Plots magnetic shear at rational surfaces versus PSI for nu scan
 
 import math
 import numpy as np
@@ -64,10 +64,10 @@ plt.rc ('ytick', labelsize = 15)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0.9, 1.001)
+plt.xlim (0.8, 1.001)
 
-#if len(p3) > 0:
-#    plt.plot (p3, i3, color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=3$')
+if len(p3) > 0:
+    plt.plot (p3, i3, color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=3$')
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'red',     linewidth = 2, linestyle = 'solid', label = '$m=4$')
 if len(p5) > 0:
@@ -88,7 +88,7 @@ plt.axvline (1.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.xlabel (r'$\Psi}$',        fontsize = "15")
 plt.ylabel (r"$\log_{10}(s)$", fontsize = "15")
-plt.xticks([0.9, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99, 1.0])
+#plt.xticks([0.9, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99, 1.0])
 plt.legend (fontsize = '15')
 
 plt.tight_layout ()

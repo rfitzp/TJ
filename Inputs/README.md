@@ -11,4 +11,5 @@
   - *Vertical.json*:  JSON file specifying control parameters for class Vertical
   - *FourField.json*: JSON file specifying control parameters for class FourField
   - *Pinch.json*:     JSON file specifying control parameters for class Pinch
+  - *TearX.json*:     JSON file specifying control parameters for class TearX
    

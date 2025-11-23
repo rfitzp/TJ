@@ -1,6 +1,6 @@
-# Psinu.py
+# Ideal.py
 
-# Plots PSI versus q95 for nu scan
+# Plots ideal response parameter versus PSI for nu scan
 
 import math
 import numpy as np
@@ -64,7 +64,7 @@ plt.rc ('ytick', labelsize = 15)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0.89, 1.001)
+plt.xlim (0.8, 1.001)
 
 if len(p3) > 0:
     plt.plot (p3, i3,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=3$')
@@ -86,8 +86,8 @@ if len(p10) > 0:
 plt.axvline (1.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axhline (0.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\Psi}$',          fontsize = "15")
-plt.ylabel (r"$\log_{10}(I_s)$", fontsize = "15")
+plt.xlabel (r'$\Psi}$',                          fontsize = "15")
+plt.ylabel (r"$\log_{10}(|\Delta_s|/|E_{ss}|)$", fontsize = "15")
 #plt.xticks([0.9, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99, 1.0])
 plt.legend (fontsize = '15')
 

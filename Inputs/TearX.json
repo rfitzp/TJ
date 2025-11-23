@@ -1,8 +1,11 @@
 {
     "NTOR":     1,        // Toroidal mode number
     "q0":       1.01,     // Central safety-factor
-    "nu":       2.5,      // Current peaking factor
+    "nu":       3.5,      // Current peaking factor
     "alpha":    0.4,      // X-point parameter
+    "Delta_q":  0.5,      // Height of safety-factor step 
+    "r_q":      0.94,     // Central radius of safery-factor step
+    "delta_q":  0.025,    // Width of safety-factor step 
 
     "B0":       5.3,      // Toroidal magnetic field-strength (SI)
     "R0":       6.2,      // Major radius (SI)
@@ -42,14 +45,13 @@
     "EPS":      1.0e-6,   // Regularization parameter for logarithm
     "Psimax":   0.9999,   // Poloidal flux at effective plasma boundary
     "Nr":       10000,    // Number of radial gridpoints in output
-
-    "q0_sta":   1.01,     // Start value for q0 scan
-    "q0_end":   3.5,      // End value for q0 scan
-    "q0_num":   1000,      // Number of points in q0 scan
  
     "nu_sta":   2.01,     // Start value for nu scan
     "nu_end":   7.5,      // End value for nu scan
-    "nu_num":   100,      // Number of points in nu scan
+    "nu_num":   1000,     // Number of points in nu scan
+    "m_min":    4,        // Ignore rational surfaces with poloidal mode numbers less than m_min
+    "r_min":    0.8,      // Ignore rational surfaces with radii less than r_min
+    "c_min":    0.01,     // Use three-field layer Delta calculation for c_beta < c_min
 
     "acc":      1.0e-12,  // Integration accuracy
     "h0":       1.0e-4,   // Initial integration step-length
