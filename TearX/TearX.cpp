@@ -451,9 +451,17 @@ void TearX::Solve (int flg)
   wE   [0] = wE   [1];
   JJbs [0] = JJbs [1];
 
+  double smin = 1.e6, rmin;
+  for (int i = 0; i < Nr; i++)
+    if (ss[i] < smin && rr[i] > r_min)
+      {
+	smin = ss[i];
+	rmin = rr[i];
+      }
+	
   if (flg == 0)
-    printf ("ne(1) = %-10.3e Te(1) = %-10.3e Ti(1) = %-10.3e\n\n",
-	    ne[Nr-1], Te[Nr-1], Ti[Nr-1]);
+    printf ("s_min = %10.3e r_min = %-10.3e ne(1) = %-10.3e Te(1) = %-10.3e Ti(1) = %-10.3e\n\n",
+	    smin, rmin, ne[Nr-1], Te[Nr-1], Ti[Nr-1]);
 
   int mmax = int (qmax /ntor);
   int mmin = mmax - nres + 1;
