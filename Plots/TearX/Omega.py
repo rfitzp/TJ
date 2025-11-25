@@ -25,9 +25,7 @@ plt.rc ('ytick', labelsize = 15)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0., 1.)
-
-plt.xlim (0., 1.)
+plt.xlim (0.8, 1.)
  
 plt.plot (r, omegae, color = 'red',   linewidth = 2,    linestyle = 'solid', label = r"$\omega_{\ast\,e}$")
 plt.plot (r, omegai, color = 'blue',  linewidth = 2,   linestyle = 'solid',  label = r"$\omega_{\ast\,i}$")

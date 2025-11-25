@@ -12,6 +12,7 @@ all:
 	(cd StartUp;     make)
 	(cd Vertical;    make)
 	(cd TJ;        	 make)
+	(cd TearX;       make)
 
 clean:
 	(cd Utility;     make clean)
@@ -25,3 +26,4 @@ clean:
 	(cd StartUp;     make clean)
 	(cd Vertical;    make clean)
 	(cd TJ;          make clean)
+	(cd TearX;       make clean)

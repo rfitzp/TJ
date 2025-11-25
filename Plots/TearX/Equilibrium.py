@@ -34,7 +34,7 @@ plt.rc ('ytick', labelsize = 15)
 
 plt.subplot (2, 2, 1)
 
-plt.xlim (0., 1.)
+plt.xlim (0.8, 1.)
  
 plt.plot (r, q, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 for rs in rres:
@@ -45,18 +45,19 @@ plt.ylabel (r'$q$', fontsize = "15")
 
 plt.subplot (2, 2, 2)
 
-plt.xlim (0., 1.)
+plt.xlim (0.8, 1.)
  
 plt.plot    (lr, ls, color = 'blue',  linewidth = 2,   linestyle = 'solid')
+plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rs in rres:
     plt.axvline (math.log(1. + rs)/math.log(2.), color = 'black', linewidth = 1.0, linestyle = 'dotted')
 
 plt.xlabel (r'$\ln(1+r)/\ln 2$', fontsize = "15")
-plt.ylabel (r'$\ln(1+s)$', fontsize = "15")
+plt.ylabel (r'$\ln(1+s)$',       fontsize = "15")
 
 plt.subplot (2, 2, 3)
 
-plt.xlim (0., 1.)
+plt.xlim (0.8, 1.)
  
 plt.plot    (r, j,   color = 'blue',  linewidth = 2,   linestyle = 'solid', label = r'$J$')
 plt.plot    (r, mjp, color = 'red',   linewidth = 2,   linestyle = 'solid', label = r"$-J'$")
@@ -71,7 +72,7 @@ plt.legend (fontsize = "15")
 
 plt.subplot (2, 2, 4)
 
-plt.xlim (0., 1.)
+plt.xlim (0.8, 1.)
  
 plt.plot    (r, l, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 plt.axhline (0.,   color = 'black', linewidth = 1.5, linestyle = 'dotted')

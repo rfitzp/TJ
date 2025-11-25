@@ -25,7 +25,8 @@ TearX::TearX ()
   string JSONFilename = "../Inputs/TearX.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  NTOR    = JSONData["NTOR"]   .get<int>    ();
+  NTOR = JSONData["NTOR"].get<int>();
+
   q0      = JSONData["q0"]     .get<double> ();
   nu      = JSONData["nu"]     .get<double> ();
   alpha   = JSONData["alpha"]  .get<double> ();
@@ -236,6 +237,7 @@ void TearX::Setq0 (double _q0)
 void TearX::Setnu (double _nu)
 {
   nu = _nu;
+
   qc = nu * q0;
 }
 

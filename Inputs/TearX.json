@@ -1,11 +1,12 @@
 {
     "NTOR":     1,        // Toroidal mode number
+
     "q0":       1.01,     // Central safety-factor
     "nu":       3.5,      // Current peaking factor
     "alpha":    0.4,      // X-point parameter
-    "Delta_q":  0.6,      // Height of safety-factor step 
-    "r_q":      0.94,     // Central radius of safery-factor step
-    "delta_q":  0.025,    // Width of safety-factor step 
+    "Delta_q":  0.6,      // Height of safety-factor pedestal
+    "r_q":      0.94,     // Central radius of safery-factor pedestal
+    "delta_q":  0.025,    // Width of safety-factor pedestal
 
     "B0":       5.3,      // Toroidal magnetic field-strength (SI)
     "R0":       6.2,      // Major radius (SI)

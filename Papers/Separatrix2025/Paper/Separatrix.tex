@@ -244,8 +244,9 @@ out, because the second term is zero everywhere on the surface. Hence, in genera
 {\em shielding current}\/ that acts to suppress driven magnetic reconnection on the flux-surface \cite{rf1,rf2}. 
 
 We can now appreciate that, by employing a straight-field-line coordinate system, we can distinguish rational magnetic flux-surfaces from
-irrational flux-surfaces. (A rational surface is one on which the associated safety-factor can be expressed as a rational number. Note that
-this definition only makes sense if the safety-factor is a flux-surface function.) We can also determine the angular variation of the particular magnetic perturbation that drives a
+irrational flux-surfaces. [A rational surface is one on which the associated safety-factor can be expressed as a rational number. Note that
+this definition only makes sense if the safety-factor is a flux-surface function. In this respect, we cannot agree with the analysis of Ref.~\cite{lj} where a
+coordinate system is adopted in which $q=q(\psi_p,\theta)$ in the vicinity of the X-point.] We can also determine the angular variation of the particular magnetic perturbation that drives a
 shielding current on a particular rational surface. Finally, it is clear from  that Figs.~\ref{fig2}--\ref{fig4}  that rational
 flux-surfaces exist both inside and outside the magnetic separatrix. 
 
@@ -525,19 +526,21 @@ Alternatively, Eq.~(\ref{e58}) yields
 \begin{equation}
 {\mit\Delta\Psi}_k = E_{kk}\,{\mit\Psi}_k + \chi_k.
 \end{equation}
-We can distinguish two asymptotic limits. In the first limit, $|{\mit\Delta}_k|\gg |E_{kk}|$. In this limit, the shielding current excited at the
+Let us  suppose that $E_{kk}<0$: i.e., the tearing mode resonant at the surface is intrinsically stable. In this case, any magnetic
+reconnection that takes place at the surface is entirely due to the RMP.
+We can distinguish two asymptotic limits. In the first limit, $|{\mit\Delta}_k|\gg (-E_{kk})$. In this limit, the shielding current excited at the
 rational surface is sufficiently strong that driven magnetic reconnection is largely suppressed at the surface \cite{rf1,rf2}. In other words,
 ${\mit\Psi}_k\simeq 0$. We term this an {\em ideal response}, because it is the exactly the same response as one would get by imposing the
 ideal-MHD flux-freezing  constraint that the topology of the magnetic field cannot change at the rational surface: i.e., ${\mit\Psi}_k=0$ \cite{boozer}. 
-In the second limit, $|{\mit\Delta}_k|\ll |E_{kk}|$. In this limit, the shielding current is too weak to prevent
-driven magnetic reconnection from occurring at the rational surface. Thus, ${\mit\Psi}_k\simeq -\chi_k/E_{kk}$. 
+In the second limit, $|{\mit\Delta}_k|\ll (-E_{kk})$. In this limit, the shielding current is too weak to prevent
+driven magnetic reconnection from occurring at the rational surface. Thus, ${\mit\Psi}_k\simeq \chi_k/(-E_{kk})$. 
 We term this a {\em vacuum response}, because it is exactly the same response as one would get by imposing the
 vacuum constraint that no shielding current flows at the rational surface: i.e., ${\mit\Delta\Psi}_k=0$. 
 
-In a region of the plasma in which the response to the RMP lies in the ideal regime (i.e., $|{\mit\Delta}_k|/|E_{kk}|\gg 1$ at all rational surfaces), the perturbed magnetic field has
+In a region of the plasma in which the response to the RMP lies in the ideal regime [i.e., $|{\mit\Delta}_k|/(-E_{kk})\gg 1$ at all rational surfaces], the perturbed magnetic field has
 a strong dependence on the equilibrium magnetic field, because the equilibrium field determines the locations of the rational
-surfaces on which the constraints ${\mit\Psi}_k\simeq 0$ have to be imposed. On the other hand, in a region of the plasma in which the response lies in the vacuum
-regime (i.e., $|{\mit\Delta}_k|/|E_{kk}|\ll 1$ at all rational surfaces), the perturbed magnetic field has no (local) dependence on the equilibrium magnetic field. This is the case because we
+surfaces on which the constraints ${\mit\Psi}_k= 0$ have to be imposed. On the other hand, in a region of the plasma in which the response lies in the vacuum
+regime [i.e., $|{\mit\Delta}_k|/(-E_{kk})\ll 1$ at all rational surfaces], the perturbed magnetic field has no (local) dependence on the equilibrium magnetic field. This is the case because we
 can write the perturbed field in a current-free region  in the form ${\bf b} = \nabla V$, where the vacuum potential satisfies
 $\nabla^2 V=0$, which completely independent of the equilibrium field. Moreover, writing the perturbed magnetic field in this form
 automatically satisfies the constraints that ${\mit\Delta\Psi}_k=0$ at the rational surfaces. Thus, in the vacuum regime, there is no need for us to determine the locations of the
@@ -810,7 +813,7 @@ free to choose a convenient non-singular coordinate system in the vacuum region,
 If we suppose that $q_{95}$ is gradually increased then, at some stage, a new rational surface will enter the domain of solution, $0<{\mit\Psi}<1-\epsilon_c$,
 from the region of resistive layer overlap. Suppose that the new surface is the $k$th surface. The entry of the surface into the domain of solution
 will not cause the sudden imposition of the additional ideal constraint ${\mit\Psi}_k=0$, which would also cause a sudden change in the plasma
-response to the RMP \cite{zheng}, because $|{\mit\Delta}_k|/|E_{kk}|$ is initially quite small, due to the large magnetic shear at ${\mit\Psi}=1-\epsilon_c$. However, 
+response to the RMP \cite{zheng}, because $|{\mit\Delta}_k|/(-E_{kk})$ is initially quite small, due to the large magnetic shear at ${\mit\Psi}=1-\epsilon_c$. However, 
 as $q_{95}$ is further increased, the new surface will move into the plasma interior, where the shear is moderate, and the ideal constraint ${\mit\Psi}_k=0$
 will eventually hold. In other words, ideal constraint ${\mit\Psi}_k=0$ develops gradually, as the new surface moves into the plasma interior,
 rather than being imposed immediately, as soon as the surface enters the domain of solution. 
@@ -860,67 +863,70 @@ RMP,  and $\epsilon_c=4.8\times 10^{-3}$ for an $n=4$ RMP,  in  a typical JET H-
 
 \bibitem{meiss} R.D.~Hazeltine and J.D.~Meiss, {\em Plasma Confinement}, (Dover, New York NY, 2003).
 
-\bibitem{boozer} A.H.~Boozer, Rev.\ Mod.\ Phys.\ {\bf 76}, 1071 (2004).
+\bibitem{boozer} A.H.~Boozer, {\em Physics of magnetically confined plasmas}, Rev.\ Mod.\ Phys.\ {\bf 76}, 1071 (2004).
 
-\bibitem{chang}  Z.~Chang and J.D.~Callen, Nucl.\ Fusion {\bf 30}, 219 (1990).
+\bibitem{chang}  Z.~Chang and J.D.~Callen, {\em Global energy confinement degradation due to macroscopic phenomena in tokamaks}, Nucl.\ Fusion {\bf 30}, 219 (1990).
 
-\bibitem {rf1} R. Fitzpatrick, Nucl.\ Fusion {\bf 33}, 1049 (1993).
+\bibitem {rf1} R. Fitzpatrick, {\em Interaction of tearing modes with external structures in cylindrical geometry (plasma)}, Nucl.\ Fusion {\bf 33}, 1049 (1993).
 
-\bibitem{pom} N.~Pomphrey and A.~Reiman, Phys.\ Fluids B {\bf 4}, 938 (1992). 
+\bibitem{pom} N.~Pomphrey and A.~Reiman, {\em Effect of nonaxisymmetric perturbations on the structure of a tokamak poloidal divertor}, Phys.\ Fluids B {\bf 4}, 938 (1992). 
 
-\bibitem{reiman} A.~Reiman, Phys.\ Plasmas {\bf 3}, 906 (1996).
+\bibitem{reiman} A.~Reiman, {\em Singular surfaces in the open field line region of a diverted tokamak}, Phys.\ Plasmas {\bf 3}, 906 (1996).
 
-\bibitem{mars} Y.Q.~Liu, A.~Bondeson, C.M.~Fransson, B.~Lennartson and C.~Breitzholtz, Phys.\ Plasmas {\bf 7}, 3681 (2000).
+\bibitem{mars} Y.Q.~Liu, A.~Bondeson, C.M.~Fransson, B.~Lennartson and C.~Breitzholtz, {\em Feedback stabilization of nonaxisymmetric resistive wall modes in tokamaks. I. Electromagnetic model},  Phys.\ Plasmas {\bf 7}, 3681 (2000).
 
-\bibitem{ipec} J.-K.~Park,  A.H.~Boozer and  A.H.~Glasser,  Phys.\ Plasmas {\bf 14}, 052110 (2007). 
+\bibitem{ipec} J.-K.~Park,  A.H.~Boozer and  A.H.~Glasser,  {\em Computation of three-dimensional tokamak and spherical torus equilibria}, Phys.\ Plasmas {\bf 14}, 052110 (2007). 
 
-\bibitem{dcon} A.H.~Glasser, Phys.\ Plasmas {\bf 23}, 072505 (2016). 
+\bibitem{dcon} A.H.~Glasser, {\em The direct criterion of Newcomb for the ideal MHD stability of an axisymmetric toroidal plasma}, Phys.\ Plasmas {\bf 23}, 072505 (2016). 
 
-\bibitem{park} J.-K.~Park and N.C.~Logan, Phys.\ Plasmas {\bf 24}, 032505 (2017).
+\bibitem{park} J.-K.~Park and N.C.~Logan, {\em Self-consistent perturbed equilibrium with neoclassical toroidal torque in tokamaks}, Phys.\ Plasmas {\bf 24}, 032505 (2017).
 
-\bibitem{epec} R.~Fitzpatrick, Phys.\ Plasmas {\bf 27}, 102511 (2020).
+\bibitem{epec} R.~Fitzpatrick, {\em Modeling q95 windows for the suppression of edge localized modes by resonant magnetic perturbations in the DIII-D tokamak}, Phys.\ Plasmas {\bf 27}, 102511 (2020).
 
-\bibitem{gpec} Q.M.~Hu, J.-K.~Park, N.C.~Logan, S.M.~Yang, B.A.~Grierson, R.~Nazikian and Q.~Yu, Nucl.\ Fusion {\bf 61}, 106006 (2021). 
+\bibitem{gpec} Q.M.~Hu, J.-K.~Park, N.C.~Logan, S.M.~Yang, B.A.~Grierson, R.~Nazikian and Q.~Yu, {\em Nonlinear two-fluid modeling of plasma response to RMPs for the ELM control in the ITER baseline}, Nucl.\ Fusion {\bf 61}, 106006 (2021). 
 
-\bibitem{logan} S.~Benjamin, N.C.~Logan and C.~Hansen, Plasma Phys.\ Control.\ Fusion {\bf 67}, 065019 (2025).
+\bibitem{logan} S.~Benjamin, N.C.~Logan and C.~Hansen, 
+{\em Computation of generalised magnetic coordinates asymptotically close to the separatrix}, Plasma Phys.\ Control.\ Fusion {\bf 67}, 065019 (2025).
 
-\bibitem{boz} R.D.~Hazeltine and J.D.~Meiss, Phys.\ Reports {\bf 121}, 1 (1984).
+\bibitem{boz} R.D.~Hazeltine and J.D.~Meiss, {\em Shear-Alfv\'{e}n dynamics of toroidally confined plasmas}, Phys.\ Reports {\bf 121}, 1 (1984).
 
-\bibitem{hamada} S.~Hamada,  Nucl.\ Fusion {\bf 2}, 23 (1962).
+\bibitem{hamada} S.~Hamada,  {\em Hydromagnetic equilibria and their proper coordinates}, Nucl.\ Fusion {\bf 2}, 23 (1962).
 
-\bibitem{bcoord} A.H.~Boozer, Phys.\ Fluids {\bf 24}, 1999 (1981).
+\bibitem{bcoord} A.H.~Boozer, {\em Plasma equilibrium with rational magnetic surfaces}, Phys.\ Fluids {\bf 24}, 1999 (1981).
 
-\bibitem{pest} J.L.~Johnson and R.C.~Grimm, Phys.\  Fluids {\bf 17}, 337 (1974).
+\bibitem{pest} 	R.C.~Grimm, R.L.~Dewar and J.~Manickam, {\em Ideal MHD stability calculations in axisymmetric toroidal coordinate systems}, J.\ Comput.\ Phys.\ {\bf 49}, 94 (1983).
 
-\bibitem{rf2} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin and C.M.~Roach, Nucl.\ Fusion {\bf 33}, 1533 (1993).
+\bibitem{rf2} R.~Fitzpatrick, R.J.~Hastie, T.J.~Martin and C.M.~Roach,  {\em Stability of coupled tearing modes in tokamaks}, Nucl.\ Fusion {\bf 33}, 1533 (1993).
+
+\bibitem{lj} L.J.~Zheng, M.T.~Kotschenreuther, F.L.~Waelbroeck and M.E.~Austin, {\em X-point effects on the ideal MHD modes in tokamaks in the description of dual-poloidal-region safety factor}, Phys.\ Plasmas {\bf 32}, 012501 (2025).
 
 \bibitem{as} M.~Abramowitz and I.A.~Stegun, {\em Handbook of Mathematical Functions}, (Dover, New York NY, 1964).
 
-\bibitem{rf3} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31}, 102507 (2024).
+\bibitem{rf3} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31}, {\em Calculation of tearing mode stability in an inverse aspect-ratio expanded tokamak plasma equilibrium}, 102507 (2024).
 
-\bibitem{rf4}  R.~Fitzpatrick, Phys.\ Plasmas {\bf 24}, 072506 (2017).
+\bibitem{rf4}  R.~Fitzpatrick, Phys.\ Plasmas {\bf 24}, {\em Determination of the non-ideal response of a high temperature tokamak plasma to a static external magnetic perturbation via asymptotic matching}, 072506 (2017).
 
-\bibitem{fkr} H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  Phys.\ Fluids {\bf 6}, 459 (1963).
+\bibitem{fkr} H.P.~Furth,  J.~Killeen and M.N.~Rosenbluth,  {\em Finite‐resistivity instabilities of a sheet pinch}, Phys.\ Fluids {\bf 6}, 459 (1963).
 
-\bibitem{mercier} C.~Mercier, Nucl.\ Fusion {\bf 1}, 47 (1960).
+\bibitem{mercier} C.~Mercier, {\em A necessary condition for hydromagnetic stability of plasma with axial symmetry}, Nucl.\ Fusion {\bf 1}, 47 (1960).
 
-\bibitem{layer} R.~Fitzpatrick, Phys.\ Plasmas {\bf 29}, 032507 (2022).
+\bibitem{layer} R.~Fitzpatrick, {\em Influence of anomalous perpendicular transport on linear tearing mode dynamics in tokamak plasmas}, Phys.\ Plasmas {\bf 29}, 032507 (2022).
 
-\bibitem{cole} A.~Cole and R.~Fitzpatrick, Phys.\ Plasmas {\bf 13}, 032503 (2006).
+\bibitem{cole} A.~Cole and R.~Fitzpatrick, {\em Drift-magnetohydrodynamical model of error-field penetration in tokamak plasmas}, Phys.\ Plasmas {\bf 13}, 032503 (2006).
 
-\bibitem{rf5} R.~Fitzpatrick,  Phys.\ Plasmas {\bf 32}, 062509 (2025).
+\bibitem{rf5} R.~Fitzpatrick,  {\em Investigation of tearing mode stability near ideal stability boundaries via asymptotic matching techniques}, Phys.\ Plasmas {\bf 32}, 062509 (2025).
 
-\bibitem{ggj} A.H.~Glasser, J.M.~Greene and J.L.~Johnson, Phys.\ Fluids {\bf 19}, 567 (1976).
+\bibitem{ggj} A.H.~Glasser, J.M.~Greene and J.L.~Johnson, {\em Resistive instabilities in a tokamak}, Phys.\ Fluids {\bf 19}, 567 (1976).
 
 \bibitem{jet} L.~Frassinetti, S.~Saarelma, G.~Verdoolaege, M.~Groth, J.C.~Hillesheim, P.~Bilkova,
-P.~Bohm, M.~Dunne, R.~Fridstr\"{o}m, E.~Giovannozzi, et al., Nucl.\ Fusion {\bf 61}, 016001 (2021).
+P.~Bohm, M.~Dunne, R.~Fridstr\"{o}m, E.~Giovannozzi, et al., {\em Pedestal structure, stability and scalings in JET-ILW: the EUROfusion JET-ILW pedestal database}, Nucl.\ Fusion {\bf 61}, 016001 (2021).
 
 \bibitem{jetx} Z.S.~Hartwig and Y.A.~Podpaly, {\em Magnetic Fusion Energy Formulary}, (Massachusetts Institute of Technology, Cambridge MA, 2011).
 
 \bibitem{diiid} R.~Nazikian, C.~Paz-Solden, J.D.~Callen, J.S.~de\,Grassie, D.~Eldon, T.E.~Evans, N.M.~Ferraro,
-B.A.~Grierson, R.J.~Groebner, S.R.~Haskey, et al., Phys.\ Rev.\ Lett.\ {\bf 114}, 105002 (2015).
+B.A.~Grierson, R.J.~Groebner, S.R.~Haskey, et al., {\em Pedestal bifurcation and resonant field penetration at the threshold of edge-localized mode suppression in the DIII-D tokamak}, Phys.\ Rev.\ Lett.\ {\bf 114}, 105002 (2015).
 
-\bibitem{zheng} L.J.~Zheng, M.~Kotschenreuther and P.~Valanju, Phys.\ Plasmas {\bf 24}, 102503 (2017).
+\bibitem{zheng} L.J.~Zheng, M.T.~Kotschenreuther and P.~Valanju, {\em The sensitivity of tokamak magnetohydrodynamics stability on the edge equilibrium},  Phys.\ Plasmas {\bf 24}, 102503 (2017).
 
 \end{thebibliography}
 

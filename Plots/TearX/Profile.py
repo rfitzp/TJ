@@ -26,8 +26,9 @@ plt.rc ('ytick', labelsize = 15)
 
 plt.subplot (2, 2, 1)
 
-plt.xlim (0., 1.)
- 
+plt.xlim (0.8, 1.)
+plt.ylim (0., 1.5e20)
+
 plt.plot     (r, ne, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rs in rres:
@@ -38,7 +39,8 @@ plt.ylabel (r'$n_e$', fontsize = "15")
 
 plt.subplot (2, 2, 2)
 
-plt.xlim (0., 1.)
+plt.xlim (0.8, 1.)
+plt.ylim (0., 7.e3)
  
 plt.plot (r, Te, color = 'red',  linewidth = 2,   linestyle = 'solid', label = "$T_e$")
 plt.plot (r, Ti, color = 'blue', linewidth = 2,   linestyle = 'solid', label = "$T_i$")
@@ -46,12 +48,13 @@ plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rs in rres:
     plt.axvline (rs, color = 'black', linewidth = 1.0, linestyle = 'dotted')
 
+plt.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))    
 plt.xlabel (r'$r$', fontsize = "15")
 plt.legend (fontsize = "15")
 
 plt.subplot (2, 2, 3)
 
-plt.xlim (0., 1.)
+plt.xlim (0.8, 1.)
  
 plt.plot    (r, nep, color = 'blue',  linewidth = 2,   linestyle = 'solid')
 plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
@@ -63,7 +66,7 @@ plt.ylabel (r"$n_e'$", fontsize = "15")
 
 plt.subplot (2, 2, 4)
 
-plt.xlim (0., 1.)
+plt.xlim (0.8, 1.)
  
 plt.plot    (r, Tep, color = 'red',  linewidth = 2,   linestyle = 'solid', label = "$T_e'$")
 plt.plot    (r, Tip, color = 'blue', linewidth = 2,   linestyle = 'solid', label = "$T_i'$")
@@ -71,6 +74,7 @@ plt.axhline (0.,   color = 'black', linewidth = 1.5, linestyle = 'dotted')
 for rs in rres:
     plt.axvline (rs, color = 'black', linewidth = 1.0, linestyle = 'dotted')
 
+plt.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))    
 plt.xlabel (r'$r$', fontsize = "15")
 plt.legend (fontsize = "15")
 

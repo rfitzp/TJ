@@ -14,7 +14,7 @@
 // Temperatures are in eV. 
 
 // Equilibrium quantities:
-
+//
 //  The safety-factor profile is
 //
 //   q(r) = r^2 /f(r) - alpha ln(|1 - r^2| + EPS) - (1/2) Delta_q (1 + tanh[(r - r_q) /delta_q]), 
@@ -92,14 +92,15 @@
 
 // Outputs:
 //  Outputs/TearX/TearX.nc
+//  Outputs/TearX/Scannu.txt
 
 // #########################################################################################
 
 #pragma once
 
 #include "Utility.h"
-#include <gsl/gsl_const_mksa.h>
 #include "FourField.h"
+#include <gsl/gsl_const_mksa.h>
     
 // ############
 // Class header
@@ -111,52 +112,62 @@ class TearX: private Utility
   // ------------------
   // Physics parameters
   // ------------------
-  int    NTOR;     // Toroidal mode number (read from JSON file)
-  double q0;       // Central safety-factor (read from JSON file)
-  double nu;       // Current peaking factor (read from JSON file)
-  double alpha;    // X-point parameter (read from JSON file)
-  double Delta_q;  // Height of safety-factor step (read from JSON file)
-  double r_q;      // Central radius of safery-factor step (read from JSON file)
-  double delta_q;  // Width of safety-factor step (read from JSON file)
+  int    NTOR;      // Toroidal mode number (read from JSON file)
+  double q0;        // Central safety-factor (read from JSON file)
+  double nu;        // Current peaking factor (read from JSON file)
+  double alpha;     // X-point parameter (read from JSON file)
+  double Delta_q;   // Height of safety-factor pedestal (read from JSON file)
+  double r_q;       // Central radius of safery-factor pedestal (read from JSON file)
+  double delta_q;   // Width of safety-factor pedestal (read from JSON file)
 
-  double B0;       // Toroidal magnetic field-strength (SI) (read from JSON file)
-  double R0;       // Plasma minor radius (SI) (read from JSON file)
-  double a;        // Plasma major radius (SI) (read from JSON file)
-  double M;        // Ion mass number (read from JSON file)
-  double chiE;     // Perpendicular energy diffusivity (SI) (read from JSON file)
-  double chip;     // Perpendicular momentum diffusivity (SI) (read from JSON file)
-  double Z;        // Effective ion charge number (read from JSON file)
+  double B0;        // Toroidal magnetic field-strength (SI) (read from JSON file)
+  double R0;        // Plasma minor radius (SI) (read from JSON file)
+  double a;         // Plasma major radius (SI) (read from JSON file)
+  double M;         // Ion mass number (read from JSON file)
+  double chiE;      // Perpendicular energy diffusivity (SI) (read from JSON file)
+  double chip;      // Perpendicular momentum diffusivity (SI) (read from JSON file)
+  double Z;         // Effective ion charge number (read from JSON file)
 
-  double ne_0;     // Central electron number density (SI) (read from JSON file)
-  double ne_1;     // Electron number density offset (SI) (read from JSON file)
-  double Delta_ne; // Height of electron number density pedestal (SI) (read from JSON file)
-  double nu_ne;    // Electron number density central peaking parameter (read from JSON file)
-  double r_ne;     // Central radius of electron number density pedestal (read from JSON file)
-  double delta_ne; // Width of electron number density pedestal (read from JSON file)
+  double ne_0;      // Central electron number density (SI) (read from JSON file)
+  double ne_1;      // Electron number density offset (SI) (read from JSON file)
+  double Delta_ne;  // Height of electron number density pedestal (SI) (read from JSON file)
+  double nu_ne;     // Electron number density central peaking parameter (read from JSON file)
+  double r_ne;      // Central radius of electron number density pedestal (read from JSON file)
+  double delta_ne;  // Width of electron number density pedestal (read from JSON file)
 
-  double Te_0;     // Central electron temperature (eV) (read from JSON file)
-  double Te_1;     // Rlectron temperature offset (eV) (read from JSON file)
-  double Delta_Te; // Height of electron temperature pedestal (eV) (read from JSON file)
-  double nu_Te;    // Electron temperature central peaking parameter (read from JSON file)
-  double r_Te;     // Central radius of electron temperature pedestal (read from JSON file)
-  double delta_Te; // Width of electron temperature pedestal (read from JSON file)
+  double Te_0;      // Central electron temperature (eV) (read from JSON file)
+  double Te_1;      // Rlectron temperature offset (eV) (read from JSON file)
+  double Delta_Te;  // Height of electron temperature pedestal (eV) (read from JSON file)
+  double nu_Te;     // Electron temperature central peaking parameter (read from JSON file)
+  double r_Te;      // Central radius of electron temperature pedestal (read from JSON file)
+  double delta_Te;  // Width of electron temperature pedestal (read from JSON file)
 
-  double Ti_0;     // Central ion temperature (eV) (read from JSON file)
-  double Ti_1;     // Ion temperature offset (eV) (read from JSON file)
-  double Delta_Ti; // Height of ion temperature pedestal (eV) (read from JSON file)
-  double nu_Ti;    // Ion temperature central peaking parameter (read from JSON file)
-  double r_Ti;     // Central radius of ion temperature pedestal (read from JSON file)
-  double delta_Ti; // Width of ion temperature pedestal (read from JSON file)
+  double Ti_0;      // Central ion temperature (eV) (read from JSON file)
+  double Ti_1;      // Ion temperature offset (eV) (read from JSON file)
+  double Delta_Ti;  // Height of ion temperature pedestal (eV) (read from JSON file)
+  double nu_Ti;     // Ion temperature central peaking parameter (read from JSON file)
+  double r_Ti;      // Central radius of ion temperature pedestal (read from JSON file)
+  double delta_Ti;  // Width of ion temperature pedestal (read from JSON file)
 
-  double alphaE;   // ExB frequency factor
-  double omegaE_0; // Central ExB frequency offset (rad/s) (read from JSON file)
-  double nu_E;     // ExB frequency central peaking parameter (read from JSON file)
+  double alphaE;    // ExB frequency factor
+  double omegaE_0;  // Central ExB frequency offset (rad/s) (read from JSON file)
+  double nu_E;      // ExB frequency central peaking parameter (read from JSON file)
 
-  double e;          // Magnitude of electron charge (SI)
-  double m_e;        // Mass of electron (SI)
-  double m_p;        // Mass of proton (SI)
-  double epsilon_0;  // Vacuum permittivity (SI)
-  double mu_0;       // Vacuum permeability (SI)
+  double e;         // Magnitude of electron charge (SI)
+  double m_e;       // Mass of electron (SI)
+  double m_p;       // Mass of proton (SI)
+  double epsilon_0; // Vacuum permittivity (SI)
+  double mu_0;      // Vacuum permeability (SI)
+
+  // ---------------
+  // Scan parameters
+  // ---------------
+  double nu_sta;   // Start value for nu scan (read from JSON file)
+  double nu_end;   // End value for nu scan (read from JSON file)
+  int    nu_num;   // Number of points in nu scan (read from JSON file)
+  int    m_min;    // Ignore rational surfaces with poloidal mode numbers less than m_min (read from JSON file)
+  double r_min;    // Ignore rational surfaces with radii less than r_min (read from JSON file)
+  double c_min;    // Use three-field layer Delta calculation for c_beta < c_min (read from JSON file)
 
   // ----------------------
   // Calculation parameters
@@ -167,19 +178,12 @@ class TearX: private Utility
   double EPS;      // ln (1 - r^2) regularized as ln (|1 - r^2| + EPS) (read from JSON file)
   double Psimax;   // Rational surfaces ignored in region PSI > Psimax (read from JSON file)
 
-  double nu_sta;   // Start value for nu scan (read from JSON file)
-  double nu_end;   // End value for nu scan (read from JSON file)
-  int    nu_num;   // Number of points in nu scan (read from JSON file)
-  int    m_min;    // Ignore rational surfaces with poloidal mode numbers less than m_min (read from JSON file)
-  double r_min;    // Ignore rational surfaces with radii less than r_min (read from JSON file)
-  double c_min;    // Use three-field layer Delta calculation for c_beta < c_min (read from JSON file)
-  
   // ----------------
   // Calculation data
   // ----------------
   double            qc;       // Cylindrical edge safety-factor 
   double            r95;      // Radius of 95% flux-surface
-  double            R95;      // Rho value of 95% flux-surface
+  double            R95;      // Rho = PSI^1/2 value of 95% flux-surface
   double            q95;      // Safety-factor at 95% flux-surface
   double            s95;      // Magnetic shear (in terms of r) at 95% flux-surface
   double            S95;      // Magnetic shear (in terms of rho) at 95% flux-surface
@@ -203,7 +207,7 @@ class TearX: private Utility
   double*           Dires;    // Imaginary parts of layer response indices
   double*           Idres;    // Ideal response indicies
   
-  double*           rr;       // Radial grid
+  double*           rr;       // Radial grid points
   double*           qq;       // Safety factor
   double*           PSI;      // Normalized equilibrium poloidal magnetic flux
   double*           rho;      // rho = PSI^1/2
