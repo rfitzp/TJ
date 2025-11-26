@@ -63,11 +63,13 @@ df =  pd.read_csv("RIii_Vz.txt", delim_whitespace=True, skiprows=1)
 Q   = df.iloc[:,0]
 D4r = df.iloc[:,2]
 D4i = df.iloc[:,3]
+
+fontsize = 17
     
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'TJ Code: Delta3 and Delta4')
-plt.rc ('xtick', labelsize = 15) 
-plt.rc ('ytick', labelsize = 15)
+plt.rc ('xtick', labelsize = fontsize) 
+plt.rc ('ytick', labelsize = fontsize)
 
 plt.subplot (2, 1, 1)
 
@@ -84,8 +86,8 @@ plt.plot (gi, d4r, color = 'red',   linewidth = 2, linestyle = 'solid',  label =
 plt.plot (Q,  D4r, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"SLAYER")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
-plt.xlabel (r'$Q_E$', fontsize = "15")
-plt.legend (fontsize = "15");
+plt.xlabel (r'$Q_E$', fontsize = fontsize)
+plt.legend (fontsize = fontsize);
 
 plt.subplot (2, 1, 2)
 
@@ -102,8 +104,8 @@ plt.plot (gi, d4i, color = 'red',   linewidth = 2, linestyle = 'solid',  label =
 plt.plot (Q,  D4i, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"SLAYER")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
-plt.xlabel (r'$Q_E$', fontsize = "15")
-plt.legend (fontsize = "15");
+plt.xlabel (r'$Q_E$', fontsize = fontsize)
+plt.legend (fontsize = fontsize);
 
 plt.tight_layout ()
 

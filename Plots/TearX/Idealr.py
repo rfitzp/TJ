@@ -1,6 +1,6 @@
-# Ideal.py
+# Idealr.py
 
-# Plots ideal response parameter versus PSI for nu scan
+# Plots ideal response parameter versus 6 for nu scan
 
 import math
 import numpy as np
@@ -10,7 +10,7 @@ import pandas as pd
 
 df = pd.read_csv ("../../Outputs/TearX/Scannu.txt", delim_whitespace = True, header = None)
 
-psi = df.iloc[:,9]
+psi = df.iloc[:,6]
 m   = df.iloc[:,5]
 id  = np.log10(np.asarray(df.iloc[:,12]))
 
@@ -86,7 +86,7 @@ if len(p10) > 0:
 plt.axvline (1.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axhline (0.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$\Psi$',                            fontsize = "15")
+plt.xlabel (r'$r$',                               fontsize = "15")
 plt.ylabel (r"$\log_{10}[|\Delta_s|/(-E_{ss})]$", fontsize = "15")
 #plt.xticks([0.9, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99, 1.0])
 plt.legend (fontsize = '15')

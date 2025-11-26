@@ -74,12 +74,20 @@ private:
   double pmax3;   // Maximum value of p in three-field calculation
   double pmax4;   // Maximum value of p in four-field calculation
 
-  // ....................................
-  // Four-field frequency scan parameters
-  // ....................................
-  int    Scan;    // Flag for performing frequency scan (read from JSON file)
+  // ........................................
+  // Four-field ExB frequency scan parameters
+  // ........................................
+  int    Scan;    // Flag for performing ExB frequency scan (read from JSON file)
   double Fscan;   // Scan from g_i = - Fmax * (Qe - Qi) to g_i = Fmax * (Qe - Qi) (read from JSON file)
   int    Nscan;   // Number of points in scan (read from JSON file)
+
+  // .................................
+  // Four-field c_beta scan parameters
+  // .................................
+  int    Zero;    // Flag for finding Q_E at which Im(Delta) = 0 as function of c_beta (overrides Scan) (read from JSON file)
+  double cbetas;  // Start value for cbeta scan (read from JSON file)
+  double cbetae;  // End value for cbeta scan (read from JSON file)
+  int    Ncbeta;  // Number of points in cbeta scan (read from JSON file)
 
   double* givals;  // g_i values in frequency scan
   double* D3rvals; // Re(Delta3) values in frequency scan
@@ -128,4 +136,7 @@ private:
   
   // Evaluate right-hand sides of differential equations
   void CashKarp45Rhs (double x, complex<double>*  y, complex<double>*  dydx) override;
+
+  // Evaluate target function for one-dimensional root finding
+  double RootFindF (double x) override;
 };

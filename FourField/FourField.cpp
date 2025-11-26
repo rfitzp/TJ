@@ -49,10 +49,19 @@ FourField::FourField ()
   Fscan = JSONData["Fscan"].get<double> ();
   Nscan = JSONData["Nscan"].get<int>    ();
 
+  Zero   = JSONData["Zero"]  .get<int>    ();
+  cbetas = JSONData["cbetas"].get<double> ();
+  cbetae = JSONData["cbetae"].get<double> ();
+  Ncbeta = JSONData["Ncbeta"].get<int>    ();
+
   acc  = JSONData["acc"] .get<double> ();
   h0   = JSONData["h0"]  .get<double> ();
   hmin = JSONData["hmin"].get<double> ();
   hmax = JSONData["hmax"].get<double> ();
+
+  Nint    = JSONData["Nint"]   .get<int>    ();
+  Eta     = JSONData["Eta"]    .get<double> ();
+  MaxIter = JSONData["MaxIter"].get<int>    ();
 
   // ------------
   // Sanity check
@@ -118,14 +127,16 @@ FourField::FourField ()
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("g_r    = %10.3e g_i   = %10.3e Qe    = %10.3e Qi    = %10.3e D = %10.3e JK = %1d\n",
+  printf ("g_r    = %10.3e g_i   = %10.3e Qe      = %10.3e Qi    = %10.3e D = %10.3e JK = %1d\n",
 	  g_r, g_i, Qe, Qi, D, JK);
-  printf( "Pphi   = %10.3e Pperp = %10.3e cbeta = %10.3e iotae = %10.3e\n",
+  printf( "Pphi   = %10.3e Pperp = %10.3e cbeta   = %10.3e iotae = %10.3e\n",
 	  Pphi, Pperp, cbeta, iotae);
-  printf ("pstart = %10.3e pend  = %10.3e P3max = %10.3e\n",
+  printf ("pstart = %10.3e pend  = %10.3e P3max   = %10.3e\n",
 	  pstart, pend, P3max);
-  printf ("acc    = %10.3e h0    = %10.3e hmin  = %10.3e hmax  = %10.3e\n",
+  printf ("acc    = %10.3e h0    = %10.3e hmin    = %10.3e hmax  = %10.3e\n",
 	  acc, h0, hmin, hmax);
+  printf ("Nint   = %3d        Eta   = %10.3e MaxIter = %3d\n",
+	  Nint, Eta, MaxIter);
 }
 
 // #######################
@@ -202,23 +213,51 @@ void FourField::GetDelta4 (double _QE, double _Qe, double _Qi, double _cbeta, do
 // #########################
 void FourField::Solve ()
 {
-  // .................................
-  // Solve three-field layer equations
-  // .................................
-  SolveThreeFieldLayerEquations ();
-  printf ("\nDeltas3 = (%10.3e, %10.3e) pmax = %10.3e\n", real(Deltas3), imag(Deltas3), pmax3);
-
-  // ................................
-  // Solve four-field layer equations
-  // ................................
-  SolveFourFieldLayerEquations ();
-  printf ("Deltas4 = (%10.3e, %10.3e) pmax = %10.3e\n", real(Deltas4), imag(Deltas4), pmax4);
-
-  // ......................
-  // Perform frequency scan
-  // ......................
-  if (Scan)
+  if (!Zero && !Scan)
     {
+      // .................................
+      // Solve three-field layer equations
+      // .................................
+      SolveThreeFieldLayerEquations ();
+      printf ("\nDeltas3 = (%10.3e, %10.3e) pmax = %10.3e\n", real(Deltas3), imag(Deltas3), pmax3);
+      
+      // ................................
+      // Solve four-field layer equations
+      // ................................
+      SolveFourFieldLayerEquations ();
+      printf ("Deltas4 = (%10.3e, %10.3e) pmax = %10.3e\n", real(Deltas4), imag(Deltas4), pmax4);
+    }
+
+  if (Zero)
+    {
+      // ......................................
+      // Find Q_E value at which Im(Deltas) = 0
+      // ......................................
+      printf ("\n");
+      
+      double QE_start = - 1.1 * Qe;
+      double QE_end   = - 1.1 * Qi;
+      double QE_zero;
+
+      FILE* file = OpenFilew ("../Outputs/FourField/cbetascan.txt");
+      for (int i = 0; i < Ncbeta; i++)
+	{
+	  cbeta = cbetas + double (i) * (cbetae - cbetas) /double (Ncbeta);
+	  
+	  QE_zero = RootFind (QE_start, QE_end);
+	  
+	  printf ("%38s cbeta = %10.3e QE_zero = %10.3e\n", "", cbeta, QE_zero);
+	  
+	  fprintf (file, "%11.4e %11.4e\n", cbeta, QE_zero);
+	  fflush (file);
+	}
+      fclose (file);
+    }
+  else if (Scan)
+    {
+      // ..........................
+      // Perform ExB frequency scan
+      // ..........................
       printf ("\n");
       
       givals  = new double[Nscan+1];
@@ -267,7 +306,8 @@ void FourField::Solve ()
   // .....................................
   // Write calculation date to netcdf file
   // .....................................
-  WriteNetcdf ();
+  if (!Zero)
+    WriteNetcdf ();
   
   // ........
   // Clean up
@@ -351,7 +391,7 @@ void FourField::CleanUp ()
 {
   printf ("Cleaning up\n");
 
-  if (Scan)
+  if (Scan && !Zero)
     {
       delete[] givals;
 
@@ -665,4 +705,18 @@ void FourField::GetJace (complex<double>& _DeltaJ1, complex<double>& _DeltaJ2)
   complex<double> b5 = b2 - b4 * g * gi /12. /ge;
 
   _DeltaJ2 = - M_PI * ge * b5 /b3;
+}
+
+// ######################################################
+// Function to calculate target function for root finding
+// ######################################################
+double FourField::RootFindF (double x)
+{
+  g_i = x;
+
+  SolveFourFieldLayerEquations ();
+
+  printf ("QE = %10.3e Im(Deltas) = %10.3e\n", x, imag(Deltas4));
+
+  return imag(Deltas4);
 }

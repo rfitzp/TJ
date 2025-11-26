@@ -39,9 +39,11 @@ di001 = d4i2 - d3i
 dr005 = d4r3 - d3r
 di005 = d4i3 - d3i
 
+fontsize = 17
+
 fig = plt.figure (figsize = (12.0, 8.0))
-plt.rc ('xtick', labelsize = 15) 
-plt.rc ('ytick', labelsize = 15)
+plt.rc ('xtick', labelsize = fontsize) 
+plt.rc ('ytick', labelsize = fontsize)
 
 plt.subplot (2, 1, 1)
 
@@ -59,9 +61,9 @@ plt.plot (gi, dr005, color = 'blue',  linewidth = 2, linestyle = 'solid', label 
 plt.plot (gi, dr001, color = 'cyan',  linewidth = 2, linestyle = 'solid', label = r"$c_\beta=0.01$")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
-plt.xlabel (r'$Q_E$',                                      fontsize = "15")
-plt.ylabel (r'${\rm Re} (\hat{\Delta}_4-\hat{\Delta}_3)$', fontsize = "15")
-plt.legend (fontsize = "12");
+plt.xlabel (r'$Q_E$',                                      fontsize = fontsize)
+plt.ylabel (r'${\rm Re} (\hat{\Delta}_4-\hat{\Delta}_3)$', fontsize = fontsize)
+plt.legend (fontsize = 15);
 
 plt.subplot (2, 1, 2)
 
@@ -79,9 +81,9 @@ plt.plot (gi, di005, color = 'blue',  linewidth = 2, linestyle = 'solid', label 
 plt.plot (gi, di001, color = 'cyan',  linewidth = 2, linestyle = 'solid', label = r"$c_\beta=0.01$")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
-plt.xlabel (r'$Q_E$',                                      fontsize = "15")
-plt.ylabel (r'${\rm Im} (\hat{\Delta}_4-\hat{\Delta}_3)$', fontsize = "15")
-plt.legend (fontsize = "15");
+plt.xlabel (r'$Q_E$',                                      fontsize = fontsize)
+plt.ylabel (r'${\rm Im} (\hat{\Delta}_4-\hat{\Delta}_3)$', fontsize = fontsize)
+plt.legend (fontsize = 15);
 
 plt.tight_layout ()
 
