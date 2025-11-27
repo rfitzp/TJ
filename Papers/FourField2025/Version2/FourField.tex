@@ -130,6 +130,20 @@ In the following, it is assumed that $E_{ss}<0$, which implies that the tearing 
 reconnects magnetic flux at the rational surface is intrinsically stable. In this case, any magnetic reconnection that takes place at the
 surface is entirely due to the RMP. 
 
+\begin{table}[t]
+\centering
+\begin{tabular}{ccccccc}
+\hline
+Regime & $Q_e$ & $Q_i$ & $c_\beta$ & $D$ & $P_E$ & $P_\varphi$\\[0.5ex]\hline
+&&&&&&\\[-2ex]
+HRi  & $-1.0$  & $1.0$  &1.0  &10.0 & 1.0 & $1.0\times 10^{+0}$\\[0.5ex]
+HRii & $-1.0$  & $1.0$  & 1.0 & 10.0& 1.0 & $1.0\times 10^{-1}$\\[0.5ex]
+RIii   & $-0.15$ & $0.15$ &1.0 & 1.0 & 1.0 & $1.0\times 10^{-4}$\\[0.5ex]
+VRii & $-0.15$ & $0.15$ &1.0 & 0.1& 1.0 & $1.0\times 10^{+0}$
+\end{tabular}
+\caption{The normalized layer parameters used in the benchmark comparisons shown in Figs.~\ref{fig1}--\ref{fig4}. }\label{t1}
+\end{table}
+
 \subsection{Inner region}
 The current sheet at the rational surface is resolved by employing a extended-MHD resonant response model
 in the  inner region (i.e., the region of the plasma in the immediate vicinity of the rational surface) to determine the
@@ -155,19 +169,15 @@ to that which would occur if the ideal-MHD flux freezing constraint, ${\mit\Psi}
 \subsection{Introduction}
 The Fourier-space  four-field resonant response model employed in this paper is described in detail in Appendix~\ref{sfour}. 
 
-\begin{table}[t]
-\centering
-\begin{tabular}{ccccccc}
-\hline
-Regime & $Q_e$ & $Q_i$ & $c_\beta$ & $D$ & $P_E$ & $P_\varphi$\\[0.5ex]\hline
-&&&&&&\\[-2ex]
-HRi  & $-1.0$  & $1.0$  &1.0  &10.0 & 1.0 & $1.0\times 10^{+0}$\\[0.5ex]
-HRii & $-1.0$  & $1.0$  & 1.0 & 10.0& 1.0 & $1.0\times 10^{-1}$\\[0.5ex]
-RIii   & $-0.15$ & $0.15$ &1.0 & 1.0 & 1.0 & $1.0\times 10^{-4}$\\[0.5ex]
-VRii & $-0.15$ & $0.15$ &1.0 & 0.1& 1.0 & $1.0\times 10^{+0}$
-\end{tabular}
-\caption{The normalized layer parameters used in the benchmark comparisons shown in Figs.~\ref{fig1}--\ref{fig4}. }\label{t1}
-\end{table}
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.9\textwidth]{Figure1.pdf}}
+\caption{The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q_E$, in
+the first Hall-resistive (HRi) response regime. (See Table~\ref{t1}.)  $\hat{\mit\Delta}_3$ is the response index predicted by the three-field Fourier-space
+response model of Ref.~\cite{rf2022}. $\hat{\mit\Delta}_4$ is the response index predicted by the four-field Fourier-space
+response model specified in Appendix~\ref{sfour}. SLAYER is the response index predicted by the four-field configuration-space response model of
+Ref.~\cite{lee}. The three vertical lines indicate the ion fluid resonance, $Q_E+Q_i=0$, the MHD fluid resonance, $Q_E=0$,
+and the electron fluid resonance, $Q_E+Q_e=0$, respectively, in order from the left to the right.}\label{fig1}
+\end{figure}
 
 \subsection{Dimensionless parameters}
 All four-field resonant response models are defined by the following seven dimensionless parameters:
@@ -186,13 +196,9 @@ into those used by Lee et alia by letting $Q_E\rightarrow Q$, $Q_e\rightarrow -Q
  $P_\varphi\rightarrow P$. 
 
 \begin{figure}[t]
-\centerline{\includegraphics[width=0.9\textwidth]{Figure1.pdf}}
-\caption{The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q_E$, in
-the first Hall-resistive (HRi) response regime of Ref.~\cite{cole}. $\hat{\mit\Delta}_3$ is the response index predicted by the three-field Fourier-space
-response model of Ref.~\cite{rf2022}. $\hat{\mit\Delta}_4$ is the response index predicted by the four-field Fourier-space
-response model specified in Appendix~\ref{sfour}. SLAYER is the response index predicted by the four-field configuration-space response model of
-Ref.~\cite{lee}. The three vertical lines indicate the ion fluid resonance, $Q_E+Q_i=0$, the MHD fluid resonance, $Q_E=0$,
-and the electron fluid resonance, $Q_E+Q_e=0$, respectively, in order from the left to the right.}\label{fig1}
+\centerline{\includegraphics[width=0.9\textwidth]{Figure2.pdf}}
+\caption{ The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q_E$, in
+the second Hall-resistive (HRii) response regime. See Table~\ref{t1} and the caption to Fig.~\ref{fig1}. }\label{fig2}
 \end{figure}
 
 \subsection{Method of solution}
@@ -214,9 +220,9 @@ Our first task is to benchmark the results of our Fourier-space calculation of $
 calculation  performed by Lee et alia. The latter calculation has been implemented in the SLAYER code \cite{lee,ric2}. 
 
 \begin{figure}[t]
-\centerline{\includegraphics[width=0.9\textwidth]{Figure2.pdf}}
-\caption{ The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q_E$, in
-the second Hall-resistive (HRii) response regime of Ref.~\cite{cole}. See caption to Fig.~\ref{fig1}. }\label{fig2}
+\centerline{\includegraphics[width=0.9\textwidth]{Figure3.pdf}}
+\caption{The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q_E$, in
+the second resistive-inertial (RIii) response regime. See Table~\ref{t1} and the caption to Fig.~\ref{fig1}.  }\label{fig3}
 \end{figure}
 
 Figures~\ref{fig1}--\ref{fig4} show the scaled layer response index, $\hat{\mit\Delta}$, calculated as a function of the normalized ${\bf E}\times {\bf B}$
@@ -233,9 +239,9 @@ and $\bar{\phi}$). The second solution method involves using the Fourier-space a
 involves using the configuration-space analysis of Ref.~\cite{lee}, which is implemented in the SLAYER code  \cite{ric2}.   Solution methods two and three  constitute equivalent four-field response models. 
 
 \begin{figure}[t]
-\centerline{\includegraphics[width=0.9\textwidth]{Figure3.pdf}}
+\centerline{\includegraphics[width=0.9\textwidth]{Figure4.pdf}}
 \caption{The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q_E$, in
-the second resistive-inertial (RIii) response regime of Ref.~\cite{cole}. See caption to Fig.~\ref{fig1}.  }\label{fig3}
+the second viscous-resistive (VRii) response regime. See Table~\ref{t1} and the caption to Fig.~\ref{fig1}. }\label{fig4}
 \end{figure}
 
 It is clear from Figs.~\ref{fig1}--\ref{fig4} that the second and third solution methods yield exactly the same results. This is remarkable because
@@ -246,21 +252,52 @@ coupled equations in the the latter method. It follows that the two solution met
 Hence, we can be confident that the two methods are valid, and also that they have been implemented correctly in the TJ and SLAYER codes. 
 
 \begin{figure}[t]
-\centerline{\includegraphics[width=0.9\textwidth]{Figure4.pdf}}
-\caption{ The scaled layer response index, $\hat{\mit\Delta}$, plotted as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q_E$, in
-the second viscous-resistive (VRii) response regime of Ref.~\cite{cole}. See caption to Fig.~\ref{fig1}. }\label{fig4}
+\centerline{\includegraphics[width=0.9\textwidth]{Figure5.pdf}}
+\caption{The difference between the scaled layer response indices predicted by the three-field and the four-field Fourier-space resonant
+response models plotted as a function of
+the normalized   ${\bf E}\times {\bf B}$ frequency, $Q_E$. The calculations are performed in the VRii regime of Table~\ref{t1}, but for various different values of $c_\beta$. 
+See the caption to Fig.~\ref{fig1}.}\label{fig5}
 \end{figure}
 
-Figures~\ref{fig1}--\ref{fig4} allow us to assess the consequences of neglecting the term involving $c_\beta^{\,2}$ in Eq.~(\ref{e316}).
+\subsection{Effect of $c_\beta$}
+Figures~\ref{fig1}--\ref{fig4} allow us to assess the consequences of neglecting the term involving $c_\beta^{\,2}$ in Eq.~(\ref{e316}) by looking
+at the difference between $\hat{\mit\Delta}_4$ and $\hat{\mit\Delta}_3$. 
 Obviously, this neglect is not going to make a difference if the ion sound parameter, $c_\beta$, is much less than unity, which explains
 why the rather large value, $c_\beta=1$, is used in the calculations shown in the figures. (See Table~\ref{t1}.) It can be seen from the figures that
-the neglect of the $c_\beta$ term has a larger relative effect on the real part of the scaled layer response index than on the imaginary part.
-Furthermore, Figs.~\ref{fig2} and \ref{fig3} indicate that if the $c_\beta$ term is neglected then the plasma response model fails to capture resonant behavior
-that occurs, in some response regimes,  close to the MHD-fluid resonance ($Q_E=0$). All four figures indicate that if the $c_\beta$ term is neglected then the imaginary part
+the neglect of the $c_\beta^{\,2}$ term has a larger relative effect on the real part of the scaled layer response index than on the imaginary part.
+Furthermore, Figs.~\ref{fig2} and \ref{fig3} indicate that if the $c_\beta^{\,2}$ term is neglected then the plasma response model fails to capture resonant behavior
+that occurs, in some response regimes,  close to the MHD-fluid resonance ($Q_E=0$). All four figures indicate that if the $c_\beta^{\,2}$ term is neglected then the imaginary part
 of the response index passes through zero exactly at the electron fluid resonance ($Q_E+Q_e=0$). This implies that the electromagnetic
 torque exerted by the RMP on the plasma in the resonant layer is zero at the electron fluid resonance. However, as is
-clear from the figures, when the $c_\beta$ term is retained then the $Q_E$ value at which ${\rm Im}(\hat{\mit\Delta})=0$ is shifted from the
-electron fluid resonace in the ion diamagnetic direction [i.e., ${\rm Im}(\hat{\mit\Delta})=0$ when $Q_E+Q_e<0$] \cite{lee}. 
+clear from the figures, when the $c_\beta^{\,2}$ term is retained then the $Q_E$ value at which ${\rm Im}(\hat{\mit\Delta})=0$ is shifted from the
+electron fluid resonance in the ion diamagnetic direction [i.e., ${\rm Im}(\hat{\mit\Delta})=0$ when $Q_E+Q_e<0$] \cite{lee}. 
+
+Figure~\ref{fig5} shows the difference between the scaled layer response index predicted by the three-field Fourier-space  resonant response model of Ref.~\cite{rf2022} and the
+four-field Fourier-space resonant response model of Appendix~\ref{sfour}. The calculations are performed using the $Q_e$, $Q_i$, $D$, $P_E$,
+and $P_\varphi$ values associated with the VRii regime of Table~\ref{t1}, and for various different values of $c_\beta$. It can, again, be seen that
+finite $c_\beta$ has a  larger relative effect on the real part of the response index than on the imaginary part. It can also be seen that the
+difference between the predictions of the two models is an increasing function of increasing $c_\beta$, and that the difference is essentially
+negligible for $c_\beta$ values less than $0.01$.
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.9\textwidth]{Figure6.pdf}}
+\caption{The critical value of the normalized electron fluid rotation frequency at the rational surface, $Q_E+Q_e$, 
+at which the imaginary part of the layer response index is zero, plotted as a function of $c_\beta$, for the
+four response regimes specified in Table~\ref{t1}.}\label{fig6}
+\end{figure}
+
+Figure~\ref{fig6} shows the critical value of the normalized electron fluid rotation frequency at the rational surface, $Q_E+Q_e$,
+at which the imaginary part of the layer response index, ${\rm Im}(\hat{\mit\Delta})$,  is zero, plotted as a function of $c_\beta$. The calculations are performed
+using the  $Q_e$, $Q_i$, $D$, $P_E$,
+and $P_\varphi$ values associated with the HRi, HRii, RIii, and VRii regimes of Table~\ref{t1}. As is well known \cite{rf1993,rf1998}, the nonlinear electromagnetic torque exerted  by the
+RMP on the plasma in the immediate vicinity of the rational surface modifies the ${\bf E}\times {\bf B}$ frequency at the
+rational surface in such a manner as to reduce ${\rm Im}(\hat{\mit\Delta})$ to a very small value. In fact, there is a critical RMP amplitude above
+which  the normalized ${\bf E}\times {\bf B}$ frequency at the surface, $Q_E$,  ``locks'' to the value that makes ${\rm Im}(\hat{\mit\Delta})$ (almost) zero \cite{rf1998}.
+As is clear from the figure, when $c_\beta=0$ the surface locks to the value of $Q_E$ that makes $Q_E+Q_e=0$. In other words, the
+nonlinear electromagnetic torque acts to bring the electron fluid at the rational surface to rest in the laboratory frame. However, the
+figure also indicates that at finite $c_\beta$ the surface locks to a negative value of $Q_E+Q_e$, which implies that the electromagnetic
+torque acts to bring the plasmas into a state in which the electron and ion fluids at the rational surface rotate in opposite directions. 
+As $c_\beta$ increases the residual rotation frequency of the electron fluid [i.e., $(Q_E+Q_e)_{\rm crit}$] increases. 
 
 \section*{Acknowledgements}
 The authors would like to thank   Y.~Lee, J.-K.~Park, J.~Waybright, and D.~Burgess for help benchmarking the results of this paper against those of

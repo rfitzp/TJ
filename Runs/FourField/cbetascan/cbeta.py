@@ -49,5 +49,5 @@ plt.legend (fontsize = fontsize)
 
 plt.tight_layout ()
 
-plt.show () 
-#plt.savefig ("Fscan.pdf")
+#plt.show () 
+plt.savefig ("Figure6.pdf")

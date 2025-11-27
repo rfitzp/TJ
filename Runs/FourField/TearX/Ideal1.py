@@ -32,7 +32,7 @@ p12 = []
 i12 = []
 
 for p, mm, i in zip (psi, m, id):
-    if mm == 3 and p > 0.99:
+    if mm == 3 and p > 0.995:
         p3.append(p)
         i3.append(i)
     elif mm == 4 and p > 0.99:
@@ -71,7 +71,8 @@ plt.rc ('ytick', labelsize = fontsize)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0.99, 1.)
+plt.xlim (0.995, 1.)
+plt.ylim (0.,    6.)
 
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')

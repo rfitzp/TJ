@@ -8,7 +8,7 @@ df = pd.read_csv ("Scannu.txt", delim_whitespace = True, header = None)
 
 psi = df.iloc[:,9]
 m   = df.iloc[:,5]
-id = df.iloc[:,12]
+id  = df.iloc[:,12]
 
 p3  = []
 i3  = []
@@ -72,6 +72,7 @@ plt.rc ('ytick', labelsize = fontsize)
 plt.subplot (1, 1, 1)
 
 plt.xlim (0.835, 1.001)
+plt.ylim (0., 240.)
 
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')
@@ -90,9 +91,7 @@ if len(p10) > 0:
 if len(p11) > 0:
     plt.plot (p11, i11, color = 'brown',   linewidth = 2, linestyle = 'solid', label = '$m=11$')
     
-plt.axvline (1., color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
-
+plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
 plt.xlabel (r'$\Psi$',                 fontsize = fontsize)
 plt.ylabel (r"$|\Delta_s|/(-E_{ss})$", fontsize = fontsize)
 plt.legend (fontsize = fontsize)

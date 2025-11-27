@@ -76,6 +76,7 @@ plt.rc ('ytick', labelsize = fontsize)
 plt.subplot (1, 1, 1)
 
 plt.ylim (0.835, 1.001)
+plt.xlim (2., 9.)
 
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')

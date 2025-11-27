@@ -92,7 +92,8 @@ plt.rc ('ytick', labelsize = fontsize)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0.835, 1.001)
+plt.xlim (0.835, 1.00)
+#plt.ylim (0., 250.)
 
 if len(p4) > 0:
     plt.plot (p4, j4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')
@@ -128,10 +129,11 @@ if len(p10) > 0:
 if len(p11) > 0:
     plt.plot (p11, i11, color = 'brown',   linewidth = 2, linestyle = 'dashed')    
         
-plt.axhline (1.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.ylabel (r'$\hat{\Delta}$', fontsize = fontsize)
-plt.xlabel (r"$\Psi$",         fontsize = fontsize)
+plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
+plt.ylabel (r'$\Delta_s$', fontsize = fontsize)
+plt.xlabel (r"$\Psi$",     fontsize = fontsize)
 
 plt.legend (fontsize = fontsize)
 
