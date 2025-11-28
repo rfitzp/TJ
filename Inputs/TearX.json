@@ -1,13 +1,6 @@
 {
     "NTOR":     1,        // Toroidal mode number
 
-    "q0":       1.01,     // Central safety-factor
-    "nu":       3.5,      // Current peaking factor
-    "alpha":    0.4,      // X-point parameter
-    "Delta_q":  0.6,      // Height of safety-factor pedestal
-    "r_q":      0.94,     // Central radius of safery-factor pedestal
-    "delta_q":  0.025,    // Width of safety-factor pedestal
-
     "B0":       5.3,      // Toroidal magnetic field-strength (SI)
     "R0":       6.2,      // Major radius (SI)
     "a":        2.0,      // Minor radius (SI)
@@ -15,6 +8,13 @@
     "chiE":     1.0,      // Perpendicular energy diffusivity (SI)
     "chip":     1.5,      // Perpendicular momentum diffusivity (SI)
     "Z":        3.0,      // Effective ion charge number
+
+    "q0":       1.01,     // Central safety-factor
+    "nu":       3.5,      // Current peaking factor
+    "alpha":    0.4,      // X-point parameter
+    "Delta_q":  0.6,      // Height of safety-factor pedestal
+    "r_q":      0.94,     // Central radius of safery-factor pedestal
+    "delta_q":  0.025,    // Width of safety-factor pedestal
  
     "ne_0":     1.2e20,   // Central electron number density (SI)
     "ne_1":     2.0e19,   // Electron number density offset (SI)
