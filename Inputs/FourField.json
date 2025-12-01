@@ -1,12 +1,12 @@
 {
     "g_r":   0.00,        // Real part of normalized growth-rate in MHD frame 
-    "g_i":   0.4,         // Imaginary part of normalized growth-rate in MHD frame
-    "Qe":    -1.0,        // Normalized electron diamagnetic frequency
-    "Qi":    1.0,         // Normalized ion diamagnetic frequency
-    "D":     10.0,        // Normalized ion sound radius
-    "Pphi":  1.0e-1,      // Normalized momentum diffusivity
+    "g_i":   -0.4,         // Imaginary part of normalized growth-rate in MHD frame
+    "Qe":    -0.15,       // Normalized electron diamagnetic frequency
+    "Qi":    0.15,        // Normalized ion diamagnetic frequency
+    "D":     0.1,         // Normalized ion sound radius
+    "Pphi":  1.0,         // Normalized momentum diffusivity
     "Pperp": 1.0,         // Normalized energy diffusivity
-    "cbeta": 0.05,        // Normalized plasma pressure
+    "cbeta": 0.2,         // Normalized plasma pressure
 
     "JK":    0,           // Flag for J.-K. Park calculation
     
@@ -14,11 +14,11 @@
     "pend":   1.0e-6,     // Layer equations integrated from p = pstart to p = pend 
     "P3max":  20.0,       // Value of Pmax[3] above which switch to low-D layer equations made
 
-    "Scan":   0,          // Flag for performing ExB frequency scan
+    "Scan":   1,          // Flag for performing ExB frequency scan
     "Fscan":  1.01,       // Scan from g_i = - Fmax * (Qe - Qi) to g_i = Fmax * (Qe - Qi)
     "Nscan":  500,        // Number of points in scan
 
-    "Zero":   1,          // Flag for determining Q_E value at which Im(Delta) = 0 as function of c_beta
+    "Zero":   0,          // Flag for determining Q_E value at which Im(Delta) = 0 as function of c_beta
     "cbetas": 1.0e-2,     // Start value of cbeta scan
     "cbetae": 1.0,        // End value of cbeta scan
     "Ncbeta": 500,        // Number of points in cbeta scan

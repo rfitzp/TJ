@@ -236,7 +236,7 @@ void FourField::Solve ()
       printf ("\n");
       
       double QE_start = - 1.1 * Qe;
-      double QE_end   = - 1.1 * Qi;
+      double QE_end   = - 0.0 * Qe;
       double QE_zero;
 
       FILE* file = OpenFilew ("../Outputs/FourField/cbetascan.txt");
@@ -246,7 +246,7 @@ void FourField::Solve ()
 	  
 	  QE_zero = RootFind (QE_start, QE_end);
 	  
-	  printf ("%38s cbeta = %10.3e QE_zero = %10.3e\n", "", cbeta, QE_zero);
+	  printf ("%38s cbeta = %10.3e QE_zero = %12.5e\n", "", cbeta, QE_zero);
 	  
 	  fprintf (file, "%11.4e %11.4e\n", cbeta, QE_zero);
 	  fflush (file);
@@ -716,7 +716,7 @@ double FourField::RootFindF (double x)
 
   SolveFourFieldLayerEquations ();
 
-  printf ("QE = %10.3e Im(Deltas) = %10.3e\n", x, imag(Deltas4));
+  printf ("QE = %10.3e Re(Deltas) = %10.3e\n", x, real(Deltas4));
 
-  return imag(Deltas4);
+  return real(Deltas4);
 }

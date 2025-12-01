@@ -1,33 +1,11 @@
 # HRi regime
 
-# Qe    = -1.
-# Qi    = +1.
+# Qe    = 1.
+# Qi    = -1.
 # cbeta = 1.
 # D     = 10.
 # P     = 1.
 # tau   = -Qe/Qi = 1.
-
-# Delta = 2.124 * i (Q - Qe) cbeta^1/2 D^-1/2 (1 + tau)^-1/2
-
-def F_r(Q):
-
-    Qe     = 1.
-    cbeta  = 1.
-    D      = 10.
-    P      = 1.
-    tau    = 1.
-
-    return 0.
-
-def F_i(Q):
-
-    Qe     = 1.
-    cbeta  = 1.
-    D      = 10.
-    P      = 1.
-    tau    = 1.
-
-    return 2.124 * (Q - Qe) * cbeta**0.5 /D**0.5 /(1. + tau)**0.5
 
 import math
 import numpy as np
@@ -37,45 +15,36 @@ import pandas as pd
 
 fn = 'FourField.nc'
 ds  = nc.Dataset(fn)
-In  = ds['InputParameters']
-gi  = ds['g_i']
+gi  = - np.asarray(ds['g_i'])
 d3r = ds['Delta3_r']
-d3i = ds['Delta3_i']
+d3i = - np.asarray(ds['Delta3_i'])
 d4r = ds['Delta4_r']
-d4i = ds['Delta4_i']
-
-D_r = []
-D_i = []
-for Q in gi:
-    D_r.append(F_r(Q))
-    D_i.append(F_i(Q))
+d4i = - np.asarray(ds['Delta4_i'])
 
 df = pd.read_csv("HRi_Vz.txt", delim_whitespace=True, skiprows=1)
 
-Q   = df.iloc[:,0]
+Q   = - df.iloc[:,0]
 D4r = df.iloc[:,2]
-D4i = df.iloc[:,3]
+D4i = - df.iloc[:,3]
 
 fontsize = 17
 
 fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TJ Code: Delta3 and Delta4')
 plt.rc ('xtick', labelsize = fontsize) 
 plt.rc ('ytick', labelsize = fontsize)
 
 plt.subplot (2, 1, 1)
 
 plt.xlim (gi[0], gi[-1])
-plt.gca().invert_xaxis()
 
-plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (-In[2], color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (-In[3], color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0.,  color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.,  color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (0.,  color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (-1., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.plot (gi, d3r, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Re($\hat{\Delta}_3$)")
-plt.plot (gi, d4r, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Re($\hat{\Delta}_4$)")
-plt.plot (Q,  D4r, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"SLAYER")
+plt.plot (gi, d3r, color = 'blue', linewidth = 2, linestyle = 'solid',  label = r"Re($\hat{\Delta}_3$)")
+plt.plot (gi, d4r, color = 'red',  linewidth = 2, linestyle = 'solid',  label = r"Re($\hat{\Delta}_4$)")
+plt.plot (Q,  D4r, color = 'cyan', linewidth = 2, linestyle = 'dotted', label = r"SLAYER")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
 plt.xlabel (r'$Q_E$', fontsize = fontsize)
@@ -84,16 +53,15 @@ plt.legend (fontsize = fontsize);
 plt.subplot (2, 1, 2)
 
 plt.xlim (gi[0], gi[-1])
-plt.gca().invert_xaxis()
 
-plt.axhline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (-In[2], color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (0.,     color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axvline (-In[3], color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0.,  color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (1.,  color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (0.,  color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axvline (-1., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.plot (gi, d3i, color = 'blue',  linewidth = 2, linestyle = 'solid',  label = r"Im($\hat{\Delta}_3$)")
-plt.plot (gi, d4i, color = 'red',   linewidth = 2, linestyle = 'solid',  label = r"Im($\hat{\Delta}_4$)")
-plt.plot (Q,  D4i, color = 'cyan',  linewidth = 2, linestyle = 'dotted', label = r"SLAYER")
+plt.plot (gi, d3i, color = 'blue', linewidth = 2, linestyle = 'solid',  label = r"Im($\hat{\Delta}_3$)")
+plt.plot (gi, d4i, color = 'red',  linewidth = 2, linestyle = 'solid',  label = r"Im($\hat{\Delta}_4$)")
+plt.plot (Q,  D4i, color = 'cyan', linewidth = 2, linestyle = 'dotted', label = r"SLAYER")
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
 plt.xlabel (r'$Q_E$', fontsize = fontsize)
