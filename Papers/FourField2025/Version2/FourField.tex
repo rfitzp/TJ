@@ -49,7 +49,7 @@ to determine the linear two-fluid response of a resonant layer to the perturbati
  converting a four-field resonant response model into a three-field model. Furthermore, the three remaining layer equations can be combined to give a
  single second-order linear o.d.e. This second-order equation is most conveniently solved  by means of a Riccati transformation
  that converts it into a first-order nonlinear o.d.e.\ \cite{ric1,ric2,ric3}. The advantage of the Riccati approach is that it can deal with numerically problematic  solutions
- that blow up as $\exp(p^2)$, or faster, at large $p$, where $p$ is the Fourier-space variable. 
+ that blow up as $\exp(p^2)$, or faster, at large $p$, where $p$ is the Fourier transform variable. 
  
  Lee, Park \& Na \cite{lee} recently demonstrated  how to solve the full tenth-order four-field resonant layer equations in configuration space using a Riccati transformation. In the process, they discovered that, in a high-$\beta$ plasma,  the RMP rotation frequency (as seen in the local ${\bf E}\times {\bf B}$ frame
  at the rational surface)  at which the electromagnetic torque exerted on the plasma in the immediate vicinity of the resonant layer passes through zero is shifted in the ion diamagnetic direction from the electron diamagnetic frequency.
@@ -61,17 +61,18 @@ to determine the linear two-fluid response of a resonant layer to the perturbati
  
  \subsection{Magnetically diverted plasmas}
  The safety-factor profile of a magnetically diverted tokamak plasma diverges logarithmically as the magnetic separatrix 
-(a.k.a.\ the last closed magnetic flux-surface) is approached. At first sight, this suggests that, when determining the response of such a plasma to an RMP, it is necessary to include an infinite number of rational magnetic flux-surfaces (at which the RMP resonates with the equilibrium magnetic field) in the calculation, the
+(a.k.a.\ the last closed magnetic flux-surface) is approached. At first sight, this suggests that, when determining the response of such a plasma to an RMP 
+with a given toroidal mode number, it is necessary to include an infinite number of rational magnetic flux-surfaces in the calculation, the
 majority of which lie  very close to the separatrix. In fact, as was demonstrated in Ref.~\cite{rf2025}, when finite plasma resistivity is taken into account, this turns out not to be the case. 
 Instead, it is only necessary to include rational surfaces that
 lie in the region $0<{\mit\Psi}<1-\epsilon_c$, where ${\mit\Psi}$ is the normalized poloidal magnetic flux, and
 $0<\epsilon_c\ll 1$. Moreover, the value of $\epsilon_c$ can be calculated from the plasma parameters at the edge of the discharge. 
 
-The analysis of Ref.~\cite{rf2025} was based on the three-field resonant response model of Refs.~\cite{cole} and \cite{rf2022}.
+The analysis of Ref.~\cite{rf2025} is based on the three-field resonant response model of Refs.~\cite{cole} and \cite{rf2022}.
 The second aim of this paper is to generalize this analysis  by employing  the new Fourier-space four-field resonant response model. 
 
 \section{Asymptotic matching}\label{sect1}
-\subsection{Plasma equilibrium}
+\subsection{Plasma equilibrium}\label{cyleq}
 Consider a large aspect-ratio tokamak plasma equilibrium whose magnetic flux-surfaces map out
 (almost) concentric circles in the poloidal plane. Such an equilibrium can be approximated as a
 periodic cylinder \cite{rf1993}. Let $r$, $\theta$, $z$ be right-handed cylindrical coordinates. 
@@ -190,7 +191,7 @@ $P_E$ and $P_\varphi$ are magnetic Prandtl numbers,
 $\iota_e = - \omega_{\ast\,e}/(\omega_{\ast\,i}-\omega_{\ast\,e})$, and $\hat{d}_\beta= d_\beta/r_s$. All quantities are evaluated at the
 rational surface. (See Appendix~\ref{sfour} for more detailed definitions.)
 
-Note that the previous definitions are slightly different to those adopted in Ref.~\cite{lee}. We can convert our dimensionless parameter  into
+Note that the previous definitions are slightly different to those adopted in Ref.~\cite{lee}. We can convert our dimensionless parameters  into
 into those used by Lee et alia by letting $Q_E\rightarrow Q$, $Q_e\rightarrow -Q_{\ast\,e}$, $Q_i\rightarrow -Q_{\ast\,i}$, $\iota_e\rightarrow 1/(1+\tau)$, $P_E\rightarrow c_\beta^{\,2}$, and 
  $P_\varphi\rightarrow P$. 
 
@@ -225,8 +226,9 @@ the second resistive-inertial (RIii) response regime. See Table~\ref{t1} and the
 \end{figure}
 
 Figures~\ref{fig1}--\ref{fig4} show the scaled layer response index, $\hat{\mit\Delta}$, calculated as a function of the normalized ${\bf E}\times {\bf B}$
-frequency, $Q_E$, by three different solution methods, in four of the analytic layer response regimes identified in Ref.~\cite{cole}. The dimensionless 
-layer parameters used in the four calculations are specified in Table~\ref{t1}. 
+frequency, $Q_E$, by three different solution methods, in four of the analytic layer response regimes identified in Ref.~\cite{cole}. These response regimes are the most probable ones for  a comparatively weakly rotating plasma such as ITER. 
+The dimensionless 
+layer parameters used in the four response regimes are specified in Table~\ref{t1}. 
 The first solution
 method involves using the Fourier-space analysis of Ref.~\cite{rf2022}. In this analysis, the term involving $c_\beta^{\,2}$ is neglected in Eq.~(\ref{e316}).
 Consequently, Eq.~(\ref{e317}) decouples from Eqs.~(\ref{e314})--(\ref{e316a}), which effectively converts a four-field response model 
@@ -252,41 +254,42 @@ Hence, we can be confident that the two methods are valid, and also that they ha
 
 \begin{figure}[t]
 \centerline{\includegraphics[width=0.9\textwidth]{Figure5.pdf}}
-\caption{The difference between the scaled layer response indices predicted by the three-field and the four-field Fourier-space resonant
-response models plotted as a function of
+\caption{The difference between the scaled layer response indices predicted by the four-field and the three-field Fourier-space resonant
+response models, $\hat{\mit\Delta}_4$ and $\hat{\mit\Delta}_3$, respectively,  plotted as a function of
 the normalized   ${\bf E}\times {\bf B}$ frequency, $Q_E$. The calculations are performed in the VRii regime of Table~\ref{t1}, but for various different values of $c_\beta$. 
 See the caption to Fig.~\ref{fig1}.}\label{fig5}
 \end{figure}
 
 \subsection{Effect of $c_\beta$}
 In Figs.~\ref{fig1}--\ref{fig4}, the {\em electron fluid resonance}, $Q_E+Q_e=0$, the {\em MHD-fluid resonance}, $Q_E=0$, and the {\em ion fluid
-resonance}, $Q_E+Q_i=0$, are highlighted. The electron fluid resonance corresponds to the situation in which the rotation frequency of the electron fluid
+resonance}, $Q_E+Q_i=0$, are indicated. The electron fluid resonance corresponds to the situation in which the rotation frequency of the electron fluid
 at the rational surface  passes through zero, which we would expect to maximize the interaction between the electron
 fluid and the static RMP. Likewise for the other fluid resonances. 
 
 Figures~\ref{fig1}--\ref{fig4} allow us to assess the consequences of neglecting the term involving $c_\beta^{\,2}$ in Eq.~(\ref{e316}) by looking
-at the difference between $\hat{\mit\Delta}_4$ and $\hat{\mit\Delta}_3$. 
+at the difference between the four-field and the three-field scaled plasma response indices,  $\hat{\mit\Delta}_4$ and $\hat{\mit\Delta}_3$, respectively. 
 Obviously, this neglect is unlikely  to make a significant difference if the ion sound parameter, $c_\beta$, is much less than unity, which explains
 why the rather large value, $c_\beta=1$, is used in the calculations shown in the figures. (See Table~\ref{t1}.) It can be seen from the figures that
 the neglect of the $c_\beta^{\,2}$ term has a larger relative effect on the real part of the scaled layer response index, $\hat{\mit\Delta}$,  than on the imaginary part.
 Furthermore, Figs.~\ref{fig2} and \ref{fig3} indicate that if the $c_\beta^{\,2}$ term is neglected then the plasma response model fails to capture resonant behavior
 that occurs, in some response regimes,  close to the MHD-fluid resonance ($Q_E=0$). All four figures indicate that if the $c_\beta^{\,2}$ term is neglected then the real and the imaginary parts
-of the response index pass simultaneously through zero  at the electron fluid resonance ($Q_E+Q_e=0$). From Eq.~(\ref{response}), this implies a
+of the scaled response index pass simultaneously through zero  at the electron fluid resonance ($Q_E+Q_e=0$). From Eq.~(\ref{response}), this implies a
 complete loss of shielding at the electron fluid resonance, leading to a vacuum-like response in which the reconnected magnetic flux
 driven at the rational surface is maximized. The figures also indicate that if the $c_\beta^{\,2}$ term is retained then 
 the value of $Q_E$  at which the imaginary part of the scaled response index passes through zero shifts from the electron fluid
-resonance in the direction of the ion fluid resonance. The value of $Q_E$ at which the real part of the scaled response index passes through zero also shifts from the electron fluid resonance. However, the direction of the shift is different in different response regimes.
+resonance in the direction of the ion fluid resonance \cite{lee}. The value of $Q_E$ at which the real part of the scaled response index passes through zero also shifts from the electron fluid resonance. However, the direction of the shift is different in different response regimes.
 
-Figure~\ref{fig5} shows the difference between the scaled layer response index predicted by the three-field (i.e., $c_\beta^{\,2}=0$) Fourier-space  resonant response model of Ref.~\cite{rf2022} and the
-four-field Fourier-space resonant response model of Appendix~\ref{sfour}. The calculations are performed using the $Q_e$, $Q_i$, $D$, $P_E$,
+Figure~\ref{fig5} shows the difference between the scaled layer response index predicted by the 
+four-field Fourier-space resonant response model of Appendix~\ref{sfour} and the  three-field (i.e., $c_\beta=0$) Fourier-space  resonant response model of Ref.~\cite{rf2022}, plotted
+as a function of the normalized ${\bf E}\times {\bf B}$ frequency, $Q_E$. The calculations are performed using the $Q_e$, $Q_i$, $D$, $P_E$,
 and $P_\varphi$ values associated with the VRii regime of Table~\ref{t1}, and for various different values of $c_\beta$.  It can be seen that the
-difference between the predictions of the three-field and four-field  models is an increasing function of increasing $c_\beta$, and that the difference is essentially
+difference between the predictions of the four-field and three-field  models is an increasing function of increasing $c_\beta$, and that the difference is essentially
 negligible for $c_\beta$ values less than $0.01$.
 
 \begin{figure}[t]
 \centerline{\includegraphics[width=0.9\textwidth]{Figure6.pdf}}
 \caption{The critical value of the normalized electron fluid rotation frequency at the rational surface, $Q_E+Q_e$, 
-at which the real (dashed curves) and imaginary (solid curves) components of the layer response index pass through zero, plotted as a function of $c_\beta$ for the
+at which the real (solid curves) and imaginary (imaginary curves) components of the layer response index pass through zero, plotted as a function of $c_\beta$ for the
 four response regimes specified in Table~\ref{t1}.}\label{fig6}
 \end{figure}
 
@@ -294,21 +297,25 @@ Figure~\ref{fig6} shows the critical value of the normalized electron fluid rota
 at which the real and imaginary parts of the scaled layer response index, $\hat{\mit\Delta}$,  pass through  zero, plotted as a function of $c_\beta$. The calculations are performed
 using the  $Q_e$, $Q_i$, $D$, $P_E$,
 and $P_\varphi$ values associated with the HRi, HRii, RIii, and VRii regimes of Table~\ref{t1}. 
-As we have seen, if $c_\beta=0$ then the real and the imaginary components of $\hat{\mit\Delta}$ pass through zero simultaneously as the electron fluid rotation frequency 
-passes through zero. However, as is clear from the figure,  as $c_\beta$ increases from zero, the critical value of the electron fluid rotation frequency
+As we have seen, if $c_\beta=0$ then the real and the imaginary parts of $\hat{\mit\Delta}$ pass through zero simultaneously as the electron fluid rotation frequency 
+passes through zero. However, the figure indicates that, as $c_\beta$ increases from zero, the critical value of the electron fluid rotation frequency
 at which the real part of the scaled layer response index passes through zero shifts in the electron diamagnetic direction (i.e., to more negative values of $Q_E+Q_e$), whereas that 
 at which the imaginary part passes through zero shifts in opposite direction. The only exception to this
 rule occurs in the second resistive-inertial (RIii) regime, where  the critical values of the electron fluid rotation frequency at which the real and imaginary parts of the scaled layer response index pass through zero
-both shift in the ion diamagnetic direction by almost equal amounts. According to Eq.~(\ref{response}), a vacuum response  (i.e., ${\mit\Psi}\simeq {\mit\Psi}_v$) 
-requires  the real and the imaginary parts of the scaled plasma response index to be simultaneously much smaller than unity (given that the true layer response index is ${\mit\Delta}_s=S^{1/3}\,\hat{\mit\Delta}$, 
-whereas, under normal circumstances, $-E_{ss}\sim {\cal O}(1)$, and 
-$S\gg 1$). As $c_\beta$ increases, this state of affairs seems to become progressively harder to achieve, except in the RIii regime. 
+both shift in the ion diamagnetic direction by almost equal amounts. According to Eq.~(\ref{response}), a vacuum response  to the RMP (i.e., ${\mit\Psi}\simeq {\mit\Psi}_v$) 
+requires  the real and the imaginary parts of the scaled plasma response index to be simultaneously much smaller than unity. This follows because the true layer response index is ${\mit\Delta}_s=S^{1/3}\,\hat{\mit\Delta}$.
+Furthermore,, under normal circumstances, $-E_{ss}\sim {\cal O}(1)$ and 
+$S^{1/3}\gg 1$. As $c_\beta$ increases, the state of affairs  in which the real and imaginary parts of $\hat{\mit\Delta}$ are simultaneously small (which, if $c_\beta=0$, is automatically achieved when the electron
+fluid  rotation frequency is zero)   becomes progressively harder to achieve, 
+as a consequence of the aforementioned frequency shifts, except in the RIii regime. The main difference between the RIii regime, and the other three response regimes, is the much smaller value of $P_\varphi$ in the former regime. However, we expect $P_\varphi>1$ in a conventional tokamak
+plasma (because the resistive diffusion timescale generally exceeds the momentum confinement timescale, unless the electron temperature much less than the on-axis temperature). Hence, we deduce that the frequency-shift behavior exhibited in the
+HRi, HRii, and VRii response regimes is more likely to represent the response of an actual tokamak plasma than that exhibited in the RIii regime. 
 
 \section{Response of  the pedestal region of tokamak plasma to an RMP}
 \subsection{Edge-localized modes}
 Magnetically diverted tokamak plasmas generally operate in so-called {\em H-mode} \cite{hmode}. In this  operation mode, a transport barrier forms in the outer part of 
 the plasma, leading to a region of enhanced density and temperature gradients known as the {\em pedestal}. As the name suggests, the ``pedestal''
-is characterized  by negative steps in the density and temperature profiles that are located just inside the plasma boundary. (See Fig.~\ref{f7}.) 
+is characterized  by negative steps in the density and temperature profiles that are located just inside the plasma boundary. (See Fig.~\ref{fig7}.) 
 Unfortunately, the large pressure gradient present in the pedestal can drive ideal-MHD instabilities known as {\em peeling-ballooning modes} \cite{pb}. Consequently, most H-mode plasmas exhibit intermittent bursts of heat and particle transport, emanating from the pedestal, that are known as (type-I)
 {\em edge-localized modes}  (ELMs) \cite{elm}.  It is estimated that the heat load that ELMs will
 deliver to the tungsten plasma-facing components in a reactor-scale
@@ -327,13 +334,14 @@ KSTAR, \cite{rmp4} MAST \cite{rmp5}, EAST \cite{rmp6}, and MAST-U \cite{rmp7} to
 
 If an RMP opens up a magnetic island chain at the foot of the pedestal then it gives rise to an undesirable  phenomenon, known as a
 {\em density pump-out}, by which the density gradient in the pedestal  is greatly reduced \cite{hu,hu1,hu2}. On the other hand,
-if an RMP opens up a magnetic island chain at the top of the pedestal then it generally suppresses ELMs  \cite{hu,hu1,hu2,hu3,hu4}, because the
+if an RMP opens up a magnetic island chain at the top of the pedestal then it generally suppresses ELMs  while preserving the pedestal density and temperature gradients \cite{hu,hu1,hu2,hu3,hu4}.
+ELM suppression occurs because the
 island chain limits the width and height of the pedestal, and, thereby, prevents the peeling-ballooning instability threshold from being crossed \cite{pb}. 
 
 In the following, we shall construct a simple model of a pedestal in the ITER tokamak, and then use our Fourier-space, four-field, resonant
 response model to gauge the response of this model pedestal to a  externally generated, static, RMP.
 
-\begin{table}
+\begin{table}\centering
 \begin{tabular}{|cl | cl | cl | cl |}
 $\nu_q$              &  $3.5$     & $\nu_{n_e}$               & $1.1$                                               & $\nu_{T_e}$            &  $2.0$                                        & $\nu_{T_i}$             &    $2.0$\\[0.5ex]
 $q_0$                 & $1.01$    & $n_{e\,0}$                  & $1.2\times 10^{20}\,\,{\rm m}^{-3}$  & $T_{e\,0}$                &  $1.6\times 10^{4}\,\,{\rm eV}$ & $T_{i\,0}$                &  $1.4\times 10^{4}\,\,{\rm eV}$\\[0.5ex]
@@ -356,14 +364,14 @@ where $\hat{r}=r/a$. The model safety-factor profile is written
 q(\hat{r}) =\frac{ \nu_q\,q_0\,\hat{r}^{\,2}}{1- (1-\hat{r}^{\,2})^{\nu_q}} -\alpha_q\,\ln(1-\hat{r}^{\,2}) - \frac{{\mit\Delta}_q}{2}\!
 \left[1+\tanh\left(\frac{\hat{r}-\hat{r}_q}{\delta_q}\right)\right].
 \end{equation}
-The first term on the right-hand side of the previous equation is the safety-factor profile that cylindrical theory would associate with the current profile
+The first term on the right-hand side of the previous equation is the safety-factor profile that conventional cylindrical theory would associate with the current profile
 specified in Eq.~(\ref{Jdef})  \cite{wes}.  Here, $q_0$ is the cylindrical safety-factor on the magnetic axis ($\hat{r}=0$), whereas
-$\nu_q\,q_0$ is the cylindrical safety-factor at the plasma boundary ($\hat{r}=1$). The second term is intended  to mimic the logarithmic singularity in the $q$-profile that occurs
+$\nu_q\,q_0$ is the cylindrical safety-factor at the plasma boundary ($\hat{r}=1$). The second term mimics the logarithmic singularity in the $q$-profile that occurs
 at the edge of a magnetically diverted plasma (assuming that the magnetic separatrix corresponds to $\hat{r}=1$) \cite{rf2025}. 
-The final term is meant to represent the reduction in the magnetic shear generated by the strong, pressure-gradient-driven, bootstrap 
+The final term represents the reduction in the magnetic shear generated by the strongly peaked, pressure-gradient-driven, bootstrap 
 current \cite{bootstrap} present in the pedestal
-of an H-mode plasma. (See, for example, Fig.~6 of Ref.~\cite{rfx} and Fig.~1 of Ref.~\cite{sar}.)  The approach taken here is similar to that taken in the TM1 code, which employs cylindrical geometry in association
-with experimental  safety-factor, density, and temperature profiles \cite{tm1,tm2}. This approach has been very successful at explaining
+of an H-mode plasma. (See, for example, Fig.~6 of Ref.~\cite{rfx}, Fig.~1 of Ref.~\cite{sar}, and Fig.~2 of Ref.~\cite{shear}.)  The approach taken here is similar to that taken in the TM1 code, which employs cylindrical geometry in association
+with experimental  safety-factor, density, and temperature profiles \cite{tm1,tm2}. The TM1 approach has been very successful at explaining
 RMP-induced density pump-out and  ELM suppression in the DIII-D tokamak \cite{hu,hu1,hu2}. 
 
 \begin{figure}[t]
@@ -383,17 +391,17 @@ T_i(\hat{r}) &=(T_{i\,0}-T_{i\,1})\,(1-\hat{r}^{\,2})^{\nu_{T_i}} + \frac{{\mit\
 Here, the second terms on the right-hand sides of the previous three equations  represent the negative steps in the
 three profiles in the pedestal region. 
 
-The parameters used in our model ITER pedestal are specified in Table~\ref{t2}. The electron number density and electron and ion temperature profiles  approximately reproduce the model profiles shown in Fig.~8 of Ref.~\cite{crystal}. Our model pedestal is characterized by $q_{95} =3.70$, $n_e(1)=2.2\times 10^{19}\,{\rm m}^{-3}$, $T_e(1)= 106\,{\rm eV}$, and
+The parameters used in our model ITER pedestal are specified in Table~\ref{t2}. The model profiles are shown in Fig.~\ref{fig7}. The electron number density and electron and ion temperature profiles  approximately reproduce the profiles shown in Fig.~8 of Ref.~\cite{crystal}. Our model pedestal is characterized by $q_{95} =3.70$, $n_e(1)=2.2\times 10^{19}\,{\rm m}^{-3}$, $T_e(1)= 106\,{\rm eV}$, and
 $T_i(1)= 97\,{\rm eV}$. The magnetic shear attains its minimum value of $s=0.21$ at $\hat{r}= 0.937$. 
 
 The parallel electrical resistivity of the plasma is \cite{ric3}
 \begin{equation}
-\eta_\parallel = \frac{0.51\,\ln{\mit\Lambda}\,Z\,m_e^{\,1/2}\,e^{1/2}}{6\sqrt{2}\,\pi^{\,3/2}\,f_p\,\epsilon_0^{\,2}\,T_e^{\,3/2}}
+\eta_\parallel(\hat{r}) = \frac{0.51\,\ln{\mit\Lambda}\,Z\,m_e^{\,1/2}\,e^{1/2}}{6\sqrt{2}\,\pi^{\,3/2}\,f_p\,\epsilon_0^{\,2}\,T_e^{\,3/2}}
 \end{equation}
 where
 \begin{align}
-\ln{\mit\Lambda} &= 24 - \ln\left[\left(\frac{n_e}{10^6}\right)^{1/2}\,\frac{1}{T_e}\right],\\[0.5ex]
-f_p &= 1 - 1.46\left(\frac{\hat{r}\,a}{R_0}\right)^{1/2} + 0.46\left(\frac{\hat{r}\,a}{R_0}\right)^{3/2}.\label{fp}
+\ln{\mit\Lambda}(\hat{r}) &= 24 - \ln\left[\left(\frac{n_e}{10^6}\right)^{1/2}\,\frac{1}{T_e}\right],\\[0.5ex]
+f_p(\hat{r}) &= 1 - 1.46\left(\frac{\hat{r}\,a}{R_0}\right)^{1/2} + 0.46\left(\frac{\hat{r}\,a}{R_0}\right)^{3/2}.\label{fp}
 \end{align}
 Here, $n_e$ is measured in SI units, whereas $T_e$ is measured in units of eV. Moreover, $m_e$ is the electron mass, $e$ the magnitude of the electron charge,
 $Z=3.0$ the effective ion charge number, $R_0=5.3\,{\rm m}$ the plasma major radius, and $a=2.0\,{\rm m}$ the plasma minor radius \cite{hartwig}. 
@@ -407,21 +415,41 @@ $\omega_{\perp\,e}=\omega_E+\omega_{\ast\,e}$ the electron fluid rotation freque
  \label{fig8}
 \end{figure}
 
-All of the remaining plasma parameter, apart from the ${\bf E}\times {\bf B}$ rotation profile, can be calculated from their definitions given in Appendix~\ref{sfour},  
-the profile data specified in Eqs.~(\ref{eq})--(\ref{fp}) and Table~\ref{t2}, and the following information.  The vacuum toroidal magnetic
-field-strength is $B_0 = 5.3\,{\rm T}$ \cite{hartwig}, the ion mass number is $M=2$, and the perpendicular energy and momentum diffusivities
+All of the remaining plasma parameters, apart from the ${\bf E}\times {\bf B}$ rotation profile, can be calculated from their definitions given in Appendix~\ref{sfour},  
+the profile data specified in Eqs.~(\ref{eq})--(\ref{fp}) and Table~\ref{t2}, and the following information.  The toroidal magnetic
+field-strength is $B_z = 5.3\,{\rm T}$ \cite{hartwig}, the ion mass number is $M=2$, and the perpendicular energy and momentum diffusivities
 take the (spatially) constant values  $\chi_E=1\,{\rm m^2/s}$ and $\chi_\varphi = 1\,{\rm m^2/s}$, respectively \cite{wes1}. 
 
 Figure~\ref{fig8} shows the rotation frequencies in our model ITER pedestal. The adopted ${\bf E}\times {\bf B}$ frequency profile is
 written
 \begin{equation}
-\omega_E(\hat{r}) =\omega_{E\,0}\,(1-\hat{r}^{\,2})^{\nu_E}+  \alpha_E\,\omega_{\ast\,e},
+\omega_E(\hat{r}) =\omega_{E\,0}\,(1-\hat{r}^{\,2})^{\nu_E}+  \alpha_E\,\omega_{\ast\,e}(\hat{r}),
 \end{equation}
-where $\omega_{E\,0} = 3\times 10^4\,{\rm rad./s}$, $\nu_E= 1.1$, and $\alpha_E= 0.3$. The adopted ${\bf E}\times {\bf B}$ frequency profile
+where $\omega_{E\,0} = 3\times 10^4\,{\rm rad./s}$, $\nu_E= 1.1$, and $\alpha_E= 0.3$. This frequency profile
 has the appropriate sign in the pedestal and the core \cite{sar,crystal}, and is designed to ensure that the electron fluid rotation frequency,
 $\omega_{\perp\,e}=\omega_E +\omega_{\ast\,e}$, passes through zero close to the top of the pedestal. This feature of the electron
 fluid rotation frequency is almost always observed in H-mode tokamak plasmas with co-current neutral beam injection, and has been
 identified as a key feature in RMP-induced ELM suppression \cite{hu,hu1,hu2,hu3,hu4}. 
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.9\textwidth]{Figure9.pdf}}
+\caption{Top panel: Normalized poloidal fluxes at $n=1$ rational surfaces as functions of $q_{95}$ in a model ITER pedestal.  Bottom panel: Tearing stability indices 
+of tearing modes resonant at the rational surfaces as functions of the normalized poloidal fluxes at the surfaces.  }
+ \label{fig9}
+\end{figure}
+
+\subsection{$q_{95}$ scan}
+We can
+define the normalized poloidal magnetic flux, ${\mit\Psi}_N (\hat{r}) = \psi_p(\hat{r})/\psi_p(1)$, where $\psi_p(\hat{r})=B_z\,a^2\int_0^{\hat{r}}\hat{r}'/q(\hat{r}')\,d\hat{r}'$ is
+calculated from Eq.~(\ref{eq}). Thus, ${\mit\Psi}_N=0$ at the magnetic axis, and ${\mit\Psi}_N=1$ at the magnetic separatrix (i.e., the magnetic flux-surface that contains the
+X-point). $q_{95}$ is defined as the safety-factor value at the magnetic flux-surface that contains 95\% of the poloidal magnetic flux contained by the magnetic separatrix.
+In other words, $q_{95}= q(\hat{r}_{95})$,  where ${\mit\Psi}_N(\hat{r}_{95})=0.95$. We can scan $q_{95}$, at constant $q_0$, by adjusting the parameter $\nu_q$, while
+keeping all other parameters in our model fixed. 
+
+Suppose that the RMP consists of a set of helical harmonics with a common toroidal mode number, $n=1$, but a range of different poloidal mode numbers, $m$. In our study, we shall concentrate on rational surfaces associated
+with intrinsically stable tearing modes, which implies that $m>3$. We shall also include all rational surfaces that lie in the region $0<{\mit\Psi}_N < 0.9999$. The parameter $\nu_q$ is
+varied from 2.1 to 9.5, which causes $q_{95}$ to vary from about 2.4 to 8.9. Figure~\ref{fig9} shows the ${\mit\Psi}_N$ values of the various rational surfaces as functions of $q_{95}$.
+It can be seen that, as $q_{95}$ increases, successive rational surfaces emerge from the magnetic separatrix and sweep across the pedestal region. 
 
 \section*{Acknowledgements}
 The authors would like to thank   Y.~Lee, J.-K.~Park, J.~Waybright, and D.~Burgess for help benchmarking the results of this paper against those of
@@ -436,6 +464,7 @@ The data that support the findings of this study are available from the correspo
 \appendix
 \section{Fourier-space four-field resonant plasma response model}\label{sfour}
 \subsection{Fundamental definitions}
+Consider the quasi-cylindrical plasma equilibrium introduced  in Sect.~\ref{cyleq}. 
 The plasma is assumed to consist of two species. First, electrons of mass $m_e$, electrical charge $-e$, 
 number density $n_e$, and temperature $T_e$.  Second, ions of mass $m_i$, electrical charge $+e$,  
 number density $n_e$, and temperature $T_i$. Let $p=n_e\,(T_e+T_i)$ be the total plasma pressure. 
@@ -444,7 +473,7 @@ Let $r_s$ be the minor radius of the rational surface. It is helpful to define $
 \begin{align}
 \eta_e &=\left.\frac{d\ln T_e}{d\ln n_e}\right|_{r=r_s},\label{e211}\\[0.5ex]
 \eta_i &= \left.\frac{d\ln T_i}{d\ln n_e}\right|_{r=r_s},\\[0.5ex]
-\iota&= \left(\frac{T_e}{T_i}\right)_{r=r_s}\left(\frac{1+\eta_e}{1+\eta_i}\right)=\left(\frac{dp_e}{dp_i}\right)_{r_s},\label{e213}
+\iota&\equiv\left(\frac{dp_e}{dp_i}\right)_{r_s}= \left(\frac{T_e}{T_i}\right)_{r=r_s}\left(\frac{1+\eta_e}{1+\eta_i}\right),\label{e213}
 \end{align}
 where $n_e(r)$, $p(r)$, $p_e(r)$, $p_i(r)$, $T_e(r)$, and $T_i(r)$ refer to
 electron number density, total pressure, electron pressure, ion pressure, electron temperature, and ion temperature profiles, respectively, in the absence of the magnetic perturbation. 
@@ -454,8 +483,8 @@ the perturbed electron number density profile in the immediate vicinity of the r
 implies that $p=p(n_e)$. 
 The ``MHD velocity'', which is the velocity of a
 fictional MHD fluid \cite{haz1}, is defined ${\bf V}={\bf V}_E + V_{\parallel\,i}\,{\bf b}$, where ${\bf V}_E$ is the
-${\bf E}\times{\bf B}$ drift velocity, $V_{\parallel\,i}$ is the parallel component of the ion fluid
-velocity, ${\bf b}= {\bf B}/|{\bf B}|$, and ${\bf B}$ is the magnetic field-strength.
+${\bf E}\times{\bf B}$ drift velocity, $V_{\parallel\,i}$  the parallel component of the ion fluid
+velocity, ${\bf b}= {\bf B}/|{\bf B}|$, and ${\bf B}$ the magnetic field-strength.
 
 \subsection{Fundamental fields}
 The four fundamental fields in our four-field model---namely, $\psi$, $N$, $\phi$, and $V$---have the following
@@ -520,13 +549,14 @@ $\hat{V}_\ast= V_\ast(r_s)/V_A$,
 $V_\ast(r) = (dp/dr)/(e\,n_0\,B_z)$ 
 is the (dominant $\theta$-component of the) diamagnetic velocity,
   and 
- $\hat{V}_\parallel=\hat{d}_i\, V_z(r_s)/V_A$. Here, $s_s=s(r_s)$ and $s(r)=d\ln q/d\ln r$. We also have
+ $\hat{V}_\parallel=\hat{d}_i\, V_z(r_s)/V_A$. Here, $s_s=s(r_s)$, and $s(r)=d\ln q/d\ln r$ is the magnetic shear. We also have
  \begin{align}\label{e28}
  J (\hat{x})&= -\left(\frac{2}{s_s}-1\right)\frac{1}{\hat{L}_s},
 \end{align} 
 and $ \hat{E}_\parallel(\hat{x}) =(2/s_s-1)\, (\hat{\eta}_\parallel/\hat{L}_s)$.
 
 \subsection{Derivation of linear layer equations}
+Suppose that the magnetic perturbation has $m$ periods in the poloidal angle, and $n$ periods in the toroidal angle. 
 In accordance with Eqs.~(\ref{e23})--(\ref{e28}), let us write \cite{ric3}
 \begin{align}\label{e31}
 \psi(\hat{x},\zeta) &= \frac{\hat{x}^{\,2} }{2\,\hat{L}_s}+ \tilde{\psi}(\hat{x})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
@@ -535,7 +565,7 @@ N(\hat{x},\zeta) &= -\hat{V}_\ast\,\hat{x}+\iota_e\,\tilde{N}(\hat{x})\,{\rm e}^
 V(\hat{x},\zeta) &= \hat{V}_\parallel +\iota_e\,\tilde{V}(\hat{x})\,{\rm e}^{\,{\rm i}\,\zeta},\\[0.5ex]
 J(\hat{x},\zeta) &=-\left(\frac{2}{s_s}-1\right)\!\frac{1}{\hat{L}_s}+ \hat{\nabla}^2\tilde{\psi}(\hat{x})\,{\rm e}^{\,{\rm i}\,\zeta},\label{e36}
 \end{align}
-where $\zeta=m\,\theta-n\,\varphi$. 
+where $\zeta=m\,\theta-n\,\varphi$. Here, $\tilde{~}$ denotes a perturbed quantity. 
 Substituting Eqs.~(\ref{e31})--(\ref{e36}) into Eqs.~(\ref{e16})--(\ref{e21}), 
  and only retaining terms that
 are first order in perturbed quantities, we obtain the following set of linear equations:
@@ -547,7 +577,7 @@ are first order in perturbed quantities, we obtain the following set of linear e
 + S^{-1}\,P_\varphi\,\hat{\nabla}^2\tilde{V}.\label{e40}
 \end{align}
 Here, 
-$\tau_H = L_s/(m\,V_A)$ 
+$\tau_H = L_s/[m\,V_A(r_s)]$ 
 is the  hydromagnetic time, 
 $\omega_E =-(q_s/r_s)\,V_E(r_s) = -(d{\mit\Phi}/d\psi_p)_{r_s}$
   the 
@@ -556,11 +586,11 @@ $\omega_{\ast\,e} = \iota_e\,(q_s/r_s)V_\ast(r_s)= [(dp_e/d\psi_p)/(e\,n_e)]_{r_
 the electron diamagnetic frequency,
 $\omega_{\ast\,i} =-\iota_i\,(m/r_s)V_\ast(r_s)=-[(dp_i/d\psi_p)/(e\,n_e)]_{r_s}$
  the  ion diamagnetic frequency,  ${\mit\Phi}(r)$ the equilibrium electrostatic potential, $S=\tau_R/\tau_H$ the  Lundquist number, 
-$\tau_R = \mu_0\,r_s^{\,2}/\eta_\parallel$
+$\tau_R = (\mu_0\,r^{2}/\eta_\parallel)_{r_s}$
  the
- resistive diffusion time,  $\tau_E = r_s^{\,2}/\chi_E$ the energy confinement time,
+ resistive diffusion time,  $\tau_E = (r^{2}/\chi_E)_{r_s}$ the energy confinement time,
 and $\tau_\varphi
-= r_s^{\,2}/\chi_\varphi$
+= (r^{2}/\chi_\varphi)_{r_s}$
 the  toroidal momentum confinement time.
 Furthermore, $P_E = \tau_R/\tau_E$ and $P_\varphi = \tau_R/\tau_\varphi$ are magnetic Prandtl numbers.
 
@@ -1061,6 +1091,10 @@ Phys.\   Plasmas {\bf 27}, 072501 (2020).
 \bibitem{rfx} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31},  {\em Inverse aspect-ratio expanded tokamak equilibria}, 082505 (2024).
 
 \bibitem{sar} R.J.~Groebner and S.~Saarelma, {\em Elements of H-mode pedestal structure}, Plasma Phys.\ Control.\ Fusion {\bf 65}, 073001 (2023). 
+
+\bibitem{shear} X.~Lin, Q.Q.~Yang, G.S.~Xu,  G.Z.~Jia, C.~Zhang, Y.F.~Wang,  N.M.~Li, N.~Yan, 
+R.~Chen, X.Q.~Xu, et al., {\em Edge-localized mode mitigation enabled by active control of pedestal density gradient with new EAST tokamak divertor}, 
+Phys.\ Plasmas {\bf 32}, 012503 (2025).
 
 \bibitem{tm1} Q.~Yu, S.~G\"{u}nter, and B.D.~Scott, {\em Numerical modeling of linear drift-tearing mode stability}, Phys.\ Plasmas
 {\bf 10}, 797 (2003). 

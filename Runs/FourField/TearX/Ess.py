@@ -8,7 +8,7 @@ df = pd.read_csv ("Scannu.txt", delim_whitespace = True, header = None)
 
 psi = df.iloc[:,9]
 m   = df.iloc[:,5]
-id = df.iloc[:,12]
+id  = df.iloc[:,8]
 
 p3  = []
 i3  = []
@@ -32,34 +32,34 @@ p12 = []
 i12 = []
 
 for p, mm, i in zip (psi, m, id):
-    if mm == 3 and p > 0.995:
+    if mm == 3:
         p3.append(p)
         i3.append(i)
-    elif mm == 4 and p > 0.99:
+    elif mm == 4:
         p4.append(p)
         i4.append(i)
-    elif mm == 5 and p > 0.99:
+    elif mm == 5:
         p5.append(p)
         i5.append(i)
-    elif mm == 6 and p > 0.99:
+    elif mm == 6:
         p6.append(p)
         i6.append(i)
-    elif mm == 7 and p > 0.99:
+    elif mm == 7:
         p7.append(p)
         i7.append(i)
-    elif mm == 8 and p > 0.99:
+    elif mm == 8:
         p8.append(p)
         i8.append(i)
-    elif mm == 9 and p > 0.99:
+    elif mm == 9:
         p9.append(p)
         i9.append(i)
-    elif mm == 10 and p > 0.99:
+    elif mm == 10:
         p10.append(p)
         i10.append(i)   
-    elif mm == 11 and p > 0.99:
+    elif mm == 11:
         p11.append(p)
         i11.append(i)
-    elif mm == 12 and p > 0.99:
+    elif mm == 12:
         p12.append(p)
         i12.append(i)
 
@@ -69,10 +69,9 @@ fig = plt.figure (figsize = (12.0, 8.0))
 plt.rc ('xtick', labelsize = fontsize) 
 plt.rc ('ytick', labelsize = fontsize) 
 
-plt.subplot (1, 1, 1)
+plt.subplot (2, 1, 1)
 
-plt.xlim (0.995, 1.)
-plt.ylim (0.,    6.)
+plt.xlim (0.835, 1.001)
 
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')
@@ -91,10 +90,9 @@ if len(p10) > 0:
 if len(p11) > 0:
     plt.plot (p11, i11, color = 'brown',   linewidth = 2, linestyle = 'solid', label = '$m=11$')
     
-plt.axhline (1., color = 'black', linewidth = 1.5, linestyle = 'dotted')
-
-plt.xlabel (r'$\Psi_N$',               fontsize = fontsize)
-plt.ylabel (r"$|\Delta_s|/(-E_{ss})$", fontsize = fontsize)
+plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
+plt.xlabel (r'$\Psi_N$', fontsize = fontsize)
+plt.ylabel (r"$E_{ss}$", fontsize = fontsize)
 plt.legend (fontsize = fontsize)
 
 plt.tight_layout ()

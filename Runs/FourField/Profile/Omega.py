@@ -14,7 +14,7 @@ oe = np.asarray(omegae) + np.asarray(omegaE)
 
 fontsize = 17
 
-fig = plt.figure (figsize = (12.0, 8.0))
+fig = plt.figure (figsize = (12.0, 6.0))
 plt.rc ('xtick', labelsize = fontsize) 
 plt.rc ('ytick', labelsize = fontsize) 
 
