@@ -166,6 +166,7 @@ class TearX: private Utility
   double nu_end;   // End value for nu scan (read from JSON file)
   int    nu_num;   // Number of points in nu scan (read from JSON file)
   int    m_min;    // Ignore rational surfaces with poloidal mode numbers less than m_min (read from JSON file)
+  int    m_max;    // Ignore rational surfaces with poloidal mode numbers greater than m_max (read from JSON file)
   double r_min;    // Ignore rational surfaces with radii less than r_min (read from JSON file)
   double c_min;    // Use three-field layer Delta calculation for c_beta < c_min (read from JSON file)
 

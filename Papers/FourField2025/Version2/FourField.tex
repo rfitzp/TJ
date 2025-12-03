@@ -79,7 +79,7 @@ periodic cylinder \cite{rf1993}. Let $r$, $\theta$, $z$ be right-handed cylindri
 The magnetic axis corresponds to $r=0$, and the plasma boundary to $r=a$, where $a$ is the simulated minor radius of the plasma. The system is assumed to be periodic in the $z$-direction with periodicity length $2\pi\,R_0$, where $R_0$ is the simulated major radius of the plasma. The
 safety-factor profile takes the form $q(r)=r\,B_z/[R_0\,B_\theta(r)]$, where $B_z$ is the constant
 ``toroidal'' magnetic field-strength, and $B_\theta(r)$ is the poloidal magnetic field-strength. The equilibrium poloidal and toroidal magnetic
-fluxes (divided by $2\pi$) are written $\psi_p(r)=B_z\int_0^r r'/q(r')\,dr'$ and $\psi_t(r)=B_z\,r^2/2$, respectively.
+fluxes (divided by $2\pi$) are written $\psi_p(r)=B_z\int_0^r dr'\,r'/q(r')$ and $\psi_t(r)=B_z\,r^2/2$, respectively.
 The standard
 large aspect-ratio tokamak orderings, $r/R_0\ll 1$ and $B_\theta/B_z\ll 1$, are adopted \cite{ric3}. 
 
@@ -433,23 +433,23 @@ identified as a key feature in RMP-induced ELM suppression \cite{hu,hu1,hu2,hu3,
 
 \begin{figure}[t]
 \centerline{\includegraphics[width=0.9\textwidth]{Figure9.pdf}}
-\caption{Top panel: Normalized poloidal fluxes at $n=1$ rational surfaces as functions of $q_{95}$ in a model ITER pedestal.  Bottom panel: Tearing stability indices 
-of tearing modes resonant at the rational surfaces as functions of the normalized poloidal fluxes at the surfaces.  }
+\caption{Top panel: Normalized poloidal magnetic fluxes at the $n=1$ rational surfaces as functions of $q_{95}$ in a model ITER pedestal.  Here, $m$ is the resonant poloidal mode number. Bottom panel: Stability indices 
+of tearing modes resonant at the $n=1$ rational surfaces as functions of the normalized poloidal magnetic fluxes at the surfaces.  }
  \label{fig9}
 \end{figure}
 
 \subsection{$q_{95}$ scan}
-We can
-define the normalized poloidal magnetic flux, ${\mit\Psi}_N (\hat{r}) = \psi_p(\hat{r})/\psi_p(1)$, where $\psi_p(\hat{r})=B_z\,a^2\int_0^{\hat{r}}\hat{r}'/q(\hat{r}')\,d\hat{r}'$ is
+The {\em normalized poloidal magnetic flux}\/ is conventionally defined as  ${\mit\Psi}_N (\hat{r}) = \psi_p(\hat{r})/\psi_p(1)$, where the poloidal magnetic flux, $\psi_p(\hat{r})=B_z\,a^2\int_0^{\hat{r}}\,d\hat{r}'\hat{r}'/q(\hat{r}')$, is
 calculated from Eq.~(\ref{eq}). Thus, ${\mit\Psi}_N=0$ at the magnetic axis, and ${\mit\Psi}_N=1$ at the magnetic separatrix (i.e., the magnetic flux-surface that contains the
-X-point). $q_{95}$ is defined as the safety-factor value at the magnetic flux-surface that contains 95\% of the poloidal magnetic flux contained by the magnetic separatrix.
-In other words, $q_{95}= q(\hat{r}_{95})$,  where ${\mit\Psi}_N(\hat{r}_{95})=0.95$. We can scan $q_{95}$, at constant $q_0$, by adjusting the parameter $\nu_q$, while
+magnetic X-point). 
+Magnetically diverted plasmas are conventionally characterized by $q_{95}$, which  is defined as the safety-factor value at the magnetic flux-surface that contains 95\% of the poloidal magnetic flux contained by the magnetic separatrix.
+In other words, $q_{95}= q(\hat{r}_{95})$,  where ${\mit\Psi}_N(\hat{r}_{95})=0.95$. We can vary $q_{95}$, at constant on-axis safety-factor, $q_0$, by varying the parameter $\nu_q$, appearing in Eq.~(\ref{eq}), while
 keeping all other parameters in our model fixed. 
 
-Suppose that the RMP consists of a set of helical harmonics with a common toroidal mode number, $n=1$, but a range of different poloidal mode numbers, $m$. In our study, we shall concentrate on rational surfaces associated
-with intrinsically stable tearing modes, which implies that $m>3$. We shall also include all rational surfaces that lie in the region $0<{\mit\Psi}_N < 0.9999$. The parameter $\nu_q$ is
-varied from 2.1 to 9.5, which causes $q_{95}$ to vary from about 2.4 to 8.9. Figure~\ref{fig9} shows the ${\mit\Psi}_N$ values of the various rational surfaces as functions of $q_{95}$.
-It can be seen that, as $q_{95}$ increases, successive rational surfaces emerge from the magnetic separatrix and sweep across the pedestal region. 
+Suppose that the RMP is such that it can be decomposed into of a set of helical Fourier harmonics with a common toroidal mode number, $n=1$, but a range of different poloidal mode numbers, $m$. In our study, we shall concentrate on rational surfaces associated
+with intrinsically stable tearing modes, which implies that $m>3$. We shall also include all rational surfaces in the plasma that lie in the region $0<{\mit\Psi}_N < 0.9999$. The parameter $\nu_q$ is
+varied from 2.1 to 9.5, which causes $q_{95}$ to vary from about 2.4 to 8.9. Figure~\ref{fig9} shows the ${\mit\Psi}_N$ values at the various rational surfaces in the plasma as functions of $q_{95}$.
+It can be seen that, as $q_{95}$ increases, successive rational surfaces emerge from the magnetic separatrix, and sweep across the pedestal region. 
 
 \section*{Acknowledgements}
 The authors would like to thank   Y.~Lee, J.-K.~Park, J.~Waybright, and D.~Burgess for help benchmarking the results of this paper against those of
@@ -1038,8 +1038,7 @@ J.A.~Boedo, M.E.~Fenstermacher, K.H.~Finken, R.J.~Groebner, M.~Groth, et al., {\
 {\em Regime of improved confinement and high beta in neutral-beam-heated divertor discharges of the ASDEX tokamak}, Phys.\ Rev.\ Lett.\ {\bf 49}, 1408   (1982).
 
 \bibitem{pb} P.B.~Snyder, H.R.~Wilson, J.R.~Ferron, L.L.~Lao, A.W.~Leonard, T.H.~Osborne, A.D.~Turnbull, D.~Mossessian, M.~Murakami and
- X.Q.~Xu, {\em Edge localized modes and the pedestal: A model based on coupled peeling–ballooning modes}, 
-  Phys.\ Plasmas {\bf 9}, 2037 (2002).  
+ X.Q.~Xu, {\em Edge localized modes and the pedestal: A model based on coupled peeling–ballooning modes}, Phys.\ Plasmas {\bf 9}, 2037 (2002).  
   
 \bibitem{elm} H.~Zohm, {\em Edge localized modes (ELMs)}, Plasma Phys.\ Controlled Fusion {\bf 38}, 105 (1996).
 
@@ -1063,30 +1062,24 @@ and MAST Team, {\em Understanding edge-localized mode mitigation by resonant mag
 \bibitem{rmp6} T.~Sun, Y.~Liang, Y.Q.~Liu, S.~Gu, X.~Yang, W.~Guo, T.~Shi, M.~Jia, L.~Wang, 
 B.~Lyu, et al., {\em Nonlinear transition from mitigation to suppression of the edge localized mode with resonant magnetic perturbations in the EAST tokamak}, Phys.\ Rev.\ Lett.\ {\bf 117}, 115001 (2016).
 
-\bibitem{rmp7} D.A.~Ryan, C.~Ham, A.~Kirk, T.~Markovic, S.~Munaretto, L.~Piron, S.~Saarelma, W.~Suttrop, A.J.~Thornton, E.~Viezzer, M.~Willensdorfer, the MAST Upgrade Team and the EUROfusion Tokamak Exploitation Team, {\em First observation of RMP ELM mitigation on MAST Upgrade}, 
- Plasma Phys.\ Control.\ Fusion {\bf 66},  105003 (2024).
+\bibitem{rmp7} D.A.~Ryan, C.~Ham, A.~Kirk, T.~Markovic, S.~Munaretto, L.~Piron, S.~Saarelma, W.~Suttrop, A.J.~Thornton, E.~Viezzer, M.~Willensdorfer, the MAST Upgrade Team and the EUROfusion Tokamak Exploitation Team, {\em First observation of RMP ELM mitigation on MAST Upgrade}, Plasma Phys.\ Control.\ Fusion {\bf 66},  105003 (2024).
  
  \bibitem{hu} Q.M.~Hu, R.~Nazikian, B.A.~Grierson, N.C.~Logan, J.-K.~Park, C.~Paz-Soldan and Q.~Yu, {\em The density dependence
- of edge-localized-mode suppression and density pump-out by resonant magnetic perturbations in the DIII-D tokamak}, Phys.\ Plasmas
- {\bf 26}, 120702 (2019).
+ of edge-localized-mode suppression and density pump-out by resonant magnetic perturbations in the DIII-D tokamak}, Phys.\ Plasmas  {\bf 26}, 120702 (2019).
  
  \bibitem{hu1} Q.M.~Hu, R.~Nazikian, B.A.~Grierson, N.C.~Logan, C.~Paz-Solden and Q.~Yu, {\em The role of edge resonant magnetic
- perturbations in edge-localized-mode suppression and density pump-out in low-collisionality DIII-D plasmas}, Nucl.\ Fusion {\bf 60},
- 076001 (2020). 
+ perturbations in edge-localized-mode suppression and density pump-out in low-collisionality DIII-D plasmas}, Nucl.\ Fusion {\bf 60}, 076001 (2020). 
  
  \bibitem{hu2} Q.M.~Hu, R.~Nazikian, B.A.~Grierson, N.C.~Logan, D.M.~Orlav, C.~Paz-Solden and Q.~Yu, {\em Wide operational windows
  of edge-localized mode suppression by resonant magnetic perturbations in the DIII-D tokamak}, Phys.\ Rev.\ Lett.\ {\bf 125}, 045001 (2020).
  
-\bibitem{hu3} R.~Fitzpatrick,
-{\em Theory of edge localized mode suppression by static resonant perturbations in the DIII-D tokamak},
-Phys.\ Plasmas {\bf 27}, 042506 (2020).
+\bibitem{hu3} R.~Fitzpatrick, {\em Theory of edge localized mode suppression by static resonant perturbations in the DIII-D tokamak}, Phys.\ Plasmas {\bf 27}, 042506 (2020).
 
 \bibitem{hu4} R.~Fitzpatrick and A.O.~Nelson, 
 {\em An improved theory of the response of DIII-D H-mode discharges to static resonant magnetic perturbations and its implications for the suppression of edge localized modes},
 Phys.\   Plasmas {\bf 27}, 072501 (2020).
 
-\bibitem{bootstrap} R.J.~Bickerton, J.W.~Connor and J.B.~Taylor, {\em Diffusion driven plasma currents and bootstrap tokamak}, Nat.\ Phys.\ Sci.\ 
-{\bf 229}, 110 (1971). 
+\bibitem{bootstrap} R.J.~Bickerton, J.W.~Connor and J.B.~Taylor, {\em Diffusion driven plasma currents and bootstrap tokamak}, Nat.\ Phys.\ Sci.\  {\bf 229}, 110 (1971). 
 
 \bibitem{rfx} R.~Fitzpatrick, Phys.\ Plasmas {\bf 31},  {\em Inverse aspect-ratio expanded tokamak equilibria}, 082505 (2024).
 
@@ -1096,14 +1089,12 @@ Phys.\   Plasmas {\bf 27}, 072501 (2020).
 R.~Chen, X.Q.~Xu, et al., {\em Edge-localized mode mitigation enabled by active control of pedestal density gradient with new EAST tokamak divertor}, 
 Phys.\ Plasmas {\bf 32}, 012503 (2025).
 
-\bibitem{tm1} Q.~Yu, S.~G\"{u}nter, and B.D.~Scott, {\em Numerical modeling of linear drift-tearing mode stability}, Phys.\ Plasmas
-{\bf 10}, 797 (2003). 
+\bibitem{tm1} Q.~Yu, S.~G\"{u}nter, and B.D.~Scott, {\em Numerical modeling of linear drift-tearing mode stability}, Phys.\ Plasmas {\bf 10}, 797 (2003). 
 
 \bibitem{tm2} Q.~Yu and S.~G\"{u}nter, {\em Plasma response to externally applied resonant perturbations}, Nucl.\ Fusion {\bf 51}, 
 073030 (2011).
 
-\bibitem{crystal} C.~Chrystal, B.A.~Grierson, S.R.~Haskey, A.C.~Sontag, F.M.~Poli, M.W.~Shafer and J.S.~de\,Grassie, {\em Predicting the rotation profile in ITER}, 
-Nucl.\ Fusion {\bf 60}, 036003 (2020). 
+\bibitem{crystal} C.~Chrystal, B.A.~Grierson, S.R.~Haskey, A.C.~Sontag, F.M.~Poli, M.W.~Shafer and J.S.~de\,Grassie, {\em Predicting the rotation profile in ITER},  Nucl.\ Fusion {\bf 60}, 036003 (2020). 
 
 \bibitem{hartwig} Z.S.~Hartwig and Y.A.~Podpaly, {\em Magnetic fusion energy formulary}, (Massachusetts Institute of Technology, Cambridge MA, 2011). 
 

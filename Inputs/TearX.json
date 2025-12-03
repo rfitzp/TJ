@@ -51,6 +51,7 @@
     "nu_end":   7.5,      // End value for nu scan
     "nu_num":   5000,     // Number of points in nu scan
     "m_min":    4,        // Ignore rational surfaces with poloidal mode numbers less than m_min
+    "m_max":    11,       // Ignore rational surfaces with poloidal mode numbers greater than m_max
     "r_min":    0.8,      // Ignore rational surfaces with radii less than r_min
     "c_min":    0.01,     // Use three-field layer Delta calculation for c_beta < c_min
 

@@ -77,6 +77,7 @@ TearX::TearX ()
   nu_end = JSONData["nu_end"].get<double> ();
   nu_num = JSONData["nu_num"].get<int>    ();
   m_min  = JSONData["m_min"] .get<int>    ();
+  m_max  = JSONData["m_max"] .get<int>    ();
   r_min  = JSONData["r_min"] .get<double> ();
   c_min  = JSONData["c_min"] .get<double> ();
   
@@ -209,8 +210,8 @@ TearX::TearX ()
 	  alphaE, omegaE_0, nu_E);
   printf ("\nNr     = %-5d      eps      = %-10.3e del      = %-10.3e EPS   = %-10.3e Psimax = %-10.3e\n",
 	  Nr, eps, del, EPS, Psimax);
-  printf ("nu_sta = %-10.3e nu_end   = %-10.3e nu_num   = %-5d      m_min = %-3d        r_min  = %-10.3e c_min    = %-10.3e\n",
-	  nu_sta, nu_end, nu_num, m_min, r_min, c_min);
+  printf ("nu_sta = %-10.3e nu_end   = %-10.3e nu_num   = %-5d      m_min = %-3d        m_max  = %-3d        r_min    = %-10.3e c_min = %-10.3e\n",
+	  nu_sta, nu_end, nu_num, m_min, m_max, r_min, c_min);
   printf ("acc    = %-10.3e h0       = %-10.3e hmax     = %-10.3e\n",
 	  acc, h0, hmax);
 }
@@ -496,7 +497,7 @@ void TearX::Solve (int flg)
       double Sc  = GetScale (rs);
       double Delta_r, Delta_i, pmax, Ideal;
 
-      if (rs > r_min && mpol >= m_min)
+      if (rs > r_min && mpol >= m_min && mpol <= m_max)
 	{
 	  FourField fourfield (1);
 
