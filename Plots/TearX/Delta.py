@@ -10,7 +10,7 @@ import pandas as pd
 
 df = pd.read_csv ("../../Outputs/TearX/Scannu.txt", delim_whitespace = True, header = None)
 
-psi = df.iloc[:,9]
+psi = df.iloc[:,6]
 m   = df.iloc[:,5]
 id  = df.iloc[:,8]
 
@@ -30,6 +30,8 @@ p9  = []
 i9  = []
 p10 = []
 i10 = []
+p11 = []
+i11 = []
 
 for p, mm, i in zip (psi, m, id):
     if mm == 3:
@@ -55,7 +57,10 @@ for p, mm, i in zip (psi, m, id):
         i9.append(i)
     elif mm == 10:
         p10.append(p)
-        i10.append(i)   
+        i10.append(i)
+    elif mm == 11:
+        p11.append(p)
+        i11.append(i)   
 
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'TEARX Code: nu Scan')
@@ -64,31 +69,27 @@ plt.rc ('ytick', labelsize = 15)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0.8, 1.001)
+plt.xlim (0.8, 1.00)
 
-if len(p3) > 0:
-    plt.plot (p3, i3, color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=3$')
 if len(p4) > 0:
-    plt.plot (p4, i4,   color = 'red',     linewidth = 2, linestyle = 'solid', label = '$m=4$')
+    plt.plot (p4, i4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')
 if len(p5) > 0:
-    plt.plot (p5, i5,   color = 'green',   linewidth = 2, linestyle = 'solid', label = '$m=5$')
-if len(p6) > 0: 
-    plt.plot (p6, i6,   color = 'blue',    linewidth = 2, linestyle = 'solid', label = '$m=6$')
-if len(p7) > 0:
-    plt.plot (p7, i7,   color = 'yellow',  linewidth = 2, linestyle = 'solid', label = '$m=7$')
+    plt.plot (p5, i5,   color = 'red',     linewidth = 2, linestyle = 'solid', label = '$m=5$')
+if len(p6) > 0:
+    plt.plot (p6, i6,   color = 'green',   linewidth = 2, linestyle = 'solid', label = '$m=6$')
+if len(p7) > 0: 
+    plt.plot (p7, i7,   color = 'blue',    linewidth = 2, linestyle = 'solid', label = '$m=7$')
 if len(p8) > 0:
-    plt.plot (p8, i8,   color = 'cyan',    linewidth = 2, linestyle = 'solid', label = '$m=8$')    
+    plt.plot (p8, i8,   color = 'yellow',  linewidth = 2, linestyle = 'solid', label = '$m=8$')
 if len(p9) > 0:
-    plt.plot (p9, i9,   color = 'magenta', linewidth = 2, linestyle = 'solid', label = '$m=9$')
+    plt.plot (p9, i9,   color = 'cyan',    linewidth = 2, linestyle = 'solid', label = '$m=9$')    
 if len(p10) > 0:
-    plt.plot (p10, i10, color = 'brown',   linewidth = 2, linestyle = 'solid', label = '$m=10$')    
-    
-plt.axvline (1.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
-plt.axhline (0.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+    plt.plot (p10, i10, color = 'magenta', linewidth = 2, linestyle = 'solid', label = '$m=10$')
+if len(p11) > 0:
+    plt.plot (p11, i11, color = 'brown',   linewidth = 2, linestyle = 'solid', label = '$m=11$')    
 
-plt.xlabel (r'$\Psi}$',  fontsize = "15")
-plt.ylabel (r"$E_{ss}$", fontsize = "15")
-#plt.xticks([0.9, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.99, 1.0])
+plt.xlabel (r'$\hat{r}$', fontsize = "15")
+plt.ylabel (r"$E_{ss}$",  fontsize = "15")
 plt.legend (fontsize = '15')
 
 plt.tight_layout ()

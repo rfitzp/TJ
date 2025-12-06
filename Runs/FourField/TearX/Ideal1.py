@@ -65,7 +65,7 @@ for p, mm, i in zip (psi, m, id):
 
 fontsize = 17        
 
-fig = plt.figure (figsize = (12.0, 8.0))
+fig = plt.figure (figsize = (12.0, 6.0))
 plt.rc ('xtick', labelsize = fontsize) 
 plt.rc ('ytick', labelsize = fontsize) 
 
@@ -99,4 +99,5 @@ plt.legend (fontsize = fontsize)
 
 plt.tight_layout ()
 
-plt.show ()    
+#plt.show ()    
+plt.savefig("Figure12.pdf")

@@ -6,10 +6,9 @@ import pandas as pd
 
 df = pd.read_csv ("Scannu.txt", delim_whitespace = True, header = None)
 
-id  = df.iloc[:,6]
+id  = df.iloc[:,9]
 m   = df.iloc[:,5]
 psi = df.iloc[:,4]
-#psi = df.iloc[:,1]
 
 p3  = []
 i3  = []
@@ -72,8 +71,8 @@ plt.rc ('ytick', labelsize = fontsize)
 
 plt.subplot (2, 1, 1)
 
-plt.ylim (0.8, 1.00)
-plt.xlim (2.3, 14.6)
+plt.ylim (0.835, 1.00)
+plt.xlim (2., 9.)
 
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')
@@ -94,12 +93,12 @@ if len(p11) > 0:
     
 #plt.axhline (1.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
-plt.xlabel (r'$q_{95}$',  fontsize = fontsize)
-plt.ylabel (r"$\hat{r}$", fontsize = fontsize)
+plt.xlabel (r'$q_{95}$', fontsize = fontsize)
+plt.ylabel (r"$\Psi_N$", fontsize = fontsize)
 
-#plt.legend (fontsize = 16)
+plt.legend (fontsize = 16)
 
-psi = df.iloc[:,6]
+psi = df.iloc[:,9]
 idd = df.iloc[:,8]
 
 xp3  = []
@@ -157,7 +156,7 @@ for p, mm, i in zip (psi, m, idd):
 
 plt.subplot (2, 1, 2)
 
-plt.xlim (0.8, 1.00)
+plt.xlim (0.835, 1.00)
 
 if len(p4) > 0:
     plt.plot (xp4, xi4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')
@@ -177,11 +176,11 @@ if len(p11) > 0:
     plt.plot (xp11, xi11, color = 'brown',   linewidth = 2, linestyle = 'solid', label = '$m=11$')
     
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
-plt.xlabel (r'$\hat{r}$', fontsize = fontsize)
+plt.xlabel (r'$\Psi_N$', fontsize = fontsize)
 plt.ylabel (r"$E_{ss}$", fontsize = fontsize)
 #plt.legend (fontsize = fontsize)
 
 plt.tight_layout ()
 
-#plt.show ()    
-plt.savefig ("Figure9.pdf")
+plt.show ()    
+#plt.savefig ("Figure9.pdf")

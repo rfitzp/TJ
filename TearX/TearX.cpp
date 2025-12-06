@@ -555,7 +555,7 @@ void TearX::Solve (int flg)
 	      nu, qq[Nr-1]/qc, q95, nres, mres[0], mres[nres-1]);
 	      
       for (int i = 0; i < nres; i++)
-	if (rres[i] > r_min && mres[i] >= m_min)
+	if (rres[i] > r_min && mres[i] >= m_min && mres[i] <= m_max)
 	  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %3d %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e\n",
 		   q0, nu, qc, r95, q95, mres[i], rres[i], sres[i], Dres[i], Pres[i], Drres[i], Dires[i], Idres[i]);
       fclose (file);

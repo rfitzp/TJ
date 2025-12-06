@@ -7,7 +7,7 @@ import pandas as pd
 df = pd.read_csv ("Scannu.txt", delim_whitespace = True, header = None)
 
 m   = df.iloc[:,5]
-psi = df.iloc[:,9]
+psi = df.iloc[:,6]
 Dr  = df.iloc[:,10]
 Di  = df.iloc[:,11]
 
@@ -86,13 +86,13 @@ for mm, p, r, i in zip (m, psi, Dr, Di):
 
 fontsize = 17
         
-fig = plt.figure (figsize = (12.0, 8.0))
+fig = plt.figure (figsize = (12.0, 6.0))
 plt.rc ('xtick', labelsize = fontsize) 
 plt.rc ('ytick', labelsize = fontsize) 
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0.835, 1.00)
+plt.xlim (0.8, 1.00)
 #plt.ylim (0., 250.)
 
 if len(p4) > 0:
@@ -133,11 +133,11 @@ plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
 
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
 plt.ylabel (r'$\Delta_s$', fontsize = fontsize)
-plt.xlabel (r"$\Psi_N$",   fontsize = fontsize)
+plt.xlabel (r"$\hat{r}$",  fontsize = fontsize)
 
-plt.legend (fontsize = fontsize)
+#plt.legend (fontsize = fontsize)
 
 plt.tight_layout ()
 
-plt.show ()    
-
+#plt.show ()    
+plt.savefig("Figure10.pdf")

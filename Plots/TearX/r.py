@@ -1,6 +1,6 @@
-# Shear.py
+# r.py
 
-# Plots magnetic shear at rational surfaces versus r for nu scan
+# Plots r at rational surfaces versus nu for nu scan
 
 import math
 import numpy as np
@@ -10,9 +10,9 @@ import pandas as pd
 
 df = pd.read_csv ("../../Outputs/TearX/Scannu.txt", delim_whitespace = True, header = None)
 
-psi = df.iloc[:,6]
+id  = df.iloc[:,6]
 m   = df.iloc[:,5]
-id  = np.log10(1. + np.asarray(df.iloc[:,7]))
+psi = df.iloc[:,1]
 
 p3  = []
 i3  = []
@@ -60,7 +60,7 @@ for p, mm, i in zip (psi, m, id):
         i10.append(i)
     elif mm == 11:
         p11.append(p)
-        i11.append(i)  
+        i11.append(i)   
 
 fig = plt.figure (figsize = (12.0, 8.0))
 fig.canvas.manager.set_window_title (r'TEARX Code: nu Scan')
@@ -69,7 +69,7 @@ plt.rc ('ytick', labelsize = 15)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0.8, 1.00)
+plt.ylim (0.80, 1.00)
 
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')
@@ -87,11 +87,14 @@ if len(p10) > 0:
     plt.plot (p10, i10, color = 'magenta', linewidth = 2, linestyle = 'solid', label = '$m=10$')
 if len(p11) > 0:
     plt.plot (p11, i11, color = 'brown',   linewidth = 2, linestyle = 'solid', label = '$m=11$')    
-    
-plt.xlabel (r'$\hat{r}$',        fontsize = "15")
-plt.ylabel (r"$\log_{10}(1+s)$", fontsize = "15")
+   
+#plt.axhline (1.,    color = 'black', linewidth = 1.5, linestyle = 'dotted')
+
+plt.xlabel (r'$\nu_q$',     fontsize = "15")
+plt.ylabel (r"$\hat{r}$",   fontsize = "15")
 plt.legend (fontsize = '15')
 
 plt.tight_layout ()
 
 plt.show ()    
+

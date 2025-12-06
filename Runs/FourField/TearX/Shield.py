@@ -1,18 +1,16 @@
-# Shear.py
-
-# Plots magnetic shear at rational surfaces versus r for nu scan
-
 import math
 import numpy as np
 import matplotlib.pyplot as plt
 import netCDF4 as nc
 import pandas as pd
 
-df = pd.read_csv ("../../Outputs/TearX/Scannu.txt", delim_whitespace = True, header = None)
+df = pd.read_csv ("Scannu.txt", delim_whitespace = True, header = None)
 
-psi = df.iloc[:,6]
-m   = df.iloc[:,5]
-id  = np.log10(1. + np.asarray(df.iloc[:,7]))
+m  = df.iloc[:,5]
+r  = df.iloc[:,6]
+E  = df.iloc[:,8]
+Dr = df.iloc[:,10]
+Di = df.iloc[:,11]
 
 p3  = []
 i3  = []
@@ -32,44 +30,54 @@ p10 = []
 i10 = []
 p11 = []
 i11 = []
+p12 = []
+i12 = []
 
-for p, mm, i in zip (psi, m, id):
+for mm, rr, e, dr, di in zip (m, r, E, Dr, Di):
+
+    i = ((1. + dr/(-e)) * (1. + dr/(-e)) + di*di/e/e)**0.5 - 1.
+    
     if mm == 3:
-        p3.append(p)
+        p3.append(rr)
         i3.append(i)
     elif mm == 4:
-        p4.append(p)
+        p4.append(rr)
         i4.append(i)
     elif mm == 5:
-        p5.append(p)
+        p5.append(rr)
         i5.append(i)
     elif mm == 6:
-        p6.append(p)
+        p6.append(rr)
         i6.append(i)
     elif mm == 7:
-        p7.append(p)
+        p7.append(rr)
         i7.append(i)
     elif mm == 8:
-        p8.append(p)
+        p8.append(rr)
         i8.append(i)
     elif mm == 9:
-        p9.append(p)
+        p9.append(rr)
         i9.append(i)
     elif mm == 10:
-        p10.append(p)
-        i10.append(i)
+        p10.append(rr)
+        i10.append(i)   
     elif mm == 11:
-        p11.append(p)
-        i11.append(i)  
+        p11.append(rr)
+        i11.append(i)
+    elif mm == 12:
+        p12.append(rr)
+        i12.append(i)
 
-fig = plt.figure (figsize = (12.0, 8.0))
-fig.canvas.manager.set_window_title (r'TEARX Code: nu Scan')
-plt.rc ('xtick', labelsize = 15) 
-plt.rc ('ytick', labelsize = 15) 
+fontsize = 17        
+
+fig = plt.figure (figsize = (12.0, 6.0))
+plt.rc ('xtick', labelsize = fontsize) 
+plt.rc ('ytick', labelsize = fontsize) 
 
 plt.subplot (1, 1, 1)
 
 plt.xlim (0.8, 1.00)
+plt.ylim (0., 240.)
 
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')
@@ -86,12 +94,15 @@ if len(p9) > 0:
 if len(p10) > 0:
     plt.plot (p10, i10, color = 'magenta', linewidth = 2, linestyle = 'solid', label = '$m=10$')
 if len(p11) > 0:
-    plt.plot (p11, i11, color = 'brown',   linewidth = 2, linestyle = 'solid', label = '$m=11$')    
+    plt.plot (p11, i11, color = 'brown',   linewidth = 2, linestyle = 'solid', label = '$m=11$')
     
-plt.xlabel (r'$\hat{r}$',        fontsize = "15")
-plt.ylabel (r"$\log_{10}(1+s)$", fontsize = "15")
-plt.legend (fontsize = '15')
+plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
+plt.xlabel (r'$\hat{r}$', fontsize = fontsize)
+plt.ylabel (r"$\Sigma$",  fontsize = fontsize)
+
+#plt.legend (fontsize = fontsize)
 
 plt.tight_layout ()
 
-plt.show ()    
+#plt.show ()    
+plt.savefig("Figure11.pdf")

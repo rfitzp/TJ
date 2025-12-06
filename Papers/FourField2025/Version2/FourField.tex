@@ -226,7 +226,8 @@ the second resistive-inertial (RIii) response regime. See Table~\ref{t1} and the
 \end{figure}
 
 Figures~\ref{fig1}--\ref{fig4} show the scaled layer response index, $\hat{\mit\Delta}$, calculated as a function of the normalized ${\bf E}\times {\bf B}$
-frequency, $Q_E$, by three different solution methods, in four of the analytic layer response regimes identified in Ref.~\cite{cole}. These response regimes are the most probable ones for  a comparatively weakly rotating plasma such as ITER. 
+frequency, $Q_E$, by three different solution methods, in four of the analytic layer response regimes identified in Ref.~\cite{cole}. These response regimes are the most probable ones for  a comparatively weakly rotating 
+tokamak plasma such as ITER. 
 The dimensionless 
 layer parameters used in the four response regimes are specified in Table~\ref{t1}. 
 The first solution
@@ -308,8 +309,8 @@ Furthermore,, under normal circumstances, $-E_{ss}\sim {\cal O}(1)$ and
 $S^{1/3}\gg 1$. As $c_\beta$ increases, the state of affairs  in which the real and imaginary parts of $\hat{\mit\Delta}$ are simultaneously small (which, if $c_\beta=0$, is automatically achieved when the electron
 fluid  rotation frequency is zero)   becomes progressively harder to achieve, 
 as a consequence of the aforementioned frequency shifts, except in the RIii regime. The main difference between the RIii regime, and the other three response regimes, is the much smaller value of $P_\varphi$ in the former regime. However, we expect $P_\varphi>1$ in a conventional tokamak
-plasma (because the resistive diffusion timescale generally exceeds the momentum confinement timescale, unless the electron temperature much less than the on-axis temperature). Hence, we deduce that the frequency-shift behavior exhibited in the
-HRi, HRii, and VRii response regimes is more likely to represent the response of an actual tokamak plasma than that exhibited in the RIii regime. 
+plasma (because the resistive diffusion timescale generally exceeds the momentum confinement timescale, unless the electron temperature much less than the on-axis temperature). Hence, we deduce that the frequency-shift behavior exhibited  in Fig.~\ref{fig6} by the
+HRi, HRii, and VRii response regimes is more likely to represent the response of an actual tokamak plasma than that exhibited by the RIii regime. 
 
 \section{Response of  the pedestal region of tokamak plasma to an RMP}
 \subsection{Edge-localized modes}
@@ -342,15 +343,15 @@ In the following, we shall construct a simple model of a pedestal in the ITER to
 response model to gauge the response of this model pedestal to a  externally generated, static, RMP.
 
 \begin{table}\centering
-\begin{tabular}{|cl | cl | cl | cl |}
-$\nu_q$              &  $3.5$     & $\nu_{n_e}$               & $1.1$                                               & $\nu_{T_e}$            &  $2.0$                                        & $\nu_{T_i}$             &    $2.0$\\[0.5ex]
-$q_0$                 & $1.01$    & $n_{e\,0}$                  & $1.2\times 10^{20}\,\,{\rm m}^{-3}$  & $T_{e\,0}$                &  $1.6\times 10^{4}\,\,{\rm eV}$ & $T_{i\,0}$                &  $1.4\times 10^{4}\,\,{\rm eV}$\\[0.5ex]
-$\alpha_q$         & $0.4$      & $n_{e\,1}$                  & $2.0\times 10^{19}\,\,{\rm m}^{-3}$  & $T_{e\,1}$                &  $0.0\times 10^{0}\,\,{\rm eV}$ & $T_{i\,1}$                &  $2.5\times 10^{1}\,\,{\rm eV}$\\[0.5ex]
-${\mit\Delta}_q$ & $0.6$      &  ${\mit\Delta}_{n_e}$  & $9.0\times 10^{19}\,\,{\rm m}^{-3}$  & ${\mit\Delta}_{T_e}$ &  $4.0\times 10^{3}\,\,{\rm eV}$ & ${\mit\Delta}_{T_i}$ &  $4.0\times 10^{3}\,\,{\rm eV}$\\[0.5ex]
-$\hat{r}_q$         & $0.940$    & $\hat{r}_{n_e}$           & $0.950$                                             & $\hat{r}_{T_e}$          &  $0.955$                                 & $\hat{r}_{T_i}$         &  $0.950$ \\[0.5ex]
-$\delta_q$          & $0.025$  & $\delta_{n_e}$            & $0.025$                                          & $\delta_{T_e}$          &  $0.025$                                    & $\delta_{T_i}$          & $0.025$ \\[0.5ex]
+\begin{tabular}{|cl | cl | cl | cl | cl |}
+$\nu_q$              &  $3.5$     & $\nu_{n_e}$               & $1.1$                                               & $\nu_{T_e}$             &  $2.0$                                        & $\nu_{T_i}$             &    $2.0$                                    & $R_0$ & 6.2\,m \\[0.5ex]
+$q_0$                 & $1.01$    & $n_{e\,0}$                  & $1.2\times 10^{20}\,\,{\rm m}^{-3}$  & $T_{e\,0}$                &  $1.6\times 10^{4}\,\,{\rm eV}$ & $T_{i\,0}$                &  $1.4\times 10^{4}\,\,{\rm eV}$  & $a$ & 2.0\,m\\[0.5ex]
+$\alpha_q$         & $0.4$      & $n_{e\,1}$                  & $2.0\times 10^{19}\,\,{\rm m}^{-3}$  & $T_{e\,1}$                &  $0.0\times 10^{0}\,\,{\rm eV}$ & $T_{i\,1}$                &  $2.5\times 10^{1}\,\,{\rm eV}$  &$B_z$ & 5.3\,T \\[0.5ex]
+${\mit\Delta}_q$ & $0.6$      &  ${\mit\Delta}_{n_e}$  & $9.0\times 10^{19}\,\,{\rm m}^{-3}$  & ${\mit\Delta}_{T_e}$ &  $4.0\times 10^{3}\,\,{\rm eV}$ & ${\mit\Delta}_{T_i}$ &  $4.0\times 10^{3}\,\,{\rm eV}$\ & $\chi_E$ & $1.0\,{\rm m^2/s}$\\[0.5ex]
+$\hat{r}_q$         & $0.940$   & $\hat{r}_{n_e}$           & $0.950$                                            & $\hat{r}_{T_e}$         &  $0.955$                                 & $\hat{r}_{T_i}$         &  $0.950$                                    & $\chi_\varphi$ &$1.5\,{\rm m^2/s}$ \\[0.5ex]
+$\delta_q$          & $0.025$  & $\delta_{n_e}$            & $0.025$                                            & $\delta_{T_e}$          &  $0.025$                                   & $\delta_{T_i}$         & $0.025$                                     & $Z_{\rm eff}$ & 3.0 \\[0.5ex]
 \end{tabular}
-\caption{Parameters used to model the ITER pedestal.}\label{t2}
+\caption{Parameters used to model an ITER pedestal.}\label{t2}
 \end{table}
 
 \subsection{Model ITER pedestal}
@@ -376,7 +377,7 @@ RMP-induced density pump-out and  ELM suppression in the DIII-D tokamak \cite{hu
 
 \begin{figure}[t]
 \centerline{\includegraphics[width=0.9\textwidth]{Figure7.pdf}}
-\caption{Safety-factor, magnetic shear, electron number density, and electron and ion temperature profiles used to model ITER pedestal. } \label{fig7}
+\caption{Equilibrium safety-factor, $q$, magnetic shear, $s$, electron number density, $n_e$, electron temperature, $T_e$, and ion temperature, $T_i$, profiles used to model an ITER pedestal. } \label{fig7}
 \end{figure}
 
 The model electron number density, electron temperature, and ion temperature profiles take the respective forms
@@ -396,7 +397,7 @@ $T_i(1)= 97\,{\rm eV}$. The magnetic shear attains its minimum value of $s=0.21$
 
 The parallel electrical resistivity of the plasma is \cite{ric3}
 \begin{equation}
-\eta_\parallel(\hat{r}) = \frac{0.51\,\ln{\mit\Lambda}\,Z\,m_e^{\,1/2}\,e^{1/2}}{6\sqrt{2}\,\pi^{\,3/2}\,f_p\,\epsilon_0^{\,2}\,T_e^{\,3/2}}
+\eta_\parallel(\hat{r}) = \frac{0.51\,\ln{\mit\Lambda}\,Z_{\rm eff}\,m_e^{\,1/2}\,e^{1/2}}{6\sqrt{2}\,\pi^{\,3/2}\,f_p\,\epsilon_0^{\,2}\,T_e^{\,3/2}}
 \end{equation}
 where
 \begin{align}
@@ -404,21 +405,21 @@ where
 f_p(\hat{r}) &= 1 - 1.46\left(\frac{\hat{r}\,a}{R_0}\right)^{1/2} + 0.46\left(\frac{\hat{r}\,a}{R_0}\right)^{3/2}.\label{fp}
 \end{align}
 Here, $n_e$ is measured in SI units, whereas $T_e$ is measured in units of eV. Moreover, $m_e$ is the electron mass, $e$ the magnitude of the electron charge,
-$Z=3.0$ the effective ion charge number, $R_0=5.3\,{\rm m}$ the plasma major radius, and $a=2.0\,{\rm m}$ the plasma minor radius \cite{hartwig}. 
+$Z_{\rm eff}=3.0$ the effective ion charge number, $R_0=6.2\,{\rm m}$ the plasma major radius, and $a=2.0\,{\rm m}$ the plasma minor radius \cite{hartwig}. 
 The factor $f_p$ accounts for the neoclassical enhancement of resistivity \cite{hinton}.
 
 \begin{figure}[t]
 \centerline{\includegraphics[width=0.9\textwidth]{Figure8.pdf}}
-\caption{Rotation frequency profiles in the model ITER pedestal. Here, $\omega_{\ast\,e}$ is the electron diamagnetic frequency, 
+\caption{Rotation frequency profiles in a model ITER pedestal. Here, $\omega_{\ast\,e}$ is the electron diamagnetic frequency, 
 $\omega_{\ast\,i}$  the ion diamagnetic frequency,  $\omega_E$ the ${\bf E}\times {\bf B}$ frequency, and
-$\omega_{\perp\,e}=\omega_E+\omega_{\ast\,e}$ the electron fluid rotation frequency. All frequencies are in radians per second. }
+$\omega_{\perp\,e}=\omega_E+\omega_{\ast\,e}$ the electron fluid rotation frequency. All frequencies are in  units of radians per second. }
  \label{fig8}
 \end{figure}
 
 All of the remaining plasma parameters, apart from the ${\bf E}\times {\bf B}$ rotation profile, can be calculated from their definitions given in Appendix~\ref{sfour},  
 the profile data specified in Eqs.~(\ref{eq})--(\ref{fp}) and Table~\ref{t2}, and the following information.  The toroidal magnetic
 field-strength is $B_z = 5.3\,{\rm T}$ \cite{hartwig}, the ion mass number is $M=2$, and the perpendicular energy and momentum diffusivities
-take the (spatially) constant values  $\chi_E=1\,{\rm m^2/s}$ and $\chi_\varphi = 1\,{\rm m^2/s}$, respectively \cite{wes1}. 
+take the (spatially) constant values  $\chi_E=1.0\,{\rm m^2/s}$ and $\chi_\varphi = 1.5\,{\rm m^2/s}$, respectively \cite{wes1}. 
 
 Figure~\ref{fig8} shows the rotation frequencies in our model ITER pedestal. The adopted ${\bf E}\times {\bf B}$ frequency profile is
 written
@@ -433,8 +434,9 @@ identified as a key feature in RMP-induced ELM suppression \cite{hu,hu1,hu2,hu3,
 
 \begin{figure}[t]
 \centerline{\includegraphics[width=0.9\textwidth]{Figure9.pdf}}
-\caption{Top panel: Normalized poloidal magnetic fluxes at the $n=1$ rational surfaces as functions of $q_{95}$ in a model ITER pedestal.  Here, $m$ is the resonant poloidal mode number. Bottom panel: Stability indices 
-of tearing modes resonant at the $n=1$ rational surfaces as functions of the normalized poloidal magnetic fluxes at the surfaces.  }
+\caption{Top panel: Normalized minor radii, $\hat{r}$,  of the  $n=1$ rational surfaces plotted as functions of $q_{95}$ in a model ITER pedestal.  Bottom panel: Stability indices, $E_{ss}$, 
+of tearing modes resonant at the $n=1$ rational surfaces plotted as functions of the normalized minor radii, $\hat{r}$,  of the surfaces  in a model ITER pedestal.  Different colored curves correspond to different poloidal
+mode numbers according to the legend in Fig.~\ref{fig12}.}
  \label{fig9}
 \end{figure}
 
@@ -446,10 +448,36 @@ Magnetically diverted plasmas are conventionally characterized by $q_{95}$, whic
 In other words, $q_{95}= q(\hat{r}_{95})$,  where ${\mit\Psi}_N(\hat{r}_{95})=0.95$. We can vary $q_{95}$, at constant on-axis safety-factor, $q_0$, by varying the parameter $\nu_q$, appearing in Eq.~(\ref{eq}), while
 keeping all other parameters in our model fixed. 
 
-Suppose that the RMP is such that it can be decomposed into of a set of helical Fourier harmonics with a common toroidal mode number, $n=1$, but a range of different poloidal mode numbers, $m$. In our study, we shall concentrate on rational surfaces associated
-with intrinsically stable tearing modes, which implies that $m>3$. We shall also include all rational surfaces in the plasma that lie in the region $0<{\mit\Psi}_N < 0.9999$. The parameter $\nu_q$ is
-varied from 2.1 to 9.5, which causes $q_{95}$ to vary from about 2.4 to 8.9. Figure~\ref{fig9} shows the ${\mit\Psi}_N$ values at the various rational surfaces in the plasma as functions of $q_{95}$.
+Suppose that the RMP can be decomposed into of a set of helical Fourier harmonics with a common toroidal mode number, $n=1$, but a range of different poloidal mode numbers, $m$. In our study, we shall concentrate on rational surfaces associated
+with intrinsically stable tearing modes whose poloidal mode numbers lies in the range $4\leq m\leq 11$, and which are located in the region $0<{\mit\Psi}_N < 0.9999$. The parameter $\nu_q$ is
+varied from 2.01 to 16.4, which causes $q_{95}$ to vary from about 2.4 to 14.5. Figure~\ref{fig9} shows the normalized minor radii, $\hat{r}$, of the various surfaces as functions of $q_{95}$.
 It can be seen that, as $q_{95}$ increases, successive rational surfaces emerge from the magnetic separatrix, and sweep across the pedestal region. 
+
+Figure~\ref{fig9} also shows the tearing stability
+indices, $E_{ss}$, associated with the rational surfaces. It can be seen that the indices are all negative (confirming that the plasma is intrinsically tearing stable). Note that $E_{ss}$ is
+calculated from the cylindrical tearing mode equation, (\ref{e3}), using the normalized current profile (\ref{Jdef}) and the safety-factor profile (\ref{eq}). 
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.9\textwidth]{Figure10.pdf}}
+\caption{The real (solid curves) and imaginary (dashed curves) parts of the layer response indices, ${\mit\Delta}_s$,  at the $n=1$ rational surfaces plotted as functions of the normalized minor radii, $\hat{r}$,  of the surfaces in a model ITER pedestal.
+Different colored curves correspond to different poloidal
+mode numbers according to the legend in Fig.~\ref{fig12}.}
+ \label{fig10}
+\end{figure}
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.9\textwidth]{Figure11.pdf}}
+\caption{The shielding factors, ${\mit\Sigma}$,  at the $n=1$ rational surfaces plotted as functions of the normalized minor radii, $\hat{r}$, of the surfaces  in a model ITER pedestal.
+Different colored curves correspond to different poloidal
+mode numbers according to the legend in Fig.~\ref{fig12}.}
+ \label{fig11}
+\end{figure}
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.9\textwidth]{Figure12.pdf}}
+\caption{The shielding factors, ${\mit\Sigma}$, at the $n=1$ rational surfaces plotted as functions of the normalized poloidal magnetic flux, ${\mit\Psi}_N$, at the surfaces at the edge of a model ITER pedestal.}
+ \label{fig12}
+\end{figure}
 
 \section*{Acknowledgements}
 The authors would like to thank   Y.~Lee, J.-K.~Park, J.~Waybright, and D.~Burgess for help benchmarking the results of this paper against those of
