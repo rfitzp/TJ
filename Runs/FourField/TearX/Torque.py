@@ -35,7 +35,7 @@ i12 = []
 
 for mm, rr, e, dr, di in zip (m, r, E, Dr, Di):
 
-    i = ((1. + dr/(-e)) * (1. + dr/(-e)) + di*di/e/e)**0.5 - 1.
+    i = di / ((dr/(-e) + 1.) * (dr/(-e) + 1.) + di*di/e/e)
     
     if mm == 3:
         p3.append(rr)
@@ -77,7 +77,7 @@ plt.rc ('ytick', labelsize = fontsize)
 plt.subplot (1, 1, 1)
 
 plt.xlim (0.8, 1.00)
-plt.ylim (0., 240.)
+#plt.ylim (0., 240.)
 
 if len(p4) > 0:
     plt.plot (p4, i4,   color = 'black',   linewidth = 2, linestyle = 'solid', label = '$m=4$')
@@ -96,15 +96,16 @@ if len(p10) > 0:
 if len(p11) > 0:
     plt.plot (p11, i11, color = 'brown',   linewidth = 2, linestyle = 'solid', label = '$m=11$')
 
-plt.axvline (0.89144,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
+#plt.axvline (0.89144, color = 'black', linewidth = 1.5, linestyle = 'dotted')
+plt.axhline (0.,      color = 'black', linewidth = 1.5, linestyle = 'dotted')
     
 plt.ticklabel_format (style = 'sci', axis = 'y', scilimits = (0, 0))
-plt.xlabel (r'$\hat{r}$', fontsize = fontsize)
-plt.ylabel (r"$\Sigma$",  fontsize = fontsize)
+plt.xlabel (r'$\hat{r}$',          fontsize = fontsize)
+plt.ylabel (r"$\hat{T}_\varphi$",  fontsize = fontsize)
 
-#plt.legend (fontsize = fontsize)
+plt.legend (fontsize = fontsize)
 
 plt.tight_layout ()
 
 #plt.show ()    
-plt.savefig("Figure11.pdf")
+plt.savefig("Figure13.pdf")
