@@ -54,19 +54,19 @@ plt.subplot (1, 1, 1)
 
 plt.xlim (0., 1.0)
 
-plt.plot (c1a, q1a, color = 'red',   linewidth = 2, linestyle = 'solid')
-plt.plot (c2a, q2a, color = 'green', linewidth = 2, linestyle = 'solid')
-plt.plot (c4a, q4a, color = 'blue',  linewidth = 2, linestyle = 'solid')
-plt.plot (c3a, q3a, color = 'black', linewidth = 2, linestyle = 'solid')
+plt.plot (c1a, q1a, color = 'red',   linewidth = 2, linestyle = 'solid', label = "HRi")
+plt.plot (c2a, q2a, color = 'green', linewidth = 2, linestyle = 'solid', label = "HRii")
+plt.plot (c4a, q4a, color = 'blue',  linewidth = 2, linestyle = 'solid', label = "RIii")
+plt.plot (c3a, q3a, color = 'black', linewidth = 2, linestyle = 'solid', label = "VRii")
 
 plt.plot ([0.,c1a[0]], [0., q1a[0]], color = 'red',   linewidth = 2, linestyle = 'solid')
 plt.plot ([0.,c2a[0]], [0., q2a[0]], color = 'green', linewidth = 2, linestyle = 'solid')
 plt.plot ([0.,c3a[0]], [0., q3a[0]], color = 'black', linewidth = 2, linestyle = 'solid')
 
-plt.plot (c1, q1, color = 'red',   linewidth = 2, linestyle = 'dashed', label = "HRi")
-plt.plot (c2, q2, color = 'green', linewidth = 2, linestyle = 'dashed', label = "HRii")
-plt.plot (c4, q4, color = 'blue',  linewidth = 2, linestyle = 'dashed', label = "RIii")
-plt.plot (c3, q3, color = 'black', linewidth = 2, linestyle = 'dashed', label = "VRii")
+plt.plot (c1, q1, color = 'red',   linewidth = 2, linestyle = 'dashed')
+plt.plot (c2, q2, color = 'green', linewidth = 2, linestyle = 'dashed')
+plt.plot (c4, q4, color = 'blue',  linewidth = 2, linestyle = 'dashed')
+plt.plot (c3, q3, color = 'black', linewidth = 2, linestyle = 'dashed')
 
 plt.plot ([0.,c1[0]], [0., q1[0]], color = 'red',   linewidth = 2, linestyle = 'dashed')
 plt.plot ([0.,c2[0]], [0., q2[0]], color = 'green', linewidth = 2, linestyle = 'dashed')

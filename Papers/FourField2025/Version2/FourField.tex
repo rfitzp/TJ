@@ -5,26 +5,32 @@
 \pdfoutput = 1 
 \usepackage {graphicx}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{orcidlink}
+\usepackage{titlesec}
+
+\titleformat{\subsection}
+  {\itshape\normalsize}{\thesubsection}{1em}{}
 
 \begin{document}
 
 \title{\bf A Fourier-space four-field resonant response model for tokamak plasmas with applications to pedestal physics}
 
-\author{R.~Fitzpatrick\thanks{rfitzp@utexas.edu}~ and Y.~Lin\\[2ex]
+\author{R.~Fitzpatrick\orcidlink{0000-0001-6237-9309}\thanks{rfitzp@utexas.edu}~ and Y.~Lin\\[2ex]
 {\em Institute for Fusion Studies,  Department of Physics,}\\[0.5ex]{\em   University of Texas at Austin,  Austin TX 78712, USA}}
 \date{}
 \maketitle
+
 \begin{abstract}
-It is demonstrated that the two-fluid, resistive-magnetohydrodynamical  response of a resonant layer in a tokamak plasma to an externally generated, static,  resonant magnetic
+It is demonstrated that the two-fluid, drift-magnetohydrodynamical  response of a resonant layer in a tokamak plasma to an externally generated, static,  resonant magnetic
 perturbation (RMP) can  be reduced to four, coupled, first-order, ordinary differential equations in Fourier space. 
 It is also shown that these 
 four equations  can be conveniently solved by means of a Riccati transformation. The resulting Fourier-space, four-field, resonant plasma response model is 
 successfully benchmarked against the equivalent configuration-space model of Lee et alia  [Nucl.\ Fusion {\bf 64}, 106058 (2024)].  The Fourier-space model is used to
-predict the response of a model ITER pedestal to an RMP.  The strong magnetic shear present just inside the magnetic
-separatrix of a magnetically diverted tokamak plasma is found to suppress the response of the plasma to the RMP to such an extent it is indistinguishable from that
-of a vacuum. Consequently, rational surfaces that lie in the strong shear region can be neglected when calculating the response of the plasma to the RMP. This implies
+estimate the response of an ITER pedestal to an RMP.  The strong magnetic shear present just inside the magnetic
+separatrix is found to suppress the response of the plasma to the RMP to such an extent it is indistinguishable from that
+of a vacuum. Consequently, rational surfaces that lie in the strong-shear region can be neglected when calculating the response of the plasma to the RMP. This implies
 that it is not necessary to include an infinite number of rational surfaces in the calculation, despite the fact that the safety-factor asymptotes to infinity
-as the magnetic separatrix is approached.  The shielding of driven magnetic reconnection is found to break down at rational surfaces with comparatively low
+as the magnetic separatrix is approached.  Furthermore, the vacuum response of the plasma in the strong-shear region is associated with the density pump-out phenomenon. The shielding of driven magnetic reconnection  by the plasma is found to also break down at rational surfaces associated with comparatively low
 poloidal mode numbers that are situated close to the top of the pedestal. This breakdown is associated with the RMP-induced suppression of edge-localized modes.  
 
 \end{abstract}
@@ -37,7 +43,7 @@ field-coil misalignments  \cite{error}, but are sometimes deliberately applied t
 Driven reconnection is significant because it leads to the formation of magnetic island chains at so-called {\em rational}\/ magnetic flux-surfaces within the plasma \cite{boz}. Such chains locally flatten the pressure profile, and, thereby, degrade the plasma energy confinement \cite{chang}. 
 
 The analysis  of the response of a tokamak plasma to an RMP  is most efficiently formulated as an asymptotic matching problem in which the  plasma is  divided into two distinct regions \cite{fkr}.    In the so-called {\em outer region}, which comprises most
-of the plasma, the plasma perturbation is governed by the equations of linearized, marginally-stable, ideal-magnetohydrodynamics (MHD).
+of the plasma, the plasma perturbation is governed by the equations of linearized, marginally-stable, ideal magnetohydrodynamics (MHD).
 However, these equations become singular on    rational  magnetic flux-surfaces at which the perturbed magnetic field resonates with the equilibrium field. In the {\em inner region}, which
 consists of a set of narrow layers centered on the various rational surfaces, non-ideal-MHD effects   become important.
 
@@ -45,26 +51,26 @@ consists of a set of narrow layers centered on the various rational surfaces, no
 It is well known that single-fluid resistive-MHD offers a very poor description of
 the response of the inner region to the magnetic perturbation in the outer region. 
 For instance, the strong  diamagnetic flows present in tokamak plasmas imply that the  electron and ion fluid velocities are significantly different from one another,
-necessitating a two-fluid treatment \cite{ara}. Moreover, resistive-MHD does not take  into account the important  ion sound-radius lengthscale below which electron and ion dynamics become decoupled from one another \cite{drake,wal}. Previously, Cole \& Fitzpatrick\,\cite{cole} used the four-field model
+necessitating a two-fluid drift-MHD treatment \cite{ara}. Moreover, single-fluid resistive-MHD does not take  into account the important  ion sound-radius lengthscale below which electron and ion dynamics become decoupled from one another \cite{drake,wal}. Previously, Cole \& Fitzpatrick\,\cite{cole} used the four-field model
 of Fitzpatrick \& Waelbroeck \cite{fw}, which consists of four coupled nonlinear partial differential equations,
 and which is based on the original four-field model of Hazeltine, Kotschenreuther \& Morrison \cite{haz}, 
 to determine the linear two-fluid response of a resonant layer to the perturbation in the outer region. This treatment was extended in Ref.~\cite{rf2022} in order  to take into account the
  anomalously large perpendicular  energy diffusivity  present in tokamak plasmas. 
  
  In configuration space, the four-field models of Refs.~\cite{cole} and \cite{rf2022} yield a set of resonant layer equations that can be expressed as 
- {\em ten}\/  coupled 
- first-order linear ordinary differential equations (o.d.e.s)  \cite{lee}. However, in Fourier space, the resonant layer equations can be written as 
- {\em four}\/  coupled  first-order linear o.d.e.s  \cite{cole}. It is clearly advantageous to solve the equations in Fourier space. In Refs.~\cite{cole}
+ {\em ten},   coupled,
+ first-order, linear ordinary differential equations (o.d.e.s)  \cite{lee}. However, in Fourier space, the resonant layer equations can be written as 
+ {\em four}, coupled,  first-order linear o.d.e.s  \cite{cole}. It is clearly advantageous to solve the equations in Fourier space. In Refs.~\cite{cole}
  and \cite{rf2022}, an approximation is made by which one of the terms in the Fourier-transformed layer equations is neglected. This
  approximation, which is valid in low-$\beta$ plasmas,  is such that the layer equation that governs the parallel ion dynamics decouples from the other three equations, effectively
  converting a four-field resonant response model into a three-field model. Furthermore, the three remaining layer equations can be combined to give a
- single second-order linear o.d.e. This second-order equation is most conveniently solved  by means of a Riccati transformation
- that converts it into a first-order nonlinear o.d.e.\ \cite{ric1,ric2,ric3}. The advantage of the Riccati approach is that it can deal with numerically problematic  solutions
+ single, second-order, linear o.d.e. This second-order equation is most conveniently solved  by means of a Riccati transformation
+ that converts it into a first-order, nonlinear o.d.e.\ \cite{ric1,ric2,ric3}. The advantage of the Riccati approach is that it can deal with numerically problematic  solutions
  that blow up as $\exp(p^2)$, or faster, at large $p$, where $p$ is the Fourier transform variable. 
  
- Lee, Park \& Na \cite{lee} recently demonstrated  how to solve the full tenth-order four-field resonant layer equations in configuration space using a Riccati transformation. In the process, they discovered that, in a high-$\beta$ plasma,  the RMP rotation frequency (as seen in the local ${\bf E}\times {\bf B}$ frame
+ Lee, Park \& Na \cite{lee} recently demonstrated  how to solve the full, tenth-order, four-field,  resonant layer equations in configuration space using a Riccati transformation. In the process, they discovered that, in a high-$\beta$ plasma,  the RMP rotation frequency (as seen in the local ${\bf E}\times {\bf B}$ frame
  at the rational surface)  at which the electromagnetic torque exerted on the plasma in the immediate vicinity of the resonant layer passes through zero is shifted in the ion diamagnetic direction from the electron diamagnetic frequency.
- This result is significant because there is some experimental evidence for such a shift \cite{paz}. 
+ This result is significant because there is some experimental evidence for such a shift \cite{textor1,textor2,paz}. 
  
  The first aim of this paper is to demonstrate how the calculation of
  Lee et alia can be reimplemented in Fourier space. The Fourier version of the calculation is more convenient, from a numerical point of view, because
@@ -79,18 +85,18 @@ Instead, it is only necessary to include rational surfaces that
 lie in the region $0<{\mit\Psi}_N<1-\epsilon_c$, where ${\mit\Psi}_N$ is the normalized poloidal magnetic flux, and
 $0<\epsilon_c\ll 1$. Moreover, the value of $\epsilon_c$ can be calculated from the plasma parameters at the edge of the discharge. 
 
-The analysis of Ref.~\cite{rf2025} is based on the three-field resonant response model of Refs.~\cite{cole} and \cite{rf2022}.
-The second aim of this paper is to generalize this analysis  by employing  the new Fourier-space, four-field, resonant plasma response model. In particular, we wish to predict the response of
+The analysis of Ref.~\cite{rf2025} is based on the three-field, resonant response model of Refs.~\cite{cole} and \cite{rf2022}.
+The second aim of this paper is to generalize this analysis  by employing  the new Fourier-space, four-field, resonant plasma response model. In particular, we wish to estimate the response of
 an ITER pedestal to an RMP. 
 
 \subsection{Organization}
-This paper is organized as follows. The asymptotic matching approach to determining the response of a tokamak plasma to an RMP is outlined in Sect.~\ref{sect1}. 
-The Fourier-space, four-field, resonant plasma response model is outlined, and benchmarked against the configuration-space model of Ref.~\cite{lee}, in Sect.~\ref{sect3}. The former model is described in detail in Appendix~\ref{sfour}. The Fourier-space, four-field, resonant plasma response model is used to predict the response of the ITER pedestal to an RMP in Sect.~\ref{sect4}. Finally, the paper is
+This paper is organized as follows. The asymptotic matching approach to determining the response of a tokamak plasma to an RMP is described in Sect.~\ref{sect1}. 
+In Sect.~\ref{sect3}, the Fourier-space, four-field, resonant plasma response model is outlined, and benchmarked against the configuration-space model of Ref.~\cite{lee}. The former model is described in detail in Appendix~\ref{sfour}. In Sect.~\ref{sect4}, the Fourier-space, four-field, resonant plasma response model is used to estimate the response of the ITER pedestal to an RMP. Finally, the paper is
 summarized in Sect.~\ref{sect5}. 
 
 \section{Asymptotic matching}\label{sect1}
 \subsection{Plasma equilibrium}\label{cyleq}
-Consider a large aspect-ratio tokamak plasma equilibrium whose magnetic flux-surfaces map out
+Consider a large-aspect-ratio tokamak plasma equilibrium whose magnetic flux-surfaces map out
 (almost) concentric circles in the poloidal plane. Such an equilibrium can be approximated as a
 periodic cylinder \cite{rf1993}. Let $r$, $\theta$, $z$ be right-handed cylindrical coordinates. 
 The magnetic axis corresponds to $r=0$, and the plasma boundary to $r=a$, where $a$ is the simulated minor radius of the plasma. The system is assumed to be periodic in the $z$-direction with periodicity length $2\pi\,R_0$, where $R_0$ is the simulated major radius of the plasma. The
@@ -162,7 +168,7 @@ VRii & $0.15$ & $-0.15$ &1.0 & 0.1& 1.0 & $1.0\times 10^{+0}$
 \end{table}
 
 \subsection{Inner region}
-The current sheet at the rational surface is resolved by employing a two-fluid resistive-MHD resonant response model
+The current sheet at the rational surface is resolved by employing a two-fluid, drift-MHD, resonant response model
 in the  inner region (i.e., the region of the plasma in the immediate vicinity of the rational surface) to determine the
 complex {\em layer response index}, ${\mit\Delta}_s$. Asymptotic matching between the solutions in the inner and the outer regions
 yields
@@ -208,8 +214,8 @@ $P_E$ and $P_\varphi$ are magnetic Prandtl numbers,
 $\iota_e = - \omega_{\ast\,e}/(\omega_{\ast\,i}-\omega_{\ast\,e})$, and $\hat{d}_\beta= d_\beta/r_s$. All quantities are evaluated at the
 rational surface. (See Appendix~\ref{sfour} for more detailed definitions.)
 
-Note that the previous definitions are slightly different to those adopted in Ref.~\cite{lee}. We can convert our dimensionless parameters  into
-into those used by Lee et alia by letting $Q_E\rightarrow Q$, $Q_e\rightarrow -Q_{\ast\,e}$, $Q_i\rightarrow -Q_{\ast\,i}$, $\iota_e\rightarrow 1/(1+\tau)$, $P_E\rightarrow c_\beta^{\,2}$, and 
+Note that the previous definitions are slightly different to those adopted in   Lee et alia \cite{lee}. We can convert our dimensionless parameters  into
+into those used in Ref.~\cite{lee} by letting $Q_E\rightarrow Q$, $Q_e\rightarrow -Q_{\ast\,e}$, $Q_i\rightarrow -Q_{\ast\,i}$, $\iota_e\rightarrow 1/(1+\tau)$, $P_E\rightarrow c_\beta^{\,2}$, and 
  $P_\varphi\rightarrow P$. 
 
 \begin{figure}[t]
@@ -264,7 +270,7 @@ the second viscous-resistive (VRii) response regime. See Table~\ref{t1} and the 
 \end{figure}
 
 It is clear from Figs.~\ref{fig1}--\ref{fig4} that the second and third solution methods yield exactly the same results. This is remarkable because
-the second method involves solving four coupled first-order o.d.e.s in Fourier space, whereas the third involves solving ten coupled first-order o.d.e.s
+the second method involves solving four, coupled, first-order o.d.e.s in Fourier space, whereas the third involves solving ten, coupled, first-order o.d.e.s
 in configuration space. Moreover, as is clear from a comparison of Appendix~\ref{sfour} and Ref.~\cite{lee},  the analysis that leads to the
 four coupled equations in the former method is radically different from, and completely independent of, that which leads to the ten
 coupled equations in the latter method. It follows that the two solution methods constitute strong independent checks on one another. 
@@ -307,12 +313,12 @@ negligible for $c_\beta$ values less than $0.01$.
 \begin{figure}[t]
 \centerline{\includegraphics[width=0.9\textwidth]{Figure6.pdf}}
 \caption{The critical value of the normalized electron fluid rotation frequency at the rational surface, $Q_E+Q_e$, 
-at which the real (solid curves) and imaginary (imaginary curves) components of the layer response index pass through zero, plotted as a function of $c_\beta$ for the
+at which the real (solid curves) and imaginary (imaginary curves) parts of the layer response index pass through zero, plotted as a function of $c_\beta$ for the
 four response regimes specified in Table~\ref{t1}.}\label{fig6}
 \end{figure}
 
 Figure~\ref{fig6} shows the critical values of the normalized electron fluid rotation frequency at the rational surface, $Q_E+Q_e$,
-at which the real and imaginary parts of the scaled layer response index, $\hat{\mit\Delta}$,  pass through  zero, plotted as functions of $c_\beta$. The calculations are performed
+at which the real and imaginary parts of the (four-field) scaled layer response index, $\hat{\mit\Delta}$,  pass through  zero, plotted as functions of $c_\beta$. The calculations are performed
 using the  $Q_e$, $Q_i$, $D$, $P_E$,
 and $P_\varphi$ values associated with the HRi, HRii, RIii, and VRii regimes of Table~\ref{t1}. 
 As we have seen, if $c_\beta=0$ then the real and the imaginary parts of $\hat{\mit\Delta}$ pass through zero simultaneously as the electron fluid rotation frequency 
@@ -331,7 +337,7 @@ HRi, HRii, and VRii response regimes is more likely to represent the response of
 
 \section{Response of  the pedestal region of tokamak plasma to an RMP}\label{sect4}
 \subsection{Edge-localized modes}
-Magnetically diverted tokamak plasmas (i.e., plasmas whose boundary is defined by a magnetic X-point) generally operate in so-called {\em H-mode} \cite{hmode}. In this  operation mode, a transport barrier forms in the outer part of 
+Magnetically diverted tokamak plasmas (i.e., plasmas whose boundary is defined by a magnetic X-point) generally operate in so-called {\em H-mode} \cite{hmode}. In this  mode of operation, a transport barrier forms in the outer part of 
 the plasma, leading to a region of enhanced density and temperature gradients known as the {\em pedestal}. As the name suggests, the ``pedestal''
 is characterized  by negative steps in the density and temperature profiles that are located just inside the plasma boundary. (See Fig.~\ref{fig7}.) 
 Unfortunately, the large pressure gradient present in the pedestal can drive ideal-MHD instabilities known as {\em peeling-ballooning modes} \cite{pb}. Consequently, most H-mode plasmas exhibit intermittent bursts of heat and particle transport, emanating from the pedestal, that are known as (type-I)
@@ -345,7 +351,7 @@ high priority for the international magnetic fusion program.
 
 \subsection{RMP-induced ELM suppression} 
 The most promising method for the control of ELMs is via the
-application of externally generated, static, RPMs to the plasma, 
+application of externally generated, static RPMs to the plasma, 
 Complete RMP-induced ELM suppression was first demonstrated on
 the DIII-D tokamak \cite{elmx}. Subsequently, either mitigation or complete suppression of ELMs via RMPs has been demonstrated on the JET \cite{rmp2}, ASDEX-U \cite{rmp3}, 
 KSTAR, \cite{rmp4} MAST \cite{rmp5}, EAST \cite{rmp6}, and MAST-U \cite{rmp7} tokamaks.
@@ -357,7 +363,7 @@ ELM suppression occurs because the
 island chain limits the width and height of the pedestal, and, thereby, prevents the peeling-ballooning instability threshold from being crossed \cite{pb}. 
 
 In the following, we shall construct a simple model of a pedestal in the ITER tokamak, and then use our Fourier-space, four-field, resonant plasma 
-response model to gauge the response of this model pedestal to a  externally generated, static, RMP.
+response model to gauge the response of this  pedestal to an  externally generated, static RMP.
 
 \begin{table}\centering
 \begin{tabular}{|cl | cl | cl | cl | cl |}
@@ -384,7 +390,7 @@ q(\hat{r}) =\frac{ \nu_q\,q_0\,\hat{r}^{\,2}}{1- (1-\hat{r}^{\,2})^{\nu_q}} -\al
 \end{equation}
 The first term on the right-hand side of the previous equation is the safety-factor profile that conventional cylindrical theory would associate with the current profile
 specified in Eq.~(\ref{Jdef})  \cite{wes}.  Here, $q_0$ is the cylindrical safety-factor on the magnetic axis ($\hat{r}=0$), whereas
-$\nu_q\,q_0$ is the cylindrical safety-factor at the plasma boundary ($\hat{r}=1$). The second term mimics the logarithmic singularity in the $q$-profile that occurs
+$\nu_q\,q_0$ is the cylindrical safety-factor at the plasma boundary ($\hat{r}=1$). The second term mimics the logarithmic singularity in the safety-factor profile that occurs
 at the edge of a magnetically diverted plasma (assuming that the magnetic separatrix corresponds to $\hat{r}=1$) \cite{rf2025}. 
 The final term represents the reduction in the magnetic shear generated by the strongly peaked, pressure-gradient-driven, bootstrap 
 current \cite{bootstrap} present in the pedestal
@@ -414,7 +420,7 @@ $T_i(1)= 97\,{\rm eV}$. The magnetic shear attains its minimum value of $s=0.21$
 
 The parallel electrical resistivity of the plasma is \cite{ric3}
 \begin{equation}
-\eta_\parallel(\hat{r}) = \frac{0.51\,\ln{\mit\Lambda}\,Z_{\rm eff}\,m_e^{\,1/2}\,e^{1/2}}{6\sqrt{2}\,\pi^{\,3/2}\,f_p\,\epsilon_0^{\,2}\,T_e^{\,3/2}}
+\eta_\parallel(\hat{r}) = \frac{0.51\,\ln{\mit\Lambda}\,Z_{\rm eff}\,m_e^{\,1/2}\,e^{1/2}}{6\sqrt{2}\,\pi^{3/2}\,f_p\,\epsilon_0^{\,2}\,T_e^{\,3/2}}
 \end{equation}
 where
 \begin{align}
@@ -536,14 +542,14 @@ in shielding. Figure~\ref{fig11} also indicates that, as a consequence of finite
 \end{figure}
 
 Figure~\ref{fig12} shows the shielding factors, ${\mit\Sigma}$,  associated with  the $n=1$ rational surfaces at the very edge of the pedestal, plotted  as functions of the normalized poloidal magnetic
-fluxes, ${\mit\Psi}_N$, at the surfaces. It can be seen that, as a consequence of the very rapid increases in the magnetic shear, the shielding factors asymptote to zero as the magnetic separatrix is approached (i.e., as ${\mit\Psi}_N\rightarrow 1$). In Ref.~\cite{rf2025} it is argued that if ${\mit\Sigma}< 1$ then the response of a rational surface to the RMP is essentially indistinguishable from that of a
-vacuum, which allows us to neglect the responses of rational surfaces that lie in a thin region, lying just inside the magnetic separatrix, that extends from 
+fluxes, ${\mit\Psi}_N$, at the surfaces. It can be seen that, as a consequence of the very rapid increases in the magnetic shear, the shielding factors asymptote to zero as the magnetic separatrix is approached (i.e., as ${\mit\Psi}_N\rightarrow 1$). In Ref.~\cite{rf2025}, it is argued that if ${\mit\Sigma}< 1$ then the response of a rational surface to the RMP is essentially indistinguishable from that of a
+vacuum, which allows us to neglect the responses of rational surfaces that are situated in a radially thin region, lying just inside the magnetic separatrix, that extends from 
 $1-\epsilon_c <{\mit\Psi}_N < 1$. It is clear from the figure that $\epsilon_c\simeq 2\times 10^{-3}$, which is similar to the value estimated in the three-field analysis
-of Ref.~\cite{rf2025}. The fact that we can ignore rational surfaces that lies in the region $1-\epsilon_c <{\mit\Psi}_N < 1$ implies that we do not have to
+of Ref.~\cite{rf2025}. The fact that we can ignore rational surfaces that lie in the region $1-\epsilon_c <{\mit\Psi}_N < 1$ implies that we do not have to
 include an infinite number of  surfaces in the calculation of the response of a magnetically diverted tokamak plasma to an RMP, despite the fact that the safety-factor
 asymptotes to infinity as the magnetic separatrix is approached. 
 
-The toroidal electromagnetic torque exerted in the vicinity of a given rational surface takes the form \cite{rf1993} 
+The net toroidal electromagnetic torque exerted in the vicinity of a given rational surface takes the form \cite{rf1993} 
 \begin{equation}
 T_\varphi = \frac{2\pi^2\,R_0\,n}{\mu_0}\,|{\mit\Psi}_v|^2\,\hat{T}_\varphi,
 \end{equation}
@@ -553,22 +559,20 @@ where
 \end{equation}
 Figure~\ref{fig13} shows the normalized toroidal electromagnetic torques, $\hat{T}_\varphi$, at the $n=1$ rational surfaces, plotted as functions of the normalized minor radii, $\hat{r}$, of the surfaces. 
 It can be seen that the torques are comparatively large very close to the magnetic separatrix because of the breakdown of the shielding of driven magnetic reconnection in this region. These large
-torques act to change the ${\bf E}\times {\bf B}$ rotation profile at the very edge of the plasma in such a manner as to further reduce the shielding in this region \cite{rf1993}. Driven
-magnetic reconnection at the very e dge of the plasma is associated with the density pump-out phenomenon  \cite{hu,hu1,hu2}. Figure~\ref{fig13} also indicates that the torques at the
+torques act to change the ${\bf E}\times {\bf B}$ rotation profile at the very edge of the plasma in such a manner as to further reduce the shielding in this region \cite{rf1993}. The breakdown of shielding  at the very edge of the plasma is associated with the density pump-out phenomenon  \cite{hu,hu1,hu2}. Figure~\ref{fig13} also indicates that the torques at the
 $m=4$ and $m=5$ rational surfaces become comparatively large when the shielding of driven magnetic reconnection at these surfaces breaks down close to the top of
 the pedestal. These large torques act to change the ${\bf E}\times {\bf B}$ rotation profile  in such a manner as to further reduce the shielding \cite{rf1993}. The breakdown of
 shielding close to the top of the pedestal is associated with RMP-induced ELM suppression \cite{hu,hu1,hu2,hu3,hu4}.
 
 \section{Summary}\label{sect5}
-In this paper, we have demonstrated that the two-fluid, resistive-MHD response of a resonant layer in a tokamak plasma to an externally generated, static,  RMP can  be reduced to four, coupled, first-order, o.d.e.s in Fourier space. 
-We have also shown that these 
-four equations  can be conveniently solved by means of a Riccati transformation. (See Appendix~\ref{sfour}.) Our Fourier-space, four-field, resonant plasma response model has been
-successfully benchmarked against the equivalent configuration-space model of Lee et alia \cite{lee}. (See Sect.~\ref{sect3}.) Our Fourier-space model has been used to
-predict the response of a model ITER pedestal to an RMP. (See Sect.~\ref{sect4}.) We find that the strong magnetic shear present just inside the magnetic
-separatrix of a magnetically diverted tokamak plasma suppresses the response of the plasma to the RMP to such an extent that it is indistinguishable from that
-of a vacuum. Consequently, we can neglect rational surfaces that lie in the strong shear region when calculating the response of the plasma to the RMP. This implies
+In this paper, we  demonstrate that the two-fluid drift-MHD response of a resonant layer in a tokamak plasma to an externally generated, static  RMP can  be reduced to four, coupled, first-order o.d.e.s in Fourier space. 
+We also show that these 
+four equations  can be conveniently solved by means of a Riccati transformation. (See Appendix~\ref{sfour}.) The Fourier-space, four-field, resonant plasma response model is successfully benchmarked against the equivalent configuration-space model of Lee et alia \cite{lee}. (See Sect.~\ref{sect3}.) The Fourier-space model is used to
+estimate the response of an ITER pedestal to an RMP. (See Sect.~\ref{sect4}.) We find that the strong magnetic shear present just inside the magnetic
+separatrix  suppresses the response of the plasma to the RMP to such an extent that it is indistinguishable from that
+of a vacuum. Consequently, we can neglect rational surfaces that lie in the strong-shear region when calculating the response of the plasma to the RMP. This implies
 that it is not necessary to include an infinite number of rational surfaces in the calculation, despite the fact that the safety-factor asymptotes to infinity
-as the magnetic separatrix is approached.  The shielding of driven magnetic reconnection is found to break down at rational surfaces with comparatively low
+as the magnetic separatrix is approached.  Furthermore, the vacuum response of the plasma in the strong-shear region is associated with the density pump-out phenomenon. The shielding of driven magnetic reconnection is also found to break down at rational surfaces associated with comparatively low
 poloidal mode numbers that are situated close to the top of the pedestal. This breakdown is associated with RMP-induced ELM suppression.  
 
 \section*{Acknowledgements}
@@ -742,7 +746,7 @@ converts a four-field resonant response model into a three-field model. In the f
 The  linear layer equations, (\ref{e43xx})--(\ref{e46}), possess tearing parity solutions
 characterized by the symmetry $\tilde{\psi}(-X)=\tilde\psi(X)$, 
 $\tilde{N}(-X)= - \tilde{N}(X)$, $\tilde{\phi}(-X)=-\tilde{\phi}(X)$,  $\tilde{V}(-X)=\tilde{V}(X)$.
-As is easily demonstrated, the asymptotic behavior of the tearing parity solutions to Eqs.~(\ref{e43xx})--(\ref{e46}) are such that 
+As is easily demonstrated, the asymptotic behavior of the tearing parity solution to Eqs.~(\ref{e43xx})--(\ref{e46}) is such that 
 \begin{align}\label{e311}
 \tilde{\psi}(X)&\rightarrow  \psi_0\left[\frac{\skew{6}\hat{\mit\Delta}}{2}\,|X| +1+ {\cal O}\left(\frac{1}{X^2}\right)\right],\\[0.5ex]
 \skew{3}\tilde{\phi}(X)&\rightarrow -\psi_0\,Q_E\,\left[\frac{\skew{6}\hat{\mit\Delta}}{2}\,{\rm sgn}(X) +\frac{1}{X}+ {\cal O}\left(\frac{1}{X^2}\right)\right],\label{e312a}\\[0.5ex]
@@ -779,7 +783,7 @@ Finally, if we define
 \begin{align}
 \bar{J}(p)&= p^2\,\bar{\psi},
 \end{align}
-then Eqs.~(\ref{e314})--(\ref{e317}) can be converted into the following equivalent set of four coupled first-order o.d.e.s:
+then Eqs.~(\ref{e314})--(\ref{e317}) can be converted into the following equivalent set of four, coupled, first-order o.d.e.s:
 \begin{align}\label{e1}
 \frac{d\bar{Y}}{dp} &= \left[\frac{\,{\rm i}\,(Q_E+Q_e)+p^2}{p^2}\right]\bar{J},\\[0.5ex]
 \frac{d\bar{N}}{dp} &= -\left(\frac{{\rm i}\,Q_e}{p^2}\right)\bar{J} + (\,{\rm i}\,Q_E + P_\varphi\,p^2)\,\bar{V},\\[0.5ex]
@@ -791,7 +795,7 @@ c_\beta^{\,2}\,\frac{d\bar{V}}{dp} &= [\,{\rm i}\,Q_e+ {\rm i}\,(Q_E+Q_i)\,D^{\,
 Note that $\iota_e= -Q_e/(Q_i-Q_e)$. 
 
 \subsection{Small argument expansion}
-Let us search for power-law solutions of Eqs.~(\ref{e1})--(\ref{e4}) at small values of $p$. Given that we have four coupled first-order o.d.e.s,
+Let us search for power-law solutions of Eqs.~(\ref{e1})--(\ref{e4}) at small values of $p$. Given that we have four, coupled, first-order o.d.e.s,
 we expect to find four independent power-law solutions.
 The first solution is
 such that
@@ -911,7 +915,7 @@ p\,\frac{dW_{12}}{dp} &= W_{12} - W_{11}\,W_{12} - W_{12}\,W_{22} - E_{11}\,W_{1
 p\,\frac{dW_{21}}{dp} &= W_{21} -W_{21}\,W_{11}- W_{22}\,W_{21} - E_{21}\,W_{11} - E_{22}\,W_{21} + F_{21},\\[0.5ex]
 p\,\frac{dW_{22}}{dp} &= W_{22} -W_{21}\,W_{12}- W_{22}\,W_{22}- E_{21}\,W_{12} - E_{22}\,W_{22} + F_{22}.\label{err4}
 \end{align}
-Thus, our final system of equations consists of a set of four coupled nonlinear differential equations. 
+Thus, our final system of equations consists of a set of four, coupled, nonlinear differential equations. 
 
 \subsection{Small-argument behavior of Riccati matrix differential equation}
 It follows from Eqs.~(\ref{ee1})--(\ref{ee4})  that  $\underline{\underline{E}}(p) = \underline{\underline{E}}^{\,(0)} + {\cal O}(p^2)$ at small values of $p$,
@@ -1063,7 +1067,7 @@ Hence, the two eigenvalues of the $F$-matrix are
  Thus, we deduce that the two eigenvalues of the $W$-matrix are 
  \begin{align}\label{l1}
  \lambda_1&=-{\mit\Lambda}_1^{\,1/2}= -c_\beta^{\,-1}\,\iota_e^{\,-1/2}\,D\,P_\varphi\,p^4,\\[0.5ex]
- \lambda_2&=-{\mit\Lambda}_2^{\,1/2}=-\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}\,p^2,
+ \lambda_2&=-{\mit\Lambda}_2^{\,1/2}=-\iota_e^{\,1/2}\,D^{-1}\,R^{1/2}\,p^2,
  \end{align}
  Here, the square root of $R$ is taken such that the real part of $\lambda_2$ is negative. 
   Now, the eigenvalue problem for the $W$-matrix reduces to 
@@ -1080,19 +1084,19 @@ which is in agreement with Eq.~(\ref{l1}), and
 \end{equation}
  which implies that
  \begin{equation}
- W_{11}^{\,(2)} = -\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}-c_\beta\,\iota_e^{\,1/2}\,D^{-1}.
+ W_{11}^{\,(2)} = -\iota_e^{\,1/2}\,D^{-1}\,R^{1/2}-c_\beta\,\iota_e^{\,1/2}\,D^{-1}.
  \end{equation}
  Hence, the large-$p$ boundary condition for the $W$-matrix
  is
  \begin{equation}\label{e147}
- \underline{\underline{W}}(p) =  \left(\begin{array}{cc} -\iota_e^{\,1/2}\,D^{-1}\,R^{\,1/2}\,p^2-c_\beta\,\iota_e^{\,1/2}\,D^{-1}\,p^2,& - c_\beta\,\iota_e^{\,-1/2}\,D^{-1}\,p^2\\-c_\beta^{\,-1}\,\iota_e^{\,1/2}\,D\,P_\varphi\,p^4,&-c_\beta^{\,-1}\,\iota_e^{\,-1/2}\,D\,P_\varphi\,p^4\end{array}\right).
+ \underline{\underline{W}}(p) =  \left(\begin{array}{cc} -\iota_e^{\,1/2}\,D^{-1}\,R^{1/2}\,p^2-c_\beta\,\iota_e^{\,1/2}\,D^{-1}\,p^2,& - c_\beta\,\iota_e^{\,-1/2}\,D^{-1}\,p^2\\-c_\beta^{\,-1}\,\iota_e^{\,1/2}\,D\,P_\varphi\,p^4,&-c_\beta^{\,-1}\,\iota_e^{\,-1/2}\,D\,P_\varphi\,p^4\end{array}\right).
  \end{equation}
 
 \subsection{Method of solution}
 The method of solution is to launch the well-behaved asymptotic solution (\ref{e147}) of Eqs.~(\ref{err1})--(\ref{err4}) from large $p$, and then
 integrate the equations backward to small $p$. The scaled layer response index, $\hat{\mit\Delta}$, is then determined  from Eq.~(\ref{e111}). 
 Note that, because there are no free parameters in expression (\ref{e147}), the scaled layer response index is uniquely determined by this procedure. 
-Finally, the true layer response index is given by ${\mit\Delta}_s= S^{\,1/3}\,\hat{\mit\Delta}$. [See Eq.~(\ref{e48}).]
+Finally, the true layer response index is given by ${\mit\Delta}_s= S^{1/3}\,\hat{\mit\Delta}$. [See Eq.~(\ref{e48}).]
 
 %\section*{References}
 \begin{thebibliography}{99}\baselineskip 5ex
@@ -1140,6 +1144,11 @@ J.A.~Boedo, M.E.~Fenstermacher, K.H.~Finken, R.J.~Groebner, M.~Groth, et al., {\
 \bibitem{ric2} J.-K.~Park, {\em Parametric dependencies of resonant layer responses across linear, two-fluid, drift-MHD regimes},  Phys.\ Plasmas {\bf 29}, 072506 (2022).
 
 \bibitem{ric3} R.~Fitzpatrick, {\em Tearing mode dynamics in tokamak plasmas}, (IOP Publishing, Bristol UK, 2023). 
+
+\bibitem{textor1} H.R.~Koslowski, Y.~Liang, A.~Kr\"{a}mer-Flecken, K.~L\"{o}wenbr\"{u}ck, M.~Von~Hellermann, E.~Westerhof,R.C.~Wolf, O.~Zimmermann, TEXTOR team, {\em Dependence of the threshold for perturbationfield generated m/n= 2/1 tearing modes on the plasma fluid rotation}, Nucl.\ Fusion, {\bf 46}, L1 (2006).
+
+\bibitem{textor2} M.F.M~De~Bock, I.G.J.~Classen, C.~Busch, R.J.E.~Jaspers, H.R.~Koslowski, B.~Unterberg, TEXTOR Team,
+{\em The interaction between plasma rotation, stochastic fields and tearing mode excitation by external perturbation fields}, Nucl.\ Fusion, {\bf 48}, 015007 (2008).
 
 \bibitem{paz} C.~Paz-Soldan, R.~Nazikian, L.~Cui, B.C.~Lyons, D.M.~Orlov, A.~Kirk,  N.C.~Logan, T.H.~Osborne, W.~Suttrop and D.B.~Weisberg, 
 {\em The effect of plasma shape and neutral beam mix on the rotation threshold for RMP-ELM suppression}, Nucl.\ Fusion {\bf 59}, 056012 (2019).
@@ -1220,7 +1229,7 @@ Phys.\ Plasmas {\bf 32}, 012503 (2025).
 
 \bibitem{hinton} F.L.~Hinton and C.~Oberman, {\em Electrical conductivity of plasma in a spatially homogeneous magnetic field}, Nucl.\ Fusion {\bf 9}, 319 (1969). 
 
-\bibitem{wes1}  J.A.~Wesson, {\em Tokamaks}, 4th ed., (Oxford University Press Oxford UK, 2011). 
+\bibitem{wes1}  J.A.~Wesson, {\em Tokamaks}, 4th ed., (Oxford University Press, Oxford UK, 2011). 
 
 \bibitem{haz1} R.D.~Hazeltine and J.D.~Meiss, {\em Plasma confinement}, (Dover, New York NY, 2003).
 
