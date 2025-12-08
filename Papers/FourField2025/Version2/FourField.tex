@@ -60,7 +60,7 @@ to determine the linear two-fluid response of a resonant layer to the perturbati
  In configuration space, the four-field models of Refs.~\cite{cole} and \cite{rf2022} yield a set of resonant layer equations that can be expressed as 
  {\em ten},   coupled,
  first-order, linear ordinary differential equations (o.d.e.s)  \cite{lee}. However, in Fourier space, the resonant layer equations can be written as 
- {\em four}, coupled,  first-order linear o.d.e.s  \cite{cole}. It is clearly advantageous to solve the equations in Fourier space. In Refs.~\cite{cole}
+ {\em four}, coupled,  first-order linear o.d.e.s  \cite{cole}. In Refs.~\cite{cole}
  and \cite{rf2022}, an approximation is made by which one of the terms in the Fourier-transformed layer equations is neglected. This
  approximation, which is valid in low-$\beta$ plasmas,  is such that the layer equation that governs the parallel ion dynamics decouples from the other three equations, effectively
  converting a four-field resonant response model into a three-field model. Furthermore, the three remaining layer equations can be combined to give a
@@ -240,7 +240,7 @@ true layer response index is ${\mit\Delta}_s=S^{1/3}\,\hat{\mit\Delta}$.
 
 \subsection{Benchmarking against SLAYER}
 Our first task is to benchmark the results of our Fourier-space calculation of $\hat{\mit\Delta}$ against the results of the configuration-space
-calculation  performed by Lee et alia. The latter calculation has been implemented in the SLAYER code \cite{lee,ric2}. 
+calculation  performed by Lee et alia.    
 
 \begin{figure}[t]
 \centerline{\includegraphics[width=0.9\textwidth]{Figure3.pdf}}
@@ -324,11 +324,11 @@ and $P_\varphi$ values associated with the HRi, HRii, RIii, and VRii regimes of 
 As we have seen, if $c_\beta=0$ then the real and the imaginary parts of $\hat{\mit\Delta}$ pass through zero simultaneously as the electron fluid rotation frequency 
 passes through zero. However, the figure indicates that, as $c_\beta$ increases from zero, the critical value of the electron fluid rotation frequency
 at which the real part of the scaled layer response index passes through zero shifts in the electron diamagnetic direction (i.e., to more negative values of $Q_E+Q_e$), whereas that 
-at which the imaginary part passes through zero shifts in opposite direction. The only exception to this
+at which the imaginary part passes through zero shifts in the  opposite direction. The only exception to this
 rule occurs in the second resistive-inertial (RIii) regime, where  the critical values of the electron fluid rotation frequency at which the real and imaginary parts of the scaled layer response index pass through zero
 both shift in the ion diamagnetic direction by almost equal amounts. According to Eq.~(\ref{response}), a vacuum response  to the RMP (i.e., ${\mit\Psi}\simeq {\mit\Psi}_v$) 
 requires  the real and the imaginary parts of the scaled layer response index to be simultaneously much smaller than unity. This follows because the true layer response index is ${\mit\Delta}_s=S^{1/3}\,\hat{\mit\Delta}$.
-Furthermore,, under normal circumstances, $-E_{ss}\sim {\cal O}(1)$ and 
+Furthermore, under normal circumstances, $-E_{ss}\sim {\cal O}(1)$ and 
 $S^{1/3}\gg 1$. As $c_\beta$ increases, the state of affairs  in which the real and imaginary parts of $\hat{\mit\Delta}$ are simultaneously small (which, if $c_\beta=0$, is automatically achieved when the electron
 fluid  rotation frequency is zero)   becomes progressively harder to achieve, 
 as a consequence of the aforementioned frequency shifts, except in the RIii regime. The main difference between the RIii regime, and the other three response regimes, is the much smaller value of $P_\varphi$ in the former regime. However, we expect $P_\varphi>1$ in a conventional tokamak
@@ -570,7 +570,7 @@ We also show that these
 four equations  can be conveniently solved by means of a Riccati transformation. (See Appendix~\ref{sfour}.) The Fourier-space, four-field, resonant plasma response model is successfully benchmarked against the equivalent configuration-space model of Lee et alia \cite{lee}. (See Sect.~\ref{sect3}.) The Fourier-space model is used to
 estimate the response of an ITER pedestal to an RMP. (See Sect.~\ref{sect4}.) We find that the strong magnetic shear present just inside the magnetic
 separatrix  suppresses the response of the plasma to the RMP to such an extent that it is indistinguishable from that
-of a vacuum. Consequently, we can neglect rational surfaces that lie in the strong-shear region when calculating the response of the plasma to the RMP. This implies
+of a vacuum \cite{rf2025}. Consequently, we can neglect rational surfaces that lie in the strong-shear region when calculating the response of the plasma to the RMP. This implies
 that it is not necessary to include an infinite number of rational surfaces in the calculation, despite the fact that the safety-factor asymptotes to infinity
 as the magnetic separatrix is approached.  Furthermore, the vacuum response of the plasma in the strong-shear region is associated with the density pump-out phenomenon. The shielding of driven magnetic reconnection is also found to break down at rational surfaces associated with comparatively low
 poloidal mode numbers that are situated close to the top of the pedestal. This breakdown is associated with RMP-induced ELM suppression.  
@@ -708,7 +708,7 @@ $\omega_E =-(q_s/r_s)\,V_E(r_s) = -(d{\mit\Phi}/d\psi_p)_{r_s}$
  ${\bf E}\times {\bf B}$ frequency, 
 $\omega_{\ast\,e} = \iota_e\,(q_s/r_s)V_\ast(r_s)= [(dp_e/d\psi_p)/(e\,n_e)]_{r_s}$
 the electron diamagnetic frequency,
-$\omega_{\ast\,i} =-\iota_i\,(m/r_s)V_\ast(r_s)=-[(dp_i/d\psi_p)/(e\,n_e)]_{r_s}$
+$\omega_{\ast\,i} =-\iota_i\,(q_s/r_s)V_\ast(r_s)=-[(dp_i/d\psi_p)/(e\,n_e)]_{r_s}$
  the  ion diamagnetic frequency,  ${\mit\Phi}(r)$ the equilibrium electrostatic potential, $S=\tau_R/\tau_H$ the  Lundquist number, 
 $\tau_R = (\mu_0\,r^{2}/\eta_\parallel)_{r_s}$
  the
@@ -1145,10 +1145,13 @@ J.A.~Boedo, M.E.~Fenstermacher, K.H.~Finken, R.J.~Groebner, M.~Groth, et al., {\
 
 \bibitem{ric3} R.~Fitzpatrick, {\em Tearing mode dynamics in tokamak plasmas}, (IOP Publishing, Bristol UK, 2023). 
 
-\bibitem{textor1} H.R.~Koslowski, Y.~Liang, A.~Kr\"{a}mer-Flecken, K.~L\"{o}wenbr\"{u}ck, M.~Von~Hellermann, E.~Westerhof,R.C.~Wolf, O.~Zimmermann, TEXTOR team, {\em Dependence of the threshold for perturbationfield generated m/n= 2/1 tearing modes on the plasma fluid rotation}, Nucl.\ Fusion, {\bf 46}, L1 (2006).
+\bibitem{textor1} H.R.~Koslowski, Y.~Liang, A.~Kr\"{a}mer-Flecken, K.~L\"{o}wenbr\"{u}ck, M.~Von~Hellermann, E.~Westerhof,
+R.C.~Wolf, O.~Zimmermann, TEXTOR team, {\em Dependence of the threshold for perturbation
+field generated m/n= 2/1 tearing modes on the plasma fluid rotation}, Nucl.\ Fusion, {\bf 46}, L1 (2006).
 
 \bibitem{textor2} M.F.M~De~Bock, I.G.J.~Classen, C.~Busch, R.J.E.~Jaspers, H.R.~Koslowski, B.~Unterberg, TEXTOR Team,
-{\em The interaction between plasma rotation, stochastic fields and tearing mode excitation by external perturbation fields}, Nucl.\ Fusion, {\bf 48}, 015007 (2008).
+{\em The interaction between plasma rotation, stochastic fields and tearing mode excitation
+ by external perturbation fields}, Nucl.\ Fusion, {\bf 48}, 015007 (2008).
 
 \bibitem{paz} C.~Paz-Soldan, R.~Nazikian, L.~Cui, B.C.~Lyons, D.M.~Orlov, A.~Kirk,  N.C.~Logan, T.H.~Osborne, W.~Suttrop and D.B.~Weisberg, 
 {\em The effect of plasma shape and neutral beam mix on the rotation threshold for RMP-ELM suppression}, Nucl.\ Fusion {\bf 59}, 056012 (2019).
