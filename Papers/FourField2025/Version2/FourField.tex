@@ -21,11 +21,11 @@
 \maketitle
 
 \begin{abstract}
-It is demonstrated that the determination of the two-fluid, drift-magnetohydrodynamical  response of a resonant layer in a tokamak plasma to an externally generated, static,  resonant magnetic
-perturbation (RMP) can  be reduced to four, coupled, first-order, ordinary differential equations in Fourier space. 
+It is demonstrated that the problem of determining  the two-fluid, drift-magnetohydrodynamical  response of a resonant layer in a tokamak plasma to an externally generated, static,  resonant magnetic
+perturbation (RMP) can  be reduced to the solution of four, coupled, first-order, ordinary differential equations in Fourier space. 
 It is also shown that these 
 four equations  can be conveniently solved by means of a Riccati transformation. The resulting Fourier-space, four-field, resonant plasma response model is 
-successfully benchmarked against the equivalent configuration-space model of Lee et alia  [Nucl.\ Fusion {\bf 64}, 106058 (2024)].  The Fourier-space model is used to
+successfully benchmarked against the equivalent configuration-space model of Lee et alia  [Nucl.\ Fusion {\bf 64}, 106058 (2024)].  The Fourier-space model is then used to
 estimate the response of an ITER pedestal to an RMP.  The strong magnetic shear present just inside the magnetic
 separatrix is found to suppress the response of the plasma to the RMP to such an extent it is indistinguishable from that
 of a vacuum. Consequently, rational surfaces that lie in the strong-shear region can be neglected when calculating the response of the plasma to the RMP. This implies
@@ -378,12 +378,13 @@ $\delta_q$          & $0.025$  & $\delta_{n_e}$            & $0.025$            
 \end{table}
 
 \subsection{Model ITER pedestal}
-We shall again employ the cylindrical analysis of  Sect.~\ref{sect1}. Let the normalized toroidal plasma current take the
+We shall again employ the cylindrical analysis of  Sect.~\ref{sect1}. In the following, all profiles are valid for $0\leq\hat{r}\leq 1$, where $\hat{r}=r/a$.
+Let the normalized toroidal plasma current take the
 form 
 \begin{equation}\label{Jdef}
-J_z(\hat{r}) = \frac{2}{q_0}\,(1-\hat{r}^{\,2})^{\nu_q-1},
+J_z(\hat{r}) = \frac{2}{q_0}\,(1-\hat{r}^{\,2})^{\nu_q-1}.
 \end{equation}
-where $\hat{r}=r/a$. The model safety-factor profile is written
+   The model safety-factor profile is written
 \begin{equation}\label{eq}
 q(\hat{r}) =\frac{ \nu_q\,q_0\,\hat{r}^{\,2}}{1- (1-\hat{r}^{\,2})^{\nu_q}} -\alpha_q\,\ln(1-\hat{r}^{\,2}) - \frac{{\mit\Delta}_q}{2}\!
 \left[1+\tanh\left(\frac{\hat{r}-\hat{r}_q}{\delta_q}\right)\right].
@@ -565,9 +566,10 @@ the pedestal. These large torques act to change the ${\bf E}\times {\bf B}$ rota
 shielding close to the top of the pedestal is associated with RMP-induced ELM suppression \cite{hu,hu1,hu2,hu3,hu4}.
 
 \section{Summary}\label{sect5}
-In this paper, we  demonstrate that the determination of the two-fluid drift-MHD response of a resonant layer in a tokamak plasma to an externally generated, static  RMP can  be reduced to four, coupled, first-order o.d.e.s in Fourier space. 
+In this paper, we  demonstrate that the problem of determining  the two-fluid drift-MHD response of a resonant layer in a tokamak plasma to an externally generated, static  RMP can  be reduced to
+the solution of  four, coupled, first-order o.d.e.s in Fourier space. 
 We also show that these 
-four equations  can be conveniently solved by means of a Riccati transformation. (See Appendix~\ref{sfour}.) The Fourier-space, four-field, resonant plasma response model is successfully benchmarked against the equivalent configuration-space model of Lee et alia \cite{lee}. (See Sect.~\ref{sect3}.) The Fourier-space model is used to
+four equations  can be conveniently solved by means of a Riccati transformation. (See Appendix~\ref{sfour}.) The Fourier-space, four-field, resonant plasma response model is successfully benchmarked against the equivalent configuration-space model of Lee et alia \cite{lee}. (See Sect.~\ref{sect3}.) The Fourier-space model is then used to
 estimate the response of an ITER pedestal to an RMP. (See Sect.~\ref{sect4}.) We find that the strong magnetic shear present just inside the magnetic
 separatrix  suppresses the response of the plasma to the RMP to such an extent that it is indistinguishable from that
 of a vacuum \cite{rf2025}. Consequently, we can neglect rational surfaces that lie in the strong-shear region when calculating the response of the plasma to the RMP. This implies
@@ -1156,7 +1158,7 @@ field generated m/n= 2/1 tearing modes on the plasma fluid rotation}, Nucl.\ Fus
 \bibitem{paz} C.~Paz-Soldan, R.~Nazikian, L.~Cui, B.C.~Lyons, D.M.~Orlov, A.~Kirk,  N.C.~Logan, T.H.~Osborne, W.~Suttrop and D.B.~Weisberg, 
 {\em The effect of plasma shape and neutral beam mix on the rotation threshold for RMP-ELM suppression}, Nucl.\ Fusion {\bf 59}, 056012 (2019).
 
-\bibitem{rf2025} R.~Fitzpatrick, {\em Response of a magnetically diverted tokamak plasma to a resonant magnetic perturbation},  arXiv 2511.07666 (2025).
+\bibitem{rf2025} R.~Fitzpatrick, {\em Response of a magnetically diverted tokamak plasma to a resonant magnetic perturbation},  arXiv:2511.07666v2 (2025).
 
 \bibitem{cyl} H.P.~Furth, P.H.~Rutherford and H.~Selberg, {\em Tearing mode in the cylindrical tokamak}, Phys.\  Fluids {\bf 16}, 1054 (1973). 
 

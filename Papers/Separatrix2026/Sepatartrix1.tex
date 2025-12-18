@@ -1,0 +1,236 @@
+%\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\documentclass{article}
+\usepackage{fullpage}
+\usepackage {amsmath}
+\pdfoutput = 1 
+\usepackage {graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{orcidlink}
+\usepackage{titlesec}
+
+\titleformat{\subsection}
+  {\itshape\normalsize}{\thesubsection}{1em}{}
+
+\begin{document}
+
+\title{\bf Advanced Divertors}
+
+\author{R.~Fitzpatrick\orcidlink{0000-0001-6237-9309}\thanks{rfitzp@utexas.edu}\\[2ex]
+{\em Institute for Fusion Studies,  Department of Physics,}\\[0.5ex]{\em   University of Texas at Austin,  Austin TX 78712, USA}}
+\date{}
+\maketitle
+
+%\begin{abstract}
+%\end{abstract}
+
+\section{Plasma Equilibrium}
+Let $x$, $y$, $z$ be right-handed Cartesian coordinates. The system is assumed to be periodic in the $z$-direction with period $2\pi\,R_0$, where
+$R_0$ is the simulated major radius of the plasma. 
+Let $\phi = z/R_0$ be a simulated toroidal angle. The equilibrium magnetic field is written
+\begin{equation}
+{\bf B} = \nabla\phi\times \nabla\psi_p + B_0\,R_0\,\nabla\phi,
+\end{equation}
+where $B_0$ is the toroidal magnetic field-strength, and $\psi_p$ the poloidal magnetic flux (divided by $2\pi$). Let $a$ be the mean minor radius of the plasma, and let $I_p$ be the toroidal plasma current. 
+Let $X=x/a$, $Y=y/a$, and 
+\begin{equation}
+\psi_p(x,y) = \frac{\mu_0\,I_p\,R_0}{2\pi}\,\psi(X,Y). 
+\end{equation}
+The safety-factor on a given magnetic flux-surface is
+\begin{equation}
+q = \frac{q_\ast}{2\pi}\oint \frac{dL}{|\hat{\nabla}\psi|},
+\end{equation}
+where 
+\begin{equation}
+q_\ast = \frac{2\pi\,B_0\,a^2}{\mu_0\,I_p\,R_0},
+\end{equation}
+and $\hat{\nabla}=a\,\nabla$. Here, $dL$ is an element of normalized length, in the $X$-$Y$ plane, along the flux-surface. 
+
+We require $\hat{\nabla}^2\psi=0$ everywhere that a current does not flow, where $\hat{\nabla}^2\equiv\partial^2/\partial X^2+\partial^2/\partial Y^2$. 
+If we let  $z=X+{\rm i}\,Y$ then we can automatically ensure this by writing
+\begin{equation}
+F(z)= \psi(X,Y)+{\rm i}\,\chi(X,Y),
+\end{equation}
+where $\psi(X,Y)$ and $\chi(X,Y)$ are real functions. The Cauchy-Reiman relations yield
+\begin{align}
+\frac{\partial\psi}{\partial X}&= \frac{\partial\chi}{\partial Y},\\[0.5ex]
+ \frac{\partial\psi}{\partial Y}&= -\frac{\partial\chi}{\partial X},
+\end{align}
+from which it follows that $\hat{\nabla}^2\psi=0$. 
+The poloidal magnetic field is
+\begin{equation}
+{\bf B}_p \equiv  \nabla\phi\times \nabla\psi_p=\frac{\mu_0\,I_p}{2\pi\,a}\,\hat{\bf B},
+\end{equation}
+where
+\begin{align}
+\hat{B}_{X} &= \frac{\partial\psi}{\partial Y},\\[0.5ex]
+\hat{B}_{Y}&= - \frac{\partial\psi}{\partial X}.
+\end{align}
+Now,
+\begin{equation}
+\frac{dF}{dz} = \frac{\partial\psi}{\partial X} + {\rm i}\,\frac{\partial\chi}{\partial X}= \frac{\partial\psi}{\partial X} - {\rm i}\,\frac{\partial\psi}{\partial Y},
+\end{equation}
+which implies that
+\begin{align}
+\hat{B}_X &= - {\rm Im}\left(\frac{dF}{dz}\right),\\[0.5ex]
+\hat{B}_Y &= - {\rm Re}\left(\frac{dF}{dz}\right).
+\end{align}
+
+\section{First-Order Magnetic Null}
+Let
+\begin{equation}
+F(z)= \ln z + \zeta\,\ln(z + {\rm i}),
+\end{equation}
+where $\zeta$ is real and positive. The first term corresponds to the plasma current filament located at the origin, whereas the second corresponds to the divertor coil filament located at $X=0$, $Y=-1$. 
+The current in the plasma filament is $I_p$, whereas that in the divertor coil filament is $\zeta\,I_p$. 
+
+Now,
+\begin{equation}
+\frac{dF}{dz} = \frac{1}{z} + \frac{\zeta}{z+{\rm i}}.
+\end{equation}
+If $z=z_0$ corresponds to a null  in the poloidal magnetic field, at which $|\hat{\bf B}|=0$,  then we require $(dF/dz)_{z_0}= 0$. It follows that
+\begin{equation}
+z_0 = - \frac{\rm i}{1+\zeta}.
+\end{equation}
+In other words, the magnetic null is located at $X=0$, $Y=Y_0$, where $Y_0 = - 1/(1+\zeta)$. 
+
+Now,
+\begin{equation}
+\frac{d^2F}{dz^2} = -\frac{1}{z^2}- \frac{\zeta}{(z + {\rm i})^2}.
+\end{equation}
+So, at the magnetic null,
+\begin{equation}
+\left(\frac{d^2 F}{dz^2}\right)_{z_0} = \frac{(1+\zeta)^3}{\zeta}.
+\end{equation}
+
+Thus, in the vicinity of the magnetic null 
+\begin{equation}
+F(z)\simeq \frac{1}{2}\,\frac{(1+\zeta)^3}{\zeta} \,(z-z_0)^2.
+\end{equation}
+Let
+\begin{equation}
+z-z_0 = u + {\rm i}\,v.
+\end{equation}
+It follows that
+\begin{equation}
+\psi(u,v) = {\rm Re}(F) = \frac{1}{2}\,\frac{(1+\zeta)^3}{\zeta}\,(u^2-v^2).
+\end{equation}
+The separatrix curves corresponds to $\psi=0$. Thus, the separatrix curves are the two straight-lines $u=v$ and $u=-v$, which subtend right-angles with respect to one another. 
+
+Consider the  flux-surface
+\begin{equation}
+v^2-u^2=\epsilon^2,
+\end{equation}
+whose distance of closest approach to the null point is $\epsilon$. Here, $0<\epsilon\ll 1$. Note that
+\begin{equation}
+\frac{dv}{du} = \frac{u}{v}.
+\end{equation}
+This flux-surface corresponds to the contour
+\begin{equation}
+\psi(u,v) = - \frac{1}{2}\,\frac{(1+\zeta)^3}{\zeta}\,\epsilon^2.
+\end{equation}
+On the flux-surface,
+\begin{align}
+|\hat{\nabla}\psi| &= \left[\left(\frac{\partial\psi}{\partial u}\right)^2+\left(\frac{\partial\psi}{\partial v}\right)^2\right]^{1/2}= \frac{1}{2}\,\frac{(1+\zeta)^3}{\zeta}\left[(2\,u)^2+(2\,v)^2\right]^{1/2}
+= \frac{(1+\zeta)^3}{\zeta}\,(u^2+v^2)^{1/2},
+\end{align}
+and
+\begin{equation}
+dL =\left[1+\left(\frac{dv}{du}\right)^2\right]^{1/2}du=\left(1+\frac{u^2}{v^2}\right)^{1/2} du= \frac{(u^2+v^2)^{1/2}\,du}{v}= \frac{(u^2+v^2)^{1/2}\,du}{(u^2+\epsilon^2)^{1/2}}.
+\end{equation}
+Thus,
+\begin{equation}
+\frac{q (\epsilon)}{q_\ast}= \frac{1}{\pi} \, \frac{\zeta}{(1+\zeta)^3}\int_0^1\frac{du}{(u^2+\epsilon^2)^{1/2}}= \frac{1}{\pi} \, \frac{\zeta}{(1+\zeta)^3}\left[\ln\left\{(u^2+\epsilon^2)^{1/2} + u\right\}\right]_0^1
+\simeq \frac{1}{\pi} \, \frac{\zeta}{(1+\zeta)^3}\,\ln\left(\frac{2}{\epsilon}\right).
+\end{equation}
+
+\section{Second-Order Magnetic Null}
+Let
+\begin{equation}
+F(z) = \ln z + \frac{\zeta}{2}\,\ln(z+{\rm i}+{\mit\Delta}) + \frac{\zeta}{2}\,\ln(z+{\rm i}-{\mit\Delta}),
+\end{equation}
+where $\zeta$ and ${\mit\Delta}$ are real and positive. The first term corresponds to the plasma current filament located at the origin, whereas the second and third terms corresponds to two
+ divertor coil filaments, carrying equal currents, located at $X=\pm{\mit\Delta}$, $Y=-1$. 
+
+Now,
+\begin{equation}
+\frac{dF}{dz} = \frac{1}{z} + \frac{\zeta}{2\,(z+{\rm i}+{\mit\Delta})} + \frac{\zeta}{2\,(z+{\rm i}-{\mit\Delta})}.
+\end{equation}
+If $z=z_0$ corresponds to a null  in the poloidal magnetic field, at which $|\hat{\bf B}|=0$,  then we require $(dF/dz)_{z_0}= 0$. It follows that
+\begin{equation}
+(1+\zeta)\,z_0^{\,2} + {\rm i}\,(2+\zeta)\,z_0 - 1-{\mit\Delta}^2 = 0,
+\end{equation}
+which gives
+\begin{equation}\label{ex}
+z_0 = \frac{-{\rm i}\,(2+\zeta) \pm {\rm i}\sqrt{\zeta^2-4\,(1+\zeta)\,{\mit\Delta}^2}}{2\,(1+\zeta)}.
+\end{equation}
+Thus, in general, there are two magnetic null points. 
+
+Now,
+\begin{equation}
+\frac{d^2F}{dz^2} = - \frac{1}{z^2} - \frac{\zeta}{2\,(z+{\rm i}+{\mit\Delta})^2} - \frac{\zeta}{2\,(z+{\rm i}-{\mit\Delta})^2}.
+\end{equation}
+If $z=z_0$ corresponds to a second-order null point then we require $(d^2F/dz^2)_{z_0}= 0$. It follows that 
+\begin{equation}
+{\mit\Delta} = \frac{\zeta}{2\sqrt{1+\zeta}},
+\end{equation}
+which is, of course, the condition for the two solutions in Eq.~(\ref{ex}) to merge. The second-order null is located at $X=0$, $Y=Y_0$, where
+\begin{equation}
+Y_0 = - \frac{(2+\zeta)}{2\,(1+\zeta)}.
+\end{equation}
+
+Now, 
+\begin{equation}
+\frac{d^3F}{dz^3} = \frac{2}{z^3} +  \frac{\zeta}{(z+{\rm i}+{\mit\Delta})^3} + \frac{\zeta}{(z+{\rm i}-{\mit\Delta})^3}.
+\end{equation}
+So, at the magnetic null, 
+\begin{equation}
+\left(\frac{d^3 F}{dz^3}\right)_{z_0} = - \frac{16\,{\rm i}\,(1+\zeta)^4}{2+\zeta)^2\,\zeta^2}.
+\end{equation}
+
+Thus, in the vicinity of the magnetic null 
+\begin{equation}
+F(z)\simeq -\frac{1}{6}\,\frac{16\,{\rm i}\,(1+\zeta)^4}{2+\zeta)^2\,\zeta^2}\,(z-z_0)^3.
+\end{equation}
+Let
+\begin{equation}
+z-z_0 = u + {\rm i}\,v.
+\end{equation}
+It follows that
+\begin{equation}
+\psi(u,v) = {\rm Re}(F) = \frac{8}{3}\,\frac{(1+\zeta)^4}{(2+\zeta)^2\,\zeta^2}\,(3\,u^2- v^2)\,v
+\end{equation}
+The separatrix curves corresponds to $\psi=0$. Thus, the separatrix curves are the three straight-lines $u=\pm v/\sqrt{3}$ and $v=0$ which subtend $60^\circ$ with respect to one another. 
+
+Consider the 
+he  flux-surface
+\begin{equation}
+(v^2-3\,u^2)\,v=\epsilon^3
+\end{equation}
+whose distance of closest approach to the null point is $\epsilon$. Here, $0<\epsilon\ll 1$. Note that
+\begin{equation}
+\frac{du}{dv} = \frac{v^2-u^2}{2\,u\,v}.
+\end{equation}
+This flux-surface corresponds to the contour
+\begin{equation}
+\psi(u,v) = -\frac{8}{3}\,\frac{(1+\zeta)^4}{(2+\zeta)^2\,\zeta^2}\,\epsilon^3.
+\end{equation}
+On the flux-surface,
+\begin{align}
+|\hat{\nabla}\psi| &= \left[\left(\frac{\partial\psi}{\partial u}\right)^2+\left(\frac{\partial\psi}{\partial v}\right)^2\right]^{1/2}= \frac{8}{3}\,\frac{(1+\zeta)^4}{(2+\zeta)^2\,\zeta^2} \left[(6\,u\,v)^2+(3\,u^2-3\,v^2)^2\right]^{1/2}
+\nonumber\\[0.5ex]
+&=\frac{8\,(1+\zeta)^4}{(2+\zeta)^2\,\zeta^2} \,(u^2+v^2), 
+\end{align}
+and
+\begin{align}
+dL &=\left[\left(\frac{du}{dv}\right)^2+1\right]^{1/2}dv=\left[\left(\frac{v^2-u^2}{2\,u\,v}\right)^2+1\right]^{1/2} dv= \frac{(u^2+v^2)\,dv}{2\,u\,v}.
+\end{align}
+Thus,
+\begin{align}
+\frac{q (\epsilon)}{q_\ast}&= \frac{1}{8\,\pi}\,\frac{(2+\zeta)\,\zeta^2}{(1+\zeta)^4} \,\int_\epsilon^\infty\frac{dv}{2\,u\,v}= \frac{\sqrt{3}}{16\,\pi} \, \frac{(2+\zeta)\,\zeta^2}{(1+\zeta)^4} \int_\epsilon^\infty
+\frac{dv}{v^{1/2}\,(v^3-\epsilon^3)^{1/2}}\nonumber\\[0.5ex]
+&= \frac{\sqrt{3}}{16\,\pi} \, \frac{(2+\zeta)\,\zeta^2}{(1+\zeta)^4} \,\frac{1}{\epsilon}\int_1^\infty
+\frac{dx}{x^{1/2}\,(x^3-1)^{1/2}}=\frac{\sqrt{3}\,\Gamma(4/3)}{16\,\pi^{1/2}\,\Gamma(5/6)}\,\frac{(2+\zeta)\,\zeta^2}{(1+\zeta)^4} \,\frac{1}{\epsilon}.
+\end{align}
+
+
+\end{document}
