@@ -16,9 +16,9 @@ q0   = 1.01
 q95  = 3.5
 q105 = 4.0
 
-B0 = 3.45
+B0 = 2.00
 R0 = 2.96
-a  = 1.25
+a  = 0.90
 
 Wd    = 0.02
 Teped = 400.
@@ -433,8 +433,8 @@ plt.plot (ps, d1, color = 'blue',  linewidth = 2, linestyle = 'solid',   label =
 
 plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
 
-plt.axvline (-4.7967e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
-plt.axvline ( 4.2652e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.axvline (-6.1793e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.axvline ( 6.8026e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.ticklabel_format (style = 'sci', axis = 'x', scilimits = (0, 0))
 
@@ -446,14 +446,14 @@ plt.subplot (3, 1, 2)
 
 plt.xlim (ps[0], ps[-1])
 
-plt.ylim (0., 200.)
+plt.ylim (0., 400.)
 
 plt.plot (ps, d2, color = 'green',  linewidth = 2, linestyle = 'solid')
 
 plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
 
-plt.axvline (-4.7967e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
-plt.axvline ( 4.2652e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.axvline (-6.1793e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.axvline ( 6.8026e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.ticklabel_format (style = 'sci', axis = 'x', scilimits = (0, 0))
 
@@ -464,19 +464,19 @@ plt.subplot (3, 1, 3)
 
 plt.xlim (ps[0], ps[-1])
 
-plt.ylim (0., 5.)
+plt.ylim (0., 10.)
 
 plt.plot (ps, d3, color = 'red',  linewidth = 2, linestyle = 'solid')
 
 plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
 plt.axhline (1., color = 'black', linewidth = 1, linestyle = 'dotted')
 
-plt.axvline (-4.7967e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
-plt.axvline ( 4.2652e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.axvline (-6.1793e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.axvline ( 6.8026e-03, color = 'black', linewidth = 1, linestyle = 'dotted')
 
 plt.ticklabel_format (style = 'sci', axis = 'x', scilimits = (0, 0))
 
-plt.yticks([0, 1, 3, 5])
+plt.yticks([0, 1, 5])
 
 plt.xlabel (r'$\Psi-1$',             fontsize = "15")
 plt.ylabel (r'$|\Delta_k|/(-E_{kk})$', fontsize = "15")

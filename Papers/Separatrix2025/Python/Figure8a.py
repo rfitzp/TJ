@@ -44,13 +44,13 @@ omegaEfac = 0.
 # .........
 # Mode data
 # .........
-ntor = 2.
+ntor = 1.
 
 # .........
 # Plot data
 # .........
-rmin = 0.99
-rmax = 1.01
+rmin = 0.991
+rmax = 1.008
 
 # .................................
 # Defininition of mtanh() functions
@@ -392,10 +392,13 @@ def Ekk(x):
 
 rrr = np.linspace (rmin, rmax, 1000)
 
-ee = []
-d1 = []
-d2 = []
-d3 = []
+qe = []
+qi = []
+qE = []
+dd = []
+pp = []
+ph = []
+ss = []
 ps = []
 
 for r in rrr:    
@@ -403,23 +406,30 @@ for r in rrr:
     if r == 1.:
         r = 1. + 1.e-15
         
-    ee.append (math.log10(epsilon(r)))
-    d1.append (math.log10(delta(r)))
-    d2.append (Delta(r))
-    d3.append (Delta(r)/Ekk(r))
+    qe.append (abs(Qe(r)))
+    qi.append (abs(Qi(r)))
+    qE.append (abs(QE(r)))
+    dd.append (D(r))
+    pp.append (Pperp(r))
+    ph.append (Pphi(r))
+    ss.append (math.log10(shear(r)*shear(r)))
     ps.append (Psi(r) - 1)
 
-fig = plt.figure (figsize = (8.0, 6.0))
+fig = plt.figure (figsize = (12.0, 6.0))
 
 plt.rc ('xtick', labelsize = 15) 
 plt.rc ('ytick', labelsize = 15) 
 
-plt.subplot (3, 1, 1)
+plt.subplot (1, 1, 1)
 
 plt.xlim (ps[0], ps[-1])
+plt.ylim (-0.1, 6.)
  
-plt.plot (ps, ee, color = 'red',  linewidth = 2, linestyle = 'solid', label = '$log_{10}(\hat{\epsilon}_k)$')
-plt.plot (ps, d1, color = 'blue', linewidth = 2, linestyle = 'solid', label = '$\log_{10}(\hat{\delta}_k)$')
+plt.plot (ps, qe, color = 'red',   linewidth = 2, linestyle = 'solid', label = r'$|Q_e|, |Q_i|$')
+plt.plot (ps, qE, color = 'blue',  linewidth = 2, linestyle = 'solid', label = r'$|Q_E|$')
+plt.plot (ps, dd, color = 'green', linewidth = 2, linestyle = 'solid', label = r'$D$')
+plt.plot (ps, pp, color = 'cyan',  linewidth = 2, linestyle = 'solid', label = r'$P_E, P_\phi$')
+plt.plot (ps, ss, color = 'black', linewidth = 2, linestyle = 'solid', label = r'$\log_{10}[(n\,s)^2]$')
 
 plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
 
@@ -429,37 +439,7 @@ plt.xlabel (r'$\Psi-1$', fontsize = "15")
 
 plt.legend (fontsize = '15')
 
-plt.subplot (3, 1, 2)
-
-plt.xlim (ps[0], ps[-1])
-
-plt.ylim (0., 70.)
-
-plt.plot (ps, d2, color = 'red',  linewidth = 2, linestyle = 'solid')
-
-plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
-
-plt.ticklabel_format (style = 'sci', axis = 'x', scilimits = (0, 0))
-
-plt.xlabel (r'$\Psi-1$',   fontsize = "15")
-plt.ylabel (r'$|\Delta_k|$', fontsize = "15")
-
-plt.subplot (3, 1, 3)
-
-plt.xlim (ps[0], ps[-1])
-
-plt.ylim (0., 3.)
-
-plt.plot (ps, d3, color = 'red',  linewidth = 2, linestyle = 'solid')
-
-plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
-plt.axhline (1., color = 'black', linewidth = 1, linestyle = 'dotted')
-
-plt.ticklabel_format (style = 'sci', axis = 'x', scilimits = (0, 0))
-
-plt.xlabel (r'$\Psi-1$',               fontsize = "15")
-plt.ylabel (r'$|\Delta_k|/(-E_{kk})$', fontsize = "15")
-      
 plt.tight_layout ()
 
-plt.show ()
+#plt.show ()
+plt.savefig ("Figure8a.pdf")
