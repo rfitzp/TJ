@@ -415,10 +415,11 @@ for r in rrr:
     ss.append (math.log10(shear(r)*shear(r)))
     ps.append (Psi(r) - 1)
 
+fontsize = 20    
 fig = plt.figure (figsize = (12.0, 6.0))
 
-plt.rc ('xtick', labelsize = 15) 
-plt.rc ('ytick', labelsize = 15) 
+plt.rc ('xtick', labelsize = fontsize) 
+plt.rc ('ytick', labelsize = fontsize) 
 
 plt.subplot (1, 1, 1)
 
@@ -435,9 +436,9 @@ plt.axvline (0., color = 'black', linewidth = 2, linestyle = 'dotted')
 
 plt.ticklabel_format (style = 'sci', axis = 'x', scilimits = (0, 0))
 
-plt.xlabel (r'$\Psi-1$', fontsize = "15")
+plt.xlabel (r'$\Psi-1$', fontsize = fontsize)
 
-plt.legend (fontsize = '15')
+plt.legend (fontsize = fontsize)
 
 plt.tight_layout ()
 

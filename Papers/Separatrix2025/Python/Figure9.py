@@ -33,7 +33,7 @@ neped = 5e19
 nesep = 2e19
 nesol = 0.5e19
 
-Z = 1.
+Z = 10.
 M = 2.
 
 chiperp = 1.
