@@ -1,0 +1,22 @@
+{
+    "NTOR":  2,        // Toroidal mode number
+    "MPOL":  10,        // Poloidal mode number
+    "nu":    1.001,    // Current peakedness parameter
+    "qa":    1.4,     // Edge safety-factor
+
+    "Nqa":   10001,    // Number of points in qa scan
+    "Nnu":   500,      // Number of points in nu scan
+
+    "eps":   1.0e-4,   // Distance of closest approach to magnetic axis
+    "del":   1.0e-8,   // Distance of closest approach to rational surface
+    "Nr":    1000,     // Number of radial gridpoints in output
+
+    "acc":   1.0e-12,  // Integration accuracy
+    "h0":    1.0e-4,   // Initial integration step-length
+    "hmin":  1.0e-10,  // Minimum integration step-length
+    "hmax":  1.0e-3,   // Maximum integration step-length
+
+    "Eta":     1.0e-12, // Minimum magnitude of F at root F(x) = 0
+    "Maxiter": 60,      // Maximum number of root finding iterations
+    "Nint":    1000     // Number of root finding search intervals
+}
