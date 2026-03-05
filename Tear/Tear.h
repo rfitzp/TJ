@@ -48,8 +48,8 @@ class Tear : private Utility
   int    NTOR;   // Toroidal mode number (read from JSON file)
   double q0;     // Central safety-factor (read from JSON file)
   double qa;     // Edge safety-factor (read from JSON file)
+  double rw;     // Radius of perfectly conducting wall (read from JSON file)
   double nu;     // Current peaking factor
-  int    Fixed;  // Flag for fixed boundary calculation
 
   // ----------------------
   // Calculation parameters

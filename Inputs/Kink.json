@@ -1,11 +1,12 @@
 {
-    "NTOR":  2,        // Toroidal mode number
-    "MPOL":  10,        // Poloidal mode number
+    "NTOR":  1,        // Toroidal mode number
+    "MPOL":  -1,        // Poloidal mode number
     "nu":    1.001,    // Current peakedness parameter
-    "qa":    1.4,     // Edge safety-factor
+    "qa":    0.9,      // Edge safety-factor
+    "rw":    10.0,      // Wall radius
 
     "Nqa":   10001,    // Number of points in qa scan
-    "Nnu":   500,      // Number of points in nu scan
+    "Nnu":   1000,     // Number of points in nu scan
 
     "eps":   1.0e-4,   // Distance of closest approach to magnetic axis
     "del":   1.0e-8,   // Distance of closest approach to rational surface

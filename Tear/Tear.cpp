@@ -28,6 +28,8 @@ Tear::Tear ()
   NTOR  = JSONData["NTOR"] .get<int>    ();
   q0    = JSONData["q0"]   .get<double> ();
   qa    = JSONData["qa"]   .get<double> ();
+  rw    = JSONData["rw"]   .get<double> ();
+
   eps   = JSONData["eps"]  .get<double> ();
   del   = JSONData["del"]  .get<double> ();
   Nr    = JSONData["Nr"]   .get<int>    ();
@@ -35,7 +37,6 @@ Tear::Tear ()
   h0    = JSONData["h0"]   .get<double> ();
   hmin  = JSONData["hmin"] .get<double> ();
   hmax  = JSONData["hmax"] .get<double> ();
-  Fixed = JSONData["Fixed"].get<int>    ();
 
   // ------------
   // Sanity check
@@ -58,6 +59,11 @@ Tear::Tear ()
   if (eps <= 0.)
     {
       printf ("Tear:: Error - eps must be positive\n");
+      exit (1);
+    }
+  if (rw <= 1.)
+    {
+      printf ("Tear:: Error - rw must be greater than unity\n");
       exit (1);
     }
   if (del <= 0.)
@@ -107,8 +113,8 @@ Tear::Tear ()
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("ntor = %-2d    q0  = %10.3e qa  = %10.3e Fixed = %1d\n",
-	  NTOR, q0, qa, Fixed);
+  printf ("ntor = %-2d    q0  = %10.3e qa  = %10.3e rw = %10.3e\n",
+	  NTOR, q0, qa, rw);
   printf ("Nr   = %4d eps  = %10.3e del = %10.3e acc   = %10.3e h0 = %10.3e hmax = %10.3e\n",
 	  Nr, eps, del, acc, h0, hmax);
 }
@@ -487,20 +493,15 @@ double Tear::GetDelta (int isurf)
   // ----------------------------------------------------------------------
   // Launch solution from plasma boundary and integrate to rational surface
   // ----------------------------------------------------------------------
+  double fac = 1. /pow (rw, 2.*mpol);
+  
   r     = 1.;
   y[0]  = 1.;
-  y[1]  = - mpol;
+  y[1]  = - mpol * (1. + fac) /(1. - fac);
   h     = - h0;
   count = 0;
 
   Psi(Nr-1, isurf) = 1.;
-
-  if (Fixed)
-    {
-      y[0]             = 0.;
-      y[1]             = - 1.;
-      Psi(Nr-1, isurf) = 0.;
-    }
 
   printf ("Launching solution from plasma boundary: r = %11.4e y[0] = %11.4e y[1] = %11.4e\n",
 	  r, y[0], y[1]);

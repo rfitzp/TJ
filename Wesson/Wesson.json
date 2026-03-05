@@ -1,0 +1,22 @@
+{
+    "mpol":  4.0,      // Toroidal mode number
+    "ntor":  3.0,      // Poloidal mode number
+    "q0":    1.01,     // Central safety-factor
+    "qa":    1.4,      // Edge safety-factor
+    "rw":    10.0,     // Wall radius
+    "abar":  1.0,      // Current channel radius
+    "qafc":  4.0,      // Control parameter for qa scan
+    "flag":  0,        // Flag for various calculations
+
+    "eps":   1.0e-4,   // Distance of closest approach to magnetic axis
+    "del":   1.0e-8,   // Distance of closest approach to rational surface
+
+    "acc":   1.0e-12,  // Integration accuracy
+    "h0":    1.0e-4,   // Initial integration step-length
+    "hmin":  1.0e-10,  // Minimum integration step-length
+    "hmax":  1.0e-3,   // Maximum integration step-length
+
+    "Eta":     1.0e-12, // Minimum magnitude of F at root F(x) = 0
+    "Maxiter": 10,      // Maximum number of root finding iterations
+    "Nint":    50       // Number of root finding search intervals
+}

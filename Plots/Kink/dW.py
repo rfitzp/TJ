@@ -28,7 +28,6 @@ plt.axhline (0.,  color = 'black', linewidth = 2, linestyle = 'dotted')
 plt.xlabel (r'$q_a$',                        fontsize = "15")
 plt.ylabel (r'$- \delta \overline{W}_{nw}$', fontsize = "15")
 
-
 plt.tight_layout ()
 
 plt.show ()    

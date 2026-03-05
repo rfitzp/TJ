@@ -29,6 +29,7 @@ Kink::Kink ()
   MPOL = JSONData["MPOL"].get<int>    ();
   qa   = JSONData["qa"]  .get<double> ();
   nu   = JSONData["nu"]  .get<double> ();
+  rw   = JSONData["rw"]  .get<double> ();
 
   Nqa  = JSONData["Nqa"].get<int> ();
   Nnu  = JSONData["Nnu"].get<int> ();
@@ -64,11 +65,11 @@ Kink::Kink ()
       printf ("Kink:: Error - NTOR must be positive\n");
       exit (1);
     }
- if (MPOL < 1)
-    {
-      printf ("Kink:: Error - MPOL must be positive\n");
-      exit (1);
-    }
+ // if (MPOL < 1)
+ // {
+ //   printf ("Kink:: Error - MPOL must be positive\n");
+ //   exit (1);
+ // }
   if (eps <= 0.)
     {
       printf ("Kink:: Error - eps must be positive\n");
@@ -120,8 +121,8 @@ Kink::Kink ()
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("ntor = %-2d   mpol = %-2d         qa = %9.3e nu  = %9.3e q0 = %9.3e\n",
-	  NTOR, MPOL, qa, nu, qa /(1. + nu));
+  printf ("ntor = %-2d   mpol = %-2d         qa = %9.3e nu  = %9.3e q0 = %9.3e rw  = %9.3e\n",
+	  NTOR, MPOL, qa, nu, qa /(1. + nu), rw);
   printf ("Nr   = %4d eps  = %9.3e del = %9.3e acc = %9.3e h0 = %9.3e hmax = %9.3e\n",
 	  Nr, eps, del, acc, h0, hmax);
 }
@@ -208,12 +209,12 @@ void Kink::Solve ()
   // ---------------------------------------------
   // Find critical qa value for marginal stability
   // ---------------------------------------------
-  FindCritical ();
+  //FindCritical ();
   
   // -----------------
   // Write netcdf file
   // -----------------
-  WriteNetcdf ();
+  //WriteNetcdf ();
   
   // -------
   // Cleanup
@@ -234,7 +235,7 @@ void Kink::FindCritical ()
   for (int i = 0; i < Nnu; i++)
     {
       double nu_min = 1.001;
-      double nu_max = 2.0;
+      double nu_max = 2.5;
 
       nu = nu_min + (nu_max - nu_min) * double (i) /double (Nnu - 1);
       
@@ -617,7 +618,9 @@ double Kink::RootFindF (double x)
 {
   qa = x;
 
+  double fac = 1. /pow (rw, 2.*mpol);
+
   double lambda = GetLambda ();
 
-  return lambda + fabs (mpol);
+  return lambda + fabs (mpol) * (1. + fac) /(1. - fac);
 }

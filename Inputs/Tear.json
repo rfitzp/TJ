@@ -1,8 +1,8 @@
 {
     "NTOR":  1,        // Toroidal mode number
     "q0":    1.1,      // Central safety-factor
-    "qa":    4.1,    // Edge safety-factor
-    "Fixed": 0,        // Flag for fixed boundary calculation  
+    "qa":    3.5,      // Edge safety-factor
+    "rw":    1.05,     // Radius of perfectly conducting wall
 
     "eps":   1.0e-4,   // Distance of closest approach to magnetic axis
     "del":   1.0e-8,   // Distance of closest approach to rational surface

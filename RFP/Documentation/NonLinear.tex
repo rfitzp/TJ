@@ -1,0 +1,171 @@
+\documentclass[12pt, oneside]{article}   	
+\usepackage{amsmath}           		          	
+\usepackage{graphicx,epstopdf}					
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{esint}
+\newcommand {\bxi}{\mbox{\boldmath$\xi$}}
+\allowdisplaybreaks
+
+\title{Program {\sf NonLinear}}
+\author{Richard Fitzpatrick}
+\date{}
+\begin{document}
+\maketitle
+
+\section{Normalization}
+All lengths normalized to $a$. All magnetic fields normalized to $B_0$. All pressures normalized to $B_0^{\,2}/\mu_0$. Also,
+$\epsilon_a\,\sigma\rightarrow \sigma$. 
+
+\section{Continuous Pressure Equilibrium}
+Must solve 
+\begin{align}
+\frac{dB_\varphi}{dr} &= -\sigma\,B_\theta - \frac{P'\,B_\varphi}{B_\theta^{\,2}+B_\varphi^{\,2}},\\[0.5ex]
+\frac{dB_\theta}{dr} &= -\frac{B_\theta}{r} + \sigma\,B_\varphi - \frac{P'\,B_\theta}{B_\theta^{\,2}+B_\varphi^{\,2}},
+\end{align}
+subject to small-$r$ boundary conditions
+\begin{align}
+B_\varphi(0) &= 1,\\[0.5ex]
+B_\theta(r) &= \frac{\epsilon_a\,r}{q_0}.
+\end{align}
+The safety-factor profile is
+\begin{equation}
+q(r) = \frac{\epsilon_a\,r\,B_\varphi}{B_\theta}.
+\end{equation}
+
+Let
+\begin{align}
+\sigma(r) &= \frac{2\,\epsilon_a}{q_0}\,(1-r^{\alpha_s})^{\nu_s},\\[0.5ex]
+P(r) &= \frac{\beta_0}{2}\,(1-r^{\alpha_p})^{\nu_p},
+\end{align}
+so
+\begin{align}
+\sigma'(r) &= -\frac{2\,\epsilon_a}{q_0}\,\alpha_s\,\nu_s\,r^{\alpha_s-1}\,(1-r^{\alpha_s})^{\nu_s-1},\\[0.5ex]
+P'(r) &= -\frac{\beta_0}{2}\,\alpha_p\,\nu_p\,r^{\alpha_p-1}\,(1-r^{\alpha_p})^{\nu_p-1}.
+\end{align}
+
+\section{Stepped Pressure Equilibrium}
+Must solve
+\begin{equation}
+\frac{dq}{dr} =\frac{(2-\sigma\,q/\epsilon_a)\,q}{r} - \epsilon_a\,r\,\sigma,
+\end{equation}
+subject to boundary condition
+\begin{equation}
+q(0) = q_0.
+\end{equation}
+Must also solve
+\begin{equation}
+\frac{dB_\theta}{dr} = \left(\frac{\sigma\,q/\epsilon_a-1}{r}\right)B_\theta,
+\end{equation}
+subject to the small-$r$ boundary condition
+\begin{equation}
+B_\theta = \frac{\epsilon_a\,r}{q_0},
+\end{equation}
+and the jump conditions 
+\begin{equation}
+[B_\theta^{\,2}]_{r_i-}^{r_i+} = 2\,(P_i-P_{i+1})\left(\frac{\epsilon_a^{\,2}\,r^2}{\epsilon_a^{\,2}\,r^2+q^2}\right)_{r_i}
+\end{equation}
+at the control surfaces. Then
+\begin{equation}
+B_\varphi = \frac{q\,B_\theta}{\epsilon_a\,r}.
+\end{equation}
+
+\section{Eigenmode Equation}
+Let
+\begin{align}
+F^{m,n} &= m\,B_\theta-n\,\epsilon_a\,r\,B_\varphi,\\[0.5ex]
+G^{m,n}&=n\,\epsilon_a\,r\,B_\theta + m\,B_\varphi,\\[0.5ex]
+H^{m,n}&= m^2+ (n\,\epsilon_a\,r)^2.
+\end{align}
+Let 
+\begin{align}
+f^{m,n} &= \frac{r}{H^{m,n}},\\[0.5ex]
+g^{m,n} &= \frac{1}{r}+\frac{2\,m\,n\,\epsilon_a\,r\,\sigma }{(H^{m,n})^2}- \frac{r\,\sigma^2}{H^{m,n}}+\frac{G^{m,n}\,r\,\sigma'}{H^{m,n}\,F^{m,n}}.
+\end{align}
+
+Eigenmode equation is
+\begin{align}
+\frac{d\psi^{m,n}}{dr} &= \frac{\chi^{m,n}}{f^{m,n}},\\[0.5ex]
+\frac{d\chi^{m,n}}{dr} &= g^{m,n}\,\psi^{m,n}.
+\end{align}
+
+Let
+\begin{align}
+\alpha &= \frac{1}{(m+2)^2-1}\left[\frac{(m+2)\,(n\,\epsilon_a)^2}{m}-\gamma\right],\\[0.5ex]
+\beta &= \frac{1}{(m+2)^2-1}\left[\frac{(n\,\epsilon_a)^2}{m}-(m+2)\,\gamma\right],
+\end{align}
+where
+\begin{equation}
+\gamma = \frac{4\,(m-n\,q_0)}{m^3}\left[\left(\frac{\epsilon_a}{q_0}\right)^2 + \frac{m^2\,\nu_s}{(m-n\,q_0)^2}\right]
+\end{equation}
+if $\alpha_s=2$, and 
+\begin{equation}
+\gamma = \frac{4\,(m-n\,q_0)}{m^3}\left(\frac{\epsilon_a}{q_0}\right)^2
+\end{equation}
+if $\alpha_s>2$. 
+The small-$r$ boundary conditions are
+\begin{align}
+\psi^{m,n}&=r^m\,(1+\alpha\,r^2),\\[0.5ex]
+\chi^{m,n}&=r^m\left(\frac{1}{m}+ \beta\,r^2\right)
+\end{align}
+for $m>0$, and
+\begin{align}
+\psi^{m,n}&=r^2\left\{1+\frac{(n\,\epsilon_a)^2}{8}\left[1-\frac{4}{(n\,q_0)^2}\right]r^2\right\},\\[0.5ex]
+\chi^{m,n}&=\frac{2}{(n\,\epsilon_a)^2}+\frac{1}{2}\left[1-\frac{4}{(n\,q_0)^2}\right]r^2
+\end{align}
+for $m=0$. 
+
+At $r=1$, the boundary conditions are 
+\begin{align}
+\psi^{m,n} &= n\,\epsilon_a\left[I_m'(n\,\epsilon_a)\,K_m'(n\,\epsilon_b)- K_m'(n\,\epsilon_a)\,I_m'(n\,\epsilon_b)\right],\\[0.5ex]
+\chi^{m,n} &= I_m(n\,\epsilon_a)\,K_m'(n\,\epsilon_b)- K_m(n\,\epsilon_a)\,I_m'(n\,\epsilon_b).
+\end{align}
+
+In the vicinity of the rational surface
+\begin{align}
+\psi^{m,n}&= C_{l\pm}\left[1+\,\lambda^{m,n}\,x\,(\ln|x|-1)\right] + C_{s\pm}\,x,\\[0.5ex]
+\chi^{m,n} &= \frac{C_{l\pm}}{H^{m,n}}\,\lambda^{m,n}\,\ln|x| + \frac{C_{s\pm}}{H^{m,n}},
+\end{align}
+where
+\begin{align}
+x&= \frac{r-r_s^{\,m,n}}{r_s^{\,m,n}},\\[0.5ex]
+\lambda^{m,n} &= \left[\frac{G^{m,n}\,r\,\sigma'}{(F^{m,n})'}\right]_{r_s^{\,m,n}},\\[0.5ex]
+(F^{m,n})' &= \sigma\,G^{m,n} - \frac{m\,B_\theta}{r} -n\,\epsilon_a\,B_\varphi.
+\end{align}
+Thus,
+\begin{align}
+C_l &= \frac{a_{22}\,\psi^{m,n}-a_{12}\,\chi^{m,n}}{a_{11}\,a_{22}-a_{12}\,a_{21}},\\[0.5ex]
+C_s &= \frac{-a_{21}\,\psi^{m,n}+a_{11}\,\chi^{m,n}}{a_{11}\,a_{22}-a_{12}\,a_{21}},\\[0.5ex]
+a_{11} &= 1+\,\lambda^{m,n}\,x\,(\ln|x|-1),\\[0.5ex]
+a_{12}&= x,\\[0.5ex]
+a_{21}&= \frac{\ln|x|}{H^{m,n}},\\[0.5ex]
+a_{22} &= \frac{1}{H^{m,n}}.
+\end{align}
+Require
+\begin{equation}
+C_{l-}=C_{l+} = 1.
+\end{equation}
+Then
+\begin{equation}
+{\mit\Delta}^{m,n} = C_{s+}-C_{s-}.
+\end{equation}
+
+At the control surfaces
+\begin{align}
+\left[\psi^{m,n}\right]_{r_i-}^{r_-+} &= 0,\\[0.5ex]
+\left[\chi^{m,n}\right]_{r_i-}^{r_-+} &= J_i^{\,m,n}\,\psi^{m,n}(r_i),
+\end{align}
+where
+\begin{align}
+H^{\,m,n}_i &= H^{m,n}(r_i),\\[0.5ex]
+J_i^{\,m,n} &= \frac{K^{m,n}(r_i)}{H^{m,n}(r_i)}\,\frac{[B_\theta^{\,2}]_{r=r_{i}-}^{r=r_{i}+}}{B_\theta(r_i-)\,B_\theta(r_{i}+)},\\[0.5ex]
+K^{m,n}(r) &= \frac{1}{m-n\,q}\left[m+ (m\,n\,q+n^2\,\epsilon_a^{\,2}\,r^2)\left(\frac{\sigma}{2\,n\,\epsilon_a}-\frac{m}{m^2+n^2\,\epsilon_a^{\,2}\,r^2}\right)\right]\nonumber\\[0.5ex]
+&\phantom{=}  -\frac{(m\,n\,q+n^2\,\epsilon_a^{\,2}\,r^2)\,(1-q^2)}{(m-n\,q)^2}.
+\end{align}
+In the previous equation, the factors of $(m-n\,q)^{-1}$ are regularized as follows: 
+\begin{equation}
+\frac{1}{m-n\,q} = \frac{m-n\,q}{(m-n\,q)^2+ [n\,q'(r_s)\,W^{m,n}]^{\,2}}.
+\end{equation}
+
+\end{document}
+

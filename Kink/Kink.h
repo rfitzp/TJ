@@ -48,6 +48,7 @@ class Kink : private Utility
   int    MPOL;   // Poloidal mode number (read from JSON file)
   double qa;     // Edge safety-factor (read from JSON file)
   double nu;     // Current peaking factor (read from JSON file)
+  double rw;     // Radius of resistive wall (read from JSON file)
 
   // ---------------
   // Scan parameters
