@@ -34,8 +34,8 @@ plt.subplot (1, 2, 1)
 
 plt.xlim (0., 1.)
 
-plt.plot    (r, p2, color = 'black', linewidth = 3,   linestyle = 'solid',  label = "$m=2/n=1$")
-plt.plot    (r, p3, color = 'black', linewidth = 3,   linestyle = 'dashed', label = "$m=3/n=1$")
+plt.plot    (r, p2, color = 'black', linewidth = 3,   linestyle = 'solid',  label = "$m=2, n=1$")
+plt.plot    (r, p3, color = 'black', linewidth = 3,   linestyle = 'dashed', label = "$m=3, n=1$")
 plt.axhline (0.,          color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (rs[0],       color = 'black', linewidth = 2.0, linestyle = 'dotted')
 plt.axvline (rs[1],       color = 'black', linewidth = 2.0, linestyle = 'dotted')
@@ -50,8 +50,8 @@ plt.subplot (1, 2, 2)
 
 plt.xlim (0., 1.)
 
-plt.plot    (r, p2a, color = 'black', linewidth = 3,   linestyle = 'solid',  label = "$m=2/n=1$")
-plt.plot    (r, p3a, color = 'black', linewidth = 3,   linestyle = 'dashed', label = "$m=3/n=1$")
+plt.plot    (r, p2a, color = 'black', linewidth = 3,   linestyle = 'solid',  label = "$m=2, n=1$")
+plt.plot    (r, p3a, color = 'black', linewidth = 3,   linestyle = 'dashed', label = "$m=3, n=1$")
 plt.axhline (0.,          color = 'black', linewidth = 1.5, linestyle = 'dotted')
 plt.axvline (rs[0],       color = 'black', linewidth = 2.0, linestyle = 'dotted')
 plt.axvline (rs[1],       color = 'black', linewidth = 2.0, linestyle = 'dotted')
@@ -64,6 +64,6 @@ plt.legend (fontsize = 15)
 
 plt.tight_layout ()
 
-plt.show ()    
+#plt.show ()    
 
-#plt.savefig ("Figure11_1.pdf")
+plt.savefig ("Figure11_1.pdf")

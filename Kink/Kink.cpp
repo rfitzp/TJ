@@ -60,16 +60,11 @@ Kink::Kink ()
       printf ("Kink:: Error - nu cannot be less than 1\n");
       exit (1);
     }
- if (NTOR < 1)
+  if (MPOL == 0)
     {
-      printf ("Kink:: Error - NTOR must be positive\n");
+      printf ("Kink:: Error - MPOL cannot be zero\n");
       exit (1);
     }
- // if (MPOL < 1)
- // {
- //   printf ("Kink:: Error - MPOL must be positive\n");
- //   exit (1);
- // }
   if (eps <= 0.)
     {
       printf ("Kink:: Error - eps must be positive\n");
@@ -561,8 +556,8 @@ double Kink::GetLambda ()
       double y[2], err[2];
       
       r     = eps;
-      y[0]  = pow (r, mpol);
-      y[1]  = mpol * pow (r, mpol-1.);
+      y[0]  = pow (r, fabs(mpol));
+      y[1]  = fabs(mpol) * pow (r, fabs(mpol)-1.);
       h     = h0;
       count = 0;
       
@@ -608,7 +603,7 @@ void Kink::CashKarp45Rhs (double r, double* y, double* dydr)
   GetEquilibrium (r, q, sigma, Drive);
 
   dydr[0] = y[1];
-  dydr[1] = - y[1] /r + mpol*mpol * y[0] /r/r - Drive * y[0] /(1./q - 1./qs); 
+  dydr[1] = - y[1] /r + mpol*mpol * y[0] /r/r - Drive * y[0] /(1./q - ntor/mpol); 
  }
 
 // ################################
@@ -618,7 +613,7 @@ double Kink::RootFindF (double x)
 {
   qa = x;
 
-  double fac = 1. /pow (rw, 2.*mpol);
+  double fac = 1. /pow (rw, 2.*fabs(mpol));
 
   double lambda = GetLambda ();
 

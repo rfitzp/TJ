@@ -1,8 +1,8 @@
 {
-    "NTOR":  1,        // Toroidal mode number
-    "MPOL":  -1,        // Poloidal mode number
+    "NTOR":  0,        // Toroidal mode number
+    "MPOL":  2,        // Poloidal mode number
     "nu":    1.001,    // Current peakedness parameter
-    "qa":    0.9,      // Edge safety-factor
+    "qa":    1.2,      // Edge safety-factor
     "rw":    10.0,      // Wall radius
 
     "Nqa":   10001,    // Number of points in qa scan
