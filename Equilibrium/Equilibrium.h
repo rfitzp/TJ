@@ -189,12 +189,18 @@ class Equilibrium : private Utility
   double*            Tep;       // Radial derivative of electron temperature
   double*            nep;       // Radial derivative of electron number density
   double             gshape;    // Factor by which toroidal current increased due to plasma shaping
+  double             dgshape;   // gshape - 1
    
   Array<double,2>    HHfunc;    // Horizontal shaping functions
   Array<double,2>    VVfunc;    // Vertical shaping functions
   Array<double,2>    HPfunc;    // Radial derivatives of horizontal shaping functions
   Array<double,2>    VPfunc;    // Radial derivatives of vertical shaping functions
   double*            Lfunc;     // Relabelling function
+
+  double             beta1;     // Pressure current enhancement parameter
+  double             alpha1;    // Toroidal current enhancement parameter
+  double             alpha2;    // Elliptical current enhancement parameter
+  double             alpha3;    // Triangular current enhacement parameter
  
   double             amean;     // Mean minor radius
   double             li;        // Normalized plasma self-inductance

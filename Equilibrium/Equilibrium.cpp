@@ -483,6 +483,46 @@ void Equilibrium::Solve ()
 
   delete[] y; delete[] err;
 
+  // .................................
+  // Integrate alpha1, beta1 equations
+  // .................................
+  y           = new double[2];
+  err         = new double[2];
+  rhs_chooser = 5;
+
+  h     = h0;
+  count = 0;
+  r     = eps;
+  p2ppc = - 2.*mu;
+  y[0]  = - r /4.;
+  y[1]  = (2.*p2ppc/f1c/f1c) * r /4.;
+
+   do
+     {
+       CashKarp45Adaptive (2, r, y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+     }
+   while (r < rr[Nr] - h);
+   CashKarp45Fixed (2, r, y, err, rr[Nr] - r);
+
+   alpha1 = - y[0];
+   beta1  = - y[1];
+
+   delete[] y; delete[] err;
+   
+  // .............................
+  // Calculate alpha_2 and alpha_3
+  // .............................
+  if (Ns > 1)
+    alpha2 = HPfunc(2, Nr) /HHfunc(2, Nr);
+  else
+    alpha2 = 0.;
+  if (Ns > 2)
+    alpha3 = HPfunc(3, Nr) /HHfunc(3, Nr);
+  else
+    alpha3 = 0.;
+
+  printf ("alpha1 = %10.3e beta1 = %10.3e alpha2 = %10.3e alpha3  = %10.3e\n", alpha1, beta1, alpha2, alpha3);
+
   // .....................
   // Set edge shaping data
   // .....................
@@ -672,11 +712,12 @@ void Equilibrium::Solve ()
     }
   q2[0] = qc * (1. + epsa*epsa * (H2c*H2c + V2c*V2c));
 
-  gshape = It[Nr] /2./M_PI /f1[Nr];
+  gshape  = It[Nr] /2./M_PI /f1[Nr];
+  dgshape = gshape - 1.;
 
   for (int i = 0; i <= Nr; i++)
     {
-      Tf[i]   = B0*R0 * (1. + epsa*epsa*g2[i]);
+      Tf  [i] = B0*R0 * (1. + epsa*epsa*g2[i]);
       mu0P[i] = B0*B0 * epsa*epsa * p2[i];
       PsiN[i] = Psi[i] /Psi[Nr];
     }
@@ -784,8 +825,8 @@ void Equilibrium::Solve ()
 
   delete[] y2; delete[] err2;
 
-  printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It = %10.3e gshape = %10.3e\n",
-	  q2[0], q0[Nr], q2[Nr], Ip[Nr], It[Nr], gshape);
+  printf ("qc = %10.3e q0a   = %10.3e q2a   = %10.3e Ip    = %10.3e It = %10.3e gshape = %10.3e dgshape = %10.3e\n",
+	  q2[0], q0[Nr], q2[Nr], Ip[Nr], It[Nr], gshape, dgshape);
   printf ("li = %10.3e betat = %10.3e betap = %10.3e betaN = %10.3e\n",
   	  li, betat, betap, betaN);
 
@@ -2543,5 +2584,30 @@ void Equilibrium::CashKarp45Rhs (double r, double* y, double* dydr)
       double dZdw  = GetdZdw (rw, r, 1);
 
       dydr[0] = (dRdw * dZdr - dRdr * dZdw) /R;
+    }
+  else if (rhs_chooser == 5)
+    {
+      // .....................................
+      // Right-hand sides for H_1' calculation
+      // .....................................
+
+      double f1  = Getf1 (r);
+      double f1p = Getf1p(r);
+
+      double p2p;
+      if (SRC)
+	{
+	  p2p = gsl_spline_eval_deriv (p2inspline, r, p2inacc) /gsl_spline_eval (p2inspline, 0., p2inacc);
+	}
+      else
+	{
+	  p2p = - 2. * mu * r * pow (1. - r*r, mu - 1.);
+	}
+         
+      double facf = 2.*f1p/f1 - 1./r;
+      double facp = 2.*r*r*r*p2p/f1/f1;
+ 
+      dydr[0] = - facf * y[0] - 1.;
+      dydr[1] = - facf * y[1] + facp;
     }
  }
