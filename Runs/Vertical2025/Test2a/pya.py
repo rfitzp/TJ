@@ -76,5 +76,5 @@ plt.ylabel (r'$Z/R_0$', fontsize = "15")
 
 plt.tight_layout()
 
-#plt.show()    
-plt.savefig ("Fig2.png")
+plt.show()    
+#plt.savefig ("Fig2.png")
