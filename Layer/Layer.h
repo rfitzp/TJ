@@ -1,8 +1,8 @@
 // Layer.h
 
-// #####################################################################
+// ################################################################################
 
-// Class to solve three-field resonant layer equations in tokamak plasma
+// Class to solve three-field/four-field resonant layer equations in tokamak plasma
 
 // Inputs:
 //  Inputs/TJ.json          - TJ JSON file
@@ -30,11 +30,16 @@
 
 // Documentation: ../Documentation/Layer.pdf
 
-// #####################################################################
+// ################################################################################
 
 #pragma once
 
 #include "Utility.h"
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_multiroots.h>
+
+// Pointers to target function for root finding
+extern "C" int pTarget (const gsl_vector* x, void* params, gsl_vector* f);
 
 // ############
 // Class header
@@ -58,7 +63,8 @@ private:
   double* iotae_res;  // Ratio of minus electron diamagnetic frequencies to total diamagnetic frequencies at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* D_res;      // Normalized ion sound radii at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* Pphi_res;   // Normalized momentum diffusivities at rational surfaces (read from Outputs/TJ/TJ.nc)
-  double* Pperp_res;  // Normalized energy diffusivities at rational surfaces (read from Outputs/TJ/TJ.nc
+  double* Pperp_res;  // Normalized energy diffusivities at rational surfaces (read from Outputs/TJ/TJ.nc)
+  double* cbeta_res;  // c_beta values at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* Delta_res;  // Delta_primes at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* Deltac_res; // Critical Delta_primes at rational surfaces (read from Outputs/TJ/TJ.nc)
   double* Chi_res;    // Absolute values of Chi (read from Outputs/TJ/TJ.nc)
@@ -71,7 +77,8 @@ private:
   double          QE;     // Normalized ExB frequency
   double          D;      // Normalized ion sound radius 
   double          Pphi;   // Normalized momentum diffusivity 
-  double          Pperp;  // Normalized energy diffusivity 
+  double          Pperp;  // Normalized energy diffusivity
+  double          cbeta;  // Plasma beta parameter
   double          iotae;  // Ratio of minus electron diamagnetic frequency to total diamagnetic frequency
 
   double          g_r;    // Real part of normalized growth-rate in MHD frame
@@ -84,10 +91,16 @@ private:
   // ....................................
   int    RMP;    // Flag to enable resonant magnetic perturbation calculation (read from TJ JSON file)
   int    MARG;   // Flag to enable calculation of ion branch marginal stability points (read from JSON file)
+  int    GSL;    // Flag to enable GSL root finding (read from JSON file)
+  int    USR;    // Flag to use initial guesses read from JSON file (read from JSON file)
   double pstart; // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double pend;   // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double P3max;  // Value of Pmax[3] above which switch to low-D layer equations made (read from JSON file)
   int    Nscan;  // Number of points in marginal stability and frequency scans (read from JSON file)
+  double cbmin;  // Minimum value of cbeta below which three-field model used (read from JSON file)
+
+  vector<double> Gr; // Initial offset guesses for g_r
+  vector<double> Gi; // Initial offset guesses for g_i
 
   // .........................
   // Marginal stability points
@@ -101,6 +114,8 @@ private:
   // .................................
   // Growth-rates and real frequencies
   // .................................
+  double* gr_e;    // Real part of normalized growth rate in MHD frame
+  double* gi_e;    // Imaginary part of normalized growth rate in MHD frame
   double* gamma_e; // Electron-branch growth-rates at rational surfaces (kHz)
   double* omega_e; // Electron-branch real frequencies at rational surfaces  (kHz)
   double* f_e;     // Electron-branch relative frequency (+1/0/-1 if mode corotates with electron/ExB/ion fluid)
@@ -119,7 +134,7 @@ private:
   // ....
   // Misc
   // ....
-  int lowD;
+  int             lowD, rhs_chooser;
   complex<double> Im; // Square-root of -1: Im = complex<double> (0., 1.)
   
 public:
@@ -127,6 +142,9 @@ public:
   // Constructor
   Layer ();
 
+  // Target function for rootfinding
+  void Target (double x1, double x2, double& F1, double& F2);
+  
   // Solve problem
   void Solve (int verbose);
 
@@ -145,8 +163,12 @@ private:
   // Deallocate memory
   void CleanUp ();
 
-  // Solve layer equations 
+  // Solve layer equations
   void SolveLayerEquations ();
+  // Solve three-field layer equations 
+  void SolveThreeFieldLayerEquations ();
+  // Solve four-field layer equations 
+  void SolveFourFieldLayerEquations ();
   
   // Evaluate right-hand sides of differential equations
   void CashKarp45Rhs (double x, complex<double>*  y, complex<double>*  dydx) override;
@@ -156,4 +178,9 @@ private:
 
   // Target function for one-dimensional root finding
   double RootFindF (double x) override;
+
+  // Print state of GSL root finder
+  int print_state (size_t iter, gsl_multiroot_fsolver* s);
+  // Find electron branch roots using GSL library
+  void GSLRoot (double& x1, double& x2, double& res);
 };

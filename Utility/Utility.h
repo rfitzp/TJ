@@ -124,7 +124,7 @@ public:
   double pc_m_e;       // Electron rest mass (kg)
   double pc_m_p;       // Proton rest mass (kg)
   double pc_epsilon_0; // Vacuum permittivity (F/m)
-  double pc_mu_0;      // Vacuum permeability (F/m)
+  double pc_mu_0;      // Vacuum permeability (H/m)
 
   // ----------------------
   // Mathematical constants

@@ -487,12 +487,12 @@ void FourField::SolveThreeFieldLayerEquations ()
   // ........
   // Clean up
   // ........
-  delete[] y; delete[] dydp; 
+  delete[] y; delete[] dydp; delete[] err;
 }
 
-// #############################################
+// ############################################
 // Function to solve four-field layer equations
-// #############################################
+// ############################################
 void FourField::SolveFourFieldLayerEquations ()
 {
   // ........
@@ -576,7 +576,7 @@ void FourField::SolveFourFieldLayerEquations ()
   // ........
   // Clean up
   // ........
-  delete[] y; delete[] dydp; 
+  delete[] y; delete[] dydp; delete[] err;
 }
 
 // ###################################

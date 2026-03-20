@@ -1,21 +1,27 @@
 {
     "MARG":  0,           // Flag for calculation of ion branch marginal stability points
+    "GSL":   1,           // Flag for GSL root finding
+    "USR":   1,           // Flag for reading offset of guesses from this file
    	  
-    "pstart": 6.0,        // Layer equations integrated from p = pstart to p = pend 
+    "pstart": 8.0,        // Layer equations integrated from p = pstart to p = pend 
     "pend":   1.0e-8,     // Layer equations integrated from p = pstart to p = pend 
     "P3max":  20.0,       // Value of Pmax[3] above which switch to low-D layer equations made 
-    "Nscan":  1000,       // Number of points in marginal stability and frequency scans 
+    "Nscan":  1000,       // Number of points in marginal stability and frequency scans
+    "cbmin":  0.01,       // Minimum cbeta below which three-field model is used
     
-    "acc":  1.0e-12,      // Integration accuracy
+    "acc":  1.0e-14,      // Integration accuracy
     "h0":   1.0e-2,       // Initial integration step-length
     "hmin": 1.0e-10,      // Minimum integration step-length 
     "hmax": 1.0e-1,       // Maximum integration step-length
     
-    "Eps":     1.0e-12,   // Minimum magnitude of (F1^2+F2^2)^1/2 at root F1(x1,x2) = F2(x1,x2) = 0 
-    "MaxIter": 100,       // Maximum number of Newton iterations
+    "Eps":     1.0e-8,    // Minimum magnitude of (F1^2+F2^2)^1/2 at root F1(x1,x2) = F2(x1,x2) = 0 
+    "MaxIter": 50,        // Maximum number of Newton iterations
     "dS":      1.0e-6,    // Step-size for calculation of Jacobian
     "Smax":    0.1,       // Maximum Newton step-size
-    "Smin":    1.0e-7     // Minimum Newton step-size
+    "Smin":    1.0e-9,     // Minimum Newton step-size
+
+    "g_r":     [0.0,  1.0e-2],   // Initial offset of guesses for g_r
+    "g_i":     [0.0,  0.0]    // Initial offset of guesses for g_i
 }
 
 

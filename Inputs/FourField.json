@@ -1,6 +1,6 @@
 {
     "g_r":   0.00,        // Real part of normalized growth-rate in MHD frame 
-    "g_i":   -0.4,         // Imaginary part of normalized growth-rate in MHD frame
+    "g_i":   -0.4,        // Imaginary part of normalized growth-rate in MHD frame
     "Qe":    -0.15,       // Normalized electron diamagnetic frequency
     "Qi":    0.15,        // Normalized ion diamagnetic frequency
     "D":     0.1,         // Normalized ion sound radius

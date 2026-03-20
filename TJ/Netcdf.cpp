@@ -1854,6 +1854,8 @@ void TJ::WriteNetcdf ()
       Pm_r.putVar (Pmres);
       NcVar Pe_r  = dataFile.addVar ("Pperp",      ncDouble, x_d);
       Pe_r.putVar (Peres);
+      NcVar cb_r  = dataFile.addVar ("cbeta",      ncDouble, x_d);
+      cb_r.putVar (cbres);
       NcVar Dc_r  = dataFile.addVar ("Delta_crit", ncDouble, x_d);
       Dc_r.putVar (Dcres);
       NcVar Wd_r  = dataFile.addVar ("W_d",        ncDouble, x_d);

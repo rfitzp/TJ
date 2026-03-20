@@ -656,6 +656,7 @@ class TJ : private Utility
   double* Dres;   // Normalized ion sound radius
   double* Pmres;  // Magnetic Prandtl number for perpendicular momentum diffusion
   double* Peres;  // Magnetic Prandtl number for perpendicular energy diffusion
+  double* cbres;  // c_beta 
   double* Dcres;  // Critical Delta' for instability
   double* Wdres;  // Critical island width for temperature flattening
 

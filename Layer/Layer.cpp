@@ -33,12 +33,15 @@ Layer::Layer ()
   string JSONFilename1 = "../Inputs/Layer.json";
   json   JSONData1     = ReadJSONFile (JSONFilename1);
 
-  MARG   = JSONData1["MARG"]  .get<int>    ();
+  MARG = JSONData1["MARG"].get<int> ();
+  GSL  = JSONData1["GSL"] .get<int> ();
+  USR  = JSONData1["USR"] .get<int> ();
 
   pstart = JSONData1["pstart"].get<double> ();
   pend   = JSONData1["pend"]  .get<double> ();
   P3max  = JSONData1["P3max"] .get<double> ();
   Nscan  = JSONData1["Nscan"] .get<int>    ();
+  cbmin  = JSONData1["cbmin"] .get<double> ();
 
   acc  = JSONData1["acc"] .get<double> ();
   h0   = JSONData1["h0"]  .get<double> ();
@@ -50,6 +53,15 @@ Layer::Layer ()
   Smin    = JSONData1["Smin"]   .get<double> ();
   Eps     = JSONData1["Eps"]    .get<double> ();
   MaxIter = JSONData1["MaxIter"].get<int>    ();
+
+  for (const auto& number : JSONData1["g_r"])
+    {
+      Gr.push_back (number.get<double> ());
+    }
+  for (const auto& number : JSONData1["g_i"])
+    {
+      Gi.push_back (number.get<double> ());
+    }
 
   // ------------
   // Sanity check
@@ -114,9 +126,9 @@ Layer::Layer ()
       printf ("Layer:: Error - Eps cannot be less than zero\n");
       exit (1);
     }
-   if (Maxiter < 0)
+   if (MaxIter < 0)
     {
-      printf ("Layer:: Error - Maxiter cannot be less than zero\n");
+      printf ("Layer:: Error - MaxIter cannot be less than zero\n");
       exit (1);
     }
     
@@ -125,8 +137,8 @@ Layer::Layer ()
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan =  %-4d      MARG    = %-1d\n",
-	  pstart, pend, P3max, Nscan, MARG);
+  printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan =  %-4d      cbmin   = %10.3e MARG = %1d GSL = %1d USR = %1d\n",
+	  pstart, pend, P3max, Nscan, cbmin, MARG, GSL, USR);
   printf ("acc    = %10.3e h0   = %10.3e hmin  = %10.3e hmax  = %10.3e\n",
 	  acc, h0, hmin, hmax);
   printf ("dS     = %10.3e Smax = %10.3e Smin  = %10.3e Eps   = %10.3e MaxIter = %-4d\n",
@@ -161,6 +173,8 @@ void Layer::Solve (int verbose)
 	Di_marg(i, j) = - 1.e15;
       }
 
+  gr_e    = new double[nres];
+  gi_e    = new double[nres];
   gamma_e = new double[nres];
   omega_e = new double[nres];
   f_e     = new double[nres];
@@ -231,6 +245,7 @@ void Layer::ReadNetcdf ()
       NcVar D_x      = dataFile.getVar ("D");
       NcVar Pphi_x   = dataFile.getVar ("Pphi");
       NcVar Pperp_x  = dataFile.getVar ("Pperp");
+      NcVar cbeta_x  = dataFile.getVar ("cbeta");
       NcVar Delta_x  = dataFile.getVar ("Delta");
       NcVar Deltac_x = dataFile.getVar ("Delta_crit");
       NcDim n_x      = rres_x.getDim (0);
@@ -254,6 +269,7 @@ void Layer::ReadNetcdf ()
       D_res      = new double[nres];
       Pphi_res   = new double[nres];
       Pperp_res  = new double[nres];
+      cbeta_res  = new double[nres];
       Delta_res  = new double[nres];
       Deltac_res = new double[nres];
       Chi_res    = new double[nres];
@@ -270,6 +286,7 @@ void Layer::ReadNetcdf ()
       D_x.getVar      (D_res);
       Pphi_x.getVar   (Pphi_res);
       Pperp_x.getVar  (Pperp_res);
+      cbeta_x.getVar  (cbeta_res);
       Delta_x.getVar  (Delta_res);
       Deltac_x.getVar (Deltac_res);
 
@@ -288,9 +305,9 @@ void Layer::ReadNetcdf ()
   printf ("Rational surfaces:\n");
   for (int i = 0; i < nres; i++)
     {
-      printf ("m = %3d r = %9.2e De = %9.2e Dc = %9.2e S13 = %9.2e tau = %9.2e Qe = %9.2e Qi = %9.2e D = %9.2e P = %9.2e\n",
+      printf ("m = %3d r = %9.2e De = %9.2e Dc = %9.2e S13 = %9.2e tau = %9.2e Qe = %9.2e Qi = %9.2e D = %9.2e P = %9.2e cb = %9.2e\n",
 	      m_res[i], r_res[i], Delta_res[i], Deltac_res[i], S13_res[i], tau_res[i], Qe_res[i], Qi_res[i],
-	      D_res[i], Pphi_res[i]);
+	      D_res[i], Pphi_res[i], cbeta_res[i]);
     }
 }
 
@@ -307,6 +324,7 @@ void Layer::FindMarginal (int i, int verbose)
   D     = D_res[i];
   Pphi  = Pphi_res[i];
   Pperp = Pperp_res[i];
+  cbeta = cbeta_res[i];
   iotae = iotae_res[i];
 
   // ---------------------------------------------
@@ -384,6 +402,7 @@ void Layer::GetElectronBranchGrowth (int i, int verbose)
   D     = D_res[i];
   Pphi  = Pphi_res[i];
   Pperp = Pperp_res[i];
+  cbeta = cbeta_res[i];
   iotae = iotae_res[i];
 
   // ..........................................
@@ -392,15 +411,28 @@ void Layer::GetElectronBranchGrowth (int i, int verbose)
   Delta = (Delta_res[i] - Deltac_res[i]) /S13_res[i];
 
   double gr, gi, Residual;
-  gr = 0.;
-  gi = gi_marg (i, 0);
-  NewtonRoot (gr, gi, Residual, verbose);
+  if (USR && GSL)
+    {
+      gr = 0.             + Gr[i];
+      gi = gi_marg (i, 0) + Gi[i];
+    }
+  else
+    {
+      gr = 0.;
+      gi = gi_marg (i, 0);
+    }
+  if (GSL)
+    GSLRoot (gr, gi, Residual);
+  else
+    NewtonRoot (gr, gi, Residual, verbose);
 
-  double f     =    (gi) * (gi + Qi) /(- Qe) /(- Qe + Qi);
-  f            += - (gi) * (gi + Qe) /(- Qi) /(- Qi + Qe);
+  double f     =   (gi) * (gi + Qi) /(- Qe) /(- Qe + Qi);
+  f           += - (gi) * (gi + Qe) /(- Qi) /(- Qi + Qe);
   double gamma = gr /tau_res[i];
-  double omega = (QE - g_i) /tau_res[i];
+  double omega = (QE - gi) /tau_res[i];
 
+  gr_e   [i] = gr;
+  gi_e   [i] = gi;
   gamma_e[i] = gamma/1.e3;
   omega_e[i] = omega/1.e3;
   f_e    [i] = f;
@@ -424,6 +456,7 @@ void Layer::GetTorque (int i)
   D     = D_res[i];
   Pphi  = Pphi_res[i];
   Pperp = Pperp_res[i];
+  cbeta = cbeta_res[i];
   iotae = iotae_res[i];
 
   // .......................................
@@ -566,7 +599,13 @@ void Layer::WriteNetcdf ()
        Pphires_x.putVar (Pphi_res);
        NcVar Pperpres_x  = dataFile.addVar ("Pperp_res",       ncDouble, x_d);
        Pperpres_x.putVar (Pperp_res);
-       
+       NcVar cbeta_x     = dataFile.addVar ("cbeta_res",       ncDouble, x_d);
+       cbeta_x.putVar (cbeta_res);
+
+       NcVar gre_x    = dataFile.addVar ("gr_e",    ncDouble, x_d);
+       gre_x.putVar (gr_e);
+       NcVar gie_x    = dataFile.addVar ("gi_e",    ncDouble, x_d);
+       gie_x.putVar (gi_e);
        NcVar gammae_x = dataFile.addVar ("gamma_e", ncDouble, x_d);
        gammae_x.putVar (gamma_e);
        NcVar omegae_x = dataFile.addVar ("omega_e", ncDouble, x_d);
@@ -624,16 +663,28 @@ void Layer::CleanUp ()
 {
   printf ("Cleaning up\n");
   
-  delete[] r_res,    delete[] m_res;     delete[] Delta_res; delete[] Deltac_res; delete[] tau_res;
-  delete[] QE_res;   delete[] Qe_res;    delete[] Qi_res;    delete[] iotae_res;  delete[] D_res;
-  delete[] Pphi_res; delete[] Pperp_res; delete[] S13_res;   delete[] Chi_res;    delete[] input;
-  delete[] gamma_e;  delete[] omega_e;   delete[] res_e;     delete[] lowD_e;     delete[] f_e;
+  delete[] r_res,     delete[] m_res;     delete[] Delta_res; delete[] Deltac_res; delete[] tau_res;
+  delete[] QE_res;    delete[] Qe_res;    delete[] Qi_res;    delete[] iotae_res;  delete[] D_res;
+  delete[] Pphi_res;  delete[] Pperp_res; delete[] S13_res;   delete[] Chi_res;    delete[] input;
+  delete[] gamma_e;   delete[] omega_e;   delete[] res_e;     delete[] lowD_e;     delete[] f_e;
+  delete[] cbeta_res; delete[] gr_e;      delete[] gi_e;
 }
 
 // #################################
 // Function to solve layer equations
 // #################################
 void Layer::SolveLayerEquations ()
+{
+  if (cbeta < cbmin)
+    SolveThreeFieldLayerEquations ();
+  else
+    SolveFourFieldLayerEquations ();
+}
+
+// #############################################
+// Function to solve three-field layer equations
+// #############################################
+void Layer::SolveThreeFieldLayerEquations ()
 {
   // ........
   // Define g
@@ -678,9 +729,10 @@ void Layer::SolveLayerEquations ()
   // ...........................................................
   complex<double>   alpha, beta, gamma, X;
   double            p, h, t_err;
-  int               rept; count = 0;
+  int               rept; count = 0; rhs_chooser = 0;
   complex<double>*  y    = new complex<double>[1];
   complex<double>*  dydp = new complex<double>[1];
+  complex<double>*  err  = new complex<double>[1];
 
   alpha = - gEe;
   p     = pstart * PMAX;
@@ -707,6 +759,7 @@ void Layer::SolveLayerEquations ()
       CashKarp45Adaptive (1, p, y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
     }
   while (p > pend);
+  CashKarp45Fixed (1, p, y, err, pend - p);
   
   CashKarp45Rhs (p, y, dydp);
   Deltas = M_PI /dydp[0];
@@ -714,7 +767,96 @@ void Layer::SolveLayerEquations ()
   // ........
   // Clean up
   // ........
-  delete[] y; delete[] dydp; 
+  delete[] y; delete[] dydp; delete[] err;
+}
+
+// #############################################
+// Function to solve four-field layer equations
+// #############################################
+void Layer::SolveFourFieldLayerEquations ()
+{
+  // ........
+  // Define g
+  // ........
+  complex<double> g = complex<double> (g_r, g_i);
+
+  // ..............
+  // Determine Pmax
+  // ..............
+  complex<double> gEe  = g + mc_i * Qe;
+  complex<double> gEi  = g + mc_i * Qi;
+  complex<double> gPD  = Pperp + (g + mc_i * Qi) * D*D;
+  complex<double> R    = Pperp + (1. - 1./iotae) * D*D * gEi;
+  double          PD   = Pphi * D*D /iotae;
+  double          cbm2 = 1./cbeta/cbeta;
+
+  complex<double> F11_4 = gEi + Pphi * gEe;
+  complex<double> F12_4 = gEi + Pphi * gEe /iotae;
+  complex<double> F21_4 = - mc_i * Qe * Pphi        + cbm2 * (g * D*D * gEi + Pphi * mc_i * Qe);
+  complex<double> F22_4 = - mc_i * Qe * Pphi /iotae + cbm2 * (g * gPD       + Pphi * gEe);
+
+  complex<double> F11_6 = Pphi;
+  complex<double> F12_6 = Pphi /iotae;
+  complex<double> F21_6 = cbm2 * D*D * g * Pphi        + cbm2 * D*D * gEi * Pphi;
+  complex<double> F22_6 = cbm2 * D*D * g * Pphi /iotae + cbm2 * gPD       * Pphi;
+
+  complex<double> F21_8 = cbm2 * D*D * Pphi*Pphi;
+  complex<double> F22_8 = cbm2 * D*D * Pphi*Pphi /iotae;
+
+  double Pmax[4];
+  Pmax[0] = pow (abs (F21_6/F21_8), 0.5);
+  Pmax[1] = pow (abs (F22_6/F22_8), 0.5);
+  Pmax[2] = pow (abs (F11_4/F11_6), 0.5);
+  Pmax[3] = pow (abs (F12_4/F12_6), 0.5);
+  //Pmax[4] = pow (abs (F21_4/F21_6), 0.5);
+  //Pmax[5] = pow (abs (F22_4/F22_6), 0.5);
+  lowD = 2;
+
+  double PMAX = 1.;
+  for (int i = 0; i < 4; i++)
+    if (Pmax[i] > PMAX)
+      PMAX = Pmax[i];
+
+  // ...........................................................
+  // Integrate layer equations backward in p to calculate Deltas
+  // ...........................................................
+  double            p, h, t_err;
+  int               rept; count = 0; rhs_chooser = 1;
+  complex<double>*  y    = new complex<double>[4];
+  complex<double>*  dydp = new complex<double>[4];
+  complex<double>*  err  = new complex<double>[4];
+ 
+  p     = pstart * PMAX;
+  h     = - h0;
+
+  y[0] = - sqrt (iotae) * sqrt (R) * p*p /D - cbeta * sqrt (iotae) * p*p /D;
+  y[1] = - cbeta * p*p /D /sqrt (iotae);
+  y[2] = - sqrt (iotae) * D * Pphi * p*p*p*p /cbeta;
+  y[3] = - D * Pphi * p*p*p*p /sqrt (iotae) /cbeta;
+  
+  do
+    {
+      CashKarp45Adaptive (4, p, y, h, t_err, acc, 0.95, 2., rept, maxrept, hmin, hmax, flag, 0, NULL);
+    }
+  while (p > pend);
+  CashKarp45Fixed (4, p, y, err, pend - p);
+ 
+  CashKarp45Rhs (p, y, dydp);
+  Deltas = M_PI /(dydp[0] - dydp[1] * mc_i * Qe /gEe);
+
+  /*
+  complex<double> E12 = - 2. * mc_i * Qe /(complex<double> (g_r, g_i) + mc_i * Qe);
+  printf ("W_11 = (%10.3e, %10.3e) W_21 = (%10.3e, %10.3e)\n",
+	  real (y[0]), imag(y[0]), real (2.*y[2]/E12), imag (2.*y[2]/E12));
+  complex<double> W21 = 0.5 * E12 * (dydp[0] - dydp[3]);
+  printf ("W_21 = (%10.3e, %10.3e) W_21 = (%10.3e, %10.3e)\n",
+	  real (dydp[2]), imag(dydp[2]), real (W21), imag (W21));
+  */
+
+  // ........
+  // Clean up
+  // ........
+  delete[] y; delete[] dydp; delete[] err;
 }
 
 // ###################################
@@ -722,44 +864,94 @@ void Layer::SolveLayerEquations ()
 // ###################################
 void Layer::CashKarp45Rhs (double x, complex<double>* y, complex<double>* dydx)
 {
-  // ...............................
-  // Define layer equation variables
-  // ...............................
-  complex<double> g (g_r, g_i);
-
-  double p  = x;
-  double p2 = p*p;
-  double p3 = p*p2;
-  double p4 = p2*p2;
-  double D2 = D*D;
- 
-  // ............................................................
-  // Right-hand sides for backward integration of layer equations
-  // ............................................................
-  complex<double> W   = y[0];
-  complex<double> V   = y[1];
-  complex<double> gEe = g + mc_i * Qe;
-  complex<double> gEi = g + mc_i * Qi;
-  complex<double> gPD = Pperp + (g + mc_i * Qi) * D*D;
-  double          PS  = Pphi + Pperp;
-  double          PP  = Pphi * Pperp;
-  double          PD  = Pphi * D*D /iotae;
-
-  complex<double> A = p2 /(gEe + p2); 
-  complex<double> B = g * gEi + gEi * PS * p2 + PP * p4;
-  complex<double> C;
-  if (!lowD)
+  if (rhs_chooser == 0)
     {
-      C = gEe + gPD * p2 + PD * p4;
+      // ...............................
+      // Define layer equation variables
+      // ...............................
+      complex<double> g (g_r, g_i);
+      
+      double p  = x;
+      double p2 = p*p;
+      double p3 = p*p2;
+      double p4 = p2*p2;
+      double D2 = D*D;
+      
+      // ............................................................
+      // Right-hand sides for backward integration of layer equations
+      // ............................................................
+      complex<double> W   = y[0];
+      complex<double> V   = y[1];
+      complex<double> gEe = g + mc_i * Qe;
+      complex<double> gEi = g + mc_i * Qi;
+      complex<double> gPD = Pperp + (g + mc_i * Qi) * D*D;
+      double          PS  = Pphi + Pperp;
+      double          PP  = Pphi * Pperp;
+      double          PD  = Pphi * D*D /iotae;
+      
+      complex<double> A = p2 /(gEe + p2); 
+      complex<double> B = g * gEi + gEi * PS * p2 + PP * p4;
+      complex<double> C;
+      if (!lowD)
+	{
+	  C = gEe + gPD * p2 + PD * p4;
+	}
+      else
+	{
+	  C = gEe + Pperp * p2;
+	}
+      
+      complex<double> AA = (gEe - p2) /(gEe + p2);
+      
+      dydx[0] = - AA * W /p - W*W /p + B * p3 /A /C;
     }
   else
     {
-      C = gEe + Pperp * p2;
+      // ...............................
+      // Define layer equation variables
+      // ...............................
+      complex<double> g (g_r, g_i);
+      
+      double p  = x;
+      double p2 = p*p;
+      double p4 = p2*p2;
+      double D2 = D*D;
+      double cm = 1./cbeta/cbeta;
+
+      complex<double> gEe = g + mc_i * Qe;
+      complex<double> gEi = g + mc_i * Qi;
+      complex<double> gPD = Pperp + (g + mc_i * Qi) * D*D;
+      complex<double> gP2 = g + Pphi * p2;
+
+      complex<double> E11 = 2. * gEe /(gEe + p2);
+      complex<double> E21 = - 2. * mc_i * Qe * (g + 2. * Pphi * p2) /(gEe + p2) /gP2;
+      complex<double> E22 = - 2. * Pphi * p2 /gP2;
+
+      complex<double> F11 = p2 * (gEe + p2) * (gEi + Pphi * p2);
+      complex<double> F12 = p2 * (gEe + p2) * (gEi + Pphi * p2 /iotae);
+      complex<double> F21 = - mc_i * Qe * p2 * (gEi + Pphi * p2)
+	+ cm * p2 * gP2 * (mc_i * Qe + D2 * gEi * p2 + D2 * Pphi * p4);
+      complex<double> F22 = - mc_i * Qe * p2 * (gEi + Pphi * p2 /iotae)
+	+ cm * p2 * gP2 * (gEe + gPD * p2 + D2 * Pphi * p4 /iotae);
+
+      complex<double> W11 = y[0];
+      complex<double> W12 = y[1];
+      complex<double> W21 = y[2];
+      complex<double> W22 = y[3];
+
+      // .......................................................................
+      // Right-hand sides for backward integration of four-field layer equations
+      // .......................................................................
+      complex<double> rhs11 = W11 - W11 * W11 - W12 * W21 - E11 * W11             + F11;
+      complex<double> rhs12 = W12 - W11 * W12 - W12 * W22 - E11 * W12             + F12;
+      complex<double> rhs21 = W21 - W21 * W11 - W22 * W21 - E21 * W11 - E22 * W21 + F21;
+      complex<double> rhs22 = W22 - W21 * W12 - W22 * W22 - E21 * W12 - E22 * W22 + F22;
+
+      dydx[0] = rhs11 /p;
+      dydx[1] = rhs12 /p;
+      dydx[2] = rhs21 /p;
+      dydx[3] = rhs22 /p;
     }
-  
-  complex<double> AA = (gEe - p2) /(gEe + p2);
-  
-  dydx[0] = - AA * W /p - W*W /p + B * p3 /A /C;
 }
 
 // ######################################################################
@@ -788,3 +980,84 @@ double Layer::RootFindF (double x)
   return imag (Deltas);
 }
 
+// ######################################################################
+// Function to calculate target functions for Newton-Raphson root finding
+// ######################################################################
+void Layer::Target (double x1, double x2, double& F1, double& F2)
+{
+  g_r = x1;
+  g_i = x2;
+
+  SolveLayerEquations ();
+
+  F1 = real (Deltas) - Delta;
+  F2 = imag (Deltas);
+}
+
+// ##########################################
+// Function to print state of GGL root finder
+// ##########################################
+int Layer::print_state (size_t iter, gsl_multiroot_fsolver* s)
+{
+  double x1 = gsl_vector_get (s->x, 0);
+  double x2 = gsl_vector_get (s->x, 1);
+  double F1 = gsl_vector_get (s->f, 0);
+  double F2 = gsl_vector_get (s->f, 1);
+
+  double res  = sqrt (F1*F1 + F2*F2);
+  
+  printf ("iter = %3u x = (%10.3e, %10.3e) f(x) = (%10.3e, %10.3e) res = %9.3e\n",
+          iter, x1, x2, F1, F2, res);
+}
+
+// ########################################################
+// Function to find electron branch roots using GSL library
+// ########################################################
+void Layer::GSLRoot (double& x1, double& x2, double& res)
+{
+  const gsl_multiroot_fsolver_type* T;
+  gsl_multiroot_fsolver*            s;
+  
+  int    status;
+  size_t i, iter = 0;
+  lowD           = 3;
+
+  const  size_t          n = 2;
+  gsl_multiroot_function f = {pTarget, n, this};
+  
+  double     x_init[2] = {x1, x2};
+  gsl_vector *x        = gsl_vector_alloc (n);
+
+  gsl_vector_set (x, 0, x_init[0]);
+  gsl_vector_set (x, 1, x_init[1]);
+
+  T = gsl_multiroot_fsolver_hybrids;
+  s = gsl_multiroot_fsolver_alloc (T, 2);
+  gsl_multiroot_fsolver_set (s, &f, x);
+
+  do
+    {
+      iter++;
+      status = gsl_multiroot_fsolver_iterate (s);
+
+      print_state (iter, s);
+
+      if (status)   /* check if solver is stuck */
+        break;
+
+      status = gsl_multiroot_test_residual (s->f, Eps);
+    }
+  while (status == GSL_CONTINUE && iter < MaxIter);
+	 
+  x1 = gsl_vector_get (s->x, 0);
+  x2 = gsl_vector_get (s->x, 1);
+
+  double F1 = gsl_vector_get (s->f, 0);
+  double F2 = gsl_vector_get (s->f, 1);
+
+  res = sqrt (F1*F1 + F2*F2);
+
+  gsl_multiroot_fsolver_free (s);
+  gsl_vector_free            (x);
+
+}

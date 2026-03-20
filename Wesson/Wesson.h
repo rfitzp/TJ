@@ -33,17 +33,7 @@ class Wesson : private Utility
   // ----------------------
   double eps;   // Closest distance to magnetic axis
   double del;   // Closest distance to rational surface
-  double h0;    // Initial step-length
-  double acc;   // Integration accuracy
-  double hmin;  // Minimum step-length
-
-  // ---------------------------------------
-  // One-dimensional root finding parameters
-  // ---------------------------------------
-  int    Nint;    // Number of search intervals
-  double Eta;     // Minimum magnitude of F at root F(x) = 0
-  int    Maxiter; // Maximum number of iterations
-
+ 
   // ----
   // Misc
   // ----
