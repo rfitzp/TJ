@@ -35,7 +35,6 @@ Layer::Layer ()
 
   MARG = JSONData1["MARG"].get<int> ();
   GSL  = JSONData1["GSL"] .get<int> ();
-  USR  = JSONData1["USR"] .get<int> ();
 
   pstart = JSONData1["pstart"].get<double> ();
   pend   = JSONData1["pend"]  .get<double> ();
@@ -137,8 +136,8 @@ Layer::Layer ()
   printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
   printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
   printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-  printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan =  %-4d      cbmin   = %10.3e MARG = %1d GSL = %1d USR = %1d\n",
-	  pstart, pend, P3max, Nscan, cbmin, MARG, GSL, USR);
+  printf ("pstart = %10.3e pend = %10.3e P3max = %10.3e Nscan =  %-4d      cbmin   = %10.3e MARG = %1d GSL = %1d\n",
+	  pstart, pend, P3max, Nscan, cbmin, MARG, GSL);
   printf ("acc    = %10.3e h0   = %10.3e hmin  = %10.3e hmax  = %10.3e\n",
 	  acc, h0, hmin, hmax);
   printf ("dS     = %10.3e Smax = %10.3e Smin  = %10.3e Eps   = %10.3e MaxIter = %-4d\n",
@@ -215,6 +214,16 @@ void Layer::Solve (int verbose)
   // Write calculation date to netcdf file
   // .....................................
   WriteNetcdf ();
+
+  // .........................
+  // Output data to ascii file
+  // .........................
+  FILE* file = OpenFilew ("../Outputs/TJ/Layer.out");
+
+  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %11.4e",
+	   gamma_e[0], omega_e[0], f_e[0], gamma_e[1], omega_e[1], f_e[1]);
+  
+  fclose (file);
   
   // ........
   // Clean up
@@ -396,11 +405,11 @@ void Layer::GetElectronBranchGrowth (int i, int verbose)
   // ....................
   // Set layer parameters
   // ....................
-  Qe    = Qe_res[i];
-  Qi    = Qi_res[i];
-  QE    = QE_res[i];
-  D     = D_res[i];
-  Pphi  = Pphi_res[i];
+  Qe    = Qe_res   [i];
+  Qi    = Qi_res   [i];
+  QE    = QE_res   [i];
+  D     = D_res    [i];
+  Pphi  = Pphi_res [i];
   Pperp = Pperp_res[i];
   cbeta = cbeta_res[i];
   iotae = iotae_res[i];
@@ -411,16 +420,8 @@ void Layer::GetElectronBranchGrowth (int i, int verbose)
   Delta = (Delta_res[i] - Deltac_res[i]) /S13_res[i];
 
   double gr, gi, Residual;
-  if (USR && GSL)
-    {
-      gr = 0.             + Gr[i];
-      gi = gi_marg (i, 0) + Gi[i];
-    }
-  else
-    {
-      gr = 0.;
-      gi = gi_marg (i, 0);
-    }
+  gr = 0.             + Gr[i];
+  gi = gi_marg (i, 0) + Gi[i];
   if (GSL)
     GSLRoot (gr, gi, Residual);
   else

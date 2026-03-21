@@ -1,7 +1,6 @@
 {
     "MARG":  0,           // Flag for calculation of ion branch marginal stability points
-    "GSL":   1,           // Flag for GSL root finding
-    "USR":   1,           // Flag for reading offset of guesses from this file
+    "GSL":   0,           // Flag for GSL root finding
    	  
     "pstart": 8.0,        // Layer equations integrated from p = pstart to p = pend 
     "pend":   1.0e-8,     // Layer equations integrated from p = pstart to p = pend 
@@ -18,10 +17,10 @@
     "MaxIter": 50,        // Maximum number of Newton iterations
     "dS":      1.0e-6,    // Step-size for calculation of Jacobian
     "Smax":    0.1,       // Maximum Newton step-size
-    "Smin":    1.0e-9,     // Minimum Newton step-size
+    "Smin":    1.0e-9,    // Minimum Newton step-size
 
-    "g_r":     [0.0,  1.0e-2],   // Initial offset of guesses for g_r
-    "g_i":     [0.0,  0.0]    // Initial offset of guesses for g_i
+    "g_r":     [0.0e-2,  0.0e-3],   // Initial offset of guesses for g_r
+    "g_i":     [0.0e-2,  0.0]       // Initial offset of guesses for g_i
 }
 
 

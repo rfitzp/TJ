@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#printf "\n" >> TJ.out
+cat ../../../Outputs/TJ/TJ.out >> TJ.out
+
+#printf "\n" >> Ideal.out
+cat ../../../Outputs/TJ/Ideal.out >> Ideal.out
+
+printf "\n" >> Layer.out
+cat ../../../Outputs/TJ/Layer.out >> Layer.out

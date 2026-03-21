@@ -741,5 +741,11 @@ void TJ::CalculatePerfectWallIdealStability ()
   gammaw = - deltaW[jzero] /alphaw /pdeltaW[pjzero];
   
   printf ("Solution number (%1d, %1d): alphaw = %10.3e gammaw = %10.3e\n", jzero, pjzero, alphaw, gammaw);
+
+  // Write ascii data
+  FILE* file = OpenFilew ("../Outputs/TJ/Ideal.out");
+
+  fprintf (file, "%11.4e %11.4e %11.4e %11.4e\n", p2[0], deltaW[jzero], deltaWp[jzero], deltaWv[jzero]);
   
+  fclose (file);
 }

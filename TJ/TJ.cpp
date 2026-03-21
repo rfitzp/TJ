@@ -328,8 +328,15 @@ void TJ::Solve ()
 	    }
 	}
 
-       // Write program data to Netcdf file
+      // Write program data to Netcdf file
       WriteNetcdf ();
+
+      // Write program data to ascii file
+      FILE* file = OpenFilew ("../Outputs/TJ/TJ.out");
+      fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e\n",
+	       p2[0], rres[0], rres[1], sres[0], sres[1], real(Emat(0,0)), real(Emat(0,1)), real(Emat(1,1)), Dcres[0], Dcres[1]);
+      fclose (file);
+	
       
       // Clean up
       CleanUp ();

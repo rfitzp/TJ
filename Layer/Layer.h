@@ -92,7 +92,6 @@ private:
   int    RMP;    // Flag to enable resonant magnetic perturbation calculation (read from TJ JSON file)
   int    MARG;   // Flag to enable calculation of ion branch marginal stability points (read from JSON file)
   int    GSL;    // Flag to enable GSL root finding (read from JSON file)
-  int    USR;    // Flag to use initial guesses read from JSON file (read from JSON file)
   double pstart; // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double pend;   // Layer equations integrated from p = pstart to p = pend (read from JSON file)
   double P3max;  // Value of Pmax[3] above which switch to low-D layer equations made (read from JSON file)
@@ -119,7 +118,7 @@ private:
   double* gamma_e; // Electron-branch growth-rates at rational surfaces (kHz)
   double* omega_e; // Electron-branch real frequencies at rational surfaces  (kHz)
   double* f_e;     // Electron-branch relative frequency (+1/0/-1 if mode corotates with electron/ExB/ion fluid)
-  double* res_e;   // Electron-branch residuas of zero search at rational surfaces 
+  double* res_e;   // Electron-branch residuals of zero search at rational surfaces 
   int*    lowD_e;  // Electron-branch low D flags at rational surfaces
 
   // ..........................................
