@@ -1050,6 +1050,71 @@ void Utility::NewtonJacobian (double x1, double x2, double& J11, double& J12, do
   J22 = (F2p - F2m) /2./dS;
 }
 
+// #################################################################
+// Function to solve tridiagonal matrix problem via Thomas algorithm
+
+// Solve tridiagonal system Ax = d
+
+// n is size of matrix
+
+// a[i] = subdiagonal (a[0] unused)
+// b[i] = main diagonal
+// c[i] = superdiagonal (c[n-1] unused)
+// d[i] = right-hand side
+// x[i] = solution
+
+// All arrays of size n
+// #################################################################
+void Utility::Tridiagonal (int n, double* a, double* b, double* c, double* d, double* x)
+{
+    double c_star[n];
+    double d_star[n];
+
+    // Forward sweep
+    c_star[0] = c[0] /b[0];
+    d_star[0] = d[0] /b[0];
+
+    for (int i = 1; i < n; i++)
+      {
+        double m = b[i] - a[i] * c_star[i-1];
+
+	c_star[i] = (i < n-1) ? c[i] /m : 0.0;
+        d_star[i] = (d[i] - a[i] * d_star[i-1]) /m;
+      }
+
+    // Back substitution
+    x[n-1] = d_star[n-1];
+
+    for (int i = n-2; i >= 0; i--)
+      {
+        x[i] = d_star[i] - c_star[i] * x[i+1];
+      }
+}
+
+// ######################################################################################
+// Function to evaluate integral via trapezium rule given function on equally spaced grid
+
+// n    = number of grid-points
+// f[n] = function
+// h    = grid-spacing
+
+// ######################################################################################
+double Utility::Trapezium (int n, double* f, double h)
+{
+  double sum = 0.0;
+
+  // End points
+  sum = 0.5 * (f[0] + f[n-1]);
+  
+  // Interior points
+  for (int i = 1; i < n-1; i++)
+    {
+      sum += f[i];
+    }
+  
+  return h * sum;
+}
+
 // ########################################
 // Function to return maximum of two values
 // ########################################
@@ -1191,7 +1256,6 @@ FILE* Utility::OpenFilea (char* filename)
     }
   return file;
 }
-
 
 // ################################################################
 // Function to check that directory exists, and create it otherwise

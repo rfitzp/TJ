@@ -153,6 +153,156 @@ Equilibrium::Equilibrium ()
     }
 }
 
+// ########################################################
+// Constructor that sets central safety-factor and pressure
+// ########################################################
+Equilibrium::Equilibrium (double _qc, double _pc)
+{
+  // --------------------------------------------------
+  // Ensure that directory ../Outputs/Equilibrium exits
+  // --------------------------------------------------
+  if (!CreateDirectory ("../Outputs"))
+    {
+      exit (1);
+    }
+  if (!CreateDirectory ("../Outputs/Equilibrium"))
+    {
+      exit (1);
+    }
+  
+  // --------------------------------------
+  // Read control parameters from JSON file
+  // --------------------------------------
+  string JSONFilename = "../Inputs/Equilibrium.json";
+  json   JSONData     = ReadJSONFile (JSONFilename);
+
+  SRC  = JSONData["SRC"] .get<int>    ();
+  qc   = _qc;
+  qa   = JSONData["qa"]  .get<double> ();
+  pc   = _pc;
+  mu   = JSONData["mu"]  .get<double> ();
+  epsa = JSONData["epsa"].get<double> ();
+  eps  = JSONData["eps"] .get<double> ();
+  Ns   = JSONData["Ns"]  .get<int>    ();
+  Nr   = JSONData["Nr"]  .get<int>    ();
+  Nf   = JSONData["Nf"]  .get<int>    ();
+  Nw   = JSONData["Nw"]  .get<int>    ();
+  acc  = JSONData["acc"] .get<double> ();
+  h0   = JSONData["h0"]  .get<double> ();
+  hmin = JSONData["hmin"].get<double> ();
+  hmax = JSONData["hmax"].get<double> ();
+  tilt = JSONData["tilt"].get<double> ();
+
+  for (const auto& number : JSONData["Hna"])
+    {
+      Hna.push_back (number.get<double> ());
+    }
+  for (const auto& number : JSONData["Vna"])
+    {
+      Vna.push_back (number.get<double> ());
+    }
+
+  B0    = JSONData["B0"]   .get<double> ();
+  R0    = JSONData["R0"]   .get<double> ();
+  n0    = JSONData["n0"]   .get<double> ();
+  alpha = JSONData["alpha"].get<double> ();
+  Teped = JSONData["Teped"].get<double> ();
+  neped = JSONData["neped"].get<double> ();
+  
+  JSONFilename = "../Inputs/TJ.json";
+  JSONData     = ReadJSONFile (JSONFilename);
+  VIZ          = JSONData["VIZ"].get<int> ();
+
+  // ------------
+  // Sanity check
+  // ------------
+  if (qc < 0.)
+    {
+      printf ("Equilibrium:: Error - qc cannot be negative\n");
+      exit (1);
+    }
+  if (qa < qc)
+    {
+      printf ("Equilibrium:: Error - qa cannot be less than qc\n");
+      exit (1);
+    }
+  if (pc < 0.)
+    {
+      printf ("Equilibrium:: Error - pc cannot be negative\n");
+      exit (1);
+    }
+  if (mu < 1.)
+    {
+      printf ("Equilibrium:: Error - mu cannot be less than unity\n");
+      exit (1);
+    }
+  if (epsa <= 0.)
+    {
+      printf ("Equilibrium:: Error - epsa must be positive\n");
+      exit (1);
+    }
+  if (eps <= 0.)
+    {
+      printf ("Equilibrium:: Error - eps must be positive\n");
+      exit (1);
+    }
+  if (Ns < 1)
+    {
+      printf ("Equilibrium:: Error - Ns cannot be less than unity\n");
+      exit (1);
+    }
+  if (Nr < 2)
+    {
+      printf ("Equilibrium:: Error - Nr cannot be less than two\n");
+      exit (1);
+    }
+  if (Nf < 2)
+    {
+      printf ("Equilibrium:: Error - Nf cannot be less than two\n");
+      exit (1);
+    }
+  if (Nw < 2)
+    {
+      printf ("Equilibrium:: Error - Nw cannot be less than two\n");
+      exit (1);
+    }
+  if (acc <= 0.)
+    {
+      printf ("Equilibrium:: Error - acc must be positive\n");
+      exit (1);
+    }
+  if (h0 <= 0.)
+    {
+      printf ("Equilibrium:: Error - h0 must be positive\n");
+      exit (1);
+    }
+  if (hmin <= 0.)
+    {
+      printf ("Equilibrium:: Error - hmin must be positive\n");
+      exit (1);
+    }
+  if (hmax <= 0.)
+    {
+      printf ("Equilibrium:: Error - hmax must be positive\n");
+      exit (1);
+    }
+  if (hmax < hmin)
+    {
+      printf ("Equilibrium:: Error - hmax must exceed hmin\n");
+      exit (1);
+    }
+  if (Hna.size() != Vna.size())
+    {
+      printf ("Equilibrium:: Error - Hna and Van arrays must be the same size\n");
+      exit (1);
+    }
+  if (tilt < -180. || tilt > 180.)
+    {
+       printf ("Equilibrium:: Error -  tilt must lie in range -180 to +180\n");
+      exit (1);
+    }
+}
+
 // ##########
 // Destructor
 // ##########

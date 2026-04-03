@@ -376,6 +376,9 @@ class Equilibrium : private Utility
   // Constructor
   Equilibrium ();
 
+  // Constructor that sets central safety-factor and pressure
+  Equilibrium (double _qc, double _pc);
+
   // Destructor
   ~Equilibrium ();
 
@@ -390,7 +393,7 @@ private:
   // .............
   // in Netcdf.cpp
   // .............
-
+  
   // Write equilibrium data to netcdf file
   void WriteNetcdf (double sa);
 

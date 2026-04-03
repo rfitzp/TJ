@@ -191,6 +191,12 @@ public:
   // Calculate Jacobian matrix for Newton-Raphson root finding
   void NewtonJacobian (double x1, double x2, double& J11, double& J12, double& J21, double& J22);
 
+  // Solve tridiagonal matrix problem via Thomas algorithm
+  void Tridiagonal (int n, double* a, double* b, double*c, double* d, double* x);
+
+  // Evalauate integral via trapezium rule given function on equally spaced grid
+  double Trapezium (int n, double* f, double h);
+  
   // Return maximum of two values
   double Fmax (double f1, double f2);
   // Return minimum of two values

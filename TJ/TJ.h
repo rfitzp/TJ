@@ -679,13 +679,17 @@ class TJ : private Utility
 
   // Solve problem
   void Solve ();
+  // Solve problem while setting central safety-factor and pressure
+  void Solve (double _qc, double _pc);
 
  private:
 
   // .........
   // In TJ.cpp
   // .........
-  
+
+  // Run TJ
+  void RunTJ ();
   // Set mode numbers
   void SetModeNumbers ();
   // Deallocate memory

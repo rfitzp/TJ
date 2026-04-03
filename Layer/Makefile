@@ -41,5 +41,5 @@ $(U_OBJECT):
 			$(MAKE) -C $(UTILITY_DIR)
 
 clean: 
-			rm -f $(C_OBJECT) $(LIBRARY) $(EXECUTABLE)
+			rm -f $(M_OBJECT) $(C_OBJECT) $(LIBRARY) $(EXECUTABLE)
 

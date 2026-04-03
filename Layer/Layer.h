@@ -38,7 +38,7 @@
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_multiroots.h>
 
-// Pointers to target function for root finding
+// Pointer to target function for GSL root finding
 extern "C" int pTarget (const gsl_vector* x, void* params, gsl_vector* f);
 
 // ############
@@ -47,6 +47,11 @@ extern "C" int pTarget (const gsl_vector* x, void* params, gsl_vector* f);
 class Layer : private Utility
 {
 private:
+
+  // ......................
+  // Equilibrium parameters
+  // ......................
+  double pc; // Central normalized pressure
 
   // .............
   // TJ parameters
@@ -98,8 +103,10 @@ private:
   int    Nscan;  // Number of points in marginal stability and frequency scans (read from JSON file)
   double cbmin;  // Minimum value of cbeta below which three-field model used (read from JSON file)
 
-  vector<double> Gr; // Initial offset guesses for g_r
-  vector<double> Gi; // Initial offset guesses for g_i
+  vector<double> Gr;       // Initial offset guesses for g_r (read from JSON file)
+  vector<double> Gi;       // Initial offset guesses for g_i (read from JSON file)
+  vector<int>    STEP;     // Number of intermediate steps in zero finding (read from JSON file)
+  double         fac;      // Reduction factor for intermediate steps
 
   // .........................
   // Marginal stability points

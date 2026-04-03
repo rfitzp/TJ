@@ -1,0 +1,11 @@
+{
+    "qc_start":  0.994,  // Lower limit of central safety-factor scan interval
+    "qc_end":    0.999,  // Upper limit of central safety-factor scan interval
+    "N_qc":      6,     // Number of points in central safety-factor scan
+    
+    "pc_start":  0.136,   // Lower limit of central pressure search interval
+    "pc_end":    0.15,   // Upper limit of central pressure search interval
+    "Nint":      10      // Number of subdivisions in search interval
+}
+
+

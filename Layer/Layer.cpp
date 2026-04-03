@@ -18,6 +18,14 @@ Layer::Layer ()
     {
       exit (1);
     }
+
+  // ......................................................
+  // Read equilibrium parameters from Equilibrium JSON file
+  // ......................................................
+  string JSONFilename2 = "../Inputs/Equilibrium.json";
+  json   JSONData2     = ReadJSONFile (JSONFilename2);
+
+  pc = JSONData2["pc"].get<double> ();
   
   // .........................................
   // Read control parameters from TJ JSON file
@@ -60,6 +68,10 @@ Layer::Layer ()
   for (const auto& number : JSONData1["g_i"])
     {
       Gi.push_back (number.get<double> ());
+    }
+  for (const auto& number : JSONData1["STEP"])
+    {
+      STEP.push_back (number.get<int> ());
     }
 
   // ------------
@@ -125,9 +137,14 @@ Layer::Layer ()
       printf ("Layer:: Error - Eps cannot be less than zero\n");
       exit (1);
     }
-   if (MaxIter < 0)
+  if (MaxIter < 0)
     {
       printf ("Layer:: Error - MaxIter cannot be less than zero\n");
+      exit (1);
+    }
+  if (Gr.size () != Gi.size ())
+    {
+      printf ("Layer:: Error - Gr and Gi must be the same size\n");
       exit (1);
     }
     
@@ -220,8 +237,8 @@ void Layer::Solve (int verbose)
   // .........................
   FILE* file = OpenFilew ("../Outputs/TJ/Layer.out");
 
-  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %11.4e",
-	   gamma_e[0], omega_e[0], f_e[0], gamma_e[1], omega_e[1], f_e[1]);
+  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e",
+	   pc, gamma_e[0], omega_e[0], f_e[0], gamma_e[1], omega_e[1], f_e[1]);
   
   fclose (file);
   
@@ -420,13 +437,50 @@ void Layer::GetElectronBranchGrowth (int i, int verbose)
   Delta = (Delta_res[i] - Deltac_res[i]) /S13_res[i];
 
   double gr, gi, Residual;
-  gr = 0.             + Gr[i];
-  gi = gi_marg (i, 0) + Gi[i];
-  if (GSL)
-    GSLRoot (gr, gi, Residual);
+  if (i < Gr.size())
+    {
+      gr = 0.             + Gr[i];
+      gi = gi_marg (i, 0) + Gi[i];
+    }
   else
-    NewtonRoot (gr, gi, Residual, verbose);
+    {
+      gr = 0.;
+      gi = gi_marg (i, 0);
+    }
 
+  if (GSL)
+    {
+      if (STEP[i] > 0)
+	{
+	  for (int j = 1; j <= STEP[i]; j++)
+	    {
+	      fac = double (j) / double (STEP[i]);
+	      printf ("Step = %4u/%4u: Delta = %11.4e\n", j, STEP[i], fac*Delta);
+
+	      GSLRoot (gr, gi, Residual);
+	    }
+	}
+      else
+	{
+	  GSLRoot (gr, gi, Residual);
+	}
+    }
+  else
+    if (STEP[i] > 0)
+      {
+	for (int j = 1; j <= STEP[i]; j++)
+	  {
+	    fac = double (j) / double (STEP[i]);
+	    printf ("Step = %4u/%4u: Delta = %11.4e\n", j, STEP[i], fac*Delta);
+
+	    NewtonRoot (gr, gi, Residual, verbose);
+	  }
+	}
+    else
+      {
+	NewtonRoot (gr, gi, Residual, verbose);
+      }
+  
   double f     =   (gi) * (gi + Qi) /(- Qe) /(- Qe + Qi);
   f           += - (gi) * (gi + Qe) /(- Qi) /(- Qi + Qe);
   double gamma = gr /tau_res[i];
@@ -965,7 +1019,7 @@ void Layer::NewtonFunction (double x1, double x2, double& F1, double& F2)
 
   SolveLayerEquations ();
 
-  F1 = real (Deltas) - Delta;
+  F1 = real (Deltas) - fac * Delta;
   F2 = imag (Deltas);
 }
 
@@ -981,9 +1035,9 @@ double Layer::RootFindF (double x)
   return imag (Deltas);
 }
 
-// ######################################################################
-// Function to calculate target functions for Newton-Raphson root finding
-// ######################################################################
+// ###########################################################
+// Function to calculate target functions for GSL root finding
+// ###########################################################
 void Layer::Target (double x1, double x2, double& F1, double& F2)
 {
   g_r = x1;
@@ -991,7 +1045,7 @@ void Layer::Target (double x1, double x2, double& F1, double& F2)
 
   SolveLayerEquations ();
 
-  F1 = real (Deltas) - Delta;
+  F1 = real (Deltas) - fac * Delta;
   F2 = imag (Deltas);
 }
 

@@ -250,107 +250,139 @@ void TJ::Solve ()
 
   if (!EQLB)
     {
-      // -----------------------------
-      // Output calculation parameters
-      // -----------------------------
-      printf ("\nClass TJ::\n");
-      printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
-      printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
-      printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
-      printf ("Calculation flags:\n");
-      printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d LAYER = %1d TEMP = %1d\n",
-	      EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, LAYER, TEMP);
-      printf ("Calculation parameters:\n");
-      printf ("ntor = %3d        mmin  = %3d        mmax  = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e NPHI = %3d\n",
-	      NTOR, MMIN, MMAX, EPS, DEL, ISLAND[0], NPHI);
-      printf ("nfix = %3d        ndiag = %3d       nulc  = %10.3e itermax = %3d\n",
-	      NFIX, NDIAG, NULC, ITERMAX);
-      printf ("acc  = %10.3e h0    = %10.3e hmin  = %10.3e hmax    = %10.3e epsf = %10.3e\n",
-	      acc, h0, hmin, hmax, EPSF);
-      printf ("B0   = %10.3e R0    = %10.3e n0    = %10.3e alpha   = %10.3e Zeff = %10.3e\n",
-	      B0, R0, n0, alpha, Zeff);
-      printf ("Mion = %10.3e Chip  = %10.3e Teped = %10.3e neped   = %10.3e\n",
-	      Mion, Chip, Teped, neped);
-      
-      // Set toroidal and poloidal mode numbers
-      SetModeNumbers ();
-      
-      // Read equilibrium data
-      ReadEquilibrium ();
-      
-      // Calculate metric data at plasma boundary
-      CalculateMetricBoundary ();
+      RunTJ ();
+    }
+}
 
-      // Calculate metric data at wall
-      CalculateMetricWall ();
-      
-      // Calculate vacuum matrices
-      GetVacuumBoundary ();
-      
-      // Calculate wall matrices
-      GetVacuumWall ();
+// ##########################################################################
+// Function to solve problem while setting central safety-factor and pressure
+// ##########################################################################
+void TJ::Solve (double _qc, double _pc)
+{
+  // .............................................................................
+  // Call class Equilibrium to construct aspect-ratio expanded tokamak equilibrium
+  // .............................................................................
+  {
+    Equilibrium equilibrium (_qc, _pc);
 
-      // Find rational surfaces
-      FindRational ();
+    if (!SRC)
+      equilibrium.Setnu ();
+    
+    equilibrium.Solve ();
+  }
+
+  if (!EQLB)
+    {
+      RunTJ ();
+    }
+}
+
+// ##################
+// Function to run TJ
+// ##################
+void TJ::RunTJ ()
+{
+  // -----------------------------
+  // Output calculation parameters
+  // -----------------------------
+  printf ("\nClass TJ::\n");
+  printf ("Git Hash     = "); printf (GIT_HASH);     printf ("\n");
+  printf ("Compile time = "); printf (COMPILE_TIME); printf ("\n");
+  printf ("Git Branch   = "); printf (GIT_BRANCH);   printf ("\n\n");
+  printf ("Calculation flags:\n");
+  printf ("EQLB = %1d FREE = %1d FVAL = %1d RMP = %1d VIZ = %1d IDEAL = %1d XI = %1d LAYER = %1d TEMP = %1d\n",
+	  EQLB, FREE, FVAL, RMP, VIZ, IDEAL, XI, LAYER, TEMP);
+  printf ("Calculation parameters:\n");
+  printf ("ntor = %3d        mmin  = %3d        mmax  = %3d        eps     = %10.3e del  = %10.3e ISLAND = %10.3e NPHI = %3d\n",
+	  NTOR, MMIN, MMAX, EPS, DEL, ISLAND[0], NPHI);
+  printf ("nfix = %3d        ndiag = %3d       nulc  = %10.3e itermax = %3d\n",
+	  NFIX, NDIAG, NULC, ITERMAX);
+  printf ("acc  = %10.3e h0    = %10.3e hmin  = %10.3e hmax    = %10.3e epsf = %10.3e\n",
+	  acc, h0, hmin, hmax, EPSF);
+  printf ("B0   = %10.3e R0    = %10.3e n0    = %10.3e alpha   = %10.3e Zeff = %10.3e\n",
+	  B0, R0, n0, alpha, Zeff);
+  printf ("Mion = %10.3e Chip  = %10.3e Teped = %10.3e neped   = %10.3e\n",
+	  Mion, Chip, Teped, neped);
+  
+  // Set toroidal and poloidal mode numbers
+  SetModeNumbers ();
+  
+  // Read equilibrium data
+  ReadEquilibrium ();
+  
+  // Calculate metric data at plasma boundary
+  CalculateMetricBoundary ();
+  
+  // Calculate metric data at wall
+  CalculateMetricWall ();
+  
+  // Calculate vacuum matrices
+  GetVacuumBoundary ();
+  
+  // Calculate wall matrices
+  GetVacuumWall ();
+  
+  // Find rational surfaces
+  FindRational ();
+  
+  // Calculate resonant layer data
+  GetLayerData ();
+  
+  // Solve outer region odes
+  ODESolve ();
+  
+  // Determine tearing mode dispersion relation and tearing eigenfunctions
+  FindDispersion ();
+  
+  if (RMP)
+    {
+      // Calculate resonant magnetic perturbation data
+      CalculateResonantMagneticPerturbation ();
+    }
+  
+  // Calculate ideal stability
+  if (IDEAL)
+    {
+      CalculateNoWallIdealStability ();
       
-      // Calculate resonant layer data
-      GetLayerData ();
+      CalculatePerfectWallIdealStability ();
+    }
+  
+  if (VIZ)
+    {
+      // Calculate unreconnected eigenfunction and ideal eigenfunction visualization data
+      VisualizeEigenfunctions ();
       
-      // Solve outer region odes
-      ODESolve ();
-      
-      // Determine tearing mode dispersion relation and tearing eigenfunctions
-      FindDispersion ();
-         
       if (RMP)
 	{
-	  // Calculate resonant magnetic perturbation data
-	  CalculateResonantMagneticPerturbation ();
+	  // Calculate resonant magnetic perturbation respose visualization data
+	  VisualizeRMP ();
 	}
-      
-      // Calculate ideal stability
-      if (IDEAL)
-	{
-	  CalculateNoWallIdealStability ();
-
-	  CalculatePerfectWallIdealStability ();
-	}
-
-      if (VIZ)
-	{
-	  // Calculate unreconnected eigenfunction and ideal eigenfunction visualization data
-	  VisualizeEigenfunctions ();
-	   
-	  if (RMP)
-	    {
-	      // Calculate resonant magnetic perturbation respose visualization data
-	      VisualizeRMP ();
-	    }
-	}
-
-      // Write program data to Netcdf file
-      WriteNetcdf ();
-
-      // Write program data to ascii file
-      FILE* file = OpenFilew ("../Outputs/TJ/TJ.out");
-      fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e\n",
-	       p2[0], rres[0], rres[1], sres[0], sres[1], real(Emat(0,0)), real(Emat(0,1)), real(Emat(1,1)), Dcres[0], Dcres[1]);
-      fclose (file);
-	
-      
-      // Clean up
-      CleanUp ();
-
-      if (LAYER)
-	{
-	  // ...............................................................
-	  // Call class Layer to calculate growth-rates and real frequencies
-	  // ...............................................................
-	  {
-	    Layer layer;
-	    layer.Solve (0);
-	  }
-	}
+    }
+  
+  // Write program data to Netcdf file
+  WriteNetcdf ();
+  
+  /*
+  // Write program data to ascii file
+  FILE* file = OpenFilew ("../Outputs/TJ/TJ.out");
+  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e %11.4e\n",
+  p2[0], rres[0], rres[1], sres[0], sres[1], real(Emat(0,0)), real(Emat(0,1)), real(Emat(1,1)), Dcres[0], Dcres[1]);
+  fclose (file);
+  */
+  
+  // Clean up
+  CleanUp ();
+  
+  if (LAYER)
+    {
+      // ...............................................................
+      // Call class Layer to calculate growth-rates and real frequencies
+      // ...............................................................
+      {
+	Layer layer;
+	layer.Solve (0);
+      }
     }
 }
 

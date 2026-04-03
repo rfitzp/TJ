@@ -18,22 +18,33 @@ EQUILIBRIUM_LIB = $(LIB_DIR)/libEquilibrium.a
 LAYER_LIB       = $(LIB_DIR)/libLayer.a
 ISLAND_LIB      = $(LIB_DIR)/libIsland.a
 
-C_HEADER = TJ.h 
-C_SOURCE = main.cpp TJ.cpp ReadEquilibrium.cpp Interpolate.cpp Rational.cpp Matrix.cpp Vacuum.cpp Armadillo.cpp\
+C_HEADER = TJ.h
+M_SOURCE = main.cpp
+C_SOURCE = TJ.cpp ReadEquilibrium.cpp Interpolate.cpp Rational.cpp Matrix.cpp Vacuum.cpp Armadillo.cpp\
 	ODESolve.cpp Resonant.cpp Dispersion.cpp Toroidal.cpp Ideal.cpp Netcdf.cpp RMP.cpp Visualize.cpp
 C_OBJECT = $(C_SOURCE:%.cpp=%.o)
+M_OBJECT = $(M_SOURCE:%.cpp=%.o)
 U_OBJECT = ../Utility/Utility.o
 
+LIBRARY    = ../lib/libTj.a
 EXECUTABLE = ../bin/tj
 
-$(EXECUTABLE):	 	$(C_OBJECT) $(BUILD_DIR) $(EQUILIBRIUM_LIB) $(LAYER_LIB) $(ISLAND_LIB)
-			$(C_COMPILER) -o $(EXECUTABLE) $(C_OBJECT) $(U_OBJECT) $(C_LIBS) -L../lib -lEquilibrium -lLayer -lIsland -lEce
+all: 			$(LIBRARY) $(EXECUTABLE)
+
+$(LIBRARY):	 	$(C_OBJECT) $(BUILD_DIR) $(EQUILIBRIUM_LIB) $(LAYER_LIB) $(ISLAND_LIB)
+			$(C_ARCHIVER) $(LIBRARY) $(C_OBJECT) $(U_OBJECT) 
+
+$(EXECUTABLE):	 	$(M_OBJECT) $(C_OBJECT) $(BUILD_DIR) $(EQUILIBRIUM_LIB) $(LAYER_LIB) $(ISLAND_LIB)
+			$(C_COMPILER) -o $(EXECUTABLE) $(M_OBJECT) $(C_OBJECT) $(U_OBJECT) $(C_LIBS) -L../lib -lEquilibrium -lLayer -lIsland -lEce
 
 $(BUILD_DIR):
 			@mkdir -p $(BUILD_DIR)
 
 $(C_OBJECT):		$(C_SOURCE) $(C_HEADER)
 			$(C_COMPILER) $(C_FLAGS) -o $*.o -c $(C_INCLUDE) -I../include $*.cpp
+
+$(M_OBJECT):		$(M_SOURCE) $(C_HEADER)
+			$(C_COMPILER) $(C_FLAGS) -o $*.o -c $(C_INCLUDE) -I../include $(M_SOURCE)
 
 $(U_OBJECT):
 			$(MAKE) -C $(UTILITY_DIR)
@@ -48,5 +59,5 @@ $(ISLAND_LIB):
 			$(MAKE) -C $(ISLAND_DIR)
 
 clean: 
-			rm -f $(C_OBJECT) $(EXECUTABLE)
+			rm -f $(M_OBJECT) $(C_OBJECT) $(EXECUTABLE) $(LIBRARY)
 
