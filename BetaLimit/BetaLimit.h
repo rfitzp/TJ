@@ -1,6 +1,9 @@
 // BetaLimit.h
 
-// Program to search for beta limit as function of central safeety-factor using TJ code
+/*
+// Program to search for beta limit as function of central safety-factor using TJ code
+*/
+// Program to search for beta limit as function of wall radius using TJ code
 
 #pragma once
 
@@ -14,14 +17,18 @@ class BetaLimit : private Utility
 {
  private:
 
-  double qc;        // Central safety-factor
+  //double qc;        // Central safety-factor
+  double bw;        // Wall radius
   double rs;        // Rational surface radius
   double ss;        // Resonant magnetic shear
   double dW;        // delta W
   
-  double qc_start;  // Lower limit of central safety-factor scan (read from JSON file)
-  double qc_end;    // Upper limit of central safety-factor scan (read from JSON file)
-  int    N_qc;      // Number of points in central safety-factor scan (read from JSON file)
+  //double qc_start;  // Lower limit of central safety-factor scan (read from JSON file)
+  //double qc_end;    // Upper limit of central safety-factor scan (read from JSON file)
+  //int    N_qc;      // Number of points in central safety-factor scan (read from JSON file)
+  double bw_start;  // Lower limit of wall radius scan (read from JSON file)
+  double bw_end;    // Upper limit of wall radius scan (read from JSON file)
+  int    N_bw;      // Number of points in wall radius scan (read from JSON file)
 
   double pc_start;  // Lower limit of central pressure search interval (read from JSON file)
   double pc_end  ;  // Upper limit of central pressure search interval (read from JSON file)

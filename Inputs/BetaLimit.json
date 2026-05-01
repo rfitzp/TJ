@@ -1,9 +1,12 @@
 {
-    "qc_start":  0.994,  // Lower limit of central safety-factor scan interval
-    "qc_end":    0.999,  // Upper limit of central safety-factor scan interval
-    "N_qc":      6,     // Number of points in central safety-factor scan
+    //"qc_start":  0.994,  // Lower limit of central safety-factor scan interval
+    //"qc_end":    0.999,  // Upper limit of central safety-factor scan interval
+    //"N_qc":      6,     // Number of points in central safety-factor scan
+    "bw_start":  1.4,  // Lower limit of wall radius scan interval
+    "bw_end":    1.0,  // Upper limit of wall radius scan interval
+    "N_bw":      50,   // Number of points in wall radius scan
     
-    "pc_start":  0.136,   // Lower limit of central pressure search interval
+    "pc_start":  0.10,   // Lower limit of central pressure search interval
     "pc_end":    0.15,   // Upper limit of central pressure search interval
     "Nint":      10      // Number of subdivisions in search interval
 }

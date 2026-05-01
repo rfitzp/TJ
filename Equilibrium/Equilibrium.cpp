@@ -58,6 +58,17 @@ Equilibrium::Equilibrium ()
   alpha = JSONData["alpha"].get<double> ();
   Teped = JSONData["Teped"].get<double> ();
   neped = JSONData["neped"].get<double> ();
+
+  bw = JSONData["bw"].get<double> ();
+
+  for (const auto& number : JSONData["wcoil"])
+    {
+      wcoil.push_back (number.get<double> ());
+    }
+  for (const auto& number : JSONData["Icoil"])
+    {
+      Icoil.push_back (number.get<double> ());
+    }
   
   JSONFilename = "../Inputs/TJ.json";
   JSONData     = ReadJSONFile (JSONFilename);
@@ -148,15 +159,26 @@ Equilibrium::Equilibrium ()
     }
   if (tilt < -180. || tilt > 180.)
     {
-       printf ("Equilibrium:: Error -  tilt must lie in range -180 to +180\n");
+      printf ("Equilibrium:: Error -  tilt must lie in range -180 to +180\n");
+      exit (1);
+    }
+  if (wcoil.size() != Icoil.size())
+    {
+      printf ("Equilibrium:: Error - wcoil and Icoil arrays must be same size\n");
       exit (1);
     }
 }
 
+/*
 // ########################################################
 // Constructor that sets central safety-factor and pressure
 // ########################################################
 Equilibrium::Equilibrium (double _qc, double _pc)
+*/
+// ##############################################
+// Constructor that sets wall radius and pressure
+// ##############################################
+Equilibrium::Equilibrium (double _bw, double _pc)
 {
   // --------------------------------------------------
   // Ensure that directory ../Outputs/Equilibrium exits
@@ -177,7 +199,8 @@ Equilibrium::Equilibrium (double _qc, double _pc)
   json   JSONData     = ReadJSONFile (JSONFilename);
 
   SRC  = JSONData["SRC"] .get<int>    ();
-  qc   = _qc;
+  qc   = JSONData["qc"]  .get<double> ();
+  //qc   = _qc;
   qa   = JSONData["qa"]  .get<double> ();
   pc   = _pc;
   mu   = JSONData["mu"]  .get<double> ();
@@ -208,6 +231,18 @@ Equilibrium::Equilibrium (double _qc, double _pc)
   alpha = JSONData["alpha"].get<double> ();
   Teped = JSONData["Teped"].get<double> ();
   neped = JSONData["neped"].get<double> ();
+
+  //bw = JSONData["bw"].get<double> ();
+  bw = _bw;
+
+  for (const auto& number : JSONData["wcoil"])
+    {
+      wcoil.push_back (number.get<double> ());
+    }
+  for (const auto& number : JSONData["Icoil"])
+    {
+      Icoil.push_back (number.get<double> ());
+    }
   
   JSONFilename = "../Inputs/TJ.json";
   JSONData     = ReadJSONFile (JSONFilename);
@@ -299,6 +334,11 @@ Equilibrium::Equilibrium (double _qc, double _pc)
   if (tilt < -180. || tilt > 180.)
     {
        printf ("Equilibrium:: Error -  tilt must lie in range -180 to +180\n");
+      exit (1);
+    }
+  if (wcoil.size() != Icoil.size())
+    {
+      printf ("Equilibrium:: Error - wcoil and Icoil arrays must be same size\n");
       exit (1);
     }
 }
@@ -1291,14 +1331,6 @@ void Equilibrium::Solve ()
 
   igrr2b = Getigrr2av (1.);
 
-  // ....................
-  // Read wall parameters
-  // ....................
-  string JSONFilename = "../Inputs/Equilibrium.json";
-  json   JSONData     = ReadJSONFile (JSONFilename);
-
-  bw = JSONData["bw"].get<double> ();
-
   // ...................
   // Calculate wall data
   // ...................
@@ -1372,32 +1404,15 @@ void Equilibrium::Solve ()
   // .......................
   // Calculate RMP coil data
   // .......................
-  vector<double> wcoil, icoil;
-  for (const auto& number : JSONData["wcoil"])
-    {
-      wcoil.push_back (number.get<double> ());
-    }
-  for (const auto& number : JSONData["Icoil"])
-    {
-      icoil.push_back (number.get<double> ());
-    }
-
-  if (wcoil.size() != icoil.size())
-    {
-      printf ("Equilibrium:: Error reading etacoil and Icoil arrays must be same size\n");
-      exit (1);
-    }
   ncoil = wcoil.size();
 
   Rcoil = new double[ncoil];
   Zcoil = new double[ncoil];
-  Icoil = new double[ncoil];
   
   for (int i = 0; i < ncoil; i++)
     {
       Rcoil[i] = 1. + bw * (GetR (ra, wcoil[i]*M_PI, 1) - 1.);
       Zcoil[i] = bw * GetZ (ra, wcoil[i]*M_PI, 1);
-      Icoil[i] = icoil[i];
      }
   
   printf ("RMP coil data:\n");
@@ -1495,7 +1510,7 @@ void Equilibrium::Solve ()
   delete[] DI;  delete[] DR;   delete[] Lfunc; delete[] Te;
   delete[] ne;  delete[] Tep;  delete[] nep;  
 
-  delete[] Rcoil; delete[] Zcoil; delete[] Icoil;
+  delete[] Rcoil; delete[] Zcoil; 
 
   if (SRC)
     {

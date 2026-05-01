@@ -13,9 +13,14 @@ BetaLimit::BetaLimit ()
   string JSONFilename = "../Inputs/BetaLimit.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
+  /*
   qc_start = JSONData["qc_start"].get<double>();
   qc_end   = JSONData["qc_end"]  .get<double>();
   N_qc     = JSONData["N_qc"]    .get<int>();
+  */
+  bw_start = JSONData["bw_start"].get<double>();
+  bw_end   = JSONData["bw_end"]  .get<double>();
+  N_bw     = JSONData["N_bw"]    .get<int>();
   
   pc_start = JSONData["pc_start"].get<double>();
   pc_end   = JSONData["pc_end"]  .get<double>();
@@ -40,15 +45,18 @@ void BetaLimit::Solve ()
   FILE* file = OpenFilew ("../Outputs/BetaLimit/BetaLimit.out");
 
   double pc_st = pc_start;
-  for (int i = 0; i < N_qc; i++)
+  //for (int i = 0; i < N_qc; i++)
+  for (int i = 0; i < N_bw; i++)
     { 
-      qc = qc_start + (qc_end - qc_start) * double (i) /double (N_qc - 1);
+      //qc = qc_start + (qc_end - qc_start) * double (i) /double (N_qc - 1);
+      bw = bw_start + (bw_end - bw_start) * double (i) /double (N_bw - 1);
 
       double pc = RootFind (pc_st, pc_end);
       
       pc_st = pc;
 
-      fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", qc, rs, ss, pc, dW);
+      //fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", qc, rs, ss, pc, dW);
+      fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", bw, rs, ss, pc, dW);
       fflush (file);
     }
   
@@ -62,13 +70,15 @@ double BetaLimit::RootFindF (double _pc)
 {
   TJ tj;
 
-  tj.Solve (qc, _pc);
+  //tj.Solve (qc, _pc);
+  tj.Solve (bw, _pc);
 
   try
     {
       NcFile dataFile ("../Outputs/TJ/TJ.nc", NcFile::read);
 
-      NcVar W_x = dataFile.getVar ("delta_W");
+      // NcVar W_x = dataFile.getVar ("delta_W");
+      NcVar W_x = dataFile.getVar ("pdelta_W");
       NcDim W_d = W_x.getDim (0);
 
       int     NW     = W_d.getSize ();
@@ -109,7 +119,8 @@ double BetaLimit::RootFindF (double _pc)
 
   FILE* file = OpenFilea ("../Outputs/BetaLimit/Record.out");
 
-  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", qc, _pc, rs, ss, dW);
+  //fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", qc, _pc, rs, ss, dW);
+  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", bw, _pc, rs, ss, dW);
 
   fclose (file);
 

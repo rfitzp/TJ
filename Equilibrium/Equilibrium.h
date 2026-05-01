@@ -103,9 +103,9 @@ class Equilibrium : private Utility
 
   double         bw;    // Relative wall radius (read from JSON file)
 
+  vector<double> wcoil; // omega coordinates of RMP strands/M_PI (read from JSON file)
+  vector<double> Icoil; // Toroidal currents flowing in RMP strands (read from JSON file)
   int            ncoil; // Number of toroidal strands that make up RMP coils (strands assumed to be located at wall radius)
-  double*        wcoil; // omega coordinates of RMP strands/M_PI (read from JSON file)
-  double*        Icoil; // Toroidal currents flowing in RMP strands (read from JSON file)
   double*        Rcoil; // R coodinates of RMP strands 
   double*        Zcoil; // Z coodinates of RMP strands 
 
@@ -376,8 +376,12 @@ class Equilibrium : private Utility
   // Constructor
   Equilibrium ();
 
+  /*
   // Constructor that sets central safety-factor and pressure
   Equilibrium (double _qc, double _pc);
+  */
+  // Constructor that sets wall radius and pressure
+  Equilibrium (double _bw, double _pc);
 
   // Destructor
   ~Equilibrium ();

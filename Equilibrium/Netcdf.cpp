@@ -299,7 +299,7 @@ void Equilibrium::WriteNetcdf (double sa)
       NcVar Zcoil_x = dataFile.addVar ("Zcoil", ncDouble, c_d);
       Zcoil_x.putVar (Zcoil);
       NcVar Icoil_x = dataFile.addVar ("Icoil", ncDouble, c_d);
-      Icoil_x.putVar (Icoil);
+      Icoil_x.putVar (Icoil.data());
 
       dataFile.close ();
     }
