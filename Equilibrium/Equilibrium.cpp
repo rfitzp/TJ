@@ -169,16 +169,15 @@ Equilibrium::Equilibrium ()
     }
 }
 
-/*
-// ########################################################
-// Constructor that sets central safety-factor and pressure
-// ########################################################
-Equilibrium::Equilibrium (double _qc, double _pc)
-*/
-// ##############################################
-// Constructor that sets wall radius and pressure
-// ##############################################
-Equilibrium::Equilibrium (double _bw, double _pc)
+// #############################################################
+// Constructor that sets value of parameter and central pressure
+//
+// cntrl = 0 - sets qc
+// cntrl = 1 - sets bw
+// cntrl = 2 - sets Ea
+//
+// #############################################################
+Equilibrium::Equilibrium (int cntrl, double val, double _pc)
 {
   // --------------------------------------------------
   // Ensure that directory ../Outputs/Equilibrium exits
@@ -199,8 +198,10 @@ Equilibrium::Equilibrium (double _bw, double _pc)
   json   JSONData     = ReadJSONFile (JSONFilename);
 
   SRC  = JSONData["SRC"] .get<int>    ();
-  qc   = JSONData["qc"]  .get<double> ();
-  //qc   = _qc;
+  if (cntrl == 0)
+      qc = val;
+  else
+      qc = JSONData["qc"]  .get<double> ();
   qa   = JSONData["qa"]  .get<double> ();
   pc   = _pc;
   mu   = JSONData["mu"]  .get<double> ();
@@ -225,6 +226,9 @@ Equilibrium::Equilibrium (double _bw, double _pc)
       Vna.push_back (number.get<double> ());
     }
 
+  if (cntrl == 2)
+    Hna[0] = val;
+
   B0    = JSONData["B0"]   .get<double> ();
   R0    = JSONData["R0"]   .get<double> ();
   n0    = JSONData["n0"]   .get<double> ();
@@ -232,8 +236,10 @@ Equilibrium::Equilibrium (double _bw, double _pc)
   Teped = JSONData["Teped"].get<double> ();
   neped = JSONData["neped"].get<double> ();
 
-  //bw = JSONData["bw"].get<double> ();
-  bw = _bw;
+  if (cntrl == 1)
+    bw = val;
+  else
+    bw = JSONData["bw"].get<double> ();
 
   for (const auto& number : JSONData["wcoil"])
     {

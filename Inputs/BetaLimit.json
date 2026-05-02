@@ -1,14 +1,13 @@
 {
-    //"qc_start":  0.994,  // Lower limit of central safety-factor scan interval
-    //"qc_end":    0.999,  // Upper limit of central safety-factor scan interval
-    //"N_qc":      6,     // Number of points in central safety-factor scan
-    "bw_start":  1.4,  // Lower limit of wall radius scan interval
-    "bw_end":    1.0,  // Upper limit of wall radius scan interval
-    "N_bw":      50,   // Number of points in wall radius scan
+    "CNTRL":      1,      // Parameter chooser (0 - qc; 1 - bw; 2 - Ea)
+    "UP":         1,      // 1/0 if beta limti goes up/down with increasing parameter
+    "val_start":  1.04,    // Lower limit of parameter scan interval
+    "val_end":    1.0,    // Upper limit of parameter scan interval
+    "N_val":      8,      // Number of points in parameter scan
     
-    "pc_start":  0.10,   // Lower limit of central pressure search interval
-    "pc_end":    0.15,   // Upper limit of central pressure search interval
-    "Nint":      10      // Number of subdivisions in search interval
+    "pc_start":   1.198e-01, // Lower limit of central pressure search interval
+    "pc_end":     0.13,       // Upper limit of central pressure search interval
+    "Nint":       50          // Number of subdivisions in search interval
 }
 
 

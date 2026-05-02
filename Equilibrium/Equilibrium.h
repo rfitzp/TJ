@@ -376,12 +376,13 @@ class Equilibrium : private Utility
   // Constructor
   Equilibrium ();
 
-  /*
-  // Constructor that sets central safety-factor and pressure
-  Equilibrium (double _qc, double _pc);
-  */
-  // Constructor that sets wall radius and pressure
-  Equilibrium (double _bw, double _pc);
+  // Constructor that sets value of parameter and central pressure
+  //
+  // cntrl = 0 - sets qc
+  // cntrl = 1 - sets bw
+  // cntrl = 2 - sets Ea
+  //
+  Equilibrium (int cntrl, double val, double _pc);
 
   // Destructor
   ~Equilibrium ();

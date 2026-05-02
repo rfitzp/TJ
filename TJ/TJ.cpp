@@ -254,16 +254,16 @@ void TJ::Solve ()
     }
 }
 
-// ##########################################################################
-// Function to solve problem while setting central safety-factor and pressure
-// ##########################################################################
-void TJ::Solve (double _qc, double _pc)
+// ########################################################################
+// Function to solve problem while setting specified parameter and pressure
+// ########################################################################
+void TJ::Solve (int cntrl, double val, double _pc)
 {
   // .............................................................................
   // Call class Equilibrium to construct aspect-ratio expanded tokamak equilibrium
   // .............................................................................
   {
-    Equilibrium equilibrium (_qc, _pc);
+    Equilibrium equilibrium (cntrl, val, _pc);
 
     if (!SRC)
       equilibrium.Setnu ();

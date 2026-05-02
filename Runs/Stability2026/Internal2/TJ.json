@@ -1,0 +1,32 @@
+{
+    "NTOR":   1,            // Toroidal mode number
+    "MMIN":  -10,           // Minimum poloidal mode number included in calculation
+    "MMAX":   20,           // Maximum poloidal mode number included in calculation
+    "ISLAND": [0.1, 0.01],  // Island widths/displacements (divided by minor radius) used to regularize perturbed magnetic field
+    "NPHI":   32,           // Number of toroidal grid-points on extended visualization grid
+
+    "EQLB":   0,           // Flag for equilibrium calculation only
+    "FREE":   0,           // Values +1/0/-1 switch between no-wall/perfect-wall/fixed-boundary tearing mode calculations
+    "FVAL":   0,           // Flag for calculating eigenvalues and eigenvectors of F-matrix
+    "VIZ":    0,           // Flag for generating unreconnected eigenfunction visualization data
+    "IDEAL":  1,           // Flag for ideal calculation
+    "XI":     1,           // Flag for using Xi, rather than Psi, as ideal eigenfunction basis
+    "RMP":    0,           // Flag for resonant magnetic perturbation calculation
+    "LAYER":  0,           // Flag for layer calculation
+    "TEMP":   0,           // Flag for perturbed temperature calculation (only fully works with VIZ = 1)
+ 
+    "EPS":   1.0e-4,       // Solutions launched from magnetic axis at r = EPS 
+    "DEL":   1.0e-9,       // Distance of closest approach to rational surface
+    "NFIX":  160,          // Number of fixups 
+    "NDIAG": 1024,         // Number of radial grid-points for diagnostics
+    
+    "NULC":    2.0e-9,     // Use zero pressure jump conditions when |nu_L| < NULC 
+    "ITERMAX": 10,         // Maximum number of iterations used to determine quantities at rational surface 
+    
+    "acc":  1.0e-12,       // Adaptive integration accuracy
+    "h0":   1.0e-4,        // Initial integration step-length 
+    "hmin": 1.0e-10,       // Minimum integration step-length 
+    "hmax": 1.0e-2,        // Maximum integration step-length
+    
+    "EPSF": 1.0e-4         // Step-length for finite difference determination of derivatives
+}

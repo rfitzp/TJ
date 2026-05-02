@@ -13,14 +13,11 @@ BetaLimit::BetaLimit ()
   string JSONFilename = "../Inputs/BetaLimit.json";
   json   JSONData     = ReadJSONFile (JSONFilename);
 
-  /*
-  qc_start = JSONData["qc_start"].get<double>();
-  qc_end   = JSONData["qc_end"]  .get<double>();
-  N_qc     = JSONData["N_qc"]    .get<int>();
-  */
-  bw_start = JSONData["bw_start"].get<double>();
-  bw_end   = JSONData["bw_end"]  .get<double>();
-  N_bw     = JSONData["N_bw"]    .get<int>();
+  CNTRL     = JSONData["CNTRL"]    .get<int>();
+  UP        = JSONData["UP"]       .get<int>();
+  val_start = JSONData["val_start"].get<double>();
+  val_end   = JSONData["val_end"]  .get<double>();
+  N_val     = JSONData["N_val"]    .get<int>();
   
   pc_start = JSONData["pc_start"].get<double>();
   pc_end   = JSONData["pc_end"]  .get<double>();
@@ -45,18 +42,25 @@ void BetaLimit::Solve ()
   FILE* file = OpenFilew ("../Outputs/BetaLimit/BetaLimit.out");
 
   double pc_st = pc_start;
-  //for (int i = 0; i < N_qc; i++)
-  for (int i = 0; i < N_bw; i++)
+  double pc_en = pc_end;
+  for (int i = 0; i <= N_val; i++)
     { 
-      //qc = qc_start + (qc_end - qc_start) * double (i) /double (N_qc - 1);
-      bw = bw_start + (bw_end - bw_start) * double (i) /double (N_bw - 1);
+      val = val_start + (val_end - val_start) * double (i) /double (N_val);
+ 
+      double pc = RootFind (pc_st, pc_en);
 
-      double pc = RootFind (pc_st, pc_end);
-      
-      pc_st = pc;
+      if (UP)
+	{
+	  pc_st = pc;
+	  pc_en = pc_end;
+	}
+      else
+	{
+	  pc_st = pc;
+	  pc_en = pc_start;
+	}
 
-      //fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", qc, rs, ss, pc, dW);
-      fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", bw, rs, ss, pc, dW);
+      fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", val, rs, ss, pc, dW);
       fflush (file);
     }
   
@@ -70,24 +74,50 @@ double BetaLimit::RootFindF (double _pc)
 {
   TJ tj;
 
-  //tj.Solve (qc, _pc);
-  tj.Solve (bw, _pc);
+  tj.Solve (CNTRL, val, _pc);
 
   try
     {
       NcFile dataFile ("../Outputs/TJ/TJ.nc", NcFile::read);
 
-      // NcVar W_x = dataFile.getVar ("delta_W");
-      NcVar W_x = dataFile.getVar ("pdelta_W");
-      NcDim W_d = W_x.getDim (0);
+      NcVar W_x   = dataFile.getVar ("delta_W");
+      NcVar Wv_x  = dataFile.getVar ("delta_W_v");
+      NcVar pW_x  = dataFile.getVar ("pdelta_W");
+      NcVar pWv_x = dataFile.getVar ("pdelta_W_v");
+      NcDim W_d   = W_x.getDim (0);
 
-      int     NW     = W_d.getSize ();
-      double* deltaW = new double[NW];
+      int     NW       = W_d.getSize ();
+      double* deltaW   = new double[NW];
+      double* deltaWv  = new double[NW];
+      double* pdeltaW  = new double[NW];
+      double* pdeltaWv = new double[NW];
 
-      W_x.getVar (deltaW);
+      W_x  .getVar (deltaW);
+      Wv_x .getVar (deltaWv);
+      pW_x .getVar (pdeltaW);
+      pWv_x.getVar (pdeltaWv);
 
-      dW = deltaW[1];
-
+      if (CNTRL == 1)
+	{
+	  int i = -1;
+	  do
+	    {
+	      i++;
+	      dW = pdeltaW[i];
+	    }
+	  while (pdeltaWv[i] < 0.);
+	}
+      else
+	{
+	  int i = -1;
+	  do
+	    {
+	      i++;
+	      dW = deltaW[i];
+	    }
+	  while (deltaWv[i] < 0.);
+	}
+  
       NcVar r_x = dataFile.getVar ("r_res");
       NcDim r_d = r_x.getDim (0);
 
@@ -108,7 +138,8 @@ double BetaLimit::RootFindF (double _pc)
 
       ss = s_res[0];
 
-      delete [] deltaW; delete[] r_res; delete[] s_res;
+      delete[] deltaW; delete[] deltaWv; delete[] pdeltaW; delete[] pdeltaWv;
+      delete[] r_res; delete[] s_res;
     }
   catch (NcException& e)
     {
@@ -119,8 +150,7 @@ double BetaLimit::RootFindF (double _pc)
 
   FILE* file = OpenFilea ("../Outputs/BetaLimit/Record.out");
 
-  //fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", qc, _pc, rs, ss, dW);
-  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", bw, _pc, rs, ss, dW);
+  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", val, _pc, rs, ss, dW);
 
   fclose (file);
 

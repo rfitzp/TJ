@@ -679,8 +679,8 @@ class TJ : private Utility
 
   // Solve problem
   void Solve ();
-  // Solve problem while setting central safety-factor and pressure
-  void Solve (double _qc, double _pc);
+  // Solve problem while setting specified parameter and pressure
+  void Solve (int cntrl, double val, double _pc);
 
  private:
 
