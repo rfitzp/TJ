@@ -381,6 +381,7 @@ class Equilibrium : private Utility
   // cntrl = 0 - sets qc
   // cntrl = 1 - sets bw
   // cntrl = 2 - sets Ea
+  // cntrl = 3 - sets Ta
   //
   Equilibrium (int cntrl, double val, double _pc);
 

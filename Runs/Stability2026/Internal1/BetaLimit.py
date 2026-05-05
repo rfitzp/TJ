@@ -31,7 +31,7 @@ plt.rc ('ytick', labelsize = fontsize)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0.9, 1.0)
+plt.xlim (0.8, 1.0)
 #plt.ylim (0.,  0.08)
 #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 

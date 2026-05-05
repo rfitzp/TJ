@@ -58,5 +58,5 @@ plt.ylabel (r"$\beta_{0\,{\rm crit}}$", fontsize = "15")
 
 plt.tight_layout ()
 
-#plt.show ()    
-plt.savefig("BetaLimit1.pdf")
+plt.show ()    
+#plt.savefig("BetaLimit1.pdf")

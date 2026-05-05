@@ -1,13 +1,13 @@
 {
-    "CNTRL":      1,      // Parameter chooser (0 - qc; 1 - bw; 2 - Ea)
+    "CNTRL":      3,      // Parameter chooser (0 - qc; 1 - bw; 2 - Ea; 3 - Ta)
     "UP":         1,      // 1/0 if beta limti goes up/down with increasing parameter
-    "val_start":  1.04,    // Lower limit of parameter scan interval
-    "val_end":    1.0,    // Upper limit of parameter scan interval
-    "N_val":      8,      // Number of points in parameter scan
+    "val_start":  0.5,    // Lower limit of parameter scan interval
+    "val_end":    -0.5,   // Upper limit of parameter scan interval
+    "N_val":      100,    // Number of points in parameter scan
     
-    "pc_start":   1.198e-01, // Lower limit of central pressure search interval
-    "pc_end":     0.13,       // Upper limit of central pressure search interval
-    "Nint":       50          // Number of subdivisions in search interval
+    "pc_start":   0.05,  // Lower limit of central pressure search interval
+    "pc_end":     0.13,  // Upper limit of central pressure search interval
+    "Nint":       50     // Number of subdivisions in search interval
 }
 
 

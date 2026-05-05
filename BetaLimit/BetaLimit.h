@@ -20,7 +20,7 @@ class BetaLimit : private Utility
   double dW;         // delta W
 
   int    CNTRL;      // Sets which parameter is scanned (read from JSON file)
-                     // 0 - qc scan; 1 - bw scan; 2 - Ea scan
+                     // 0 - qc scan; 1 - bw scan; 2 - Ea scan; 3 - Ta scan
   int    UP;         // Sets whether beta limit goes up (1) or down (0) with increasing parameter (read from JSON file)
   double val_start;  // Lower limit of parameter scan (read from JSON file)
   double val_end;    // Upper limit of parameter scan (read from JSON file)

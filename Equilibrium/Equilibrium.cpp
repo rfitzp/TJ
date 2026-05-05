@@ -175,6 +175,7 @@ Equilibrium::Equilibrium ()
 // cntrl = 0 - sets qc
 // cntrl = 1 - sets bw
 // cntrl = 2 - sets Ea
+// cntrl = 3 - sets Ta
 //
 // #############################################################
 Equilibrium::Equilibrium (int cntrl, double val, double _pc)
@@ -228,6 +229,8 @@ Equilibrium::Equilibrium (int cntrl, double val, double _pc)
 
   if (cntrl == 2)
     Hna[0] = val;
+  if (cntrl == 3)
+    Hna[1] = val;
 
   B0    = JSONData["B0"]   .get<double> ();
   R0    = JSONData["R0"]   .get<double> ();
