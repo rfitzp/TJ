@@ -121,7 +121,7 @@ double BetaLimit::RootFindF (double _pc)
       NcVar r_x = dataFile.getVar ("r_res");
       NcDim r_d = r_x.getDim (0);
 
-      int     Nr     = r_d.getSize ();
+      int     Nr    = r_d.getSize ();
       double* r_res = new double[Nr];
 
       r_x.getVar (r_res);
@@ -150,7 +150,7 @@ double BetaLimit::RootFindF (double _pc)
 
   FILE* file = OpenFilea ("../Outputs/BetaLimit/Record.out");
 
-  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", val, _pc, rs, ss, dW);
+  fprintf (file, "%11.4e %11.4e %11.4e %11.4e %11.4e\n", val, rs, ss, _pc, dW);
 
   fclose (file);
 

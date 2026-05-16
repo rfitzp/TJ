@@ -36,8 +36,8 @@ plt.xlim (0.8, 1.0)
 #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 
 plt.plot (q, p,  color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"$p_{0\,crit}$")
-plt.plot (q, r,  color = 'black',  linewidth = 2, linestyle = 'dashed',   label =  r"$r_s$")
-plt.plot (q, s,  color = 'black',  linewidth = 2, linestyle = 'dotted',   label =  r"$s_s$")
+plt.plot (q, r,  color = 'black',  linewidth = 2, linestyle = 'dashed',   label =  r"$\hat{r}_{q=1}$")
+plt.plot (q, s,  color = 'black',  linewidth = 2, linestyle = 'dotted',   label =  r"$s_{q=1}$")
 
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
 #plt.axvline (0.1104,  color = 'black', linewidth = 1, linestyle = 'dotted')
@@ -48,4 +48,5 @@ plt.legend (fontsize = 13)
 
 plt.tight_layout ()
 
-plt.show ()   
+#plt.show ()   
+plt.savefig("Figure13_5.pdf")

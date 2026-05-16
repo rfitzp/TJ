@@ -35,17 +35,18 @@ plt.xlim (0., 0.12)
 #plt.ylim (0.,  0.08)
 #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 
-plt.plot (p0, dW,  color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"$\delta W$")
-plt.plot (p0, dWp, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"$\delta W_p$")
-plt.plot (p0, dWv, color = 'black',  linewidth = 2, linestyle = 'dotted',  label =  r"$\delta W_v$")
+plt.plot (p0, dW,  color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"$\delta \hat{W}$")
+plt.plot (p0, dWp, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"$\delta \hat{W}_p$")
+plt.plot (p0, dWv, color = 'black',  linewidth = 2, linestyle = 'dotted',  label =  r"$\delta \hat{W}_v$")
 
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
-plt.axvline (0.1104,  color = 'black', linewidth = 1, linestyle = 'dotted')
+plt.axvline (0.1104,  color = 'black', linewidth = 1, linestyle = 'dashdot')
 
 plt.xlabel (r'$p_0$', fontsize = fontsize)
 #plt.ylabel (r"$\Delta'$", fontsize = fontsize)
-plt.legend (fontsize = 13)
+plt.legend (fontsize = 15)
 
 plt.tight_layout ()
 
-plt.show ()   
+#plt.show ()   
+plt.savefig ("Figure13_4.pdf")
