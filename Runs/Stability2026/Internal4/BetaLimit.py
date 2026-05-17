@@ -32,6 +32,20 @@ for line in infile:
     Eb.append(c1)
     pb.append(c4)
 
+infile = open("BetaLimita.out", "r")
+
+Ec  = []
+pc  = []
+
+for line in infile: 
+
+    numbers = line.split()
+    
+    c1 = float(numbers[0])
+    c4 = float(numbers[3])
+
+    Ec.append(c1)
+    pc.append(c4)
     
 fig = plt.figure (figsize = (12.0, 6.0))
 plt.rc ('xtick', labelsize = 20) 
@@ -48,9 +62,11 @@ plt.ylabel (r"$p_{0\,{\rm crit}}$", fontsize = "20")
 
 plt.subplot (1, 2, 2)
 
-plt.xlim(0., 0.3)
+plt.xlim(-0.3, 0.3)
 
 plt.plot (Ea, pa,  color = 'black',  linewidth = 2,   linestyle = 'dotted',  marker = 's', fillstyle = 'none', markersize = 5)
+plt.plot (Ec, pc,  color = 'black',  linewidth = 2,   linestyle = 'dotted',  marker = 's', fillstyle = 'none', markersize = 5)
+plt.axvline (0., linewidth = 2,   linestyle = 'dotted', color = 'black')
 plt.xlabel (r'$T_a$',               fontsize = "20")
 plt.ylabel (r"$p_{0\,{\rm crit}}$", fontsize = "20")
 

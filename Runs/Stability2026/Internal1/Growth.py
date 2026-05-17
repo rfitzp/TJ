@@ -43,8 +43,8 @@ plt.subplot (3, 1, 1)
 
 plt.xlim (0., 0.12)
 
-plt.plot (p2, g1, color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"m=1")
-plt.plot (p2, g2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"m=2")
+plt.plot (p2, g1, color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"q=1")
+plt.plot (p2, g2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"q=2")
 
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
 plt.axvline (0.1104,  color = 'black', linewidth = 1, linestyle = 'dotted')
@@ -56,8 +56,8 @@ plt.legend (fontsize = 13)
 plt.subplot (3, 1, 2)
 
 plt.xlim (0., 0.12)
-plt.plot (p2, w1, color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"m=1")
-plt.plot (p2, w2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"m=2")
+plt.plot (p2, w1, color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"q=1")
+plt.plot (p2, w2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"q=2")
 
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
 plt.axvline (0.1104,  color = 'black', linewidth = 1, linestyle = 'dotted')
@@ -69,8 +69,8 @@ plt.legend (fontsize = 13)
 plt.subplot (3, 1, 3)
 
 plt.xlim (0., 0.12)
-plt.plot (p2, f1, color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"m=1")
-plt.plot (p2, f2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"m=2")
+plt.plot (p2, f1, color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"q=1")
+plt.plot (p2, f2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"q=2")
 
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
 plt.axvline (0.1104,  color = 'black', linewidth = 1, linestyle = 'dotted')
