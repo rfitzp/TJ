@@ -31,13 +31,14 @@ plt.rc('ytick', labelsize = 15)
 J = Psi_r.shape[0]
 j = 1
 
-plt.subplot(2, 1, 1)
+plt.subplot(1, 1, 1)
 
 plt.xlim(0., 1.)
 
 plt.plot (r, Psi_r[11,j,:], color = 'black',  linewidth = 2.0, linestyle = 'solid',  label = r"$m=1$")
 plt.plot (r, Psi_r[12,j,:], color = 'black',  linewidth = 2.0, linestyle = 'dashed', label = r"$m=2$")
 plt.plot (r, Psi_r[13,j,:], color = 'black',  linewidth = 2.0, linestyle = 'dotted', label = r"$m=3$")
+plt.plot (r, Psi_r[14,j,:], color = 'black',  linewidth = 2.0, linestyle = 'dashdot', label = r"$m=4$")
 
 plt.axhline (0., color='black', linewidth = 1.5, linestyle = 'dotted')
 
@@ -48,24 +49,7 @@ plt.xlabel (r'$\hat{r}$',  fontsize = "15")
 plt.ylabel (r'$\psi_m$',   fontsize = "15")
 plt.legend (fontsize = 15)
 
-plt.subplot (2, 1, 2)
-
-plt.xlim (0., 1.)
-
-plt.plot (r[1:], Xi_r[11,j,1:], color = 'black', linewidth = 2.0, linestyle = 'solid',  label = r"$m=1$")
-plt.plot (r[1:], Xi_r[12,j,1:], color = 'black', linewidth = 2.0, linestyle = 'dashed', label = r"$m=2$")
-plt.plot (r[1:], Xi_r[13,j,1:], color = 'black', linewidth = 2.0, linestyle = 'dotted', label = r"$m=3$")
- 
-plt.axhline (0., color = 'black', linewidth = 1.5, linestyle = 'dotted')
-
-for rx in rres:
-    plt.axvline (rx, color = 'black', linewidth = 1.5, linestyle = 'dashed')
-
-plt.xlabel (r'$\hat{r}$', fontsize = "15")
-plt.ylabel (r'$\xi_m$',   fontsize = "15")
-plt.legend (fontsize = 15)
-
 plt.tight_layout ()
 
-#plt.show ()    
-plt.savefig ("Figure13_2.pdf")
+plt.show ()    
+#plt.savefig ("Figure13_2.pdf")

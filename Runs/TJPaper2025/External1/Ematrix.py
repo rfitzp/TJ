@@ -171,5 +171,5 @@ inset_ax.plot (b0, e22r, color = 'blue',  linewidth = 1, linestyle = 'dotted', m
 
 plt.tight_layout ()
 
-#plt.show ()    
-plt.savefig("Ematrix.pdf")
+plt.show ()    
+#plt.savefig("Ematrix.pdf")

@@ -31,7 +31,7 @@ plt.rc ('ytick', labelsize = fontsize)
 
 plt.subplot (1, 1, 1)
 
-plt.xlim (0., 0.12)
+plt.xlim (0., 0.18)
 #plt.ylim (0.,  0.08)
 plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 
@@ -39,7 +39,7 @@ plt.plot (p2, D1, color = 'black',  linewidth = 2, linestyle = 'solid',   label 
 plt.plot (p2, D2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"$E_{22}$")
 
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
-plt.axvline (0.1104,  color = 'black', linewidth = 1, linestyle = 'dashed')
+plt.axvline (0.1674,  color = 'black', linewidth = 1, linestyle = 'dashed')
 
 plt.xlabel (r'$p_0$', fontsize = fontsize)
 plt.ylabel (r"$\log_{10}(E_{kk})$", fontsize = fontsize)
@@ -47,5 +47,5 @@ plt.legend (fontsize = 15)
 
 plt.tight_layout ()
 
-#plt.show ()    
-plt.savefig ("Figure13_8.pdf")
+plt.show ()    
+#plt.savefig ("Figure13_8.pdf")

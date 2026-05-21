@@ -41,13 +41,13 @@ plt.rc ('ytick', labelsize = fontsize)
 
 plt.subplot (1, 2, 1)
 
-plt.xlim (0., 0.12)
+plt.xlim (0., 0.18)
 
-plt.plot (p2, g1, color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"q=1")
-plt.plot (p2, g2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"q=2")
+plt.plot (p2, g1, color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"q=2")#, marker = 's', fillstyle = 'none', markersize = 5)
+plt.plot (p2, g2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"q=3")#, marker = 's', fillstyle = 'none', markersize = 5)
 
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
-plt.axvline (0.1104,  color = 'black', linewidth = 1, linestyle = 'dashed')
+plt.axvline (0.1674,  color = 'black', linewidth = 1, linestyle = 'dashed')
 
 plt.xlabel (r'$p_0$',        fontsize = fontsize)
 plt.ylabel (r"$\gamma(kHz)$", fontsize = fontsize)
@@ -55,12 +55,13 @@ plt.legend (fontsize = 20)
 
 plt.subplot (1, 2, 2)
 
-plt.xlim (0., 0.12)
-plt.plot (p2, w1, color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"q=1")
-plt.plot (p2, w2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"q=2")
+plt.xlim (0., 0.18)
+
+plt.plot (p2, w1, color = 'black',  linewidth = 2, linestyle = 'solid',   label =  r"q=2")#, marker = 's', fillstyle = 'none', markersize = 5)
+plt.plot (p2, w2, color = 'black',  linewidth = 2, linestyle = 'dashed',  label =  r"q=3")#, marker = 's', fillstyle = 'none', markersize = 5)
 
 plt.axhline (0.,      color = 'black', linewidth = 1, linestyle = 'dotted')
-plt.axvline (0.1104,  color = 'black', linewidth = 1, linestyle = 'dashed')
+plt.axvline (0.1674,  color = 'black', linewidth = 1, linestyle = 'dashed')
 
 plt.xlabel (r'$p_0$',        fontsize = fontsize)
 plt.ylabel (r"$\omega(kHz)$", fontsize = fontsize)
@@ -83,5 +84,5 @@ plt.legend (fontsize = 13)
 
 plt.tight_layout ()
 
-#plt.show ()    
-plt.savefig ("Figure13_9.pdf")
+plt.show ()    
+#plt.savefig ("Figure13_9.pdf")

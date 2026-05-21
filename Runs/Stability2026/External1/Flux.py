@@ -1,0 +1,103 @@
+# Flux.py
+
+# Plots r, theta coordinate system in R, Z plane.
+# Also shows rational surfaces, wall, and RMP coils.
+
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+import netCDF4 as nc
+
+fn   = 'Equilibrium.nc'
+ds   = nc.Dataset (fn)
+para = ds['para']
+R    = ds['R']
+Z    = ds['Z']
+r    = ds['rr']
+Req  = ds['R_eq']
+Zeq  = ds['Z_eq']
+
+epsa = para[0]
+
+RR = np.asarray(R);
+ZZ = np.asarray(Z);
+rr = np.asarray(r);
+nf = RR.shape[0]
+nt = RR.shape[1]                
+
+Rcoil = np.asarray(ds['Rcoil'])
+Zcoil = np.asarray(ds['Zcoil'])
+Icoil = np.asarray(ds['Icoil'])
+Rw    = ds['Rwall']
+Zw    = ds['Zwall']
+
+fn1   = 'TJ.nc'
+ds1   = nc.Dataset (fn1)
+rres  = ds1['r_res']
+
+fig = plt.figure (figsize = (8.0, 7.5))
+fig.canvas.manager.set_window_title (r'TJ Code: r, theta Coordinate System')
+plt.rc ('xtick', labelsize = 17) 
+plt.rc ('ytick', labelsize = 17) 
+
+plt.subplot(1, 1, 1)
+
+scale = 1.2*epsa
+plt.xlim (1.-scale, 1.+scale)
+plt.ylim (-scale, scale)
+
+"""
+for n in range (0, nf, 5):
+    plt.plot (R[n], Z[n],   color = 'black', linewidth = 0.1, linestyle = 'solid')
+"""
+plt.plot (R[nf-1], Z[nf-1], color = 'black', linewidth = 0.75, linestyle = 'solid')    
+
+"""
+for n in range (0, nt-1, 5):
+    plt.plot (R[:,n], Z[:,n], color = 'black', linewidth = 0.1, linestyle = 'solid')
+
+"""
+for n in range (0, nf, 40):
+    plt.plot (R[n], Z[n], color = 'black', linewidth = 0.5, linestyle = 'solid')
+
+for n in range (0, nt-1, 20):
+    plt.plot (R[:,n], Z[:,n], color = 'black', linewidth = 0.75, linestyle = 'dashed')
+
+plt.contour (RR, ZZ, rr, rres, colors = 'black', linewidths = 2.)
+
+"""
+rr1 = RR[:, 0]
+zz1 = ZZ[:, 0]
+plt.plot (rr1, zz1, color = 'red', linewidth = 1)
+rr1 = RR[:, int((nt+1)/2)]
+zz1 = ZZ[:, int((nt+1)/2)]
+plt.plot (rr1, zz1, color = 'red', linewidth = 1)
+rr1 = RR[:, int((nt+1)/4)]
+zz1 = ZZ[:, int((nt+1)/4)]
+plt.plot (rr1, zz1, color = 'red', linewidth = 1)
+rr1 = RR[:, int(3*(nt+1)/4)]
+zz1 = ZZ[:, int(3*(nt+1)/4)]
+plt.plot (rr1, zz1, color = 'red', linewidth  = 1)
+"""
+
+#plt.plot ([1.], [0.], marker = 'o', markersize = 1, color = "black")
+
+#plt.plot (Rw, Zw, color = 'black', linewidth = 1, linestyle = 'solid')
+
+"""
+for R, Z, I in zip (Rcoil, Zcoil, Icoil):
+    if I > 0.:
+        plt.plot ([R], [Z], marker = 'o', markersize = 5, color = "blue")
+    if I < 0.:
+        plt.plot ([R], [Z], marker = 'o', markersize = 5, color = "red")
+"""
+
+#plt.plot (Req, Zeq, color = 'cyan', linewidth = 1.5, linestyle = 'dashed')
+        
+plt.xlabel (r'$R/R_0$', fontsize = "20")
+plt.ylabel (r'$Z/R_0$', fontsize = "20")
+
+plt.tight_layout ()
+
+plt.show ()    
+#plt.savefig("Figure13_1.pdf")

@@ -37,7 +37,7 @@ b0 = []
 for b,p1,w1,p2,w2 in zip(bw,pc1,dW1,pc2,dW2):
     p0 = (p1*w2 - p2*w1) /(w2 - w1)
     pc.append(p2)
-    bc.append(0.08*p2)
+    bc.append(p2)
 
 """
 for b,p in zip(bw, pc):
@@ -52,9 +52,9 @@ plt.subplot (1, 1, 1)
 
 plt.plot (bw, bc,  color = 'black',  linewidth = 1,   linestyle = 'dotted', marker = 's', fillstyle = 'none', markersize = 5)
 plt.axvline (1.179, color = 'black', linewidth = 1.5, linestyle = 'dashed')
-plt.axhline (0.013394, color = 'black', linewidth = 1.5, linestyle = 'dashed')
-plt.xlabel (r'$b_w$',                   fontsize = "15")
-plt.ylabel (r"$\beta_{0\,{\rm crit}}$", fontsize = "15")
+plt.axhline (1.6740e-01, color = 'black', linewidth = 1.5, linestyle = 'dashed')
+plt.xlabel (r'$\hat{b}_w$',                   fontsize = "15")
+plt.ylabel (r"$p_{0\,{\rm crit}}$", fontsize = "15")
 
 plt.tight_layout ()
 

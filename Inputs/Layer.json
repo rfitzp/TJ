@@ -19,9 +19,9 @@
     "Smax":    0.1,       // Maximum Newton step-size
     "Smin":    1.0e-9,    // Minimum Newton step-size
 
-    "g_r":     [4.0e-1,   0.0],  // Initial offset of guesses for g_r
-    "g_i":     [-2.0e-1,  0.0],     // Initial offset of guesses for g_i
-    "STEP":    [1, 1]              // Number of intermediate steps in zero finding
+    "g_r":     [-4.0e-3, -4.0e-3],  // Initial offset of guesses for g_r
+    "g_i":     [-4.0e-2, -4.0e-2],     // Initial offset of guesses for g_i
+    "STEP":    [10, 10]              // Number of intermediate steps in zero finding
 }
 
 
