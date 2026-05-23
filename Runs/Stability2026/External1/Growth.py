@@ -84,5 +84,5 @@ plt.legend (fontsize = 13)
 
 plt.tight_layout ()
 
-plt.show ()    
-#plt.savefig ("Figure13_9.pdf")
+#plt.show ()    
+plt.savefig ("Figure13_18.pdf")
