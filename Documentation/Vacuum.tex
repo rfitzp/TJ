@@ -1,0 +1,113 @@
+\documentclass[12pt,prb,aps,notitlepage]{revtex4-1}
+\usepackage{amsmath}           		          	
+\usepackage{graphicx,epstopdf}					
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage{esint}
+\pdfoutput = 1 
+\newcommand {\bxi}{\mbox{\boldmath$\xi$}}
+\allowdisplaybreaks
+
+\begin{document}
+\title{Calculation of No-Wall Vacuum Matrix}
+\author{Richard Fitzpatrick\,\footnote{rfitzp@utexas.edu}}
+\affiliation{Institute for Fusion Studies, Department of Physics, University of Texas at Austin, Austin, TX 78712}
+\maketitle
+
+Let 
+\begin{equation}
+{\cal E}_m(r,\theta,\phi)= \bar{\cal E}_m(r,\theta)\,{\rm e}^{\,{\rm i}\,n\,\phi},
+\end{equation}
+where
+\begin{align}
+{\cal E}_m(\epsilon,\theta\,\phi)&= {\rm e}^{-{\rm i}\,(m\,\theta-n\,\phi)},\\[0.5ex]
+{\cal E}_m(\infty,\theta\,\phi)&= 0,\label{e2}\\[0.5ex]
+\nabla^2{\cal E}_m &=0.\label{e3}
+\end{align}
+It follows that 
+\begin{align}
+\bar{\cal E}_m(\epsilon,\theta)&= {\rm e}^{-{\rm i}\,m\,\theta},\label{e5}\\[0.5ex]
+\bar{\cal E}_m(\infty,\theta)&= 0,\\[0.5ex]
+\nabla^2\bar{\cal E}_m &=\frac{n^2}{R^2}\,\bar{\cal E}_m.
+\end{align}
+
+We can ensure that Eqs.~(\ref{e2}) and (\ref{e3}) are satisfied by writing
+\begin{equation}
+{\cal E}_m(r,\theta,\phi) = \oint\oint_{r'=r_c}\frac{\sigma_m(\theta')\,{\rm e}^{\,{\rm i}\,n\,\phi'}}{|{\bf r}-{\bf r}'|}\,{\cal J}\,d\theta'\,d\phi',
+\end{equation}
+where $r_c<\epsilon$, 
+It follows that
+\begin{equation}
+{\cal E}_m(r,\theta,\phi) 
+={\rm e}^{\,{\rm i}\,n\,\phi}\oint\oint_{r'=r_c} 
+\frac{\sigma_m(\theta')\,{\rm e}^{\,{\rm i}\,n\,\phi''}\,r'\,R'^{\,2}}
+{\left[R^{\,2}+R'^{\,2} - 2\,R\,R'\,\cos\phi'' + (Z-Z')^2\right]^{1/2}}
+\,d\theta'\,d\phi'',
+\end{equation}
+where $\phi''=\phi'-\phi$, which reduces to 
+\begin{equation}
+\bar{\cal E}_m(r,\theta) 
+=\oint\oint_{r'=r_c} 
+\frac{\sigma_m(\theta')\,\cos(n\,\phi)\,r'\,R'^{\,2}}
+{\left[R^{\,2}+R'^{\,2} - 2\,R\,R'\,\cos\phi + (Z-Z')^2\right]^{1/2}}
+\,d\theta'\,d\phi.
+\end{equation}
+However, 
+\begin{equation}
+P_{-1/2}^n(\cosh\eta) = \frac{(-1)^n\,\Gamma(1/2)\,\Gamma(1/2+n)}{2\pi^2}\oint
+\frac{\cos(n\,\phi)\,d\phi}{(\cosh\eta-\sinh\eta\,\cos\phi)^{1/2}}.
+\end{equation}
+Hence, we get
+\begin{equation}
+\bar{\cal E}_m(r,\theta) = \frac{2\pi^2\,(-1)^n}{\Gamma(1/2)\,\Gamma(n+1/2)}\,r_c\oint_{r'=r_c}\sigma_m(\theta')\left[\frac{\cosh\eta}
+{R^{\,2} + R'^{\,2}+(Z-Z')^2}\right]^{1/2}\,P_{-1/2}^n(\cosh\eta)\,R'^{\,2}\,d\theta',
+\end{equation}
+where
+\begin{equation}
+\eta(r,\theta,r',\theta')= \tanh^{-1}\left[\frac{2\,R\,R'}{R^{\,2} + R'^{\,2} + (Z-Z')^2}\right].
+\end{equation}
+
+Let 
+\begin{equation}
+\frac{2\pi^2\,(-1)^n}{\Gamma(1/2)\,\Gamma(n+1/2)}\,r_c\,\sigma_m(\theta)=\sum_{m'}\frac{\sigma_{mm'}\,{\rm e}^{-{\rm i}\,m'\,\theta}}{2\pi}.
+\end{equation}
+It follows that
+\begin{equation}
+\bar{\cal E}_m(r,\theta) = \sum_{m'}\sigma_{mm'}\oint_{r'=r_c}\,{\rm e}^{-{\rm i}\,m'\,\theta'}\left[\frac{\cosh\eta}
+{R^{\,2} + R'^{\,2}+(Z-Z')^2}\right]^{1/2}\,P_{-1/2}^n(\cosh\eta)\,R'^{\,2}\,\frac{d\theta'}{2\pi}.
+\end{equation}
+However, Eq.~(\ref{e5}) gives
+\begin{equation}
+\sum_{m'}\sigma_{mm'}\oint_{r=\epsilon,r'=r_c}\,{\rm e}^{-{\rm i}\,m'\,\theta'}\left[\frac{\cosh\eta}
+{R^{\,2} + R'^{\,2}+(Z-Z')^2}\right]^{1/2}\,P_{-1/2}^n(\cosh\eta)\,R'^{\,2}\,\frac{d\theta'}{2\pi} = {\rm e}^{-{\rm i}\,m\,\theta}.
+\end{equation}
+Hence, we obtain
+\begin{equation}
+\sum_{m'}\sigma_{mm''}\,S_{m''m'}(\epsilon) = \delta_{mm'},
+\end{equation}
+where
+\begin{equation}
+S_{mm'}(r) = \oint_{r=r}\oint_{r'=r_c}{\rm e}^{-{\rm i}\,m\,\theta'+{\rm i}\,m'\,\theta}\left[\frac{\cosh\eta}
+{R^{\,2} + R'^{\,2}+(Z-Z')^2}\right]^{1/2}\,P_{-1/2}^n(\cosh\eta)\,R'^{\,2}\,\frac{d\theta}{2\pi}\,\frac{d\theta'}{2\pi}.
+\end{equation}
+Moreover,
+\begin{equation}
+\bar{\cal E}_m(r,\theta) = \sum_{m',m''} \sigma_{mm''}\,S_{m''m'}(r)\,{\rm e}^{-{\rm i}\,m'\,\theta}.
+\end{equation}
+
+Now,
+\begin{align}
+H_{mm'}^{-1} &=\oint_{r=\epsilon} {\rm e}^{\,{\rm i}\,m'\,\theta}\,\left[\frac{\partial\bar{\cal E}_m}{\partial r}\,|\nabla r|^2+ \frac{\partial\bar{\cal E}_m}{\partial\theta}\,\nabla r\cdot\nabla\theta\right]r\,R^{\,2}\,\frac{d\theta}{2\pi}\nonumber\\[0.5ex]
+&= \sum_{m''m'''}\sigma_{mm''}\oint_{r=\epsilon} \left[\frac{dS_{m''m'''}}{dr}\,|\nabla r|^2-{\rm i}\,m'''\,S_{m''m'''}(\epsilon)\,
+\nabla r\cdot\nabla\theta\right]{\rm e}^{-{\rm i}\,(m'''-m')\,\theta}r\,R^{\,2}\,\frac{d\theta}{2\pi}\nonumber\\[0.5ex]
+&= \sum_{m''m'''}\sigma_{mm''}\left[\frac{dS_{m''m'''}(\epsilon)}{dr}\,R_{m'''m'}+S_{m''m'''}(\epsilon)\,T_{m'''m'}\right]\nonumber\\[0.5ex]
+&=\frac{R_{mm'}}{\delta\epsilon} -\sum_{m''m'''}\frac{\sigma_{mm''}\,S_{m''m'''}(\epsilon-\delta\epsilon)\,R_{m'''m'} }{\delta\epsilon} +T_{mm'},
+\end{align}
+where
+\begin{align}
+R_{mm'} &= \oint_{r=\epsilon} {\rm e}^{-{\rm i}\,(m-m')\,\theta}\,|\nabla r|^2\,r\,R^{\,2}\,\frac{d\theta}{2\pi},\\[0.5ex]
+T_{mm'} &= -{\rm i}\,m\oint_{r=\epsilon} {\rm e}^{-{\rm i}\,(m-m')\,\theta}\,\nabla r\cdot\nabla\theta\,r\,R^{\,2}\,\frac{d\theta}{2\pi}.
+\end{align}
+
+\end{document}

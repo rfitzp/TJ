@@ -53,6 +53,8 @@
 #include <blitz/array.h>
 #include <gsl/gsl_const_mksa.h>
 #include <gsl/gsl_spline.h>
+#include <gsl/gsl_spline2d.h>
+#include <gsl/gsl_interp2d.h>
 #include <gsl/gsl_sf_ellint.h>
 #include <gsl/gsl_sf_bessel.h>
 #include <gsl/gsl_sf_gamma.h>
